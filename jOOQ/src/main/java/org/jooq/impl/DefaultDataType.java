@@ -170,6 +170,10 @@ public class DefaultDataType<T> implements DataType<T> {
      */
     private final String                                 typeName;
 
+    private final int precision;
+    private final int scale;
+    private final int length;
+
     static {
         TYPES_BY_SQL_DATATYPE = new Map[SQLDialect.values().length];
         TYPES_BY_NAME = new Map[SQLDialect.values().length];
@@ -192,11 +196,15 @@ public class DefaultDataType<T> implements DataType<T> {
         this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
     }
 
-    public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName) {
-        this(dialect, sqlDataType, type, typeName, typeName);
+    public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
+        this(dialect, null, type, typeName, typeName);
     }
 
-    public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName) {
+    public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
+        this(dialect, null, type, typeName, castTypeName);
+    }
+
+    private DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName) {
         this.dialect = dialect;
 
         // [#858] SQLDataTypes should reference themselves for more convenience
@@ -205,6 +213,10 @@ public class DefaultDataType<T> implements DataType<T> {
         this.typeName = typeName;
         this.castTypeName = castTypeName;
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
+
+        this.precision = 0;
+        this.scale = 0;
+        this.length = 0;
 
         init();
     }

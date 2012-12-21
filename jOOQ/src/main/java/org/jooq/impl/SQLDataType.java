@@ -89,42 +89,42 @@ public final class SQLDataType {
     /**
      * The {@link Types#VARCHAR} type
      */
-    public static final DataType<String> VARCHAR = new DefaultDataType<String>(null, null, String.class, "varchar");
+    public static final DataType<String> VARCHAR = new DefaultDataType<String>(null, String.class, "varchar");
 
     /**
      * The {@link Types#CHAR} type
      */
-    public static final DataType<String> CHAR = new DefaultDataType<String>(null, null, String.class, "char");
+    public static final DataType<String> CHAR = new DefaultDataType<String>(null, String.class, "char");
 
     /**
      * The {@link Types#LONGVARCHAR} type
      */
-    public static final DataType<String> LONGVARCHAR = new DefaultDataType<String>(null, null, String.class, "longvarchar");
+    public static final DataType<String> LONGVARCHAR = new DefaultDataType<String>(null, String.class, "longvarchar");
 
     /**
      * The {@link Types#CLOB} type
      */
-    public static final DataType<String> CLOB = new DefaultDataType<String>(null, null, String.class, "clob");
+    public static final DataType<String> CLOB = new DefaultDataType<String>(null, String.class, "clob");
 
     /**
      * The {@link Types#NVARCHAR} type
      */
-    public static final DataType<String> NVARCHAR = new DefaultDataType<String>(null, null, String.class, "nvarchar");
+    public static final DataType<String> NVARCHAR = new DefaultDataType<String>(null, String.class, "nvarchar");
 
     /**
      * The {@link Types#NCHAR} type
      */
-    public static final DataType<String> NCHAR = new DefaultDataType<String>(null, null, String.class, "nchar");
+    public static final DataType<String> NCHAR = new DefaultDataType<String>(null, String.class, "nchar");
 
     /**
      * The {@link Types#LONGNVARCHAR} type
      */
-    public static final DataType<String> LONGNVARCHAR = new DefaultDataType<String>(null, null, String.class, "longnvarchar");
+    public static final DataType<String> LONGNVARCHAR = new DefaultDataType<String>(null, String.class, "longnvarchar");
 
     /**
      * The {@link Types#NCLOB} type
      */
-    public static final DataType<String> NCLOB = new DefaultDataType<String>(null, null, String.class, "nclob");
+    public static final DataType<String> NCLOB = new DefaultDataType<String>(null, String.class, "nclob");
 
     // -------------------------------------------------------------------------
     // Boolean types
@@ -133,12 +133,12 @@ public final class SQLDataType {
     /**
      * The {@link Types#BOOLEAN} type
      */
-    public static final DataType<Boolean> BOOLEAN = new DefaultDataType<Boolean>(null, null, Boolean.class, "boolean");
+    public static final DataType<Boolean> BOOLEAN = new DefaultDataType<Boolean>(null, Boolean.class, "boolean");
 
     /**
      * The {@link Types#BIT} type
      */
-    public static final DataType<Boolean> BIT = new DefaultDataType<Boolean>(null, null, Boolean.class, "bit");
+    public static final DataType<Boolean> BIT = new DefaultDataType<Boolean>(null, Boolean.class, "bit");
 
     // -------------------------------------------------------------------------
     // Integer types
@@ -147,27 +147,27 @@ public final class SQLDataType {
     /**
      * The {@link Types#TINYINT} type
      */
-    public static final DataType<Byte> TINYINT = new DefaultDataType<Byte>(null, null, Byte.class, "tinyint");
+    public static final DataType<Byte> TINYINT = new DefaultDataType<Byte>(null, Byte.class, "tinyint");
 
     /**
      * The {@link Types#SMALLINT} type
      */
-    public static final DataType<Short> SMALLINT = new DefaultDataType<Short>(null, null, Short.class, "smallint");
+    public static final DataType<Short> SMALLINT = new DefaultDataType<Short>(null, Short.class, "smallint");
 
     /**
      * The {@link Types#INTEGER} type
      */
-    public static final DataType<Integer> INTEGER = new DefaultDataType<Integer>(null, null, Integer.class, "integer");
+    public static final DataType<Integer> INTEGER = new DefaultDataType<Integer>(null, Integer.class, "integer");
 
     /**
      * The {@link Types#BIGINT} type
      */
-    public static final DataType<Long> BIGINT = new DefaultDataType<Long>(null, null, Long.class, "bigint");
+    public static final DataType<Long> BIGINT = new DefaultDataType<Long>(null, Long.class, "bigint");
 
     /**
      * The zero-scale {@link Types#DECIMAL} type
      */
-    public static final DataType<BigInteger> DECIMAL_INTEGER = new DefaultDataType<BigInteger>(null, null, BigInteger.class, "decimal_integer");
+    public static final DataType<BigInteger> DECIMAL_INTEGER = new DefaultDataType<BigInteger>(null, BigInteger.class, "decimal_integer");
 
     // -------------------------------------------------------------------------
     // Unsigned integer types
@@ -176,22 +176,22 @@ public final class SQLDataType {
     /**
      * The unsigned {@link Types#TINYINT} type
      */
-    public static final DataType<UByte> TINYINTUNSIGNED = new DefaultDataType<UByte>(null, null, UByte.class, "tinyintunsigned");
+    public static final DataType<UByte> TINYINTUNSIGNED = new DefaultDataType<UByte>(null, UByte.class, "tinyintunsigned");
 
     /**
      * The unsigned {@link Types#SMALLINT} type
      */
-    public static final DataType<UShort> SMALLINTUNSIGNED = new DefaultDataType<UShort>(null, null, UShort.class, "smallintunsigned");
+    public static final DataType<UShort> SMALLINTUNSIGNED = new DefaultDataType<UShort>(null, UShort.class, "smallintunsigned");
 
     /**
      * The unsigned {@link Types#INTEGER} type
      */
-    public static final DataType<UInteger> INTEGERUNSIGNED = new DefaultDataType<UInteger>(null, null, UInteger.class, "integerunsigned");
+    public static final DataType<UInteger> INTEGERUNSIGNED = new DefaultDataType<UInteger>(null, UInteger.class, "integerunsigned");
 
     /**
      * The unsigned {@link Types#BIGINT} type
      */
-    public static final DataType<ULong> BIGINTUNSIGNED = new DefaultDataType<ULong>(null, null, ULong.class, "bigintunsigned");
+    public static final DataType<ULong> BIGINTUNSIGNED = new DefaultDataType<ULong>(null, ULong.class, "bigintunsigned");
 
     // -------------------------------------------------------------------------
     // Floating point types
@@ -200,17 +200,17 @@ public final class SQLDataType {
     /**
      * The {@link Types#DOUBLE} type
      */
-    public static final DataType<Double> DOUBLE = new DefaultDataType<Double>(null, null, Double.class, "double");
+    public static final DataType<Double> DOUBLE = new DefaultDataType<Double>(null, Double.class, "double");
 
     /**
      * The {@link Types#FLOAT} type
      */
-    public static final DataType<Double> FLOAT = new DefaultDataType<Double>(null, null, Double.class, "float");
+    public static final DataType<Double> FLOAT = new DefaultDataType<Double>(null, Double.class, "float");
 
     /**
      * The {@link Types#REAL} type
      */
-    public static final DataType<Float> REAL = new DefaultDataType<Float>(null, null, Float.class, "real");
+    public static final DataType<Float> REAL = new DefaultDataType<Float>(null, Float.class, "real");
 
     // -------------------------------------------------------------------------
     // Numeric types
@@ -219,12 +219,12 @@ public final class SQLDataType {
     /**
      * The {@link Types#NUMERIC} type
      */
-    public static final DataType<BigDecimal> NUMERIC = new DefaultDataType<BigDecimal>(null, null, BigDecimal.class, "numeric");
+    public static final DataType<BigDecimal> NUMERIC = new DefaultDataType<BigDecimal>(null, BigDecimal.class, "numeric");
 
     /**
      * The {@link Types#DECIMAL} type
      */
-    public static final DataType<BigDecimal> DECIMAL = new DefaultDataType<BigDecimal>(null, null, BigDecimal.class, "decimal");
+    public static final DataType<BigDecimal> DECIMAL = new DefaultDataType<BigDecimal>(null, BigDecimal.class, "decimal");
 
     // -------------------------------------------------------------------------
     // Datetime types
@@ -233,27 +233,27 @@ public final class SQLDataType {
     /**
      * The {@link Types#DATE} type
      */
-    public static final DataType<Date> DATE = new DefaultDataType<Date>(null, null, Date.class, "date");
+    public static final DataType<Date> DATE = new DefaultDataType<Date>(null, Date.class, "date");
 
     /**
      * The {@link Types#TIMESTAMP} type
      */
-    public static final DataType<Timestamp> TIMESTAMP = new DefaultDataType<Timestamp>(null, null, Timestamp.class, "timestamp");
+    public static final DataType<Timestamp> TIMESTAMP = new DefaultDataType<Timestamp>(null, Timestamp.class, "timestamp");
 
     /**
      * The {@link Types#TIME} type
      */
-    public static final DataType<Time> TIME = new DefaultDataType<Time>(null, null, Time.class, "time");
+    public static final DataType<Time> TIME = new DefaultDataType<Time>(null, Time.class, "time");
 
     /**
      * The SQL standard <code>INTERVAL YEAR TO MONTH</code> data type
      */
-    public static final DataType<YearToMonth> INTERVALYEARTOMONTH = new DefaultDataType<YearToMonth>(null, null, YearToMonth.class, "interval year to month");
+    public static final DataType<YearToMonth> INTERVALYEARTOMONTH = new DefaultDataType<YearToMonth>(null, YearToMonth.class, "interval year to month");
 
     /**
      * The SQL standard <code>INTERVAL DAY TO SECOND</code> data type
      */
-    public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new DefaultDataType<DayToSecond>(null, null, DayToSecond.class, "interval day to second");
+    public static final DataType<DayToSecond> INTERVALDAYTOSECOND = new DefaultDataType<DayToSecond>(null, DayToSecond.class, "interval day to second");
 
     // -------------------------------------------------------------------------
     // Binary types
@@ -262,22 +262,22 @@ public final class SQLDataType {
     /**
      * The {@link Types#BINARY} type
      */
-    public static final DataType<byte[]> BINARY = new DefaultDataType<byte[]>(null, null, byte[].class, "binary");
+    public static final DataType<byte[]> BINARY = new DefaultDataType<byte[]>(null, byte[].class, "binary");
 
     /**
      * The {@link Types#VARBINARY} type
      */
-    public static final DataType<byte[]> VARBINARY = new DefaultDataType<byte[]>(null, null, byte[].class, "varbinary");
+    public static final DataType<byte[]> VARBINARY = new DefaultDataType<byte[]>(null, byte[].class, "varbinary");
 
     /**
      * The {@link Types#LONGVARBINARY} type
      */
-    public static final DataType<byte[]> LONGVARBINARY = new DefaultDataType<byte[]>(null, null, byte[].class, "longvarbinary");
+    public static final DataType<byte[]> LONGVARBINARY = new DefaultDataType<byte[]>(null, byte[].class, "longvarbinary");
 
     /**
      * The {@link Types#BLOB} type
      */
-    public static final DataType<byte[]> BLOB = new DefaultDataType<byte[]>(null, null, byte[].class, "blob");
+    public static final DataType<byte[]> BLOB = new DefaultDataType<byte[]>(null, byte[].class, "blob");
 
     // -------------------------------------------------------------------------
     // Other types
@@ -286,7 +286,7 @@ public final class SQLDataType {
     /**
      * The {@link Types#OTHER} type
      */
-    public static final DataType<Object> OTHER = new DefaultDataType<Object>(null, null, Object.class, "other");
+    public static final DataType<Object> OTHER = new DefaultDataType<Object>(null, Object.class, "other");
 
     /**
      * The {@link ResultSet} type
@@ -295,7 +295,7 @@ public final class SQLDataType {
      * and similar constructs
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static final DataType<Result<Record>> RESULT = new DefaultDataType<Result<Record>>(null, null, (Class) Result.class, "result");
+    public static final DataType<Result<Record>> RESULT = new DefaultDataType<Result<Record>>(null, (Class) Result.class, "result");
 
     // -------------------------------------------------------------------------
     // Static initialisation of dialect-specific data types

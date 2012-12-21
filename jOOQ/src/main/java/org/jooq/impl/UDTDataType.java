@@ -51,7 +51,7 @@ class UDTDataType<R extends UDTRecord<R>> extends DefaultDataType<R> {
 
     @SuppressWarnings("deprecation")
     UDTDataType(UDT<R> udt) {
-        super(SQLDialect.SQL99, null, udt.getRecordType(), getQualifiedName(udt));
+        super(SQLDialect.SQL99, udt.getRecordType(), getQualifiedName(udt));
 
         DataTypes.registerUDTRecord(getQualifiedName(udt), udt.getRecordType());
     }

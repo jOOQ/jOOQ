@@ -56,6 +56,6 @@ public final class TestDataType<T> extends DefaultDataType<T> {
     public static final DataType<Date>    DATE_TYPE        = new TestDataType<Date>(Date.class);
 
     protected TestDataType(Class<T> type) {
-        super(SQLDialect.ORACLE, null, type, type.getSimpleName());
+        super(SQLDialect.ORACLE, type, type.getSimpleName());
     }
 }

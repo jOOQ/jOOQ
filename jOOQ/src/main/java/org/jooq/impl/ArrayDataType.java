@@ -53,11 +53,7 @@ class ArrayDataType<T> extends DefaultDataType<T[]> {
     private final DataType<T> elementType;
 
     public ArrayDataType(DataType<T> elementType) {
-        super(null,
-              null,
-              elementType.getArrayType(),
-              elementType.getTypeName(),
-              elementType.getCastTypeName());
+        super(null, elementType.getArrayType(), elementType.getTypeName(), elementType.getCastTypeName());
 
         this.elementType = elementType;
     }

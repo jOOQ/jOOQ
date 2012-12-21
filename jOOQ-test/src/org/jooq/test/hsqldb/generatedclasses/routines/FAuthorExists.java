@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -506007569;
+	private static final long serialVersionUID = -1083040331;
 
 	/**
 	 * The parameter <code>PUBLIC.F_AUTHOR_EXISTS.RETURN_VALUE</code>. 
@@ -19,7 +19,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	/**
 	 * The parameter <code>PUBLIC.F_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
 	 * Create a new routine call instance

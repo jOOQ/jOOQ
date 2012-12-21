@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1242895425;
+	private static final long serialVersionUID = 868916292;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>
@@ -32,12 +32,12 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(25), this);
 
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.ID_REF</code>. 
@@ -87,12 +87,12 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.NAME_REF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.FIELD 737</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL.precision(25).scale(2), this);
 
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.CONNECTION</code>. 

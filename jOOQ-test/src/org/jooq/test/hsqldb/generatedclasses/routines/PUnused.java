@@ -9,12 +9,12 @@ package org.jooq.test.hsqldb.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1120336289;
+	private static final long serialVersionUID = 388166867;
 
 	/**
 	 * The parameter <code>PUBLIC.P_UNUSED.IN1</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> IN1 = createParameter("IN1", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> IN1 = createParameter("IN1", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
 	 * The parameter <code>PUBLIC.P_UNUSED.OUT1</code>. 

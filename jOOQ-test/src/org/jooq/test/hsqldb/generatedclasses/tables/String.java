@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class String extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord> {
 
-	private static final long serialVersionUID = -1127812447;
+	private static final long serialVersionUID = 861365771;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.STRING</code>
@@ -32,7 +32,7 @@ public class String extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generat
 	/**
 	 * The column <code>PUBLIC.STRING.OTHER</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord, java.lang.String> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord, java.lang.String> OTHER = createField("OTHER", org.jooq.impl.SQLDataType.VARCHAR.length(3), this);
 
 	/**
 	 * Create a <code>PUBLIC.STRING</code> table reference

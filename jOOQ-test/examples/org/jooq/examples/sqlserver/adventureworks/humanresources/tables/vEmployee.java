@@ -107,7 +107,7 @@ public class vEmployee extends org.jooq.impl.TableImpl<org.jooq.examples.sqlserv
 	/**
 	 * The column <code>HumanResources.vEmployee.AdditionalContactInfo</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployee, java.lang.Object> AdditionalContactInfo = createField("AdditionalContactInfo", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.vEmployee, java.lang.Object> AdditionalContactInfo = createField("AdditionalContactInfo", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * Create a <code>HumanResources.vEmployee</code> table reference

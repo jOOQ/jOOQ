@@ -12,9 +12,16 @@ package org.jooq.test.sqlite.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
 
+	public static final org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
+
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE_ID = UniqueKeys0.PK_T_639_NUMBERS_TABLE_ID;
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST_ID = UniqueKeys0.PK_T_725_LOB_TEST_ID;
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> PK_T_986_1_REF = UniqueKeys0.PK_T_986_1_REF;
@@ -34,7 +41,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> PK_X_UNUSED_ID = UniqueKeys0.PK_X_UNUSED_ID;
 	public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> PK_X_UNUSED_NAME = UniqueKeys0.PK_X_UNUSED_NAME;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record, org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> FK_T_986_1_X_UNUSED_1 = ForeignKeys0.FK_T_986_1_X_UNUSED_1;
 	public static final org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record, org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> FK_T_986_2_X_UNUSED_1 = ForeignKeys0.FK_T_986_2_X_UNUSED_1;
 	public static final org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord, org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord> FK_T_BOOK_T_AUTHOR_2 = ForeignKeys0.FK_T_BOOK_T_AUTHOR_2;
@@ -48,11 +58,18 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> FK_X_UNUSED_X_UNUSED_1 = ForeignKeys0.FK_X_UNUSED_X_UNUSED_1;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings({"hiding", "unchecked"})
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
+	private static class Identities0 extends org.jooq.impl.AbstractKeys {
+		public static org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sqlite.generatedclasses.tables.TTriggers.ID_GENERATED);
+	}
+
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE_ID = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord> PK_T_725_LOB_TEST_ID = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest.ID);
@@ -74,7 +91,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> PK_X_UNUSED_NAME = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.sqlite.generatedclasses.tables.XUnused.NAME);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record, org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> FK_T_986_1_X_UNUSED_1 = createForeignKey(org.jooq.test.sqlite.generatedclasses.Keys.PK_X_UNUSED_ID, org.jooq.test.sqlite.generatedclasses.tables.T_986_1.T_986_1, org.jooq.test.sqlite.generatedclasses.tables.T_986_1.REF);
 		public static final org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record, org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> FK_T_986_2_X_UNUSED_1 = createForeignKey(org.jooq.test.sqlite.generatedclasses.Keys.PK_X_UNUSED_ID, org.jooq.test.sqlite.generatedclasses.tables.T_986_2.T_986_2, org.jooq.test.sqlite.generatedclasses.tables.T_986_2.REF);

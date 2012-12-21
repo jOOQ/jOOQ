@@ -12,10 +12,7 @@ package org.jooq.test.oracle3.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Call TEST.F_ARRAYS1
-	 *
-	 * @param IN_ARRAY
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_ARRAYS1</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY call_F_ARRAYS1(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS1();
@@ -26,9 +23,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ARRAYS1 as a field
-	 *
-	 * @param IN_ARRAY
+	 * Get <code>TEST.F_ARRAYS1</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> call_F_ARRAYS1(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS1();
@@ -38,9 +33,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ARRAYS1 as a field
-	 *
-	 * @param IN_ARRAY
+	 * Get <code>TEST.F_ARRAYS1</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> call_F_ARRAYS1(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS1();
@@ -50,10 +43,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_ARRAYS2
-	 *
-	 * @param IN_ARRAY
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_ARRAYS2</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY call_F_ARRAYS2(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS2 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS2();
@@ -64,9 +54,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ARRAYS2 as a field
-	 *
-	 * @param IN_ARRAY
+	 * Get <code>TEST.F_ARRAYS2</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY> call_F_ARRAYS2(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS2 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS2();
@@ -76,9 +64,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ARRAYS2 as a field
-	 *
-	 * @param IN_ARRAY
+	 * Get <code>TEST.F_ARRAYS2</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY> call_F_ARRAYS2(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY> IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS2 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS2();
@@ -88,10 +74,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_ARRAYS3
-	 *
-	 * @param IN_ARRAY
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_ARRAYS3</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY call_F_ARRAYS3(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS3 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS3();
@@ -102,9 +85,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ARRAYS3 as a field
-	 *
-	 * @param IN_ARRAY
+	 * Get <code>TEST.F_ARRAYS3</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY> call_F_ARRAYS3(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS3 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS3();
@@ -114,9 +95,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ARRAYS3 as a field
-	 *
-	 * @param IN_ARRAY
+	 * Get <code>TEST.F_ARRAYS3</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY> call_F_ARRAYS3(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY> IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS3 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS3();
@@ -126,10 +105,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_ARRAYS4
-	 *
-	 * @param IN_ARRAY
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_ARRAYS4</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY call_F_ARRAYS4(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS4();
@@ -140,9 +116,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ARRAYS4 as a field
-	 *
-	 * @param IN_ARRAY
+	 * Get <code>TEST.F_ARRAYS4</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> call_F_ARRAYS4(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS4();
@@ -152,9 +126,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ARRAYS4 as a field
-	 *
-	 * @param IN_ARRAY
+	 * Get <code>TEST.F_ARRAYS4</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> call_F_ARRAYS4(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_ARRAYS4();
@@ -164,10 +136,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_AUTHOR_EXISTS
-	 *
-	 * @param AUTHOR_NAME
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_AUTHOR_EXISTS</code>
 	 */
 	public static java.math.BigDecimal call_F_AUTHOR_EXISTS(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.routines.F_AUTHOR_EXISTS();
@@ -178,9 +147,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_AUTHOR_EXISTS as a field
-	 *
-	 * @param AUTHOR_NAME
+	 * Get <code>TEST.F_AUTHOR_EXISTS</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F_AUTHOR_EXISTS(java.lang.String AUTHOR_NAME) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.routines.F_AUTHOR_EXISTS();
@@ -190,9 +157,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_AUTHOR_EXISTS as a field
-	 *
-	 * @param AUTHOR_NAME
+	 * Get <code>TEST.F_AUTHOR_EXISTS</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F_AUTHOR_EXISTS(org.jooq.Field<java.lang.String> AUTHOR_NAME) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_AUTHOR_EXISTS f = new org.jooq.test.oracle3.generatedclasses.routines.F_AUTHOR_EXISTS();
@@ -202,10 +167,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_GET_ONE_CURSOR
-	 *
-	 * @param BOOK_IDS
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_GET_ONE_CURSOR</code>
 	 */
 	public static org.jooq.Result<org.jooq.Record> call_F_GET_ONE_CURSOR(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY BOOK_IDS) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_GET_ONE_CURSOR f = new org.jooq.test.oracle3.generatedclasses.routines.F_GET_ONE_CURSOR();
@@ -216,9 +178,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_GET_ONE_CURSOR as a field
-	 *
-	 * @param BOOK_IDS
+	 * Get <code>TEST.F_GET_ONE_CURSOR</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> call_F_GET_ONE_CURSOR(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY BOOK_IDS) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_GET_ONE_CURSOR f = new org.jooq.test.oracle3.generatedclasses.routines.F_GET_ONE_CURSOR();
@@ -228,9 +188,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_GET_ONE_CURSOR as a field
-	 *
-	 * @param BOOK_IDS
+	 * Get <code>TEST.F_GET_ONE_CURSOR</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> call_F_GET_ONE_CURSOR(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> BOOK_IDS) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_GET_ONE_CURSOR f = new org.jooq.test.oracle3.generatedclasses.routines.F_GET_ONE_CURSOR();
@@ -240,10 +198,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_NUMBER
-	 *
-	 * @param N
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_NUMBER</code>
 	 */
 	public static java.math.BigDecimal call_F_NUMBER(org.jooq.Configuration configuration, java.lang.Number N) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_NUMBER f = new org.jooq.test.oracle3.generatedclasses.routines.F_NUMBER();
@@ -254,9 +209,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_NUMBER as a field
-	 *
-	 * @param N
+	 * Get <code>TEST.F_NUMBER</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F_NUMBER(java.lang.Number N) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_NUMBER f = new org.jooq.test.oracle3.generatedclasses.routines.F_NUMBER();
@@ -266,9 +219,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_NUMBER as a field
-	 *
-	 * @param N
+	 * Get <code>TEST.F_NUMBER</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F_NUMBER(org.jooq.Field<? extends java.lang.Number> N) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_NUMBER f = new org.jooq.test.oracle3.generatedclasses.routines.F_NUMBER();
@@ -278,9 +229,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_ONE
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_ONE</code>
 	 */
 	public static java.math.BigDecimal call_F_ONE(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ONE f = new org.jooq.test.oracle3.generatedclasses.routines.F_ONE();
@@ -290,8 +239,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_ONE as a field
-	 *
+	 * Get <code>TEST.F_ONE</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F_ONE() {
 		org.jooq.test.oracle3.generatedclasses.routines.F_ONE f = new org.jooq.test.oracle3.generatedclasses.routines.F_ONE();
@@ -300,9 +248,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_PIPELINED_ARRAY1
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_PIPELINED_ARRAY1</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY call_F_PIPELINED_ARRAY1(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_ARRAY1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_ARRAY1();
@@ -312,8 +258,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_PIPELINED_ARRAY1 as a field
-	 *
+	 * Get <code>TEST.F_PIPELINED_ARRAY1</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> call_F_PIPELINED_ARRAY1() {
 		org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_ARRAY1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_ARRAY1();
@@ -322,9 +267,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_PIPELINED_ARRAY4
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_PIPELINED_ARRAY4</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY call_F_PIPELINED_ARRAY4(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_ARRAY4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_ARRAY4();
@@ -334,8 +277,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_PIPELINED_ARRAY4 as a field
-	 *
+	 * Get <code>TEST.F_PIPELINED_ARRAY4</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> call_F_PIPELINED_ARRAY4() {
 		org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_ARRAY4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_ARRAY4();
@@ -344,9 +286,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_PIPELINED_TABLE1
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_PIPELINED_TABLE1</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE call_F_PIPELINED_TABLE1(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_TABLE1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_TABLE1();
@@ -356,8 +296,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_PIPELINED_TABLE1 as a field
-	 *
+	 * Get <code>TEST.F_PIPELINED_TABLE1</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> call_F_PIPELINED_TABLE1() {
 		org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_TABLE1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_TABLE1();
@@ -366,9 +305,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_PIPELINED_TABLE4
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_PIPELINED_TABLE4</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE call_F_PIPELINED_TABLE4(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_TABLE4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_TABLE4();
@@ -378,8 +315,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_PIPELINED_TABLE4 as a field
-	 *
+	 * Get <code>TEST.F_PIPELINED_TABLE4</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE> call_F_PIPELINED_TABLE4() {
 		org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_TABLE4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_PIPELINED_TABLE4();
@@ -388,10 +324,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_TABLES1
-	 *
-	 * @param IN_TABLE
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_TABLES1</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE call_F_TABLES1(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES1();
@@ -402,9 +335,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_TABLES1 as a field
-	 *
-	 * @param IN_TABLE
+	 * Get <code>TEST.F_TABLES1</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> call_F_TABLES1(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES1();
@@ -414,9 +345,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_TABLES1 as a field
-	 *
-	 * @param IN_TABLE
+	 * Get <code>TEST.F_TABLES1</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> call_F_TABLES1(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES1 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES1();
@@ -426,10 +355,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_TABLES2
-	 *
-	 * @param IN_TABLE
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_TABLES2</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE call_F_TABLES2(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES2 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES2();
@@ -440,9 +366,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_TABLES2 as a field
-	 *
-	 * @param IN_TABLE
+	 * Get <code>TEST.F_TABLES2</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE> call_F_TABLES2(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES2 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES2();
@@ -452,9 +376,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_TABLES2 as a field
-	 *
-	 * @param IN_TABLE
+	 * Get <code>TEST.F_TABLES2</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE> call_F_TABLES2(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE> IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES2 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES2();
@@ -464,10 +386,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_TABLES3
-	 *
-	 * @param IN_TABLE
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_TABLES3</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE call_F_TABLES3(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES3 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES3();
@@ -478,9 +397,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_TABLES3 as a field
-	 *
-	 * @param IN_TABLE
+	 * Get <code>TEST.F_TABLES3</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE> call_F_TABLES3(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES3 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES3();
@@ -490,9 +407,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_TABLES3 as a field
-	 *
-	 * @param IN_TABLE
+	 * Get <code>TEST.F_TABLES3</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE> call_F_TABLES3(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE> IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES3 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES3();
@@ -502,10 +417,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F_TABLES4
-	 *
-	 * @param IN_TABLE
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F_TABLES4</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE call_F_TABLES4(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES4();
@@ -516,9 +428,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_TABLES4 as a field
-	 *
-	 * @param IN_TABLE
+	 * Get <code>TEST.F_TABLES4</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE> call_F_TABLES4(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES4();
@@ -528,9 +438,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F_TABLES4 as a field
-	 *
-	 * @param IN_TABLE
+	 * Get <code>TEST.F_TABLES4</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE> call_F_TABLES4(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE> IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.F_TABLES4 f = new org.jooq.test.oracle3.generatedclasses.routines.F_TABLES4();
@@ -540,13 +448,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F317
-	 *
-	 * @param P1
-	 * @param P2
-	 * @param P3
-	 * @param P4
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F317</code>
 	 */
 	public static java.math.BigDecimal call_F317(org.jooq.Configuration configuration, java.lang.Number P1, java.lang.Number P2, java.lang.Number P3, java.lang.Number P4) {
 		org.jooq.test.oracle3.generatedclasses.routines.F317 f = new org.jooq.test.oracle3.generatedclasses.routines.F317();
@@ -560,12 +462,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F317 as a field
-	 *
-	 * @param P1
-	 * @param P2
-	 * @param P3
-	 * @param P4
+	 * Get <code>TEST.F317</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F317(java.lang.Number P1, java.lang.Number P2, java.lang.Number P3, java.lang.Number P4) {
 		org.jooq.test.oracle3.generatedclasses.routines.F317 f = new org.jooq.test.oracle3.generatedclasses.routines.F317();
@@ -578,12 +475,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F317 as a field
-	 *
-	 * @param P1
-	 * @param P2
-	 * @param P3
-	 * @param P4
+	 * Get <code>TEST.F317</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F317(org.jooq.Field<? extends java.lang.Number> P1, org.jooq.Field<? extends java.lang.Number> P2, org.jooq.Field<? extends java.lang.Number> P3, org.jooq.Field<? extends java.lang.Number> P4) {
 		org.jooq.test.oracle3.generatedclasses.routines.F317 f = new org.jooq.test.oracle3.generatedclasses.routines.F317();
@@ -596,9 +488,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F377
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F377</code>
 	 */
 	public static void call_F377(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.F377 p = new org.jooq.test.oracle3.generatedclasses.routines.F377();
@@ -607,13 +497,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F378
-	 *
-	 * @param RETURN_VALUE OUT parameter
-	 * @param I IN parameter
-	 * @param IO IN OUT parameter
-	 * @param O OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F378</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.routines.F378 call_F378(org.jooq.Configuration configuration, java.lang.Number I, java.lang.Number IO) {
 		org.jooq.test.oracle3.generatedclasses.routines.F378 p = new org.jooq.test.oracle3.generatedclasses.routines.F378();
@@ -625,10 +509,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F691CURSOR_IN
-	 *
-	 * @param C
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F691CURSOR_IN</code>
 	 */
 	public static java.math.BigDecimal call_F691CURSOR_IN(org.jooq.Configuration configuration, org.jooq.Result<org.jooq.Record> C) {
 		org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_IN f = new org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_IN();
@@ -639,9 +520,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F691CURSOR_IN as a field
-	 *
-	 * @param C
+	 * Get <code>TEST.F691CURSOR_IN</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F691CURSOR_IN(org.jooq.Result<org.jooq.Record> C) {
 		org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_IN f = new org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_IN();
@@ -651,9 +530,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F691CURSOR_IN as a field
-	 *
-	 * @param C
+	 * Get <code>TEST.F691CURSOR_IN</code> as a field
 	 */
 	public static org.jooq.Field<java.math.BigDecimal> call_F691CURSOR_IN(org.jooq.Field<org.jooq.Result<org.jooq.Record>> C) {
 		org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_IN f = new org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_IN();
@@ -663,9 +540,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.F691CURSOR_OUT
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.F691CURSOR_OUT</code>
 	 */
 	public static org.jooq.Result<org.jooq.Record> call_F691CURSOR_OUT(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_OUT f = new org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_OUT();
@@ -675,8 +550,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.F691CURSOR_OUT as a field
-	 *
+	 * Get <code>TEST.F691CURSOR_OUT</code> as a field
 	 */
 	public static org.jooq.Field<org.jooq.Result<org.jooq.Record>> call_F691CURSOR_OUT() {
 		org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_OUT f = new org.jooq.test.oracle3.generatedclasses.routines.F691CURSOR_OUT();
@@ -685,11 +559,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_ARRAYS1
-	 *
-	 * @param IN_ARRAY IN parameter
-	 * @param OUT_ARRAY OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_ARRAYS1</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY call_P_ARRAYS1(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS1 p = new org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS1();
@@ -700,11 +570,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_ARRAYS2
-	 *
-	 * @param IN_ARRAY IN parameter
-	 * @param OUT_ARRAY OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_ARRAYS2</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY call_P_ARRAYS2(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS2 p = new org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS2();
@@ -715,11 +581,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_ARRAYS3
-	 *
-	 * @param IN_ARRAY IN parameter
-	 * @param OUT_ARRAY OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_ARRAYS3</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY call_P_ARRAYS3(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS3 p = new org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS3();
@@ -730,11 +592,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_ARRAYS4
-	 *
-	 * @param IN_ARRAY IN parameter
-	 * @param OUT_ARRAY OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_ARRAYS4</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY call_P_ARRAYS4(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY IN_ARRAY) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS4 p = new org.jooq.test.oracle3.generatedclasses.routines.P_ARRAYS4();
@@ -745,11 +603,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_AUTHOR_EXISTS
-	 *
-	 * @param AUTHOR_NAME IN parameter
-	 * @param RESULT OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_AUTHOR_EXISTS</code>
 	 */
 	public static java.math.BigDecimal call_P_AUTHOR_EXISTS(org.jooq.Configuration configuration, java.lang.String AUTHOR_NAME) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_AUTHOR_EXISTS p = new org.jooq.test.oracle3.generatedclasses.routines.P_AUTHOR_EXISTS();
@@ -760,9 +614,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_CREATE_AUTHOR
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_CREATE_AUTHOR</code>
 	 */
 	public static void call_P_CREATE_AUTHOR(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_CREATE_AUTHOR p = new org.jooq.test.oracle3.generatedclasses.routines.P_CREATE_AUTHOR();
@@ -771,11 +623,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_CREATE_AUTHOR_BY_NAME
-	 *
-	 * @param FIRST_NAME IN parameter
-	 * @param LAST_NAME IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_CREATE_AUTHOR_BY_NAME</code>
 	 */
 	public static void call_P_CREATE_AUTHOR_BY_NAME(org.jooq.Configuration configuration, java.lang.String FIRST_NAME, java.lang.String LAST_NAME) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_CREATE_AUTHOR_BY_NAME p = new org.jooq.test.oracle3.generatedclasses.routines.P_CREATE_AUTHOR_BY_NAME();
@@ -786,15 +634,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_DEFAULT
-	 *
-	 * @param P_IN_NUMBER IN parameter
-	 * @param P_OUT_NUMBER OUT parameter
-	 * @param P_IN_VARCHAR IN parameter
-	 * @param P_OUT_VARCHAR OUT parameter
-	 * @param P_IN_DATE IN parameter
-	 * @param P_OUT_DATE OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_DEFAULT</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.routines.P_DEFAULT call_P_DEFAULT(org.jooq.Configuration configuration, java.lang.Number P_IN_NUMBER, java.lang.String P_IN_VARCHAR, java.sql.Date P_IN_DATE) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_DEFAULT p = new org.jooq.test.oracle3.generatedclasses.routines.P_DEFAULT();
@@ -807,11 +647,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_ENHANCE_ADDRESS1
-	 *
-	 * @param ADDRESS IN parameter
-	 * @param NO OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_ENHANCE_ADDRESS1</code>
 	 */
 	public static java.lang.String call_P_ENHANCE_ADDRESS1(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_ENHANCE_ADDRESS1 p = new org.jooq.test.oracle3.generatedclasses.routines.P_ENHANCE_ADDRESS1();
@@ -822,10 +658,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_ENHANCE_ADDRESS2
-	 *
-	 * @param ADDRESS OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_ENHANCE_ADDRESS2</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE call_P_ENHANCE_ADDRESS2(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_ENHANCE_ADDRESS2 p = new org.jooq.test.oracle3.generatedclasses.routines.P_ENHANCE_ADDRESS2();
@@ -835,10 +668,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_ENHANCE_ADDRESS3
-	 *
-	 * @param ADDRESS IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_ENHANCE_ADDRESS3</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE call_P_ENHANCE_ADDRESS3(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_ENHANCE_ADDRESS3 p = new org.jooq.test.oracle3.generatedclasses.routines.P_ENHANCE_ADDRESS3();
@@ -849,12 +679,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_GET_ONE_CURSOR
-	 *
-	 * @param TOTAL OUT parameter
-	 * @param BOOKS OUT parameter
-	 * @param BOOK_IDS IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_GET_ONE_CURSOR</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.routines.P_GET_ONE_CURSOR call_P_GET_ONE_CURSOR(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY BOOK_IDS) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_GET_ONE_CURSOR p = new org.jooq.test.oracle3.generatedclasses.routines.P_GET_ONE_CURSOR();
@@ -865,11 +690,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_GET_TWO_CURSORS
-	 *
-	 * @param BOOKS OUT parameter
-	 * @param AUTHORS OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_GET_TWO_CURSORS</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.routines.P_GET_TWO_CURSORS call_P_GET_TWO_CURSORS(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_GET_TWO_CURSORS p = new org.jooq.test.oracle3.generatedclasses.routines.P_GET_TWO_CURSORS();
@@ -879,11 +700,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_TABLES1
-	 *
-	 * @param IN_TABLE IN parameter
-	 * @param OUT_TABLE OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_TABLES1</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE call_P_TABLES1(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_TABLES1 p = new org.jooq.test.oracle3.generatedclasses.routines.P_TABLES1();
@@ -894,11 +711,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_TABLES2
-	 *
-	 * @param IN_TABLE IN parameter
-	 * @param OUT_TABLE OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_TABLES2</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE call_P_TABLES2(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_TABLES2 p = new org.jooq.test.oracle3.generatedclasses.routines.P_TABLES2();
@@ -909,11 +722,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_TABLES3
-	 *
-	 * @param IN_TABLE IN parameter
-	 * @param OUT_TABLE OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_TABLES3</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE call_P_TABLES3(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_TABLES3 p = new org.jooq.test.oracle3.generatedclasses.routines.P_TABLES3();
@@ -924,11 +733,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_TABLES4
-	 *
-	 * @param IN_TABLE IN parameter
-	 * @param OUT_TABLE OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_TABLES4</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE call_P_TABLES4(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE IN_TABLE) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_TABLES4 p = new org.jooq.test.oracle3.generatedclasses.routines.P_TABLES4();
@@ -939,12 +744,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P_UNUSED
-	 *
-	 * @param IN1 IN parameter
-	 * @param OUT1 OUT parameter
-	 * @param OUT2 IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P_UNUSED</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.routines.P_UNUSED call_P_UNUSED(org.jooq.Configuration configuration, java.lang.String IN1, java.lang.Number OUT2) {
 		org.jooq.test.oracle3.generatedclasses.routines.P_UNUSED p = new org.jooq.test.oracle3.generatedclasses.routines.P_UNUSED();
@@ -956,10 +756,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P1490
-	 *
-	 * @param value IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P1490</code>
 	 */
 	public static void call_P1490(org.jooq.Configuration configuration, java.lang.Number value) {
 		org.jooq.test.oracle3.generatedclasses.routines.P1490 p = new org.jooq.test.oracle3.generatedclasses.routines.P1490();
@@ -969,9 +766,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P377
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P377</code>
 	 */
 	public static void call_P377(org.jooq.Configuration configuration) {
 		org.jooq.test.oracle3.generatedclasses.routines.P377 p = new org.jooq.test.oracle3.generatedclasses.routines.P377();
@@ -980,15 +775,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call TEST.P391
-	 *
-	 * @param I1 IN parameter
-	 * @param IO1 IN OUT parameter
-	 * @param O1 OUT parameter
-	 * @param O2 OUT parameter
-	 * @param IO2 IN OUT parameter
-	 * @param I2 IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.P391</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.routines.P391 call_P391(org.jooq.Configuration configuration, java.lang.Number I1, java.lang.Number IO1, java.lang.Number IO2, java.lang.Number I2) {
 		org.jooq.test.oracle3.generatedclasses.routines.P391 p = new org.jooq.test.oracle3.generatedclasses.routines.P391();
@@ -1002,9 +789,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.SECOND_MAX as a field
-	 *
-	 * @param INPUT
+	 * Get <code>TEST.SECOND_MAX</code> as a field
 	 */
 	public static org.jooq.AggregateFunction<java.math.BigDecimal> call_SECOND_MAX(java.lang.Number INPUT) {
 		org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX f = new org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX();
@@ -1014,9 +799,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get TEST.SECOND_MAX as a field
-	 *
-	 * @param INPUT
+	 * Get <code>TEST.SECOND_MAX</code> as a field
 	 */
 	public static org.jooq.AggregateFunction<java.math.BigDecimal> call_SECOND_MAX(org.jooq.Field<? extends java.lang.Number> INPUT) {
 		org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX f = new org.jooq.test.oracle3.generatedclasses.routines.SECOND_MAX();
@@ -1026,7 +809,7 @@ public final class Routines {
 	}
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Routines() {}
 }

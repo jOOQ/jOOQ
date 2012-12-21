@@ -11,12 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> implements java.lang.Cloneable, org.jooq.Record5<java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY, org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = 318208311;
+	private static final long serialVersionUID = -409434148;
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_ARRAYS.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -24,9 +22,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_ARRAYS.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -36,7 +32,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.STRING_ARRAY</code>
+	 * Setter for <code>TEST.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	@Override
 	public void setSTRING_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY value) {
@@ -44,7 +40,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.STRING_ARRAY</code>
+	 * Getter for <code>TEST.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	@javax.persistence.Column(name = "STRING_ARRAY", length = 101)
 	@Override
@@ -53,7 +49,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>
+	 * Setter for <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	@Override
 	public void setNUMBER_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value) {
@@ -61,7 +57,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>
+	 * Getter for <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	@javax.persistence.Column(name = "NUMBER_ARRAY", length = 109)
 	@Override
@@ -70,7 +66,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>
+	 * Setter for <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>. 
 	 */
 	@Override
 	public void setNUMBER_LONG_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY value) {
@@ -78,7 +74,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>
+	 * Getter for <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>. 
 	 */
 	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY", length = 109)
 	@Override
@@ -87,7 +83,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.DATE_ARRAY</code>
+	 * Setter for <code>TEST.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	@Override
 	public void setDATE_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY value) {
@@ -95,7 +91,7 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.DATE_ARRAY</code>
+	 * Getter for <code>TEST.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	@javax.persistence.Column(name = "DATE_ARRAY", length = 49)
 	@Override
@@ -103,11 +99,20 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS.DATE_ARRAY);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached T_ARRAYS
+	 * {@inheritDoc}
 	 */
-	public T_ARRAYS() {
-		super(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -208,5 +213,41 @@ public class T_ARRAYS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY value5() {
 		return getDATE_ARRAY();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE from) {
+		setID(from.getID());
+		setSTRING_ARRAY(from.getSTRING_ARRAY());
+		setNUMBER_ARRAY(from.getNUMBER_ARRAY());
+		setNUMBER_LONG_ARRAY(from.getNUMBER_LONG_ARRAY());
+		setDATE_ARRAY(from.getDATE_ARRAY());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_ARRAYS
+	 */
+	public T_ARRAYS() {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS);
 	}
 }

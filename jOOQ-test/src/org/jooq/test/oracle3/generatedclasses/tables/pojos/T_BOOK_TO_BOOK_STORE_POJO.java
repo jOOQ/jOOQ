@@ -15,7 +15,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 })
 public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = 698333952;
+	private static final long serialVersionUID = 959816524;
 
 	private java.lang.String  BOOK_STORE_NAME;
 	private java.lang.Integer BOOK_ID;
@@ -52,5 +52,28 @@ public class T_BOOK_TO_BOOK_STORE_POJO extends java.lang.Object implements java.
 	@Override
 	public void setSTOCK(java.lang.Integer STOCK) {
 		this.STOCK = STOCK;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE from) {
+		setBOOK_STORE_NAME(from.getBOOK_STORE_NAME());
+		setBOOK_ID(from.getBOOK_ID());
+		setSTOCK(from.getSTOCK());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

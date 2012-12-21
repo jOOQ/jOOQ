@@ -9,16 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_TABLES2 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -2130989462;
-
+	private static final long serialVersionUID = -659647990;
 
 	/**
-	 * The procedure parameter <code>TEST.P_TABLES2.IN_TABLE</code>
+	 * The parameter <code>TEST.P_TABLES2.IN_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE.class));
 
 	/**
-	 * The procedure parameter <code>TEST.P_TABLES2.OUT_TABLE</code>
+	 * The parameter <code>TEST.P_TABLES2.OUT_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.impl.SQLDataType.BIGINT.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_TABLE.class));
 

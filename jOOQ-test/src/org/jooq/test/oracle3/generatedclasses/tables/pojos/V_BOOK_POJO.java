@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_BOOK", schema = "TEST")
 public class V_BOOK_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -1811480490;
+	private static final long serialVersionUID = 1084830728;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer AUTHOR_ID;
@@ -120,5 +120,34 @@ public class V_BOOK_POJO extends java.lang.Object implements java.io.Serializabl
 	@Override
 	public void setCONTENT_PDF(byte[] CONTENT_PDF) {
 		this.CONTENT_PDF = CONTENT_PDF;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE from) {
+		setID(from.getID());
+		setAUTHOR_ID(from.getAUTHOR_ID());
+		setCO_AUTHOR_ID(from.getCO_AUTHOR_ID());
+		setDETAILS_ID(from.getDETAILS_ID());
+		setTITLE(from.getTITLE());
+		setPUBLISHED_IN(from.getPUBLISHED_IN());
+		setLANGUAGE_ID(from.getLANGUAGE_ID());
+		setCONTENT_TEXT(from.getCONTENT_TEXT());
+		setCONTENT_PDF(from.getCONTENT_PDF());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE {
 
-	private static final long serialVersionUID = -1618649130;
+	private static final long serialVersionUID = 670303514;
 
 	private java.lang.Integer ID;
 	private java.lang.String  NAME;
@@ -48,5 +48,28 @@ public class T_785_POJO extends java.lang.ThreadDeath implements java.lang.Clone
 	@Override
 	public void setVALUE(java.lang.String VALUE) {
 		this.VALUE = VALUE;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE from) {
+		setID(from.getID());
+		setNAME(from.getNAME());
+		setVALUE(from.getVALUE());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

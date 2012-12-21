@@ -14,24 +14,38 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface M_LIBRARY_INTERFACE extends java.io.Serializable, java.lang.Cloneable {
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.AUTHOR</code>
+	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
 	public void setAUTHOR(java.lang.String value);
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.AUTHOR</code>
+	 * Getter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	public java.lang.String getAUTHOR();
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.TITLE</code>
+	 * Setter for <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
 	public void setTITLE(java.lang.String value);
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.TITLE</code>
+	 * Getter for <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTITLE();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface M_LIBRARY_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface M_LIBRARY_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE> E into(E into);
 }

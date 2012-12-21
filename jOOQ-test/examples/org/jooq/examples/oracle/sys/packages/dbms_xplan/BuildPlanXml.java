@@ -9,12 +9,12 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -1093473898;
+	private static final long serialVersionUID = -316108104;
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.RETURN_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
+	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"));
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.BUILD_PLAN_XML.TABLE_NAME</code>. 
@@ -55,7 +55,7 @@ public class BuildPlanXml extends org.jooq.impl.AbstractRoutine<java.lang.Object
 	 * Create a new routine call instance
 	 */
 	public BuildPlanXml() {
-		super("BUILD_PLAN_XML", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
+		super("BUILD_PLAN_XML", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(TABLE_NAME);

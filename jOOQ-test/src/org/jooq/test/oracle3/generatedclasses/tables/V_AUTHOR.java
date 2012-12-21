@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class V_AUTHOR extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1936055896;
+	private static final long serialVersionUID = -2009560468;
 
 	/**
-	 * The singleton instance of TEST.V_AUTHOR
+	 * The singleton instance of <code>TEST.V_AUTHOR</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR V_AUTHOR = new org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR();
 
@@ -25,43 +25,52 @@ public class V_AUTHOR extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gene
 	}
 
 	/**
-	 * The table column <code>TEST.V_AUTHOR.ID</code>
+	 * The column <code>TEST.V_AUTHOR.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>TEST.V_AUTHOR.FIRST_NAME</code>
+	 * The column <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>TEST.V_AUTHOR.LAST_NAME</code>
+	 * The column <code>TEST.V_AUTHOR.LAST_NAME</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>
+	 * The column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * The table column <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>
+	 * The column <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>TEST.V_AUTHOR.ADDRESS</code>
+	 * The column <code>TEST.V_AUTHOR.ADDRESS</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> ADDRESS = createField("ADDRESS", org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE.getDataType(), this);
 
+	/**
+	 * Create a <code>TEST.V_AUTHOR</code> table reference
+	 */
 	public V_AUTHOR() {
 		super("V_AUTHOR", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.V_AUTHOR</code> table reference
+	 */
 	public V_AUTHOR(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR as(java.lang.String alias) {
 		return new org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR(alias);

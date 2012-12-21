@@ -12,35 +12,49 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_785_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The table column <code>TEST.T_785.ID</code>
+	 * Setter for <code>TEST.T_785.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_785.ID</code>
+	 * Getter for <code>TEST.T_785.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * The table column <code>TEST.T_785.NAME</code>
+	 * Setter for <code>TEST.T_785.NAME</code>. 
 	 */
 	public void setNAME(java.lang.String value);
 
 	/**
-	 * The table column <code>TEST.T_785.NAME</code>
+	 * Getter for <code>TEST.T_785.NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	public java.lang.String getNAME();
 
 	/**
-	 * The table column <code>TEST.T_785.VALUE</code>
+	 * Setter for <code>TEST.T_785.VALUE</code>. 
 	 */
 	public void setVALUE(java.lang.String value);
 
 	/**
-	 * The table column <code>TEST.T_785.VALUE</code>
+	 * Getter for <code>TEST.T_785.VALUE</code>. 
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	public java.lang.String getVALUE();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface T_785_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface T_785_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE> E into(E into);
 }

@@ -9,16 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.udt.u_author_type;
 @java.lang.SuppressWarnings("all")
 public class COUNT_BOOKS extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 573257465;
-
+	private static final long serialVersionUID = -1332659327;
 
 	/**
-	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.RETURN_VALUE</code>
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.SELF</code>
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS.SELF</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> SELF = createParameter("SELF", org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE.getDataType());
 
@@ -40,9 +39,7 @@ public class COUNT_BOOKS extends org.jooq.impl.AbstractRoutine<java.math.BigDeci
 	}
 
 	/**
-	 * Set the <code>SELF</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>SELF</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setSELF(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> field) {
 		setField(SELF, field);

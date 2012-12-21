@@ -14,51 +14,61 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_LANGUAGE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The language ISO code
+	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	public void setCD(java.lang.String value);
 
 	/**
-	 * The language ISO code
+	 * Getter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
 	public java.lang.String getCD();
 
 	/**
-	 * The language description
+	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	public void setDESCRIPTION(java.lang.String value);
 
 	/**
-	 * The language description
+	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
 	public java.lang.String getDESCRIPTION();
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public void setDESCRIPTION_ENGLISH(java.lang.String value);
 
 	/**
-	 * The table column <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
 	public java.lang.String getDESCRIPTION_ENGLISH();
 
 	/**
-	 * The language ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * The language ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface T_LANGUAGE_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface T_LANGUAGE_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE> E into(E into);
 }

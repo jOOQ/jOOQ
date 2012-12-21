@@ -9,36 +9,35 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_DEFAULT extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -605649016;
-
+	private static final long serialVersionUID = 939874210;
 
 	/**
-	 * The procedure parameter <code>TEST.P_DEFAULT.P_IN_NUMBER</code>
+	 * The parameter <code>TEST.P_DEFAULT.P_IN_NUMBER</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_IN_NUMBER = createParameter("P_IN_NUMBER", org.jooq.impl.SQLDataType.NUMERIC, true);
 
 	/**
-	 * The procedure parameter <code>TEST.P_DEFAULT.P_OUT_NUMBER</code>
+	 * The parameter <code>TEST.P_DEFAULT.P_OUT_NUMBER</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_OUT_NUMBER = createParameter("P_OUT_NUMBER", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_DEFAULT.P_IN_VARCHAR</code>
+	 * The parameter <code>TEST.P_DEFAULT.P_IN_VARCHAR</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("P_IN_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR, true);
 
 	/**
-	 * The procedure parameter <code>TEST.P_DEFAULT.P_OUT_VARCHAR</code>
+	 * The parameter <code>TEST.P_DEFAULT.P_OUT_VARCHAR</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("P_OUT_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The procedure parameter <code>TEST.P_DEFAULT.P_IN_DATE</code>
+	 * The parameter <code>TEST.P_DEFAULT.P_IN_DATE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Date> P_IN_DATE = createParameter("P_IN_DATE", org.jooq.impl.SQLDataType.DATE, true);
 
 	/**
-	 * The procedure parameter <code>TEST.P_DEFAULT.P_OUT_DATE</code>
+	 * The parameter <code>TEST.P_DEFAULT.P_OUT_DATE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.sql.Date> P_OUT_DATE = createParameter("P_OUT_DATE", org.jooq.impl.SQLDataType.DATE);
 

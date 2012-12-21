@@ -135,9 +135,4 @@ public class OracleDataType<T> {
     public static final DataType<BigInteger>   INT                    = new DefaultDataType<BigInteger>(SQLDialect.ORACLE, SQLDataType.DECIMAL_INTEGER, "int");
     public static final DataType<BigInteger>   SMALLINT               = new DefaultDataType<BigInteger>(SQLDialect.ORACLE, SQLDataType.DECIMAL_INTEGER, "smallint");
     public static final DataType<Boolean>      BOOLEAN                = new DefaultDataType<Boolean>(SQLDialect.ORACLE, SQLDataType.BOOLEAN, "boolean");
-
-    @Deprecated
-    public static DataType<Object> getDefaultDataType(String string) {
-        return DefaultDataType.getDefaultDataType(string);
-    }
 }

@@ -110,9 +110,4 @@ public class SQLiteDataType<T> {
     // -------------------------------------------------------------------------
 
     public static final DataType<Object>     NULL             = new DefaultDataType<Object>(SQLDialect.SQLITE, SQLDataType.OTHER, "null");
-
-    @Deprecated
-    public static DataType<Object> getDefaultDataType(String string) {
-        return DefaultDataType.getDefaultDataType(string);
-    }
 }

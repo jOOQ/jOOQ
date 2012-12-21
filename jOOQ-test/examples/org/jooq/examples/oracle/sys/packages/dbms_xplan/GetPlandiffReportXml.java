@@ -9,12 +9,12 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = 114609547;
+	private static final long serialVersionUID = -1720925395;
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.RETURN_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
+	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"));
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.GET_PLANDIFF_REPORT_XML.REPORT_REF</code>. 
@@ -35,7 +35,7 @@ public class GetPlandiffReportXml extends org.jooq.impl.AbstractRoutine<java.lan
 	 * Create a new routine call instance
 	 */
 	public GetPlandiffReportXml() {
-		super("GET_PLANDIFF_REPORT_XML", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"));
+		super("GET_PLANDIFF_REPORT_XML", org.jooq.examples.oracle.sys.Sys.SYS, org.jooq.examples.oracle.sys.packages.DbmsXplan.DBMS_XPLAN, org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(REPORT_REF);

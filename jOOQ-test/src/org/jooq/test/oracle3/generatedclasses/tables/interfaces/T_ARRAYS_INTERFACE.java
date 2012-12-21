@@ -12,62 +12,72 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_ARRAYS_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_ARRAYS.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_ARRAYS.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.STRING_ARRAY</code>
+	 * Setter for <code>TEST.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	public void setSTRING_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY value);
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.STRING_ARRAY</code>
+	 * Getter for <code>TEST.T_ARRAYS.STRING_ARRAY</code>. 
 	 */
 	@javax.persistence.Column(name = "STRING_ARRAY", length = 101)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY getSTRING_ARRAY();
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>
+	 * Setter for <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	public void setNUMBER_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY value);
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>
+	 * Getter for <code>TEST.T_ARRAYS.NUMBER_ARRAY</code>. 
 	 */
 	@javax.persistence.Column(name = "NUMBER_ARRAY", length = 109)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY getNUMBER_ARRAY();
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>
+	 * Setter for <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>. 
 	 */
 	public void setNUMBER_LONG_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY value);
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>
+	 * Getter for <code>TEST.T_ARRAYS.NUMBER_LONG_ARRAY</code>. 
 	 */
 	@javax.persistence.Column(name = "NUMBER_LONG_ARRAY", length = 109)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_LONG_ARRAY getNUMBER_LONG_ARRAY();
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.DATE_ARRAY</code>
+	 * Setter for <code>TEST.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	public void setDATE_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY value);
 
 	/**
-	 * The table column <code>TEST.T_ARRAYS.DATE_ARRAY</code>
+	 * Getter for <code>TEST.T_ARRAYS.DATE_ARRAY</code>. 
 	 */
 	@javax.persistence.Column(name = "DATE_ARRAY", length = 49)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY getDATE_ARRAY();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface T_ARRAYS_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface T_ARRAYS_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE> E into(E into);
 }

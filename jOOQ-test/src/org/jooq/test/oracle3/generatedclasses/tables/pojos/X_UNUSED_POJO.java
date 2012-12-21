@@ -15,7 +15,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 })
 public class X_UNUSED_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = 21197975;
+	private static final long serialVersionUID = 1123863048;
 
 	private java.lang.Integer    ID;
 	private java.lang.String     NAME;
@@ -208,5 +208,41 @@ public class X_UNUSED_POJO extends java.lang.ThreadDeath implements java.lang.Cl
 	@Override
 	public void setMS_UNUSED_NAME_REF(java.lang.String MS_UNUSED_NAME_REF) {
 		this.MS_UNUSED_NAME_REF = MS_UNUSED_NAME_REF;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE from) {
+		setID(from.getID());
+		setNAME(from.getNAME());
+		setBIG_INTEGER(from.getBIG_INTEGER());
+		setID_REF(from.getID_REF());
+		setCLASS(from.getCLASS());
+		setFIELDS(from.getFIELDS());
+		setCONFIGURATION(from.getCONFIGURATION());
+		setU_D_T(from.getU_D_T());
+		setMETA_DATA(from.getMETA_DATA());
+		setTYPE0(from.getTYPE0());
+		setPRIMARY_KEY(from.getPRIMARY_KEY());
+		setPRIMARYKEY(from.getPRIMARYKEY());
+		setNAME_REF(from.getNAME_REF());
+		setFIELD_737(from.getFIELD_737());
+		setMS_UNUSED_ID_REF(from.getMS_UNUSED_ID_REF());
+		setMS_UNUSED_NAME_REF(from.getMS_UNUSED_NAME_REF());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 305611316;
+	private static final long serialVersionUID = -476141590;
 
 	/**
-	 * The singleton instance of TEST.T_DIRECTORY
+	 * The singleton instance of <code>TEST.T_DIRECTORY</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY T_DIRECTORY = new org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY();
 
@@ -25,58 +25,66 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT PK_T_DIRECTORY_SELF
-	 * FOREIGN KEY (PARENT_ID)
-	 * REFERENCES TEST.T_DIRECTORY (ID)
-	 * </pre></code>
+	 * The column <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY, java.lang.Integer> PARENT_ID = createField("PARENT_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
+	 * The column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY, java.lang.Integer> IS_DIRECTORY = createField("IS_DIRECTORY", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.name</code>
+	 * The column <code>TEST.T_DIRECTORY.name</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY, java.lang.String> name = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>TEST.T_DIRECTORY</code> table reference
+	 */
 	public T_DIRECTORY() {
 		super("T_DIRECTORY", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.T_DIRECTORY</code> table reference
+	 */
 	public T_DIRECTORY(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> getMainKey() {
 		return org.jooq.test.oracle3.generatedclasses.Keys.PK_T_DIRECTORY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY>>asList(org.jooq.test.oracle3.generatedclasses.Keys.PK_T_DIRECTORY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY, ?>>asList(org.jooq.test.oracle3.generatedclasses.Keys.PK_T_DIRECTORY_SELF);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY as(java.lang.String alias) {
 		return new org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY(alias);

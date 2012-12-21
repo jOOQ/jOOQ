@@ -62,7 +62,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	/**
 	 * The column <code>dbo.DatabaseLog.XmlEvent</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.Object> XmlEvent = createField("XmlEvent", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog, java.lang.Object> XmlEvent = createField("XmlEvent", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * Create a <code>dbo.DatabaseLog</code> table reference

@@ -13,14 +13,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_UNUSED", schema = "TEST", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ID", "NAME"})
 })
-public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE {
+public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> implements java.lang.Cloneable, org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = -685837263;
+	private static final long serialVersionUID = 387341436;
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.X_UNUSED.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -28,9 +26,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.X_UNUSED.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
@@ -39,47 +35,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> fetchX_TEST_CASE_85List() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID)))
-			.and(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_NAME.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>TEST.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> fetchX_UNUSEDList() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID_REF.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID)))
-			.and(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>TEST.X_UNUSED.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69> fetchX_TEST_CASE_64_69List() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69.UNUSED_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>TEST.X_UNUSED.NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.X_UNUSED.NAME</code>. 
 	 */
 	@Override
 	public void setNAME(java.lang.String value) {
@@ -87,9 +43,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.X_UNUSED.NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
 	@Override
@@ -98,7 +52,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.BIG_INTEGER</code>
+	 * Setter for <code>TEST.X_UNUSED.BIG_INTEGER</code>. 
 	 */
 	@Override
 	public void setBIG_INTEGER(java.math.BigInteger value) {
@@ -106,7 +60,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.BIG_INTEGER</code>
+	 * Getter for <code>TEST.X_UNUSED.BIG_INTEGER</code>. 
 	 */
 	@javax.persistence.Column(name = "BIG_INTEGER", precision = 38)
 	@Override
@@ -115,13 +69,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.ID_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>TEST.X_UNUSED.ID_REF</code>. 
 	 */
 	@Override
 	public void setID_REF(java.lang.Integer value) {
@@ -129,13 +77,7 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.ID_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * Getter for <code>TEST.X_UNUSED.ID_REF</code>. 
 	 */
 	@javax.persistence.Column(name = "ID_REF", precision = 7)
 	@Override
@@ -144,13 +86,247 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.ID_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>TEST.X_UNUSED.CLASS</code>. 
+	 */
+	@Override
+	public void setCLASS(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CLASS, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.CLASS</code>. 
+	 */
+	@javax.persistence.Column(name = "CLASS", precision = 7)
+	@Override
+	public java.lang.Integer getCLASS() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CLASS);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.FIELDS</code>. 
+	 */
+	@Override
+	public void setFIELDS(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELDS, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.FIELDS</code>. 
+	 */
+	@javax.persistence.Column(name = "FIELDS", precision = 7)
+	@Override
+	public java.lang.Integer getFIELDS() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELDS);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.CONFIGURATION</code>. 
+	 */
+	@Override
+	public void setCONFIGURATION(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CONFIGURATION, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.CONFIGURATION</code>. 
+	 */
+	@javax.persistence.Column(name = "CONFIGURATION", precision = 7)
+	@Override
+	public java.lang.Integer getCONFIGURATION() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CONFIGURATION);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.U_D_T</code>. 
+	 */
+	@Override
+	public void setU_D_T(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.U_D_T, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.U_D_T</code>. 
+	 */
+	@javax.persistence.Column(name = "U_D_T", precision = 7)
+	@Override
+	public java.lang.Integer getU_D_T() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.U_D_T);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.META_DATA</code>. 
+	 */
+	@Override
+	public void setMETA_DATA(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.META_DATA, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.META_DATA</code>. 
+	 */
+	@javax.persistence.Column(name = "META_DATA", precision = 7)
+	@Override
+	public java.lang.Integer getMETA_DATA() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.META_DATA);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.TYPE0</code>. 
+	 */
+	@Override
+	public void setTYPE0(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.TYPE0, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.TYPE0</code>. 
+	 */
+	@javax.persistence.Column(name = "TYPE0", precision = 7)
+	@Override
+	public java.lang.Integer getTYPE0() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.TYPE0);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.PRIMARY_KEY</code>. 
+	 */
+	@Override
+	public void setPRIMARY_KEY(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARY_KEY, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.PRIMARY_KEY</code>. 
+	 */
+	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 7)
+	@Override
+	public java.lang.Integer getPRIMARY_KEY() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARY_KEY);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.PRIMARYKEY</code>. 
+	 */
+	@Override
+	public void setPRIMARYKEY(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARYKEY, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.PRIMARYKEY</code>. 
+	 */
+	@javax.persistence.Column(name = "PRIMARYKEY", precision = 7)
+	@Override
+	public java.lang.Integer getPRIMARYKEY() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARYKEY);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.NAME_REF</code>. 
+	 */
+	@Override
+	public void setNAME_REF(java.lang.String value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.NAME_REF</code>. 
+	 */
+	@javax.persistence.Column(name = "NAME_REF", length = 10)
+	@Override
+	public java.lang.String getNAME_REF() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.FIELD 737</code>. 
+	 */
+	@Override
+	public void setFIELD_737(java.math.BigDecimal value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELD_737, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.FIELD 737</code>. 
+	 */
+	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
+	@Override
+	public java.math.BigDecimal getFIELD_737() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELD_737);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>. 
+	 */
+	@Override
+	public void setMS_UNUSED_ID_REF(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_ID_REF, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>. 
+	 */
+	@javax.persistence.Column(name = "MS_UNUSED_ID_REF", precision = 7)
+	@Override
+	public java.lang.Integer getMS_UNUSED_ID_REF() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_ID_REF);
+	}
+
+	/**
+	 * Setter for <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>. 
+	 */
+	@Override
+	public void setMS_UNUSED_NAME_REF(java.lang.String value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_NAME_REF, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>. 
+	 */
+	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF", length = 10)
+	@Override
+	public java.lang.String getMS_UNUSED_NAME_REF() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_NAME_REF);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>TEST.X_TEST_CASE_85</code> referencing this <code>TEST.X_UNUSED</code>
+	 */
+	public org.jooq.Result<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> fetchX_TEST_CASE_85List() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID)))
+			.and(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_NAME.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a list of <code>TEST.X_UNUSED</code> referencing this <code>TEST.X_UNUSED</code>
+	 */
+	public org.jooq.Result<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> fetchX_UNUSEDList() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID_REF.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID)))
+			.and(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a list of <code>TEST.X_TEST_CASE_64_69</code> referencing this <code>TEST.X_UNUSED</code>
+	 */
+	public org.jooq.Result<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69> fetchX_TEST_CASE_64_69List() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69.UNUSED_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_UNUSED</code>
 	 */
 	public org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED fetchX_UNUSED() {
 		return create()
@@ -160,221 +336,333 @@ public class X_UNUSED extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.or
 			.fetchOne();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * The table column <code>TEST.X_UNUSED.CLASS</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCLASS(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CLASS, value);
+	public org.jooq.Record2<java.lang.Integer, java.lang.String> key() {
+		return (org.jooq.Record2) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record16 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14(), field15(), field16());
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.CLASS</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "CLASS", precision = 7)
 	@Override
-	public java.lang.Integer getCLASS() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CLASS);
+	public org.jooq.Row16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14(), value15(), value16());
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.FIELDS</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setFIELDS(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELDS, value);
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.FIELDS</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "FIELDS", precision = 7)
 	@Override
-	public java.lang.Integer getFIELDS() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELDS);
+	public org.jooq.Field<java.lang.String> field2() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.CONFIGURATION</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCONFIGURATION(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CONFIGURATION, value);
+	public org.jooq.Field<java.math.BigInteger> field3() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.BIG_INTEGER;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.CONFIGURATION</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "CONFIGURATION", precision = 7)
 	@Override
-	public java.lang.Integer getCONFIGURATION() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CONFIGURATION);
+	public org.jooq.Field<java.lang.Integer> field4() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID_REF;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.U_D_T</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setU_D_T(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.U_D_T, value);
+	public org.jooq.Field<java.lang.Integer> field5() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CLASS;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.U_D_T</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "U_D_T", precision = 7)
 	@Override
-	public java.lang.Integer getU_D_T() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.U_D_T);
+	public org.jooq.Field<java.lang.Integer> field6() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELDS;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.META_DATA</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setMETA_DATA(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.META_DATA, value);
+	public org.jooq.Field<java.lang.Integer> field7() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.CONFIGURATION;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.META_DATA</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "META_DATA", precision = 7)
 	@Override
-	public java.lang.Integer getMETA_DATA() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.META_DATA);
+	public org.jooq.Field<java.lang.Integer> field8() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.U_D_T;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.TYPE0</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setTYPE0(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.TYPE0, value);
+	public org.jooq.Field<java.lang.Integer> field9() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.META_DATA;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.TYPE0</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "TYPE0", precision = 7)
 	@Override
-	public java.lang.Integer getTYPE0() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.TYPE0);
+	public org.jooq.Field<java.lang.Integer> field10() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.TYPE0;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.PRIMARY_KEY</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPRIMARY_KEY(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARY_KEY, value);
+	public org.jooq.Field<java.lang.Integer> field11() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARY_KEY;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.PRIMARY_KEY</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 7)
 	@Override
-	public java.lang.Integer getPRIMARY_KEY() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARY_KEY);
+	public org.jooq.Field<java.lang.Integer> field12() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARYKEY;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.PRIMARYKEY</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPRIMARYKEY(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARYKEY, value);
+	public org.jooq.Field<java.lang.String> field13() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.PRIMARYKEY</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "PRIMARYKEY", precision = 7)
 	@Override
-	public java.lang.Integer getPRIMARYKEY() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.PRIMARYKEY);
+	public org.jooq.Field<java.math.BigDecimal> field14() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELD_737;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.NAME_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setNAME_REF(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF, value);
+	public org.jooq.Field<java.lang.Integer> field15() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_ID_REF;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.NAME_REF</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_UNUSED_SELF
-	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES TEST.X_UNUSED (ID, NAME)
-	 * </pre></code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "NAME_REF", length = 10)
 	@Override
-	public java.lang.String getNAME_REF() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME_REF);
+	public org.jooq.Field<java.lang.String> field16() {
+		return org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_NAME_REF;
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.FIELD 737</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setFIELD_737(java.math.BigDecimal value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELD_737, value);
+	public java.lang.Integer value1() {
+		return getID();
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.FIELD 737</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
 	@Override
-	public java.math.BigDecimal getFIELD_737() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.FIELD_737);
+	public java.lang.String value2() {
+		return getNAME();
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setMS_UNUSED_ID_REF(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_ID_REF, value);
+	public java.math.BigInteger value3() {
+		return getBIG_INTEGER();
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "MS_UNUSED_ID_REF", precision = 7)
 	@Override
-	public java.lang.Integer getMS_UNUSED_ID_REF() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_ID_REF);
+	public java.lang.Integer value4() {
+		return getID_REF();
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setMS_UNUSED_NAME_REF(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_NAME_REF, value);
+	public java.lang.Integer value5() {
+		return getCLASS();
 	}
 
 	/**
-	 * The table column <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF", length = 10)
 	@Override
-	public java.lang.String getMS_UNUSED_NAME_REF() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.MS_UNUSED_NAME_REF);
+	public java.lang.Integer value6() {
+		return getFIELDS();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value7() {
+		return getCONFIGURATION();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value8() {
+		return getU_D_T();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value9() {
+		return getMETA_DATA();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value10() {
+		return getTYPE0();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value11() {
+		return getPRIMARY_KEY();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value12() {
+		return getPRIMARYKEY();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value13() {
+		return getNAME_REF();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.math.BigDecimal value14() {
+		return getFIELD_737();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value15() {
+		return getMS_UNUSED_ID_REF();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value16() {
+		return getMS_UNUSED_NAME_REF();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE from) {
+		setID(from.getID());
+		setNAME(from.getNAME());
+		setBIG_INTEGER(from.getBIG_INTEGER());
+		setID_REF(from.getID_REF());
+		setCLASS(from.getCLASS());
+		setFIELDS(from.getFIELDS());
+		setCONFIGURATION(from.getCONFIGURATION());
+		setU_D_T(from.getU_D_T());
+		setMETA_DATA(from.getMETA_DATA());
+		setTYPE0(from.getTYPE0());
+		setPRIMARY_KEY(from.getPRIMARY_KEY());
+		setPRIMARYKEY(from.getPRIMARYKEY());
+		setNAME_REF(from.getNAME_REF());
+		setFIELD_737(from.getFIELD_737());
+		setMS_UNUSED_ID_REF(from.getMS_UNUSED_ID_REF());
+		setMS_UNUSED_NAME_REF(from.getMS_UNUSED_NAME_REF());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached X_UNUSED

@@ -9,16 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_ARRAYS4 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 170445544;
-
+	private static final long serialVersionUID = 1906310338;
 
 	/**
-	 * The procedure parameter <code>TEST.P_ARRAYS4.IN_ARRAY</code>
+	 * The parameter <code>TEST.P_ARRAYS4.IN_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY.class));
 
 	/**
-	 * The procedure parameter <code>TEST.P_ARRAYS4.OUT_ARRAY</code>
+	 * The parameter <code>TEST.P_ARRAYS4.OUT_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_ARRAY.class));
 

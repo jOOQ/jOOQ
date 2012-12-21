@@ -14,13 +14,27 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_BOOK_STORE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The books store name
+	 * Setter for <code>TEST.T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	public void setNAME(java.lang.String value);
 
 	/**
-	 * The books store name
+	 * Getter for <code>TEST.T_BOOK_STORE.NAME</code>. The books store name
 	 */
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
 	public java.lang.String getNAME();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface T_BOOK_STORE_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface T_BOOK_STORE_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE> E into(E into);
 }

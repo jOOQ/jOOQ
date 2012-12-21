@@ -9,10 +9,10 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1723858903;
+	private static final long serialVersionUID = -98831184;
 
 	/**
-	 * The singleton instance of x_test_case_85
+	 * The singleton instance of <code>x_test_case_85</code>
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85();
 
@@ -25,31 +25,17 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>x_test_case_85.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>x_test_case_85.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * The table column <code>x_test_case_85.x_unused_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES x_unused (ID)
-	 * </pre></code>
+	 * The column <code>x_test_case_85.x_unused_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * The table column <code>x_test_case_85.x_unused_name</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES x_unused (ID)
-	 * </pre></code>
+	 * The column <code>x_test_case_85.x_unused_name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR, X_TEST_CASE_85);
 
@@ -60,19 +46,26 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 		super("x_test_case_85");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record> getMainKey() {
 		return org.jooq.test.sqlite.generatedclasses.Keys.PK_X_TEST_CASE_85_ID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_X_TEST_CASE_85_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.sqlite.generatedclasses.Keys.FK_X_TEST_CASE_85_X_UNUSED_1);
 	}

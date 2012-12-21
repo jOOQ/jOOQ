@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639_NUMBERS_TABLE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE {
 
-	private static final long serialVersionUID = 989012505;
+	private static final long serialVersionUID = 1942934635;
 
 	private java.lang.Integer    ID;
 	private java.lang.Byte       BYTE;
@@ -145,5 +145,36 @@ public class T_639_NUMBERS_TABLE_POJO extends java.lang.ThreadDeath implements j
 	@Override
 	public void setBIG_DECIMAL(java.math.BigDecimal BIG_DECIMAL) {
 		this.BIG_DECIMAL = BIG_DECIMAL;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE from) {
+		setID(from.getID());
+		setBYTE(from.getBYTE());
+		setSHORT(from.getSHORT());
+		setINTEGER(from.getINTEGER());
+		setLONG(from.getLONG());
+		setBYTE_DECIMAL(from.getBYTE_DECIMAL());
+		setSHORT_DECIMAL(from.getSHORT_DECIMAL());
+		setINTEGER_DECIMAL(from.getINTEGER_DECIMAL());
+		setLONG_DECIMAL(from.getLONG_DECIMAL());
+		setBIG_INTEGER(from.getBIG_INTEGER());
+		setBIG_DECIMAL(from.getBIG_DECIMAL());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

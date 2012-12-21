@@ -11,10 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_785", schema = "TEST")
 public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_785> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE {
 
-	private static final long serialVersionUID = -1395074856;
+	private static final long serialVersionUID = -166617468;
 
 	/**
-	 * The table column <code>TEST.T_785.ID</code>
+	 * Setter for <code>TEST.T_785.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -22,7 +22,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.ID</code>
+	 * Getter for <code>TEST.T_785.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", precision = 7)
 	@Override
@@ -31,7 +31,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.NAME</code>
+	 * Setter for <code>TEST.T_785.NAME</code>. 
 	 */
 	@Override
 	public void setNAME(java.lang.String value) {
@@ -39,7 +39,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.NAME</code>
+	 * Getter for <code>TEST.T_785.NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	@Override
@@ -48,7 +48,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.VALUE</code>
+	 * Setter for <code>TEST.T_785.VALUE</code>. 
 	 */
 	@Override
 	public void setVALUE(java.lang.String value) {
@@ -56,7 +56,7 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * The table column <code>TEST.T_785.VALUE</code>
+	 * Getter for <code>TEST.T_785.VALUE</code>. 
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	@Override
@@ -64,12 +64,9 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_785.T_785.VALUE);
 	}
 
-	/**
-	 * Create a detached T_785
-	 */
-	public T_785() {
-		super(org.jooq.test.oracle3.generatedclasses.tables.T_785.T_785);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation
@@ -137,5 +134,39 @@ public class T_785 extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.g
 	@Override
 	public java.lang.String value3() {
 		return getVALUE();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE from) {
+		setID(from.getID());
+		setNAME(from.getNAME());
+		setVALUE(from.getVALUE());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_785_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_785
+	 */
+	public T_785() {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_785.T_785);
 	}
 }

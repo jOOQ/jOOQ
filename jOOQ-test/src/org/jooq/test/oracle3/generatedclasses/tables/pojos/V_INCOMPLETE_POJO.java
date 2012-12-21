@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = 1949243935;
+	private static final long serialVersionUID = 1444138623;
 
 	private java.lang.Object ID;
 	private java.lang.Object AUTHOR_ID;
@@ -120,5 +120,34 @@ public class V_INCOMPLETE_POJO extends java.lang.ThreadDeath implements java.lan
 	@Override
 	public void setCONTENT_PDF(java.lang.Object CONTENT_PDF) {
 		this.CONTENT_PDF = CONTENT_PDF;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE from) {
+		setID(from.getID());
+		setAUTHOR_ID(from.getAUTHOR_ID());
+		setCO_AUTHOR_ID(from.getCO_AUTHOR_ID());
+		setDETAILS_ID(from.getDETAILS_ID());
+		setTITLE(from.getTITLE());
+		setPUBLISHED_IN(from.getPUBLISHED_IN());
+		setLANGUAGE_ID(from.getLANGUAGE_ID());
+		setCONTENT_TEXT(from.getCONTENT_TEXT());
+		setCONTENT_PDF(from.getCONTENT_PDF());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

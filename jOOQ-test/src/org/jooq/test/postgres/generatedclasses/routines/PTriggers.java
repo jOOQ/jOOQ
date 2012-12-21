@@ -9,18 +9,18 @@ package org.jooq.test.postgres.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PTriggers extends org.jooq.impl.AbstractRoutine<java.lang.Object> {
 
-	private static final long serialVersionUID = -1955351553;
+	private static final long serialVersionUID = -1578307745;
 
 	/**
 	 * The parameter <code>public.p_triggers.RETURN_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.postgres.PostgresDataType.getDefaultDataType("trigger"));
+	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.DefaultDataType.getDefaultDataType("trigger"));
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PTriggers() {
-		super("p_triggers", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.util.postgres.PostgresDataType.getDefaultDataType("trigger"));
+		super("p_triggers", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.impl.DefaultDataType.getDefaultDataType("trigger"));
 
 		setReturnParameter(RETURN_VALUE);
 	}

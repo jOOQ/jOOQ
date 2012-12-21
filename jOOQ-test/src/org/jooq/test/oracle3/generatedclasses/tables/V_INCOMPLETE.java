@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class V_INCOMPLETE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 363037087;
+	private static final long serialVersionUID = 1086762845;
 
 	/**
-	 * The singleton instance of TEST.V_INCOMPLETE
+	 * The singleton instance of <code>TEST.V_INCOMPLETE</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE V_INCOMPLETE = new org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE();
 
@@ -25,85 +25,67 @@ public class V_INCOMPLETE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.
 	}
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> ID = createField("ID", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> ID = createField("ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> DETAILS_ID = createField("DETAILS_ID", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> TITLE = createField("TITLE", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> TITLE = createField("TITLE", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * The column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.util.oracle.OracleDataType.getDefaultDataType("UNDEFINED"), this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE, java.lang.Object> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.DefaultDataType.getDefaultDataType("UNDEFINED"), this);
 
+	/**
+	 * Create a <code>TEST.V_INCOMPLETE</code> table reference
+	 */
 	public V_INCOMPLETE() {
 		super("V_INCOMPLETE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.V_INCOMPLETE</code> table reference
+	 */
 	public V_INCOMPLETE(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE.V_INCOMPLETE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE as(java.lang.String alias) {
 		return new org.jooq.test.oracle3.generatedclasses.tables.V_INCOMPLETE(alias);

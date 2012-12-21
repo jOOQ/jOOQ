@@ -9,10 +9,10 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -2043421182;
+	private static final long serialVersionUID = 1623077439;
 
 	/**
-	 * The singleton instance of t_book_to_book_store
+	 * The singleton instance of <code>t_book_to_book_store</code>
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore();
 
@@ -25,33 +25,17 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES t_book_store (name)
-	 * </pre></code>
+	 * The column <code>t_book_to_book_store.book_store_name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * The table column <code>t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES t_book (ID)
-	 * </pre></code>
+	 * The column <code>t_book_to_book_store.book_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * The table column <code>t_book_to_book_store.stock</code>
+	 * The column <code>t_book_to_book_store.stock</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
@@ -62,19 +46,26 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 		super("t_book_to_book_store");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
 		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK_TO_BOOK_STORE_BOOK_STORE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK_TO_BOOK_STORE_BOOK_STORE_NAME, org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK_TO_BOOK_STORE_BOOK_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_TO_BOOK_STORE_T_BOOK_STORE_1, org.jooq.test.sqlite.generatedclasses.Keys.FK_T_BOOK_TO_BOOK_STORE_T_BOOK_1);
 	}

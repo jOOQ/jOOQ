@@ -122,7 +122,7 @@ public final class Tables {
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED X_UNUSED = org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

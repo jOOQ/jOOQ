@@ -9,10 +9,10 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 1754114767;
+	private static final long serialVersionUID = -559148120;
 
 	/**
-	 * The singleton instance of t_725_lob_test
+	 * The singleton instance of <code>t_725_lob_test</code>
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest();
 
@@ -25,14 +25,12 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>t_725_lob_test.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>t_725_lob_test.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_725_LOB_TEST);
 
 	/**
-	 * The table column <code>t_725_lob_test.LOB</code>
+	 * The column <code>t_725_lob_test.LOB</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.LONGVARBINARY, T_725_LOB_TEST);
 
@@ -43,13 +41,18 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 		super("t_725_lob_test");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord> getMainKey() {
 		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_725_LOB_TEST_ID;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_725_LOB_TEST_ID);
 	}

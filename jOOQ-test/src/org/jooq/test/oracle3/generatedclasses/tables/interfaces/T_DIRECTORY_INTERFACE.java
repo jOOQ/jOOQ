@@ -12,63 +12,61 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_DIRECTORY_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT PK_T_DIRECTORY_SELF
-	 * FOREIGN KEY (PARENT_ID)
-	 * REFERENCES TEST.T_DIRECTORY (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	public void setPARENT_ID(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT PK_T_DIRECTORY_SELF
-	 * FOREIGN KEY (PARENT_ID)
-	 * REFERENCES TEST.T_DIRECTORY (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
 	public java.lang.Integer getPARENT_ID();
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
+	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	public void setIS_DIRECTORY(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
+	 * Getter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	public java.lang.Integer getIS_DIRECTORY();
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.name</code>
+	 * Setter for <code>TEST.T_DIRECTORY.name</code>. 
 	 */
 	public void setname(java.lang.String value);
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.name</code>
+	 * Getter for <code>TEST.T_DIRECTORY.name</code>. 
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
 	public java.lang.String getname();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface T_DIRECTORY_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface T_DIRECTORY_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE> E into(E into);
 }

@@ -9,16 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F_TABLES1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -9875455;
-
+	private static final long serialVersionUID = 1349538137;
 
 	/**
-	 * The procedure parameter <code>TEST.F_TABLES1.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_TABLES1.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class));
 
 	/**
-	 * The procedure parameter <code>TEST.F_TABLES1.IN_TABLE</code>
+	 * The parameter <code>TEST.F_TABLES1.IN_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class));
 
@@ -40,9 +39,7 @@ public class F_TABLES1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracl
 	}
 
 	/**
-	 * Set the <code>IN_TABLE</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>IN_TABLE</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setIN_TABLE(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> field) {
 		setField(IN_TABLE, field);

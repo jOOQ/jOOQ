@@ -12,41 +12,39 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface X_TEST_CASE_71_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	public void setTEST_CASE_64_69_ID(java.lang.Short value);
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "TEST_CASE_64_69_ID", precision = 4)
 	public java.lang.Short getTEST_CASE_64_69_ID();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface X_TEST_CASE_71_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface X_TEST_CASE_71_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE> E into(E into);
 }

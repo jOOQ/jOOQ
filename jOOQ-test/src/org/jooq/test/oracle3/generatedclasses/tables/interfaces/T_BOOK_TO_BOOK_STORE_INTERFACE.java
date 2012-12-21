@@ -16,67 +16,49 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_BOOK_TO_BOOK_STORE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	public void setBOOK_STORE_NAME(java.lang.String value);
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	public java.lang.String getBOOK_STORE_NAME();
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES TEST.T_BOOK (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	public void setBOOK_ID(java.lang.Integer value);
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES TEST.T_BOOK (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	public java.lang.Integer getBOOK_ID();
 
 	/**
-	 * The number of books on stock
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	public void setSTOCK(java.lang.Integer value);
 
 	/**
-	 * The number of books on stock
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	@javax.persistence.Column(name = "STOCK", precision = 7)
 	public java.lang.Integer getSTOCK();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface T_BOOK_TO_BOOK_STORE_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface T_BOOK_TO_BOOK_STORE_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE> E into(E into);
 }

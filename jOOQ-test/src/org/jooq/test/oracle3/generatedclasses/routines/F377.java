@@ -9,8 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F377 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1212615763;
-
+	private static final long serialVersionUID = 526772863;
 
 	/**
 	 * Create a new routine call instance

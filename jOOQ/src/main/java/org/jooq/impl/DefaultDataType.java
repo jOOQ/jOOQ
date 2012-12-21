@@ -189,22 +189,22 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName);
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, 0, 0, 0);
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, 0, 0, 0);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
-        this(dialect, null, type, typeName, typeName);
+        this(dialect, null, type, typeName, typeName, 0, 0, 0);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
-        this(dialect, null, type, typeName, castTypeName);
+        this(dialect, null, type, typeName, castTypeName, 0, 0, 0);
     }
 
-    private DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName) {
+    private DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length) {
         this.dialect = dialect;
 
         // [#858] SQLDataTypes should reference themselves for more convenience
@@ -214,9 +214,9 @@ public class DefaultDataType<T> implements DataType<T> {
         this.castTypeName = castTypeName;
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
-        this.precision = 0;
-        this.scale = 0;
-        this.length = 0;
+        this.precision = precision;
+        this.scale = scale;
+        this.length = length;
 
         init();
     }
@@ -245,6 +245,74 @@ public class DefaultDataType<T> implements DataType<T> {
                 SQL_DATATYPES_BY_TYPE.put(type, this);
             }
         }
+    }
+
+    @Override
+    public final DataType<T> precision(int p) {
+        if (hasPrecision()) {
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, scale, length);
+        }
+
+        return this;
+    }
+
+    @Override
+    public final int precision() {
+        return precision;
+    }
+
+    @Override
+    public final boolean hasPrecision() {
+        return sqlDataType == SQLDataType.DECIMAL
+            || sqlDataType == SQLDataType.DECIMAL_INTEGER
+            || sqlDataType == SQLDataType.NUMERIC;
+    }
+
+    @Override
+    public final DataType<T> scale(int s) {
+        if (hasScale()) {
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length);
+        }
+
+        return this;
+    }
+
+    @Override
+    public final int scale() {
+        return scale;
+    }
+
+    @Override
+    public final boolean hasScale() {
+        return hasPrecision();
+    }
+
+    @Override
+    public final DataType<T> length(int l) {
+        if (hasLength()) {
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l);
+        }
+
+        return this;
+    }
+
+    @Override
+    public final int length() {
+        return length;
+    }
+
+    @Override
+    public final boolean hasLength() {
+        return sqlDataType == SQLDataType.BINARY
+            || sqlDataType == SQLDataType.BIT
+            || sqlDataType == SQLDataType.CHAR
+            || sqlDataType == SQLDataType.LONGNVARCHAR
+            || sqlDataType == SQLDataType.LONGVARBINARY
+            || sqlDataType == SQLDataType.LONGVARCHAR
+            || sqlDataType == SQLDataType.NCHAR
+            || sqlDataType == SQLDataType.NVARCHAR
+            || sqlDataType == SQLDataType.VARBINARY
+            || sqlDataType == SQLDataType.VARCHAR;
     }
 
     @Override
@@ -437,12 +505,12 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final <A extends ArrayRecord<T>> DataType<A> asArrayDataType(Class<A> arrayDataType) {
-        return new DefaultDataType<A>(dialect, null, arrayDataType, typeName, castTypeName);
+        return new DefaultDataType<A>(dialect, arrayDataType, typeName, castTypeName);
     }
 
     @Override
     public final <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType) {
-        return new DefaultDataType<E>(dialect, null, enumDataType, typeName, castTypeName);
+        return new DefaultDataType<E>(dialect, enumDataType, typeName, castTypeName);
     }
 
     @Override
@@ -481,11 +549,11 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static DataType<Object> getDefaultDataType(String typeName) {
-        return new DefaultDataType<Object>(SQLDialect.SQL99, null, Object.class, typeName, typeName);
+        return new DefaultDataType<Object>(SQLDialect.SQL99, Object.class, typeName, typeName);
     }
 
     public static DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {
-        return new DefaultDataType<Object>(dialect, null, Object.class, typeName, typeName);
+        return new DefaultDataType<Object>(dialect, Object.class, typeName, typeName);
     }
 
     public static DataType<?> getDataType(SQLDialect dialect, String typeName) {

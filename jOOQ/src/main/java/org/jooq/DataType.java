@@ -182,6 +182,79 @@ public interface DataType<T> extends Serializable {
     List<T> convert(Collection<?> objects);
 
     /**
+     * Return a new data type like this, with a new precision value
+     * <p>
+     * This will have no effect if {@link #hasPrecision()} is <code>false</code>
+     *
+     * @param precision The new precision value
+     * @return The new data type
+     */
+    DataType<T> precision(int precision);
+
+    /**
+     * Get the precision of this data type
+     *
+     * @return The precision of this data type
+     */
+    int precision();
+
+    /**
+     * Whether this data type has a precision
+     *
+     * @return Whether this data type has a precision
+     */
+    boolean hasPrecision();
+
+    /**
+     * Return a new data type like this, with a new scale value
+     * <p>
+     * This will have no effect if {@link #hasScale()} is <code>false</code>
+     *
+     * @param scale The new scale value
+     * @return The new data type
+     */
+    DataType<T> scale(int scale);
+
+    /**
+     * Get the scale of this data type
+     *
+     * @return The scale of this data type
+     */
+    int scale();
+
+    /**
+     * Whether this data type has a scale
+     *
+     * @return Whether this data type has a scale
+     */
+    boolean hasScale();
+
+    /**
+     * Return a new data type like this, with a new length value
+     * <p>
+     * This will have no effect if {@link #hasLength()} is <code>false</code>
+     *
+     * @param length The new length value
+     * @return The new data type
+     */
+    DataType<T> length(int length);
+
+    /**
+     * Get the length of this data type
+     *
+     * @return The length of this data type
+     */
+    int length();
+
+    /**
+     * Whether this data type has a length
+     *
+     * @return Whether this data type has a length
+     */
+    boolean hasLength();
+
+
+    /**
      * Whether this data type is any numeric data type.
      * <p>
      * This applies to any of these types:

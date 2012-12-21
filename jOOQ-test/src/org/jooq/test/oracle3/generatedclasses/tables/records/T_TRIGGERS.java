@@ -11,12 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
 public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE {
 
-	private static final long serialVersionUID = -2034221467;
+	private static final long serialVersionUID = -1198549670;
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@Override
 	public void setID_GENERATED(java.lang.Integer value) {
@@ -24,9 +22,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID_GENERATED</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)
@@ -36,7 +32,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID</code>
+	 * Setter for <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -44,7 +40,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.ID</code>
+	 * Getter for <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	@Override
@@ -53,7 +49,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.COUNTER</code>
+	 * Setter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
 	@Override
 	public void setCOUNTER(java.lang.Integer value) {
@@ -61,7 +57,7 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	}
 
 	/**
-	 * The table column <code>TEST.T_TRIGGERS.COUNTER</code>
+	 * Getter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
 	@javax.persistence.Column(name = "COUNTER", nullable = false, precision = 7)
 	@Override
@@ -69,11 +65,20 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS.COUNTER);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached T_TRIGGERS
+	 * {@inheritDoc}
 	 */
-	public T_TRIGGERS() {
-		super(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -142,5 +147,39 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.Integer value3() {
 		return getCOUNTER();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE from) {
+		setID_GENERATED(from.getID_GENERATED());
+		setID(from.getID());
+		setCOUNTER(from.getCOUNTER());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_TRIGGERS_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_TRIGGERS
+	 */
+	public T_TRIGGERS() {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS);
 	}
 }

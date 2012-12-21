@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_LIBRARY", schema = "TEST")
 public class V_LIBRARY_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = -790495011;
+	private static final long serialVersionUID = -672162770;
 
 	private java.lang.String AUTHOR;
 	private java.lang.String TITLE;
@@ -36,5 +36,27 @@ public class V_LIBRARY_POJO extends java.lang.ThreadDeath implements java.lang.C
 	@Override
 	public void setTITLE(java.lang.String TITLE) {
 		this.TITLE = TITLE;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_LIBRARY_INTERFACE from) {
+		setAUTHOR(from.getAUTHOR());
+		setTITLE(from.getTITLE());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_LIBRARY_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

@@ -9,41 +9,17 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -629459474;
+	private static final long serialVersionUID = 1339510094;
 
 	/**
-	 * The table column <code>t_986_2.REF</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_986_2_X_UNUSED_1
-	 * FOREIGN KEY (REF)
-	 * REFERENCES x_unused (ID)
-	 * </pre></code>
+	 * Setter for <code>t_986_2.REF</code>. 
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.REF, value);
 	}
 
 	/**
-	 * The table column <code>t_986_2.REF</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_986_2_X_UNUSED_1
-	 * FOREIGN KEY (REF)
-	 * REFERENCES x_unused (ID)
-	 * </pre></code>
-	 */
-	public java.lang.Integer getRef() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.REF);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord 
-	 * XUnusedRecord}
+	 * Link this record to a given {@link org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord}
 	 */
 	public void setRef(org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord value) {
 		if (value == null) {
@@ -55,15 +31,18 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * The table column <code>t_986_2.REF</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_986_2_X_UNUSED_1
-	 * FOREIGN KEY (REF)
-	 * REFERENCES x_unused (ID)
-	 * </pre></code>
+	 * Getter for <code>t_986_2.REF</code>. 
+	 */
+	public java.lang.Integer getRef() {
+		return getValue(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.REF);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>x_unused</code> referenced by this <code>t_986_2</code>
 	 */
 	public org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
@@ -72,11 +51,16 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 			.fetchOne();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached T_986_2Record
+	 * {@inheritDoc}
 	 */
-	public T_986_2Record() {
-		super(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.T_986_2);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -113,5 +97,16 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Integer value1() {
 		return getRef();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_986_2Record
+	 */
+	public T_986_2Record() {
+		super(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.T_986_2);
 	}
 }

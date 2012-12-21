@@ -37,12 +37,12 @@ public class ProductModel extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	/**
 	 * The column <code>Production.ProductModel.CatalogDescription</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModel, java.lang.Object> CatalogDescription = createField("CatalogDescription", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModel, java.lang.Object> CatalogDescription = createField("CatalogDescription", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * The column <code>Production.ProductModel.Instructions</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModel, java.lang.Object> Instructions = createField("Instructions", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModel, java.lang.Object> Instructions = createField("Instructions", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * The column <code>Production.ProductModel.rowguid</code>. 

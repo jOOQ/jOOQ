@@ -9,2011 +9,2010 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1590486114;
-
+	private static final long serialVersionUID = 398384577;
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F000</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F000</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F000 = createParameter("F000", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F001</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F001</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F001 = createParameter("F001", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F002</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F002</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F002 = createParameter("F002", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F003</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F003</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F003 = createParameter("F003", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F004</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F004</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F004 = createParameter("F004", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F005</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F005</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F005 = createParameter("F005", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F006</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F006</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F006 = createParameter("F006", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F007</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F007</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F007 = createParameter("F007", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F008</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F008</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F008 = createParameter("F008", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F009</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F009</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F009 = createParameter("F009", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F010</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F010</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F010 = createParameter("F010", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F011</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F011</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F011 = createParameter("F011", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F012</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F012</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F012 = createParameter("F012", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F013</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F013</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F013 = createParameter("F013", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F014</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F014</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F014 = createParameter("F014", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F015</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F015</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F015 = createParameter("F015", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F016</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F016</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F016 = createParameter("F016", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F017</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F017</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F017 = createParameter("F017", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F018</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F018</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F018 = createParameter("F018", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F019</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F019</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F019 = createParameter("F019", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F020</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F020</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F020 = createParameter("F020", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F021</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F021</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F021 = createParameter("F021", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F022</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F022</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F022 = createParameter("F022", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F023</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F023</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F023 = createParameter("F023", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F024</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F024</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F024 = createParameter("F024", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F025</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F025</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F025 = createParameter("F025", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F026</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F026</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F026 = createParameter("F026", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F027</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F027</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F027 = createParameter("F027", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F028</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F028</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F028 = createParameter("F028", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F029</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F029</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F029 = createParameter("F029", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F030</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F030</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F030 = createParameter("F030", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F031</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F031</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F031 = createParameter("F031", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F032</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F032</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F032 = createParameter("F032", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F033</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F033</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F033 = createParameter("F033", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F034</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F034</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F034 = createParameter("F034", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F035</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F035</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F035 = createParameter("F035", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F036</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F036</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F036 = createParameter("F036", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F037</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F037</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F037 = createParameter("F037", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F038</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F038</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F038 = createParameter("F038", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F039</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F039</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F039 = createParameter("F039", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F040</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F040</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F040 = createParameter("F040", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F041</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F041</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F041 = createParameter("F041", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F042</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F042</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F042 = createParameter("F042", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F043</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F043</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F043 = createParameter("F043", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F044</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F044</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F044 = createParameter("F044", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F045</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F045</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F045 = createParameter("F045", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F046</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F046</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F046 = createParameter("F046", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F047</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F047</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F047 = createParameter("F047", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F048</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F048</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F048 = createParameter("F048", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F049</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F049</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F049 = createParameter("F049", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F050</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F050</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F050 = createParameter("F050", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F051</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F051</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F051 = createParameter("F051", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F052</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F052</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F052 = createParameter("F052", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F053</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F053</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F053 = createParameter("F053", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F054</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F054</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F054 = createParameter("F054", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F055</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F055</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F055 = createParameter("F055", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F056</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F056</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F056 = createParameter("F056", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F057</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F057</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F057 = createParameter("F057", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F058</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F058</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F058 = createParameter("F058", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F059</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F059</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F059 = createParameter("F059", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F060</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F060</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F060 = createParameter("F060", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F061</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F061</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F061 = createParameter("F061", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F062</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F062</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F062 = createParameter("F062", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F063</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F063</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F063 = createParameter("F063", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F064</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F064</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F064 = createParameter("F064", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F065</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F065</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F065 = createParameter("F065", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F066</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F066</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F066 = createParameter("F066", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F067</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F067</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F067 = createParameter("F067", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F068</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F068</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F068 = createParameter("F068", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F069</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F069</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F069 = createParameter("F069", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F070</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F070</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F070 = createParameter("F070", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F071</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F071</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F071 = createParameter("F071", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F072</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F072</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F072 = createParameter("F072", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F073</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F073</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F073 = createParameter("F073", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F074</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F074</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F074 = createParameter("F074", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F075</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F075</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F075 = createParameter("F075", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F076</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F076</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F076 = createParameter("F076", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F077</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F077</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F077 = createParameter("F077", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F078</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F078</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F078 = createParameter("F078", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F079</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F079</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F079 = createParameter("F079", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F080</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F080</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F080 = createParameter("F080", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F081</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F081</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F081 = createParameter("F081", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F082</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F082</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F082 = createParameter("F082", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F083</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F083</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F083 = createParameter("F083", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F084</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F084</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F084 = createParameter("F084", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F085</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F085</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F085 = createParameter("F085", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F086</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F086</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F086 = createParameter("F086", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F087</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F087</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F087 = createParameter("F087", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F088</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F088</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F088 = createParameter("F088", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F089</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F089</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F089 = createParameter("F089", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F090</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F090</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F090 = createParameter("F090", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F091</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F091</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F091 = createParameter("F091", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F092</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F092</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F092 = createParameter("F092", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F093</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F093</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F093 = createParameter("F093", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F094</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F094</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F094 = createParameter("F094", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F095</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F095</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F095 = createParameter("F095", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F096</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F096</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F096 = createParameter("F096", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F097</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F097</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F097 = createParameter("F097", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F098</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F098</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F098 = createParameter("F098", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F099</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F099</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F099 = createParameter("F099", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F100</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F100</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F100 = createParameter("F100", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F101</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F101</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F101 = createParameter("F101", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F102</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F102</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F102 = createParameter("F102", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F103</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F103</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F103 = createParameter("F103", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F104</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F104</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F104 = createParameter("F104", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F105</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F105</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F105 = createParameter("F105", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F106</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F106</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F106 = createParameter("F106", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F107</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F107</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F107 = createParameter("F107", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F108</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F108</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F108 = createParameter("F108", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F109</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F109</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F109 = createParameter("F109", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F110</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F110</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F110 = createParameter("F110", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F111</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F111</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F111 = createParameter("F111", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F112</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F112</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F112 = createParameter("F112", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F113</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F113</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F113 = createParameter("F113", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F114</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F114</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F114 = createParameter("F114", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F115</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F115</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F115 = createParameter("F115", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F116</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F116</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F116 = createParameter("F116", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F117</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F117</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F117 = createParameter("F117", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F118</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F118</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F118 = createParameter("F118", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F119</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F119</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F119 = createParameter("F119", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F120</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F120</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F120 = createParameter("F120", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F121</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F121</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F121 = createParameter("F121", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F122</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F122</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F122 = createParameter("F122", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F123</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F123</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F123 = createParameter("F123", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F124</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F124</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F124 = createParameter("F124", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F125</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F125</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F125 = createParameter("F125", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F126</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F126</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F126 = createParameter("F126", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F127</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F127</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F127 = createParameter("F127", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F128</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F128</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F128 = createParameter("F128", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F129</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F129</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F129 = createParameter("F129", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F130</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F130</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F130 = createParameter("F130", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F131</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F131</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F131 = createParameter("F131", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F132</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F132</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F132 = createParameter("F132", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F133</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F133</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F133 = createParameter("F133", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F134</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F134</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F134 = createParameter("F134", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F135</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F135</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F135 = createParameter("F135", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F136</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F136</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F136 = createParameter("F136", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F137</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F137</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F137 = createParameter("F137", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F138</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F138</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F138 = createParameter("F138", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F139</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F139</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F139 = createParameter("F139", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F140</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F140</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F140 = createParameter("F140", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F141</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F141</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F141 = createParameter("F141", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F142</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F142</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F142 = createParameter("F142", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F143</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F143</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F143 = createParameter("F143", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F144</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F144</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F144 = createParameter("F144", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F145</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F145</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F145 = createParameter("F145", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F146</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F146</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F146 = createParameter("F146", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F147</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F147</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F147 = createParameter("F147", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F148</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F148</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F148 = createParameter("F148", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F149</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F149</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F149 = createParameter("F149", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F150</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F150</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F150 = createParameter("F150", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F151</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F151</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F151 = createParameter("F151", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F152</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F152</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F152 = createParameter("F152", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F153</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F153</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F153 = createParameter("F153", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F154</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F154</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F154 = createParameter("F154", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F155</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F155</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F155 = createParameter("F155", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F156</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F156</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F156 = createParameter("F156", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F157</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F157</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F157 = createParameter("F157", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F158</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F158</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F158 = createParameter("F158", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F159</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F159</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F159 = createParameter("F159", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F160</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F160</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F160 = createParameter("F160", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F161</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F161</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F161 = createParameter("F161", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F162</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F162</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F162 = createParameter("F162", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F163</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F163</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F163 = createParameter("F163", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F164</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F164</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F164 = createParameter("F164", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F165</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F165</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F165 = createParameter("F165", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F166</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F166</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F166 = createParameter("F166", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F167</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F167</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F167 = createParameter("F167", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F168</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F168</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F168 = createParameter("F168", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F169</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F169</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F169 = createParameter("F169", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F170</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F170</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F170 = createParameter("F170", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F171</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F171</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F171 = createParameter("F171", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F172</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F172</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F172 = createParameter("F172", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F173</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F173</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F173 = createParameter("F173", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F174</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F174</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F174 = createParameter("F174", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F175</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F175</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F175 = createParameter("F175", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F176</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F176</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F176 = createParameter("F176", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F177</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F177</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F177 = createParameter("F177", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F178</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F178</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F178 = createParameter("F178", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F179</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F179</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F179 = createParameter("F179", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F180</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F180</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F180 = createParameter("F180", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F181</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F181</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F181 = createParameter("F181", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F182</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F182</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F182 = createParameter("F182", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F183</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F183</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F183 = createParameter("F183", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F184</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F184</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F184 = createParameter("F184", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F185</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F185</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F185 = createParameter("F185", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F186</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F186</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F186 = createParameter("F186", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F187</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F187</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F187 = createParameter("F187", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F188</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F188</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F188 = createParameter("F188", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F189</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F189</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F189 = createParameter("F189", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F190</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F190</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F190 = createParameter("F190", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F191</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F191</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F191 = createParameter("F191", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F192</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F192</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F192 = createParameter("F192", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F193</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F193</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F193 = createParameter("F193", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F194</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F194</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F194 = createParameter("F194", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F195</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F195</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F195 = createParameter("F195", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F196</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F196</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F196 = createParameter("F196", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F197</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F197</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F197 = createParameter("F197", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F198</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F198</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F198 = createParameter("F198", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F199</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F199</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F199 = createParameter("F199", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F200</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F200</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F200 = createParameter("F200", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F201</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F201</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F201 = createParameter("F201", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F202</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F202</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F202 = createParameter("F202", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F203</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F203</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F203 = createParameter("F203", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F204</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F204</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F204 = createParameter("F204", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F205</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F205</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F205 = createParameter("F205", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F206</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F206</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F206 = createParameter("F206", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F207</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F207</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F207 = createParameter("F207", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F208</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F208</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F208 = createParameter("F208", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F209</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F209</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F209 = createParameter("F209", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F210</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F210</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F210 = createParameter("F210", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F211</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F211</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F211 = createParameter("F211", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F212</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F212</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F212 = createParameter("F212", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F213</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F213</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F213 = createParameter("F213", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F214</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F214</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F214 = createParameter("F214", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F215</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F215</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F215 = createParameter("F215", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F216</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F216</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F216 = createParameter("F216", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F217</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F217</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F217 = createParameter("F217", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F218</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F218</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F218 = createParameter("F218", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F219</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F219</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F219 = createParameter("F219", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F220</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F220</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F220 = createParameter("F220", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F221</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F221</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F221 = createParameter("F221", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F222</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F222</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F222 = createParameter("F222", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F223</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F223</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F223 = createParameter("F223", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F224</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F224</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F224 = createParameter("F224", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F225</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F225</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F225 = createParameter("F225", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F226</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F226</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F226 = createParameter("F226", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F227</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F227</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F227 = createParameter("F227", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F228</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F228</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F228 = createParameter("F228", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F229</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F229</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F229 = createParameter("F229", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F230</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F230</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F230 = createParameter("F230", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F231</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F231</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F231 = createParameter("F231", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F232</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F232</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F232 = createParameter("F232", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F233</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F233</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F233 = createParameter("F233", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F234</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F234</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F234 = createParameter("F234", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F235</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F235</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F235 = createParameter("F235", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F236</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F236</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F236 = createParameter("F236", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F237</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F237</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F237 = createParameter("F237", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F238</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F238</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F238 = createParameter("F238", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F239</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F239</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F239 = createParameter("F239", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F240</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F240</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F240 = createParameter("F240", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F241</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F241</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F241 = createParameter("F241", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F242</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F242</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F242 = createParameter("F242", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F243</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F243</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F243 = createParameter("F243", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F244</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F244</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F244 = createParameter("F244", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F245</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F245</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F245 = createParameter("F245", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F246</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F246</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F246 = createParameter("F246", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F247</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F247</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F247 = createParameter("F247", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F248</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F248</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F248 = createParameter("F248", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F249</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F249</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F249 = createParameter("F249", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F250</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F250</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F250 = createParameter("F250", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F251</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F251</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F251 = createParameter("F251", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F252</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F252</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F252 = createParameter("F252", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F253</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F253</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F253 = createParameter("F253", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F254</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F254</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F254 = createParameter("F254", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F255</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F255</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F255 = createParameter("F255", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F256</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F256</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F256 = createParameter("F256", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F257</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F257</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F257 = createParameter("F257", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F258</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F258</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F258 = createParameter("F258", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F259</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F259</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F259 = createParameter("F259", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F260</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F260</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F260 = createParameter("F260", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F261</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F261</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F261 = createParameter("F261", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F262</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F262</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F262 = createParameter("F262", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F263</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F263</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F263 = createParameter("F263", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F264</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F264</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F264 = createParameter("F264", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F265</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F265</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F265 = createParameter("F265", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F266</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F266</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F266 = createParameter("F266", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F267</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F267</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F267 = createParameter("F267", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F268</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F268</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F268 = createParameter("F268", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F269</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F269</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F269 = createParameter("F269", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F270</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F270</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F270 = createParameter("F270", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F271</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F271</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F271 = createParameter("F271", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F272</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F272</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F272 = createParameter("F272", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F273</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F273</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F273 = createParameter("F273", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F274</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F274</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F274 = createParameter("F274", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F275</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F275</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F275 = createParameter("F275", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F276</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F276</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F276 = createParameter("F276", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F277</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F277</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F277 = createParameter("F277", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F278</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F278</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F278 = createParameter("F278", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F279</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F279</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F279 = createParameter("F279", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F280</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F280</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F280 = createParameter("F280", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F281</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F281</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F281 = createParameter("F281", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F282</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F282</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F282 = createParameter("F282", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F283</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F283</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F283 = createParameter("F283", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F284</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F284</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F284 = createParameter("F284", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F285</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F285</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F285 = createParameter("F285", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F286</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F286</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F286 = createParameter("F286", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F287</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F287</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F287 = createParameter("F287", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F288</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F288</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F288 = createParameter("F288", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F289</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F289</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F289 = createParameter("F289", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F290</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F290</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F290 = createParameter("F290", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F291</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F291</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F291 = createParameter("F291", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F292</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F292</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F292 = createParameter("F292", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F293</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F293</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F293 = createParameter("F293", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F294</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F294</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F294 = createParameter("F294", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F295</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F295</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F295 = createParameter("F295", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F296</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F296</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F296 = createParameter("F296", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F297</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F297</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F297 = createParameter("F297", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F298</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F298</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F298 = createParameter("F298", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F299</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F299</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F299 = createParameter("F299", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F300</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F300</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F300 = createParameter("F300", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F301</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F301</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F301 = createParameter("F301", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F302</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F302</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F302 = createParameter("F302", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F303</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F303</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F303 = createParameter("F303", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F304</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F304</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F304 = createParameter("F304", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F305</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F305</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F305 = createParameter("F305", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F306</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F306</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F306 = createParameter("F306", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F307</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F307</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F307 = createParameter("F307", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F308</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F308</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F308 = createParameter("F308", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F309</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F309</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F309 = createParameter("F309", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F310</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F310</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F310 = createParameter("F310", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F311</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F311</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F311 = createParameter("F311", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F312</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F312</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F312 = createParameter("F312", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F313</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F313</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F313 = createParameter("F313", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F314</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F314</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F314 = createParameter("F314", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F315</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F315</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F315 = createParameter("F315", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F316</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F316</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F316 = createParameter("F316", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F317</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F317</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F317 = createParameter("F317", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F318</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F318</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F318 = createParameter("F318", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F319</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F319</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F319 = createParameter("F319", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F320</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F320</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F320 = createParameter("F320", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F321</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F321</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F321 = createParameter("F321", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F322</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F322</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F322 = createParameter("F322", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F323</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F323</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F323 = createParameter("F323", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F324</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F324</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F324 = createParameter("F324", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F325</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F325</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F325 = createParameter("F325", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F326</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F326</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F326 = createParameter("F326", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F327</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F327</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F327 = createParameter("F327", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F328</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F328</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F328 = createParameter("F328", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F329</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F329</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F329 = createParameter("F329", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F330</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F330</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F330 = createParameter("F330", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F331</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F331</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F331 = createParameter("F331", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F332</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F332</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F332 = createParameter("F332", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F333</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F333</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F333 = createParameter("F333", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F334</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F334</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F334 = createParameter("F334", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F335</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F335</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F335 = createParameter("F335", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F336</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F336</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F336 = createParameter("F336", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F337</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F337</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F337 = createParameter("F337", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F338</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F338</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F338 = createParameter("F338", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F339</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F339</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F339 = createParameter("F339", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F340</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F340</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F340 = createParameter("F340", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F341</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F341</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F341 = createParameter("F341", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F342</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F342</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F342 = createParameter("F342", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F343</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F343</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F343 = createParameter("F343", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F344</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F344</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F344 = createParameter("F344", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F345</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F345</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F345 = createParameter("F345", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F346</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F346</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F346 = createParameter("F346", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F347</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F347</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F347 = createParameter("F347", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F348</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F348</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F348 = createParameter("F348", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F349</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F349</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F349 = createParameter("F349", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F350</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F350</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F350 = createParameter("F350", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F351</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F351</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F351 = createParameter("F351", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F352</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F352</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F352 = createParameter("F352", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F353</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F353</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F353 = createParameter("F353", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F354</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F354</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F354 = createParameter("F354", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F355</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F355</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F355 = createParameter("F355", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F356</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F356</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F356 = createParameter("F356", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F357</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F357</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F357 = createParameter("F357", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F358</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F358</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F358 = createParameter("F358", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F359</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F359</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F359 = createParameter("F359", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F360</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F360</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F360 = createParameter("F360", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F361</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F361</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F361 = createParameter("F361", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F362</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F362</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F362 = createParameter("F362", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F363</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F363</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F363 = createParameter("F363", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F364</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F364</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F364 = createParameter("F364", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F365</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F365</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F365 = createParameter("F365", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F366</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F366</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F366 = createParameter("F366", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F367</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F367</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F367 = createParameter("F367", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F368</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F368</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F368 = createParameter("F368", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F369</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F369</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F369 = createParameter("F369", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F370</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F370</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F370 = createParameter("F370", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F371</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F371</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F371 = createParameter("F371", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F372</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F372</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F372 = createParameter("F372", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F373</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F373</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F373 = createParameter("F373", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F374</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F374</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F374 = createParameter("F374", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F375</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F375</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F375 = createParameter("F375", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F376</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F376</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F376 = createParameter("F376", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F377</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F377</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F377 = createParameter("F377", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F378</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F378</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F378 = createParameter("F378", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F379</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F379</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F379 = createParameter("F379", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F380</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F380</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F380 = createParameter("F380", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F381</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F381</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F381 = createParameter("F381", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F382</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F382</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F382 = createParameter("F382", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F383</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F383</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F383 = createParameter("F383", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F384</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F384</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F384 = createParameter("F384", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F385</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F385</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F385 = createParameter("F385", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F386</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F386</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F386 = createParameter("F386", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F387</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F387</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F387 = createParameter("F387", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F388</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F388</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F388 = createParameter("F388", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F389</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F389</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F389 = createParameter("F389", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F390</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F390</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F390 = createParameter("F390", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F391</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F391</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F391 = createParameter("F391", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F392</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F392</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F392 = createParameter("F392", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F393</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F393</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F393 = createParameter("F393", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F394</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F394</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F394 = createParameter("F394", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F395</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F395</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F395 = createParameter("F395", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F396</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F396</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F396 = createParameter("F396", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F397</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F397</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F397 = createParameter("F397", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F398</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F398</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F398 = createParameter("F398", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.F_MANY_PARAMETERS.F399</code>
+	 * The parameter <code>TEST.F_MANY_PARAMETERS.F399</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> F399 = createParameter("F399", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -2434,9 +2433,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F000</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F000</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF000(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F000, field);
@@ -2450,9 +2447,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F001</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F001</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF001(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F001, field);
@@ -2466,9 +2461,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F002</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F002</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF002(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F002, field);
@@ -2482,9 +2475,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F003</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F003</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF003(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F003, field);
@@ -2498,9 +2489,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F004</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F004</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF004(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F004, field);
@@ -2514,9 +2503,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F005</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F005</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF005(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F005, field);
@@ -2530,9 +2517,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F006</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F006</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF006(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F006, field);
@@ -2546,9 +2531,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F007</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F007</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF007(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F007, field);
@@ -2562,9 +2545,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F008</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F008</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF008(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F008, field);
@@ -2578,9 +2559,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F009</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F009</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF009(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F009, field);
@@ -2594,9 +2573,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F010</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F010</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF010(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F010, field);
@@ -2610,9 +2587,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F011</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F011</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF011(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F011, field);
@@ -2626,9 +2601,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F012</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F012</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF012(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F012, field);
@@ -2642,9 +2615,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F013</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F013</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF013(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F013, field);
@@ -2658,9 +2629,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F014</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F014</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF014(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F014, field);
@@ -2674,9 +2643,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F015</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F015</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF015(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F015, field);
@@ -2690,9 +2657,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F016</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F016</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF016(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F016, field);
@@ -2706,9 +2671,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F017</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F017</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF017(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F017, field);
@@ -2722,9 +2685,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F018</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F018</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF018(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F018, field);
@@ -2738,9 +2699,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F019</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F019</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF019(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F019, field);
@@ -2754,9 +2713,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F020</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F020</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF020(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F020, field);
@@ -2770,9 +2727,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F021</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F021</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF021(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F021, field);
@@ -2786,9 +2741,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F022</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F022</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF022(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F022, field);
@@ -2802,9 +2755,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F023</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F023</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF023(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F023, field);
@@ -2818,9 +2769,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F024</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F024</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF024(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F024, field);
@@ -2834,9 +2783,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F025</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F025</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF025(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F025, field);
@@ -2850,9 +2797,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F026</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F026</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF026(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F026, field);
@@ -2866,9 +2811,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F027</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F027</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF027(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F027, field);
@@ -2882,9 +2825,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F028</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F028</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF028(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F028, field);
@@ -2898,9 +2839,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F029</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F029</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF029(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F029, field);
@@ -2914,9 +2853,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F030</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F030</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF030(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F030, field);
@@ -2930,9 +2867,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F031</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F031</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF031(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F031, field);
@@ -2946,9 +2881,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F032</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F032</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF032(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F032, field);
@@ -2962,9 +2895,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F033</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F033</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF033(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F033, field);
@@ -2978,9 +2909,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F034</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F034</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF034(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F034, field);
@@ -2994,9 +2923,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F035</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F035</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF035(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F035, field);
@@ -3010,9 +2937,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F036</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F036</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF036(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F036, field);
@@ -3026,9 +2951,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F037</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F037</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF037(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F037, field);
@@ -3042,9 +2965,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F038</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F038</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF038(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F038, field);
@@ -3058,9 +2979,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F039</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F039</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF039(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F039, field);
@@ -3074,9 +2993,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F040</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F040</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF040(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F040, field);
@@ -3090,9 +3007,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F041</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F041</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF041(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F041, field);
@@ -3106,9 +3021,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F042</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F042</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF042(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F042, field);
@@ -3122,9 +3035,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F043</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F043</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF043(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F043, field);
@@ -3138,9 +3049,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F044</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F044</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF044(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F044, field);
@@ -3154,9 +3063,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F045</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F045</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF045(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F045, field);
@@ -3170,9 +3077,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F046</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F046</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF046(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F046, field);
@@ -3186,9 +3091,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F047</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F047</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF047(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F047, field);
@@ -3202,9 +3105,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F048</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F048</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF048(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F048, field);
@@ -3218,9 +3119,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F049</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F049</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF049(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F049, field);
@@ -3234,9 +3133,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F050</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F050</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF050(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F050, field);
@@ -3250,9 +3147,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F051</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F051</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF051(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F051, field);
@@ -3266,9 +3161,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F052</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F052</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF052(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F052, field);
@@ -3282,9 +3175,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F053</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F053</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF053(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F053, field);
@@ -3298,9 +3189,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F054</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F054</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF054(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F054, field);
@@ -3314,9 +3203,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F055</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F055</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF055(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F055, field);
@@ -3330,9 +3217,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F056</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F056</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF056(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F056, field);
@@ -3346,9 +3231,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F057</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F057</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF057(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F057, field);
@@ -3362,9 +3245,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F058</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F058</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF058(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F058, field);
@@ -3378,9 +3259,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F059</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F059</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF059(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F059, field);
@@ -3394,9 +3273,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F060</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F060</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF060(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F060, field);
@@ -3410,9 +3287,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F061</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F061</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF061(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F061, field);
@@ -3426,9 +3301,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F062</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F062</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF062(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F062, field);
@@ -3442,9 +3315,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F063</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F063</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF063(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F063, field);
@@ -3458,9 +3329,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F064</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F064</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF064(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F064, field);
@@ -3474,9 +3343,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F065</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F065</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF065(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F065, field);
@@ -3490,9 +3357,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F066</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F066</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF066(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F066, field);
@@ -3506,9 +3371,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F067</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F067</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF067(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F067, field);
@@ -3522,9 +3385,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F068</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F068</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF068(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F068, field);
@@ -3538,9 +3399,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F069</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F069</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF069(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F069, field);
@@ -3554,9 +3413,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F070</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F070</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF070(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F070, field);
@@ -3570,9 +3427,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F071</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F071</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF071(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F071, field);
@@ -3586,9 +3441,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F072</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F072</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF072(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F072, field);
@@ -3602,9 +3455,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F073</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F073</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF073(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F073, field);
@@ -3618,9 +3469,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F074</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F074</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF074(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F074, field);
@@ -3634,9 +3483,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F075</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F075</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF075(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F075, field);
@@ -3650,9 +3497,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F076</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F076</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF076(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F076, field);
@@ -3666,9 +3511,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F077</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F077</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF077(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F077, field);
@@ -3682,9 +3525,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F078</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F078</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF078(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F078, field);
@@ -3698,9 +3539,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F079</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F079</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF079(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F079, field);
@@ -3714,9 +3553,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F080</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F080</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF080(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F080, field);
@@ -3730,9 +3567,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F081</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F081</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF081(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F081, field);
@@ -3746,9 +3581,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F082</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F082</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF082(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F082, field);
@@ -3762,9 +3595,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F083</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F083</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF083(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F083, field);
@@ -3778,9 +3609,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F084</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F084</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF084(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F084, field);
@@ -3794,9 +3623,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F085</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F085</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF085(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F085, field);
@@ -3810,9 +3637,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F086</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F086</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF086(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F086, field);
@@ -3826,9 +3651,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F087</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F087</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF087(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F087, field);
@@ -3842,9 +3665,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F088</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F088</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF088(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F088, field);
@@ -3858,9 +3679,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F089</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F089</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF089(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F089, field);
@@ -3874,9 +3693,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F090</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F090</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF090(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F090, field);
@@ -3890,9 +3707,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F091</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F091</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF091(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F091, field);
@@ -3906,9 +3721,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F092</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F092</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF092(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F092, field);
@@ -3922,9 +3735,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F093</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F093</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF093(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F093, field);
@@ -3938,9 +3749,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F094</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F094</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF094(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F094, field);
@@ -3954,9 +3763,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F095</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F095</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF095(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F095, field);
@@ -3970,9 +3777,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F096</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F096</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF096(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F096, field);
@@ -3986,9 +3791,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F097</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F097</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF097(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F097, field);
@@ -4002,9 +3805,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F098</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F098</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF098(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F098, field);
@@ -4018,9 +3819,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F099</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F099</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF099(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F099, field);
@@ -4034,9 +3833,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F100</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F100</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF100(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F100, field);
@@ -4050,9 +3847,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F101</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F101</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF101(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F101, field);
@@ -4066,9 +3861,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F102</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F102</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF102(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F102, field);
@@ -4082,9 +3875,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F103</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F103</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF103(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F103, field);
@@ -4098,9 +3889,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F104</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F104</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF104(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F104, field);
@@ -4114,9 +3903,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F105</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F105</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF105(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F105, field);
@@ -4130,9 +3917,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F106</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F106</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF106(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F106, field);
@@ -4146,9 +3931,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F107</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F107</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF107(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F107, field);
@@ -4162,9 +3945,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F108</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F108</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF108(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F108, field);
@@ -4178,9 +3959,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F109</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F109</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF109(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F109, field);
@@ -4194,9 +3973,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F110</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F110</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF110(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F110, field);
@@ -4210,9 +3987,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F111</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F111</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF111(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F111, field);
@@ -4226,9 +4001,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F112</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F112</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF112(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F112, field);
@@ -4242,9 +4015,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F113</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F113</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF113(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F113, field);
@@ -4258,9 +4029,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F114</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F114</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF114(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F114, field);
@@ -4274,9 +4043,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F115</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F115</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF115(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F115, field);
@@ -4290,9 +4057,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F116</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F116</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF116(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F116, field);
@@ -4306,9 +4071,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F117</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F117</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF117(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F117, field);
@@ -4322,9 +4085,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F118</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F118</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF118(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F118, field);
@@ -4338,9 +4099,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F119</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F119</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF119(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F119, field);
@@ -4354,9 +4113,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F120</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F120</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF120(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F120, field);
@@ -4370,9 +4127,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F121</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F121</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF121(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F121, field);
@@ -4386,9 +4141,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F122</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F122</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF122(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F122, field);
@@ -4402,9 +4155,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F123</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F123</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF123(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F123, field);
@@ -4418,9 +4169,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F124</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F124</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF124(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F124, field);
@@ -4434,9 +4183,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F125</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F125</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF125(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F125, field);
@@ -4450,9 +4197,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F126</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F126</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF126(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F126, field);
@@ -4466,9 +4211,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F127</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F127</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF127(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F127, field);
@@ -4482,9 +4225,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F128</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F128</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF128(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F128, field);
@@ -4498,9 +4239,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F129</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F129</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF129(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F129, field);
@@ -4514,9 +4253,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F130</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F130</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF130(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F130, field);
@@ -4530,9 +4267,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F131</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F131</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF131(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F131, field);
@@ -4546,9 +4281,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F132</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F132</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF132(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F132, field);
@@ -4562,9 +4295,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F133</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F133</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF133(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F133, field);
@@ -4578,9 +4309,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F134</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F134</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF134(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F134, field);
@@ -4594,9 +4323,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F135</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F135</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF135(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F135, field);
@@ -4610,9 +4337,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F136</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F136</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF136(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F136, field);
@@ -4626,9 +4351,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F137</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F137</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF137(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F137, field);
@@ -4642,9 +4365,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F138</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F138</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF138(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F138, field);
@@ -4658,9 +4379,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F139</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F139</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF139(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F139, field);
@@ -4674,9 +4393,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F140</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F140</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF140(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F140, field);
@@ -4690,9 +4407,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F141</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F141</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF141(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F141, field);
@@ -4706,9 +4421,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F142</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F142</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF142(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F142, field);
@@ -4722,9 +4435,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F143</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F143</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF143(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F143, field);
@@ -4738,9 +4449,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F144</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F144</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF144(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F144, field);
@@ -4754,9 +4463,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F145</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F145</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF145(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F145, field);
@@ -4770,9 +4477,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F146</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F146</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF146(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F146, field);
@@ -4786,9 +4491,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F147</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F147</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF147(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F147, field);
@@ -4802,9 +4505,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F148</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F148</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF148(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F148, field);
@@ -4818,9 +4519,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F149</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F149</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF149(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F149, field);
@@ -4834,9 +4533,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F150</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F150</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF150(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F150, field);
@@ -4850,9 +4547,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F151</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F151</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF151(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F151, field);
@@ -4866,9 +4561,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F152</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F152</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF152(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F152, field);
@@ -4882,9 +4575,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F153</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F153</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF153(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F153, field);
@@ -4898,9 +4589,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F154</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F154</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF154(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F154, field);
@@ -4914,9 +4603,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F155</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F155</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF155(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F155, field);
@@ -4930,9 +4617,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F156</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F156</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF156(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F156, field);
@@ -4946,9 +4631,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F157</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F157</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF157(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F157, field);
@@ -4962,9 +4645,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F158</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F158</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF158(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F158, field);
@@ -4978,9 +4659,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F159</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F159</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF159(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F159, field);
@@ -4994,9 +4673,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F160</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F160</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF160(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F160, field);
@@ -5010,9 +4687,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F161</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F161</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF161(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F161, field);
@@ -5026,9 +4701,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F162</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F162</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF162(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F162, field);
@@ -5042,9 +4715,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F163</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F163</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF163(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F163, field);
@@ -5058,9 +4729,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F164</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F164</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF164(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F164, field);
@@ -5074,9 +4743,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F165</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F165</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF165(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F165, field);
@@ -5090,9 +4757,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F166</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F166</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF166(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F166, field);
@@ -5106,9 +4771,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F167</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F167</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF167(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F167, field);
@@ -5122,9 +4785,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F168</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F168</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF168(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F168, field);
@@ -5138,9 +4799,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F169</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F169</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF169(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F169, field);
@@ -5154,9 +4813,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F170</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F170</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF170(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F170, field);
@@ -5170,9 +4827,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F171</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F171</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF171(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F171, field);
@@ -5186,9 +4841,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F172</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F172</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF172(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F172, field);
@@ -5202,9 +4855,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F173</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F173</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF173(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F173, field);
@@ -5218,9 +4869,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F174</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F174</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF174(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F174, field);
@@ -5234,9 +4883,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F175</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F175</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF175(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F175, field);
@@ -5250,9 +4897,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F176</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F176</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF176(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F176, field);
@@ -5266,9 +4911,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F177</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F177</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF177(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F177, field);
@@ -5282,9 +4925,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F178</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F178</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF178(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F178, field);
@@ -5298,9 +4939,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F179</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F179</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF179(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F179, field);
@@ -5314,9 +4953,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F180</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F180</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF180(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F180, field);
@@ -5330,9 +4967,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F181</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F181</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF181(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F181, field);
@@ -5346,9 +4981,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F182</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F182</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF182(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F182, field);
@@ -5362,9 +4995,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F183</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F183</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF183(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F183, field);
@@ -5378,9 +5009,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F184</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F184</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF184(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F184, field);
@@ -5394,9 +5023,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F185</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F185</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF185(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F185, field);
@@ -5410,9 +5037,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F186</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F186</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF186(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F186, field);
@@ -5426,9 +5051,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F187</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F187</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF187(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F187, field);
@@ -5442,9 +5065,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F188</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F188</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF188(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F188, field);
@@ -5458,9 +5079,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F189</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F189</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF189(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F189, field);
@@ -5474,9 +5093,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F190</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F190</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF190(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F190, field);
@@ -5490,9 +5107,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F191</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F191</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF191(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F191, field);
@@ -5506,9 +5121,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F192</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F192</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF192(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F192, field);
@@ -5522,9 +5135,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F193</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F193</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF193(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F193, field);
@@ -5538,9 +5149,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F194</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F194</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF194(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F194, field);
@@ -5554,9 +5163,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F195</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F195</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF195(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F195, field);
@@ -5570,9 +5177,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F196</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F196</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF196(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F196, field);
@@ -5586,9 +5191,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F197</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F197</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF197(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F197, field);
@@ -5602,9 +5205,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F198</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F198</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF198(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F198, field);
@@ -5618,9 +5219,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F199</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F199</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF199(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F199, field);
@@ -5634,9 +5233,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F200</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F200</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF200(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F200, field);
@@ -5650,9 +5247,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F201</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F201</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF201(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F201, field);
@@ -5666,9 +5261,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F202</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F202</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF202(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F202, field);
@@ -5682,9 +5275,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F203</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F203</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF203(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F203, field);
@@ -5698,9 +5289,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F204</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F204</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF204(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F204, field);
@@ -5714,9 +5303,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F205</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F205</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF205(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F205, field);
@@ -5730,9 +5317,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F206</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F206</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF206(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F206, field);
@@ -5746,9 +5331,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F207</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F207</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF207(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F207, field);
@@ -5762,9 +5345,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F208</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F208</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF208(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F208, field);
@@ -5778,9 +5359,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F209</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F209</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF209(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F209, field);
@@ -5794,9 +5373,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F210</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F210</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF210(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F210, field);
@@ -5810,9 +5387,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F211</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F211</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF211(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F211, field);
@@ -5826,9 +5401,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F212</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F212</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF212(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F212, field);
@@ -5842,9 +5415,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F213</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F213</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF213(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F213, field);
@@ -5858,9 +5429,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F214</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F214</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF214(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F214, field);
@@ -5874,9 +5443,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F215</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F215</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF215(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F215, field);
@@ -5890,9 +5457,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F216</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F216</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF216(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F216, field);
@@ -5906,9 +5471,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F217</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F217</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF217(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F217, field);
@@ -5922,9 +5485,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F218</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F218</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF218(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F218, field);
@@ -5938,9 +5499,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F219</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F219</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF219(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F219, field);
@@ -5954,9 +5513,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F220</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F220</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF220(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F220, field);
@@ -5970,9 +5527,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F221</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F221</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF221(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F221, field);
@@ -5986,9 +5541,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F222</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F222</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF222(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F222, field);
@@ -6002,9 +5555,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F223</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F223</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF223(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F223, field);
@@ -6018,9 +5569,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F224</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F224</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF224(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F224, field);
@@ -6034,9 +5583,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F225</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F225</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF225(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F225, field);
@@ -6050,9 +5597,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F226</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F226</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF226(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F226, field);
@@ -6066,9 +5611,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F227</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F227</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF227(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F227, field);
@@ -6082,9 +5625,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F228</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F228</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF228(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F228, field);
@@ -6098,9 +5639,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F229</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F229</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF229(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F229, field);
@@ -6114,9 +5653,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F230</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F230</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF230(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F230, field);
@@ -6130,9 +5667,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F231</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F231</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF231(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F231, field);
@@ -6146,9 +5681,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F232</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F232</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF232(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F232, field);
@@ -6162,9 +5695,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F233</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F233</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF233(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F233, field);
@@ -6178,9 +5709,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F234</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F234</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF234(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F234, field);
@@ -6194,9 +5723,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F235</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F235</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF235(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F235, field);
@@ -6210,9 +5737,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F236</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F236</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF236(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F236, field);
@@ -6226,9 +5751,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F237</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F237</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF237(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F237, field);
@@ -6242,9 +5765,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F238</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F238</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF238(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F238, field);
@@ -6258,9 +5779,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F239</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F239</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF239(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F239, field);
@@ -6274,9 +5793,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F240</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F240</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF240(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F240, field);
@@ -6290,9 +5807,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F241</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F241</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF241(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F241, field);
@@ -6306,9 +5821,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F242</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F242</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF242(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F242, field);
@@ -6322,9 +5835,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F243</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F243</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF243(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F243, field);
@@ -6338,9 +5849,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F244</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F244</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF244(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F244, field);
@@ -6354,9 +5863,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F245</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F245</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF245(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F245, field);
@@ -6370,9 +5877,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F246</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F246</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF246(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F246, field);
@@ -6386,9 +5891,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F247</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F247</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF247(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F247, field);
@@ -6402,9 +5905,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F248</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F248</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF248(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F248, field);
@@ -6418,9 +5919,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F249</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F249</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF249(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F249, field);
@@ -6434,9 +5933,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F250</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F250</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF250(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F250, field);
@@ -6450,9 +5947,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F251</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F251</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF251(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F251, field);
@@ -6466,9 +5961,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F252</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F252</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF252(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F252, field);
@@ -6482,9 +5975,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F253</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F253</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF253(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F253, field);
@@ -6498,9 +5989,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F254</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F254</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF254(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F254, field);
@@ -6514,9 +6003,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F255</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F255</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF255(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F255, field);
@@ -6530,9 +6017,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F256</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F256</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF256(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F256, field);
@@ -6546,9 +6031,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F257</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F257</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF257(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F257, field);
@@ -6562,9 +6045,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F258</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F258</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF258(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F258, field);
@@ -6578,9 +6059,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F259</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F259</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF259(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F259, field);
@@ -6594,9 +6073,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F260</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F260</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF260(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F260, field);
@@ -6610,9 +6087,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F261</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F261</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF261(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F261, field);
@@ -6626,9 +6101,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F262</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F262</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF262(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F262, field);
@@ -6642,9 +6115,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F263</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F263</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF263(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F263, field);
@@ -6658,9 +6129,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F264</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F264</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF264(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F264, field);
@@ -6674,9 +6143,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F265</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F265</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF265(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F265, field);
@@ -6690,9 +6157,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F266</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F266</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF266(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F266, field);
@@ -6706,9 +6171,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F267</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F267</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF267(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F267, field);
@@ -6722,9 +6185,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F268</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F268</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF268(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F268, field);
@@ -6738,9 +6199,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F269</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F269</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF269(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F269, field);
@@ -6754,9 +6213,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F270</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F270</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF270(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F270, field);
@@ -6770,9 +6227,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F271</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F271</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF271(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F271, field);
@@ -6786,9 +6241,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F272</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F272</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF272(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F272, field);
@@ -6802,9 +6255,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F273</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F273</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF273(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F273, field);
@@ -6818,9 +6269,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F274</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F274</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF274(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F274, field);
@@ -6834,9 +6283,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F275</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F275</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF275(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F275, field);
@@ -6850,9 +6297,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F276</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F276</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF276(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F276, field);
@@ -6866,9 +6311,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F277</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F277</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF277(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F277, field);
@@ -6882,9 +6325,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F278</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F278</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF278(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F278, field);
@@ -6898,9 +6339,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F279</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F279</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF279(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F279, field);
@@ -6914,9 +6353,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F280</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F280</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF280(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F280, field);
@@ -6930,9 +6367,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F281</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F281</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF281(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F281, field);
@@ -6946,9 +6381,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F282</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F282</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF282(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F282, field);
@@ -6962,9 +6395,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F283</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F283</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF283(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F283, field);
@@ -6978,9 +6409,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F284</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F284</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF284(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F284, field);
@@ -6994,9 +6423,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F285</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F285</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF285(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F285, field);
@@ -7010,9 +6437,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F286</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F286</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF286(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F286, field);
@@ -7026,9 +6451,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F287</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F287</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF287(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F287, field);
@@ -7042,9 +6465,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F288</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F288</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF288(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F288, field);
@@ -7058,9 +6479,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F289</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F289</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF289(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F289, field);
@@ -7074,9 +6493,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F290</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F290</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF290(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F290, field);
@@ -7090,9 +6507,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F291</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F291</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF291(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F291, field);
@@ -7106,9 +6521,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F292</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F292</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF292(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F292, field);
@@ -7122,9 +6535,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F293</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F293</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF293(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F293, field);
@@ -7138,9 +6549,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F294</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F294</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF294(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F294, field);
@@ -7154,9 +6563,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F295</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F295</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF295(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F295, field);
@@ -7170,9 +6577,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F296</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F296</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF296(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F296, field);
@@ -7186,9 +6591,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F297</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F297</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF297(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F297, field);
@@ -7202,9 +6605,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F298</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F298</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF298(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F298, field);
@@ -7218,9 +6619,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F299</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F299</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF299(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F299, field);
@@ -7234,9 +6633,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F300</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F300</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF300(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F300, field);
@@ -7250,9 +6647,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F301</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F301</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF301(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F301, field);
@@ -7266,9 +6661,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F302</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F302</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF302(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F302, field);
@@ -7282,9 +6675,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F303</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F303</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF303(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F303, field);
@@ -7298,9 +6689,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F304</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F304</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF304(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F304, field);
@@ -7314,9 +6703,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F305</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F305</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF305(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F305, field);
@@ -7330,9 +6717,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F306</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F306</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF306(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F306, field);
@@ -7346,9 +6731,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F307</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F307</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF307(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F307, field);
@@ -7362,9 +6745,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F308</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F308</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF308(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F308, field);
@@ -7378,9 +6759,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F309</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F309</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF309(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F309, field);
@@ -7394,9 +6773,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F310</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F310</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF310(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F310, field);
@@ -7410,9 +6787,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F311</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F311</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF311(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F311, field);
@@ -7426,9 +6801,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F312</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F312</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF312(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F312, field);
@@ -7442,9 +6815,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F313</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F313</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF313(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F313, field);
@@ -7458,9 +6829,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F314</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F314</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF314(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F314, field);
@@ -7474,9 +6843,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F315</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F315</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF315(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F315, field);
@@ -7490,9 +6857,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F316</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F316</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF316(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F316, field);
@@ -7506,9 +6871,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F317</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F317</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF317(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F317, field);
@@ -7522,9 +6885,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F318</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F318</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF318(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F318, field);
@@ -7538,9 +6899,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F319</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F319</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF319(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F319, field);
@@ -7554,9 +6913,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F320</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F320</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF320(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F320, field);
@@ -7570,9 +6927,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F321</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F321</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF321(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F321, field);
@@ -7586,9 +6941,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F322</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F322</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF322(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F322, field);
@@ -7602,9 +6955,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F323</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F323</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF323(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F323, field);
@@ -7618,9 +6969,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F324</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F324</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF324(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F324, field);
@@ -7634,9 +6983,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F325</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F325</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF325(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F325, field);
@@ -7650,9 +6997,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F326</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F326</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF326(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F326, field);
@@ -7666,9 +7011,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F327</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F327</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF327(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F327, field);
@@ -7682,9 +7025,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F328</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F328</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF328(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F328, field);
@@ -7698,9 +7039,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F329</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F329</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF329(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F329, field);
@@ -7714,9 +7053,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F330</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F330</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF330(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F330, field);
@@ -7730,9 +7067,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F331</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F331</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF331(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F331, field);
@@ -7746,9 +7081,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F332</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F332</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF332(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F332, field);
@@ -7762,9 +7095,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F333</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F333</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF333(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F333, field);
@@ -7778,9 +7109,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F334</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F334</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF334(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F334, field);
@@ -7794,9 +7123,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F335</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F335</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF335(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F335, field);
@@ -7810,9 +7137,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F336</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F336</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF336(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F336, field);
@@ -7826,9 +7151,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F337</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F337</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF337(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F337, field);
@@ -7842,9 +7165,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F338</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F338</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF338(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F338, field);
@@ -7858,9 +7179,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F339</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F339</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF339(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F339, field);
@@ -7874,9 +7193,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F340</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F340</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF340(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F340, field);
@@ -7890,9 +7207,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F341</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F341</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF341(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F341, field);
@@ -7906,9 +7221,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F342</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F342</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF342(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F342, field);
@@ -7922,9 +7235,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F343</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F343</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF343(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F343, field);
@@ -7938,9 +7249,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F344</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F344</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF344(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F344, field);
@@ -7954,9 +7263,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F345</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F345</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF345(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F345, field);
@@ -7970,9 +7277,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F346</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F346</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF346(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F346, field);
@@ -7986,9 +7291,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F347</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F347</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF347(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F347, field);
@@ -8002,9 +7305,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F348</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F348</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF348(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F348, field);
@@ -8018,9 +7319,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F349</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F349</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF349(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F349, field);
@@ -8034,9 +7333,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F350</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F350</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF350(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F350, field);
@@ -8050,9 +7347,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F351</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F351</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF351(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F351, field);
@@ -8066,9 +7361,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F352</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F352</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF352(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F352, field);
@@ -8082,9 +7375,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F353</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F353</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF353(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F353, field);
@@ -8098,9 +7389,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F354</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F354</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF354(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F354, field);
@@ -8114,9 +7403,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F355</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F355</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF355(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F355, field);
@@ -8130,9 +7417,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F356</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F356</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF356(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F356, field);
@@ -8146,9 +7431,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F357</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F357</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF357(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F357, field);
@@ -8162,9 +7445,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F358</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F358</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF358(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F358, field);
@@ -8178,9 +7459,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F359</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F359</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF359(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F359, field);
@@ -8194,9 +7473,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F360</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F360</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF360(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F360, field);
@@ -8210,9 +7487,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F361</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F361</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF361(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F361, field);
@@ -8226,9 +7501,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F362</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F362</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF362(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F362, field);
@@ -8242,9 +7515,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F363</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F363</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF363(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F363, field);
@@ -8258,9 +7529,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F364</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F364</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF364(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F364, field);
@@ -8274,9 +7543,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F365</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F365</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF365(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F365, field);
@@ -8290,9 +7557,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F366</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F366</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF366(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F366, field);
@@ -8306,9 +7571,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F367</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F367</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF367(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F367, field);
@@ -8322,9 +7585,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F368</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F368</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF368(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F368, field);
@@ -8338,9 +7599,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F369</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F369</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF369(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F369, field);
@@ -8354,9 +7613,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F370</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F370</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF370(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F370, field);
@@ -8370,9 +7627,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F371</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F371</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF371(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F371, field);
@@ -8386,9 +7641,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F372</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F372</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF372(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F372, field);
@@ -8402,9 +7655,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F373</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F373</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF373(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F373, field);
@@ -8418,9 +7669,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F374</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F374</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF374(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F374, field);
@@ -8434,9 +7683,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F375</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F375</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF375(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F375, field);
@@ -8450,9 +7697,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F376</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F376</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF376(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F376, field);
@@ -8466,9 +7711,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F377</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F377</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF377(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F377, field);
@@ -8482,9 +7725,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F378</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F378</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF378(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F378, field);
@@ -8498,9 +7739,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F379</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F379</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF379(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F379, field);
@@ -8514,9 +7753,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F380</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F380</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF380(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F380, field);
@@ -8530,9 +7767,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F381</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F381</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF381(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F381, field);
@@ -8546,9 +7781,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F382</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F382</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF382(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F382, field);
@@ -8562,9 +7795,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F383</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F383</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF383(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F383, field);
@@ -8578,9 +7809,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F384</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F384</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF384(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F384, field);
@@ -8594,9 +7823,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F385</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F385</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF385(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F385, field);
@@ -8610,9 +7837,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F386</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F386</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF386(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F386, field);
@@ -8626,9 +7851,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F387</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F387</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF387(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F387, field);
@@ -8642,9 +7865,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F388</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F388</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF388(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F388, field);
@@ -8658,9 +7879,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F389</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F389</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF389(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F389, field);
@@ -8674,9 +7893,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F390</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F390</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF390(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F390, field);
@@ -8690,9 +7907,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F391</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F391</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF391(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F391, field);
@@ -8706,9 +7921,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F392</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F392</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF392(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F392, field);
@@ -8722,9 +7935,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F393</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F393</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF393(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F393, field);
@@ -8738,9 +7949,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F394</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F394</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF394(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F394, field);
@@ -8754,9 +7963,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F395</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F395</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF395(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F395, field);
@@ -8770,9 +7977,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F396</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F396</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF396(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F396, field);
@@ -8786,9 +7991,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F397</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F397</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF397(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F397, field);
@@ -8802,9 +8005,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F398</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F398</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF398(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F398, field);
@@ -8818,9 +8019,7 @@ public class F_MANY_PARAMETERS extends org.jooq.impl.AbstractRoutine<java.math.B
 	}
 
 	/**
-	 * Set the <code>F399</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>F399</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setF399(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(F399, field);

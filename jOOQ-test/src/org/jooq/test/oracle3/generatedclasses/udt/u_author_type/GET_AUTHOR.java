@@ -9,16 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.udt.u_author_type;
 @java.lang.SuppressWarnings("all")
 public class GET_AUTHOR extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1650932148;
-
+	private static final long serialVersionUID = -306403226;
 
 	/**
-	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR.RETURN_VALUE</code>
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE.getDataType());
 
 	/**
-	 * The procedure parameter <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR.P_ID</code>
+	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR.P_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_ID = createParameter("P_ID", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -40,9 +39,7 @@ public class GET_AUTHOR extends org.jooq.impl.AbstractRoutine<org.jooq.test.orac
 	}
 
 	/**
-	 * Set the <code>P_ID</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>P_ID</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setP_ID(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(P_ID, field);

@@ -12,42 +12,42 @@ package org.jooq.test.oracle3.generatedclasses;
 public final class UDTs {
 
 	/**
-	 * The type TEST.O_INVALID_TYPE
+	 * The type <code>TEST.O_INVALID_TYPE</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE O_INVALID_TYPE = org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE.O_INVALID_TYPE;
 
 	/**
-	 * The type TEST.U_ADDRESS_TYPE
+	 * The type <code>TEST.U_ADDRESS_TYPE</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE U_ADDRESS_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE;
 
 	/**
-	 * The type TEST.U_AUTHOR_TYPE
+	 * The type <code>TEST.U_AUTHOR_TYPE</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE U_AUTHOR_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE;
 
 	/**
-	 * The type TEST.U_BOOK_TYPE
+	 * The type <code>TEST.U_BOOK_TYPE</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE U_BOOK_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE;
 
 	/**
-	 * The type TEST.U_INVALID_TABLE
+	 * The type <code>TEST.U_INVALID_TABLE</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE U_INVALID_TABLE = org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE.U_INVALID_TABLE;
 
 	/**
-	 * The type TEST.U_INVALID_TYPE
+	 * The type <code>TEST.U_INVALID_TYPE</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE U_INVALID_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TYPE.U_INVALID_TYPE;
 
 	/**
-	 * The type TEST.U_STREET_TYPE
+	 * The type <code>TEST.U_STREET_TYPE</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE U_STREET_TYPE = org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE.U_STREET_TYPE;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private UDTs() {}
 }

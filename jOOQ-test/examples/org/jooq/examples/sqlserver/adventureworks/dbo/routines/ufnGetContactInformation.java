@@ -14,7 +14,7 @@ public class ufnGetContactInformation extends org.jooq.impl.AbstractRoutine<java
 	/**
 	 * The parameter <code>dbo.ufnGetContactInformation.RETURN_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("TABLE"));
+	public static final org.jooq.Parameter<java.lang.Object> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.DefaultDataType.getDefaultDataType("TABLE"));
 
 	/**
 	 * The parameter <code>dbo.ufnGetContactInformation.ContactID</code>. 
@@ -25,7 +25,7 @@ public class ufnGetContactInformation extends org.jooq.impl.AbstractRoutine<java
 	 * Create a new routine call instance
 	 */
 	public ufnGetContactInformation() {
-		super("ufnGetContactInformation", org.jooq.examples.sqlserver.adventureworks.dbo.dbo.dbo, org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("TABLE"));
+		super("ufnGetContactInformation", org.jooq.examples.sqlserver.adventureworks.dbo.dbo.dbo, org.jooq.impl.DefaultDataType.getDefaultDataType("TABLE"));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(ContactID);

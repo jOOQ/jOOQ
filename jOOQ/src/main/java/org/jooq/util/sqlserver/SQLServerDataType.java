@@ -110,9 +110,4 @@ public class SQLServerDataType<T> {
     public static final DataType<String>     UNIQUEIDENTIFIER = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.VARCHAR, "uniqueidentifier");
     public static final DataType<Long>       ROWVERSION       = new DefaultDataType<Long>(SQLDialect.SQLSERVER, SQLDataType.BIGINT, "rowversion");
     public static final DataType<Long>       TIMESTAMP        = new DefaultDataType<Long>(SQLDialect.SQLSERVER, SQLDataType.BIGINT, "timestamp");
-
-    @Deprecated
-    public static DataType<Object> getDefaultDataType(String string) {
-        return DefaultDataType.getDefaultDataType(string);
-    }
 }

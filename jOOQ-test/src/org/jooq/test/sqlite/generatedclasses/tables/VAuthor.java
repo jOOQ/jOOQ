@@ -9,10 +9,10 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -1326271968;
+	private static final long serialVersionUID = -2041907917;
 
 	/**
-	 * The singleton instance of v_author
+	 * The singleton instance of <code>v_author</code>
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.VAuthor V_AUTHOR = new org.jooq.test.sqlite.generatedclasses.tables.VAuthor();
 
@@ -25,32 +25,32 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.genera
 	}
 
 	/**
-	 * The table column <code>v_author.ID</code>
+	 * The column <code>v_author.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
-	 * The table column <code>v_author.FIRST_NAME</code>
+	 * The column <code>v_author.FIRST_NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
 	/**
-	 * The table column <code>v_author.LAST_NAME</code>
+	 * The column <code>v_author.LAST_NAME</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 
 	/**
-	 * The table column <code>v_author.DATE_OF_BIRTH</code>
+	 * The column <code>v_author.DATE_OF_BIRTH</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, V_AUTHOR);
 
 	/**
-	 * The table column <code>v_author.YEAR_OF_BIRTH</code>
+	 * The column <code>v_author.YEAR_OF_BIRTH</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
-	 * The table column <code>v_author.ADDRESS</code>
+	 * The column <code>v_author.ADDRESS</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
 

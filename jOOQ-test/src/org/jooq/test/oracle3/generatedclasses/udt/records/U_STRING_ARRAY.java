@@ -9,17 +9,26 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings("all")
 public class U_STRING_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang.String> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1546569616;
+	private static final long serialVersionUID = 1872688665;
 
+	/**
+	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 */
 	public U_STRING_ARRAY(org.jooq.Configuration configuration) {
 		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_STRING_ARRAY", org.jooq.impl.SQLDataType.VARCHAR, configuration);
 	}
 
+	/**
+	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 */
 	public U_STRING_ARRAY(org.jooq.Configuration configuration, java.lang.String... array) {
 		this(configuration);
 		set(array);
 	}
 
+	/**
+	 * Create a new <code>TEST.U_STRING_ARRAY</code> record
+	 */
 	public U_STRING_ARRAY(org.jooq.Configuration configuration, java.util.List<? extends java.lang.String> list) {
 		this(configuration);
 		setList(list);

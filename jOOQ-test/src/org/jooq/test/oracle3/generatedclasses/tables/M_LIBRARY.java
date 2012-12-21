@@ -11,10 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class M_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = -2108181158;
+	private static final long serialVersionUID = -1901137898;
 
 	/**
-	 * The singleton instance of TEST.M_LIBRARY
+	 * The singleton instance of <code>TEST.M_LIBRARY</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY M_LIBRARY = new org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY();
 
@@ -27,23 +27,32 @@ public class M_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gen
 	}
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.AUTHOR</code>
+	 * The column <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, this);
 
 	/**
-	 * The table column <code>TEST.M_LIBRARY.TITLE</code>
+	 * The column <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
 
+	/**
+	 * Create a <code>TEST.M_LIBRARY</code> table reference
+	 */
 	public M_LIBRARY() {
 		super("M_LIBRARY", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
 	}
 
+	/**
+	 * Create an aliased <code>TEST.M_LIBRARY</code> table reference
+	 */
 	public M_LIBRARY(java.lang.String alias) {
 		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY as(java.lang.String alias) {
 		return new org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY(alias);

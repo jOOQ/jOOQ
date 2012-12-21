@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class TEST extends org.jooq.impl.SchemaImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 857324291;
+	private static final long serialVersionUID = -543653694;
 
 	/**
-	 * The singleton instance of TEST
+	 * The singleton instance of <code>TEST</code>
 	 */
 	public static final TEST TEST = new TEST();
 

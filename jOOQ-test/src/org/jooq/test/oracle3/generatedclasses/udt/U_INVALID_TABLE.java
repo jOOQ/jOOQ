@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.udt;
 @java.lang.SuppressWarnings("all")
 public class U_INVALID_TABLE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_INVALID_TABLE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -531216864;
+	private static final long serialVersionUID = -1519381111;
 
 	/**
-	 * The singleton instance of TEST.U_INVALID_TABLE
+	 * The singleton instance of <code>TEST.U_INVALID_TABLE</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE U_INVALID_TABLE = new org.jooq.test.oracle3.generatedclasses.udt.U_INVALID_TABLE();
 

@@ -9,42 +9,39 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1710487837;
+	private static final long serialVersionUID = -192922783;
 
 	/**
-	 * The table column <code>V_LIBRARY.AUTHOR</code>
+	 * Setter for <code>V_LIBRARY.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.AUTHOR, value);
 	}
 
 	/**
-	 * The table column <code>V_LIBRARY.AUTHOR</code>
+	 * Getter for <code>V_LIBRARY.AUTHOR</code>. 
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.AUTHOR);
 	}
 
 	/**
-	 * The table column <code>V_LIBRARY.TITLE</code>
+	 * Setter for <code>V_LIBRARY.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.TITLE, value);
 	}
 
 	/**
-	 * The table column <code>V_LIBRARY.TITLE</code>
+	 * Getter for <code>V_LIBRARY.TITLE</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.TITLE);
 	}
 
-	/**
-	 * Create a detached VLibraryRecord
-	 */
-	public VLibraryRecord() {
-		super(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.V_LIBRARY);
-	}
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -96,5 +93,16 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VLibraryRecord
+	 */
+	public VLibraryRecord() {
+		super(org.jooq.test.sqlite.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 }

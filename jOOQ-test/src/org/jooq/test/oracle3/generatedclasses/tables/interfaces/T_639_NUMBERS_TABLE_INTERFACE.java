@@ -12,128 +12,138 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_639_NUMBERS_TABLE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
 	public void setBYTE(java.lang.Byte value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
 	@javax.persistence.Column(name = "BYTE", precision = 2)
 	public java.lang.Byte getBYTE();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	public void setSHORT(java.lang.Short value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	@javax.persistence.Column(name = "SHORT", precision = 4)
 	public java.lang.Short getSHORT();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	public void setINTEGER(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	@javax.persistence.Column(name = "INTEGER", precision = 7)
 	public java.lang.Integer getINTEGER();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.LONG</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	public void setLONG(java.lang.Long value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.LONG</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	@javax.persistence.Column(name = "LONG", precision = 18)
 	public java.lang.Long getLONG();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	public void setBYTE_DECIMAL(java.lang.Byte value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "BYTE_DECIMAL", precision = 2)
 	public java.lang.Byte getBYTE_DECIMAL();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	public void setSHORT_DECIMAL(java.lang.Short value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "SHORT_DECIMAL", precision = 4)
 	public java.lang.Short getSHORT_DECIMAL();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	public void setINTEGER_DECIMAL(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "INTEGER_DECIMAL", precision = 9)
 	public java.lang.Integer getINTEGER_DECIMAL();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	public void setLONG_DECIMAL(java.lang.Long value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "LONG_DECIMAL", precision = 18)
 	public java.lang.Long getLONG_DECIMAL();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	public void setBIG_INTEGER(java.math.BigInteger value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	@javax.persistence.Column(name = "BIG_INTEGER", precision = 22)
 	public java.math.BigInteger getBIG_INTEGER();
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
+	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	public void setBIG_DECIMAL(java.math.BigDecimal value);
 
 	/**
-	 * The table column <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>
+	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "BIG_DECIMAL", precision = 22, scale = 5)
 	public java.math.BigDecimal getBIG_DECIMAL();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface T_639_NUMBERS_TABLE_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface T_639_NUMBERS_TABLE_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE> E into(E into);
 }

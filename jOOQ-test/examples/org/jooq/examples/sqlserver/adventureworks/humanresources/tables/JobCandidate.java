@@ -37,7 +37,7 @@ public class JobCandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	/**
 	 * The column <code>HumanResources.JobCandidate.Resume</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Object> Resume = createField("Resume", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate, java.lang.Object> Resume = createField("Resume", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * The column <code>HumanResources.JobCandidate.ModifiedDate</code>. 

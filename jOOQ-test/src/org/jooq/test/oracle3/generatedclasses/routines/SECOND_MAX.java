@@ -9,16 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class SECOND_MAX extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 820706144;
-
+	private static final long serialVersionUID = -266641352;
 
 	/**
-	 * The procedure parameter <code>TEST.SECOND_MAX.RETURN_VALUE</code>
+	 * The parameter <code>TEST.SECOND_MAX.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.SECOND_MAX.INPUT</code>
+	 * The parameter <code>TEST.SECOND_MAX.INPUT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> INPUT = createParameter("INPUT", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -40,9 +39,7 @@ public class SECOND_MAX extends org.jooq.impl.AbstractRoutine<java.math.BigDecim
 	}
 
 	/**
-	 * Set the <code>INPUT</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>INPUT</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setINPUT(org.jooq.Field<? extends java.lang.Number> field) {
 		setNumber(INPUT, field);

@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
 public class T_ARRAYS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = -2036735701;
+	private static final long serialVersionUID = 1371075433;
 
 	private java.lang.Integer                                                      ID;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY      STRING_ARRAY;
@@ -73,5 +73,30 @@ public class T_ARRAYS_POJO extends java.lang.ThreadDeath implements java.lang.Cl
 	@Override
 	public void setDATE_ARRAY(org.jooq.test.oracle3.generatedclasses.udt.records.U_DATE_ARRAY DATE_ARRAY) {
 		this.DATE_ARRAY = DATE_ARRAY;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE from) {
+		setID(from.getID());
+		setSTRING_ARRAY(from.getSTRING_ARRAY());
+		setNUMBER_ARRAY(from.getNUMBER_ARRAY());
+		setNUMBER_LONG_ARRAY(from.getNUMBER_LONG_ARRAY());
+		setDATE_ARRAY(from.getDATE_ARRAY());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

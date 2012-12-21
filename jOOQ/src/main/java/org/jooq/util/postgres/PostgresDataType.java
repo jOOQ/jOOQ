@@ -142,9 +142,4 @@ public class PostgresDataType<T> {
     public static final DataType<String>     ACLITEM                    = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "aclitem");
     public static final DataType<String>     NAME                       = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "name");
     public static final DataType<String>     REGPROC                    = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "regproc");
-
-    @Deprecated
-    public static DataType<Object> getDefaultDataType(String string) {
-        return DefaultDataType.getDefaultDataType(string);
-    }
 }

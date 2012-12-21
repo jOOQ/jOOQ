@@ -15,18 +15,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 })
 public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = 1028421179;
+	private static final long serialVersionUID = -763670037;
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	@Override
 	public void setBOOK_STORE_NAME(java.lang.String value) {
@@ -34,25 +26,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
-	@Override
-	public java.lang.String getBOOK_STORE_NAME() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE 
-	 * T_BOOK_STORE}
+	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE}
 	 */
 	public void setBOOK_STORE_NAME(org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE value) {
 		if (value == null) {
@@ -64,33 +38,16 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES TEST.T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE fetchT_BOOK_STORE() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE.NAME.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))
-			.fetchOne();
+	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
+	@Override
+	public java.lang.String getBOOK_STORE_NAME() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES TEST.T_BOOK (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	@Override
 	public void setBOOK_ID(java.lang.Integer value) {
@@ -98,25 +55,7 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES TEST.T_BOOK (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
-	@Override
-	public java.lang.Integer getBOOK_ID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK 
-	 * T_BOOK}
+	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK}
 	 */
 	public void setBOOK_ID(org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK value) {
 		if (value == null) {
@@ -128,15 +67,47 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES TEST.T_BOOK (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
+	 */
+	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
+	@Override
+	public java.lang.Integer getBOOK_ID() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+	}
+
+	/**
+	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
+	 */
+	@Override
+	public void setSTOCK(java.lang.Integer value) {
+		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.STOCK, value);
+	}
+
+	/**
+	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
+	 */
+	@javax.persistence.Column(name = "STOCK", precision = 7)
+	@Override
+	public java.lang.Integer getSTOCK() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.STOCK);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>TEST.T_BOOK_STORE</code> referenced by this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE fetchT_BOOK_STORE() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE.NAME.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>TEST.T_BOOK</code> referenced by this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK fetchT_BOOK() {
 		return create()
@@ -145,28 +116,16 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 			.fetchOne();
 	}
 
-	/**
-	 * The number of books on stock
-	 */
-	@Override
-	public void setSTOCK(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.STOCK, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The number of books on stock
+	 * {@inheritDoc}
 	 */
-	@javax.persistence.Column(name = "STOCK", precision = 7)
 	@Override
-	public java.lang.Integer getSTOCK() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.STOCK);
-	}
-
-	/**
-	 * Create a detached T_BOOK_TO_BOOK_STORE
-	 */
-	public T_BOOK_TO_BOOK_STORE() {
-		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE);
+	public org.jooq.Record2<java.lang.String, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -235,5 +194,39 @@ public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.
 	@Override
 	public java.lang.Integer value3() {
 		return getSTOCK();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE from) {
+		setBOOK_STORE_NAME(from.getBOOK_STORE_NAME());
+		setBOOK_ID(from.getBOOK_ID());
+		setSTOCK(from.getSTOCK());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_TO_BOOK_STORE_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_BOOK_TO_BOOK_STORE
+	 */
+	public T_BOOK_TO_BOOK_STORE() {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE);
 	}
 }

@@ -67,11 +67,11 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
-import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.DAOImpl;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.impl.PackageImpl;
@@ -1381,7 +1381,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String fullClassName = getStrategy().getFullJavaClassName(table);
         final String fullTableId = getStrategy().getFullJavaIdentifier(table);
         final String recordType = getStrategy().getFullJavaClassName(table, Mode.RECORD);
-        final List<String> interfaces =  getStrategy().getJavaClassImplements(table, Mode.DEFAULT);
+        final List<String> interfaces = getStrategy().getJavaClassImplements(table, Mode.DEFAULT);
 
         log.info("Generating table", getStrategy().getFileName(table) +
             " [input=" + table.getInputName() +
@@ -2535,14 +2535,20 @@ public class JavaGenerator extends AbstractGenerator {
 
                 // Mostly because of unsupported data types
                 catch (SQLDialectNotSupportedException e) {
-                    sb.append("getDefaultDataType(\"");
+                    sb = new StringBuilder();
+
+                    sb.append(DefaultDataType.class.getName());
+                    sb.append(".getDefaultDataType(\"");
                     sb.append(t.replace("\"", "\\\""));
                     sb.append("\")");
                 }
 
                 // More unsupported data types
                 catch (ReflectException e) {
-                    sb.append("getDefaultDataType(\"");
+                    sb = new StringBuilder();
+
+                    sb.append(DefaultDataType.class.getName());
+                    sb.append(".getDefaultDataType(\"");
                     sb.append(t.replace("\"", "\\\""));
                     sb.append("\")");
                 }

@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
 public class T_LANGUAGE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = 322423491;
+	private static final long serialVersionUID = -589286234;
 
 	private java.lang.String  CD;
 	private java.lang.String  DESCRIPTION;
@@ -63,5 +63,29 @@ public class T_LANGUAGE_POJO extends java.lang.ThreadDeath implements java.lang.
 	@Override
 	public void setID(java.lang.Integer ID) {
 		this.ID = ID;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE from) {
+		setCD(from.getCD());
+		setDESCRIPTION(from.getDESCRIPTION());
+		setDESCRIPTION_ENGLISH(from.getDESCRIPTION_ENGLISH());
+		setID(from.getID());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

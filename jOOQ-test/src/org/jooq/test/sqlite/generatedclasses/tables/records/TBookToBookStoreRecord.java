@@ -9,41 +9,17 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 946694260;
+	private static final long serialVersionUID = -1700320441;
 
 	/**
-	 * The table column <code>t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES t_book_store (name)
-	 * </pre></code>
+	 * Setter for <code>t_book_to_book_store.book_store_name</code>. 
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value);
 	}
 
 	/**
-	 * The table column <code>t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES t_book_store (name)
-	 * </pre></code>
-	 */
-	public java.lang.String getBookStoreName() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
+	 * Link this record to a given {@link org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord}
 	 */
 	public void setBookStoreName(org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord value) {
 		if (value == null) {
@@ -55,56 +31,21 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The table column <code>t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_to_book_store_t_book_store_1
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES t_book_store (name)
-	 * </pre></code>
+	 * Getter for <code>t_book_to_book_store.book_store_name</code>. 
 	 */
-	public org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.T_BOOK_STORE)
-			.where(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.NAME.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME)))
-			.fetchOne();
+	public java.lang.String getBookStoreName() {
+		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
 	}
 
 	/**
-	 * The table column <code>t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES t_book (ID)
-	 * </pre></code>
+	 * Setter for <code>t_book_to_book_store.book_id</code>. 
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_ID, value);
 	}
 
 	/**
-	 * The table column <code>t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES t_book (ID)
-	 * </pre></code>
-	 */
-	public java.lang.Integer getBookId() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord 
-	 * TBookRecord}
+	 * Link this record to a given {@link org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord}
 	 */
 	public void setBookId(org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord value) {
 		if (value == null) {
@@ -116,15 +57,42 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The table column <code>t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_t_book_to_book_store_t_book_1
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES t_book (ID)
-	 * </pre></code>
+	 * Getter for <code>t_book_to_book_store.book_id</code>. 
+	 */
+	public java.lang.Integer getBookId() {
+		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_ID);
+	}
+
+	/**
+	 * Setter for <code>t_book_to_book_store.stock</code>. 
+	 */
+	public void setStock(java.lang.Integer value) {
+		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.STOCK, value);
+	}
+
+	/**
+	 * Getter for <code>t_book_to_book_store.stock</code>. 
+	 */
+	public java.lang.Integer getStock() {
+		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.STOCK);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>t_book_store</code> referenced by this <code>t_book_to_book_store</code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.T_BOOK_STORE)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.NAME.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>t_book</code> referenced by this <code>t_book_to_book_store</code>
 	 */
 	public org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord fetchTBook() {
 		return create()
@@ -133,25 +101,16 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 			.fetchOne();
 	}
 
-	/**
-	 * The table column <code>t_book_to_book_store.stock</code>
-	 */
-	public void setStock(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.STOCK, value);
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>t_book_to_book_store.stock</code>
+	 * {@inheritDoc}
 	 */
-	public java.lang.Integer getStock() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.STOCK);
-	}
-
-	/**
-	 * Create a detached TBookToBookStoreRecord
-	 */
-	public TBookToBookStoreRecord() {
-		super(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	@Override
+	public org.jooq.Record1<java.lang.String> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -220,5 +179,16 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer value3() {
 		return getStock();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookToBookStoreRecord
+	 */
+	public TBookToBookStoreRecord() {
+		super(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 }

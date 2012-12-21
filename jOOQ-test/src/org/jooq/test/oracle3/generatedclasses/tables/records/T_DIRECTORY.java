@@ -11,12 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = 531896339;
+	private static final long serialVersionUID = -102629010;
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -24,9 +22,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -36,25 +32,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> fetchT_DIRECTORYList() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT PK_T_DIRECTORY_SELF
-	 * FOREIGN KEY (PARENT_ID)
-	 * REFERENCES TEST.T_DIRECTORY (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	@Override
 	public void setPARENT_ID(java.lang.Integer value) {
@@ -62,23 +40,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT PK_T_DIRECTORY_SELF
-	 * FOREIGN KEY (PARENT_ID)
-	 * REFERENCES TEST.T_DIRECTORY (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
-	@Override
-	public java.lang.Integer getPARENT_ID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY 
-	 * T_DIRECTORY}
+	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY}
 	 */
 	public void setPARENT_ID(org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY value) {
 		if (value == null) {
@@ -90,23 +52,16 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.PARENT_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT PK_T_DIRECTORY_SELF
-	 * FOREIGN KEY (PARENT_ID)
-	 * REFERENCES TEST.T_DIRECTORY (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY fetchT_DIRECTORY() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID)))
-			.fetchOne();
+	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
+	@Override
+	public java.lang.Integer getPARENT_ID() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID);
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
+	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	@Override
 	public void setIS_DIRECTORY(java.lang.Integer value) {
@@ -114,7 +69,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>
+	 * Getter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	@Override
@@ -123,7 +78,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.name</code>
+	 * Setter for <code>TEST.T_DIRECTORY.name</code>. 
 	 */
 	@Override
 	public void setname(java.lang.String value) {
@@ -131,7 +86,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>TEST.T_DIRECTORY.name</code>
+	 * Getter for <code>TEST.T_DIRECTORY.name</code>. 
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
 	@Override
@@ -139,11 +94,40 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.name);
 	}
 
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached T_DIRECTORY
+	 * Fetch a list of <code>TEST.T_DIRECTORY</code> referencing this <code>TEST.T_DIRECTORY</code>
 	 */
-	public T_DIRECTORY() {
-		super(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY);
+	public org.jooq.Result<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> fetchT_DIRECTORYList() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>TEST.T_DIRECTORY</code> referenced by this <code>TEST.T_DIRECTORY</code>
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY fetchT_DIRECTORY() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID)))
+			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -228,5 +212,40 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.String value4() {
 		return getname();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE from) {
+		setID(from.getID());
+		setPARENT_ID(from.getPARENT_ID());
+		setIS_DIRECTORY(from.getIS_DIRECTORY());
+		setname(from.getname());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_DIRECTORY
+	 */
+	public T_DIRECTORY() {
+		super(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY);
 	}
 }

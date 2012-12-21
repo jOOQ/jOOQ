@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
 public class T_BOOLEANS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = 208650311;
+	private static final long serialVersionUID = 491408491;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer ONE_ZERO;
@@ -145,5 +145,36 @@ public class T_BOOLEANS_POJO extends java.lang.ThreadDeath implements java.lang.
 	@Override
 	public void setN_BOOLEAN(java.lang.Integer N_BOOLEAN) {
 		this.N_BOOLEAN = N_BOOLEAN;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE from) {
+		setID(from.getID());
+		setONE_ZERO(from.getONE_ZERO());
+		setTRUE_FALSE_LC(from.getTRUE_FALSE_LC());
+		setTRUE_FALSE_UC(from.getTRUE_FALSE_UC());
+		setYES_NO_LC(from.getYES_NO_LC());
+		setYES_NO_UC(from.getYES_NO_UC());
+		setY_N_LC(from.getY_N_LC());
+		setY_N_UC(from.getY_N_UC());
+		setVC_BOOLEAN(from.getVC_BOOLEAN());
+		setC_BOOLEAN(from.getC_BOOLEAN());
+		setN_BOOLEAN(from.getN_BOOLEAN());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

@@ -11,12 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
 public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_71> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, java.lang.Short>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE {
 
-	private static final long serialVersionUID = -2123512488;
+	private static final long serialVersionUID = -721616921;
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -24,9 +22,7 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -36,13 +32,7 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	@Override
 	public void setTEST_CASE_64_69_ID(java.lang.Short value) {
@@ -50,23 +40,7 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "TEST_CASE_64_69_ID", precision = 4)
-	@Override
-	public java.lang.Short getTEST_CASE_64_69_ID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69 
-	 * X_TEST_CASE_64_69}
+	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69}
 	 */
 	public void setTEST_CASE_64_69_ID(org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69 value) {
 		if (value == null) {
@@ -78,13 +52,20 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	}
 
 	/**
-	 * The table column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES TEST.X_TEST_CASE_64_69 (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 */
+	@javax.persistence.Column(name = "TEST_CASE_64_69_ID", precision = 4)
+	@Override
+	public java.lang.Short getTEST_CASE_64_69_ID() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
+	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a <code>TEST.X_TEST_CASE_64_69</code> referenced by this <code>TEST.X_TEST_CASE_71</code>
 	 */
 	public org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69 fetchX_TEST_CASE_64_69() {
 		return create()
@@ -93,11 +74,16 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 			.fetchOne();
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached X_TEST_CASE_71
+	 * {@inheritDoc}
 	 */
-	public X_TEST_CASE_71() {
-		super(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -150,5 +136,38 @@ public class X_TEST_CASE_71 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	@Override
 	public java.lang.Short value2() {
 		return getTEST_CASE_64_69_ID();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE from) {
+		setID(from.getID());
+		setTEST_CASE_64_69_ID(from.getTEST_CASE_64_69_ID());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached X_TEST_CASE_71
+	 */
+	public X_TEST_CASE_71() {
+		super(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_71.X_TEST_CASE_71);
 	}
 }

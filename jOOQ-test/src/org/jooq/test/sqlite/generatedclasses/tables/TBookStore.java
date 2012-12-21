@@ -9,10 +9,10 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1131724182;
+	private static final long serialVersionUID = 158533707;
 
 	/**
-	 * The singleton instance of t_book_store
+	 * The singleton instance of <code>t_book_store</code>
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.sqlite.generatedclasses.tables.TBookStore();
 
@@ -25,9 +25,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 	}
 
 	/**
-	 * The table column <code>t_book_store.name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>t_book_store.name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_STORE);
 
@@ -38,13 +36,18 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 		super("t_book_store");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord> getMainKey() {
 		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK_STORE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK_STORE_NAME);
 	}

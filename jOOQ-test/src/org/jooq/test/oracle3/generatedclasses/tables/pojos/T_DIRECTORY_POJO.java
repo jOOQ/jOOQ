@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class T_DIRECTORY_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = -187939519;
+	private static final long serialVersionUID = 1849415842;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer PARENT_ID;
@@ -61,5 +61,29 @@ public class T_DIRECTORY_POJO extends java.lang.ThreadDeath implements java.lang
 	@Override
 	public void setname(java.lang.String name) {
 		this.name = name;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE from) {
+		setID(from.getID());
+		setPARENT_ID(from.getPARENT_ID());
+		setIS_DIRECTORY(from.getIS_DIRECTORY());
+		setname(from.getname());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

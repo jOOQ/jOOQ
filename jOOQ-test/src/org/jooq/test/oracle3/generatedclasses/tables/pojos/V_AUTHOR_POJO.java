@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 407022752;
+	private static final long serialVersionUID = 1989225509;
 
 	private java.lang.Integer                                                 ID;
 	private java.lang.String                                                  FIRST_NAME;
@@ -84,5 +84,31 @@ public class V_AUTHOR_POJO extends java.lang.ThreadDeath implements java.lang.Cl
 	@Override
 	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE ADDRESS) {
 		this.ADDRESS = ADDRESS;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE from) {
+		setID(from.getID());
+		setFIRST_NAME(from.getFIRST_NAME());
+		setLAST_NAME(from.getLAST_NAME());
+		setDATE_OF_BIRTH(from.getDATE_OF_BIRTH());
+		setYEAR_OF_BIRTH(from.getYEAR_OF_BIRTH());
+		setADDRESS(from.getADDRESS());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

@@ -14,142 +14,116 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface T_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_BOOK.ID</code>. The book ID
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_BOOK.ID</code>. The book ID
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	public void setAUTHOR_ID(java.lang.Integer value);
 
 	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	public java.lang.Integer getAUTHOR_ID();
 
 	/**
-	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCO_AUTHOR_ID(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCO_AUTHOR_ID();
 
 	/**
-	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
+	 * Setter for <code>TEST.T_BOOK.DETAILS_ID</code>. 
 	 */
 	public void setDETAILS_ID(java.lang.Integer value);
 
 	/**
-	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
+	 * Getter for <code>TEST.T_BOOK.DETAILS_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDETAILS_ID();
 
 	/**
-	 * The book's title
+	 * Setter for <code>TEST.T_BOOK.TITLE</code>. The book's title
 	 */
 	public void setTITLE(java.lang.String value);
 
 	/**
-	 * The book's title
+	 * Getter for <code>TEST.T_BOOK.TITLE</code>. The book's title
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTITLE();
 
 	/**
-	 * The year the book was published in
+	 * Setter for <code>TEST.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	public void setPUBLISHED_IN(java.lang.Integer value);
 
 	/**
-	 * The year the book was published in
+	 * Getter for <code>TEST.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	public java.lang.Integer getPUBLISHED_IN();
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
 	public void setLANGUAGE_ID(java.lang.Integer value);
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	public java.lang.Integer getLANGUAGE_ID();
 
 	/**
-	 * Some textual content of the book
+	 * Setter for <code>TEST.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	public void setCONTENT_TEXT(java.lang.String value);
 
 	/**
-	 * Some textual content of the book
+	 * Getter for <code>TEST.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getCONTENT_TEXT();
 
 	/**
-	 * Some binary content of the book
+	 * Setter for <code>TEST.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	public void setCONTENT_PDF(byte[] value);
 
 	/**
-	 * Some binary content of the book
+	 * Getter for <code>TEST.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getCONTENT_PDF();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface T_BOOK_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface T_BOOK_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE> E into(E into);
 }

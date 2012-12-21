@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class T_DATES_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DATES_INTERFACE {
 
-	private static final long serialVersionUID = 131424978;
+	private static final long serialVersionUID = 2004745843;
 
 	private java.lang.Integer          ID;
 	private java.sql.Date              D;
@@ -109,5 +109,33 @@ public class T_DATES_POJO extends java.lang.ThreadDeath implements java.lang.Clo
 	@Override
 	public void setI_D(org.jooq.types.DayToSecond I_D) {
 		this.I_D = I_D;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DATES_INTERFACE from) {
+		setID(from.getID());
+		setD(from.getD());
+		setT(from.getT());
+		setTS(from.getTS());
+		setD_INT(from.getD_INT());
+		setTS_BIGINT(from.getTS_BIGINT());
+		setI_Y(from.getI_Y());
+		setI_D(from.getI_D());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DATES_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

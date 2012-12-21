@@ -111,5 +111,4 @@ public class SybaseDataType<T> {
     public static final DataType<byte[]>     IMAGE                      = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.BINARY, "image");
     public static final DataType<byte[]>     VARBIT                     = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.VARBINARY, "varbit");
     public static final DataType<byte[]>     LONGVARBIT                 = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.LONGVARBINARY, "longvarbit");
-
 }

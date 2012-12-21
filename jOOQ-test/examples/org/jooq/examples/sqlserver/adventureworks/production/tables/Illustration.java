@@ -32,7 +32,7 @@ public class Illustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	/**
 	 * The column <code>Production.Illustration.Diagram</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration, java.lang.Object> Diagram = createField("Diagram", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration, java.lang.Object> Diagram = createField("Diagram", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * The column <code>Production.Illustration.ModifiedDate</code>. 

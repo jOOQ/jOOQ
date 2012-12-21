@@ -9,10 +9,10 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 830148710;
+	private static final long serialVersionUID = -1056956165;
 
 	/**
-	 * The singleton instance of v_book
+	 * The singleton instance of <code>v_book</code>
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.sqlite.generatedclasses.tables.VBook();
 
@@ -25,47 +25,47 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generate
 	}
 
 	/**
-	 * The table column <code>v_book.ID</code>
+	 * The column <code>v_book.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>v_book.AUTHOR_ID</code>
+	 * The column <code>v_book.AUTHOR_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>v_book.co_author_id</code>
+	 * The column <code>v_book.co_author_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>v_book.DETAILS_ID</code>
+	 * The column <code>v_book.DETAILS_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>v_book.TITLE</code>
+	 * The column <code>v_book.TITLE</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_BOOK);
 
 	/**
-	 * The table column <code>v_book.PUBLISHED_IN</code>
+	 * The column <code>v_book.PUBLISHED_IN</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>v_book.LANGUAGE_ID</code>
+	 * The column <code>v_book.LANGUAGE_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>v_book.CONTENT_TEXT</code>
+	 * The column <code>v_book.CONTENT_TEXT</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR, V_BOOK);
 
 	/**
-	 * The table column <code>v_book.CONTENT_PDF</code>
+	 * The column <code>v_book.CONTENT_PDF</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.LONGVARBINARY, V_BOOK);
 

@@ -11,14 +11,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
-public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
+public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable, org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 1496241171;
+	private static final long serialVersionUID = -1864160123;
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>TEST.T_BOOK.ID</code>. The book ID
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
@@ -26,9 +24,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>TEST.T_BOOK.ID</code>. The book ID
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
@@ -38,25 +34,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> fetchT_BOOK_TO_BOOK_STOREList() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	@Override
 	public void setAUTHOR_ID(java.lang.Integer value) {
@@ -64,23 +42,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
-	@Override
-	public java.lang.Integer getAUTHOR_ID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR 
-	 * T_AUTHOR}
+	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR}
 	 */
 	public void setAUTHOR_ID(org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR value) {
 		if (value == null) {
@@ -92,29 +54,16 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The author ID in entity 'author'
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_AUTHOR_ID
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR fetchT_AUTHORByAUTHOR_ID() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID)))
-			.fetchOne();
+	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
+	@Override
+	public java.lang.Integer getAUTHOR_ID() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID);
 	}
 
 	/**
-	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	@Override
 	public void setCO_AUTHOR_ID(java.lang.Integer value) {
@@ -122,23 +71,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
-	@Override
-	public java.lang.Integer getCO_AUTHOR_ID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CO_AUTHOR_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR 
-	 * T_AUTHOR}
+	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR}
 	 */
 	public void setCO_AUTHOR_ID(org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR value) {
 		if (value == null) {
@@ -150,23 +83,16 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The table column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_CO_AUTHOR_ID
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES TEST.T_AUTHOR (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR fetchT_AUTHORByCO_AUTHOR_ID() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CO_AUTHOR_ID)))
-			.fetchOne();
+	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
+	@Override
+	public java.lang.Integer getCO_AUTHOR_ID() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CO_AUTHOR_ID);
 	}
 
 	/**
-	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
+	 * Setter for <code>TEST.T_BOOK.DETAILS_ID</code>. 
 	 */
 	@Override
 	public void setDETAILS_ID(java.lang.Integer value) {
@@ -174,7 +100,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The table column <code>TEST.T_BOOK.DETAILS_ID</code>
+	 * Getter for <code>TEST.T_BOOK.DETAILS_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	@Override
@@ -183,7 +109,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The book's title
+	 * Setter for <code>TEST.T_BOOK.TITLE</code>. The book's title
 	 */
 	@Override
 	public void setTITLE(java.lang.String value) {
@@ -191,7 +117,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The book's title
+	 * Getter for <code>TEST.T_BOOK.TITLE</code>. The book's title
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	@Override
@@ -200,7 +126,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The year the book was published in
+	 * Setter for <code>TEST.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	@Override
 	public void setPUBLISHED_IN(java.lang.Integer value) {
@@ -208,7 +134,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The year the book was published in
+	 * Getter for <code>TEST.T_BOOK.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	@Override
@@ -217,13 +143,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
+	 * Setter for <code>TEST.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
 	@Override
 	public void setLANGUAGE_ID(java.lang.Integer value) {
@@ -231,23 +151,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
-	 */
-	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
-	@Override
-	public java.lang.Integer getLANGUAGE_ID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE 
-	 * T_LANGUAGE}
+	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE}
 	 */
 	public void setLANGUAGE_ID(org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE value) {
 		if (value == null) {
@@ -259,23 +163,16 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The language of the book
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_T_BOOK_LANGUAGE_ID
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES TEST.T_LANGUAGE (ID)
-	 * </pre></code>
+	 * Getter for <code>TEST.T_BOOK.LANGUAGE_ID</code>. The language of the book
 	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE fetchT_LANGUAGE() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID)))
-			.fetchOne();
+	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
+	@Override
+	public java.lang.Integer getLANGUAGE_ID() {
+		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID);
 	}
 
 	/**
-	 * Some textual content of the book
+	 * Setter for <code>TEST.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	@Override
 	public void setCONTENT_TEXT(java.lang.String value) {
@@ -283,7 +180,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Some textual content of the book
+	 * Getter for <code>TEST.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	@Override
@@ -292,7 +189,7 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Some binary content of the book
+	 * Setter for <code>TEST.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	@Override
 	public void setCONTENT_PDF(byte[] value) {
@@ -300,13 +197,266 @@ public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * Some binary content of the book
+	 * Getter for <code>TEST.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	@Override
 	public byte[] getCONTENT_PDF() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CONTENT_PDF);
 	}
+
+	// -------------------------------------------------------------------------
+	// Foreign key navigation methods
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>TEST.T_BOOK_TO_BOOK_STORE</code> referencing this <code>TEST.T_BOOK</code>
+	 */
+	public org.jooq.Result<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> fetchT_BOOK_TO_BOOK_STOREList() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_TO_BOOK_STORE.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.ID)))
+			.fetch();
+	}
+
+	/**
+	 * Fetch a <code>TEST.T_AUTHOR</code> referenced by this <code>TEST.T_BOOK</code>
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR fetchT_AUTHORByAUTHOR_ID() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>TEST.T_AUTHOR</code> referenced by this <code>TEST.T_BOOK</code>
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.records.T_AUTHOR fetchT_AUTHORByCO_AUTHOR_ID() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CO_AUTHOR_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a <code>TEST.T_LANGUAGE</code> referenced by this <code>TEST.T_BOOK</code>
+	 */
+	public org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE fetchT_LANGUAGE() {
+		return create()
+			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE)
+			.where(org.jooq.test.oracle3.generatedclasses.tables.T_LANGUAGE.T_LANGUAGE.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID)))
+			.fetchOne();
+	}
+
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
+	}
+
+	// -------------------------------------------------------------------------
+	// Record9 type implementation
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field1() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field2() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field3() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CO_AUTHOR_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field4() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.DETAILS_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field5() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.TITLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field6() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.PUBLISHED_IN;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.Integer> field7() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.LANGUAGE_ID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<java.lang.String> field8() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CONTENT_TEXT;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Field<byte[]> field9() {
+		return org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.CONTENT_PDF;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value1() {
+		return getID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value2() {
+		return getAUTHOR_ID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value3() {
+		return getCO_AUTHOR_ID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value4() {
+		return getDETAILS_ID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value5() {
+		return getTITLE();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value6() {
+		return getPUBLISHED_IN();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.Integer value7() {
+		return getLANGUAGE_ID();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.lang.String value8() {
+		return getCONTENT_TEXT();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public byte[] value9() {
+		return getCONTENT_PDF();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE from) {
+		setID(from.getID());
+		setAUTHOR_ID(from.getAUTHOR_ID());
+		setCO_AUTHOR_ID(from.getCO_AUTHOR_ID());
+		setDETAILS_ID(from.getDETAILS_ID());
+		setTITLE(from.getTITLE());
+		setPUBLISHED_IN(from.getPUBLISHED_IN());
+		setLANGUAGE_ID(from.getLANGUAGE_ID());
+		setCONTENT_TEXT(from.getCONTENT_TEXT());
+		setCONTENT_PDF(from.getCONTENT_PDF());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create a detached T_BOOK

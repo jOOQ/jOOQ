@@ -42,7 +42,7 @@ public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sq
 	/**
 	 * The column <code>Sales.Store.Demographics</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Store, java.lang.Object> Demographics = createField("Demographics", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Store, java.lang.Object> Demographics = createField("Demographics", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * The column <code>Sales.Store.rowguid</code>. 

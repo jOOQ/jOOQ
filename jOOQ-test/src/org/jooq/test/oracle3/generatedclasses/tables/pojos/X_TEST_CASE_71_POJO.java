@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
 public class X_TEST_CASE_71_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE {
 
-	private static final long serialVersionUID = 1014970588;
+	private static final long serialVersionUID = 1067975073;
 
 	private java.lang.Integer ID;
 	private java.lang.Short   TEST_CASE_64_69_ID;
@@ -37,5 +37,27 @@ public class X_TEST_CASE_71_POJO extends java.lang.ThreadDeath implements java.l
 	@Override
 	public void setTEST_CASE_64_69_ID(java.lang.Short TEST_CASE_64_69_ID) {
 		this.TEST_CASE_64_69_ID = TEST_CASE_64_69_ID;
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE from) {
+		setID(from.getID());
+		setTEST_CASE_64_69_ID(from.getTEST_CASE_64_69_ID());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_71_INTERFACE> E into(E into) {
+		into.from(this);
+		return into;
 	}
 }

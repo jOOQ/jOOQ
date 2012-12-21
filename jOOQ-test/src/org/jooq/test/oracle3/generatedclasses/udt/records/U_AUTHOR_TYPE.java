@@ -9,56 +9,53 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings("all")
 public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 201497634;
+	private static final long serialVersionUID = -23109439;
 
 
 	/**
-	 * The UDT column <code>TEST.U_AUTHOR_TYPE.ID</code>
+	 * Setter for <code>TEST.U_AUTHOR_TYPE.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.ID, value);
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_AUTHOR_TYPE.ID</code>
+	 * Getter for <code>TEST.U_AUTHOR_TYPE.ID</code>. 
 	 */
 	public java.lang.Integer getID() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.ID);
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>
+	 * Setter for <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>. 
 	 */
 	public void setFIRST_NAME(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.FIRST_NAME, value);
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>
+	 * Getter for <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>. 
 	 */
 	public java.lang.String getFIRST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.FIRST_NAME);
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>
+	 * Setter for <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>. 
 	 */
 	public void setLAST_NAME(java.lang.String value) {
 		setValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.LAST_NAME, value);
 	}
 
 	/**
-	 * The UDT column <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>
+	 * Getter for <code>TEST.U_AUTHOR_TYPE.LAST_NAME</code>. 
 	 */
 	public java.lang.String getLAST_NAME() {
 		return getValue(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.LAST_NAME);
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.COUNT_BOOKS
-	 *
-	 * @param SELF
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.COUNT_BOOKS</code>
 	 */
 	public java.math.BigDecimal call_COUNT_BOOKS() {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS f = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS();
@@ -69,10 +66,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.GET_AUTHOR
-	 *
-	 * @param P_ID
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_GET_AUTHOR(org.jooq.Configuration configuration, java.lang.Number P_ID) {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_AUTHOR f = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_AUTHOR();
@@ -83,13 +77,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.GET_BOOKS
-	 *
-	 * @param SELF IN OUT parameter
-	 * @param BOOK1 OUT parameter
-	 * @param BOOK2 OUT parameter
-	 * @param BOOKS OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.GET_BOOKS</code>
 	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS call_GET_BOOKS() {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS();
@@ -101,10 +89,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.LOAD
-	 *
-	 * @param SELF IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.LOAD</code>
 	 */
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_LOAD() {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD();
@@ -116,13 +101,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * Call TEST.U_AUTHOR_TYPE.NEW_AUTHOR
-	 *
-	 * @param P_ID IN parameter
-	 * @param P_FIRST_NAME IN parameter
-	 * @param P_LAST_NAME IN parameter
-	 * @param P_AUTHOR OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR</code>
 	 */
 	public static org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE call_NEW_AUTHOR(org.jooq.Configuration configuration, java.lang.Number P_ID, java.lang.String P_FIRST_NAME, java.lang.String P_LAST_NAME) {
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.NEW_AUTHOR p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.NEW_AUTHOR();
@@ -134,6 +113,9 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 		return p.getP_AUTHOR();
 	}
 
+	/**
+	 * Create a new <code>TEST.U_AUTHOR_TYPE</code> record
+	 */
 	public U_AUTHOR_TYPE() {
 		super(org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE);
 	}

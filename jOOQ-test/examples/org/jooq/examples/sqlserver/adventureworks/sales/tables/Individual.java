@@ -25,22 +25,22 @@ public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	}
 
 	/**
-	 * The column <code>Sales.Individual.CustomerID</code>. 
+	 * The column <code>Sales.Individual.CustomerID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Integer> CustomerID = createField("CustomerID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>Sales.Individual.ContactID</code>. 
+	 * The column <code>Sales.Individual.ContactID</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Integer> ContactID = createField("ContactID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>Sales.Individual.Demographics</code>. 
+	 * The column <code>Sales.Individual.Demographics</code>.
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Object> Demographics = createField("Demographics", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.lang.Object> Demographics = createField("Demographics", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
-	 * The column <code>Sales.Individual.ModifiedDate</code>. 
+	 * The column <code>Sales.Individual.ModifiedDate</code>.
 	 */
 	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual, java.sql.Timestamp> ModifiedDate = createField("ModifiedDate", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 

@@ -9,21 +9,20 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1621253360;
-
+	private static final long serialVersionUID = -600354351;
 
 	/**
-	 * The procedure parameter <code>TEST.P_GET_ONE_CURSOR.TOTAL</code>
+	 * The parameter <code>TEST.P_GET_ONE_CURSOR.TOTAL</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> TOTAL = createParameter("TOTAL", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The procedure parameter <code>TEST.P_GET_ONE_CURSOR.BOOKS</code>
+	 * The parameter <code>TEST.P_GET_ONE_CURSOR.BOOKS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The procedure parameter <code>TEST.P_GET_ONE_CURSOR.BOOK_IDS</code>
+	 * The parameter <code>TEST.P_GET_ONE_CURSOR.BOOK_IDS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 

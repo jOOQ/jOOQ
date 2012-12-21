@@ -9,16 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<org.jooq.Result<org.jooq.Record>> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 783180301;
-
+	private static final long serialVersionUID = -1661743523;
 
 	/**
-	 * The procedure parameter <code>TEST.F_GET_ONE_CURSOR.RETURN_VALUE</code>
+	 * The parameter <code>TEST.F_GET_ONE_CURSOR.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The procedure parameter <code>TEST.F_GET_ONE_CURSOR.BOOK_IDS</code>
+	 * The parameter <code>TEST.F_GET_ONE_CURSOR.BOOK_IDS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
@@ -40,9 +39,7 @@ public class F_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<org.jooq.Res
 	}
 
 	/**
-	 * Set the <code>BOOK_IDS</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>BOOK_IDS</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setBOOK_IDS(org.jooq.Field<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> field) {
 		setField(BOOK_IDS, field);

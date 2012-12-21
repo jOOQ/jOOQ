@@ -87,7 +87,7 @@ public class Contact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	/**
 	 * The column <code>Person.Contact.AdditionalContactInfo</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.Object> AdditionalContactInfo = createField("AdditionalContactInfo", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact, java.lang.Object> AdditionalContactInfo = createField("AdditionalContactInfo", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * The column <code>Person.Contact.rowguid</code>. 

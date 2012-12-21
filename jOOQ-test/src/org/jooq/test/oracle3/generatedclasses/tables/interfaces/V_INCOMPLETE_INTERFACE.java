@@ -12,155 +12,115 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
 public interface V_INCOMPLETE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 
 	 */
 	public void setID(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID")
 	public java.lang.Object getID();
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
 	 */
 	public void setAUTHOR_ID(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID")
 	public java.lang.Object getAUTHOR_ID();
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCO_AUTHOR_ID(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID")
 	public java.lang.Object getCO_AUTHOR_ID();
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
 	 */
 	public void setDETAILS_ID(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.DETAILS_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID")
 	public java.lang.Object getDETAILS_ID();
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.TITLE</code>. 
 	 */
 	public void setTITLE(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.TITLE</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.TITLE</code>. 
 	 */
 	@javax.persistence.Column(name = "TITLE")
 	public java.lang.Object getTITLE();
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
 	 */
 	public void setPUBLISHED_IN(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN")
 	public java.lang.Object getPUBLISHED_IN();
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
 	 */
 	public void setLANGUAGE_ID(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID")
 	public java.lang.Object getLANGUAGE_ID();
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
 	 */
 	public void setCONTENT_TEXT(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.Object getCONTENT_TEXT();
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
 	 */
 	public void setCONTENT_PDF(java.lang.Object value);
 
 	/**
-	 * The table column <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>
-	 * <p>
-	 * The SQL type of this item (UNDEFINED) could not be mapped.<br/>
-	 * Deserialising this field might not work!
+	 * Getter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public java.lang.Object getCONTENT_PDF();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface V_INCOMPLETE_INTERFACE
+	 */
+	public void from(org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface V_INCOMPLETE_INTERFACE
+	 */
+	public <E extends org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE> E into(E into);
 }

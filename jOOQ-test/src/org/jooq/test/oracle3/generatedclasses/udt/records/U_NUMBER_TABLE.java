@@ -9,17 +9,26 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings("all")
 public class U_NUMBER_TABLE extends org.jooq.impl.ArrayRecordImpl<java.lang.Integer> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -86017797;
+	private static final long serialVersionUID = -1388079717;
 
+	/**
+	 * Create a new <code>TEST.U_NUMBER_TABLE</code> record
+	 */
 	public U_NUMBER_TABLE(org.jooq.Configuration configuration) {
 		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_NUMBER_TABLE", org.jooq.impl.SQLDataType.INTEGER, configuration);
 	}
 
+	/**
+	 * Create a new <code>TEST.U_NUMBER_TABLE</code> record
+	 */
 	public U_NUMBER_TABLE(org.jooq.Configuration configuration, java.lang.Integer... array) {
 		this(configuration);
 		set(array);
 	}
 
+	/**
+	 * Create a new <code>TEST.U_NUMBER_TABLE</code> record
+	 */
 	public U_NUMBER_TABLE(org.jooq.Configuration configuration, java.util.List<? extends java.lang.Integer> list) {
 		this(configuration);
 		setList(list);

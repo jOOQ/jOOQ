@@ -107,7 +107,7 @@ public class vIndividualCustomer extends org.jooq.impl.TableImpl<org.jooq.exampl
 	/**
 	 * The column <code>Sales.vIndividualCustomer.Demographics</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualCustomer, java.lang.Object> Demographics = createField("Demographics", org.jooq.util.sqlserver.SQLServerDataType.getDefaultDataType("xml"), this);
+	public final org.jooq.TableField<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.vIndividualCustomer, java.lang.Object> Demographics = createField("Demographics", org.jooq.impl.DefaultDataType.getDefaultDataType("xml"), this);
 
 	/**
 	 * Create a <code>Sales.vIndividualCustomer</code> table reference

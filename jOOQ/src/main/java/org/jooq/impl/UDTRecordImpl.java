@@ -98,7 +98,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     }
 
     private final <T> void setValue(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
-        setValue(field, FieldTypeHelper.getFromSQLInput(configuration, stream, field));
+        setValue(field, Utils.getFromSQLInput(configuration, stream, field));
     }
 
     @Override
@@ -109,6 +109,6 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     }
 
     private final <T> void setValue(SQLOutput stream, Field<T> field) throws SQLException {
-        FieldTypeHelper.writeToSQLOutput(stream, field, getValue(field));
+        Utils.writeToSQLOutput(stream, field, getValue(field));
     }
 }

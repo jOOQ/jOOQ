@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Integer.toOctalString;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -50,6 +51,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.tools.StringUtils.leftPad;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -74,11 +76,12 @@ import org.jooq.types.Interval;
  */
 class Val<T> extends AbstractField<T> implements Param<T> {
 
-    private static final long serialVersionUID = 6807729087019209084L;
+    private static final long   serialVersionUID = 6807729087019209084L;
+    private static final char[] HEX              = "0123456789abcdef".toCharArray();
 
-    private final String      paramName;
-    private T                 value;
-    private boolean           inline;
+    private final String        paramName;
+    private T                   value;
+    private boolean             inline;
 
     Val(T value, DataType<T> type) {
         this(value, type, null);
@@ -356,27 +359,27 @@ class Val<T> extends AbstractField<T> implements Param<T> {
 
                 if (asList(ASE, SQLSERVER, SYBASE).contains(dialect)) {
                     context.sql("0x")
-                           .sql(Utils.convertBytesToHex(binary));
+                           .sql(convertBytesToHex(binary));
                 }
                 else if (dialect == DB2) {
                     context.keyword("blob")
                            .sql("(X'")
-                           .sql(Utils.convertBytesToHex(binary))
+                           .sql(convertBytesToHex(binary))
                            .sql("')");
                 }
                 else if (asList(DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE).contains(dialect)) {
                     context.sql("X'")
-                           .sql(Utils.convertBytesToHex(binary))
+                           .sql(convertBytesToHex(binary))
                            .sql("'");
                 }
                 else if (asList(ORACLE).contains(dialect)) {
                     context.keyword("hextoraw('")
-                           .sql(Utils.convertBytesToHex(binary))
+                           .sql(convertBytesToHex(binary))
                            .sql("')");
                 }
                 else if (dialect == POSTGRES) {
                     context.sql("E'")
-                           .sql(Utils.convertBytesToPostgresOctal(binary))
+                           .sql(convertBytesToPostgresOctal(binary))
                            .keyword("'::bytea");
                 }
 
@@ -384,7 +387,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                 // that do not support inlining binary data
                 else {
                     context.sql("X'")
-                           .sql(Utils.convertBytesToHex(binary))
+                           .sql(convertBytesToHex(binary))
                            .sql("'");
                 }
             }
@@ -577,5 +580,47 @@ class Val<T> extends AbstractField<T> implements Param<T> {
 
     private final boolean isInline(RenderContext context) {
         return isInline() || context.inline();
+    }
+
+    /**
+     * Convert a byte array to a hex encoded string.
+     *
+     * @param value the byte array
+     * @return the hex encoded string
+     */
+    private static final String convertBytesToHex(byte[] value) {
+        return convertBytesToHex(value, value.length);
+    }
+
+    /**
+     * Convert a byte array to a hex encoded string.
+     *
+     * @param value the byte array
+     * @param len the number of bytes to encode
+     * @return the hex encoded string
+     */
+    private static final String convertBytesToHex(byte[] value, int len) {
+        char[] buff = new char[len + len];
+        char[] hex = HEX;
+        for (int i = 0; i < len; i++) {
+            int c = value[i] & 0xff;
+            buff[i + i] = hex[c >> 4];
+            buff[i + i + 1] = hex[c & 0xf];
+        }
+        return new String(buff);
+    }
+
+    /**
+     * Postgres uses octals instead of hex encoding
+     */
+    private static final String convertBytesToPostgresOctal(byte[] binary) {
+        StringBuilder sb = new StringBuilder();
+
+        for (byte b : binary) {
+            sb.append("\\\\");
+            sb.append(leftPad(toOctalString(b), 3, '0'));
+        }
+
+        return sb.toString();
     }
 }

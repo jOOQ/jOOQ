@@ -606,7 +606,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
             // Match the first constructor by parameter length
             if (parameterTypes.length == getFields().size()) {
-                Object[] converted = Utils.convert(parameterTypes, intoArray());
+                Object[] converted = Convert.convert(intoArray(), parameterTypes);
                 return accessible(constructor).newInstance(converted);
             }
         }
@@ -659,7 +659,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             }
         }
 
-        Object[] converted = Utils.convert(parameterTypes, parameterValues);
+        Object[] converted = Convert.convert(parameterValues, parameterTypes);
         return accessible(constructor).newInstance(converted);
     }
 

@@ -56,7 +56,7 @@ class DefaultArray implements Array {
 
     @Override
     public String getBaseTypeName() {
-        return AbstractDataType.getDataType(dialect, type.getComponentType()).getTypeName();
+        return DefaultDataType.getDataType(dialect, type.getComponentType()).getTypeName();
     }
 
     @Override

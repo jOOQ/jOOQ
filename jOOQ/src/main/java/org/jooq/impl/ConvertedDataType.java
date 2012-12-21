@@ -44,7 +44,7 @@ import org.jooq.DataType;
  *
  * @author Lukas Eder
  */
-class ConvertedDataType<T, U> extends AbstractDataType<U> {
+class ConvertedDataType<T, U> extends DefaultDataType<U> {
 
     /**
      * Generated UID

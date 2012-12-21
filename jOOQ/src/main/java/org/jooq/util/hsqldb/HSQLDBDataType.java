@@ -42,10 +42,11 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
@@ -57,80 +58,66 @@ import org.jooq.types.YearToMonth;
  * @see <a href="http://hsqldb.org/doc/guide/ch09.html#datatypes-section">http://hsqldb.org/doc/guide/ch09.html#datatypes-section</a>
  * @see <a href="http://hsqldb.org/doc/2.0/guide/sqlgeneral-chapt.html#sqlgeneral_types_ops-sect">http://hsqldb.org/doc/2.0/guide/sqlgeneral-chapt.html#sqlgeneral_types_ops-sect</a>
  */
-public class HSQLDBDataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                      serialVersionUID      = -5677365115109672781L;
+public class HSQLDBDataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final HSQLDBDataType<Byte>        TINYINT               = new HSQLDBDataType<Byte>(SQLDataType.TINYINT, "tinyint");
-    public static final HSQLDBDataType<Short>       SMALLINT              = new HSQLDBDataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final HSQLDBDataType<Integer>     INT                   = new HSQLDBDataType<Integer>(SQLDataType.INTEGER, "int");
-    public static final HSQLDBDataType<Integer>     INTEGER               = new HSQLDBDataType<Integer>(SQLDataType.INTEGER, "integer");
-    public static final HSQLDBDataType<Long>        BIGINT                = new HSQLDBDataType<Long>(SQLDataType.BIGINT, "bigint");
-    public static final HSQLDBDataType<Double>      DOUBLE                = new HSQLDBDataType<Double>(SQLDataType.DOUBLE, "double");
-    public static final HSQLDBDataType<Double>      DOUBLEPRECISION       = new HSQLDBDataType<Double>(SQLDataType.DOUBLE, "double precision");
-    public static final HSQLDBDataType<Double>      FLOAT                 = new HSQLDBDataType<Double>(SQLDataType.FLOAT, "float");
-    public static final HSQLDBDataType<Float>       REAL                  = new HSQLDBDataType<Float>(SQLDataType.REAL, "real");
-    public static final HSQLDBDataType<Boolean>     BOOLEAN               = new HSQLDBDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
-    public static final HSQLDBDataType<Boolean>     BIT                   = new HSQLDBDataType<Boolean>(SQLDataType.BIT, "bit");
-    public static final HSQLDBDataType<BigDecimal>  DECIMAL               = new HSQLDBDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
-    public static final HSQLDBDataType<BigDecimal>  NUMERIC               = new HSQLDBDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final HSQLDBDataType<String>      VARCHAR               = new HSQLDBDataType<String>(SQLDataType.VARCHAR, "varchar", "varchar(32672)");
-    public static final HSQLDBDataType<String>      LONGVARCHAR           = new HSQLDBDataType<String>(SQLDataType.LONGVARCHAR, "longvarchar");
-    public static final HSQLDBDataType<String>      CHAR                  = new HSQLDBDataType<String>(SQLDataType.CHAR, "char");
-    public static final HSQLDBDataType<String>      CHARACTER             = new HSQLDBDataType<String>(SQLDataType.CHAR, "character");
-    public static final HSQLDBDataType<String>      CHARACTERVARYING      = new HSQLDBDataType<String>(SQLDataType.VARCHAR, "character varying", "character varying(32672)");
-    public static final HSQLDBDataType<String>      CLOB                  = new HSQLDBDataType<String>(SQLDataType.CLOB, "clob");
-    public static final HSQLDBDataType<String>      CHARLARGEOBJECT       = new HSQLDBDataType<String>(SQLDataType.CLOB, "char large object", "clob");
-    public static final HSQLDBDataType<String>      CHARACTERLARGEOBJECT  = new HSQLDBDataType<String>(SQLDataType.CLOB, "character large object", "clob");
-    public static final HSQLDBDataType<Date>        DATE                  = new HSQLDBDataType<Date>(SQLDataType.DATE, "date");
-    public static final HSQLDBDataType<Time>        TIME                  = new HSQLDBDataType<Time>(SQLDataType.TIME, "time");
-    public static final HSQLDBDataType<Timestamp>   TIMESTAMP             = new HSQLDBDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
-    public static final HSQLDBDataType<Timestamp>   DATETIME              = new HSQLDBDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final HSQLDBDataType<byte[]>      LONGVARBINARY         = new HSQLDBDataType<byte[]>(SQLDataType.LONGVARBINARY, "longvarbinary");
-    public static final HSQLDBDataType<byte[]>      VARBINARY             = new HSQLDBDataType<byte[]>(SQLDataType.VARBINARY, "varbinary", "varbinary(32672)");
-    public static final HSQLDBDataType<byte[]>      BINARY                = new HSQLDBDataType<byte[]>(SQLDataType.BINARY, "binary");
-    public static final HSQLDBDataType<byte[]>      BLOB                  = new HSQLDBDataType<byte[]>(SQLDataType.BLOB, "blob");
-    public static final HSQLDBDataType<byte[]>      BINARYLARGEOBJECT     = new HSQLDBDataType<byte[]>(SQLDataType.BLOB, "binary large object", "blob");
-    public static final HSQLDBDataType<Object>      OTHER                 = new HSQLDBDataType<Object>(SQLDataType.OTHER, "other");
-    public static final HSQLDBDataType<YearToMonth> INTERVALYEARTOMONTH   = new HSQLDBDataType<YearToMonth>(SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
-    public static final HSQLDBDataType<DayToSecond> INTERVALDAYTOSECOND   = new HSQLDBDataType<DayToSecond>(SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
+    public static final DataType<Byte>        TINYINT               = new DefaultDataType<Byte>(SQLDialect.HSQLDB, SQLDataType.TINYINT, "tinyint");
+    public static final DataType<Short>       SMALLINT              = new DefaultDataType<Short>(SQLDialect.HSQLDB, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Integer>     INT                   = new DefaultDataType<Integer>(SQLDialect.HSQLDB, SQLDataType.INTEGER, "int");
+    public static final DataType<Integer>     INTEGER               = new DefaultDataType<Integer>(SQLDialect.HSQLDB, SQLDataType.INTEGER, "integer");
+    public static final DataType<Long>        BIGINT                = new DefaultDataType<Long>(SQLDialect.HSQLDB, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Double>      DOUBLE                = new DefaultDataType<Double>(SQLDialect.HSQLDB, SQLDataType.DOUBLE, "double");
+    public static final DataType<Double>      DOUBLEPRECISION       = new DefaultDataType<Double>(SQLDialect.HSQLDB, SQLDataType.DOUBLE, "double precision");
+    public static final DataType<Double>      FLOAT                 = new DefaultDataType<Double>(SQLDialect.HSQLDB, SQLDataType.FLOAT, "float");
+    public static final DataType<Float>       REAL                  = new DefaultDataType<Float>(SQLDialect.HSQLDB, SQLDataType.REAL, "real");
+    public static final DataType<Boolean>     BOOLEAN               = new DefaultDataType<Boolean>(SQLDialect.HSQLDB, SQLDataType.BOOLEAN, "boolean");
+    public static final DataType<Boolean>     BIT                   = new DefaultDataType<Boolean>(SQLDialect.HSQLDB, SQLDataType.BIT, "bit");
+    public static final DataType<BigDecimal>  DECIMAL               = new DefaultDataType<BigDecimal>(SQLDialect.HSQLDB, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal>  NUMERIC               = new DefaultDataType<BigDecimal>(SQLDialect.HSQLDB, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<String>      VARCHAR               = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.VARCHAR, "varchar", "varchar(32672)");
+    public static final DataType<String>      LONGVARCHAR           = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.LONGVARCHAR, "longvarchar");
+    public static final DataType<String>      CHAR                  = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.CHAR, "char");
+    public static final DataType<String>      CHARACTER             = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.CHAR, "character");
+    public static final DataType<String>      CHARACTERVARYING      = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.VARCHAR, "character varying", "character varying(32672)");
+    public static final DataType<String>      CLOB                  = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.CLOB, "clob");
+    public static final DataType<String>      CHARLARGEOBJECT       = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.CLOB, "char large object", "clob");
+    public static final DataType<String>      CHARACTERLARGEOBJECT  = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.CLOB, "character large object", "clob");
+    public static final DataType<Date>        DATE                  = new DefaultDataType<Date>(SQLDialect.HSQLDB, SQLDataType.DATE, "date");
+    public static final DataType<Time>        TIME                  = new DefaultDataType<Time>(SQLDialect.HSQLDB, SQLDataType.TIME, "time");
+    public static final DataType<Timestamp>   TIMESTAMP             = new DefaultDataType<Timestamp>(SQLDialect.HSQLDB, SQLDataType.TIMESTAMP, "timestamp");
+    public static final DataType<Timestamp>   DATETIME              = new DefaultDataType<Timestamp>(SQLDialect.HSQLDB, SQLDataType.TIMESTAMP, "datetime");
+    public static final DataType<byte[]>      LONGVARBINARY         = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.LONGVARBINARY, "longvarbinary");
+    public static final DataType<byte[]>      VARBINARY             = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.VARBINARY, "varbinary", "varbinary(32672)");
+    public static final DataType<byte[]>      BINARY                = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BINARY, "binary");
+    public static final DataType<byte[]>      BLOB                  = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BLOB, "blob");
+    public static final DataType<byte[]>      BINARYLARGEOBJECT     = new DefaultDataType<byte[]>(SQLDialect.HSQLDB, SQLDataType.BLOB, "binary large object", "blob");
+    public static final DataType<Object>      OTHER                 = new DefaultDataType<Object>(SQLDialect.HSQLDB, SQLDataType.OTHER, "other");
+    public static final DataType<YearToMonth> INTERVALYEARTOMONTH   = new DefaultDataType<YearToMonth>(SQLDialect.HSQLDB, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
+    public static final DataType<DayToSecond> INTERVALDAYTOSECOND   = new DefaultDataType<DayToSecond>(SQLDialect.HSQLDB, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDataTypes
+    // Compatibility types for supported SQLDialect.HSQLDB, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final HSQLDBDataType<String> __NCHAR                = new HSQLDBDataType<String>(SQLDataType.NCHAR, "char");
-    protected static final HSQLDBDataType<String> __NCLOB                = new HSQLDBDataType<String>(SQLDataType.NCLOB, "clob");
-    protected static final HSQLDBDataType<String> __LONGNVARCHAR         = new HSQLDBDataType<String>(SQLDataType.LONGNVARCHAR, "longvarchar");
-    protected static final HSQLDBDataType<String> __NVARCHAR             = new HSQLDBDataType<String>(SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
+    protected static final DataType<String> __NCHAR                = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.NCHAR, "char");
+    protected static final DataType<String> __NCLOB                = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.NCLOB, "clob");
+    protected static final DataType<String> __LONGNVARCHAR         = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.LONGNVARCHAR, "longvarchar");
+    protected static final DataType<String> __NVARCHAR             = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final HSQLDBDataType<BigInteger> __BIGINTEGER       = new HSQLDBDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DataType<BigInteger> __BIGINTEGER       = new DefaultDataType<BigInteger>(SQLDialect.HSQLDB, SQLDataType.DECIMAL_INTEGER, "decimal");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final HSQLDBDataType<String>         VARCHARIGNORECASE = new HSQLDBDataType<String>(SQLDataType.VARCHAR, "varchar_ignorecase", "varchar_ignorecase(32672)");
-    public static final HSQLDBDataType<Object>         OBJECT            = new HSQLDBDataType<Object>(SQLDataType.OTHER, "object");
-    public static final HSQLDBDataType<Result<Record>> ROW               = new HSQLDBDataType<Result<Record>>(SQLDataType.RESULT, "row");
-
-
-    private HSQLDBDataType(SQLDataType<T> sqlDataType, String typeName) {
-        super(SQLDialect.HSQLDB, sqlDataType, sqlDataType.getType(), typeName);
-    }
-
-    private HSQLDBDataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName) {
-        super(SQLDialect.HSQLDB, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
-    }
+    public static final DataType<String>         VARCHARIGNORECASE = new DefaultDataType<String>(SQLDialect.HSQLDB, SQLDataType.VARCHAR, "varchar_ignorecase", "varchar_ignorecase(32672)");
+    public static final DataType<Object>         OBJECT            = new DefaultDataType<Object>(SQLDialect.HSQLDB, SQLDataType.OTHER, "object");
+    public static final DataType<Result<Record>> ROW               = new DefaultDataType<Result<Record>>(SQLDialect.HSQLDB, SQLDataType.RESULT, "row");
 }

@@ -41,8 +41,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -51,59 +52,54 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  * @see <a href="http://www.sqlite.org/datatype3.html">http://www.sqlite.org/datatype3.html</a>
  */
-public class SQLiteDataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                      serialVersionUID = -5677365115109672781L;
+public class SQLiteDataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final SQLiteDataType<Byte>       TINYINT          = new SQLiteDataType<Byte>(SQLDataType.TINYINT, "tinyint");
-    public static final SQLiteDataType<Short>      SMALLINT         = new SQLiteDataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final SQLiteDataType<Short>      INT2             = new SQLiteDataType<Short>(SQLDataType.SMALLINT, "int2");
-    public static final SQLiteDataType<Integer>    INT              = new SQLiteDataType<Integer>(SQLDataType.INTEGER, "int");
-    public static final SQLiteDataType<Integer>    INTEGER          = new SQLiteDataType<Integer>(SQLDataType.INTEGER, "integer");
-    public static final SQLiteDataType<Integer>    MEDIUMINT        = new SQLiteDataType<Integer>(SQLDataType.INTEGER, "mediumint");
-    public static final SQLiteDataType<Long>       INT8             = new SQLiteDataType<Long>(SQLDataType.BIGINT, "int8");
-    public static final SQLiteDataType<BigInteger> BIGINT           = new SQLiteDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "bigint");
-    public static final SQLiteDataType<BigInteger> UNSIGNEDBIGINT   = new SQLiteDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "unsigned big int");
-    public static final SQLiteDataType<Double>     DOUBLE           = new SQLiteDataType<Double>(SQLDataType.DOUBLE, "double");
-    public static final SQLiteDataType<Double>     DOUBLEPRECISION  = new SQLiteDataType<Double>(SQLDataType.DOUBLE, "double precision");
-    public static final SQLiteDataType<Float>      REAL             = new SQLiteDataType<Float>(SQLDataType.REAL, "real");
-    public static final SQLiteDataType<Float>      FLOAT            = new SQLiteDataType<Float>(SQLDataType.REAL, "float");
-    public static final SQLiteDataType<BigDecimal> NUMERIC          = new SQLiteDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final SQLiteDataType<BigDecimal> DECIMAL          = new SQLiteDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
-    public static final SQLiteDataType<String>     LONGVARCHAR      = new SQLiteDataType<String>(SQLDataType.LONGVARCHAR, "longvarchar");
-    public static final SQLiteDataType<String>     CHAR             = new SQLiteDataType<String>(SQLDataType.CHAR, "char");
-    public static final SQLiteDataType<String>     CHARACTER        = new SQLiteDataType<String>(SQLDataType.CHAR, "character");
-    public static final SQLiteDataType<String>     VARCHAR          = new SQLiteDataType<String>(SQLDataType.VARCHAR, "varchar");
-    public static final SQLiteDataType<String>     VARYINGCHARACTER = new SQLiteDataType<String>(SQLDataType.VARCHAR, "varying character");
-    public static final SQLiteDataType<String>     NCHAR            = new SQLiteDataType<String>(SQLDataType.NCHAR, "nchar");
-    public static final SQLiteDataType<String>     NATIVECHARACTER  = new SQLiteDataType<String>(SQLDataType.NCHAR, "native character");
-    public static final SQLiteDataType<String>     NVARCHAR         = new SQLiteDataType<String>(SQLDataType.NVARCHAR, "nvarchar");
-    public static final SQLiteDataType<String>     CLOB             = new SQLiteDataType<String>(SQLDataType.CLOB, "clob");
-    public static final SQLiteDataType<String>     TEXT             = new SQLiteDataType<String>(SQLDataType.CLOB, "text");
-    public static final SQLiteDataType<Boolean>    BOOLEAN          = new SQLiteDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
-    public static final SQLiteDataType<Date>       DATE             = new SQLiteDataType<Date>(SQLDataType.DATE, "date");
-    public static final SQLiteDataType<Timestamp>  DATETIME         = new SQLiteDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final SQLiteDataType<byte[]>     LONGVARBINARY    = new SQLiteDataType<byte[]>(SQLDataType.LONGVARBINARY, "longvarbinary");
-    public static final SQLiteDataType<byte[]>     BLOB             = new SQLiteDataType<byte[]>(SQLDataType.BLOB, "blob");
+    public static final DataType<Byte>       TINYINT          = new DefaultDataType<Byte>(SQLDialect.SQLITE, SQLDataType.TINYINT, "tinyint");
+    public static final DataType<Short>      SMALLINT         = new DefaultDataType<Short>(SQLDialect.SQLITE, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Short>      INT2             = new DefaultDataType<Short>(SQLDialect.SQLITE, SQLDataType.SMALLINT, "int2");
+    public static final DataType<Integer>    INT              = new DefaultDataType<Integer>(SQLDialect.SQLITE, SQLDataType.INTEGER, "int");
+    public static final DataType<Integer>    INTEGER          = new DefaultDataType<Integer>(SQLDialect.SQLITE, SQLDataType.INTEGER, "integer");
+    public static final DataType<Integer>    MEDIUMINT        = new DefaultDataType<Integer>(SQLDialect.SQLITE, SQLDataType.INTEGER, "mediumint");
+    public static final DataType<Long>       INT8             = new DefaultDataType<Long>(SQLDialect.SQLITE, SQLDataType.BIGINT, "int8");
+    public static final DataType<BigInteger> BIGINT           = new DefaultDataType<BigInteger>(SQLDialect.SQLITE, SQLDataType.DECIMAL_INTEGER, "bigint");
+    public static final DataType<BigInteger> UNSIGNEDBIGINT   = new DefaultDataType<BigInteger>(SQLDialect.SQLITE, SQLDataType.DECIMAL_INTEGER, "unsigned big int");
+    public static final DataType<Double>     DOUBLE           = new DefaultDataType<Double>(SQLDialect.SQLITE, SQLDataType.DOUBLE, "double");
+    public static final DataType<Double>     DOUBLEPRECISION  = new DefaultDataType<Double>(SQLDialect.SQLITE, SQLDataType.DOUBLE, "double precision");
+    public static final DataType<Float>      REAL             = new DefaultDataType<Float>(SQLDialect.SQLITE, SQLDataType.REAL, "real");
+    public static final DataType<Float>      FLOAT            = new DefaultDataType<Float>(SQLDialect.SQLITE, SQLDataType.REAL, "float");
+    public static final DataType<BigDecimal> NUMERIC          = new DefaultDataType<BigDecimal>(SQLDialect.SQLITE, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<BigDecimal> DECIMAL          = new DefaultDataType<BigDecimal>(SQLDialect.SQLITE, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<String>     LONGVARCHAR      = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.LONGVARCHAR, "longvarchar");
+    public static final DataType<String>     CHAR             = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.CHAR, "char");
+    public static final DataType<String>     CHARACTER        = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.CHAR, "character");
+    public static final DataType<String>     VARCHAR          = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.VARCHAR, "varchar");
+    public static final DataType<String>     VARYINGCHARACTER = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.VARCHAR, "varying character");
+    public static final DataType<String>     NCHAR            = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.NCHAR, "nchar");
+    public static final DataType<String>     NATIVECHARACTER  = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.NCHAR, "native character");
+    public static final DataType<String>     NVARCHAR         = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.NVARCHAR, "nvarchar");
+    public static final DataType<String>     CLOB             = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.CLOB, "clob");
+    public static final DataType<String>     TEXT             = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.CLOB, "text");
+    public static final DataType<Boolean>    BOOLEAN          = new DefaultDataType<Boolean>(SQLDialect.SQLITE, SQLDataType.BOOLEAN, "boolean");
+    public static final DataType<Date>       DATE             = new DefaultDataType<Date>(SQLDialect.SQLITE, SQLDataType.DATE, "date");
+    public static final DataType<Timestamp>  DATETIME         = new DefaultDataType<Timestamp>(SQLDialect.SQLITE, SQLDataType.TIMESTAMP, "datetime");
+    public static final DataType<byte[]>     LONGVARBINARY    = new DefaultDataType<byte[]>(SQLDialect.SQLITE, SQLDataType.LONGVARBINARY, "longvarbinary");
+    public static final DataType<byte[]>     BLOB             = new DefaultDataType<byte[]>(SQLDialect.SQLITE, SQLDataType.BLOB, "blob");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDataTypes
+    // Compatibility types for supported SQLDialect.SQLITE, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final SQLiteDataType<byte[]>  __BINARY         = new SQLiteDataType<byte[]>(SQLDataType.BINARY, "longvarbinary");
-    protected static final SQLiteDataType<Boolean> __BIT            = new SQLiteDataType<Boolean>(SQLDataType.BIT, "boolean");
-    protected static final SQLiteDataType<Double>  __FLOAT          = new SQLiteDataType<Double>(SQLDataType.FLOAT, "double");
-    protected static final SQLiteDataType<String>  __NCLOB          = new SQLiteDataType<String>(SQLDataType.NCLOB, "nclob");
-    protected static final SQLiteDataType<String>  __LONGNVARCHAR   = new SQLiteDataType<String>(SQLDataType.LONGNVARCHAR, "nvarchar");
-    protected static final SQLiteDataType<Time>    __TIME           = new SQLiteDataType<Time>(SQLDataType.TIME, "datetime");
-    protected static final SQLiteDataType<byte[]>  __VARBINARY      = new SQLiteDataType<byte[]>(SQLDataType.VARBINARY, "longvarbinary");
+    protected static final DataType<byte[]>  __BINARY         = new DefaultDataType<byte[]>(SQLDialect.SQLITE, SQLDataType.BINARY, "longvarbinary");
+    protected static final DataType<Boolean> __BIT            = new DefaultDataType<Boolean>(SQLDialect.SQLITE, SQLDataType.BIT, "boolean");
+    protected static final DataType<Double>  __FLOAT          = new DefaultDataType<Double>(SQLDialect.SQLITE, SQLDataType.FLOAT, "double");
+    protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.NCLOB, "nclob");
+    protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.LONGNVARCHAR, "nvarchar");
+    protected static final DataType<Time>    __TIME           = new DefaultDataType<Time>(SQLDialect.SQLITE, SQLDataType.TIME, "datetime");
+    protected static final DataType<byte[]>  __VARBINARY      = new DefaultDataType<byte[]>(SQLDialect.SQLITE, SQLDataType.VARBINARY, "longvarbinary");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
@@ -113,10 +109,10 @@ public class SQLiteDataType<T> extends AbstractDataType<T> {
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final SQLiteDataType<Object>     NULL             = new SQLiteDataType<Object>(SQLDataType.OTHER, "null");
+    public static final DataType<Object>     NULL             = new DefaultDataType<Object>(SQLDialect.SQLITE, SQLDataType.OTHER, "null");
 
-
-    private SQLiteDataType(SQLDataType<T> sqlDataType, String typeName) {
-        super(SQLDialect.SQLITE, sqlDataType, sqlDataType.getType(), typeName);
+    @Deprecated
+    public static DataType<Object> getDefaultDataType(String string) {
+        return DefaultDataType.getDefaultDataType(string);
     }
 }

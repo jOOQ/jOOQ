@@ -126,7 +126,7 @@ class DefaultBindContext extends AbstractBindContext {
         // Setting null onto a prepared statement is subtly different for every
         // SQL dialect. See the following section for details
         if (value == null) {
-            int sqlType = AbstractDataType.getDataType(dialect, type).getSQLType();
+            int sqlType = DefaultDataType.getDataType(dialect, type).getSQLType();
 
             // Oracle-style ARRAY types need to be bound with their type name
             if (ArrayRecord.class.isAssignableFrom(type)) {

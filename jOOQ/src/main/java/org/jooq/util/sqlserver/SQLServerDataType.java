@@ -41,8 +41,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -51,75 +52,67 @@ import org.jooq.impl.SQLDataType;
  * @author Lukas Eder
  * @see <a href="http://msdn.microsoft.com/en-us/library/aa258271%28v=sql.80%29.aspx">http://msdn.microsoft.com/en-us/library/aa258271%28v=sql.80%29.aspx</a>
  */
-public class SQLServerDataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                         serialVersionUID = -5677365115109672781L;
+public class SQLServerDataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final SQLServerDataType<Byte>       TINYINT          = new SQLServerDataType<Byte>(SQLDataType.TINYINT, "tinyint");
-    public static final SQLServerDataType<Short>      SMALLINT         = new SQLServerDataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final SQLServerDataType<Integer>    INT              = new SQLServerDataType<Integer>(SQLDataType.INTEGER, "int");
-    public static final SQLServerDataType<Long>       BIGINT           = new SQLServerDataType<Long>(SQLDataType.BIGINT, "bigint");
-    public static final SQLServerDataType<Double>     FLOAT            = new SQLServerDataType<Double>(SQLDataType.FLOAT, "float");
-    public static final SQLServerDataType<Float>      REAL             = new SQLServerDataType<Float>(SQLDataType.REAL, "real");
-    public static final SQLServerDataType<BigDecimal> NUMERIC          = new SQLServerDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final SQLServerDataType<BigDecimal> DECIMAL          = new SQLServerDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
-    public static final SQLServerDataType<Boolean>    BIT              = new SQLServerDataType<Boolean>(SQLDataType.BIT, "bit");
-    public static final SQLServerDataType<Date>       DATE             = new SQLServerDataType<Date>(SQLDataType.DATE, "date");
-    public static final SQLServerDataType<Timestamp>  DATETIME         = new SQLServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime");
-    public static final SQLServerDataType<Time>       TIME             = new SQLServerDataType<Time>(SQLDataType.TIME, "time");
-    public static final SQLServerDataType<String>     VARCHAR          = new SQLServerDataType<String>(SQLDataType.VARCHAR, "varchar");
-    public static final SQLServerDataType<String>     CHAR             = new SQLServerDataType<String>(SQLDataType.CHAR, "char");
-    public static final SQLServerDataType<String>     TEXT             = new SQLServerDataType<String>(SQLDataType.CLOB, "text");
-    public static final SQLServerDataType<String>     NVARCHAR         = new SQLServerDataType<String>(SQLDataType.NVARCHAR, "nvarchar");
-    public static final SQLServerDataType<String>     NCHAR            = new SQLServerDataType<String>(SQLDataType.NCHAR, "nchar");
-    public static final SQLServerDataType<String>     NTEXT            = new SQLServerDataType<String>(SQLDataType.NCLOB, "ntext");
-    public static final SQLServerDataType<byte[]>     VARBINARY        = new SQLServerDataType<byte[]>(SQLDataType.VARBINARY, "varbinary", "varbinary(max)");
-    public static final SQLServerDataType<byte[]>     BINARY           = new SQLServerDataType<byte[]>(SQLDataType.BINARY, "binary");
+    public static final DataType<Byte>       TINYINT          = new DefaultDataType<Byte>(SQLDialect.SQLSERVER, SQLDataType.TINYINT, "tinyint");
+    public static final DataType<Short>      SMALLINT         = new DefaultDataType<Short>(SQLDialect.SQLSERVER, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Integer>    INT              = new DefaultDataType<Integer>(SQLDialect.SQLSERVER, SQLDataType.INTEGER, "int");
+    public static final DataType<Long>       BIGINT           = new DefaultDataType<Long>(SQLDialect.SQLSERVER, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Double>     FLOAT            = new DefaultDataType<Double>(SQLDialect.SQLSERVER, SQLDataType.FLOAT, "float");
+    public static final DataType<Float>      REAL             = new DefaultDataType<Float>(SQLDialect.SQLSERVER, SQLDataType.REAL, "real");
+    public static final DataType<BigDecimal> NUMERIC          = new DefaultDataType<BigDecimal>(SQLDialect.SQLSERVER, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<BigDecimal> DECIMAL          = new DefaultDataType<BigDecimal>(SQLDialect.SQLSERVER, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<Boolean>    BIT              = new DefaultDataType<Boolean>(SQLDialect.SQLSERVER, SQLDataType.BIT, "bit");
+    public static final DataType<Date>       DATE             = new DefaultDataType<Date>(SQLDialect.SQLSERVER, SQLDataType.DATE, "date");
+    public static final DataType<Timestamp>  DATETIME         = new DefaultDataType<Timestamp>(SQLDialect.SQLSERVER, SQLDataType.TIMESTAMP, "datetime");
+    public static final DataType<Time>       TIME             = new DefaultDataType<Time>(SQLDialect.SQLSERVER, SQLDataType.TIME, "time");
+    public static final DataType<String>     VARCHAR          = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.VARCHAR, "varchar");
+    public static final DataType<String>     CHAR             = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.CHAR, "char");
+    public static final DataType<String>     TEXT             = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.CLOB, "text");
+    public static final DataType<String>     NVARCHAR         = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NVARCHAR, "nvarchar");
+    public static final DataType<String>     NCHAR            = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NCHAR, "nchar");
+    public static final DataType<String>     NTEXT            = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NCLOB, "ntext");
+    public static final DataType<byte[]>     VARBINARY        = new DefaultDataType<byte[]>(SQLDialect.SQLSERVER, SQLDataType.VARBINARY, "varbinary", "varbinary(max)");
+    public static final DataType<byte[]>     BINARY           = new DefaultDataType<byte[]>(SQLDialect.SQLSERVER, SQLDataType.BINARY, "binary");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDataTypes
+    // Compatibility types for supported SQLDialect.SQLSERVER, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final SQLServerDataType<byte[]>  __BLOB           = new SQLServerDataType<byte[]>(SQLDataType.BLOB, "binary");
-    protected static final SQLServerDataType<Boolean> __BOOLEAN        = new SQLServerDataType<Boolean>(SQLDataType.BOOLEAN, "bit");
-    protected static final SQLServerDataType<Double>  __DOUBLE         = new SQLServerDataType<Double>(SQLDataType.DOUBLE, "float");
-    protected static final SQLServerDataType<byte[]>  __LONGVARBINARY  = new SQLServerDataType<byte[]>(SQLDataType.LONGVARBINARY, "varbinary", "varbinary(max)");
-    protected static final SQLServerDataType<String>  __LONGVARCHAR    = new SQLServerDataType<String>(SQLDataType.LONGVARCHAR, "varchar");
-    protected static final SQLServerDataType<String>  __NCLOB          = new SQLServerDataType<String>(SQLDataType.NCLOB, "text");
-    protected static final SQLServerDataType<String>  __LONGNVARCHAR   = new SQLServerDataType<String>(SQLDataType.LONGNVARCHAR, "varchar");
+    protected static final DataType<byte[]>  __BLOB           = new DefaultDataType<byte[]>(SQLDialect.SQLSERVER, SQLDataType.BLOB, "binary");
+    protected static final DataType<Boolean> __BOOLEAN        = new DefaultDataType<Boolean>(SQLDialect.SQLSERVER, SQLDataType.BOOLEAN, "bit");
+    protected static final DataType<Double>  __DOUBLE         = new DefaultDataType<Double>(SQLDialect.SQLSERVER, SQLDataType.DOUBLE, "float");
+    protected static final DataType<byte[]>  __LONGVARBINARY  = new DefaultDataType<byte[]>(SQLDialect.SQLSERVER, SQLDataType.LONGVARBINARY, "varbinary", "varbinary(max)");
+    protected static final DataType<String>  __LONGVARCHAR    = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGVARCHAR, "varchar");
+    protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NCLOB, "text");
+    protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGNVARCHAR, "varchar");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final SQLServerDataType<BigInteger> __BIGINTEGER  = new SQLServerDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "numeric");
+    protected static final DataType<BigInteger> __BIGINTEGER  = new DefaultDataType<BigInteger>(SQLDialect.SQLSERVER, SQLDataType.DECIMAL_INTEGER, "numeric");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final SQLServerDataType<Timestamp>  SMALLDATETIME    = new SQLServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "smalldatetime");
-    public static final SQLServerDataType<Timestamp>  DATETIME2        = new SQLServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetime2");
-    public static final SQLServerDataType<Timestamp>  DATETIMEOFFSET   = new SQLServerDataType<Timestamp>(SQLDataType.TIMESTAMP, "datetimeoffset");
-    public static final SQLServerDataType<BigDecimal> MONEY            = new SQLServerDataType<BigDecimal>(SQLDataType.DECIMAL, "money");
-    public static final SQLServerDataType<BigDecimal> SMALLMONEY       = new SQLServerDataType<BigDecimal>(SQLDataType.DECIMAL, "smallmoney");
-    public static final SQLServerDataType<byte[]>     IMAGE            = new SQLServerDataType<byte[]>(SQLDataType.BINARY, "image");
-    public static final SQLServerDataType<String>     UNIQUEIDENTIFIER = new SQLServerDataType<String>(SQLDataType.VARCHAR, "uniqueidentifier");
-    public static final SQLServerDataType<Long>       ROWVERSION       = new SQLServerDataType<Long>(SQLDataType.BIGINT, "rowversion");
-    public static final SQLServerDataType<Long>       TIMESTAMP        = new SQLServerDataType<Long>(SQLDataType.BIGINT, "timestamp");
+    public static final DataType<Timestamp>  SMALLDATETIME    = new DefaultDataType<Timestamp>(SQLDialect.SQLSERVER, SQLDataType.TIMESTAMP, "smalldatetime");
+    public static final DataType<Timestamp>  DATETIME2        = new DefaultDataType<Timestamp>(SQLDialect.SQLSERVER, SQLDataType.TIMESTAMP, "datetime2");
+    public static final DataType<Timestamp>  DATETIMEOFFSET   = new DefaultDataType<Timestamp>(SQLDialect.SQLSERVER, SQLDataType.TIMESTAMP, "datetimeoffset");
+    public static final DataType<BigDecimal> MONEY            = new DefaultDataType<BigDecimal>(SQLDialect.SQLSERVER, SQLDataType.DECIMAL, "money");
+    public static final DataType<BigDecimal> SMALLMONEY       = new DefaultDataType<BigDecimal>(SQLDialect.SQLSERVER, SQLDataType.DECIMAL, "smallmoney");
+    public static final DataType<byte[]>     IMAGE            = new DefaultDataType<byte[]>(SQLDialect.SQLSERVER, SQLDataType.BINARY, "image");
+    public static final DataType<String>     UNIQUEIDENTIFIER = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.VARCHAR, "uniqueidentifier");
+    public static final DataType<Long>       ROWVERSION       = new DefaultDataType<Long>(SQLDialect.SQLSERVER, SQLDataType.BIGINT, "rowversion");
+    public static final DataType<Long>       TIMESTAMP        = new DefaultDataType<Long>(SQLDialect.SQLSERVER, SQLDataType.BIGINT, "timestamp");
 
-    private SQLServerDataType(SQLDataType<T> sqlDataType, String typeName) {
-        super(SQLDialect.SQLSERVER, sqlDataType, sqlDataType.getType(), typeName);
-    }
-
-    private SQLServerDataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName) {
-        super(SQLDialect.SQLSERVER, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
+    @Deprecated
+    public static DataType<Object> getDefaultDataType(String string) {
+        return DefaultDataType.getDefaultDataType(string);
     }
 }

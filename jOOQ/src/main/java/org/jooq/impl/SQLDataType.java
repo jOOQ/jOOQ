@@ -79,7 +79,7 @@ import org.jooq.util.sybase.SybaseDataType;
  *
  * @author Lukas Eder
  */
-public final class SQLDataType<T> extends AbstractDataType<T> {
+public final class SQLDataType<T> extends DefaultDataType<T> {
 
     /**
      * Generated UID

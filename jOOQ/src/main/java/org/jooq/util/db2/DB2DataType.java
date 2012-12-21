@@ -40,8 +40,9 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -50,74 +51,60 @@ import org.jooq.impl.SQLDataType;
  * @see <a href="http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.ibm.db2.udb.apdv.java.doc/doc/rjvjdata.htm">http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.ibm.db2.udb.apdv.java.doc/doc/rjvjdata.htm</a>
  * @author Espen Stromsnes
  */
-public class DB2DataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                   serialVersionUID   = -5677365115109672781L;
+public class DB2DataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DB2DataType<Short>      SMALLINT    = new DB2DataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final DB2DataType<Integer>    INTEGER     = new DB2DataType<Integer>(SQLDataType.INTEGER, "integer");
-    public static final DB2DataType<Long>       BIGINT      = new DB2DataType<Long>(SQLDataType.BIGINT, "bigint");
-    public static final DB2DataType<Float>      REAL        = new DB2DataType<Float>(SQLDataType.REAL, "real");
-    public static final DB2DataType<Double>     DOUBLE      = new DB2DataType<Double>(SQLDataType.DOUBLE, "double");
-    public static final DB2DataType<BigDecimal> DECIMAL     = new DB2DataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
-    public static final DB2DataType<BigDecimal> DECFLOAT    = new DB2DataType<BigDecimal>(SQLDataType.DECIMAL, "decfloat");
-    public static final DB2DataType<String>     VARCHAR     = new DB2DataType<String>(SQLDataType.VARCHAR, "varchar", "varchar(32672)");
-    public static final DB2DataType<String>     CHAR        = new DB2DataType<String>(SQLDataType.CHAR, "char", "varchar(32672)");
-    public static final DB2DataType<String>     CHARACTER   = new DB2DataType<String>(SQLDataType.CHAR, "character", "varchar(32672)");
-    public static final DB2DataType<String>     LONGVARCHAR = new DB2DataType<String>(SQLDataType.LONGVARCHAR, "long varchar");
-    public static final DB2DataType<String>     CLOB        = new DB2DataType<String>(SQLDataType.CLOB, "clob");
-    public static final DB2DataType<byte[]>     BLOB        = new DB2DataType<byte[]>(SQLDataType.BLOB, "blob");
-    public static final DB2DataType<Date>       DATE        = new DB2DataType<Date>(SQLDataType.DATE, "date");
-    public static final DB2DataType<Time>       TIME        = new DB2DataType<Time>(SQLDataType.TIME, "time");
-    public static final DB2DataType<Timestamp>  TIMESTAMP   = new DB2DataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
+    public static final DataType<Short>      SMALLINT           = new DefaultDataType<Short>(SQLDialect.DB2, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Integer>    INTEGER            = new DefaultDataType<Integer>(SQLDialect.DB2, SQLDataType.INTEGER, "integer");
+    public static final DataType<Long>       BIGINT             = new DefaultDataType<Long>(SQLDialect.DB2, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Float>      REAL               = new DefaultDataType<Float>(SQLDialect.DB2, SQLDataType.REAL, "real");
+    public static final DataType<Double>     DOUBLE             = new DefaultDataType<Double>(SQLDialect.DB2, SQLDataType.DOUBLE, "double");
+    public static final DataType<BigDecimal> DECIMAL            = new DefaultDataType<BigDecimal>(SQLDialect.DB2, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<BigDecimal> DECFLOAT           = new DefaultDataType<BigDecimal>(SQLDialect.DB2, SQLDataType.DECIMAL, "decfloat");
+    public static final DataType<String>     VARCHAR            = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.VARCHAR, "varchar", "varchar(32672)");
+    public static final DataType<String>     CHAR               = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CHAR, "char", "varchar(32672)");
+    public static final DataType<String>     CHARACTER          = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CHAR, "character", "varchar(32672)");
+    public static final DataType<String>     LONGVARCHAR        = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.LONGVARCHAR, "long varchar");
+    public static final DataType<String>     CLOB               = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "clob");
+    public static final DataType<byte[]>     BLOB               = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BLOB, "blob");
+    public static final DataType<Date>       DATE               = new DefaultDataType<Date>(SQLDialect.DB2, SQLDataType.DATE, "date");
+    public static final DataType<Time>       TIME               = new DefaultDataType<Time>(SQLDialect.DB2, SQLDataType.TIME, "time");
+    public static final DataType<Timestamp>  TIMESTAMP          = new DefaultDataType<Timestamp>(SQLDialect.DB2, SQLDataType.TIMESTAMP, "timestamp");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDataTypes
+    // Compatibility types for supported SQLDialect.DB2, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final DB2DataType<byte[]>     __BINARY        = new DB2DataType<byte[]>(SQLDataType.BINARY, "blob");
-    protected static final DB2DataType<Boolean>    __BIT           = new DB2DataType<Boolean>(SQLDataType.BIT, "smallint");
-    protected static final DB2DataType<Boolean>    __BOOLEAN       = new DB2DataType<Boolean>(SQLDataType.BOOLEAN, "smallint");
-    protected static final DB2DataType<byte[]>     __LONGVARBINARY = new DB2DataType<byte[]>(SQLDataType.LONGVARBINARY, "blob");
-    protected static final DB2DataType<String>     __NCHAR         = new DB2DataType<String>(SQLDataType.NCHAR, "char", "varchar(32672)");
-    protected static final DB2DataType<String>     __NCLOB         = new DB2DataType<String>(SQLDataType.NCLOB, "clob");
-    protected static final DB2DataType<String>     __LONGNVARCHAR  = new DB2DataType<String>(SQLDataType.LONGNVARCHAR, "long varchar");
-    protected static final DB2DataType<BigDecimal> __NUMERIC       = new DB2DataType<BigDecimal>(SQLDataType.NUMERIC, "decimal", "decimal");
-    protected static final DB2DataType<String>     __NVARCHAR      = new DB2DataType<String>(SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
-    protected static final DB2DataType<Byte>       __TINYINT       = new DB2DataType<Byte>(SQLDataType.TINYINT, "smallint");
-    protected static final DB2DataType<byte[]>     __VARBINARY     = new DB2DataType<byte[]>(SQLDataType.VARBINARY, "blob");
+    protected static final DataType<byte[]>     __BINARY        = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BINARY, "blob");
+    protected static final DataType<Boolean>    __BIT           = new DefaultDataType<Boolean>(SQLDialect.DB2, SQLDataType.BIT, "smallint");
+    protected static final DataType<Boolean>    __BOOLEAN       = new DefaultDataType<Boolean>(SQLDialect.DB2, SQLDataType.BOOLEAN, "smallint");
+    protected static final DataType<byte[]>     __LONGVARBINARY = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.LONGVARBINARY, "blob");
+    protected static final DataType<String>     __NCHAR         = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.NCHAR, "char", "varchar(32672)");
+    protected static final DataType<String>     __NCLOB         = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.NCLOB, "clob");
+    protected static final DataType<String>     __LONGNVARCHAR  = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.LONGNVARCHAR, "long varchar");
+    protected static final DataType<BigDecimal> __NUMERIC       = new DefaultDataType<BigDecimal>(SQLDialect.DB2, SQLDataType.NUMERIC, "decimal", "decimal");
+    protected static final DataType<String>     __NVARCHAR      = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
+    protected static final DataType<Byte>       __TINYINT       = new DefaultDataType<Byte>(SQLDialect.DB2, SQLDataType.TINYINT, "smallint");
+    protected static final DataType<byte[]>     __VARBINARY     = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.VARBINARY, "blob");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DB2DataType<BigInteger> __BIGINTEGER = new DB2DataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
+    protected static final DataType<BigInteger> __BIGINTEGER    = new DefaultDataType<BigInteger>(SQLDialect.DB2, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DB2DataType<String> XML               = new DB2DataType<String>(SQLDataType.CLOB, "xml");
-    public static final DB2DataType<String> DBCLOB            = new DB2DataType<String>(SQLDataType.CLOB, "dbclob");
-    public static final DB2DataType<String> GRAPHIC           = new DB2DataType<String>(SQLDataType.CLOB, "graphic");
-    public static final DB2DataType<String> VARGRAPHIC        = new DB2DataType<String>(SQLDataType.CLOB, "vargraphic");
-    public static final DB2DataType<byte[]> CHARFORBITDATA    = new DB2DataType<byte[]>(SQLDataType.BLOB, "char for bit data");
-    public static final DB2DataType<byte[]> VARCHARFORBITDATA = new DB2DataType<byte[]>(SQLDataType.BLOB, "varchar(32672) for bit data");
-    public static final DB2DataType<byte[]> ROWID             = new DB2DataType<byte[]>(SQLDataType.BLOB, "rowid");
-
-
-    private DB2DataType(SQLDataType<T> sqlDataType, String typeName) {
-        super(SQLDialect.DB2, sqlDataType, sqlDataType.getType(), typeName);
-    }
-
-    private DB2DataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName) {
-        super(SQLDialect.DB2, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
-    }
+    public static final DataType<String> XML                    = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "xml");
+    public static final DataType<String> DBCLOB                 = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "dbclob");
+    public static final DataType<String> GRAPHIC                = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "graphic");
+    public static final DataType<String> VARGRAPHIC             = new DefaultDataType<String>(SQLDialect.DB2, SQLDataType.CLOB, "vargraphic");
+    public static final DataType<byte[]> CHARFORBITDATA         = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BLOB, "char for bit data");
+    public static final DataType<byte[]> VARCHARFORBITDATA      = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BLOB, "varchar(32672) for bit data");
+    public static final DataType<byte[]> ROWID                  = new DefaultDataType<byte[]>(SQLDialect.DB2, SQLDataType.BLOB, "rowid");
 }

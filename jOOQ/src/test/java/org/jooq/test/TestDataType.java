@@ -39,12 +39,12 @@ import java.sql.Date;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 
 /**
  * @author Lukas Eder
  */
-public final class TestDataType<T> extends AbstractDataType<T> {
+public final class TestDataType<T> extends DefaultDataType<T> {
 
     /**
      * Generated UID

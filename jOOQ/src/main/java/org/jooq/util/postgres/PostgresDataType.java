@@ -42,10 +42,11 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.AbstractDataType;
+import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
@@ -56,99 +57,94 @@ import org.jooq.types.YearToMonth;
  * @author Lukas Eder
  * @see <a href="http://www.postgresql.org/docs/9.0/interactive/datatype.html">http://www.postgresql.org/docs/9.0/interactive/datatype.html</a>
  */
-public class PostgresDataType<T> extends AbstractDataType<T> {
-
-    /**
-     * Generated UID
-     */
-    private static final long                        serialVersionUID         = -5677365115109672781L;
+public class PostgresDataType<T> {
 
     // -------------------------------------------------------------------------
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final PostgresDataType<Short>        SMALLINT                 = new PostgresDataType<Short>(SQLDataType.SMALLINT, "smallint");
-    public static final PostgresDataType<Short>        INT2                     = new PostgresDataType<Short>(SQLDataType.SMALLINT, "int2");
-    public static final PostgresDataType<Integer>      INT                      = new PostgresDataType<Integer>(SQLDataType.INTEGER, "int");
-    public static final PostgresDataType<Integer>      INTEGER                  = new PostgresDataType<Integer>(SQLDataType.INTEGER, "integer");
-    public static final PostgresDataType<Integer>      INT4                     = new PostgresDataType<Integer>(SQLDataType.INTEGER, "int4");
-    public static final PostgresDataType<Long>         BIGINT                   = new PostgresDataType<Long>(SQLDataType.BIGINT, "bigint");
-    public static final PostgresDataType<Long>         INT8                     = new PostgresDataType<Long>(SQLDataType.BIGINT, "int8");
-    public static final PostgresDataType<Double>       DOUBLEPRECISION          = new PostgresDataType<Double>(SQLDataType.DOUBLE, "double precision");
-    public static final PostgresDataType<Double>       FLOAT8                   = new PostgresDataType<Double>(SQLDataType.FLOAT, "float8");
-    public static final PostgresDataType<Float>        REAL                     = new PostgresDataType<Float>(SQLDataType.REAL, "real");
-    public static final PostgresDataType<Float>        FLOAT4                   = new PostgresDataType<Float>(SQLDataType.REAL, "float4");
-    public static final PostgresDataType<Boolean>      BOOLEAN                  = new PostgresDataType<Boolean>(SQLDataType.BOOLEAN, "boolean");
-    public static final PostgresDataType<Boolean>      BOOL                     = new PostgresDataType<Boolean>(SQLDataType.BOOLEAN, "bool");
-    public static final PostgresDataType<BigDecimal>   NUMERIC                  = new PostgresDataType<BigDecimal>(SQLDataType.NUMERIC, "numeric");
-    public static final PostgresDataType<BigDecimal>   DECIMAL                  = new PostgresDataType<BigDecimal>(SQLDataType.DECIMAL, "decimal");
-    public static final PostgresDataType<String>       VARCHAR                  = new PostgresDataType<String>(SQLDataType.VARCHAR, "varchar");
-    public static final PostgresDataType<String>       CHARACTERVARYING         = new PostgresDataType<String>(SQLDataType.VARCHAR, "character varying");
-    public static final PostgresDataType<String>       CHAR                     = new PostgresDataType<String>(SQLDataType.CHAR, "char");
-    public static final PostgresDataType<String>       CHARACTER                = new PostgresDataType<String>(SQLDataType.CHAR, "character");
-    public static final PostgresDataType<String>       TEXT                     = new PostgresDataType<String>(SQLDataType.CLOB, "text");
-    public static final PostgresDataType<Date>         DATE                     = new PostgresDataType<Date>(SQLDataType.DATE, "date");
-    public static final PostgresDataType<Time>         TIME                     = new PostgresDataType<Time>(SQLDataType.TIME, "time");
-    public static final PostgresDataType<Timestamp>    TIMESTAMP                = new PostgresDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp");
-    public static final PostgresDataType<byte[]>       BYTEA                    = new PostgresDataType<byte[]>(SQLDataType.BLOB, "bytea");
-    public static final PostgresDataType<YearToMonth>  INTERVALYEARTOMONTH      = new PostgresDataType<YearToMonth>(SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
-    public static final PostgresDataType<DayToSecond>  INTERVALDAYTOSECOND      = new PostgresDataType<DayToSecond>(SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
+    public static final DataType<Short>        SMALLINT                 = new DefaultDataType<Short>(SQLDialect.POSTGRES, SQLDataType.SMALLINT, "smallint");
+    public static final DataType<Short>        INT2                     = new DefaultDataType<Short>(SQLDialect.POSTGRES, SQLDataType.SMALLINT, "int2");
+    public static final DataType<Integer>      INT                      = new DefaultDataType<Integer>(SQLDialect.POSTGRES, SQLDataType.INTEGER, "int");
+    public static final DataType<Integer>      INTEGER                  = new DefaultDataType<Integer>(SQLDialect.POSTGRES, SQLDataType.INTEGER, "integer");
+    public static final DataType<Integer>      INT4                     = new DefaultDataType<Integer>(SQLDialect.POSTGRES, SQLDataType.INTEGER, "int4");
+    public static final DataType<Long>         BIGINT                   = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "bigint");
+    public static final DataType<Long>         INT8                     = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "int8");
+    public static final DataType<Double>       DOUBLEPRECISION          = new DefaultDataType<Double>(SQLDialect.POSTGRES, SQLDataType.DOUBLE, "double precision");
+    public static final DataType<Double>       FLOAT8                   = new DefaultDataType<Double>(SQLDialect.POSTGRES, SQLDataType.FLOAT, "float8");
+    public static final DataType<Float>        REAL                     = new DefaultDataType<Float>(SQLDialect.POSTGRES, SQLDataType.REAL, "real");
+    public static final DataType<Float>        FLOAT4                   = new DefaultDataType<Float>(SQLDialect.POSTGRES, SQLDataType.REAL, "float4");
+    public static final DataType<Boolean>      BOOLEAN                  = new DefaultDataType<Boolean>(SQLDialect.POSTGRES, SQLDataType.BOOLEAN, "boolean");
+    public static final DataType<Boolean>      BOOL                     = new DefaultDataType<Boolean>(SQLDialect.POSTGRES, SQLDataType.BOOLEAN, "bool");
+    public static final DataType<BigDecimal>   NUMERIC                  = new DefaultDataType<BigDecimal>(SQLDialect.POSTGRES, SQLDataType.NUMERIC, "numeric");
+    public static final DataType<BigDecimal>   DECIMAL                  = new DefaultDataType<BigDecimal>(SQLDialect.POSTGRES, SQLDataType.DECIMAL, "decimal");
+    public static final DataType<String>       VARCHAR                  = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "varchar");
+    public static final DataType<String>       CHARACTERVARYING         = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "character varying");
+    public static final DataType<String>       CHAR                     = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.CHAR, "char");
+    public static final DataType<String>       CHARACTER                = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.CHAR, "character");
+    public static final DataType<String>       TEXT                     = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.CLOB, "text");
+    public static final DataType<Date>         DATE                     = new DefaultDataType<Date>(SQLDialect.POSTGRES, SQLDataType.DATE, "date");
+    public static final DataType<Time>         TIME                     = new DefaultDataType<Time>(SQLDialect.POSTGRES, SQLDataType.TIME, "time");
+    public static final DataType<Timestamp>    TIMESTAMP                = new DefaultDataType<Timestamp>(SQLDialect.POSTGRES, SQLDataType.TIMESTAMP, "timestamp");
+    public static final DataType<byte[]>       BYTEA                    = new DefaultDataType<byte[]>(SQLDialect.POSTGRES, SQLDataType.BLOB, "bytea");
+    public static final DataType<YearToMonth>  INTERVALYEARTOMONTH      = new DefaultDataType<YearToMonth>(SQLDialect.POSTGRES, SQLDataType.INTERVALYEARTOMONTH, "interval year to month");
+    public static final DataType<DayToSecond>  INTERVALDAYTOSECOND      = new DefaultDataType<DayToSecond>(SQLDialect.POSTGRES, SQLDataType.INTERVALDAYTOSECOND, "interval day to second");
 
     // -------------------------------------------------------------------------
-    // Compatibility types for supported SQLDataTypes
+    // Compatibility types for supported SQLDialect.POSTGRES, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final PostgresDataType<byte[]>     __BINARY                = new PostgresDataType<byte[]>(SQLDataType.BINARY, "bytea");
-    protected static final PostgresDataType<Boolean>    __BIT                   = new PostgresDataType<Boolean>(SQLDataType.BIT, "boolean");
-    protected static final PostgresDataType<byte[]>     __LONGVARBINARY         = new PostgresDataType<byte[]>(SQLDataType.LONGVARBINARY, "bytea");
-    protected static final PostgresDataType<String>     __LONGVARCHAR           = new PostgresDataType<String>(SQLDataType.LONGVARCHAR, "varchar");
-    protected static final PostgresDataType<String>     __NCHAR                 = new PostgresDataType<String>(SQLDataType.NCHAR, "char");
-    protected static final PostgresDataType<String>     __NCLOB                 = new PostgresDataType<String>(SQLDataType.NCLOB, "text");
-    protected static final PostgresDataType<String>     __LONGNVARCHAR          = new PostgresDataType<String>(SQLDataType.LONGNVARCHAR, "varchar");
-    protected static final PostgresDataType<String>     __NVARCHAR              = new PostgresDataType<String>(SQLDataType.NVARCHAR, "varchar");
-    protected static final PostgresDataType<Byte>       __TINYINT               = new PostgresDataType<Byte>(SQLDataType.TINYINT, "smallint");
-    protected static final PostgresDataType<byte[]>     __VARBINARY             = new PostgresDataType<byte[]>(SQLDataType.VARBINARY, "bytea");
+    protected static final DataType<byte[]>     __BINARY                = new DefaultDataType<byte[]>(SQLDialect.POSTGRES, SQLDataType.BINARY, "bytea");
+    protected static final DataType<Boolean>    __BIT                   = new DefaultDataType<Boolean>(SQLDialect.POSTGRES, SQLDataType.BIT, "boolean");
+    protected static final DataType<byte[]>     __LONGVARBINARY         = new DefaultDataType<byte[]>(SQLDialect.POSTGRES, SQLDataType.LONGVARBINARY, "bytea");
+    protected static final DataType<String>     __LONGVARCHAR           = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.LONGVARCHAR, "varchar");
+    protected static final DataType<String>     __NCHAR                 = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.NCHAR, "char");
+    protected static final DataType<String>     __NCLOB                 = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.NCLOB, "text");
+    protected static final DataType<String>     __LONGNVARCHAR          = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.LONGNVARCHAR, "varchar");
+    protected static final DataType<String>     __NVARCHAR              = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.NVARCHAR, "varchar");
+    protected static final DataType<Byte>       __TINYINT               = new DefaultDataType<Byte>(SQLDialect.POSTGRES, SQLDataType.TINYINT, "smallint");
+    protected static final DataType<byte[]>     __VARBINARY             = new DefaultDataType<byte[]>(SQLDialect.POSTGRES, SQLDataType.VARBINARY, "bytea");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final PostgresDataType<BigInteger> __BIGINTEGER            = new PostgresDataType<BigInteger>(SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DataType<BigInteger> __BIGINTEGER            = new DefaultDataType<BigInteger>(SQLDialect.POSTGRES, SQLDataType.DECIMAL_INTEGER, "decimal");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final PostgresDataType<Integer>    SERIAL                     = new PostgresDataType<Integer>(SQLDataType.INTEGER, "serial");
-    public static final PostgresDataType<Integer>    SERIAL4                    = new PostgresDataType<Integer>(SQLDataType.INTEGER, "serial4");
-    public static final PostgresDataType<Long>       BIGSERIAL                  = new PostgresDataType<Long>(SQLDataType.BIGINT, "bigserial");
-    public static final PostgresDataType<Long>       SERIAL8                    = new PostgresDataType<Long>(SQLDataType.BIGINT, "serial8");
-    public static final PostgresDataType<BigDecimal> MONEY                      = new PostgresDataType<BigDecimal>(SQLDataType.DECIMAL, "money");
-    public static final PostgresDataType<String>     BITVARYING                 = new PostgresDataType<String>(SQLDataType.VARCHAR, "bit varying");
-    public static final PostgresDataType<String>     VARBIT                     = new PostgresDataType<String>(SQLDataType.VARCHAR, "varbit");
-    public static final PostgresDataType<String>     BIT                        = new PostgresDataType<String>(SQLDataType.CHAR, "bit");
-    public static final PostgresDataType<String>     BPCHAR                     = new PostgresDataType<String>(SQLDataType.CHAR, "bpchar");
-    public static final PostgresDataType<Time>       TIMEWITHOUTTIMEZONE        = new PostgresDataType<Time>(SQLDataType.TIME, "time without time zone");
-    public static final PostgresDataType<Time>       TIMEWITHTIMEZONE           = new PostgresDataType<Time>(SQLDataType.TIME, "time with time zone");
-    public static final PostgresDataType<Time>       TIMETZ                     = new PostgresDataType<Time>(SQLDataType.TIME, "timetz");
-    public static final PostgresDataType<Timestamp>  TIMESTAMPWITHOUTTIMEZONE   = new PostgresDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp without time zone");
-    public static final PostgresDataType<Timestamp>  TIMESTAMPWITHTIMEZONE      = new PostgresDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamp with time zone");
-    public static final PostgresDataType<Timestamp>  TIMESTAMPTZ                = new PostgresDataType<Timestamp>(SQLDataType.TIMESTAMP, "timestamptz");
-    public static final PostgresDataType<Result<Record>> REFCURSOR              = new PostgresDataType<Result<Record>>(SQLDataType.RESULT, "refcursor");
-    public static final PostgresDataType<Object>     ANY                        = new PostgresDataType<Object>(SQLDataType.OTHER, "any");
+    public static final DataType<Integer>    SERIAL                     = new DefaultDataType<Integer>(SQLDialect.POSTGRES, SQLDataType.INTEGER, "serial");
+    public static final DataType<Integer>    SERIAL4                    = new DefaultDataType<Integer>(SQLDialect.POSTGRES, SQLDataType.INTEGER, "serial4");
+    public static final DataType<Long>       BIGSERIAL                  = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "bigserial");
+    public static final DataType<Long>       SERIAL8                    = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "serial8");
+    public static final DataType<BigDecimal> MONEY                      = new DefaultDataType<BigDecimal>(SQLDialect.POSTGRES, SQLDataType.DECIMAL, "money");
+    public static final DataType<String>     BITVARYING                 = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "bit varying");
+    public static final DataType<String>     VARBIT                     = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "varbit");
+    public static final DataType<String>     BIT                        = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.CHAR, "bit");
+    public static final DataType<String>     BPCHAR                     = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.CHAR, "bpchar");
+    public static final DataType<Time>       TIMEWITHOUTTIMEZONE        = new DefaultDataType<Time>(SQLDialect.POSTGRES, SQLDataType.TIME, "time without time zone");
+    public static final DataType<Time>       TIMEWITHTIMEZONE           = new DefaultDataType<Time>(SQLDialect.POSTGRES, SQLDataType.TIME, "time with time zone");
+    public static final DataType<Time>       TIMETZ                     = new DefaultDataType<Time>(SQLDialect.POSTGRES, SQLDataType.TIME, "timetz");
+    public static final DataType<Timestamp>  TIMESTAMPWITHOUTTIMEZONE   = new DefaultDataType<Timestamp>(SQLDialect.POSTGRES, SQLDataType.TIMESTAMP, "timestamp without time zone");
+    public static final DataType<Timestamp>  TIMESTAMPWITHTIMEZONE      = new DefaultDataType<Timestamp>(SQLDialect.POSTGRES, SQLDataType.TIMESTAMP, "timestamp with time zone");
+    public static final DataType<Timestamp>  TIMESTAMPTZ                = new DefaultDataType<Timestamp>(SQLDialect.POSTGRES, SQLDataType.TIMESTAMP, "timestamptz");
+    public static final DataType<Result<Record>> REFCURSOR              = new DefaultDataType<Result<Record>>(SQLDialect.POSTGRES, SQLDataType.RESULT, "refcursor");
+    public static final DataType<Object>     ANY                        = new DefaultDataType<Object>(SQLDialect.POSTGRES, SQLDataType.OTHER, "any");
 
     // Meta-table types
-    public static final PostgresDataType<Long>       OID                        = new PostgresDataType<Long>(SQLDataType.BIGINT, "oid");
-    public static final PostgresDataType<Long>       OIDVECTOR                  = new PostgresDataType<Long>(SQLDataType.BIGINT, "oidvector");
-    public static final PostgresDataType<Long>       XID                        = new PostgresDataType<Long>(SQLDataType.BIGINT, "xid");
-    public static final PostgresDataType<Long>       TID                        = new PostgresDataType<Long>(SQLDataType.BIGINT, "tid");
-    public static final PostgresDataType<Long>       CID                        = new PostgresDataType<Long>(SQLDataType.BIGINT, "cid");
-    public static final PostgresDataType<String>     ACLITEM                    = new PostgresDataType<String>(SQLDataType.VARCHAR, "aclitem");
-    public static final PostgresDataType<String>     NAME                       = new PostgresDataType<String>(SQLDataType.VARCHAR, "name");
-    public static final PostgresDataType<String>     REGPROC                    = new PostgresDataType<String>(SQLDataType.VARCHAR, "regproc");
+    public static final DataType<Long>       OID                        = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "oid");
+    public static final DataType<Long>       OIDVECTOR                  = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "oidvector");
+    public static final DataType<Long>       XID                        = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "xid");
+    public static final DataType<Long>       TID                        = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "tid");
+    public static final DataType<Long>       CID                        = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "cid");
+    public static final DataType<String>     ACLITEM                    = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "aclitem");
+    public static final DataType<String>     NAME                       = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "name");
+    public static final DataType<String>     REGPROC                    = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.VARCHAR, "regproc");
 
-
-    private PostgresDataType(SQLDataType<T> sqlDataType, String typeName) {
-        super(SQLDialect.POSTGRES, sqlDataType, sqlDataType.getType(), typeName);
+    @Deprecated
+    public static DataType<Object> getDefaultDataType(String string) {
+        return DefaultDataType.getDefaultDataType(string);
     }
 }

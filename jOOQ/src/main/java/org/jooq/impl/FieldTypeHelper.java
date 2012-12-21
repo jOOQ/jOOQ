@@ -85,17 +85,15 @@ import org.jooq.util.postgres.PostgresUtils;
 
 /**
  * Utility methods related to the treatment of fields and their types
- * <p>
- * This class is for JOOQ INTERNAL USE only. Do not reference directly
  *
  * @author Lukas Eder
  */
-public final class FieldTypeHelper {
+final class FieldTypeHelper {
 
-    private static final JooqLogger log               = JooqLogger.getLogger(FieldTypeHelper.class);
+    private static final JooqLogger log = JooqLogger.getLogger(FieldTypeHelper.class);
 
     @SuppressWarnings("unchecked")
-    public static <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
+    static <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
         Class<T> type = field.getType();
         DataType<T> dataType = field.getDataType();
 
@@ -206,7 +204,7 @@ public final class FieldTypeHelper {
         }
     }
 
-    public static <T> void writeToSQLOutput(SQLOutput stream, Field<T> field, T value) throws SQLException {
+    static <T> void writeToSQLOutput(SQLOutput stream, Field<T> field, T value) throws SQLException {
         writeToSQLOutput(stream, field.getType(), field.getDataType(), value);
     }
 
@@ -647,7 +645,7 @@ public final class FieldTypeHelper {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getFromStatement(ExecuteContext ctx, Class<T> type, int index) throws SQLException {
+    static <T> T getFromStatement(ExecuteContext ctx, Class<T> type, int index) throws SQLException {
         CallableStatement stmt = (CallableStatement) ctx.statement();
 
         if (type == Blob.class) {
@@ -763,7 +761,7 @@ public final class FieldTypeHelper {
         }
     }
 
-    
+
 
     // -------------------------------------------------------------------------
     // The following section has been added for Postgres UDT support. The

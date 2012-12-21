@@ -81,10 +81,10 @@ public abstract class AbstractDataType<T> implements DataType<T> {
      * Generated UID
      */
     private static final long                            serialVersionUID = 4155588654449505119L;
-    private static final Map<String, DataType<?>>[]      typesByTypeName;
-    private static final Map<Class<?>, DataType<?>>[]    typesByType;
-    private static final Map<DataType<?>, DataType<?>>[] typesBySQLDataType;
-    private static final Map<Class<?>, DataType<?>>      sqlDataTypesByType;
+    private static final Map<String, DataType<?>>[]      TYPES_BY_NAME;
+    private static final Map<Class<?>, DataType<?>>[]    TYPES_BY_TYPE;
+    private static final Map<DataType<?>, DataType<?>>[] TYPES_BY_SQL_DATATYPE;
+    private static final Map<Class<?>, DataType<?>>      SQL_DATATYPES_BY_TYPE;
 
     private final SQLDialect                             dialect;
 
@@ -98,17 +98,17 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     private final boolean                                hasPrecisionAndScale;
 
     static {
-        typesBySQLDataType = new Map[SQLDialect.values().length];
-        typesByTypeName = new Map[SQLDialect.values().length];
-        typesByType = new Map[SQLDialect.values().length];
+        TYPES_BY_SQL_DATATYPE = new Map[SQLDialect.values().length];
+        TYPES_BY_NAME = new Map[SQLDialect.values().length];
+        TYPES_BY_TYPE = new Map[SQLDialect.values().length];
 
         for (SQLDialect dialect : SQLDialect.values()) {
-            typesBySQLDataType[dialect.ordinal()] = new LinkedHashMap<DataType<?>, DataType<?>>();
-            typesByTypeName[dialect.ordinal()] = new LinkedHashMap<String, DataType<?>>();
-            typesByType[dialect.ordinal()] = new LinkedHashMap<Class<?>, DataType<?>>();
+            TYPES_BY_SQL_DATATYPE[dialect.ordinal()] = new LinkedHashMap<DataType<?>, DataType<?>>();
+            TYPES_BY_NAME[dialect.ordinal()] = new LinkedHashMap<String, DataType<?>>();
+            TYPES_BY_TYPE[dialect.ordinal()] = new LinkedHashMap<Class<?>, DataType<?>>();
         }
 
-        sqlDataTypesByType = new LinkedHashMap<Class<?>, DataType<?>>();
+        SQL_DATATYPES_BY_TYPE = new LinkedHashMap<Class<?>, DataType<?>>();
     }
 
     protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<T> type, String typeName) {
@@ -143,22 +143,22 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         int ordinal = dialect == null ? SQLDialect.SQL99.ordinal() : dialect.ordinal();
         String normalised = FieldTypeHelper.normalise(typeName);
 
-        if (typesByTypeName[ordinal].get(normalised) == null) {
-            typesByTypeName[ordinal].put(normalised, this);
+        if (TYPES_BY_NAME[ordinal].get(normalised) == null) {
+            TYPES_BY_NAME[ordinal].put(normalised, this);
         }
 
-        if (typesByType[ordinal].get(type) == null) {
-            typesByType[ordinal].put(type, this);
+        if (TYPES_BY_TYPE[ordinal].get(type) == null) {
+            TYPES_BY_TYPE[ordinal].put(type, this);
         }
 
-        if (typesBySQLDataType[ordinal].get(sqlDataType) == null) {
-            typesBySQLDataType[ordinal].put(sqlDataType, this);
+        if (TYPES_BY_SQL_DATATYPE[ordinal].get(sqlDataType) == null) {
+            TYPES_BY_SQL_DATATYPE[ordinal].put(sqlDataType, this);
         }
 
         // Global data types
         if (dialect == null) {
-            if (sqlDataTypesByType.get(type) == null) {
-                sqlDataTypesByType.put(type, this);
+            if (SQL_DATATYPES_BY_TYPE.get(type) == null) {
+                SQL_DATATYPES_BY_TYPE.put(type, this);
             }
         }
     }
@@ -174,7 +174,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         // If this is a SQLDataType find the most suited dialect-specific
         // data type
         if (getDialect() == null) {
-            DataType<?> dataType = typesBySQLDataType[configuration.getDialect().ordinal()].get(this);
+            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.getDialect().ordinal()].get(this);
 
             if (dataType != null) {
                 return (DataType<T>) dataType;
@@ -412,11 +412,11 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
     protected static DataType<?> getDataType(SQLDialect dialect, String typeName) {
         String normalised = FieldTypeHelper.normalise(typeName);
-        DataType<?> result = typesByTypeName[dialect.ordinal()].get(normalised);
+        DataType<?> result = TYPES_BY_NAME[dialect.ordinal()].get(normalised);
 
         // UDT data types and others are registered using SQL99
         if (result == null) {
-            result = typesByTypeName[SQLDialect.SQL99.ordinal()].get(normalised);
+            result = TYPES_BY_NAME[SQLDialect.SQL99.ordinal()].get(normalised);
         }
 
         if (result == null) {
@@ -440,7 +440,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
             DataType<?> result = null;
 
             if (dialect != null) {
-                result = typesByType[dialect.ordinal()].get(type);
+                result = TYPES_BY_TYPE[dialect.ordinal()].get(type);
             }
 
             if (result == null) {
@@ -451,7 +451,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
                     ArrayRecord.class.isAssignableFrom(type)) {
 
                     for (SQLDialect d : SQLDialect.values()) {
-                        result = typesByType[d.ordinal()].get(type);
+                        result = TYPES_BY_TYPE[d.ordinal()].get(type);
 
                         if (result != null) {
                             break;
@@ -461,8 +461,8 @@ public abstract class AbstractDataType<T> implements DataType<T> {
             }
 
             if (result == null) {
-                if (sqlDataTypesByType.get(type) != null) {
-                    return (DataType<T>) sqlDataTypesByType.get(type);
+                if (SQL_DATATYPES_BY_TYPE.get(type) != null) {
+                    return (DataType<T>) SQL_DATATYPES_BY_TYPE.get(type);
                 }
 
                 // All other data types are illegal

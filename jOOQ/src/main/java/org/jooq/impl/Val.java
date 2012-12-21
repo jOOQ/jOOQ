@@ -194,7 +194,8 @@ class Val<T> extends AbstractField<T> implements Param<T> {
      * Render the bind variable including a cast, if necessary
      */
     private void toSQLCast(RenderContext context) {
-        DataType<T> type = getDataType(context).getSQLDataType();
+        DataType<T> dataType = getDataType(context);
+        DataType<T> type = dataType.getSQLDataType();
         SQLDialect dialect = context.getDialect();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
@@ -209,7 +210,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                 precision = Math.min(precision, 18);
             }
 
-            toSQLCast(context, getDataType(context), precision, scale);
+            toSQLCast(context, dataType, 0, precision, scale);
         }
 
         // [#1028] Most databases don't know an OTHER type (except H2, HSQLDB).
@@ -217,7 +218,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
 
             // If the bind value is set, it can be used to derive the cast type
             if (value != null) {
-                toSQLCast(context, DefaultDataType.getDataType(dialect, value.getClass()), 0, 0);
+                toSQLCast(context, DefaultDataType.getDataType(dialect, value.getClass()), 0, 0, 0);
             }
 
             // [#632] [#722] Current integration tests show that Ingres and
@@ -229,7 +230,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             // Derby and DB2 must have a type associated with NULL. Use VARCHAR
             // as a workaround. That's probably not correct in all cases, though
             else {
-                toSQLCast(context, DefaultDataType.getDataType(dialect, String.class), 0, 0);
+                toSQLCast(context, DefaultDataType.getDataType(dialect, String.class), 0, 0, 0);
             }
         }
 
@@ -244,12 +245,12 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         // [#1727] VARCHAR types should be cast to their actual lengths in some
         // dialects
         else if ((type == SQLDataType.VARCHAR || type == SQLDataType.CHAR) && asList(FIREBIRD).contains(dialect)) {
-            toSQLCast(context, getDataType(context), getValueLength());
+            toSQLCast(context, dataType, getValueLength(), 0, 0);
         }
 
         // In all other cases, the bind variable can be cast normally
         else {
-            toSQLCast(context, getDataType(context), 0, 0);
+            toSQLCast(context, dataType, dataType.length(), dataType.precision(), dataType.scale());
         }
     }
 
@@ -275,19 +276,11 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         }
     }
 
-    private void toSQLCast(RenderContext context, DataType<?> type, int length) {
+    private void toSQLCast(RenderContext context, DataType<?> type, int length, int precision, int scale) {
         context.keyword("cast(");
         toSQL(context, getValue(), getType());
         context.keyword(" as ")
-               .sql(type.getCastTypeName(context, length))
-               .sql(")");
-    }
-
-    private void toSQLCast(RenderContext context, DataType<?> type, int precision, int scale) {
-        context.keyword("cast(");
-        toSQL(context, getValue(), getType());
-        context.keyword(" as ")
-               .sql(type.getCastTypeName(context, precision, scale))
+               .sql(type.length(length).precision(precision).scale(scale).getCastTypeName(context))
                .sql(")");
     }
 

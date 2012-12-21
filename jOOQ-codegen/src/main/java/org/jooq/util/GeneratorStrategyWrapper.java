@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -247,7 +248,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
     public List<String> getJavaClassImplements(Definition definition, Mode mode) {
 
         // [#1243] All generation modes can accept interfaces
-        List<String> result = new ArrayList<String>(delegate.getJavaClassImplements(definition, mode));
+        Set<String> result = new LinkedHashSet<String>(delegate.getJavaClassImplements(definition, mode));
 
         // [#1528] Generated interfaces (implemented by RECORD and POJO) are
         // always Serializable
@@ -261,7 +262,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             result.add(Serializable.class.getName());
         }
 
-        return result;
+        return new ArrayList<String>(result);
     }
 
     @Override

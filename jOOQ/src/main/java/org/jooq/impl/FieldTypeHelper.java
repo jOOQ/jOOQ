@@ -38,8 +38,8 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
+import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.math.BigDecimal;
@@ -84,21 +84,7 @@ import org.jooq.types.ULong;
 import org.jooq.types.UNumber;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
-import org.jooq.util.ase.ASEDataType;
-import org.jooq.util.cubrid.CUBRIDDataType;
-import org.jooq.util.db2.DB2DataType;
-import org.jooq.util.derby.DerbyDataType;
-import org.jooq.util.firebird.FirebirdDataType;
-import org.jooq.util.h2.H2DataType;
-import org.jooq.util.hsqldb.HSQLDBDataType;
-import org.jooq.util.ingres.IngresDataType;
-import org.jooq.util.mysql.MySQLDataType;
-import org.jooq.util.oracle.OracleDataType;
-import org.jooq.util.postgres.PostgresDataType;
 import org.jooq.util.postgres.PostgresUtils;
-import org.jooq.util.sqlite.SQLiteDataType;
-import org.jooq.util.sqlserver.SQLServerDataType;
-import org.jooq.util.sybase.SybaseDataType;
 
 /**
  * Utility methods related to the treatment of fields and their types
@@ -866,43 +852,6 @@ public final class FieldTypeHelper {
 
             default:
                 return Object.class;
-        }
-    }
-
-    public static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
-        switch (dialect) {
-            case ASE:
-                return ASEDataType.getDataType(type);
-            case CUBRID:
-                return CUBRIDDataType.getDataType(type);
-            case DB2:
-                return DB2DataType.getDataType(type);
-            case DERBY:
-                return DerbyDataType.getDataType(type);
-            case FIREBIRD:
-                return FirebirdDataType.getDataType(type);
-            case H2:
-                return H2DataType.getDataType(type);
-            case HSQLDB:
-                return HSQLDBDataType.getDataType(type);
-            case INGRES:
-                return IngresDataType.getDataType(type);
-            case MYSQL:
-                return MySQLDataType.getDataType(type);
-            case ORACLE:
-                return OracleDataType.getDataType(type);
-            case POSTGRES:
-                return PostgresDataType.getDataType(type);
-            case SQLITE:
-                return SQLiteDataType.getDataType(type);
-            case SQLSERVER:
-                return SQLServerDataType.getDataType(type);
-            case SYBASE:
-                return SybaseDataType.getDataType(type);
-
-                // Default behaviour is needed for hashCode() and toString();
-            default:
-               return SQLDataType.getDataType(null, type);
         }
     }
 

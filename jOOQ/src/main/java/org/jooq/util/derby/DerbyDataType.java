@@ -42,7 +42,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.SQLDataType;
@@ -133,13 +132,5 @@ public class DerbyDataType<T> extends AbstractDataType<T> {
 
     private DerbyDataType(SQLDataType<T> sqlDataType, String typeName, String castName) {
         super(SQLDialect.DERBY, sqlDataType, sqlDataType.getType(), typeName, castName);
-    }
-
-    public static <T> DataType<T> getDataType(Class<T> type) {
-        return getDataType(SQLDialect.DERBY, type);
-    }
-
-    public static DataType<Object> getDefaultDataType(String typeName) {
-        return getDefaultDataType(SQLDialect.DERBY, typeName);
     }
 }

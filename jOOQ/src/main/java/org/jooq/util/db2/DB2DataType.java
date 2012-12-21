@@ -40,7 +40,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.SQLDataType;
@@ -120,13 +119,5 @@ public class DB2DataType<T> extends AbstractDataType<T> {
 
     private DB2DataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName) {
         super(SQLDialect.DB2, sqlDataType, sqlDataType.getType(), typeName, castTypeName);
-    }
-
-    public static <T> DataType<T> getDataType(Class<T> type) {
-        return getDataType(SQLDialect.DB2, type);
-    }
-
-    public static DataType<Object> getDefaultDataType(String typeName) {
-        return getDefaultDataType(SQLDialect.DB2, typeName);
     }
 }

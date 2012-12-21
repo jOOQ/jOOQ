@@ -42,15 +42,13 @@ import static org.jooq.impl.Factory.notExists;
 import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
-import static org.jooq.impl.Utils.convert;
+import static org.jooq.tools.Convert.convert;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -196,11 +194,11 @@ implements
         // syntax, in case of which, the USING() was not added
         if (using == null) {
             h2Style = true;
-            getH2Values().addAll(vals(convert(getH2Fields(), values)));
+            getH2Values().addAll(vals(convert(values, getH2Fields().toArray(new Field[0]))));
         }
         else {
-            List<Field<?>> fields = new ArrayList<Field<?>>(notMatchedInsert.keySet());
-            notMatchedInsert.putValues(vals(convert(fields, values)));
+            Field<?>[] fields = notMatchedInsert.keySet().toArray(new Field[0]);
+            notMatchedInsert.putValues(vals(convert(values, fields)));
         }
 
         return this;

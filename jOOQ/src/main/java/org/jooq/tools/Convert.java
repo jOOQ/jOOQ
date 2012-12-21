@@ -61,6 +61,7 @@ import java.util.Set;
 
 import org.jooq.Converter;
 import org.jooq.EnumType;
+import org.jooq.Field;
 import org.jooq.exception.DataTypeException;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -116,6 +117,67 @@ public final class Convert {
     }
 
     /**
+     * Convert an array of values to a matching data type
+     * <p>
+     * This converts <code>values[i]</code> to <code>fields[i].getType()</code>
+     */
+    public static final Object[] convert(Object[] values, Field<?>[] fields) {
+
+        // [#1005] Convert values from the <code>VALUES</code> clause to appropriate
+        // values as specified by the <code>INTO</code> clause's column list.
+        if (values != null) {
+            Object[] result = new Object[values.length];
+
+            for (int i = 0; i < values.length; i++) {
+
+                // TODO [#1008] Should fields be cast? Check this with
+                // appropriate integration tests
+                if (values[i] instanceof Field<?>) {
+                    result[i] = values[i];
+                }
+                else {
+                    result[i] = convert(values[i], fields[i].getType());
+                }
+            }
+
+            return result;
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
+     * Convert an array of values to a matching data type
+     * <p>
+     * This converts <code>values[i]</code> to <code>types[i]</code>
+     */
+    public static final Object[] convert(Object[] values, Class<?>[] types) {
+
+        // [#1005] Convert values from the <code>VALUES</code> clause to appropriate
+        // values as specified by the <code>INTO</code> clause's column list.
+        if (values != null) {
+            Object[] result = new Object[values.length];
+
+            for (int i = 0; i < values.length; i++) {
+
+                // TODO [#1008] Should fields be cast? Check this with
+                // appropriate integration tests
+                if (values[i] instanceof Field<?>) {
+                    result[i] = values[i];
+                }
+                else {
+                    result[i] = convert(values[i], types[i]);
+                }
+            }
+
+            return result;
+        }
+        else {
+            return null;
+        }
+    }
+    /**
      * Convert an array into another one using a converter
      * <p>
      * This uses {@link #convertArray(Object[], Class)} to convert the array to
@@ -128,7 +190,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    public static <U> U[] convertArray(Object[] from, Converter<?, U> converter) throws DataTypeException {
+    public static final <U> U[] convertArray(Object[] from, Converter<?, U> converter) throws DataTypeException {
         if (from == null) {
             return null;
         }
@@ -161,7 +223,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      */
     @SuppressWarnings("unchecked")
-    public static Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
+    public static final Object[] convertArray(Object[] from, Class<?> toClass) throws DataTypeException {
         if (from == null) {
             return null;
         }
@@ -200,14 +262,14 @@ public final class Convert {
      * @return The target type object
      * @throws DataTypeException - When the conversion is not possible
      */
-    public static <U> U convert(Object from, Converter<?, U> converter) throws DataTypeException {
+    public static final <U> U convert(Object from, Converter<?, U> converter) throws DataTypeException {
         return convert0(from, converter);
     }
 
     /**
      * Conversion type-safety
      */
-    private static <T, U> U convert0(Object from, Converter<T, U> converter) throws DataTypeException {
+    private static final <T, U> U convert0(Object from, Converter<T, U> converter) throws DataTypeException {
         ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
         return converter.from(all.from(from));
     }
@@ -261,7 +323,7 @@ public final class Convert {
      * @return The converted object
      * @throws DataTypeException - When the conversion is not possible
      */
-    public static <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
+    public static final <T> T convert(Object from, Class<? extends T> toClass) throws DataTypeException {
         return convert(from, new ConvertAll<T>(toClass));
     }
 
@@ -275,7 +337,7 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Class)
      */
-    public static <T> List<T> convert(Collection<?> collection, Class<? extends T> type) throws DataTypeException {
+    public static final <T> List<T> convert(Collection<?> collection, Class<? extends T> type) throws DataTypeException {
         return convert(collection, new ConvertAll<T>(type));
     }
 
@@ -289,14 +351,14 @@ public final class Convert {
      * @throws DataTypeException - When the conversion is not possible
      * @see #convert(Object, Converter)
      */
-    public static <U> List<U> convert(Collection<?> collection, Converter<?, U> converter) throws DataTypeException {
+    public static final <U> List<U> convert(Collection<?> collection, Converter<?, U> converter) throws DataTypeException {
         return convert0(collection, converter);
     }
 
     /**
      * Type safe conversion
      */
-    private static <T, U> List<U> convert0(Collection<?> collection, Converter<T, U> converter) throws DataTypeException {
+    private static final <T, U> List<U> convert0(Collection<?> collection, Converter<T, U> converter) throws DataTypeException {
         ConvertAll<T> all = new ConvertAll<T>(converter.fromType());
         List<U> result = new ArrayList<U>(collection.size());
 

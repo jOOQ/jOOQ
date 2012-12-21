@@ -1301,7 +1301,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
          * Utility method to prevent unnecessary unchecked conversions
          */
         private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
-            T value = FieldTypeHelper.getFromResultSet(ctx, field, index + 1);
+            T value = Utils.getFromResultSet(ctx, field, index + 1);
             record.setValue(index, new Value<T>(value));
         }
 

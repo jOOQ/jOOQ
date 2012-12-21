@@ -36,19 +36,38 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.FALSE;
-import static java.lang.Integer.toOctalString;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.escape;
 import static org.jooq.impl.Factory.getDataType;
 import static org.jooq.impl.Factory.nullSafe;
 import static org.jooq.impl.Factory.val;
-import static org.jooq.tools.StringUtils.leftPad;
+import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
+import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.accessible;
+import static org.jooq.tools.reflect.Reflect.on;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Array;
+import java.sql.Blob;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLInput;
+import java.sql.SQLOutput;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -62,7 +81,9 @@ import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
@@ -71,6 +92,7 @@ import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -80,18 +102,29 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.tools.reflect.Reflect;
+import org.jooq.types.DayToSecond;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UNumber;
+import org.jooq.types.UShort;
+import org.jooq.types.YearToMonth;
+import org.jooq.util.postgres.PostgresUtils;
 
 /**
- * General jOOQ utilities
+ * General internal jOOQ utilities
  *
  * @author Lukas Eder
  */
 final class Utils {
+
+    static final JooqLogger      log                        = JooqLogger.getLogger(Utils.class);
 
     // ------------------------------------------------------------------------
     // Some constants for use with Configuration.setData()
@@ -124,6 +157,22 @@ final class Utils {
      * A pattern for the JDBC escape syntax
      */
     private static final Pattern JDBC_ESCAPE_PATTERN        = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
+
+    // ------------------------------------------------------------------------
+    // XXX: General utility methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * Use this rather than {@link Arrays#asList(Object...)} for
+     * <code>null</code>-safety
+     */
+    static final <T> List<T> list(T... array) {
+        return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Record constructors and related methods
+    // ------------------------------------------------------------------------
 
     /**
      * Create a new Oracle-style VARRAY {@link ArrayRecord}
@@ -226,67 +275,9 @@ final class Utils {
         return true;
     }
 
-    /**
-     * Use this rather than {@link Arrays#asList(Object...)} for
-     * <code>null</code>-safety
-     */
-    static final <T> List<T> list(T... array) {
-        return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
-    }
-
-    /**
-     * [#1005] Convert values from the <code>VALUES</code> clause to appropriate
-     * values as specified by the <code>INTO</code> clause's column list.
-     */
-    static final Object[] convert(List<Field<?>> fields, Object[] values) {
-        if (values != null) {
-            Object[] result = new Object[values.length];
-
-            for (int i = 0; i < values.length; i++) {
-
-                // TODO [#1008] Should fields be cast? Check this with
-                // appropriate integration tests
-                if (values[i] instanceof Field<?>) {
-                    result[i] = values[i];
-                }
-                else {
-                    result[i] = Convert.convert(values[i], fields.get(i).getType());
-                }
-            }
-
-            return result;
-        }
-        else {
-            return null;
-        }
-    }
-
-    /**
-     * [#1005] Convert values from the <code>VALUES</code> clause to appropriate
-     * values as specified by the <code>INTO</code> clause's column list.
-     */
-    static final Object[] convert(Class<?>[] types, Object[] values) {
-        if (values != null) {
-            Object[] result = new Object[values.length];
-
-            for (int i = 0; i < values.length; i++) {
-
-                // TODO [#1008] Should fields be cast? Check this with
-                // appropriate integration tests
-                if (values[i] instanceof Field<?>) {
-                    result[i] = values[i];
-                }
-                else {
-                    result[i] = Convert.convert(values[i], types[i]);
-                }
-            }
-
-            return result;
-        }
-        else {
-            return null;
-        }
-    }
+    // ------------------------------------------------------------------------
+    // XXX: Data-type related methods
+    // ------------------------------------------------------------------------
 
     /**
      * Useful conversion method
@@ -392,6 +383,10 @@ final class Utils {
     static final DataType<?>[] getDataTypes(Object[] values) {
         return getDataTypes(getClasses(values));
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: General utility methods
+    // ------------------------------------------------------------------------
 
     /**
      * Render and bind a list of {@link QueryPart} to plain SQL
@@ -686,6 +681,180 @@ final class Utils {
     }
 
     /**
+     * Type-safely copy a value from one record to another
+     */
+    static final <T> void setValue(Record target, Field<T> targetField, Record source, Field<?> sourceField) {
+        setValue(target, targetField, source.getValue(sourceField));
+    }
+
+    /**
+     * Type-safely set a value to a record
+     */
+    static final <T> void setValue(Record target, Field<T> targetField, Object value) {
+        target.setValue(targetField, targetField.getDataType().convert(value));
+    }
+
+    /**
+     * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    @SuppressWarnings("deprecation")
+    static final Schema getMappedSchema(Configuration configuration, Schema schema) {
+        org.jooq.SchemaMapping mapping = configuration.getSchemaMapping();
+
+        if (mapping != null) {
+            return mapping.map(schema);
+        }
+        else {
+            return schema;
+        }
+    }
+
+    /**
+     * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
+     */
+    @SuppressWarnings("deprecation")
+    static final Table<?> getMappedTable(Configuration configuration, Table<?> table) {
+        org.jooq.SchemaMapping mapping = configuration.getSchemaMapping();
+
+        if (mapping != null) {
+            return mapping.map(table);
+        }
+        else {
+            return table;
+        }
+    }
+
+    /**
+     * Get a list of ExecuteListener instances (including defaults) from a
+     * configuration
+     */
+    static final List<ExecuteListener> getListeners(Configuration configuration) {
+        List<ExecuteListener> result = new ArrayList<ExecuteListener>();
+
+        if (!FALSE.equals(configuration.getSettings().isExecuteLogging())) {
+            result.add(new StopWatchListener());
+            result.add(new LoggerListener());
+        }
+
+        for (String listener : configuration.getSettings().getExecuteListeners()) {
+            result.add(getListener(listener));
+        }
+
+        return result;
+    }
+
+    private static final ExecuteListener getListener(String name) {
+        try {
+
+            // [#1572] Loading classes like this is needed for class loading to
+            // work with OSGi. [#1578] The current implementation of loading
+            // ExecuteListeners will be reworked in jOOQ 3.0, though
+            Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(name);
+            return (ExecuteListener) Reflect.accessible(type.getDeclaredConstructor()).newInstance();
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Wrap a piece of SQL code in parentheses, if not wrapped already
+     */
+    static final String wrapInParentheses(String sql) {
+        if (sql.startsWith("(")) {
+            return sql;
+        }
+        else {
+            return "(" + sql + ")";
+        }
+    }
+
+    /**
+     * Return a non-negative hash code for a {@link QueryPart}, taking into
+     * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
+     */
+    static final int hash(Object object) {
+        return 0x7FFFFFF & object.hashCode();
+    }
+
+    /**
+     * Utility method to escape strings or "toString" other objects
+     */
+    static final Field<String> escapeForLike(Object value) {
+        if (value != null && value.getClass() == String.class) {
+            return val(escape("" + value, ESCAPE));
+        }
+        else {
+            return val("" + value);
+        }
+    }
+
+    /**
+     * Utility method to escape string fields, or cast other fields
+     */
+    @SuppressWarnings("unchecked")
+    static final Field<String> escapeForLike(Field<?> field) {
+        if (nullSafe(field).getDataType().isString()) {
+            return escape((Field<String>) field, ESCAPE);
+        }
+        else {
+            return field.cast(String.class);
+        }
+    }
+
+    /**
+     * Utility method to check whether a field is a {@link Param}
+     */
+    static final boolean isVal(Field<?> field) {
+        return field instanceof Param;
+    }
+
+    /**
+     * Utility method to extract a value from a field
+     */
+    static final <T> T extractVal(Field<T> field) {
+        if (isVal(field)) {
+            return ((Param<T>) field).getValue();
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
+     * Add primary key conditions to a query
+     */
+    @SuppressWarnings("deprecation")
+    static final void addConditions(org.jooq.ConditionProvider query, Record record, Field<?>... keys) {
+        for (Field<?> field : keys) {
+            addCondition(query, record, field);
+        }
+    }
+
+    /**
+     * Add a field condition to a query
+     */
+    @SuppressWarnings("deprecation")
+    static final <T> void addCondition(org.jooq.ConditionProvider provider, Record record, Field<T> field) {
+        provider.addConditions(field.equal(record.getValue(field)));
+    }
+
+    /**
+     * Extract the configuration from an attachable.
+     */
+    static final Configuration getConfiguration(Attachable attachable) {
+        if (attachable instanceof AttachableInternal) {
+            return ((AttachableInternal) attachable).getConfiguration();
+        }
+
+        return null;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Reflection utilities used for POJO mapping
+    // ------------------------------------------------------------------------
+
+    /**
      * Check if JPA classes can be loaded. This is only done once per JVM!
      */
     private static final boolean isJPAAvailable() {
@@ -972,217 +1141,885 @@ final class Utils {
         return name;
     }
 
-    /**
-     * Type-safely copy a value from one record to another
-     */
-    static final <T> void setValue(Record target, Field<T> targetField, Record source, Field<?> sourceField) {
-        setValue(target, targetField, source.getValue(sourceField));
-    }
-
-    /**
-     * Type-safely set a value to a record
-     */
-    static final <T> void setValue(Record target, Field<T> targetField, Object value) {
-        target.setValue(targetField, targetField.getDataType().convert(value));
-    }
-
-    /**
-     * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
-     */
-    @SuppressWarnings("deprecation")
-    static final Schema getMappedSchema(Configuration configuration, Schema schema) {
-        org.jooq.SchemaMapping mapping = configuration.getSchemaMapping();
-
-        if (mapping != null) {
-            return mapping.map(schema);
-        }
-        else {
-            return schema;
-        }
-    }
-
-    /**
-     * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
-     */
-    @SuppressWarnings("deprecation")
-    static final Table<?> getMappedTable(Configuration configuration, Table<?> table) {
-        org.jooq.SchemaMapping mapping = configuration.getSchemaMapping();
-
-        if (mapping != null) {
-            return mapping.map(table);
-        }
-        else {
-            return table;
-        }
-    }
-
-    static final List<ExecuteListener> getListeners(Configuration configuration) {
-        List<ExecuteListener> result = new ArrayList<ExecuteListener>();
-
-        if (!FALSE.equals(configuration.getSettings().isExecuteLogging())) {
-            result.add(new StopWatchListener());
-            result.add(new LoggerListener());
-        }
-
-        for (String listener : configuration.getSettings().getExecuteListeners()) {
-            result.add(getListener(listener));
-        }
-
-        return result;
-    }
-
-    private static final ExecuteListener getListener(String name) {
-        try {
-
-            // [#1572] Loading classes like this is needed for class loading to
-            // work with OSGi. [#1578] The current implementation of loading
-            // ExecuteListeners will be reworked in jOOQ 3.0, though
-            Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(name);
-            return (ExecuteListener) Reflect.accessible(type.getDeclaredConstructor()).newInstance();
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Wrap a piece of SQL code in parentheses, if not wrapped already
-     */
-    static final String wrapInParentheses(String sql) {
-        if (sql.startsWith("(")) {
-            return sql;
-        }
-        else {
-            return "(" + sql + ")";
-        }
-    }
-
-    /**
-     * Return a non-negative hash code for a {@link QueryPart}, taking into
-     * account FindBugs' <code>RV_ABSOLUTE_VALUE_OF_HASHCODE</code> pattern
-     */
-    static final int hash(Object object) {
-        return 0x7FFFFFF & object.hashCode();
-    }
-
     // ------------------------------------------------------------------------
-    // XXX This section is taken from the H2 Database
+    // XXX: JDBC helper methods
     // ------------------------------------------------------------------------
 
-    private static final char[] HEX = "0123456789abcdef".toCharArray();
-
-    /**
-     * Convert a byte array to a hex encoded string.
-     *
-     * @param value the byte array
-     * @return the hex encoded string
-     */
-    static final String convertBytesToHex(byte[] value) {
-        return convertBytesToHex(value, value.length);
-    }
-
-    /**
-     * Convert a byte array to a hex encoded string.
-     *
-     * @param value the byte array
-     * @param len the number of bytes to encode
-     * @return the hex encoded string
-     */
-    static final String convertBytesToHex(byte[] value, int len) {
-        char[] buff = new char[len + len];
-        char[] hex = HEX;
-        for (int i = 0; i < len; i++) {
-            int c = value[i] & 0xff;
-            buff[i + i] = hex[c >> 4];
-            buff[i + i + 1] = hex[c & 0xf];
-        }
-        return new String(buff);
-    }
-
-    /**
-     * Postgres uses octals instead of hex encoding
-     */
-    static final String convertBytesToPostgresOctal(byte[] binary) {
-        StringBuilder sb = new StringBuilder();
-
-        for (byte b : binary) {
-            sb.append("\\\\");
-            sb.append(leftPad(toOctalString(b), 3, '0'));
-        }
-
-        return sb.toString();
-    }
-
-    /**
-     * Utility method to escape strings or "toString" other objects
-     */
-    static final Field<String> escapeForLike(Object value) {
-        if (value != null && value.getClass() == String.class) {
-            return val(escape("" + value, ESCAPE));
-        }
-        else {
-            return val("" + value);
-        }
-    }
-
-    /**
-     * Utility method to escape string fields, or cast other fields
-     */
     @SuppressWarnings("unchecked")
-    static final Field<String> escapeForLike(Field<?> field) {
-        if (nullSafe(field).getDataType().isString()) {
-            return escape((Field<String>) field, ESCAPE);
+    static final <T> T getFromSQLInput(Configuration configuration, SQLInput stream, Field<T> field) throws SQLException {
+        Class<T> type = field.getType();
+        DataType<T> dataType = field.getDataType();
+
+        if (type == Blob.class) {
+            return (T) stream.readBlob();
+        }
+        else if (type == Boolean.class) {
+            return (T) wasNull(stream, Boolean.valueOf(stream.readBoolean()));
+        }
+        else if (type == BigInteger.class) {
+            BigDecimal result = stream.readBigDecimal();
+            return (T) (result == null ? null : result.toBigInteger());
+        }
+        else if (type == BigDecimal.class) {
+            return (T) stream.readBigDecimal();
+        }
+        else if (type == Byte.class) {
+            return (T) wasNull(stream, Byte.valueOf(stream.readByte()));
+        }
+        else if (type == byte[].class) {
+
+            // [#1327] Oracle cannot deserialise BLOBs as byte[] from SQLInput
+            if (dataType.isLob()) {
+                Blob blob = null;
+                try {
+                    blob = stream.readBlob();
+                    return (T) (blob == null ? null : blob.getBytes(1, (int) blob.length()));
+                }
+                finally {
+                    safeFree(blob);
+                }
+            }
+            else {
+                return (T) stream.readBytes();
+            }
+        }
+        else if (type == Clob.class) {
+            return (T) stream.readClob();
+        }
+        else if (type == Date.class) {
+            return (T) stream.readDate();
+        }
+        else if (type == Double.class) {
+            return (T) wasNull(stream, Double.valueOf(stream.readDouble()));
+        }
+        else if (type == Float.class) {
+            return (T) wasNull(stream, Float.valueOf(stream.readFloat()));
+        }
+        else if (type == Integer.class) {
+            return (T) wasNull(stream, Integer.valueOf(stream.readInt()));
+        }
+        else if (type == Long.class) {
+            return (T) wasNull(stream, Long.valueOf(stream.readLong()));
+        }
+        else if (type == Short.class) {
+            return (T) wasNull(stream, Short.valueOf(stream.readShort()));
+        }
+        else if (type == String.class) {
+            return (T) stream.readString();
+        }
+        else if (type == Time.class) {
+            return (T) stream.readTime();
+        }
+        else if (type == Timestamp.class) {
+            return (T) stream.readTimestamp();
+        }
+        else if (type == YearToMonth.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : YearToMonth.valueOf(string));
+        }
+        else if (type == DayToSecond.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : DayToSecond.valueOf(string));
+        }
+        else if (type == UByte.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : UByte.valueOf(string));
+        }
+        else if (type == UShort.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : UShort.valueOf(string));
+        }
+        else if (type == UInteger.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : UInteger.valueOf(string));
+        }
+        else if (type == ULong.class) {
+            String string = stream.readString();
+            return (T) (string == null ? null : ULong.valueOf(string));
+        }
+
+        // The type byte[] is handled earlier. byte[][] can be handled here
+        else if (type.isArray()) {
+            Array result = stream.readArray();
+            return (T) (result == null ? null : result.getArray());
+        }
+        else if (ArrayRecord.class.isAssignableFrom(type)) {
+            return (T) getArrayRecord(configuration, stream.readArray(), (Class<? extends ArrayRecord<?>>) type);
+        }
+        else if (EnumType.class.isAssignableFrom(type)) {
+            return getEnumType(type, stream.readString());
+        }
+        else if (UDTRecord.class.isAssignableFrom(type)) {
+            return (T) stream.readObject();
         }
         else {
-            return field.cast(String.class);
+            return (T) stream.readObject();
         }
     }
 
-    /**
-     * Utility method to check whether a field is a {@link Param}
-     */
-    static final boolean isVal(Field<?> field) {
-        return field instanceof Param;
-    }
+    static final <T> void writeToSQLOutput(SQLOutput stream, Field<T> field, T value) throws SQLException {
+        Class<T> type = field.getType();
+        DataType<T> dataType = field.getDataType();
 
-    /**
-     * Utility method to extract a value from a field
-     */
-    static final <T> T extractVal(Field<T> field) {
-        if (isVal(field)) {
-            return ((Param<T>) field).getValue();
+        if (value == null) {
+            stream.writeObject(null);
+        }
+        else if (type == Blob.class) {
+            stream.writeBlob((Blob) value);
+        }
+        else if (type == Boolean.class) {
+            stream.writeBoolean((Boolean) value);
+        }
+        else if (type == BigInteger.class) {
+            stream.writeBigDecimal(new BigDecimal((BigInteger) value));
+        }
+        else if (type == BigDecimal.class) {
+            stream.writeBigDecimal((BigDecimal) value);
+        }
+        else if (type == Byte.class) {
+            stream.writeByte((Byte) value);
+        }
+        else if (type == byte[].class) {
+
+            // [#1327] Oracle cannot serialise BLOBs as byte[] to SQLOutput
+            // Use reflection to avoid dependency on OJDBC
+            if (dataType.isLob()) {
+                Blob blob = null;
+
+                try {
+                    blob = on("oracle.sql.BLOB").call("createTemporary",
+                               on(stream).call("getSTRUCT")
+                                         .call("getJavaSqlConnection").get(),
+                               false,
+                               on("oracle.sql.BLOB").get("DURATION_SESSION")).get();
+
+                    blob.setBytes(1, (byte[]) value);
+                    stream.writeBlob(blob);
+                }
+                finally {
+                    DefaultExecuteContext.register(blob);
+                }
+            }
+            else {
+                stream.writeBytes((byte[]) value);
+            }
+        }
+        else if (type == Clob.class) {
+            stream.writeClob((Clob) value);
+        }
+        else if (type == Date.class) {
+            stream.writeDate((Date) value);
+        }
+        else if (type == Double.class) {
+            stream.writeDouble((Double) value);
+        }
+        else if (type == Float.class) {
+            stream.writeFloat((Float) value);
+        }
+        else if (type == Integer.class) {
+            stream.writeInt((Integer) value);
+        }
+        else if (type == Long.class) {
+            stream.writeLong((Long) value);
+        }
+        else if (type == Short.class) {
+            stream.writeShort((Short) value);
+        }
+        else if (type == String.class) {
+
+            // [#1327] Oracle cannot serialise CLOBs as String to SQLOutput
+            // Use reflection to avoid dependency on OJDBC
+            if (dataType.isLob()) {
+                Clob clob = null;
+
+                try {
+                    clob = on("oracle.sql.CLOB").call("createTemporary",
+                               on(stream).call("getSTRUCT")
+                                         .call("getJavaSqlConnection").get(),
+                               false,
+                               on("oracle.sql.CLOB").get("DURATION_SESSION")).get();
+
+                    clob.setString(1, (String) value);
+                    stream.writeClob(clob);
+                }
+                finally {
+                    DefaultExecuteContext.register(clob);
+                }
+            }
+            else {
+                stream.writeString((String) value);
+            }
+        }
+        else if (type == Time.class) {
+            stream.writeTime((Time) value);
+        }
+        else if (type == Timestamp.class) {
+            stream.writeTimestamp((Timestamp) value);
+        }
+        else if (type == YearToMonth.class) {
+            stream.writeString(value.toString());
+        }
+        else if (type == DayToSecond.class) {
+            stream.writeString(value.toString());
+        }
+//        else if (type.isArray()) {
+//            stream.writeArray(value);
+//        }
+        else if (UNumber.class.isAssignableFrom(type)) {
+            stream.writeString(value.toString());
+        }
+        else if (ArrayRecord.class.isAssignableFrom(type)) {
+
+            // [#1544] We can safely assume that localConfiguration has been
+            // set on DefaultBindContext, prior to serialising arrays to SQLOut
+            Connection connection = DefaultExecuteContext.registeredConfiguration().getConnectionProvider().acquire();
+            ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
+            stream.writeArray(on(connection).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
+        }
+        else if (EnumType.class.isAssignableFrom(type)) {
+            stream.writeString(((EnumType) value).getLiteral());
+        }
+        else if (UDTRecord.class.isAssignableFrom(type)) {
+            stream.writeObject((UDTRecord<?>) value);
         }
         else {
+            throw new UnsupportedOperationException("Type " + type + " is not supported");
+        }
+    }
+
+    static final <T, U> U getFromResultSet(ExecuteContext ctx, Field<U> field, int index) throws SQLException {
+
+        @SuppressWarnings("unchecked")
+        Converter<T, U> converter = (Converter<T, U>) DataTypes.converter(field.getType());
+
+        if (converter != null) {
+            return converter.from(getFromResultSet(ctx, converter.fromType(), index));
+        }
+        else {
+            return getFromResultSet(ctx, field.getType(), index);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final <T> T getFromResultSet(ExecuteContext ctx, Class<T> type, int index) throws SQLException {
+
+        ResultSet rs = ctx.resultSet();
+
+        if (type == Blob.class) {
+            return (T) rs.getBlob(index);
+        }
+        else if (type == Boolean.class) {
+            return (T) wasNull(rs, Boolean.valueOf(rs.getBoolean(index)));
+        }
+        else if (type == BigInteger.class) {
+        	// The SQLite JDBC driver doesn't support BigDecimals
+            if (ctx.getDialect() == SQLDialect.SQLITE) {
+                return Convert.convert(rs.getString(index), (Class<T>) BigInteger.class);
+            }
+            else {
+                BigDecimal result = rs.getBigDecimal(index);
+                return (T) (result == null ? null : result.toBigInteger());
+            }
+        }
+        else if (type == BigDecimal.class) {
+            // The SQLite JDBC driver doesn't support BigDecimals
+            if (ctx.getDialect() == SQLDialect.SQLITE) {
+                return Convert.convert(rs.getString(index), (Class<T>) BigDecimal.class);
+            }
+            else {
+                return (T) rs.getBigDecimal(index);
+            }
+        }
+        else if (type == Byte.class) {
+            return (T) wasNull(rs, Byte.valueOf(rs.getByte(index)));
+        }
+        else if (type == byte[].class) {
+            return (T) rs.getBytes(index);
+        }
+        else if (type == Clob.class) {
+            return (T) rs.getClob(index);
+        }
+        else if (type == Date.class) {
+            return (T) getDate(ctx.getDialect(), rs, index);
+        }
+        else if (type == Double.class) {
+            return (T) wasNull(rs, Double.valueOf(rs.getDouble(index)));
+        }
+        else if (type == Float.class) {
+            return (T) wasNull(rs, Float.valueOf(rs.getFloat(index)));
+        }
+        else if (type == Integer.class) {
+            return (T) wasNull(rs, Integer.valueOf(rs.getInt(index)));
+        }
+        else if (type == Long.class) {
+            return (T) wasNull(rs, Long.valueOf(rs.getLong(index)));
+        }
+        else if (type == Short.class) {
+            return (T) wasNull(rs, Short.valueOf(rs.getShort(index)));
+        }
+        else if (type == String.class) {
+            return (T) rs.getString(index);
+        }
+        else if (type == Time.class) {
+            return (T) getTime(ctx.getDialect(), rs, index);
+        }
+        else if (type == Timestamp.class) {
+            return (T) getTimestamp(ctx.getDialect(), rs, index);
+        }
+        else if (type == YearToMonth.class) {
+            if (ctx.getDialect() == POSTGRES) {
+                Object object = rs.getObject(index);
+                return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
+            }
+            else {
+                String string = rs.getString(index);
+                return (T) (string == null ? null : YearToMonth.valueOf(string));
+            }
+        }
+        else if (type == DayToSecond.class) {
+            if (ctx.getDialect() == POSTGRES) {
+                Object object = rs.getObject(index);
+                return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
+            }
+            else {
+                String string = rs.getString(index);
+                return (T) (string == null ? null : DayToSecond.valueOf(string));
+            }
+        }
+        else if (type == UByte.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : UByte.valueOf(string));
+        }
+        else if (type == UShort.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : UShort.valueOf(string));
+        }
+        else if (type == UInteger.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : UInteger.valueOf(string));
+        }
+        else if (type == ULong.class) {
+            String string = rs.getString(index);
+            return (T) (string == null ? null : ULong.valueOf(string));
+        }
+
+        // The type byte[] is handled earlier. byte[][] can be handled here
+        else if (type.isArray()) {
+            switch (ctx.getDialect()) {
+                case POSTGRES: {
+                    return pgGetArray(ctx, type, index);
+                }
+
+                default:
+                    // Note: due to a HSQLDB bug, it is not recommended to call rs.getObject() here:
+                    // See https://sourceforge.net/tracker/?func=detail&aid=3181365&group_id=23316&atid=378131
+                    return (T) convertArray(rs.getArray(index), (Class<? extends Object[]>) type);
+            }
+        }
+        else if (ArrayRecord.class.isAssignableFrom(type)) {
+            return (T) getArrayRecord(ctx, rs.getArray(index), (Class<? extends ArrayRecord<?>>) type);
+        }
+        else if (EnumType.class.isAssignableFrom(type)) {
+            return getEnumType(type, rs.getString(index));
+        }
+        else if (UDTRecord.class.isAssignableFrom(type)) {
+            switch (ctx.getDialect()) {
+                case POSTGRES:
+                    return (T) pgNewUDTRecord(type, rs.getObject(index));
+            }
+
+            return (T) rs.getObject(index, DataTypes.udtRecords());
+        }
+        else if (Result.class.isAssignableFrom(type)) {
+            ResultSet nested = (ResultSet) rs.getObject(index);
+            return (T) new Executor(ctx).fetch(nested);
+        }
+        else {
+            return (T) rs.getObject(index);
+        }
+    }
+
+    private static final ArrayRecord<?> getArrayRecord(Configuration configuration, Array array, Class<? extends ArrayRecord<?>> type) throws SQLException {
+        if (array == null) {
             return null;
         }
-    }
-
-    /**
-     * Add primary key conditions to a query
-     */
-    @SuppressWarnings("deprecation")
-    static final void addConditions(org.jooq.ConditionProvider query, Record record, Field<?>... keys) {
-        for (Field<?> field : keys) {
-            addCondition(query, record, field);
+        else {
+            // TODO: [#523] Use array record meta data instead
+            ArrayRecord<?> record = Utils.newArrayRecord(type, configuration);
+            record.set(array);
+            return record;
         }
     }
 
-    /**
-     * Add a field condition to a query
-     */
-    @SuppressWarnings("deprecation")
-    static final <T> void addCondition(org.jooq.ConditionProvider provider, Record record, Field<T> field) {
-        provider.addConditions(field.equal(record.getValue(field)));
-    }
-
-    /**
-     * Extract the configuration from an attachable.
-     */
-    static final Configuration getConfiguration(Attachable attachable) {
-        if (attachable instanceof AttachableInternal) {
-            return ((AttachableInternal) attachable).getConfiguration();
+    private static final Object[] convertArray(Object array, Class<? extends Object[]> type) throws SQLException {
+        if (array instanceof Object[]) {
+            return Convert.convert(array, type);
+        }
+        else if (array instanceof Array) {
+            return convertArray((Array) array, type);
         }
 
         return null;
+    }
+
+    private static final Object[] convertArray(Array array, Class<? extends Object[]> type) throws SQLException {
+        if (array != null) {
+            return Convert.convert(array.getArray(), type);
+        }
+
+        return null;
+    }
+
+    private static final Date getDate(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+
+        // SQLite's type affinity needs special care...
+        if (dialect == SQLDialect.SQLITE) {
+            String date = rs.getString(index);
+
+            if (date != null) {
+                return new Date(parse("yyyy-MM-dd", date));
+            }
+
+            return null;
+        }
+
+        // Cubrid SQL dates are incorrectly fetched. Reset milliseconds...
+        // See http://jira.cubrid.org/browse/APIS-159
+        // See https://sourceforge.net/apps/trac/cubridinterface/ticket/140
+        else if (dialect == CUBRID) {
+            Date date = rs.getDate(index);
+
+            if (date != null) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(date.getTime());
+                cal.set(Calendar.MILLISECOND, 0);
+                date = new Date(cal.getTimeInMillis());
+            }
+
+            return date;
+        }
+
+        else {
+            return rs.getDate(index);
+        }
+    }
+
+    private static final Time getTime(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+
+        // SQLite's type affinity needs special care...
+        if (dialect == SQLDialect.SQLITE) {
+            String time = rs.getString(index);
+
+            if (time != null) {
+                return new Time(parse("HH:mm:ss", time));
+            }
+
+            return null;
+        }
+
+        // Cubrid SQL dates are incorrectly fetched. Reset milliseconds...
+        // See http://jira.cubrid.org/browse/APIS-159
+        // See https://sourceforge.net/apps/trac/cubridinterface/ticket/140
+        else if (dialect == CUBRID) {
+            Time time = rs.getTime(index);
+
+            if (time != null) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(time.getTime());
+                cal.set(Calendar.MILLISECOND, 0);
+                time = new Time(cal.getTimeInMillis());
+            }
+
+            return time;
+        }
+
+        else {
+            return rs.getTime(index);
+        }
+    }
+
+    private static final Timestamp getTimestamp(SQLDialect dialect, ResultSet rs, int index) throws SQLException {
+
+        // SQLite's type affinity needs special care...
+        if (dialect == SQLDialect.SQLITE) {
+            String timestamp = rs.getString(index);
+
+            if (timestamp != null) {
+                return new Timestamp(parse("yyyy-MM-dd HH:mm:ss", timestamp));
+            }
+
+            return null;
+        } else {
+            return rs.getTimestamp(index);
+        }
+    }
+
+    private static final long parse(String pattern, String date) throws SQLException {
+        try {
+
+            // Try reading a plain number first
+            try {
+                return Long.valueOf(date);
+            }
+
+            // If that fails, try reading a formatted date
+            catch (NumberFormatException e) {
+                return new SimpleDateFormat(pattern).parse(date).getTime();
+            }
+        }
+        catch (ParseException e) {
+            throw new SQLException("Could not parse date " + date, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static final <T> T getEnumType(Class<T> type, String literal) throws SQLException {
+        try {
+            Object[] list = (Object[]) type.getMethod("values").invoke(type);
+
+            for (Object e : list) {
+                String l = ((EnumType) e).getLiteral();
+
+                if (l.equals(literal)) {
+                    return (T) e;
+                }
+            }
+        }
+        catch (Exception e) {
+            throw new SQLException("Unknown enum literal found : " + literal);
+        }
+
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    static final <T> T getFromStatement(ExecuteContext ctx, Class<T> type, int index) throws SQLException {
+        CallableStatement stmt = (CallableStatement) ctx.statement();
+
+        if (type == Blob.class) {
+            return (T) stmt.getBlob(index);
+        }
+        else if (type == Boolean.class) {
+            return (T) wasNull(stmt, Boolean.valueOf(stmt.getBoolean(index)));
+        }
+        else if (type == BigInteger.class) {
+            BigDecimal result = stmt.getBigDecimal(index);
+            return (T) (result == null ? null : result.toBigInteger());
+        }
+        else if (type == BigDecimal.class) {
+            return (T) stmt.getBigDecimal(index);
+        }
+        else if (type == Byte.class) {
+            return (T) wasNull(stmt, Byte.valueOf(stmt.getByte(index)));
+        }
+        else if (type == byte[].class) {
+            return (T) stmt.getBytes(index);
+        }
+        else if (type == Clob.class) {
+            return (T) stmt.getClob(index);
+        }
+        else if (type == Date.class) {
+            return (T) stmt.getDate(index);
+        }
+        else if (type == Double.class) {
+            return (T) wasNull(stmt, Double.valueOf(stmt.getDouble(index)));
+        }
+        else if (type == Float.class) {
+            return (T) wasNull(stmt, Float.valueOf(stmt.getFloat(index)));
+        }
+        else if (type == Integer.class) {
+            return (T) wasNull(stmt, Integer.valueOf(stmt.getInt(index)));
+        }
+        else if (type == Long.class) {
+            return (T) wasNull(stmt, Long.valueOf(stmt.getLong(index)));
+        }
+        else if (type == Short.class) {
+            return (T) wasNull(stmt, Short.valueOf(stmt.getShort(index)));
+        }
+        else if (type == String.class) {
+            return (T) stmt.getString(index);
+        }
+        else if (type == Time.class) {
+            return (T) stmt.getTime(index);
+        }
+        else if (type == Timestamp.class) {
+            return (T) stmt.getTimestamp(index);
+        }
+        else if (type == YearToMonth.class) {
+            if (ctx.getDialect() == POSTGRES) {
+                Object object = stmt.getObject(index);
+                return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
+            }
+            else {
+                String string = stmt.getString(index);
+                return (T) (string == null ? null : YearToMonth.valueOf(string));
+            }
+        }
+        else if (type == DayToSecond.class) {
+            if (ctx.getDialect() == POSTGRES) {
+                Object object = stmt.getObject(index);
+                return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
+            }
+            else {
+                String string = stmt.getString(index);
+                return (T) (string == null ? null : DayToSecond.valueOf(string));
+            }
+        }
+        else if (type == UByte.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : UByte.valueOf(string));
+        }
+        else if (type == UShort.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : UShort.valueOf(string));
+        }
+        else if (type == UInteger.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : UInteger.valueOf(string));
+        }
+        else if (type == ULong.class) {
+            String string = stmt.getString(index);
+            return (T) (string == null ? null : ULong.valueOf(string));
+        }
+
+        // The type byte[] is handled earlier. byte[][] can be handled here
+        else if (type.isArray()) {
+            return (T) convertArray(stmt.getObject(index), (Class<? extends Object[]>)type);
+        }
+        else if (ArrayRecord.class.isAssignableFrom(type)) {
+            return (T) getArrayRecord(ctx, stmt.getArray(index), (Class<? extends ArrayRecord<?>>) type);
+        }
+        else if (EnumType.class.isAssignableFrom(type)) {
+            return getEnumType(type, stmt.getString(index));
+        }
+        else if (UDTRecord.class.isAssignableFrom(type)) {
+            switch (ctx.getDialect()) {
+                case POSTGRES:
+                    return (T) pgNewUDTRecord(type, stmt.getObject(index));
+            }
+
+            return (T) stmt.getObject(index, DataTypes.udtRecords());
+        }
+        else if (Result.class.isAssignableFrom(type)) {
+            ResultSet nested = (ResultSet) stmt.getObject(index);
+            return (T) new Executor(ctx).fetch(nested);
+        }
+        else {
+            return (T) stmt.getObject(index);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: The following section has been added for Postgres UDT support. The
+    // official Postgres JDBC driver does not implement SQLData and similar
+    // interfaces. Instead, a string representation of a UDT has to be parsed
+    // -------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    private static final <T> T pgFromString(Class<T> type, String string) throws SQLException {
+        if (string == null) {
+            return null;
+        }
+        else if (type == Blob.class) {
+            // Not supported
+        }
+        else if (type == Boolean.class) {
+            return (T) Boolean.valueOf(string);
+        }
+        else if (type == BigInteger.class) {
+            return (T) new BigInteger(string);
+        }
+        else if (type == BigDecimal.class) {
+            return (T) new BigDecimal(string);
+        }
+        else if (type == Byte.class) {
+            return (T) Byte.valueOf(string);
+        }
+        else if (type == byte[].class) {
+            return (T) PostgresUtils.toBytes(string);
+        }
+        else if (type == Clob.class) {
+            // Not supported
+        }
+        else if (type == Date.class) {
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+            return (T) new Date(pgParseDate(string, f).getTime());
+        }
+        else if (type == Double.class) {
+            return (T) Double.valueOf(string);
+        }
+        else if (type == Float.class) {
+            return (T) Float.valueOf(string);
+        }
+        else if (type == Integer.class) {
+            return (T) Integer.valueOf(string);
+        }
+        else if (type == Long.class) {
+            return (T) Long.valueOf(string);
+        }
+        else if (type == Short.class) {
+            return (T) Short.valueOf(string);
+        }
+        else if (type == String.class) {
+            return (T) string;
+        }
+        else if (type == Time.class) {
+            SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
+            return (T) new Time(pgParseDate(string, f).getTime());
+        }
+        else if (type == Timestamp.class) {
+            SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return (T) new Timestamp(pgParseDate(string, f).getTime());
+        }
+        else if (type == UByte.class) {
+            return (T) UByte.valueOf(string);
+        }
+        else if (type == UShort.class) {
+            return (T) UShort.valueOf(string);
+        }
+        else if (type == UInteger.class) {
+            return (T) UInteger.valueOf(string);
+        }
+        else if (type == ULong.class) {
+            return (T) ULong.valueOf(string);
+        }
+        else if (type.isArray()) {
+            return (T) pgNewArray(type, string);
+        }
+        else if (ArrayRecord.class.isAssignableFrom(type)) {
+            // Not supported
+        }
+        else if (EnumType.class.isAssignableFrom(type)) {
+            return getEnumType(type, string);
+        }
+        else if (UDTRecord.class.isAssignableFrom(type)) {
+            return (T) pgNewUDTRecord(type, string);
+        }
+
+        throw new UnsupportedOperationException("Class " + type + " is not supported");
+    }
+
+    private static final java.util.Date pgParseDate(String string, SimpleDateFormat f) throws SQLException {
+        try {
+            return f.parse(string);
+        }
+        catch (ParseException e) {
+            throw new SQLException(e);
+        }
+    }
+
+    /**
+     * Create a UDT record from a PGobject
+     * <p>
+     * Unfortunately, this feature is very poorly documented and true UDT
+     * support by the PostGreSQL JDBC driver has been postponed for a long time.
+     *
+     * @param object An object of type PGobject. The actual argument type cannot
+     *            be expressed in the method signature, as no explicit
+     *            dependency to postgres logic is desired
+     * @return The converted {@link UDTRecord}
+     */
+    private static final UDTRecord<?> pgNewUDTRecord(Class<?> type, Object object) throws SQLException {
+        if (object == null) {
+            return null;
+        }
+
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        UDTRecord<?> record = (UDTRecord<?>) Utils.newRecord((Class) type);
+        List<String> values = PostgresUtils.toPGObject(object.toString());
+
+        List<Field<?>> fields = record.getFields();
+        for (int i = 0; i < fields.size(); i++) {
+            pgSetValue(record, fields.get(i), values.get(i));
+        }
+
+        return record;
+    }
+
+    /**
+     * Workarounds for the unimplemented Postgres JDBC driver features
+     */
+    @SuppressWarnings("unchecked")
+    private static final <T> T pgGetArray(ExecuteContext ctx, Class<T> type, int index) throws SQLException {
+
+        ResultSet rs = ctx.resultSet();
+
+        // Get the JDBC Array and check for null. If null, that's OK
+        Array array = rs.getArray(index);
+        if (array == null) {
+            return null;
+        }
+
+        // Try fetching a Java Object[]. That's gonna work for non-UDT types
+        try {
+            return (T) convertArray(rs.getArray(index), (Class<? extends Object[]>) type);
+        }
+
+        // This might be a UDT (not implemented exception...)
+        catch (Exception e) {
+            List<Object> result = new ArrayList<Object>();
+
+            // Try fetching the array as a JDBC ResultSet
+            try {
+                ctx.resultSet(array.getResultSet());
+                while (ctx.resultSet().next()) {
+                    result.add(getFromResultSet(ctx, type.getComponentType(), 2));
+                }
+            }
+
+            // That might fail too, then we don't know any further...
+            catch (Exception fatal) {
+                log.error("Cannot parse Postgres array: " + rs.getString(index));
+                log.error(fatal);
+                return null;
+            }
+
+            finally {
+                ctx.resultSet(rs);
+            }
+
+            return (T) convertArray(result.toArray(), (Class<? extends Object[]>) type);
+        }
+    }
+
+    /**
+     * Create an array from a String
+     * <p>
+     * Unfortunately, this feature is very poorly documented and true UDT
+     * support by the PostGreSQL JDBC driver has been postponed for a long time.
+     *
+     * @param string A String representation of an array
+     * @return The converted array
+     */
+    private static final Object[] pgNewArray(Class<?> type, String string) throws SQLException {
+        if (string == null) {
+            return null;
+        }
+
+        try {
+            Class<?> component = type.getComponentType();
+            String values = string.replaceAll("^\\{(.*)\\}$", "$1");
+
+            if ("".equals(values)) {
+                return (Object[]) java.lang.reflect.Array.newInstance(component, 0);
+            }
+            else {
+                String[] split = values.split(",");
+                Object[] result = (Object[]) java.lang.reflect.Array.newInstance(component, split.length);
+
+                for (int i = 0; i < split.length; i++) {
+                    result[i] = pgFromString(type.getComponentType(), split[i]);
+                }
+
+                return result;
+            }
+        }
+        catch (Exception e) {
+            throw new SQLException(e);
+        }
+    }
+
+    private static final <T> void pgSetValue(UDTRecord<?> record, Field<T> field, String value) throws SQLException {
+        record.setValue(field, pgFromString(field.getType(), value));
     }
 }

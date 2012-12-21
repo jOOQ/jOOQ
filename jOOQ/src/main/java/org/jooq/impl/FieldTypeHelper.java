@@ -87,6 +87,7 @@ import org.jooq.util.ase.ASEDataType;
 import org.jooq.util.cubrid.CUBRIDDataType;
 import org.jooq.util.db2.DB2DataType;
 import org.jooq.util.derby.DerbyDataType;
+import org.jooq.util.firebird.FirebirdDataType;
 import org.jooq.util.h2.H2DataType;
 import org.jooq.util.hsqldb.HSQLDBDataType;
 import org.jooq.util.ingres.IngresDataType;
@@ -889,6 +890,8 @@ public final class FieldTypeHelper {
                 return DB2DataType.getDataType(type);
             case DERBY:
                 return DerbyDataType.getDataType(type);
+            case FIREBIRD:
+                return FirebirdDataType.getDataType(type);
             case H2:
                 return H2DataType.getDataType(type);
             case HSQLDB:

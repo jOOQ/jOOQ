@@ -214,7 +214,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
 
             // If the bind value is set, it can be used to derive the cast type
             if (value != null) {
-                toSQLCast(context, FieldTypeHelper.getDataType(dialect, value.getClass()), 0, 0);
+                toSQLCast(context, AbstractDataType.getDataType(dialect, value.getClass()), 0, 0);
             }
 
             // [#632] [#722] Current integration tests show that Ingres and
@@ -226,7 +226,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             // Derby and DB2 must have a type associated with NULL. Use VARCHAR
             // as a workaround. That's probably not correct in all cases, though
             else {
-                toSQLCast(context, FieldTypeHelper.getDataType(dialect, String.class), 0, 0);
+                toSQLCast(context, AbstractDataType.getDataType(dialect, String.class), 0, 0);
             }
         }
 
@@ -507,7 +507,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             if (type.isArray() && byte[].class != type) {
                 context.sql(getBindVariable(context));
                 context.sql("::");
-                context.keyword(FieldTypeHelper.getDataType(dialect, type).getCastTypeName(context));
+                context.keyword(AbstractDataType.getDataType(dialect, type).getCastTypeName(context));
             }
 
             // ... and also for enum types

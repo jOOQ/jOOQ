@@ -41,7 +41,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -155,13 +154,5 @@ public class OracleDataType<T> extends AbstractDataType<T> {
 
     private OracleDataType(SQLDataType<T> sqlDataType, String typeName, String castTypeName, boolean hasPrecisionAndScale) {
         super(SQLDialect.ORACLE, sqlDataType, sqlDataType.getType(), typeName, castTypeName, hasPrecisionAndScale);
-    }
-
-    public static <T> DataType<T> getDataType(Class<T> type) {
-        return getDataType(SQLDialect.ORACLE, type);
-    }
-
-    public static DataType<Object> getDefaultDataType(String typeName) {
-        return getDefaultDataType(SQLDialect.ORACLE, typeName);
     }
 }

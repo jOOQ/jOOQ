@@ -406,11 +406,15 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         return Convert.convert(objects, type);
     }
 
-    protected static DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {
+    public static DataType<Object> getDefaultDataType(String typeName) {
+        return new DefaultDataType<Object>(SQLDialect.SQL99, Object.class, typeName, typeName);
+    }
+
+    public static DataType<Object> getDefaultDataType(SQLDialect dialect, String typeName) {
         return new DefaultDataType<Object>(dialect, Object.class, typeName, typeName);
     }
 
-    protected static DataType<?> getDataType(SQLDialect dialect, String typeName) {
+    public static DataType<?> getDataType(SQLDialect dialect, String typeName) {
         String normalised = FieldTypeHelper.normalise(typeName);
         DataType<?> result = TYPES_BY_NAME[dialect.ordinal()].get(normalised);
 
@@ -428,7 +432,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         return result;
     }
 
-    protected static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
+    public static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
 
         // Recurse for arrays
         if (byte[].class != type && type.isArray()) {

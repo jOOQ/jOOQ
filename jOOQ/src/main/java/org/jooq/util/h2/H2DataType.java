@@ -41,7 +41,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -146,13 +145,5 @@ public class H2DataType<T> extends AbstractDataType<T> {
 
     private H2DataType(SQLDataType<T> sqlDataType, String typeName) {
         super(SQLDialect.H2, sqlDataType, sqlDataType.getType(), typeName);
-    }
-
-    public static <T> DataType<T> getDataType(Class<T> type) {
-        return getDataType(SQLDialect.H2, type);
-    }
-
-    public static DataType<Object> getDefaultDataType(String typeName) {
-        return getDefaultDataType(SQLDialect.H2, typeName);
     }
 }

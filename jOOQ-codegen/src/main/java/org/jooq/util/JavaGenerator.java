@@ -67,6 +67,7 @@ import org.jooq.UDT;
 import org.jooq.UDTField;
 import org.jooq.UniqueKey;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.AbstractKeys;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
@@ -2471,7 +2472,7 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(".");
             sb.append(db.getDialect().getName());
             sb.append("DataType.");
-            sb.append(FieldTypeHelper.normalise(FieldTypeHelper.getDataType(db.getDialect(), String.class).getTypeName()));
+            sb.append(FieldTypeHelper.normalise(AbstractDataType.getDataType(db.getDialect(), String.class).getTypeName()));
             sb.append(".asEnumDataType(");
             sb.append(getStrategy().getFullJavaClassName(db.getEnum(schema, u)));
             sb.append(".class)");

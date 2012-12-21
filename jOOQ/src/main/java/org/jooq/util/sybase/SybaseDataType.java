@@ -36,7 +36,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.SQLDataType;
@@ -120,13 +119,5 @@ public class SybaseDataType<T> extends AbstractDataType<T> {
 
     private SybaseDataType(SQLDataType<T> sqlDataType, String typeName) {
         super(SQLDialect.SYBASE, sqlDataType, sqlDataType.getType(), typeName);
-    }
-
-    public static <T> DataType<T> getDataType(Class<T> type) {
-        return getDataType(SQLDialect.SYBASE, type);
-    }
-
-    public static DataType<Object> getDefaultDataType(String typeName) {
-        return getDefaultDataType(SQLDialect.SYBASE, typeName);
     }
 }

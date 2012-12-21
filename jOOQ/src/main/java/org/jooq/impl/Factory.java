@@ -7644,9 +7644,6 @@ public class Factory {
     /**
      * Get the default data type for the {@link Executor}'s underlying
      * {@link SQLDialect} and a given Java type.
-     * <p>
-     * This is a convenience method for calling
-     * {@link FieldTypeHelper#getDataType(SQLDialect, Class)}
      *
      * @param <T> The generic type
      * @param type The Java type
@@ -7655,7 +7652,7 @@ public class Factory {
     @SuppressWarnings("deprecation")
     @Support
     public static <T> DataType<T> getDataType(Class<T> type) {
-        return FieldTypeHelper.getDataType(SQLDialect.SQL99, type);
+        return AbstractDataType.getDataType(SQLDialect.SQL99, type);
     }
 
     /**

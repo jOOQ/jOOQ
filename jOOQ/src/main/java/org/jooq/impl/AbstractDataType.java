@@ -52,6 +52,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
@@ -82,6 +83,11 @@ public abstract class AbstractDataType<T> implements DataType<T> {
      */
     private static final long                            serialVersionUID = 4155588654449505119L;
 
+    /**
+     * A pattern for data type name normalisation
+     */
+    private static final Pattern                         NORMALISE_PATTERN = Pattern.compile("\"|\\.|\\s|\\(\\w+(,\\w+)*\\)|(NOT\\s*NULL)?");
+
     // -------------------------------------------------------------------------
     // Data type caches
     // -------------------------------------------------------------------------
@@ -105,6 +111,30 @@ public abstract class AbstractDataType<T> implements DataType<T> {
      * A cache for SQL DataTypes by Java type
      */
     private static final Map<Class<?>, DataType<?>>      SQL_DATATYPES_BY_TYPE;
+
+    // -------------------------------------------------------------------------
+    // Precisions
+    // -------------------------------------------------------------------------
+
+    /**
+     * The minimum decimal precision needed to represent a Java {@link Long} type
+     */
+    private static final int                             LONG_PRECISION    = String.valueOf(Long.MAX_VALUE).length();
+
+    /**
+     * The minimum decimal precision needed to represent a Java {@link Integer} type
+     */
+    private static final int                             INTEGER_PRECISION = String.valueOf(Integer.MAX_VALUE).length();
+
+    /**
+     * The minimum decimal precision needed to represent a Java {@link Short} type
+     */
+    private static final int                             SHORT_PRECISION   = String.valueOf(Short.MAX_VALUE).length();
+
+    /**
+     * The minimum decimal precision needed to represent a Java {@link Byte} type
+     */
+    private static final int                             BYTE_PRECISION    = String.valueOf(Byte.MAX_VALUE).length();
 
     // -------------------------------------------------------------------------
     // Data type attributes
@@ -140,11 +170,6 @@ public abstract class AbstractDataType<T> implements DataType<T> {
      */
     private final String                                 typeName;
 
-    /**
-     * Whether this type has allows for precision and scale
-     */
-    private final boolean                                hasPrecisionAndScale;
-
     static {
         TYPES_BY_SQL_DATATYPE = new Map[SQLDialect.values().length];
         TYPES_BY_NAME = new Map[SQLDialect.values().length];
@@ -159,19 +184,11 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         SQL_DATATYPES_BY_TYPE = new LinkedHashMap<Class<?>, DataType<?>>();
     }
 
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<T> type, String typeName) {
-        this(dialect, sqldatatype, type, typeName, typeName, false);
+    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, Class<T> type, String typeName) {
+        this(dialect, sqlDataType, type, typeName, typeName);
     }
 
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<T> type, String typeName, String castTypeName) {
-        this(dialect, sqldatatype, type, typeName, castTypeName, false);
-    }
-
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqldatatype, Class<T> type, String typeName, boolean hasPrecisionAndScale) {
-        this(dialect, sqldatatype, type, typeName, typeName, hasPrecisionAndScale);
-    }
-
-    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, boolean hasPrecisionAndScale) {
+    protected AbstractDataType(SQLDialect dialect, SQLDataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName) {
         this.dialect = dialect;
 
         // [#858] SQLDataTypes should reference themselves for more convenience
@@ -179,7 +196,6 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         this.type = type;
         this.typeName = typeName;
         this.castTypeName = castTypeName;
-        this.hasPrecisionAndScale = hasPrecisionAndScale;
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
 
         init();
@@ -189,7 +205,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
 
         // Dialect-specific data types
         int ordinal = dialect == null ? SQLDialect.SQL99.ordinal() : dialect.ordinal();
-        String normalised = FieldTypeHelper.normalise(typeName);
+        String normalised = AbstractDataType.normalise(typeName);
 
         if (TYPES_BY_NAME[ordinal].get(normalised) == null) {
             TYPES_BY_NAME[ordinal].put(normalised, this);
@@ -336,16 +352,6 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     @Override
-    public final Class<?> getType(int precision, int scale) {
-        if (hasPrecisionAndScale) {
-            return FieldTypeHelper.getClass(Types.NUMERIC, precision, scale);
-        }
-
-        // If no precise type could be guessed, take the default
-        return getType();
-    }
-
-    @Override
     public final Class<T[]> getArrayType() {
         return arrayType;
     }
@@ -463,7 +469,7 @@ public abstract class AbstractDataType<T> implements DataType<T> {
     }
 
     public static DataType<?> getDataType(SQLDialect dialect, String typeName) {
-        String normalised = FieldTypeHelper.normalise(typeName);
+        String normalised = AbstractDataType.normalise(typeName);
         DataType<?> result = TYPES_BY_NAME[dialect.ordinal()].get(normalised);
 
         // UDT data types and others are registered using SQL99
@@ -612,5 +618,62 @@ public abstract class AbstractDataType<T> implements DataType<T> {
         else if (!typeName.equals(other.typeName))
             return false;
         return true;
+    }
+
+    /**
+     * @return The type name without all special characters and white spaces
+     */
+    public static String normalise(String typeName) {
+        return NORMALISE_PATTERN.matcher(typeName.toUpperCase()).replaceAll("");
+    }
+
+    /**
+     * Convert a type name (using precision and scale) into a Java class
+     */
+    public static DataType<?> getDataType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
+        DataType<?> result = AbstractDataType.getDataType(dialect, AbstractDataType.normalise(t));
+
+        if (result.getType() == BigDecimal.class) {
+            result = AbstractDataType.getDataType(dialect, getNumericClass(p, s));
+        }
+
+        return result;
+    }
+
+    /**
+     * Convert a type name (using precision and scale) into a Java class
+     */
+    public static Class<?> getType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
+        return getDataType(dialect, t, p, s).getType();
+    }
+
+    /**
+     * Get the most suitable Java class for a given precision and scale
+     */
+    private static Class<?> getNumericClass(int precision, int scale) {
+
+        // Integer numbers
+        if (scale == 0 && precision != 0) {
+            if (precision < BYTE_PRECISION) {
+                return Byte.class;
+            }
+            if (precision < SHORT_PRECISION) {
+                return Short.class;
+            }
+            if (precision < INTEGER_PRECISION) {
+                return Integer.class;
+            }
+            if (precision < LONG_PRECISION) {
+                return Long.class;
+            }
+
+            // Default integer number
+            return BigInteger.class;
+        }
+
+        // Real numbers should not be represented as float or double
+        else {
+            return BigDecimal.class;
+        }
     }
 }

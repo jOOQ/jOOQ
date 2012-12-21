@@ -56,13 +56,11 @@ import java.sql.SQLInput;
 import java.sql.SQLOutput;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
@@ -74,7 +72,6 @@ import org.jooq.Field;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
-import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.types.DayToSecond;
@@ -94,12 +91,6 @@ import org.jooq.util.postgres.PostgresUtils;
  * @author Lukas Eder
  */
 public final class FieldTypeHelper {
-
-    private static final int        LONG_PRECISION    = String.valueOf(Long.MAX_VALUE).length();
-    private static final int        INTEGER_PRECISION = String.valueOf(Integer.MAX_VALUE).length();
-    private static final int        SHORT_PRECISION   = String.valueOf(Short.MAX_VALUE).length();
-    private static final int        BYTE_PRECISION    = String.valueOf(Byte.MAX_VALUE).length();
-    private static final Pattern    NORMALISE_PATTERN = Pattern.compile("\"|\\.|\\s|\\(\\w+(,\\w+)*\\)|(NOT\\s*NULL)?");
 
     private static final JooqLogger log               = JooqLogger.getLogger(FieldTypeHelper.class);
 
@@ -772,95 +763,7 @@ public final class FieldTypeHelper {
         }
     }
 
-    public static Class<?> getClass(int sqlType, int precision, int scale) {
-        switch (sqlType) {
-            case Types.BLOB:
-            case Types.BINARY:
-            case Types.LONGVARBINARY:
-            case Types.VARBINARY:
-                return byte[].class;
-
-            case Types.BOOLEAN:
-            case Types.BIT:
-                return Boolean.class;
-
-            case Types.TINYINT:
-                return Byte.class;
-
-            case Types.SMALLINT:
-                return Short.class;
-
-            case Types.INTEGER:
-                return Integer.class;
-
-            case Types.BIGINT:
-                return Long.class;
-
-            case Types.REAL:
-                return Float.class;
-
-            case Types.DOUBLE:
-            case Types.FLOAT:
-                return Double.class;
-
-            case Types.DECIMAL:
-            case Types.NUMERIC: {
-
-                // Integer numbers
-                if (scale == 0 && precision != 0) {
-                    if (precision < BYTE_PRECISION) {
-                        return Byte.class;
-                    }
-                    if (precision < SHORT_PRECISION) {
-                        return Short.class;
-                    }
-                    if (precision < INTEGER_PRECISION) {
-                        return Integer.class;
-                    }
-                    if (precision < LONG_PRECISION) {
-                        return Long.class;
-                    }
-
-                    // Default integer number
-                    return BigInteger.class;
-                }
-
-                // Real numbers should not be represented as float or double
-                else {
-                    return BigDecimal.class;
-                }
-            }
-
-            case Types.CLOB:
-            case Types.CHAR:
-            case Types.LONGNVARCHAR:
-            case Types.LONGVARCHAR:
-            case Types.NCHAR:
-            case Types.NCLOB:
-            case Types.NVARCHAR:
-            case Types.VARCHAR:
-                return String.class;
-
-            case Types.DATE:
-                return Date.class;
-
-            case Types.TIME:
-                return Time.class;
-
-            case Types.TIMESTAMP:
-                return Timestamp.class;
-
-            default:
-                return Object.class;
-        }
-    }
-
-    /**
-     * @return The type name without all special characters and white spaces
-     */
-    public static String normalise(String typeName) {
-        return NORMALISE_PATTERN.matcher(typeName.toUpperCase()).replaceAll("");
-    }
+    
 
     // -------------------------------------------------------------------------
     // The following section has been added for Postgres UDT support. The
@@ -1079,24 +982,4 @@ public final class FieldTypeHelper {
     }
 
     private FieldTypeHelper() {}
-
-    /**
-     * Convert a type name (using precision and scale) into a Java class
-     */
-    public static DataType<?> getDialectDataType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
-        DataType<?> result = AbstractDataType.getDataType(dialect, normalise(t));
-
-        if (result.getType() == BigDecimal.class) {
-            result = AbstractDataType.getDataType(dialect, getClass(Types.NUMERIC, p, s));
-        }
-
-        return result;
-    }
-
-    /**
-     * Convert a type name (using precision and scale) into a Java class
-     */
-    public static Class<?> getDialectJavaType(SQLDialect dialect, String t, int p, int s) throws SQLDialectNotSupportedException {
-        return getDialectDataType(dialect, t, p, s).getType(p, s);
-    }
 }

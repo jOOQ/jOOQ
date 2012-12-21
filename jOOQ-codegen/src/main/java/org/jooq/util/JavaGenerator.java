@@ -74,7 +74,6 @@ import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
-import org.jooq.impl.FieldTypeHelper;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
@@ -2423,7 +2422,7 @@ public class JavaGenerator extends AbstractGenerator {
         // Try finding a basic standard SQL type according to the current dialect
         else {
             try {
-                Class<?> clazz = FieldTypeHelper.getDialectJavaType(db.getDialect(), t, p, s);
+                Class<?> clazz = AbstractDataType.getType(db.getDialect(), t, p, s);
                 type = clazz.getCanonicalName();
 
                 if (clazz.getTypeParameters().length > 0) {
@@ -2472,7 +2471,7 @@ public class JavaGenerator extends AbstractGenerator {
             sb.append(".");
             sb.append(db.getDialect().getName());
             sb.append("DataType.");
-            sb.append(FieldTypeHelper.normalise(AbstractDataType.getDataType(db.getDialect(), String.class).getTypeName()));
+            sb.append(AbstractDataType.normalise(AbstractDataType.getDataType(db.getDialect(), String.class).getTypeName()));
             sb.append(".asEnumDataType(");
             sb.append(getStrategy().getFullJavaClassName(db.getEnum(schema, u)));
             sb.append(".class)");
@@ -2481,7 +2480,7 @@ public class JavaGenerator extends AbstractGenerator {
             DataType<?> dataType = null;
 
             try {
-                dataType = FieldTypeHelper.getDialectDataType(db.getDialect(), t, p, s);
+                dataType = AbstractDataType.getDataType(db.getDialect(), t, p, s);
             }
 
             // Mostly because of unsupported data types. Will be handled later.
@@ -2495,7 +2494,7 @@ public class JavaGenerator extends AbstractGenerator {
 
                 sb.append(SQLDataType.class.getCanonicalName());
                 sb.append(".");
-                sb.append(FieldTypeHelper.normalise(sqlDataType.getTypeName()));
+                sb.append(AbstractDataType.normalise(sqlDataType.getTypeName()));
 
                 if (db.getConfiguredCustomType(u) != null) {
                     sb.append(".asConvertedDataType(new ");
@@ -2519,14 +2518,14 @@ public class JavaGenerator extends AbstractGenerator {
                 try {
                     String type1 = getType(db, schema, t, p, s, u, null);
                     String type2 = getType(db, schema, t, 0, 0, u, null);
-                    String typeName = FieldTypeHelper.normalise(t);
+                    String typeName = AbstractDataType.normalise(t);
 
                     // [#1298] Prevent compilation errors for missing types
                     Reflect.on(typeClass).field(typeName);
 
                     sb.append(typeName);
                     if (!type1.equals(type2)) {
-                        Class<?> clazz = FieldTypeHelper.getDialectJavaType(db.getDialect(), t, p, s);
+                        Class<?> clazz = AbstractDataType.getType(db.getDialect(), t, p, s);
 
                         sb.append(".asNumberDataType(");
                         sb.append(clazz.getCanonicalName());

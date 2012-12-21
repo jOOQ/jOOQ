@@ -35,7 +35,6 @@
  */
 package org.jooq.util;
 
-import static org.jooq.impl.FieldTypeHelper.getDialectDataType;
 
 import java.sql.Types;
 import java.util.ArrayList;
@@ -43,6 +42,7 @@ import java.util.List;
 
 import org.jooq.DataType;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.impl.AbstractDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.jaxb.ForcedType;
@@ -108,7 +108,7 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 int s = definedType.getScale();
 
                 try {
-                    forcedDataType = getDialectDataType(db.getDialect(), forcedType.getName(), p, s);
+                    forcedDataType = AbstractDataType.getDataType(db.getDialect(), forcedType.getName(), p, s);
                 } catch (SQLDialectNotSupportedException ignore) {}
 
                 // [#677] SQLDataType matches are actual type-rewrites
@@ -127,12 +127,12 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
                 DataType<?> dataType = null;
 
                 try {
-                    dataType = getDialectDataType(db.getDialect(), definedType.getType(), 0, 0);
+                    dataType = AbstractDataType.getDataType(db.getDialect(), definedType.getType(), 0, 0);
                 } catch (SQLDialectNotSupportedException ignore) {}
 
                 if (dataType != null) {
                     if (dataType.getSQLType() == Types.DATE) {
-                        DataType<?> forcedDataType = getDialectDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
+                        DataType<?> forcedDataType = AbstractDataType.getDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
                         type = new DefaultDataTypeDefinition(db, getSchema(), forcedDataType.getTypeName(), 0, 0, 0);
                     }
                 }

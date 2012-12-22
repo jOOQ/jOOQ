@@ -353,8 +353,6 @@ public class GenerationTool {
                 g.setGenerate(new Generate());
             if (g.getGenerate().isRelations() != null)
                 generator.setGenerateRelations(g.getGenerate().isRelations());
-            if (g.getGenerate().isNavigationMethods() != null)
-                generator.setGenerateNavigationMethods(g.getGenerate().isNavigationMethods());
             if (g.getGenerate().isDeprecated() != null)
                 generator.setGenerateDeprecated(g.getGenerate().isDeprecated());
             if (g.getGenerate().isInstanceFields() != null)

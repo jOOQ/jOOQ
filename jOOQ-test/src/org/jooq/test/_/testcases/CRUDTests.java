@@ -47,17 +47,12 @@ import static org.jooq.impl.Factory.table;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.jooq.Field;
 import org.jooq.InsertQuery;
-import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -233,68 +228,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         create().executeDelete(author);
         assertEquals(null, create().fetchOne(TAuthor(), TAuthor_FIRST_NAME().equal("Erich")));
-    }
-
-    @Test
-    public void testRelations() throws Exception {
-        if (getDialect() == SQLDialect.SQLITE) {
-            log.info("SKIPPING", "referentials test");
-            return;
-        }
-
-        jOOQAbstractTest.reset = false;
-
-        // Get the book 1984
-        B book1984 = create().fetchOne(TBook(), TBook_TITLE().equal("1984"));
-
-        // Navigate to the book's author
-        Record authorOrwell = (Record) invoke(book1984, "fetchTAuthorByAuthorId");
-        assertEquals("Orwell", authorOrwell.getValue(TAuthor_LAST_NAME()));
-
-        // Navigate back to the author's books
-        List<?> books1 = (List<?>) invoke(authorOrwell, "fetchTBookListByAuthorId");
-        assertEquals(2, books1.size());
-
-        // Navigate through m:n relationships of books
-        List<Object> booksToBookStores = new ArrayList<Object>();
-        for (Object b : books1) {
-            booksToBookStores.addAll((List<?>) invoke(b, "fetchTBookToBookStoreList"));
-        }
-        assertEquals(3, booksToBookStores.size());
-
-        // Navigate to book stores
-        Set<String> bookStoreNames = new TreeSet<String>();
-        List<Object> bookStores = new ArrayList<Object>();
-        for (Object b : booksToBookStores) {
-            Object store = invoke(b, "fetchTBookStore");
-            bookStores.add(store);
-            bookStoreNames.add((String) invoke(store, "getName"));
-        }
-        assertEquals(Arrays.asList("Ex Libris", "Orell Füssli"), new ArrayList<String>(bookStoreNames));
-
-        // Navigate through m:n relationships of book stores
-        booksToBookStores = new ArrayList<Object>();
-        for (Object b : bookStores) {
-            booksToBookStores.addAll((List<?>) invoke(b, "fetchTBookToBookStoreList"));
-        }
-
-        // Navigate back to books
-        Set<String> book2Names = new TreeSet<String>();
-        List<Object> books2 = new ArrayList<Object>();
-        for (Object b : booksToBookStores) {
-            Object book = invoke(b, "fetchTBook");
-            books2.add(book);
-            book2Names.add((String) invoke(book, "getTitle"));
-        }
-        assertEquals(Arrays.asList("1984", "Animal Farm", "O Alquimista"), new ArrayList<String>(book2Names));
-
-        // Navigate back to authors
-        Set<String> authorNames = new TreeSet<String>();
-        for (Object b : books2) {
-            Object author = invoke(b, "fetchTAuthorByAuthorId");
-            authorNames.add((String) invoke(author, "getLastName"));
-        }
-        assertEquals(Arrays.asList("Coelho", "Orwell"), new ArrayList<String>(authorNames));
     }
 
     @Test

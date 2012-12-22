@@ -1529,19 +1529,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         // [#566] INTERVAL arithmetic: difference
         // --------------------------------------
-        record =
-        create().select(
+        record = create()
+        .select(
             dateDiff(new Date(0), new Date(30 * 60 * 60 * 1000L)).as("d1"),
             dateDiff(new Date(30 * 60 * 60 * 1000L), new Date(0)).as("d2"),
-            //TODO [#566] Make this work!
-            //timeDiff(new Time(0), new Time(60 * 60 * 1000L)).as("t1"),
-            //timeDiff(new Time(60 * 60 * 1000L), new Time(0)).as("t2"),
+            // TODO [#566] Make this work!
+            // timeDiff(new Time(0), new Time(60 * 60 * 1000L)).as("t1"),
+            // timeDiff(new Time(60 * 60 * 1000L), new Time(0)).as("t2"),
             timestampDiff(new Timestamp(0), new Timestamp(30 * 60 * 60 * 1000L)).as("ts1"),
             timestampDiff(new Timestamp(30 * 60 * 60 * 1000L), new Timestamp(0)).as("ts2"),
 
             // Dummy field for simpler testing
             inline("dummy")
-        ).fetchOne();
+        )
+        // TODO [#2006] INTERVAL data types seem to be still quite "experimental"
+        // their interoperability within jOOQ isn't well supported
+        // .where(timestampDiff(Timestamp.valueOf("2012-12-21 15:30:00.0"), Timestamp.valueOf("2012-12-21 15:40:00.0")).eq(new DayToSecond(0, 0, 10, 0)))
+        // .and(dateDiff(Date.valueOf("2012-12-21"), Date.valueOf("2012-12-23")).eq(2))
+        .fetchOne();
 
         assertEquals(-1, record.getValue("d1"));
         assertEquals(1, record.getValue("d2"));

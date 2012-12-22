@@ -35,18 +35,92 @@
  */
 package org.jooq;
 
+import java.util.Collection;
+
+import org.jooq.exception.DataAccessException;
+
 /**
  * A <code>ForeignKey</code> is an object referencing a {@link UniqueKey}. It
  * represents a <code>FOREIGN KEY</code> relationship between two tables.
- * 
+ *
  * @param <R> The <code>FOREIGN KEY</code>'s owner table record
- * @param <U> The referenced <code>KEY</code>'s owner table record
+ * @param <O> The referenced <code>KEY</code>'s owner table record
  * @author Lukas Eder
  */
-public interface ForeignKey<R extends Record, U extends Record> extends Key<R> {
+public interface ForeignKey<R extends Record, O extends Record> extends Key<R> {
 
     /**
      * The referenced <code>Key</code>
      */
-    UniqueKey<U> getKey();
+    UniqueKey<O> getKey();
+
+    /**
+     * Fetch a parent record of a given record through this foreign key
+     * <p>
+     * This returns a parent record referenced by a given record through this
+     * foreign key. If no parent record was found, this returns
+     * <code>null</code>
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @see TableRecord#fetchParent(ForeignKey)
+     */
+    O fetchParent(R record) throws DataAccessException;
+
+    /**
+     * Fetch parent records of a given set of record through this foreign key
+     * <p>
+     * This returns parent records referenced by any record in a given set of
+     * records through this foreign key.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @see TableRecord#fetchParent(ForeignKey)
+     */
+    Result<O> fetchParents(R... records) throws DataAccessException;
+
+    /**
+     * Fetch parent records of a given set of record through this foreign key
+     * <p>
+     * This returns parent records referenced by any record in a given set of
+     * records through this foreign key.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @see TableRecord#fetchParent(ForeignKey)
+     */
+    Result<O> fetchParents(Collection<? extends R> records) throws DataAccessException;
+
+    /**
+     * Fetch child records of a given record through this foreign key
+     * <p>
+     * This returns childs record referencing a given record through this
+     * foreign key
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @see UpdatableRecord#fetchChild(ForeignKey)
+     * @see UpdatableRecord#fetchChildren(ForeignKey)
+     */
+    Result<R> fetchChildren(O record) throws DataAccessException;
+
+    /**
+     * Fetch child records of a given set of records through this foreign key
+     * <p>
+     * This returns childs record referencing any record in a given set of
+     * records through this foreign key
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @see UpdatableRecord#fetchChild(ForeignKey)
+     * @see UpdatableRecord#fetchChildren(ForeignKey)
+     */
+    Result<R> fetchChildren(O... records) throws DataAccessException;
+
+    /**
+     * Fetch child records of a given set of records through this foreign key
+     * <p>
+     * This returns childs record referencing any record in a given set of
+     * records through this foreign key
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @see UpdatableRecord#fetchChild(ForeignKey)
+     * @see UpdatableRecord#fetchChildren(ForeignKey)
+     */
+    Result<R> fetchChildren(Collection<? extends O> records) throws DataAccessException;
 }

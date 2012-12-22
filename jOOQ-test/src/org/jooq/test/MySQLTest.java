@@ -37,6 +37,7 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertNull;
+import static org.jooq.impl.Factory.md5;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOLEANS;
@@ -52,7 +53,6 @@ import static org.jooq.util.mysql.MySQLFactory.decode;
 import static org.jooq.util.mysql.MySQLFactory.desDecrypt;
 import static org.jooq.util.mysql.MySQLFactory.desEncrypt;
 import static org.jooq.util.mysql.MySQLFactory.encode;
-import static org.jooq.util.mysql.MySQLFactory.md5;
 import static org.jooq.util.mysql.MySQLFactory.password;
 import static org.jooq.util.mysql.MySQLFactory.sha1;
 import static org.jooq.util.mysql.MySQLFactory.sha2;
@@ -70,6 +70,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -86,6 +87,7 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.mysql.generatedclasses.Keys;
 import org.jooq.test.mysql.generatedclasses.Routines;
 import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
 import org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords;
@@ -518,6 +520,16 @@ public class MySQLTest extends jOOQAbstractTest<
     @Override
     protected TableField<TBookRecord, ? extends Enum<?>> TBook_STATUS() {
         return TBook.STATUS;
+    }
+
+    @Override
+    protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
+        return Keys.FK_T_BOOK_AUTHOR_ID;
+    }
+
+    @Override
+    protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
+        return Keys.FK_T_BOOK_CO_AUTHOR_ID;
     }
 
     @Override

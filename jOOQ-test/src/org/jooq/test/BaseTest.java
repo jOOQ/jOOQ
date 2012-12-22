@@ -45,12 +45,17 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+
+import junit.framework.Assert;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -466,6 +471,14 @@ public abstract class BaseTest<
         return delegate.TBook_STATUS();
     }
 
+    protected ForeignKey<B, A> FK_T_BOOK_AUTHOR_ID() {
+        return delegate.FK_T_BOOK_AUTHOR_ID();
+    }
+
+    protected ForeignKey<B, A> FK_T_BOOK_CO_AUTHOR_ID() {
+        return delegate.FK_T_BOOK_CO_AUTHOR_ID();
+    }
+
     protected UpdatableTable<S> TBookStore() {
         return delegate.TBookStore();
     }
@@ -844,4 +857,10 @@ public abstract class BaseTest<
 
     // Dummy parameters for SQL Server
     protected static Integer DUMMY_OUT_INT = new Integer(0);
+
+    protected static <E> void assertSame(Collection<E> expected, Collection<E> actual) {
+        if (!new HashSet<E>(expected).equals(new HashSet<E>(actual))) {
+            Assert.fail("Collections aren't the same : " + expected + " and " + actual);
+        }
+    }
 }

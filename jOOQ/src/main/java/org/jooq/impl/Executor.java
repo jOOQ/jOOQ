@@ -1154,7 +1154,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Record fetchOne(ResultSet rs) throws DataAccessException, InvalidResultException {
-        return filterOne(fetchLazy(rs).fetch());
+        return Utils.filterOne(fetchLazy(rs).fetch());
     }
 
     /**
@@ -2417,7 +2417,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, InvalidResultException {
-        return filterOne(fetch(table));
+        return Utils.filterOne(fetch(table));
     }
 
     /**
@@ -2434,7 +2434,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, InvalidResultException {
-        return filterOne(fetch(table, condition));
+        return Utils.filterOne(fetch(table, condition));
     }
 
     /**
@@ -2450,7 +2450,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> R fetchAny(Table<R> table) throws DataAccessException {
-        return filterOne(selectFrom(table).limit(1).fetch());
+        return Utils.filterOne(selectFrom(table).limit(1).fetch());
     }
 
     /**
@@ -2548,19 +2548,6 @@ public class Executor implements Configuration {
     // -------------------------------------------------------------------------
     // XXX Internals
     // -------------------------------------------------------------------------
-
-    private static <R extends Record> R filterOne(List<R> list) throws InvalidResultException {
-        int size = list.size();
-
-        if (size == 1) {
-            return list.get(0);
-        }
-        else if (size > 1) {
-            throw new InvalidResultException("Too many rows selected : " + size);
-        }
-
-        return null;
-    }
 
     @Override
     public String toString() {

@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import org.jooq.exception.DataAccessException;
 
 /**
  * A record originating from a single table
@@ -54,4 +55,18 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      */
     @Override
     R original();
+
+    /**
+     * Fetch a parent record of this record, given a foreign key
+     * <p>
+     * This returns a parent record referenced by this record through a given
+     * foreign key. If no parent record was found, this returns
+     * <code>null</code>
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @see ForeignKey#fetchParent(Record)
+     * @see ForeignKey#fetchParents(java.util.Collection)
+     * @see ForeignKey#fetchParents(Record...)
+     */
+    <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) throws DataAccessException;
 }

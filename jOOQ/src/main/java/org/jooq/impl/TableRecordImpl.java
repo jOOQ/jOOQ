@@ -35,8 +35,10 @@
  */
 package org.jooq.impl;
 
+import org.jooq.ForeignKey;
 import org.jooq.Table;
 import org.jooq.TableRecord;
+import org.jooq.UpdatableRecord;
 
 /**
  * A record implementation for a record originating from a single table
@@ -70,5 +72,11 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     @Override
     public final R original() {
         return (R) super.original();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <O extends UpdatableRecord<O>> O fetchParent(ForeignKey<R, O> key) {
+        return key.fetchParent((R) this);
     }
 }

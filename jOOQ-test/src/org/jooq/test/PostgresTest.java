@@ -63,6 +63,7 @@ import java.util.List;
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -79,6 +80,7 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.postgres.generatedclasses.Keys;
 import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
 import org.jooq.test.postgres.generatedclasses.enums.U_959;
@@ -494,6 +496,16 @@ public class PostgresTest extends jOOQAbstractTest<
     @Override
     protected TableField<TBookRecord, ? extends Enum<?>> TBook_STATUS() {
         return T_BOOK.STATUS;
+    }
+
+    @Override
+    protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
+        return Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID;
+    }
+
+    @Override
+    protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
+        return Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID;
     }
 
     @Override

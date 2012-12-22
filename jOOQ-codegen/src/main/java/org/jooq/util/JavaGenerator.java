@@ -2497,11 +2497,15 @@ public class JavaGenerator extends AbstractGenerator {
                 sb.append(DefaultDataType.normalise(sqlDataType.getTypeName()));
 
                 if (dataType.hasPrecision() && p > 0) {
-                    sb.append(".precision(").append(p).append(")");
+                    sb.append(".precision(").append(p);
+
+                    if (dataType.hasScale() && s > 0) {
+                        sb.append(", ").append(s);
+                    }
+
+                    sb.append(")");
                 }
-                if (dataType.hasScale() && s > 0) {
-                    sb.append(".scale(").append(s).append(")");
-                }
+
                 if (dataType.hasLength() && l > 0) {
                     sb.append(".length(").append(l).append(")");
                 }

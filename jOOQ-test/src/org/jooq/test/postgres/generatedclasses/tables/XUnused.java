@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1011107005;
+	private static final long serialVersionUID = 1798808172;
 
 	/**
 	 * The singleton instance of <code>public.x_unused</code>
@@ -97,7 +97,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	/**
 	 * The column <code>public.x_unused.FIELD 737</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC.precision(25).scale(2), this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC.precision(25, 2), this);
 
 	/**
 	 * Create a <code>public.x_unused</code> table reference

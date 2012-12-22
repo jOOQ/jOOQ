@@ -165,11 +165,27 @@ public interface DataType<T> extends Serializable {
      * Return a new data type like this, with a new precision value
      * <p>
      * This will have no effect if {@link #hasPrecision()} is <code>false</code>
+     * <p>
+     * This is the same as calling {@link #precision(int, int)} with
+     * <code>scale == 0</code>
      *
      * @param precision The new precision value
      * @return The new data type
      */
     DataType<T> precision(int precision);
+
+    /**
+     * Return a new data type like this, with a new precision and scale value
+     * <p>
+     * This will have no effect if {@link #hasPrecision()} is <code>false</code>
+     * , or if <code>scale > 0</code> and {@link #hasScale()} is
+     * <code>false</code>
+     *
+     * @param precision The new precision value
+     * @param scale The new scale value
+     * @return The new data type
+     */
+    DataType<T> precision(int precision, int scale);
 
     /**
      * Get the precision of this data type

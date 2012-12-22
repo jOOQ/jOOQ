@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 328169272;
+	private static final long serialVersionUID = 729291910;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK</code>
@@ -64,12 +64,12 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_TEXT</code>. Some textual content of the book
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), T_BOOK);
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.CONTENT_PDF</code>. Some binary content of the book
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(2147483647), T_BOOK);
 
 	/**
 	 * The column <code>PUBLIC.T_BOOK.REC_VERSION</code>. 

@@ -92,7 +92,7 @@ class Rows extends Generators {
                    «ENDFOR»
 
                 // ------------------------------------------------------------------------
-                // Row DSL API
+                // Comparison predicates
                 // ------------------------------------------------------------------------
 
                 /**
@@ -294,6 +294,10 @@ class Rows extends Generators {
                  */
                 @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition ne(Select<? extends Record«degree»<«TN(degree)»>> select);
+            
+                // ------------------------------------------------------------------------
+                // [NOT] IN predicates
+                // ------------------------------------------------------------------------
             
                 /**
                  * Compare this row value expression with a set of row value expressions for

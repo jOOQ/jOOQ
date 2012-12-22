@@ -55,6 +55,10 @@ import java.util.Collection;
  */
 public interface RowN extends Row {
 
+    // ------------------------------------------------------------------------
+    // Comparison predicates
+    // ------------------------------------------------------------------------
+
     /**
      * Compare this row value expression with another row value expression for
      * equality
@@ -230,6 +234,10 @@ public interface RowN extends Row {
      */
     @Support
     Condition ne(Field<?>... values);
+
+    // ------------------------------------------------------------------------
+    // [NOT] IN predicates
+    // ------------------------------------------------------------------------
 
     /**
      * Compare this row value expression with a set of row value expressions for

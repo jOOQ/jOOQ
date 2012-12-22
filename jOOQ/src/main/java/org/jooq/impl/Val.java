@@ -94,6 +94,14 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         this.value = value;
     }
 
+    /**
+     * A utility method that generates a field name.
+     * <p>
+     * <ul>
+     * <li>If <code>paramName != null</code>, take <code>paramName</code></li>
+     * <li>Otherwise, take the string value of <code>value</code></li>
+     * </ul>
+     */
     private static String name(Object value, String paramName) {
         return paramName == null ? String.valueOf(value) : paramName;
     }

@@ -2,8 +2,6 @@ package org.jooq.util;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.regex.Matcher;
 
 /**
@@ -18,12 +16,8 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
 
     private static final String SERIAL_STATEMENT                = "__SERIAL_STATEMENT__";
 
-    private final Set<Object>   alreadyPrinted;
-
     public JavaWriter(File file) {
         super(file);
-
-        this.alreadyPrinted = new HashSet<Object>();
     }
 
     public JavaWriter print(Class<?> clazz) {
@@ -73,15 +67,6 @@ public class JavaWriter extends GeneratorWriter<JavaWriter> {
         tab(t).println("@Override");
 
         return this;
-    }
-
-    public boolean printOnlyOnce(Object object) {
-        if (!alreadyPrinted.contains(object)) {
-            alreadyPrinted.add(object);
-            return true;
-        }
-
-        return false;
     }
 
     public void printSerial() {

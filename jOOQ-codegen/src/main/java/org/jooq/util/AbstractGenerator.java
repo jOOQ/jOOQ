@@ -47,7 +47,6 @@ abstract class AbstractGenerator implements Generator {
 
     boolean                            generateDeprecated            = true;
     boolean                            generateRelations             = true;
-    boolean                            generateNavigationMethods     = true;
     boolean                            generateInstanceFields        = true;
     boolean                            generateGeneratedAnnotation   = true;
     boolean                            generateRecords               = true;
@@ -93,16 +92,6 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public boolean generateInstanceFields() {
         return generateInstanceFields;
-    }
-
-    @Override
-    public boolean generateNavigationMethods() {
-        return generateNavigationMethods;
-    }
-
-    @Override
-    public void setGenerateNavigationMethods(boolean generateNavigationMethods) {
-        this.generateNavigationMethods = generateNavigationMethods;
     }
 
     @Override

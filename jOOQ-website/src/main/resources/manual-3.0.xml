@@ -9209,6 +9209,8 @@ for (Record record : create().select(
 								<li>Various API changes have been done</li>
 							</ul>
 							
+							<h3>No more navigation methods and "foreign key setters"</h3>
+							
 							<h3>Object renames</h3>
 							<ul>
 								<li>jOOU</li>

@@ -81,16 +81,6 @@ public interface Generator {
     void setGenerateRelations(boolean generateRelations);
 
     /**
-     * Whether foreign key navigation methods should be generated
-     */
-    boolean generateNavigationMethods();
-
-    /**
-     * Whether foreign key navigation methods should be generated
-     */
-    void setGenerateNavigationMethods(boolean generateNavigationMethods);
-
-    /**
      * Whether instance fields should be generated (as opposed to static fields)
      */
     boolean generateInstanceFields();

@@ -145,7 +145,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 assertEquals(sequence, schema.getSequence(sequence.getName()));
             }
 
-            int tables = 17;
+            int tables = 18;
 
             // The additional T_DIRECTORY table for recursive queries
             if (supportsRecursiveQueries()) {

@@ -26,6 +26,7 @@ DROP TABLE t_book_details/
 DROP TABLE t_author/
 DROP TABLE t_language/
 DROP TABLE t_directory/
+DROP TABLE x_test_case_2025/
 DROP TABLE x_test_case_71/
 DROP TABLE x_test_case_64_69/
 DROP TABLE x_test_case_85/
@@ -669,6 +670,15 @@ CREATE TABLE x_test_case_85 (
 )
 /
 
+CREATE TABLE x_test_case_2025 (
+  ref_id NUMBER(7) NOT NULL,
+  ref_name VARCHAR2(10) NOT NULL,
+  
+  CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
+  CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
+  CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
+)
+/
 
 CREATE OR REPLACE VIEW v_library (author, title) AS
 SELECT a.first_name || ' ' || a.last_name, b.title

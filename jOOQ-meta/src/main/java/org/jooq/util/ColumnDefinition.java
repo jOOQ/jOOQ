@@ -62,10 +62,9 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
     List<UniqueKeyDefinition> getUniqueKeys();
 
     /**
-     * A definition for the foreign key that this column is part of, or
-     * <code>null</code> if this column is not part of a foreign key.
+     * All definitions of foreign keys that this column is part of.
      */
-    ForeignKeyDefinition getForeignKey();
+    List<ForeignKeyDefinition> getForeignKeys();
 
     /**
      * Whether this column is the table's <code>IDENTITY</code> column.

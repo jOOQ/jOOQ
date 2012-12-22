@@ -91,13 +91,9 @@ public class DefaultForeignKeyDefinition extends AbstractDefinition implements F
     public int countSimilarReferences() {
         Set<String> keys = new HashSet<String>();
 
-        for (ColumnDefinition column : table.getColumns()) {
-            ForeignKeyDefinition key = getDatabase().getRelations().getForeignKey(column);
-
-            if (key != null) {
-                if (key.getReferencedTable().equals(getReferencedTable())) {
-                    keys.add(key.getName());
-                }
+        for (ForeignKeyDefinition key : getDatabase().getRelations().getForeignKeys(table)) {
+            if (key.getReferencedTable().equals(getReferencedTable())) {
+                keys.add(key.getName());
             }
         }
 

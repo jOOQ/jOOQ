@@ -65,10 +65,11 @@ public interface Relations {
     List<UniqueKeyDefinition> getUniqueKeys(TableDefinition table);
 
     /**
-     * Get the foreign key for a given column, or <code>null</code> if that
-     * column is not part of a foreign key.
+     * Get a list of foreign keys for a given table, that the column
+     * participates in. Returns an empty list if the given column is not part of
+     * any foreign key.
      */
-    ForeignKeyDefinition getForeignKey(ColumnDefinition column);
+    List<ForeignKeyDefinition> getForeignKeys(ColumnDefinition column);
 
     /**
      * Get a list of foreign keys for a given table. Returns an empty list if

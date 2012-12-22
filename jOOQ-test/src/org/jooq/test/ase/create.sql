@@ -22,6 +22,7 @@ DROP TABLE t_book/
 DROP TABLE t_book_details/
 DROP TABLE t_author/
 DROP TABLE t_language/
+DROP TABLE x_test_case_2025/
 DROP TABLE x_test_case_85/
 DROP TABLE x_test_case_71/
 DROP TABLE x_test_case_64_69/
@@ -264,6 +265,16 @@ CREATE TABLE x_test_case_85 (
 
   CONSTRAINT pk_x_test_case_85 PRIMARY KEY(id),
   CONSTRAINT fk_x_test_case_85 FOREIGN KEY(x_unused_id, x_unused_name) REFERENCES x_unused(ID, NAME)
+)
+/
+
+CREATE TABLE x_test_case_2025 (
+  ref_id int NOT NULL,
+  ref_name VARCHAR(10) NOT NULL,
+  
+  CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
+  CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
+  CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
 )
 /
 

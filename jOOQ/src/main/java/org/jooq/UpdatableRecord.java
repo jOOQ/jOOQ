@@ -41,6 +41,7 @@ import java.sql.Statement;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.impl.Executor;
 
 /**
@@ -304,7 +305,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      *             record does not exist anymore in the database</li>
      *             </ul>
      */
-    void refresh(Field<?>... fields);
+    void refresh(Field<?>... fields) throws DataAccessException;
 
     /**
      * Duplicate this record (in memory) and reset all fields from the primary
@@ -314,4 +315,31 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * @return A new record, distinct from <code>this</code> record.
      */
     R copy();
+
+    /**
+     * Fetch a child record of this record, given a foreign key
+     * <p>
+     * This returns a child record referencing this record through a given
+     * foreign key. If no child record was found, this returns <code>null</code>
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     * @see ForeignKey#fetchChildren(java.util.Collection)
+     * @see ForeignKey#fetchChildren(Record)
+     * @see ForeignKey#fetchChildren(Record...)
+     */
+    <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) throws InvalidResultException, DataAccessException;
+
+    /**
+     * Fetch child records of this record, given a foreign key
+     * <p>
+     * This returns childs record referencing this record through a given
+     * foreign key.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     * @see ForeignKey#fetchChildren(java.util.Collection)
+     * @see ForeignKey#fetchChildren(Record)
+     * @see ForeignKey#fetchChildren(Record...)
+     */
+    <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) throws DataAccessException;
 }

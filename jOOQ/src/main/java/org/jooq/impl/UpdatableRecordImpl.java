@@ -47,14 +47,17 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
+import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
@@ -91,6 +94,17 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         }
 
         return result;
+    }
+
+    @Override
+    public final <O extends TableRecord<O>> O fetchChild(ForeignKey<O, R> key) {
+        return Utils.filterOne(fetchChildren(key));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) {
+        return key.fetchChildren((R) this);
     }
 
     @Override

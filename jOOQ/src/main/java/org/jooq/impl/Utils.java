@@ -70,6 +70,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -101,6 +102,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.LoggerListener;
@@ -157,18 +159,6 @@ final class Utils {
      * A pattern for the JDBC escape syntax
      */
     private static final Pattern JDBC_ESCAPE_PATTERN        = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
-
-    // ------------------------------------------------------------------------
-    // XXX: General utility methods
-    // ------------------------------------------------------------------------
-
-    /**
-     * Use this rather than {@link Arrays#asList(Object...)} for
-     * <code>null</code>-safety
-     */
-    static final <T> List<T> list(T... array) {
-        return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
-    }
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
@@ -387,6 +377,56 @@ final class Utils {
     // ------------------------------------------------------------------------
     // XXX: General utility methods
     // ------------------------------------------------------------------------
+
+    /**
+     * Use this rather than {@link Arrays#asList(Object...)} for
+     * <code>null</code>-safety
+     */
+    static final <T> List<T> list(T... array) {
+        return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
+    }
+
+    /**
+     * Extract the first item from an iterable or <code>null</code>, if there is
+     * no such item, or if iterable itself is <code>null</code>
+     */
+    static final <T> T first(Iterable<? extends T> iterable) {
+        if (iterable == null) {
+            return null;
+        }
+        else {
+            Iterator<? extends T> iterator = iterable.iterator();
+
+            if (iterator.hasNext()) {
+                return iterator.next();
+            }
+            else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Get the only element from a list or <code>null</code>, or throw an
+     * exception
+     *
+     * @param list The list
+     * @return The only element from the list or <code>null</code>
+     * @throws InvalidResultException Thrown if the list contains more than one
+     *             element
+     */
+    static <R extends Record> R filterOne(List<R> list) throws InvalidResultException {
+        int size = list.size();
+
+        if (size == 1) {
+            return list.get(0);
+        }
+        else if (size > 1) {
+            throw new InvalidResultException("Too many rows selected : " + size);
+        }
+
+        return null;
+    }
 
     /**
      * Render and bind a list of {@link QueryPart} to plain SQL

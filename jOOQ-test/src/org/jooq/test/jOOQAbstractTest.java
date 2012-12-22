@@ -65,6 +65,7 @@ import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -117,6 +118,7 @@ import org.jooq.test._.testcases.OrderByTests;
 import org.jooq.test._.testcases.PlainSQLTests;
 import org.jooq.test._.testcases.PredicateTests;
 import org.jooq.test._.testcases.RecordTests;
+import org.jooq.test._.testcases.ReferentialTests;
 import org.jooq.test._.testcases.RenderAndBindTests;
 import org.jooq.test._.testcases.ResultTests;
 import org.jooq.test._.testcases.RoutineAndUDTTests;
@@ -656,6 +658,8 @@ public abstract class jOOQAbstractTest<
     protected TableField<B, Timestamp> TBook_REC_TIMESTAMP() {
         return null;
     }
+    protected abstract ForeignKey<B, A> FK_T_BOOK_AUTHOR_ID();
+    protected abstract ForeignKey<B, A> FK_T_BOOK_CO_AUTHOR_ID();
 
     protected abstract UpdatableTable<S> TBookStore();
     protected abstract TableField<S, String> TBookStore_NAME();
@@ -1086,6 +1090,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testResultSort() throws Exception {
         new ResultTests(this).testResultSort();
+    }
+
+    @Test
+    public void testFetchParentAndChildren() throws Exception {
+        new ReferentialTests(this).testFetchParentAndChildren();
     }
 
     @Test

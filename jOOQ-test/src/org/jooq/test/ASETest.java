@@ -46,6 +46,7 @@ import java.sql.Date;
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -62,6 +63,7 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test.ase.generatedclasses.Keys;
 import org.jooq.test.ase.generatedclasses.tables.TAuthor;
 import org.jooq.test.ase.generatedclasses.tables.TBook;
 import org.jooq.test.ase.generatedclasses.tables.TBookStore;
@@ -213,6 +215,16 @@ public class ASETest extends jOOQAbstractTest<
     @Override
     protected TableField<TBookToBookStoreRecord, Integer> TBookToBookStore_STOCK() {
         return TBookToBookStore.STOCK;
+    }
+
+    @Override
+    protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
+        return Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID;
+    }
+
+    @Override
+    protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
+        return Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID;
     }
 
     @Override

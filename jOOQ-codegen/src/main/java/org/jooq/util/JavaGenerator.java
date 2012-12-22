@@ -523,9 +523,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("}");
 
             if (generateRelations() && generateNavigationMethods()) {
-                ForeignKeyDefinition foreignKey = column.getForeignKey();
-
-                if (foreignKey != null) {
+                for (ForeignKeyDefinition foreignKey : column.getForeignKeys()) {
                     printFKSetter(out, column, foreignKey);
                 }
             }
@@ -2107,9 +2105,10 @@ public class JavaGenerator extends AbstractGenerator {
         // Print references from this foreign key to its related primary key
         // E.g. in TBookRecord print getTAuthor()
         // -----------------------------------------------------------------
-        ForeignKeyDefinition foreignKey = column.getForeignKey();
-        if (foreignKey != null && out.printOnlyOnce(foreignKey)) {
-            printFetchFK(out, column, foreignKey);
+        for (ForeignKeyDefinition foreignKey : column.getForeignKeys()) {
+            if (out.printOnlyOnce(foreignKey)) {
+                printFetchFK(out, column, foreignKey);
+            }
         }
     }
 

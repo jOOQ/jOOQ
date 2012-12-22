@@ -47,15 +47,15 @@ public class DefaultColumnDefinition
     extends AbstractTypedElementDefinition<TableDefinition>
     implements ColumnDefinition {
 
-    private final int                 position;
-    private final boolean             isIdentity;
-    private final boolean             nullable;
+    private final int                  position;
+    private final boolean              isIdentity;
+    private final boolean              nullable;
 
-    private boolean                   primaryKeyLoaded;
-    private UniqueKeyDefinition       primaryKey;
-    private List<UniqueKeyDefinition> uniqueKeys;
-    private boolean                   foreignKeyLoaded;
-    private ForeignKeyDefinition      foreignKey;
+    private boolean                    primaryKeyLoaded;
+    private UniqueKeyDefinition        primaryKey;
+    private List<UniqueKeyDefinition>  uniqueKeys;
+    private boolean                    foreignKeyLoaded;
+    private List<ForeignKeyDefinition> foreignKey;
 
     public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
         boolean nullable, boolean isIdentity, String comment) {
@@ -92,10 +92,10 @@ public class DefaultColumnDefinition
     }
 
     @Override
-    public final ForeignKeyDefinition getForeignKey() {
+    public final List<ForeignKeyDefinition> getForeignKeys() {
         if (!foreignKeyLoaded) {
             foreignKeyLoaded = true;
-            foreignKey = getDatabase().getRelations().getForeignKey(this);
+            foreignKey = getDatabase().getRelations().getForeignKeys(this);
         }
 
         return foreignKey;

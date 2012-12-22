@@ -83,7 +83,7 @@ public interface Row4<T1, T2, T3, T4> extends Row {
     Field<T4> field4();
 
     // ------------------------------------------------------------------------
-    // Row DSL API
+    // Comparison predicates
     // ------------------------------------------------------------------------
 
     /**
@@ -285,6 +285,10 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      */
     @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition ne(Select<? extends Record4<T1, T2, T3, T4>> select);
+
+    // ------------------------------------------------------------------------
+    // [NOT] IN predicates
+    // ------------------------------------------------------------------------
 
     /**
      * Compare this row value expression with a set of row value expressions for

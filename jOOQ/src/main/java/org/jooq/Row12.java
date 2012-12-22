@@ -123,7 +123,7 @@ public interface Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extend
     Field<T12> field12();
 
     // ------------------------------------------------------------------------
-    // Row DSL API
+    // Comparison predicates
     // ------------------------------------------------------------------------
 
     /**
@@ -325,6 +325,10 @@ public interface Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extend
      */
     @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition ne(Select<? extends Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select);
+
+    // ------------------------------------------------------------------------
+    // [NOT] IN predicates
+    // ------------------------------------------------------------------------
 
     /**
      * Compare this row value expression with a set of row value expressions for

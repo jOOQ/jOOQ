@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 636530530;
+	private static final long serialVersionUID = 1249205090;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -38,18 +38,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setAuthorId(org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	@Override
@@ -63,18 +51,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setCoAuthorId(org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID));
-		}
 	}
 
 	/**
@@ -139,18 +115,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord}
-	 */
-	public void setLanguageId(org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.TLanguage.ID));
-		}
 	}
 
 	/**

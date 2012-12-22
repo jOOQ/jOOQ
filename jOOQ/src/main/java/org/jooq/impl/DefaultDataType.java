@@ -689,7 +689,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " [" + type + ", " + typeName + "]";
+        return getCastTypeName() + " (" + type.getName() + ")";
     }
 
     @Override

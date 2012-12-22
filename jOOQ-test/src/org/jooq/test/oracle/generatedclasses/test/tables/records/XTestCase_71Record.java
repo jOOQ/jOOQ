@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Short> {
 
-	private static final long serialVersionUID = 26197437;
+	private static final long serialVersionUID = 607244762;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>. 
@@ -59,6 +59,16 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	// -------------------------------------------------------------------------
 	// Foreign key navigation methods
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>TEST.X_TEST_CASE_2025</code> referencing this <code>TEST.X_TEST_CASE_71</code>
+	 */
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> fetchXTestCase_2025List() {
+		return create()
+			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025)
+			.where(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71.ID)))
+			.fetch();
+	}
 
 	/**
 	 * Fetch a <code>TEST.X_TEST_CASE_64_69</code> referenced by this <code>TEST.X_TEST_CASE_71</code>

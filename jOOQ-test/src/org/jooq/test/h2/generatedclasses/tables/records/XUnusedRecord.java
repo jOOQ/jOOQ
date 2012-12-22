@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 235245819;
+	private static final long serialVersionUID = 1794771427;
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>. 
@@ -274,7 +274,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Fetch a list of <code>PUBLIC.X_TEST_CASE_64_69</code> referencing this <code>PUBLIC.X_UNUSED</code>
 	 */
-	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
+	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69ListByUnusedId() {
 		return create()
 			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
 			.where(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XUnused.ID)))

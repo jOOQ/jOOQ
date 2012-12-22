@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -31985953;
+	private static final long serialVersionUID = -2075303392;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -90,7 +90,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a <code>PUBLIC.T_BOOK_STORE</code> referenced by this <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
+	 * Fetch a record from <code>PUBLIC.T_BOOK_STORE</code> referenced from <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> through <code>PUBLIC.FK_B2BS_BS_NAME</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
 		return create()
@@ -100,7 +100,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Fetch a <code>PUBLIC.T_BOOK</code> referenced by this <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
+	 * Fetch a record from <code>PUBLIC.T_BOOK</code> referenced from <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> through <code>PUBLIC.FK_B2BS_B_ID</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.TBookRecord fetchTBook() {
 		return create()

@@ -107,6 +107,11 @@ public final class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
+	 * The table PUBLIC.X_TEST_CASE_2025
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+
+	/**
 	 * The table PUBLIC.V_LIBRARY
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.h2.generatedclasses.tables.VLibrary.V_LIBRARY;

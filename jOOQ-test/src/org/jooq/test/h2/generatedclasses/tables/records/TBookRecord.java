@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 468810255;
+	private static final long serialVersionUID = 636530530;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -240,7 +240,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Fetch a <code>PUBLIC.T_AUTHOR</code> referenced by this <code>PUBLIC.T_BOOK</code>
+	 * Fetch a record from <code>PUBLIC.T_AUTHOR</code> referenced from <code>PUBLIC.T_BOOK</code> through <code>PUBLIC.FK_T_BOOK_AUTHOR_ID</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
 		return create()
@@ -250,7 +250,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Fetch a <code>PUBLIC.T_AUTHOR</code> referenced by this <code>PUBLIC.T_BOOK</code>
+	 * Fetch a record from <code>PUBLIC.T_AUTHOR</code> referenced from <code>PUBLIC.T_BOOK</code> through <code>PUBLIC.FK_T_BOOK_CO_AUTHOR_ID</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
 		return create()
@@ -260,7 +260,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Fetch a <code>PUBLIC.T_LANGUAGE</code> referenced by this <code>PUBLIC.T_BOOK</code>
+	 * Fetch a record from <code>PUBLIC.T_LANGUAGE</code> referenced from <code>PUBLIC.T_BOOK</code> through <code>PUBLIC.FK_T_BOOK_LANGUAGE_ID</code>
 	 */
 	public org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
 		return create()

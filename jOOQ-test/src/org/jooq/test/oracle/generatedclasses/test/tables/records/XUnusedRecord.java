@@ -15,7 +15,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1091848614;
+	private static final long serialVersionUID = 295788761;
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID</code>. 
@@ -260,6 +260,17 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	// -------------------------------------------------------------------------
 	// Foreign key navigation methods
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Fetch a list of <code>TEST.X_TEST_CASE_2025</code> referencing this <code>TEST.X_UNUSED</code>
+	 */
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> fetchXTestCase_2025List() {
+		return create()
+			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025)
+			.where(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID)))
+			.and(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME)))
+			.fetch();
+	}
 
 	/**
 	 * Fetch a list of <code>TEST.X_TEST_CASE_85</code> referencing this <code>TEST.X_UNUSED</code>

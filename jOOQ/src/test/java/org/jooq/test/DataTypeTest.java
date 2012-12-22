@@ -38,11 +38,18 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.impl.Factory.fieldByName;
 
+import java.sql.Timestamp;
+
+import org.jooq.Condition;
+import org.jooq.Field;
+import org.jooq.test.data.Table1;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
 
+import org.jmock.Expectations;
 import org.junit.Test;
 
 
@@ -53,6 +60,97 @@ import org.junit.Test;
  */
 public class DataTypeTest extends AbstractTest {
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Test
+    public void testComparisonPredicateTypeCoercion() throws Exception {
+        // This test checks whether automatic type coercion works well for
+        // comparison predicates
+
+        Field integer = Table1.FIELD_ID1;
+        Field string = Table1.FIELD_NAME1;
+        Field object = fieldByName("ANY");
+
+        // Check if a correct type was coerced correctly
+        // ---------------------------------------------
+        {
+            Condition int_int = integer.eq(1);
+            assertEquals("\"TABLE1\".\"ID1\" = 1", r_refI().render(int_int));
+            context.checking(new Expectations() {{
+                oneOf(statement).setInt(1, 1);
+            }});
+
+            assertEquals(2, b_ref().bind(int_int).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        {
+            Condition string_string = string.eq("1");
+            assertEquals("\"TABLE1\".\"NAME1\" = '1'", r_refI().render(string_string));
+            context.checking(new Expectations() {{
+                oneOf(statement).setString(1, "1");
+            }});
+
+            assertEquals(2, b_ref().bind(string_string).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        // Check if a convertible type was coerced correctly
+        // -------------------------------------------------
+        {
+            Condition int_string = integer.eq("1");
+            assertEquals("\"TABLE1\".\"ID1\" = 1", r_refI().render(int_string));
+            context.checking(new Expectations() {{
+                oneOf(statement).setInt(1, 1);
+            }});
+
+            assertEquals(2, b_ref().bind(int_string).peekIndex());
+            context.assertIsSatisfied();
+
+            Condition string_int = string.eq(1);
+            assertEquals("\"TABLE1\".\"NAME1\" = '1'", r_refI().render(string_int));
+            context.checking(new Expectations() {{
+                oneOf(statement).setString(1, "1");
+            }});
+
+            assertEquals(2, b_ref().bind(string_int).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        // Check if ...
+        // ------------
+        {
+            Condition object_int = object.eq(1);
+            assertEquals("\"ANY\" = 1", r_refI().render(object_int));
+            context.checking(new Expectations() {{
+                oneOf(statement).setInt(1, 1);
+            }});
+
+            assertEquals(2, b_ref().bind(object_int).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        {
+            Condition object_string = object.eq("1");
+            assertEquals("\"ANY\" = '1'", r_refI().render(object_string));
+            context.checking(new Expectations() {{
+                oneOf(statement).setString(1, "1");
+            }});
+
+            assertEquals(2, b_ref().bind(object_string).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        {
+            Condition object_date = object.eq(Timestamp.valueOf("2012-12-21 15:30:00.0"));
+            assertEquals("\"ANY\" = timestamp '2012-12-21 15:30:00.0'", r_refI().render(object_date));
+            context.checking(new Expectations() {{
+                oneOf(statement).setTimestamp(1, Timestamp.valueOf("2012-12-21 15:30:00.0"));
+            }});
+
+            assertEquals(2, b_ref().bind(object_date).peekIndex());
+            context.assertIsSatisfied();
+        }
+    }
 
     @Test
     public void testYearToMonth() {

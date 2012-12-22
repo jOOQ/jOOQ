@@ -33,36 +33,29 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test;
+package org.jooq.test.data;
 
 import java.sql.Date;
 
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.impl.TableImpl;
+import org.jooq.DataType;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DefaultDataType;
 
 /**
  * @author Lukas Eder
  */
-public class Table1 extends TableImpl<Table1Record> {
+public final class TestDataType<T> extends DefaultDataType<T> {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 7621282509163949636L;
+    private static final long             serialVersionUID = 7621282509163949636L;
 
-    public static final Table<Table1Record>               TABLE1      = new Table1();
+    public static final DataType<Integer> INTEGER_TYPE     = new TestDataType<Integer>(Integer.class);
+    public static final DataType<String>  STRING_TYPE      = new TestDataType<String>(String.class);
+    public static final DataType<Date>    DATE_TYPE        = new TestDataType<Date>(Date.class);
 
-    public static final TableField<Table1Record, Integer> FIELD_ID1   = createField("ID1", TestDataType.INTEGER_TYPE, TABLE1);
-    public static final TableField<Table1Record, String>  FIELD_NAME1 = createField("NAME1", TestDataType.STRING_TYPE, TABLE1);
-    public static final TableField<Table1Record, Date>    FIELD_DATE1 = createField("DATE1", TestDataType.DATE_TYPE, TABLE1);
-
-    public Table1() {
-        super("TABLE1");
-    }
-
-    @Override
-    public Class<Table1Record> getRecordType() {
-        return Table1Record.class;
+    protected TestDataType(Class<T> type) {
+        super(SQLDialect.ORACLE, type, type.getSimpleName());
     }
 }

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1778630516;
+	private static final long serialVersionUID = 425236155;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>
@@ -102,7 +102,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.FIELD 737</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL.precision(25).scale(2), X_UNUSED);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL.precision(25, 2), X_UNUSED);
 
 	/**
 	 * No further instances allowed

@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 868916292;
+	private static final long serialVersionUID = -575442189;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>
@@ -92,7 +92,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.FIELD 737</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL.precision(25).scale(2), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL.precision(25, 2), this);
 
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.CONNECTION</code>. 

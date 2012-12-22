@@ -281,11 +281,16 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final DataType<T> precision(int p) {
-        if (precision == p) {
+        return precision(p, scale);
+    }
+
+    @Override
+    public final DataType<T> precision(int p, int s) {
+        if (precision == p && scale == s) {
             return this;
         }
-        else if (hasPrecision()) {
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, scale, length);
+        else if (hasPrecision() && (s == 0 || hasScale())) {
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, s, length);
         }
         else {
             return this;
@@ -362,7 +367,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
             // Be sure to reset length, precision, and scale, as those values
             // were not registered in the below cache
-            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.getDialect().ordinal()].get(length(0).precision(0).scale(0));
+            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.getDialect().ordinal()].get(length(0).precision(0, 0));
 
             if (dataType != null) {
                 return (DataType<T>) dataType;

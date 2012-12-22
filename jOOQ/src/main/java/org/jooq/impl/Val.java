@@ -280,7 +280,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         context.keyword("cast(");
         toSQL(context, getValue(), getType());
         context.keyword(" as ")
-               .sql(type.length(length).precision(precision).scale(scale).getCastTypeName(context))
+               .sql(type.length(length).precision(precision, scale).getCastTypeName(context))
                .sql(")");
     }
 

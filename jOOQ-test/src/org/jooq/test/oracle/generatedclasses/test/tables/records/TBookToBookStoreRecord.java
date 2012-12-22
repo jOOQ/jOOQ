@@ -15,25 +15,13 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1124190848;
+	private static final long serialVersionUID = -2133969431;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord}
-	 */
-	public void setBookStoreName(org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, null);
-		}
-		else {
-			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE.NAME));
-		}
 	}
 
 	/**
@@ -49,18 +37,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord}
-	 */
-	public void setBookId(org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.ID));
-		}
 	}
 
 	/**
@@ -102,7 +78,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Fetch a <code>TEST.T_BOOK_STORE</code> referenced by this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
+	 * Fetch a record from <code>TEST.T_BOOK_STORE</code> referenced from <code>TEST.T_BOOK_TO_BOOK_STORE</code> through <code>TEST.FK_B2BS_BS_NAME</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord fetchTBookStore() {
 		return create()
@@ -112,7 +88,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Fetch a <code>TEST.T_BOOK</code> referenced by this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
+	 * Fetch a record from <code>TEST.T_BOOK</code> referenced from <code>TEST.T_BOOK_TO_BOOK_STORE</code> through <code>TEST.FK_B2BS_B_ID</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord fetchTBook() {
 		return create()

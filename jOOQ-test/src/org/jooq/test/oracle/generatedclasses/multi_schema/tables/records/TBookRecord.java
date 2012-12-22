@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
 
-	private static final long serialVersionUID = 896167626;
+	private static final long serialVersionUID = -1475934458;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK.ID</code>. 
@@ -37,18 +37,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord}
-	 */
-	public void setAuthorId(org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.AUTHOR_ID, value.getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
@@ -61,18 +49,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord}
-	 */
-	public void setCoAuthorId(org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID, value.getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID));
-		}
 	}
 
 	/**
@@ -136,18 +112,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord}
-	 */
-	public void setLanguageId(org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK.LANGUAGE_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
@@ -190,7 +154,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a <code>MULTI_SCHEMA.T_AUTHOR</code> referenced by this <code>MULTI_SCHEMA.T_BOOK</code>
+	 * Fetch a record from <code>MULTI_SCHEMA.T_AUTHOR</code> referenced from <code>MULTI_SCHEMA.T_BOOK</code> through <code>MULTI_SCHEMA.FK_T_BOOK_AUTHOR_ID</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
 		return create()
@@ -200,7 +164,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Fetch a <code>MULTI_SCHEMA.T_AUTHOR</code> referenced by this <code>MULTI_SCHEMA.T_BOOK</code>
+	 * Fetch a record from <code>MULTI_SCHEMA.T_AUTHOR</code> referenced from <code>MULTI_SCHEMA.T_BOOK</code> through <code>MULTI_SCHEMA.FK_T_BOOK_CO_AUTHOR_ID</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
 		return create()
@@ -210,7 +174,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Fetch a <code>TEST.T_LANGUAGE</code> referenced by this <code>MULTI_SCHEMA.T_BOOK</code>
+	 * Fetch a record from <code>TEST.T_LANGUAGE</code> referenced from <code>MULTI_SCHEMA.T_BOOK</code> through <code>MULTI_SCHEMA.FK_T_BOOK_LANGUAGE_ID</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord fetchTLanguage() {
 		return create()

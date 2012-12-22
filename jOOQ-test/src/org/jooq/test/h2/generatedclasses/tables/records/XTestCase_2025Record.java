@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = 956752736;
+	private static final long serialVersionUID = 949365853;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>. 
@@ -17,30 +17,6 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	@Override
 	public void setRefId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record}
-	 */
-	public void setRefId(org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record value) {
-		if (value == null) {
-			setValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.ID));
-		}
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record}
-	 */
-	public void setRefId(org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record value) {
-		if (value == null) {
-			setValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.ID));
-		}
 	}
 
 	/**

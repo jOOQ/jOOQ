@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -2075303392;
+	private static final long serialVersionUID = 1218048636;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -19,18 +19,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord}
-	 */
-	public void setBookStoreName(org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, null);
-		}
-		else {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value.getValue(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME));
-		}
 	}
 
 	/**
@@ -47,18 +35,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.h2.generatedclasses.tables.records.TBookRecord}
-	 */
-	public void setBookId(org.jooq.test.h2.generatedclasses.tables.records.TBookRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID, value.getValue(org.jooq.test.h2.generatedclasses.tables.TBook.ID));
-		}
 	}
 
 	/**

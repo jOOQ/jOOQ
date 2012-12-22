@@ -11,25 +11,13 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1368124714;
+	private static final long serialVersionUID = -1068292628;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
 	 */
 	public void setRefId(java.lang.Integer value) {
 		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record}
-	 */
-	public void setRefId(org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record value) {
-		if (value == null) {
-			setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID, value.getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.ID));
-		}
 	}
 
 	/**
@@ -60,7 +48,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Fetch a <code>TEST.X_TEST_CASE_85</code> referenced by this <code>TEST.X_TEST_CASE_2025</code>
+	 * Fetch a record from <code>TEST.X_TEST_CASE_85</code> referenced from <code>TEST.X_TEST_CASE_2025</code> through <code>TEST.FK_X_TEST_CASE_2025_1</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record fetchXTestCase_85() {
 		return create()
@@ -70,7 +58,17 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	}
 
 	/**
-	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_TEST_CASE_2025</code>
+	 * Fetch a record from <code>TEST.X_TEST_CASE_71</code> referenced from <code>TEST.X_TEST_CASE_2025</code> through <code>TEST.FK_X_TEST_CASE_2025_2</code>
+	 */
+	public org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record fetchXTestCase_71() {
+		return create()
+			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71)
+			.where(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_71.X_TEST_CASE_71.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID)))
+			.fetchOne();
+	}
+
+	/**
+	 * Fetch a record from <code>TEST.X_UNUSED</code> referenced from <code>TEST.X_TEST_CASE_2025</code> through <code>TEST.FK_X_TEST_CASE_2025_3</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord fetchXUnused() {
 		return create()

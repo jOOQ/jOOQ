@@ -15,7 +15,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 295788761;
+	private static final long serialVersionUID = -271279393;
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID</code>. 
@@ -297,7 +297,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Fetch a list of <code>TEST.X_TEST_CASE_64_69</code> referencing this <code>TEST.X_UNUSED</code>
 	 */
-	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
+	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69ListByUnusedId() {
 		return create()
 			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69)
 			.where(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID)))
@@ -305,7 +305,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	}
 
 	/**
-	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_UNUSED</code>
+	 * Fetch a record from <code>TEST.X_UNUSED</code> referenced from <code>TEST.X_UNUSED</code> through <code>TEST.FK_X_UNUSED_SELF</code>
 	 */
 	public org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord fetchXUnused() {
 		return create()

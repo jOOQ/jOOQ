@@ -73,7 +73,6 @@ import static org.jooq.test.data.Table3.TABLE3;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -110,7 +109,6 @@ import org.jooq.Row6;
 import org.jooq.Row7;
 import org.jooq.Row8;
 import org.jooq.RowN;
-import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectFinalStep;
 import org.jooq.SelectQuery;
@@ -122,20 +120,14 @@ import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.test.data.Table1Record;
 import org.jooq.test.data.TestDataType;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.Interval;
 import org.jooq.types.YearToMonth;
-import org.jooq.util.oracle.OracleDataType;
 
 import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -143,84 +135,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
-public class BasicTest {
-
-    private Mockery context;
-    private PreparedStatement statement;
-    private Executor create;
-
-    @BeforeClass
-    public static void init() throws Exception {
-
-        // [#650] Due to a lacking data type registry, the types need to be
-        // loaded statically
-        Class.forName(OracleDataType.class.getName());
-    }
-
-    @Before
-    public void setUp() throws Exception {
-        context = new Mockery();
-        statement = context.mock(PreparedStatement.class);
-        create = new Executor(SQLDialect.ORACLE);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        statement = null;
-        context = null;
-    }
-
-    protected final BindContext b_ref() {
-        return create.bindContext(statement);
-    }
-
-    protected final BindContext b_dec() {
-        return b_ref().declareFields(true).declareTables(true);
-    }
-
-    protected final BindContext b_decF() {
-        return b_ref().declareFields(true);
-    }
-
-    protected final BindContext b_decT() {
-        return b_ref().declareTables(true);
-    }
-
-    protected final RenderContext r_ref() {
-        return create.renderContext();
-    }
-
-    protected final RenderContext r_dec() {
-        return r_ref().declareFields(true).declareTables(true);
-    }
-
-    protected final RenderContext r_decF() {
-        return r_ref().declareFields(true);
-    }
-
-    protected final RenderContext r_decT() {
-        return r_ref().declareTables(true);
-    }
-
-    protected final RenderContext r_refI() {
-        return r_ref().inline(true);
-    }
-
-    protected final RenderContext r_decI() {
-        return r_dec().inline(true);
-    }
-
-    protected final RenderContext r_decIF() {
-        return r_decF().inline(true);
-    }
-
-    protected final RenderContext r_decIT() {
-        return r_decT().inline(true);
-    }
-
-    protected final RenderContext r_refP() {
-        return r_ref().namedParams(true);
-    }
+public class BasicTest extends AbstractTest {
 
     @Test
     public void testNullPointerExceptionSafety() throws Exception {

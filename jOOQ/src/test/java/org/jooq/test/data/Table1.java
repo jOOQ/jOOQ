@@ -33,21 +33,36 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test;
+package org.jooq.test.data;
 
-import org.jooq.impl.TableRecordImpl;
+import java.sql.Date;
+
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.impl.TableImpl;
 
 /**
  * @author Lukas Eder
  */
-public class Table1Record extends TableRecordImpl<Table1Record> {
+public class Table1 extends TableImpl<Table1Record> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 7621282509163949636L;
 
-    public Table1Record() {
-        super(Table1.TABLE1);
+    public static final Table<Table1Record>               TABLE1      = new Table1();
+
+    public static final TableField<Table1Record, Integer> FIELD_ID1   = createField("ID1", TestDataType.INTEGER_TYPE, TABLE1);
+    public static final TableField<Table1Record, String>  FIELD_NAME1 = createField("NAME1", TestDataType.STRING_TYPE, TABLE1);
+    public static final TableField<Table1Record, Date>    FIELD_DATE1 = createField("DATE1", TestDataType.DATE_TYPE, TABLE1);
+
+    public Table1() {
+        super("TABLE1");
+    }
+
+    @Override
+    public Class<Table1Record> getRecordType() {
+        return Table1Record.class;
     }
 }

@@ -522,12 +522,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(2).println("setValue(%s, value);", id);
             out.tab(1).println("}");
 
-            if (generateRelations() && generateNavigationMethods()) {
-                for (ForeignKeyDefinition foreignKey : column.getForeignKeys()) {
-                    printFKSetter(out, column, foreignKey);
-                }
-            }
-
             out.tab(1).javadoc("Getter for <code>%s</code>. %s", name, comment);
             printColumnJPAAnnotation(out, column);
             out.tab(1).overrideIf(generateInterfaces());
@@ -2164,55 +2158,6 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.println("\t\t\t.fetchOne();");
         out.println("\t}");
-    }
-
-    protected void printFKSetter(JavaWriter out, ColumnDefinition column, ForeignKeyDefinition foreignKey) {
-
-        // This implementation does not yet support multi-column foreign keys
-        // because their generated setters could be ambiguous in two ways:
-        // 1. If they use the referenced table name, that name could collide
-        //    with another column
-        // 2. If they use the referenced table name, several multi-column
-        //    foreign keys could reference the same table
-        if (foreignKey.getKeyColumns().size() > 1) {
-            return;
-        }
-
-        final TableDefinition referenced = foreignKey.getReferencedTable();
-        final String referencedType = getStrategy().getFullJavaClassName(referenced, Mode.RECORD);
-        final String setter = foreignKey.getKeyColumns().size() == 1
-            // Single-column foreign keys use the referencing column name for the setter
-            ? getStrategy().getJavaSetterName(column, Mode.RECORD)
-            // Multi-column foreign keys "could" use the referenced table name for the setter
-            : getStrategy().getJavaSetterName(referenced, Mode.RECORD);
-
-        out.tab(1).javadoc("Link this record to a given {@link %s}", referencedType);
-        out.tab(1).println("public void %s(%s value) {", setter, referencedType);
-        out.tab(2).println("if (value == null) {");
-        out.print("[[\t\t\tsetValue(%s, null);\n]]", getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()));
-        out.tab(2).println("}");
-        out.tab(2).println("else {");
-
-        for (int i = 0; i < foreignKey.getKeyColumns().size(); i++) {
-            ColumnDefinition referencingColumn = foreignKey.getKeyColumns().get(i);
-            ColumnDefinition referencedColumn = foreignKey.getReferencedColumns().get(i);
-
-            final String referencingId = getStrategy().getFullJavaIdentifier(referencingColumn);
-            final String referencedId = getStrategy().getFullJavaIdentifier(referencedColumn);
-
-            // Convert foreign key value, if there is a type mismatch
-            DataTypeDefinition foreignType = referencingColumn.getType();
-            DataTypeDefinition primaryType = referencedColumn.getType();
-
-            List<String> conversion = list(!match(foreignType, primaryType)
-                ? getSimpleJavaType(referencingColumn.getType())
-                : null);
-
-            out.tab(3).println("setValue(%s, value.getValue(%s[[before=, ][after=.class][%s]]));", referencingId, referencedId, conversion);
-        }
-
-        out.tab(2).println("}");
-        out.tab(1).println("}");
     }
 
     protected void printFetchFKList(JavaWriter out, ForeignKeyDefinition foreignKey, Set<String> fetchMethodNames) {

@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DATES", schema = "TEST")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Timestamp, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> {
 
-	private static final long serialVersionUID = -1967090320;
+	private static final long serialVersionUID = 488904422;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>. 
@@ -133,10 +133,6 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	public org.jooq.types.DayToSecond getID() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES.I_D);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

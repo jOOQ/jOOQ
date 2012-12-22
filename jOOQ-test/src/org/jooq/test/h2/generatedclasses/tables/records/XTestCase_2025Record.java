@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = 949365853;
+	private static final long serialVersionUID = -673698136;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_2025.REF_ID</code>. 
@@ -41,30 +41,6 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	@Override
 	public java.lang.String getRefName() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a record from <code>PUBLIC.X_TEST_CASE_85</code> referenced from <code>PUBLIC.X_TEST_CASE_2025</code> through <code>PUBLIC.FK_X_TEST_CASE_2025_1</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record fetchXTestCase_85() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85)
-			.where(org.jooq.test.h2.generatedclasses.tables.XTestCase_85.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a record from <code>PUBLIC.X_TEST_CASE_71</code> referenced from <code>PUBLIC.X_TEST_CASE_2025</code> through <code>PUBLIC.FK_X_TEST_CASE_2025_2</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record fetchXTestCase_71() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.REF_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

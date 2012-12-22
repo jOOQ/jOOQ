@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -1763591423;
+	private static final long serialVersionUID = 476107979;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ID</code>. 
@@ -186,10 +186,6 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	public java.lang.Boolean getNBoolean() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.N_BOOLEAN);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

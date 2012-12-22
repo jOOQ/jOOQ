@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> implements org.jooq.Record9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> {
 
-	private static final long serialVersionUID = -1415255935;
+	private static final long serialVersionUID = -1693939381;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 
@@ -147,10 +147,6 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	public java.lang.Object getContentPdf() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CONTENT_PDF);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record9 type implementation

@@ -13,7 +13,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_BOOK", schema = "TEST")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
 
-	private static final long serialVersionUID = 996973120;
+	private static final long serialVersionUID = -2129157366;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK.ID</code>. The book ID
@@ -149,50 +149,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CONTENT_PDF);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>TEST.T_BOOK_TO_BOOK_STORE</code> referencing this <code>TEST.T_BOOK</code>
-	 */
-	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a record from <code>TEST.T_AUTHOR</code> referenced from <code>TEST.T_BOOK</code> through <code>TEST.FK_T_BOOK_AUTHOR_ID</code>
-	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a record from <code>TEST.T_AUTHOR</code> referenced from <code>TEST.T_BOOK</code> through <code>TEST.FK_T_BOOK_CO_AUTHOR_ID</code>
-	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.CO_AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a record from <code>TEST.T_LANGUAGE</code> referenced from <code>TEST.T_BOOK</code> through <code>TEST.FK_T_BOOK_LANGUAGE_ID</code>
-	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord fetchTLanguage() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.LANGUAGE_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

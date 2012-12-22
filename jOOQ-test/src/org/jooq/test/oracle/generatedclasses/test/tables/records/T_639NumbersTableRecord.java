@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -723658923;
+	private static final long serialVersionUID = -2106483809;
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
@@ -178,10 +178,6 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	public java.math.BigDecimal getBigDecimal() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

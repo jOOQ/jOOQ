@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -1624086388;
+	private static final long serialVersionUID = 373572354;
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.ID</code>. 
@@ -218,10 +218,6 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	public java.lang.Double getDouble() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.DOUBLE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

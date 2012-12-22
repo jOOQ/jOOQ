@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = -241599558;
+	private static final long serialVersionUID = 1005241348;
 
 	/**
 	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
@@ -58,10 +58,6 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TTriggers.COUNTER);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

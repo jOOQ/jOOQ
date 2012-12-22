@@ -15,7 +15,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -2133969431;
+	private static final long serialVersionUID = -804869517;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -60,41 +60,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@javax.persistence.Column(name = "STOCK", precision = 7)
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>MULTI_SCHEMA.T_BOOK_SALE</code> referencing this <code>TEST.T_BOOK_TO_BOOK_STORE</code>
-	 */
-	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> fetchTBookSaleList() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE)
-			.where(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))
-			.and(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a record from <code>TEST.T_BOOK_STORE</code> referenced from <code>TEST.T_BOOK_TO_BOOK_STORE</code> through <code>TEST.FK_B2BS_BS_NAME</code>
-	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord fetchTBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TBookStore.T_BOOK_STORE.NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a record from <code>TEST.T_BOOK</code> referenced from <code>TEST.T_BOOK_TO_BOOK_STORE</code> through <code>TEST.FK_B2BS_B_ID</code>
-	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord fetchTBook() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TBook.T_BOOK.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

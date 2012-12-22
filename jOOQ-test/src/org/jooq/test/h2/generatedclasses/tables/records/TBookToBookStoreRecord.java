@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 1218048636;
+	private static final long serialVersionUID = -1474292531;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -59,30 +59,6 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.STOCK);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a record from <code>PUBLIC.T_BOOK_STORE</code> referenced from <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> through <code>PUBLIC.FK_B2BS_BS_NAME</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBookStore.T_BOOK_STORE)
-			.where(org.jooq.test.h2.generatedclasses.tables.TBookStore.NAME.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a record from <code>PUBLIC.T_BOOK</code> referenced from <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> through <code>PUBLIC.FK_B2BS_B_ID</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.TBookRecord fetchTBook() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.h2.generatedclasses.tables.TBook.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

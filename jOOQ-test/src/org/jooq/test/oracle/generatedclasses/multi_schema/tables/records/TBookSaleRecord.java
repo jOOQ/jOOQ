@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1207255637;
+	private static final long serialVersionUID = 255262714;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
@@ -87,21 +87,6 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@javax.persistence.Column(name = "SOLD_FOR", nullable = false, precision = 10, scale = 2)
 	public java.math.BigDecimal getSoldFor() {
 		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_FOR);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a record from <code>TEST.T_BOOK_TO_BOOK_STORE</code> referenced from <code>MULTI_SCHEMA.T_BOOK_SALE</code> through <code>MULTI_SCHEMA.FK_T_BOOK_TO_BOOK_STORE</code>
-	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord fetchTBookToBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_STORE_NAME)))
-			.and(org.jooq.test.oracle.generatedclasses.test.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

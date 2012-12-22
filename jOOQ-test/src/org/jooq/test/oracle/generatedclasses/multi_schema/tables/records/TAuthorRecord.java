@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> {
 
-	private static final long serialVersionUID = 878357535;
+	private static final long serialVersionUID = -1338877342;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ID</code>. 
@@ -102,30 +102,6 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@javax.persistence.Column(name = "ADDRESS", length = 1)
 	public java.lang.Object getAddress() {
 		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ADDRESS);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>MULTI_SCHEMA.T_BOOK</code> referencing this <code>MULTI_SCHEMA.T_AUTHOR</code>
-	 */
-	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> fetchTBookListByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK)
-			.where(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>MULTI_SCHEMA.T_BOOK</code> referencing this <code>MULTI_SCHEMA.T_AUTHOR</code>
-	 */
-	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK)
-			.where(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

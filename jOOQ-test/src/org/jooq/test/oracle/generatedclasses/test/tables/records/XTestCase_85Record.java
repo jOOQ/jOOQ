@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 411129556;
+	private static final long serialVersionUID = 709732513;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
@@ -57,31 +57,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
 	public java.lang.String getXUnusedName() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>TEST.X_TEST_CASE_2025</code> referencing this <code>TEST.X_TEST_CASE_85</code>
-	 */
-	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> fetchXTestCase_2025List() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a record from <code>TEST.X_UNUSED</code> referenced from <code>TEST.X_TEST_CASE_85</code> through <code>TEST.FK_X_TEST_CASE_85</code>
-	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID)))
-			.and(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

@@ -13,7 +13,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
 public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -351773400;
+	private static final long serialVersionUID = -971998862;
 
 	/**
 	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
@@ -44,10 +44,6 @@ public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.TITLE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

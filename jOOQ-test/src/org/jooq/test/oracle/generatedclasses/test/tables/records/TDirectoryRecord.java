@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1534064625;
+	private static final long serialVersionUID = 1857918427;
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
@@ -72,30 +72,6 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@javax.persistence.Column(name = "name", length = 50)
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>TEST.T_DIRECTORY</code> referencing this <code>TEST.T_DIRECTORY</code>
-	 */
-	public org.jooq.Result<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> fetchTDirectoryList() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.PARENT_ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a record from <code>TEST.T_DIRECTORY</code> referenced from <code>TEST.T_DIRECTORY</code> through <code>TEST.PK_T_DIRECTORY_SELF</code>
-	 */
-	public org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord fetchTDirectory() {
-		return create()
-			.selectFrom(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY)
-			.where(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.ID.equal(getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.PARENT_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

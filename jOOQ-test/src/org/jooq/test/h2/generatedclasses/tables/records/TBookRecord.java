@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 1249205090;
+	private static final long serialVersionUID = 1739489174;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -187,50 +187,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.sql.Timestamp getRecTimestamp() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> referencing this <code>PUBLIC.T_BOOK</code>
-	 */
-	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a record from <code>PUBLIC.T_AUTHOR</code> referenced from <code>PUBLIC.T_BOOK</code> through <code>PUBLIC.FK_T_BOOK_AUTHOR_ID</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a record from <code>PUBLIC.T_AUTHOR</code> referenced from <code>PUBLIC.T_BOOK</code> through <code>PUBLIC.FK_T_BOOK_CO_AUTHOR_ID</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.h2.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a record from <code>PUBLIC.T_LANGUAGE</code> referenced from <code>PUBLIC.T_BOOK</code> through <code>PUBLIC.FK_T_BOOK_LANGUAGE_ID</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.TLanguage.T_LANGUAGE)
-			.where(org.jooq.test.h2.generatedclasses.tables.TLanguage.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

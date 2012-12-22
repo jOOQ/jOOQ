@@ -1324,11 +1324,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testRelations() throws Exception {
-        new CRUDTests(this).testRelations();
-    }
-
-    @Test
     public void testUpdatablesCopy() throws Exception {
         new CRUDTests(this).testUpdatablesCopy();
     }

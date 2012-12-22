@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = 1093534798;
+	private static final long serialVersionUID = -1192125482;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
@@ -41,40 +41,6 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	@Override
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>PUBLIC.X_TEST_CASE_71</code> referencing this <code>PUBLIC.X_TEST_CASE_64_69</code>
-	 */
-	public org.jooq.Result<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID, Short.class)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a record from <code>PUBLIC.X_UNUSED</code> referenced from <code>PUBLIC.X_TEST_CASE_64_69</code> through <code>PUBLIC.FK_X_TEST_CASE_64_69A</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord fetchXUnusedByUnusedId() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.h2.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a record from <code>PUBLIC.X_UNUSED</code> referenced from <code>PUBLIC.X_TEST_CASE_64_69</code> through <code>PUBLIC.FK_X_TEST_CASE_64_69B</code>
-	 */
-	public org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord fetchXUnusedByUnusedId() {
-		return create()
-			.selectFrom(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.h2.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

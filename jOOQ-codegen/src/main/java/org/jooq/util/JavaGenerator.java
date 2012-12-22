@@ -2138,7 +2138,10 @@ public class JavaGenerator extends AbstractGenerator {
             ? getStrategy().getJavaClassName(column)
             : null);
 
-        out.tab(1).javadoc("Fetch a <code>%s</code> referenced by this <code>%s</code>", referenced.getQualifiedOutputName(), referencing.getQualifiedOutputName());
+        out.tab(1).javadoc("Fetch a record from <code>%s</code> referenced from <code>%s</code> through <code>%s</code>",
+            referenced.getQualifiedOutputName(),
+            referencing.getQualifiedOutputName(),
+            foreignKey.getQualifiedOutputName());
         out.tab(1).println("public %s fetch%s[[before=By][%s]]() {", referencedType, referencedClassName, disambiguation);
         out.tab(2).println("return create()");
         out.tab(3).println(".selectFrom(%s)", referencedId);

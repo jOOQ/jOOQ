@@ -118,7 +118,19 @@ abstract class AbstractStore implements AttachableInternal {
 
         for (int i = 0; i < size(); i++) {
             final Object obj = getValue(i);
-            hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
+
+            if (obj == null) {
+                hashCode = 31 * hashCode;
+            }
+
+            // [#985] [#2045] Don't use obj.hashCode() on arrays, but avoid
+            // calculating it as byte[] (BLOBs) can be quite large
+            else if (obj.getClass().isArray()) {
+                hashCode = 31 * hashCode;
+            }
+            else {
+                hashCode = 31 * hashCode + obj.hashCode();
+            }
         }
 
         return hashCode;

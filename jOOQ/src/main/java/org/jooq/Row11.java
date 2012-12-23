@@ -118,7 +118,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     Field<T11> field11();
 
     // ------------------------------------------------------------------------
-    // Comparison predicates
+    // Equal / Not equal comparison predicates
     // ------------------------------------------------------------------------
 
     /**
@@ -144,11 +144,8 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * equality
-     * <p>
-     * Row equality comparison predicates can be simulated in those databases
-     * that do not support such predicates natively:
-     * <code>(A, B) = (1, 2)</code> is equivalent to
-     * <code>A = 1 AND B = 2</code>
+     *
+     * @see #equal(Row11)
      */
     @Support
     Condition equal(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11);
@@ -156,17 +153,16 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * equality
-     * <p>
-     * Row equality comparison predicates can be simulated in those databases
-     * that do not support such predicates natively:
-     * <code>(A, B) = (1, 2)</code> is equivalent to
-     * <code>A = 1 AND B = 2</code>
+     *
+     * @see #equal(Row11)
      */
     @Support
     Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11);
 
     /**
      * Compare this row value expression with a subselect for equality
+     *
+     * @see #equal(Row11)
      */
     @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition equal(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
@@ -174,11 +170,8 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * equality
-     * <p>
-     * Row equality comparison predicates can be simulated in those databases
-     * that do not support such predicates natively:
-     * <code>(A, B) = (1, 2)</code> is equivalent to
-     * <code>A = 1 AND B = 2</code>
+     *
+     * @see #equal(Row11)
      */
     @Support
     Condition eq(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row);
@@ -186,7 +179,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with a record for equality
      *
-     * @see #eq(Row11)
+     * @see #equal(Row11)
      */
     @Support
     Condition eq(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record);
@@ -194,11 +187,8 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * equality
-     * <p>
-     * Row equality comparison predicates can be simulated in those databases
-     * that do not support such predicates natively:
-     * <code>(A, B) = (1, 2)</code> is equivalent to
-     * <code>A = 1 AND B = 2</code>
+     *
+     * @see #equal(Row11)
      */
     @Support
     Condition eq(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11);
@@ -206,17 +196,16 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * equality
-     * <p>
-     * Row equality comparison predicates can be simulated in those databases
-     * that do not support such predicates natively:
-     * <code>(A, B) = (1, 2)</code> is equivalent to
-     * <code>A = 1 AND B = 2</code>
+     *
+     * @see #equal(Row11)
      */
     @Support
     Condition eq(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11);
 
     /**
      * Compare this row value expression with a subselect for equality
+     *
+     * @see #equal(Row11)
      */
     @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition eq(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
@@ -244,11 +233,8 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * non-equality
-     * <p>
-     * Row non-equality comparison predicates can be simulated in those
-     * databases that do not support such predicates natively:
-     * <code>(A, B) <> (1, 2)</code> is equivalent to
-     * <code>NOT(A = 1 AND B = 2)</code>
+     *
+     * @see #notEqual(Row11)
      */
     @Support
     Condition notEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11);
@@ -256,17 +242,16 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * non-equality
-     * <p>
-     * Row non-equality comparison predicates can be simulated in those
-     * databases that do not support such predicates natively:
-     * <code>(A, B) <> (1, 2)</code> is equivalent to
-     * <code>NOT(A = 1 AND B = 2)</code>
+     *
+     * @see #notEqual(Row11)
      */
     @Support
     Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11);
 
     /**
      * Compare this row value expression with a subselect for non-equality
+     *
+     * @see #notEqual(Row11)
      */
     @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notEqual(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
@@ -274,11 +259,8 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * non-equality
-     * <p>
-     * Row non-equality comparison predicates can be simulated in those
-     * databases that do not support such predicates natively:
-     * <code>(A, B) <> (1, 2)</code> is equivalent to
-     * <code>NOT(A = 1 AND B = 2)</code>
+     *
+     * @see #notEqual(Row11)
      */
     @Support
     Condition ne(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row);
@@ -286,7 +268,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with a record for non-equality
      *
-     * @see #ne(Row11)
+     * @see #notEqual(Row11)
      */
     @Support
     Condition ne(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record);
@@ -294,32 +276,37 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with another row value expression for
      * non-equality
-     * <p>
-     * Row non-equality comparison predicates can be simulated in those
-     * databases that do not support such predicates natively:
-     * <code>(A, B) <> (1, 2)</code> is equivalent to
-     * <code>NOT(A = 1 AND B = 2)</code>
+     *
+     * @see #notEqual(Row11)
      */
     @Support
     Condition ne(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11);
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
-     * <p>
-     * Row non-equality comparison predicates can be simulated in those
-     * databases that do not support such predicates natively:
-     * <code>(A, B) <> (1, 2)</code> is equivalent to
-     * <code>NOT(A = 1 AND B = 2)</code>
+     *
+     * @see #notEqual(Row11)
      */
     @Support
     Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11);
 
     /**
      * Compare this row value expression with a subselect for non-equality
+     *
+     * @see #notEqual(Row11)
      */
     @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition ne(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
+
+    // ------------------------------------------------------------------------
+    // Ordering comparison predicates
+    // ------------------------------------------------------------------------
+
+
+    // ------------------------------------------------------------------------
+    // [NOT] DISTINCT predicates
+    // ------------------------------------------------------------------------
+
 
     // ------------------------------------------------------------------------
     // [NOT] IN predicates
@@ -340,11 +327,8 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with a set of row value expressions for
      * equality
-     * <p>
-     * Row IN predicates can be simulated in those databases that do not support
-     * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
-     * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
-     * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
+     *
+     * @see #in(Collection)
      */
     @Support
     Condition in(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... rows);
@@ -352,13 +336,15 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with a set of records for equality
      *
-     * @see #in(Row11[])
+     * @see #in(Collection)
      */
     @Support
     Condition in(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... record);
 
     /**
      * Compare this row value expression with a subselect for equality
+     *
+     * @see #in(Collection)
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition in(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
@@ -379,12 +365,8 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with a set of row value expressions for
      * equality
-     * <p>
-     * Row NOT IN predicates can be simulated in those databases that do not
-     * support such predicates natively:
-     * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
-     * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
-     * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
+     *
+     * @see #notIn(Collection)
      */
     @Support
     Condition notIn(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... rows);
@@ -392,13 +374,15 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
     /**
      * Compare this row value expression with a set of records for non-equality
      *
-     * @see #notIn(Row11[])
+     * @see #notIn(Collection)
      */
     @Support
     Condition notIn(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... record);
 
     /**
      * Compare this row value expression with a subselect for non-equality
+     *
+     * @see #notIn(Collection)
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);

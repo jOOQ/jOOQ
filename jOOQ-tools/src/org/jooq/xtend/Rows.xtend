@@ -92,7 +92,7 @@ class Rows extends Generators {
                    «ENDFOR»
 
                 // ------------------------------------------------------------------------
-                // Comparison predicates
+                // Equal / Not equal comparison predicates
                 // ------------------------------------------------------------------------
 
                 /**
@@ -118,11 +118,8 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
-                 * <p>
-                 * Row equality comparison predicates can be simulated in those databases
-                 * that do not support such predicates natively:
-                 * <code>(A, B) = (1, 2)</code> is equivalent to
-                 * <code>A = 1 AND B = 2</code>
+                 *
+                 * @see #equal(Row«degree»)
                  */
                 @Support
                 Condition equal(«TN_tn(degree)»);
@@ -130,17 +127,16 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
-                 * <p>
-                 * Row equality comparison predicates can be simulated in those databases
-                 * that do not support such predicates natively:
-                 * <code>(A, B) = (1, 2)</code> is equivalent to
-                 * <code>A = 1 AND B = 2</code>
+                 *
+                 * @see #equal(Row«degree»)
                  */
                 @Support
                 Condition equal(«Field_TN_tn(degree)»);
             
                 /**
                  * Compare this row value expression with a subselect for equality
+                 *
+                 * @see #equal(Row«degree»)
                  */
                 @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition equal(Select<? extends Record«degree»<«TN(degree)»>> select);
@@ -148,11 +144,8 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
-                 * <p>
-                 * Row equality comparison predicates can be simulated in those databases
-                 * that do not support such predicates natively:
-                 * <code>(A, B) = (1, 2)</code> is equivalent to
-                 * <code>A = 1 AND B = 2</code>
+                 *
+                 * @see #equal(Row«degree»)
                  */
                 @Support
                 Condition eq(Row«degree»<«TN(degree)»> row);
@@ -160,7 +153,7 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a record for equality
                  *
-                 * @see #eq(Row«degree»)
+                 * @see #equal(Row«degree»)
                  */
                 @Support
                 Condition eq(Record«degree»<«TN(degree)»> record);
@@ -168,11 +161,8 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
-                 * <p>
-                 * Row equality comparison predicates can be simulated in those databases
-                 * that do not support such predicates natively:
-                 * <code>(A, B) = (1, 2)</code> is equivalent to
-                 * <code>A = 1 AND B = 2</code>
+                 *
+                 * @see #equal(Row«degree»)
                  */
                 @Support
                 Condition eq(«TN_tn(degree)»);
@@ -180,17 +170,16 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
-                 * <p>
-                 * Row equality comparison predicates can be simulated in those databases
-                 * that do not support such predicates natively:
-                 * <code>(A, B) = (1, 2)</code> is equivalent to
-                 * <code>A = 1 AND B = 2</code>
+                 *
+                 * @see #equal(Row«degree»)
                  */
                 @Support
                 Condition eq(«Field_TN_tn(degree)»);
             
                 /**
                  * Compare this row value expression with a subselect for equality
+                 *
+                 * @see #equal(Row«degree»)
                  */
                 @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition eq(Select<? extends Record«degree»<«TN(degree)»>> select);
@@ -218,11 +207,8 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
-                 * <p>
-                 * Row non-equality comparison predicates can be simulated in those
-                 * databases that do not support such predicates natively:
-                 * <code>(A, B) <> (1, 2)</code> is equivalent to
-                 * <code>NOT(A = 1 AND B = 2)</code>
+                 *
+                 * @see #notEqual(Row«degree»)
                  */
                 @Support
                 Condition notEqual(«TN_tn(degree)»);
@@ -230,17 +216,16 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
-                 * <p>
-                 * Row non-equality comparison predicates can be simulated in those
-                 * databases that do not support such predicates natively:
-                 * <code>(A, B) <> (1, 2)</code> is equivalent to
-                 * <code>NOT(A = 1 AND B = 2)</code>
+                 *
+                 * @see #notEqual(Row«degree»)
                  */
                 @Support
                 Condition notEqual(«Field_TN_tn(degree)»);
             
                 /**
                  * Compare this row value expression with a subselect for non-equality
+                 *
+                 * @see #notEqual(Row«degree»)
                  */
                 @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition notEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
@@ -248,11 +233,8 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
-                 * <p>
-                 * Row non-equality comparison predicates can be simulated in those
-                 * databases that do not support such predicates natively:
-                 * <code>(A, B) <> (1, 2)</code> is equivalent to
-                 * <code>NOT(A = 1 AND B = 2)</code>
+                 *
+                 * @see #notEqual(Row«degree»)
                  */
                 @Support
                 Condition ne(Row«degree»<«TN(degree)»> row);
@@ -260,7 +242,7 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a record for non-equality
                  *
-                 * @see #ne(Row«degree»)
+                 * @see #notEqual(Row«degree»)
                  */
                 @Support
                 Condition ne(Record«degree»<«TN(degree)»> record);
@@ -268,32 +250,457 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
-                 * <p>
-                 * Row non-equality comparison predicates can be simulated in those
-                 * databases that do not support such predicates natively:
-                 * <code>(A, B) <> (1, 2)</code> is equivalent to
-                 * <code>NOT(A = 1 AND B = 2)</code>
+                 *
+                 * @see #notEqual(Row«degree»)
                  */
                 @Support
                 Condition ne(«TN_tn(degree)»);
             
                 /**
                  * Compare this row value expression with another row value expression for
-                 * non-equality
-                 * <p>
-                 * Row non-equality comparison predicates can be simulated in those
-                 * databases that do not support such predicates natively:
-                 * <code>(A, B) <> (1, 2)</code> is equivalent to
-                 * <code>NOT(A = 1 AND B = 2)</code>
+                 *
+                 * @see #notEqual(Row«degree»)
                  */
                 @Support
                 Condition ne(«Field_TN_tn(degree)»);
             
                 /**
                  * Compare this row value expression with a subselect for non-equality
+                 *
+                 * @see #notEqual(Row«degree»)
                  */
                 @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition ne(Select<? extends Record«degree»<«TN(degree)»>> select);
+            
+                // ------------------------------------------------------------------------
+                // Ordering comparison predicates
+                // ------------------------------------------------------------------------
+            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 * <p>
+«««                 * Row order comparison predicates can be simulated in those
+«««                 * databases that do not support such predicates natively:
+«««                 * <code>(A, B, C) < (1, 2, 3)</code> is equivalent to
+«««                 * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2 AND C < 3)</code>
+«««                 */
+«««                @Support
+«««                Condition lessThan(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lessThan(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lessThan(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lessThan(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a subselect for order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+«««                Condition lessThan(Select<? extends Record«degree»<«TN(degree)»>> select);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lt(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lt(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lt(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lt(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a subselect for order
+«««                 *
+«««                 * @see #lessThan(Row«degree»)
+«««                 */
+«««                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+«««                Condition lt(Select<? extends Record«degree»<«TN(degree)»>> select);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 * <p>
+«««                 * Row order comparison predicates can be simulated in those
+«««                 * databases that do not support such predicates natively:
+«««                 * <code>(A, B) <= (1, 2)</code> is equivalent to
+«««                 * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2)</code>
+«««                 */
+«««                @Support
+«««                Condition lessOrEqual(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lessOrEqual(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lessOrEqual(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition lessOrEqual(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a subselect for order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+«««                Condition lessOrEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition le(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition le(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition le(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition le(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a subselect for order
+«««                 *
+«««                 * @see #lessOrEqual(Row«degree»)
+«««                 */
+«««                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+«««                Condition le(Select<? extends Record«degree»<«TN(degree)»>> select);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 * <p>
+«««                 * Row order comparison predicates can be simulated in those
+«««                 * databases that do not support such predicates natively:
+«««                 * <code>(A, B, C) > (1, 2, 3)</code> is equivalent to
+«««                 * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2 AND C > 3)</code>
+«««                 */
+«««                @Support
+«««                Condition greaterThan(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition greaterThan(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition greaterThan(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition greaterThan(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a subselect for order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+«««                Condition greaterThan(Select<? extends Record«degree»<«TN(degree)»>> select);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition gt(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition gt(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition gt(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition gt(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a subselect for order
+«««                 *
+«««                 * @see #greaterThan(Row«degree»)
+«««                 */
+«««                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+«««                Condition gt(Select<? extends Record«degree»<«TN(degree)»>> select);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 * <p>
+«««                 * Row order comparison predicates can be simulated in those
+«««                 * databases that do not support such predicates natively:
+«««                 * <code>(A, B) >= (1, 2)</code> is equivalent to
+«««                 * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2)</code>
+«««                 */
+«««                @Support
+«««                Condition greaterOrEqual(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition greaterOrEqual(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition greaterOrEqual(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition greaterOrEqual(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a subselect for order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+«««                Condition greaterOrEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition ge(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition ge(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition ge(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition ge(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a subselect for order
+«««                 *
+«««                 * @see #greaterOrEqual(Row«degree»)
+«««                 */
+«««                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+«««                Condition ge(Select<? extends Record«degree»<«TN(degree)»>> select);
+            
+                // ------------------------------------------------------------------------
+                // [NOT] DISTINCT predicates
+                // ------------------------------------------------------------------------
+            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * distinctness
+«««                 */
+«««                @Support
+«««                Condition isDistinctFrom(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for distinctness
+«««                 *
+«««                 * @see #isDistinctFrom(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition isDistinctFrom(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * distinctness
+«««                 *
+«««                 * @see #isDistinctFrom(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition isDistinctFrom(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * distinctness
+«««                 *
+«««                 * @see #isDistinctFrom(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition isDistinctFrom(«Field_TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * non-distinctness
+«««                 */
+«««                @Support
+«««                Condition isNotDistinctFrom(Row«degree»<«TN(degree)»> row);
+«««            
+«««                /**
+«««                 * Compare this row value expression with a record for non-distinctness
+«««                 *
+«««                 * @see #isNotDistinctFrom(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition isNotDistinctFrom(Record«degree»<«TN(degree)»> record);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * non-distinctness
+«««                 *
+«««                 * @see #isNotDistinctFrom(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition isNotDistinctFrom(«TN_tn(degree)»);
+«««            
+«««                /**
+«««                 * Compare this row value expression with another row value expression for
+«««                 * non-distinctness
+«««                 *
+«««                 * @see #isNotDistinctFrom(Row«degree»)
+«««                 */
+«««                @Support
+«««                Condition isNotDistinctFrom(«Field_TN_tn(degree)»);
             
                 // ------------------------------------------------------------------------
                 // [NOT] IN predicates
@@ -314,11 +721,8 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a set of row value expressions for
                  * equality
-                 * <p>
-                 * Row IN predicates can be simulated in those databases that do not support
-                 * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
-                 * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
-                 * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
+                 *
+                 * @see #in(Collection)
                  */
                 @Support
                 Condition in(Row«degree»<«TN(degree)»>... rows);
@@ -326,13 +730,15 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a set of records for equality
                  *
-                 * @see #in(Row«degree»[])
+                 * @see #in(Collection)
                  */
                 @Support
                 Condition in(Record«degree»<«TN(degree)»>... record);
             
                 /**
                  * Compare this row value expression with a subselect for equality
+                 *
+                 * @see #in(Collection)
                  */
                 @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition in(Select<? extends Record«degree»<«TN(degree)»>> select);
@@ -353,12 +759,8 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a set of row value expressions for
                  * equality
-                 * <p>
-                 * Row NOT IN predicates can be simulated in those databases that do not
-                 * support such predicates natively:
-                 * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
-                 * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
-                 * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
+                 *
+                 * @see #notIn(Collection)
                  */
                 @Support
                 Condition notIn(Row«degree»<«TN(degree)»>... rows);
@@ -366,13 +768,15 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a set of records for non-equality
                  *
-                 * @see #notIn(Row«degree»[])
+                 * @see #notIn(Collection)
                  */
                 @Support
                 Condition notIn(Record«degree»<«TN(degree)»>... record);
             
                 /**
                  * Compare this row value expression with a subselect for non-equality
+                 *
+                 * @see #notIn(Collection)
                  */
                 @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition notIn(Select<? extends Record«degree»<«TN(degree)»>> select);
@@ -596,7 +1000,7 @@ class Rows extends Generators {
             «ENDFOR»
 
             // ------------------------------------------------------------------------
-            // XXX: Row DSL API
+            // Equal / Not equal comparison predicates
             // ------------------------------------------------------------------------
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
@@ -794,6 +1198,410 @@ class Rows extends Generators {
             public final Condition ne(Field<?>... values) {
                 return notEqual(values);
             }
+
+            // ------------------------------------------------------------------------
+            // Ordering comparison predicates
+            // ------------------------------------------------------------------------
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lessThan(Row«degree»<«TN(degree)»> row) {
+«««                return new Compare(row, Comparator.LESS);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lessThan(RowN row) {
+«««                return new Compare(row, Comparator.LESS);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lessThan(Record«degree»<«TN(degree)»> record) {
+«««                return new Compare(record.valuesRow(), Comparator.LESS);
+«««            }
+«««            «ENDFOR»
+«««
+«««            @Override
+«««            public final Condition lessThan(Record record) {
+«««                List<Field<?>> f = record.getFields();
+«««                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+«««                return new Compare(row, Comparator.LESS);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lessThan(«TN_tn(degree)») {
+«««                return lessThan(row(«tn(degree)»));
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lessThan(Object... values) {
+«««                return lessThan(row(values));
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lessThan(«Field_TN_tn(degree)») {
+«««                return lessThan(row(«tn(degree)»));
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lessThan(Field<?>... f) {
+«««                return lessThan(row(f));
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lt(Row«degree»<«TN(degree)»> row) {
+«««                return lessThan(row);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lt(RowN row) {
+«««                return lessThan(row);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lt(Record«degree»<«TN(degree)»> record) {
+«««                return lessThan(record);
+«««            }
+«««            «ENDFOR»
+«««
+«««            @Override
+«««            public final Condition lt(Record record) {
+«««                return lessThan(record);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lt(«TN_tn(degree)») {
+«««                return lessThan(«tn(degree)»);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lt(Object... values) {
+«««                return lessThan(values);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lt(«Field_TN_tn(degree)») {
+«««                return lessThan(«tn(degree)»);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lt(Field<?>... values) {
+«««                return lessThan(values);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lessOrEqual(Row«degree»<«TN(degree)»> row) {
+«««                return new Compare(row, Comparator.LESS_OR_EQUAL);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lessOrEqual(RowN row) {
+«««                return new Compare(row, Comparator.LESS_OR_EQUAL);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lessOrEqual(Record«degree»<«TN(degree)»> record) {
+«««                return new Compare(record.valuesRow(), Comparator.LESS_OR_EQUAL);
+«««            }
+«««            «ENDFOR»
+«««
+«««            @Override
+«««            public final Condition lessOrEqual(Record record) {
+«««                List<Field<?>> f = record.getFields();
+«««                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+«««                return new Compare(row, Comparator.LESS_OR_EQUAL);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lessOrEqual(«TN_tn(degree)») {
+«««                return lessOrEqual(row(«tn(degree)»));
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lessOrEqual(Object... values) {
+«««                return lessOrEqual(row(values));
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition lessOrEqual(«Field_TN_tn(degree)») {
+«««                return lessOrEqual(row(«tn(degree)»));
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition lessOrEqual(Field<?>... f) {
+«««                return lessOrEqual(row(f));
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition le(Row«degree»<«TN(degree)»> row) {
+«««                return lessOrEqual(row);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition le(RowN row) {
+«««                return lessOrEqual(row);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition le(Record«degree»<«TN(degree)»> record) {
+«««                return lessOrEqual(record);
+«««            }
+«««            «ENDFOR»
+«««
+«««            @Override
+«««            public final Condition le(Record record) {
+«««                return lessOrEqual(record);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition le(«TN_tn(degree)») {
+«««                return lessOrEqual(«tn(degree)»);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition le(Object... values) {
+«««                return lessOrEqual(values);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition le(«Field_TN_tn(degree)») {
+«««                return lessOrEqual(«tn(degree)»);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition le(Field<?>... values) {
+«««                return lessOrEqual(values);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition greaterThan(Row«degree»<«TN(degree)»> row) {
+«««                return new Compare(row, Comparator.GREATER);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition greaterThan(RowN row) {
+«««                return new Compare(row, Comparator.GREATER);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition greaterThan(Record«degree»<«TN(degree)»> record) {
+«««                return new Compare(record.valuesRow(), Comparator.GREATER);
+«««            }
+«««            «ENDFOR»
+«««
+«««            @Override
+«««            public final Condition greaterThan(Record record) {
+«««                List<Field<?>> f = record.getFields();
+«««                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+«««                return new Compare(row, Comparator.GREATER);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition greaterThan(«TN_tn(degree)») {
+«««                return greaterThan(row(«tn(degree)»));
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition greaterThan(Object... values) {
+«««                return greaterThan(row(values));
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition greaterThan(«Field_TN_tn(degree)») {
+«««                return greaterThan(row(«tn(degree)»));
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition greaterThan(Field<?>... f) {
+«««                return greaterThan(row(f));
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition gt(Row«degree»<«TN(degree)»> row) {
+«««                return greaterThan(row);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition gt(RowN row) {
+«««                return greaterThan(row);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition gt(Record«degree»<«TN(degree)»> record) {
+«««                return greaterThan(record);
+«««            }
+«««            «ENDFOR»
+«««
+«««            @Override
+«««            public final Condition gt(Record record) {
+«««                return greaterThan(record);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition gt(«TN_tn(degree)») {
+«««                return greaterThan(«tn(degree)»);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition gt(Object... values) {
+«««                return greaterThan(values);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition gt(«Field_TN_tn(degree)») {
+«««                return greaterThan(«tn(degree)»);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition gt(Field<?>... values) {
+«««                return greaterThan(values);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition greaterOrEqual(Row«degree»<«TN(degree)»> row) {
+«««                return new Compare(row, Comparator.GREATER_OR_EQUAL);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition greaterOrEqual(RowN row) {
+«««                return new Compare(row, Comparator.GREATER_OR_EQUAL);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition greaterOrEqual(Record«degree»<«TN(degree)»> record) {
+«««                return new Compare(record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+«««            }
+«««            «ENDFOR»
+«««
+«««            @Override
+«««            public final Condition greaterOrEqual(Record record) {
+«««                List<Field<?>> f = record.getFields();
+«««                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+«««                return new Compare(row, Comparator.GREATER_OR_EQUAL);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition greaterOrEqual(«TN_tn(degree)») {
+«««                return greaterOrEqual(row(«tn(degree)»));
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition greaterOrEqual(Object... values) {
+«««                return greaterOrEqual(row(values));
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition greaterOrEqual(«Field_TN_tn(degree)») {
+«««                return greaterOrEqual(row(«tn(degree)»));
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition greaterOrEqual(Field<?>... f) {
+«««                return greaterOrEqual(row(f));
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition ge(Row«degree»<«TN(degree)»> row) {
+«««                return greaterOrEqual(row);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition ge(RowN row) {
+«««                return greaterOrEqual(row);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition ge(Record«degree»<«TN(degree)»> record) {
+«««                return greaterOrEqual(record);
+«««            }
+«««            «ENDFOR»
+«««
+«««            @Override
+«««            public final Condition ge(Record record) {
+«««                return greaterOrEqual(record);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition ge(«TN_tn(degree)») {
+«««                return greaterOrEqual(«tn(degree)»);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition ge(Object... values) {
+«««                return greaterOrEqual(values);
+«««            }
+«««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+«««
+«««            @Override
+«««            public final Condition ge(«Field_TN_tn(degree)») {
+«««                return greaterOrEqual(«tn(degree)»);
+«««            }
+«««            «ENDFOR»
+«««        
+«««            @Override
+«««            public final Condition ge(Field<?>... values) {
+«««                return greaterOrEqual(values);
+«««            }
+
+            // ------------------------------------------------------------------------
+            // [NOT] DISTINCT predicates
+            // ------------------------------------------------------------------------
+        
+            // ------------------------------------------------------------------------
+            // [NOT] IN predicates
+            // ------------------------------------------------------------------------
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
             @Override
@@ -881,6 +1689,10 @@ class Rows extends Generators {
                 return new InRows(list, SubqueryOperator.NOT_IN);
             }
         
+            // ------------------------------------------------------------------------
+            // Predicates involving subqueries
+            // ------------------------------------------------------------------------
+            
             @Override
             public final Condition equal(Select select) {
                 return new Subquery(select, SubqueryOperator.EQUALS);
@@ -901,6 +1713,46 @@ class Rows extends Generators {
                 return notEqual(select);
             }
         
+«««            @Override
+«««            public final Condition greaterThan(Select select) {
+«««                return new Subquery(select, SubqueryOperator.GREATER);
+«««            }
+«««        
+«««            @Override
+«««            public final Condition gt(Select select) {
+«««                return greaterThan(select);
+«««            }
+«««        
+«««            @Override
+«««            public final Condition greaterOrEqual(Select select) {
+«««                return new Subquery(select, SubqueryOperator.GREATER_OR_EQUAL);
+«««            }
+«««        
+«««            @Override
+«««            public final Condition ge(Select select) {
+«««                return greaterOrEqual(select);
+«««            }
+«««        
+«««            @Override
+«««            public final Condition lessThan(Select select) {
+«««                return new Subquery(select, SubqueryOperator.LESS);
+«««            }
+«««        
+«««            @Override
+«««            public final Condition lt(Select select) {
+«««                return lessThan(select);
+«««            }
+«««        
+«««            @Override
+«««            public final Condition lessOrEqual(Select select) {
+«««                return new Subquery(select, SubqueryOperator.LESS_OR_EQUAL);
+«««            }
+«««        
+«««            @Override
+«««            public final Condition le(Select select) {
+«««                return lessOrEqual(select);
+«««            }
+«««        
             @Override
             public final Condition in(Select select) {
                 return new Subquery(select, SubqueryOperator.IN);

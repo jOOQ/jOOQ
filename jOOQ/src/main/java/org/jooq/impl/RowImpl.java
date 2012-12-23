@@ -328,7 +328,7 @@ implements
     }
 
     // ------------------------------------------------------------------------
-    // XXX: Row DSL API
+    // Equal / Not equal comparison predicates
     // ------------------------------------------------------------------------
 
     @Override
@@ -2175,6 +2175,18 @@ implements
         return notEqual(values);
     }
 
+    // ------------------------------------------------------------------------
+    // Ordering comparison predicates
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    // [NOT] DISTINCT predicates
+    // ------------------------------------------------------------------------
+
+    // ------------------------------------------------------------------------
+    // [NOT] IN predicates
+    // ------------------------------------------------------------------------
+
     @Override
     public final Condition in(Row1<T1>... rows) {
         return in(Arrays.asList(rows));
@@ -2925,6 +2937,10 @@ implements
         return new InRows(list, SubqueryOperator.NOT_IN);
     }
 
+    // ------------------------------------------------------------------------
+    // Predicates involving subqueries
+    // ------------------------------------------------------------------------
+    
     @Override
     public final Condition equal(Select select) {
         return new Subquery(select, SubqueryOperator.EQUALS);

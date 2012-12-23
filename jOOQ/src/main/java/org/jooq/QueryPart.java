@@ -37,17 +37,29 @@ package org.jooq;
 
 import java.io.Serializable;
 
+import org.jooq.impl.Executor;
+
 /**
  * The common base type for all objects that can be used for query composition.
  * <p>
  * All <code>QueryPart</code> implementations can be cast to
  * {@link QueryPartInternal} in order to access the internal API.
- * <p>
- * A <code>QueryPart</code> essentially combines the {@link Attachable}
- * interface with SQL code generation and variable binding functionality.
  *
  * @author Lukas Eder
  */
 public interface QueryPart extends Serializable {
 
+    /**
+     * Render a SQL string of this <code>QueryPart</code>
+     * <p>
+     * For improved debugging, this renders a SQL string of this
+     * <code>QueryPart</code> with inlined bind variables. If you wish to gain
+     * more control over the concrete SQL rendering of this
+     * <code>QueryPart</code>, use {@link Executor#renderContext()} to obtain a
+     * configurable render context for SQL rendering.
+     *
+     * @return A SQL string representation of this <code>QueryPart</code>
+     */
+    @Override
+    String toString();
 }

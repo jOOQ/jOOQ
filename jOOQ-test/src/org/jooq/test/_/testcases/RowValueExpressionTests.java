@@ -53,6 +53,7 @@ import static org.jooq.impl.Factory.not;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.zero;
 
@@ -135,12 +136,123 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .or(row(TBook_ID(), inline(2), val(3)).equal(1, 2, 3))
                 .or(row("1", "2", "3", "4").equal(TBook_TITLE(), TBook_TITLE(), TBook_TITLE(), TBook_TITLE()))
                 .or(row(TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID()).notEqual(row(TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID(), TBook_ID())))
-                .or(row(1, 2, 3, 4, 5, 6).eq(6, 5, 4, 3, 2, 1))
-                .or(row(1, 2, 3, 4, 5, 6, 7).eq(1, 2, 3, 4, 5, 6, 0))
-                .or(row(1, 2, 3, 4, 5, 6, 7, 8).eq(1, 2, 3, 4, 5, 6, 7, 0))
-                .or(row(1, 2, 3, 4, 5, 6, 7, 8, 9).eq(1, 2, 3, 4, 5, 6, 7, 8, 0))
+                .or(row(1, 2, "3", 4, 5, 6).eq(1, 2, "3", 4, 5, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7).eq(1, 2, "3", 4, 5, 6, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8).eq(1, 2, "3", 4, 5, 6, 7, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9).eq(1, 2, "3", 4, 5, 6, 7, 8, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 0))
+                .or(row(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23).eq(1, 2, "3", 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 0))
                 .orderBy(TBook_ID())
                 .fetch(TBook_ID()));
+    }
+
+    @Test
+    public void testRowValueExpressionOrderingConditions() throws Exception {
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1).lt(2))
+                .and(row(1).le(1))
+                .and(row(1).gt(0))
+                .and(row(1).ge(1))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1).lt(1, 2))
+                .and(row(1, 1).le(1, 2))
+                .and(row(1, 1).gt(1, 0))
+                .and(row(1, 1).ge(1, 0))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1).lt(1, 1, 2))
+                .and(row(1, 1, 1).le(1, 1, 2))
+                .and(row(1, 1, 1).gt(1, 1, 0))
+                .and(row(1, 1, 1).ge(1, 1, 0))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1, 1).lt(1, 1, 1, 2))
+                .and(row(1, 1, 1, 1).le(1, 1, 1, 2))
+                .and(row(1, 1, 1, 1).gt(1, 1, 1, 0))
+                .and(row(1, 1, 1, 1).ge(1, 1, 1, 0))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1, 1, 1).lt(1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1).le(1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1).gt(1, 1, 1, 1, 0))
+                .and(row(1, 1, 1, 1, 1).ge(1, 1, 1, 1, 0))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1, 1, 1, 1).lt(1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1).le(1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1).gt(1, 1, 1, 1, 1, 0))
+                .and(row(1, 1, 1, 1, 1, 1).ge(1, 1, 1, 1, 1, 0))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1, 1, 1, 1, 1).lt(1, 1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1, 1).le(1, 1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1, 1).gt(1, 1, 1, 1, 1, 1, 0))
+                .and(row(1, 1, 1, 1, 1, 1, 1).ge(1, 1, 1, 1, 1, 1, 0))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1).lt(1, 1, 1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1).le(1, 1, 1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1).gt(1, 1, 1, 1, 1, 1, 1, 0))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1).ge(1, 1, 1, 1, 1, 1, 1, 0))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1, 1).lt(1, 1, 1, 1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1, 1).le(1, 1, 1, 1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1, 1).gt(1, 1, 1, 1, 1, 1, 1, 1, 0))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1, 1).ge(1, 1, 1, 1, 1, 1, 1, 1, 0))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1, 1, 1).lt(1, 1, 1, 1, 1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1, 1, 1).le(1, 1, 1, 1, 1, 1, 1, 1, 1, 2))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1, 1, 1).gt(1, 1, 1, 1, 1, 1, 1, 1, 1, 0))
+                .and(row(1, 1, 1, 1, 1, 1, 1, 1, 1, 1).ge(1, 1, 1, 1, 1, 1, 1, 1, 1, 0))
+                .fetchOne(0, Integer.class));
+    }
+
+    @Test
+    public void testRowValueExpressionInConditions() throws Exception {
 
         // IN with subselects - not supported by all DBs
         // TODO [#1772] Simulate this for all dialects

@@ -62,8 +62,11 @@ public interface RowN extends Row {
     /**
      * Compare this row value expression with another row value expression for
      * equality
-     *
-     * @see #equal(RowN)
+     * <p>
+     * Row equality comparison predicates can be simulated in those databases
+     * that do not support such predicates natively:
+     * <code>(A, B) = (1, 2)</code> is equivalent to
+     * <code>A = 1 AND B = 2</code>
      */
     @Support
     Condition equal(RowN row);
@@ -93,6 +96,14 @@ public interface RowN extends Row {
      */
     @Support
     Condition equal(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for equality
+     *
+     * @see #equal(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition equal(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -127,7 +138,15 @@ public interface RowN extends Row {
      * @see #equal(RowN)
      */
     @Support
-    Condition eq(Field<?>... values);
+    Condition eq(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for equality
+     *
+     * @see #equal(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition eq(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -165,7 +184,15 @@ public interface RowN extends Row {
      * @see #notEqual(RowN)
      */
     @Support
-    Condition notEqual(Field<?>... values);
+    Condition notEqual(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for non-equality
+     *
+     * @see #notEqual(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition notEqual(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
@@ -195,372 +222,384 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
      *
      * @see #notEqual(RowN)
      */
     @Support
-    Condition ne(Field<?>... values);
+    Condition ne(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for non-equality
+     *
+     * @see #notEqual(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition ne(Select<? extends Record> select);
 
     // ------------------------------------------------------------------------
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
 
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     * <p>
-//     * Row order comparison predicates can be simulated in those
-//     * databases that do not support such predicates natively:
-//     * <code>(A, B, C) < (1, 2, 3)</code> is equivalent to
-//     * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2 AND C < 3)</code>
-//     */
-//    @Support
-//    Condition lessThan(RowN row);
-//
-//    /**
-//     * Compare this row value expression with a record for order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support
-//    Condition lessThan(Record record);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support
-//    Condition lessThan(Object... values);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support
-//    Condition lessThan(Field<?>... fields);
-//
-//    /**
-//     * Compare this row value expression with a subselect for order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition lessThan(Select<? extends Record> select);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support
-//    Condition lt(RowN row);
-//
-//    /**
-//     * Compare this row value expression with a record for order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support
-//    Condition lt(Record record);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support
-//    Condition lt(Object... values);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support
-//    Condition lt(Field<?>... fields);
-//
-//    /**
-//     * Compare this row value expression with a subselect for order
-//     *
-//     * @see #lessThan(RowN)
-//     */
-//    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition lt(Select<? extends Record> select);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     * <p>
-//     * Row order comparison predicates can be simulated in those
-//     * databases that do not support such predicates natively:
-//     * <code>(A, B) <= (1, 2)</code> is equivalent to
-//     * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2)</code>
-//     */
-//    @Support
-//    Condition lessOrEqual(RowN row);
-//
-//    /**
-//     * Compare this row value expression with a record for order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support
-//    Condition lessOrEqual(Record record);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support
-//    Condition lessOrEqual(Object... values);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support
-//    Condition lessOrEqual(Field<?>... fields);
-//
-//    /**
-//     * Compare this row value expression with a subselect for order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition lessOrEqual(Select<? extends Record> select);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support
-//    Condition le(RowN row);
-//
-//    /**
-//     * Compare this row value expression with a record for order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support
-//    Condition le(Record record);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support
-//    Condition le(Object... values);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support
-//    Condition le(Field<?>... fields);
-//
-//    /**
-//     * Compare this row value expression with a subselect for order
-//     *
-//     * @see #lessOrEqual(RowN)
-//     */
-//    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition le(Select<? extends Record> select);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     * <p>
-//     * Row order comparison predicates can be simulated in those
-//     * databases that do not support such predicates natively:
-//     * <code>(A, B, C) > (1, 2, 3)</code> is equivalent to
-//     * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2 AND C > 3)</code>
-//     */
-//    @Support
-//    Condition greaterThan(RowN row);
-//
-//    /**
-//     * Compare this row value expression with a record for order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support
-//    Condition greaterThan(Record record);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support
-//    Condition greaterThan(Object... values);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support
-//    Condition greaterThan(Field<?>... fields);
-//
-//    /**
-//     * Compare this row value expression with a subselect for order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition greaterThan(Select<? extends Record> select);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support
-//    Condition gt(RowN row);
-//
-//    /**
-//     * Compare this row value expression with a record for order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support
-//    Condition gt(Record record);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support
-//    Condition gt(Object... values);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support
-//    Condition gt(Field<?>... fields);
-//
-//    /**
-//     * Compare this row value expression with a subselect for order
-//     *
-//     * @see #greaterThan(RowN)
-//     */
-//    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition gt(Select<? extends Record> select);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     * <p>
-//     * Row order comparison predicates can be simulated in those
-//     * databases that do not support such predicates natively:
-//     * <code>(A, B) >= (1, 2)</code> is equivalent to
-//     * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2)</code>
-//     */
-//    @Support
-//    Condition greaterOrEqual(RowN row);
-//
-//    /**
-//     * Compare this row value expression with a record for order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support
-//    Condition greaterOrEqual(Record record);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support
-//    Condition greaterOrEqual(Object... values);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support
-//    Condition greaterOrEqual(Field<?>... fields);
-//
-//    /**
-//     * Compare this row value expression with a subselect for order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition greaterOrEqual(Select<? extends Record> select);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support
-//    Condition ge(RowN row);
-//
-//    /**
-//     * Compare this row value expression with a record for order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support
-//    Condition ge(Record record);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support
-//    Condition ge(Object... values);
-//
-//    /**
-//     * Compare this row value expression with another row value expression for
-//     * order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support
-//    Condition ge(Field<?>... fields);
-//
-//    /**
-//     * Compare this row value expression with a subselect for order
-//     *
-//     * @see #greaterOrEqual(RowN)
-//     */
-//    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
-//    Condition ge(Select<? extends Record> select);
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     * <p>
+     * Row order comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B, C) < (1, 2, 3)</code> is equivalent to
+     * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2 AND C < 3)</code>
+     */
+    @Support
+    Condition lessThan(RowN row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support
+    Condition lessThan(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support
+    Condition lessThan(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support
+    Condition lessThan(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition lessThan(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support
+    Condition lt(RowN row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support
+    Condition lt(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support
+    Condition lt(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support
+    Condition lt(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #lessThan(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition lt(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     * <p>
+     * Row order comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) <= (1, 2)</code> is equivalent to
+     * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2)</code>
+     */
+    @Support
+    Condition lessOrEqual(RowN row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support
+    Condition lessOrEqual(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support
+    Condition lessOrEqual(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support
+    Condition lessOrEqual(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition lessOrEqual(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support
+    Condition le(RowN row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support
+    Condition le(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support
+    Condition le(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support
+    Condition le(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #lessOrEqual(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition le(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     * <p>
+     * Row order comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B, C) > (1, 2, 3)</code> is equivalent to
+     * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2 AND C > 3)</code>
+     */
+    @Support
+    Condition greaterThan(RowN row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support
+    Condition greaterThan(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support
+    Condition greaterThan(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support
+    Condition greaterThan(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition greaterThan(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support
+    Condition gt(RowN row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support
+    Condition gt(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support
+    Condition gt(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support
+    Condition gt(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #greaterThan(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition gt(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     * <p>
+     * Row order comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) >= (1, 2)</code> is equivalent to
+     * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2)</code>
+     */
+    @Support
+    Condition greaterOrEqual(RowN row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support
+    Condition greaterOrEqual(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support
+    Condition greaterOrEqual(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support
+    Condition greaterOrEqual(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition greaterOrEqual(Select<? extends Record> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support
+    Condition ge(RowN row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support
+    Condition ge(Record record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support
+    Condition ge(Object... values);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support
+    Condition ge(Field<?>... fields);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #greaterOrEqual(RowN)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition ge(Select<? extends Record> select);
+
+    // ------------------------------------------------------------------------
+    // [NOT] DISTINCT predicates
+    // ------------------------------------------------------------------------
+
 
     // ------------------------------------------------------------------------
     // [NOT] IN predicates
@@ -581,11 +620,8 @@ public interface RowN extends Row {
     /**
      * Compare this row value expression with a set of row value expressions for
      * equality
-     * <p>
-     * Row IN predicates can be simulated in those databases that do not support
-     * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
-     * equivalent to <code>((A, B) = (1, 2)) OR ((A, B) = (3, 4))</code>, which
-     * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
+     *
+     * @see #in(Collection)
      */
     @Support
     Condition in(RowN... rows);
@@ -593,10 +629,18 @@ public interface RowN extends Row {
     /**
      * Compare this row value expression with a set of records for equality
      *
-     * @see #in(RowN[])
+     * @see #in(Collection)
      */
     @Support
     Condition in(Record... records);
+
+    /**
+     * Compare this row value expression with a subselect for equality
+     *
+     * @see #in(Collection)
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition in(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with a set of row value expressions for
@@ -614,12 +658,8 @@ public interface RowN extends Row {
     /**
      * Compare this row value expression with a set of row value expressions for
      * equality
-     * <p>
-     * Row NOT IN predicates can be simulated in those databases that do not
-     * support such predicates natively:
-     * <code>(A, B) NOT IN ((1, 2), (3, 4))</code> is equivalent to
-     * <code>NOT(((A, B) = (1, 2)) OR ((A, B) = (3, 4)))</code>, which is
-     * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
+     *
+     * @see #notIn(Collection)
      */
     @Support
     Condition notIn(RowN... rows);
@@ -627,27 +667,15 @@ public interface RowN extends Row {
     /**
      * Compare this row value expression with a set of records for non-equality
      *
-     * @see #notIn(RowN[])
+     * @see #notIn(Collection)
      */
     @Support
     Condition notIn(Record... records);
 
     /**
-     * Compare this row value expression with a subselect for equality
-     * <p>
-     * Note that the subquery must return a table of the same degree as this row
-     * value expression. This is not checked by jOOQ and will result in syntax
-     * errors in the database, if not used correctly.
-     */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
-    Condition in(Select<? extends Record> select);
-
-    /**
      * Compare this row value expression with a subselect for non-equality
-     * <p>
-     * Note that the subquery must return a table of the same degree as this row
-     * value expression. This is not checked by jOOQ and will result in syntax
-     * errors in the database, if not used correctly.
+     *
+     * @see #notIn(Collection)
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record> select);

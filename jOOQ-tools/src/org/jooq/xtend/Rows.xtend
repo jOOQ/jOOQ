@@ -869,7 +869,6 @@ class Rows extends Generators {
         
         import static java.util.Arrays.asList;
         import static org.jooq.Comparator.EQUALS;
-        import static org.jooq.Comparator.NOT_EQUALS;
         import static org.jooq.SQLDialect.ASE;
         import static org.jooq.SQLDialect.DB2;
         import static org.jooq.SQLDialect.DERBY;
@@ -1001,19 +1000,19 @@ class Rows extends Generators {
 
             @Override
             public final Condition equal(Row«degree»<«TN(degree)»> row) {
-                return new Compare(row, Comparator.EQUALS);
+                return new RowCompare(this, row, Comparator.EQUALS);
             }
             «ENDFOR»
         
             @Override
             public final Condition equal(RowN row) {
-                return new Compare(row, Comparator.EQUALS);
+                return new RowCompare(this, row, Comparator.EQUALS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition equal(Record«degree»<«TN(degree)»> record) {
-                return new Compare(record.valuesRow(), Comparator.EQUALS);
+                return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
             }
             «ENDFOR»
 
@@ -1021,7 +1020,7 @@ class Rows extends Generators {
             public final Condition equal(Record record) {
                 List<Field<?>> f = record.getFields();
                 Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
-                return new Compare(row, Comparator.EQUALS);
+                return new RowCompare(this, row, Comparator.EQUALS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
@@ -1099,19 +1098,19 @@ class Rows extends Generators {
 
             @Override
             public final Condition notEqual(Row«degree»<«TN(degree)»> row) {
-                return new Compare(row, Comparator.NOT_EQUALS);
+                return new RowCompare(this, row, Comparator.NOT_EQUALS);
             }
             «ENDFOR»
         
             @Override
             public final Condition notEqual(RowN row) {
-                return new Compare(row, Comparator.NOT_EQUALS);
+                return new RowCompare(this, row, Comparator.NOT_EQUALS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition notEqual(Record«degree»<«TN(degree)»> record) {
-                return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+                return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
             }
             «ENDFOR»
 
@@ -1119,7 +1118,7 @@ class Rows extends Generators {
             public final Condition notEqual(Record record) {
                 List<Field<?>> f = record.getFields();
                 Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
-                return new Compare(row, Comparator.NOT_EQUALS);
+                return new RowCompare(this, row, Comparator.NOT_EQUALS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
@@ -1201,19 +1200,19 @@ class Rows extends Generators {
 «««
 «««            @Override
 «««            public final Condition lessThan(Row«degree»<«TN(degree)»> row) {
-«««                return new Compare(row, Comparator.LESS);
+«««                return new RowCompare(this, row, Comparator.LESS);
 «««            }
 «««            «ENDFOR»
 «««        
 «««            @Override
 «««            public final Condition lessThan(RowN row) {
-«««                return new Compare(row, Comparator.LESS);
+«««                return new RowCompare(this, row, Comparator.LESS);
 «««            }
 «««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 «««
 «««            @Override
 «««            public final Condition lessThan(Record«degree»<«TN(degree)»> record) {
-«««                return new Compare(record.valuesRow(), Comparator.LESS);
+«««                return new RowCompare(this, record.valuesRow(), Comparator.LESS);
 «««            }
 «««            «ENDFOR»
 «««
@@ -1221,7 +1220,7 @@ class Rows extends Generators {
 «««            public final Condition lessThan(Record record) {
 «««                List<Field<?>> f = record.getFields();
 «««                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
-«««                return new Compare(row, Comparator.LESS);
+«««                return new RowCompare(this, row, Comparator.LESS);
 «««            }
 «««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 «««
@@ -1299,19 +1298,19 @@ class Rows extends Generators {
 «««
 «««            @Override
 «««            public final Condition lessOrEqual(Row«degree»<«TN(degree)»> row) {
-«««                return new Compare(row, Comparator.LESS_OR_EQUAL);
+«««                return new RowCompare(this, row, Comparator.LESS_OR_EQUAL);
 «««            }
 «««            «ENDFOR»
 «««        
 «««            @Override
 «««            public final Condition lessOrEqual(RowN row) {
-«««                return new Compare(row, Comparator.LESS_OR_EQUAL);
+«««                return new RowCompare(this, row, Comparator.LESS_OR_EQUAL);
 «««            }
 «««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 «««
 «««            @Override
 «««            public final Condition lessOrEqual(Record«degree»<«TN(degree)»> record) {
-«««                return new Compare(record.valuesRow(), Comparator.LESS_OR_EQUAL);
+«««                return new RowCompare(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
 «««            }
 «««            «ENDFOR»
 «««
@@ -1319,7 +1318,7 @@ class Rows extends Generators {
 «««            public final Condition lessOrEqual(Record record) {
 «««                List<Field<?>> f = record.getFields();
 «««                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
-«««                return new Compare(row, Comparator.LESS_OR_EQUAL);
+«««                return new RowCompare(this, row, Comparator.LESS_OR_EQUAL);
 «««            }
 «««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 «««
@@ -1397,19 +1396,19 @@ class Rows extends Generators {
 «««
 «««            @Override
 «««            public final Condition greaterThan(Row«degree»<«TN(degree)»> row) {
-«««                return new Compare(row, Comparator.GREATER);
+«««                return new RowCompare(this, row, Comparator.GREATER);
 «««            }
 «««            «ENDFOR»
 «««        
 «««            @Override
 «««            public final Condition greaterThan(RowN row) {
-«««                return new Compare(row, Comparator.GREATER);
+«««                return new RowCompare(this, row, Comparator.GREATER);
 «««            }
 «««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 «««
 «««            @Override
 «««            public final Condition greaterThan(Record«degree»<«TN(degree)»> record) {
-«««                return new Compare(record.valuesRow(), Comparator.GREATER);
+«««                return new RowCompare(this, record.valuesRow(), Comparator.GREATER);
 «««            }
 «««            «ENDFOR»
 «««
@@ -1417,7 +1416,7 @@ class Rows extends Generators {
 «««            public final Condition greaterThan(Record record) {
 «««                List<Field<?>> f = record.getFields();
 «««                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
-«««                return new Compare(row, Comparator.GREATER);
+«««                return new RowCompare(this, row, Comparator.GREATER);
 «««            }
 «««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 «««
@@ -1495,19 +1494,19 @@ class Rows extends Generators {
 «««
 «««            @Override
 «««            public final Condition greaterOrEqual(Row«degree»<«TN(degree)»> row) {
-«««                return new Compare(row, Comparator.GREATER_OR_EQUAL);
+«««                return new RowCompare(this, row, Comparator.GREATER_OR_EQUAL);
 «««            }
 «««            «ENDFOR»
 «««        
 «««            @Override
 «««            public final Condition greaterOrEqual(RowN row) {
-«««                return new Compare(row, Comparator.GREATER_OR_EQUAL);
+«««                return new RowCompare(this, row, Comparator.GREATER_OR_EQUAL);
 «««            }
 «««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 «««
 «««            @Override
 «««            public final Condition greaterOrEqual(Record«degree»<«TN(degree)»> record) {
-«««                return new Compare(record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+«««                return new RowCompare(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
 «««            }
 «««            «ENDFOR»
 «««
@@ -1515,7 +1514,7 @@ class Rows extends Generators {
 «««            public final Condition greaterOrEqual(Record record) {
 «««                List<Field<?>> f = record.getFields();
 «««                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
-«««                return new Compare(row, Comparator.GREATER_OR_EQUAL);
+«««                return new RowCompare(this, row, Comparator.GREATER_OR_EQUAL);
 «««            }
 «««            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 «««
@@ -1781,91 +1780,6 @@ class Rows extends Generators {
             // XXX: Implementation classes
             // ------------------------------------------------------------------------
         
-            private class Compare extends AbstractCondition {
-        
-                /**
-                 * Generated UID
-                 */
-                private static final long serialVersionUID = -1806139685201770706L;
-        
-                private final RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> other;
-                private final Comparator comparator;
-        
-                Compare(QueryPart other, Comparator comparator) {
-                    this.other = (RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>) other;
-                    this.comparator = comparator;
-                }
-        
-                @Override
-                public final void toSQL(RenderContext context) {
-                    delegate(context).toSQL(context);
-                }
-        
-                @Override
-                public final void bind(BindContext context) {
-                    delegate(context).bind(context);
-                }
-        
-                private final QueryPartInternal delegate(Configuration configuration) {
-                    if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
-                        List<Condition> conditions = new ArrayList<Condition>();
-        
-                        for (int i = 0; i < fields.length; i++) {
-                            conditions.add(fields[i].equal((Field) other.fields[i]));
-                        }
-        
-                        Condition result = new CombinedCondition(Operator.AND, conditions);
-        
-                        if (comparator == NOT_EQUALS) {
-                            result = result.not();
-                        }
-        
-                        return (QueryPartInternal) result;
-                    }
-                    else {
-                        return new Native();
-                    }
-                }
-        
-                private class Native extends AbstractCondition {
-        
-                    /**
-                     * Generated UID
-                     */
-                    private static final long serialVersionUID = -2977241780111574353L;
-        
-                    @Override
-                    public final void toSQL(RenderContext context) {
-        
-                        // Some dialects do not support != comparison with rows
-                        if (comparator == NOT_EQUALS && asList(DB2).contains(context.getDialect())) {
-                            context.keyword("not(")
-                                   .sql(RowImpl.this)
-                                   .sql(" = ")
-                                   .sql(other)
-                                   .sql(")");
-                        }
-                        else {
-                            // Some databases need extra parentheses around the RHS
-                            boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
-        
-                            context.sql(RowImpl.this)
-                                   .sql(" ")
-                                   .sql(comparator.toSQL())
-                                   .sql(" ")
-                                   .sql(extraParentheses ? "(" : "")
-                                   .sql(other)
-                                   .sql(extraParentheses ? ")" : "");
-                        }
-                    }
-        
-                    @Override
-                    public final void bind(BindContext context) {
-                        context.bind(RowImpl.this).bind(other);
-                    }
-                }
-            }
-        
             private class InRows extends AbstractCondition {
         
                 /**
@@ -1896,7 +1810,7 @@ class Rows extends Generators {
                         List<Condition> conditions = new ArrayList<Condition>();
         
                         for (RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> row : other) {
-                            conditions.add(new Compare(row, EQUALS));
+                            conditions.add(new RowCompare(RowImpl.this, row, EQUALS));
                         }
         
                         Condition result = new CombinedCondition(Operator.OR, conditions);

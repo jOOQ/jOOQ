@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1774247091;
+	private static final long serialVersionUID = 156581527;
 
 	/**
 	 * Setter for <code>x_test_case_85.id</code>. 
@@ -52,10 +52,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	public java.lang.String getXUnusedName() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 510736130;
+	private static final long serialVersionUID = -59272342;
 
 	/**
 	 * The singleton instance of <code>t_785</code>
@@ -32,12 +32,12 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generate
 	/**
 	 * The column <code>t_785.NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, T_785);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
 
 	/**
 	 * The column <code>t_785.VALUE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, T_785);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
 
 	/**
 	 * No further instances allowed

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -270754899;
+	private static final long serialVersionUID = 1256137634;
 
 	/**
 	 * Setter for <code>x_test_case_64_69.ID</code>. 
@@ -33,46 +33,10 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord}
-	 */
-	public void setUnusedId(org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value.getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>x_test_case_64_69.UNUSED_ID</code>. 
 	 */
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>x_test_case_71</code> referencing this <code>x_test_case_64_69</code>
-	 */
-	public org.jooq.Result<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
-		return create()
-			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.ID, Short.class)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>x_unused</code> referenced by this <code>x_test_case_64_69</code>
-	 */
-	public org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.UNUSED_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

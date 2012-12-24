@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1623077439;
+	private static final long serialVersionUID = -1359257272;
 
 	/**
 	 * The singleton instance of <code>t_book_to_book_store</code>
@@ -27,7 +27,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	/**
 	 * The column <code>t_book_to_book_store.book_store_name</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_TO_BOOK_STORE);
 
 	/**
 	 * The column <code>t_book_to_book_store.book_id</code>. 

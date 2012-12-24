@@ -92,6 +92,11 @@ public final class Tables {
 	public static final org.jooq.test.sqlite.generatedclasses.tables.VBook V_BOOK = org.jooq.test.sqlite.generatedclasses.tables.VBook.V_BOOK;
 
 	/**
+	 * The table x_test_case_2025
+	 */
+	public static final org.jooq.test.sqlite.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.sqlite.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+
+	/**
 	 * The table x_test_case_64_69
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;

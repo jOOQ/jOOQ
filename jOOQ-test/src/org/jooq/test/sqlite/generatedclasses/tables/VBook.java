@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1056956165;
+	private static final long serialVersionUID = 156390084;
 
 	/**
 	 * The singleton instance of <code>v_book</code>
@@ -47,7 +47,7 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generate
 	/**
 	 * The column <code>v_book.TITLE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), V_BOOK);
 
 	/**
 	 * The column <code>v_book.PUBLISHED_IN</code>. 

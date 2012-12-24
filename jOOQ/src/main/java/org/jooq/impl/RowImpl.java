@@ -37,7 +37,6 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Comparator.EQUALS;
-import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
@@ -328,234 +327,234 @@ implements
 
     @Override
     public final Condition equal(Row1<T1> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row2<T1, T2> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row3<T1, T2, T3> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row4<T1, T2, T3, T4> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row5<T1, T2, T3, T4, T5> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row6<T1, T2, T3, T4, T5, T6> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(RowN row) {
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record1<T1> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record2<T1, T2> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record3<T1, T2, T3> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record4<T1, T2, T3, T4> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record5<T1, T2, T3, T4, T5> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record6<T1, T2, T3, T4, T5, T6> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
-        return new Compare(record.valuesRow(), Comparator.EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
     public final Condition equal(Record record) {
         List<Field<?>> f = record.getFields();
         Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
-        return new Compare(row, Comparator.EQUALS);
+        return new RowCompare(this, row, Comparator.EQUALS);
     }
 
     @Override
@@ -1250,234 +1249,234 @@ implements
 
     @Override
     public final Condition notEqual(Row1<T1> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row2<T1, T2> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row3<T1, T2, T3> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row4<T1, T2, T3, T4> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row5<T1, T2, T3, T4, T5> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row6<T1, T2, T3, T4, T5, T6> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(RowN row) {
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record1<T1> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record2<T1, T2> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record3<T1, T2, T3> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record4<T1, T2, T3, T4> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record5<T1, T2, T3, T4, T5> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record6<T1, T2, T3, T4, T5, T6> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
-        return new Compare(record.valuesRow(), Comparator.NOT_EQUALS);
+        return new RowCompare(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
     public final Condition notEqual(Record record) {
         List<Field<?>> f = record.getFields();
         Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
-        return new Compare(row, Comparator.NOT_EQUALS);
+        return new RowCompare(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -2989,91 +2988,6 @@ implements
     // XXX: Implementation classes
     // ------------------------------------------------------------------------
 
-    private class Compare extends AbstractCondition {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -1806139685201770706L;
-
-        private final RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> other;
-        private final Comparator comparator;
-
-        Compare(QueryPart other, Comparator comparator) {
-            this.other = (RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>) other;
-            this.comparator = comparator;
-        }
-
-        @Override
-        public final void toSQL(RenderContext context) {
-            delegate(context).toSQL(context);
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            delegate(context).bind(context);
-        }
-
-        private final QueryPartInternal delegate(Configuration configuration) {
-            if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
-                List<Condition> conditions = new ArrayList<Condition>();
-
-                for (int i = 0; i < fields.length; i++) {
-                    conditions.add(fields[i].equal((Field) other.fields[i]));
-                }
-
-                Condition result = new CombinedCondition(Operator.AND, conditions);
-
-                if (comparator == NOT_EQUALS) {
-                    result = result.not();
-                }
-
-                return (QueryPartInternal) result;
-            }
-            else {
-                return new Native();
-            }
-        }
-
-        private class Native extends AbstractCondition {
-
-            /**
-             * Generated UID
-             */
-            private static final long serialVersionUID = -2977241780111574353L;
-
-            @Override
-            public final void toSQL(RenderContext context) {
-
-                // Some dialects do not support != comparison with rows
-                if (comparator == NOT_EQUALS && asList(DB2).contains(context.getDialect())) {
-                    context.keyword("not(")
-                           .sql(RowImpl.this)
-                           .sql(" = ")
-                           .sql(other)
-                           .sql(")");
-                }
-                else {
-                    // Some databases need extra parentheses around the RHS
-                    boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
-
-                    context.sql(RowImpl.this)
-                           .sql(" ")
-                           .sql(comparator.toSQL())
-                           .sql(" ")
-                           .sql(extraParentheses ? "(" : "")
-                           .sql(other)
-                           .sql(extraParentheses ? ")" : "");
-                }
-            }
-
-            @Override
-            public final void bind(BindContext context) {
-                context.bind(RowImpl.this).bind(other);
-            }
-        }
-    }
-
     private class InRows extends AbstractCondition {
 
         /**
@@ -3104,7 +3018,7 @@ implements
                 List<Condition> conditions = new ArrayList<Condition>();
 
                 for (RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row : other) {
-                    conditions.add(new Compare(row, EQUALS));
+                    conditions.add(new RowCompare(RowImpl.this, row, EQUALS));
                 }
 
                 Condition result = new CombinedCondition(Operator.OR, conditions);

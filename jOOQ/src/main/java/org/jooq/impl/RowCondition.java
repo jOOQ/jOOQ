@@ -36,25 +36,26 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.SubqueryOperator.NOT_IN;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Field;
 import org.jooq.Operator;
-import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.Row;
@@ -62,21 +63,22 @@ import org.jooq.Row;
 /**
  * @author Lukas Eder
  */
-class RowIn extends AbstractCondition {
+@SuppressWarnings({ "unchecked", "rawtypes" })
+class RowCondition extends AbstractCondition {
 
     /**
      * Generated UID
      */
-    private static final long                  serialVersionUID = -1806139685201770706L;
+    private static final long serialVersionUID = -1806139685201770706L;
 
-    private final Row                          left;
-    private final QueryPartList<? extends Row> right;
-    private final SubqueryOperator             operator;
+    private final Row         left;
+    private final Row         right;
+    private final Comparator  comparator;
 
-    RowIn(Row left, QueryPartList<? extends Row> right, SubqueryOperator operator) {
+    RowCondition(Row left, Row right, Comparator comparator) {
         this.left = left;
         this.right = right;
-        this.operator = operator;
+        this.comparator = comparator;
     }
 
     @Override
@@ -90,16 +92,19 @@ class RowIn extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (asList(ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+        if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
-            for (Row row : right) {
-                conditions.add(new RowCompare(left, row, EQUALS));
+            Field<?>[] leftFields = left.getFields();
+            Field<?>[] rightFields = right.getFields();
+
+            for (int i = 0; i < leftFields.length; i++) {
+                conditions.add(leftFields[i].equal((Field) rightFields[i]));
             }
 
-            Condition result = new CombinedCondition(Operator.OR, conditions);
+            Condition result = new CombinedCondition(Operator.AND, conditions);
 
-            if (operator == NOT_IN) {
+            if (comparator == NOT_EQUALS) {
                 result = result.not();
             }
 
@@ -115,21 +120,36 @@ class RowIn extends AbstractCondition {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -7019193803316281371L;
+        private static final long serialVersionUID = -2977241780111574353L;
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql(left)
-                   .sql(" ")
-                   .keyword(operator.toSQL())
-                   .sql(" (")
-                   .sql(right)
-                   .sql(")");
+
+            // Some dialects do not support != comparison with rows
+            if (comparator == NOT_EQUALS && asList(DB2).contains(context.getDialect())) {
+                context.keyword("not(")
+                       .sql(left)
+                       .sql(" = ")
+                       .sql(right)
+                       .sql(")");
+            }
+            else {
+                // Some databases need extra parentheses around the RHS
+                boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
+
+                context.sql(left)
+                       .sql(" ")
+                       .sql(comparator.toSQL())
+                       .sql(" ")
+                       .sql(extraParentheses ? "(" : "")
+                       .sql(right)
+                       .sql(extraParentheses ? ")" : "");
+            }
         }
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(left).bind((QueryPart) right);
+            context.bind(left).bind(right);
         }
     }
 }

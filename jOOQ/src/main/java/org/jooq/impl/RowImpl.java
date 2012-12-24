@@ -2170,6 +2170,3694 @@ implements
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
 
+    @Override
+    public final Condition lessThan(Row1<T1> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row2<T1, T2> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row3<T1, T2, T3> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row4<T1, T2, T3, T4> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(RowN row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record1<T1> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record2<T1, T2> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record3<T1, T2, T3> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record4<T1, T2, T3, T4> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record5<T1, T2, T3, T4, T5> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(Record record) {
+        List<Field<?>> f = record.getFields();
+        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return new RowCondition(this, row, Comparator.LESS);
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1) {
+        return lessThan(row(t1));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2) {
+        return lessThan(row(t1, t2));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3) {
+        return lessThan(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return lessThan(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return lessThan(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition lessThan(Object... values) {
+        return lessThan(row(values));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1) {
+        return lessThan(row(t1));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2) {
+        return lessThan(row(t1, t2));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return lessThan(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return lessThan(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return lessThan(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return lessThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition lessThan(Field<?>... f) {
+        return lessThan(row(f));
+    }
+
+    @Override
+    public final Condition lt(Row1<T1> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row2<T1, T2> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row3<T1, T2, T3> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row4<T1, T2, T3, T4> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row5<T1, T2, T3, T4, T5> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(RowN row) {
+        return lessThan(row);
+    }
+
+    @Override
+    public final Condition lt(Record1<T1> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record2<T1, T2> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record3<T1, T2, T3> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record4<T1, T2, T3, T4> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record5<T1, T2, T3, T4, T5> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(Record record) {
+        return lessThan(record);
+    }
+
+    @Override
+    public final Condition lt(T1 t1) {
+        return lessThan(t1);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2) {
+        return lessThan(t1, t2);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3) {
+        return lessThan(t1, t2, t3);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return lessThan(t1, t2, t3, t4);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return lessThan(t1, t2, t3, t4, t5);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return lessThan(t1, t2, t3, t4, t5, t6);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    @Override
+    public final Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    @Override
+    public final Condition lt(Object... values) {
+        return lessThan(values);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1) {
+        return lessThan(t1);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2) {
+        return lessThan(t1, t2);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return lessThan(t1, t2, t3);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return lessThan(t1, t2, t3, t4);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return lessThan(t1, t2, t3, t4, t5);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return lessThan(t1, t2, t3, t4, t5, t6);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    @Override
+    public final Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return lessThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    @Override
+    public final Condition lt(Field<?>... values) {
+        return lessThan(values);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row1<T1> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row2<T1, T2> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row3<T1, T2, T3> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row4<T1, T2, T3, T4> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(RowN row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record1<T1> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record2<T1, T2> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record3<T1, T2, T3> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record4<T1, T2, T3, T4> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record5<T1, T2, T3, T4, T5> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Record record) {
+        List<Field<?>> f = record.getFields();
+        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1) {
+        return lessOrEqual(row(t1));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2) {
+        return lessOrEqual(row(t1, t2));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3) {
+        return lessOrEqual(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return lessOrEqual(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Object... values) {
+        return lessOrEqual(row(values));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1) {
+        return lessOrEqual(row(t1));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2) {
+        return lessOrEqual(row(t1, t2));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return lessOrEqual(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return lessOrEqual(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return lessOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition lessOrEqual(Field<?>... f) {
+        return lessOrEqual(row(f));
+    }
+
+    @Override
+    public final Condition le(Row1<T1> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row2<T1, T2> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row3<T1, T2, T3> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row4<T1, T2, T3, T4> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row5<T1, T2, T3, T4, T5> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(RowN row) {
+        return lessOrEqual(row);
+    }
+
+    @Override
+    public final Condition le(Record1<T1> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record2<T1, T2> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record3<T1, T2, T3> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record4<T1, T2, T3, T4> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record5<T1, T2, T3, T4, T5> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(Record record) {
+        return lessOrEqual(record);
+    }
+
+    @Override
+    public final Condition le(T1 t1) {
+        return lessOrEqual(t1);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2) {
+        return lessOrEqual(t1, t2);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3) {
+        return lessOrEqual(t1, t2, t3);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return lessOrEqual(t1, t2, t3, t4);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return lessOrEqual(t1, t2, t3, t4, t5);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    @Override
+    public final Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    @Override
+    public final Condition le(Object... values) {
+        return lessOrEqual(values);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1) {
+        return lessOrEqual(t1);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2) {
+        return lessOrEqual(t1, t2);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return lessOrEqual(t1, t2, t3);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return lessOrEqual(t1, t2, t3, t4);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return lessOrEqual(t1, t2, t3, t4, t5);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    @Override
+    public final Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return lessOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    @Override
+    public final Condition le(Field<?>... values) {
+        return lessOrEqual(values);
+    }
+
+    @Override
+    public final Condition greaterThan(Row1<T1> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row2<T1, T2> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row3<T1, T2, T3> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row4<T1, T2, T3, T4> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(RowN row) {
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record1<T1> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record2<T1, T2> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record3<T1, T2, T3> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record4<T1, T2, T3, T4> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record5<T1, T2, T3, T4, T5> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(Record record) {
+        List<Field<?>> f = record.getFields();
+        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return new RowCondition(this, row, Comparator.GREATER);
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1) {
+        return greaterThan(row(t1));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2) {
+        return greaterThan(row(t1, t2));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3) {
+        return greaterThan(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return greaterThan(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return greaterThan(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition greaterThan(Object... values) {
+        return greaterThan(row(values));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1) {
+        return greaterThan(row(t1));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2) {
+        return greaterThan(row(t1, t2));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return greaterThan(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return greaterThan(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return greaterThan(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return greaterThan(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition greaterThan(Field<?>... f) {
+        return greaterThan(row(f));
+    }
+
+    @Override
+    public final Condition gt(Row1<T1> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row2<T1, T2> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row3<T1, T2, T3> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row4<T1, T2, T3, T4> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row5<T1, T2, T3, T4, T5> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(RowN row) {
+        return greaterThan(row);
+    }
+
+    @Override
+    public final Condition gt(Record1<T1> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record2<T1, T2> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record3<T1, T2, T3> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record4<T1, T2, T3, T4> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record5<T1, T2, T3, T4, T5> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(Record record) {
+        return greaterThan(record);
+    }
+
+    @Override
+    public final Condition gt(T1 t1) {
+        return greaterThan(t1);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2) {
+        return greaterThan(t1, t2);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3) {
+        return greaterThan(t1, t2, t3);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return greaterThan(t1, t2, t3, t4);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return greaterThan(t1, t2, t3, t4, t5);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return greaterThan(t1, t2, t3, t4, t5, t6);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    @Override
+    public final Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    @Override
+    public final Condition gt(Object... values) {
+        return greaterThan(values);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1) {
+        return greaterThan(t1);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2) {
+        return greaterThan(t1, t2);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return greaterThan(t1, t2, t3);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return greaterThan(t1, t2, t3, t4);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return greaterThan(t1, t2, t3, t4, t5);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return greaterThan(t1, t2, t3, t4, t5, t6);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    @Override
+    public final Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return greaterThan(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    @Override
+    public final Condition gt(Field<?>... values) {
+        return greaterThan(values);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row1<T1> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row2<T1, T2> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row3<T1, T2, T3> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row4<T1, T2, T3, T4> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(RowN row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record1<T1> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record2<T1, T2> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record3<T1, T2, T3> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record4<T1, T2, T3, T4> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record5<T1, T2, T3, T4, T5> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Record record) {
+        List<Field<?>> f = record.getFields();
+        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1) {
+        return greaterOrEqual(row(t1));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2) {
+        return greaterOrEqual(row(t1, t2));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3) {
+        return greaterOrEqual(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return greaterOrEqual(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Object... values) {
+        return greaterOrEqual(row(values));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1) {
+        return greaterOrEqual(row(t1));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2) {
+        return greaterOrEqual(row(t1, t2));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return greaterOrEqual(row(t1, t2, t3));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return greaterOrEqual(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return greaterOrEqual(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Field<?>... f) {
+        return greaterOrEqual(row(f));
+    }
+
+    @Override
+    public final Condition ge(Row1<T1> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row2<T1, T2> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row3<T1, T2, T3> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row4<T1, T2, T3, T4> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row5<T1, T2, T3, T4, T5> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(RowN row) {
+        return greaterOrEqual(row);
+    }
+
+    @Override
+    public final Condition ge(Record1<T1> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record2<T1, T2> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record3<T1, T2, T3> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record4<T1, T2, T3, T4> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record5<T1, T2, T3, T4, T5> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(Record record) {
+        return greaterOrEqual(record);
+    }
+
+    @Override
+    public final Condition ge(T1 t1) {
+        return greaterOrEqual(t1);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2) {
+        return greaterOrEqual(t1, t2);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3) {
+        return greaterOrEqual(t1, t2, t3);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return greaterOrEqual(t1, t2, t3, t4);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return greaterOrEqual(t1, t2, t3, t4, t5);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    @Override
+    public final Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    @Override
+    public final Condition ge(Object... values) {
+        return greaterOrEqual(values);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1) {
+        return greaterOrEqual(t1);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2) {
+        return greaterOrEqual(t1, t2);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return greaterOrEqual(t1, t2, t3);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return greaterOrEqual(t1, t2, t3, t4);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return greaterOrEqual(t1, t2, t3, t4, t5);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
+    }
+
+    @Override
+    public final Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
+    }
+
+    @Override
+    public final Condition ge(Field<?>... values) {
+        return greaterOrEqual(values);
+    }
+
     // ------------------------------------------------------------------------
     // [NOT] DISTINCT predicates
     // ------------------------------------------------------------------------
@@ -2950,6 +6638,46 @@ implements
     @Override
     public final Condition ne(Select select) {
         return notEqual(select);
+    }
+
+    @Override
+    public final Condition greaterThan(Select select) {
+        return new RowSubqueryCondition(this, select, SubqueryOperator.GREATER);
+    }
+
+    @Override
+    public final Condition gt(Select select) {
+        return greaterThan(select);
+    }
+
+    @Override
+    public final Condition greaterOrEqual(Select select) {
+        return new RowSubqueryCondition(this, select, SubqueryOperator.GREATER_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition ge(Select select) {
+        return greaterOrEqual(select);
+    }
+
+    @Override
+    public final Condition lessThan(Select select) {
+        return new RowSubqueryCondition(this, select, SubqueryOperator.LESS);
+    }
+
+    @Override
+    public final Condition lt(Select select) {
+        return lessThan(select);
+    }
+
+    @Override
+    public final Condition lessOrEqual(Select select) {
+        return new RowSubqueryCondition(this, select, SubqueryOperator.LESS_OR_EQUAL);
+    }
+
+    @Override
+    public final Condition le(Select select) {
+        return lessOrEqual(select);
     }
 
     @Override

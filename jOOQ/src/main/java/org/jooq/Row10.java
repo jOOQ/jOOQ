@@ -297,6 +297,361 @@ public interface Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Row {
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
 
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     * <p>
+     * Row order comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B, C) < (1, 2, 3)</code> is equivalent to
+     * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2 AND C < 3)</code>
+     */
+    @Support
+    Condition lessThan(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support
+    Condition lessThan(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support
+    Condition lessThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support
+    Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition lessThan(Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support
+    Condition lt(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support
+    Condition lt(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support
+    Condition lt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support
+    Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #lessThan(Row10)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition lt(Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     * <p>
+     * Row order comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) <= (1, 2)</code> is equivalent to
+     * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2)</code>
+     */
+    @Support
+    Condition lessOrEqual(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support
+    Condition lessOrEqual(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support
+    Condition lessOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support
+    Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition lessOrEqual(Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support
+    Condition le(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support
+    Condition le(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support
+    Condition le(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support
+    Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #lessOrEqual(Row10)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition le(Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     * <p>
+     * Row order comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B, C) > (1, 2, 3)</code> is equivalent to
+     * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2 AND C > 3)</code>
+     */
+    @Support
+    Condition greaterThan(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support
+    Condition greaterThan(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support
+    Condition greaterThan(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support
+    Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition greaterThan(Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support
+    Condition gt(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support
+    Condition gt(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support
+    Condition gt(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support
+    Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #greaterThan(Row10)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition gt(Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     * <p>
+     * Row order comparison predicates can be simulated in those
+     * databases that do not support such predicates natively:
+     * <code>(A, B) >= (1, 2)</code> is equivalent to
+     * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2)</code>
+     */
+    @Support
+    Condition greaterOrEqual(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support
+    Condition greaterOrEqual(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support
+    Condition greaterOrEqual(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support
+    Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition greaterOrEqual(Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support
+    Condition ge(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row);
+
+    /**
+     * Compare this row value expression with a record for order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support
+    Condition ge(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support
+    Condition ge(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10);
+
+    /**
+     * Compare this row value expression with another row value expression for
+     * order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support
+    Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10);
+
+    /**
+     * Compare this row value expression with a subselect for order
+     *
+     * @see #greaterOrEqual(Row10)
+     */
+    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    Condition ge(Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
 
     // ------------------------------------------------------------------------
     // [NOT] DISTINCT predicates

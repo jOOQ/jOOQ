@@ -36,8 +36,14 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.GREATER;
+import static org.jooq.Comparator.GREATER_OR_EQUAL;
+import static org.jooq.Comparator.LESS;
+import static org.jooq.Comparator.LESS_OR_EQUAL;
 import static org.jooq.Comparator.NOT_EQUALS;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -59,6 +65,7 @@ import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.Row;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -92,7 +99,11 @@ class RowCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+        SQLDialect dialect = configuration.getDialect();
+
+        // Regular comparison predicate simulation
+        if (asList(EQUALS, NOT_EQUALS).contains(comparator) &&
+            asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect)) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             Field<?>[] leftFields = left.getFields();
@@ -108,6 +119,50 @@ class RowCondition extends AbstractCondition {
                 result = result.not();
             }
 
+            return (QueryPartInternal) result;
+        }
+
+        // Ordering comparison predicate simulation
+        else if (asList(GREATER, GREATER_OR_EQUAL, LESS, LESS_OR_EQUAL).contains(comparator) &&
+                 asList(DERBY, CUBRID, ORACLE, SQLSERVER, SQLITE).contains(dialect)) {
+
+            // The order component of the comparator (stripping the equal component)
+            Comparator order
+                = (comparator == GREATER) ? GREATER
+                : (comparator == GREATER_OR_EQUAL) ? GREATER
+                : (comparator == LESS) ? LESS
+                : (comparator == LESS_OR_EQUAL) ? LESS
+                : null;
+
+            // Whether the comparator has an equal component
+            boolean equal
+                = (comparator == GREATER_OR_EQUAL)
+                ||(comparator == LESS_OR_EQUAL);
+
+            // The following algorithm simulates the equivalency of these expressions:
+            // (A, B, C) > (X, Y, Z)
+            // (A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z)
+            List<Condition> outer = new ArrayList<Condition>();
+
+            Field<?>[] leftFields = left.getFields();
+            Field<?>[] rightFields = right.getFields();
+
+            for (int i = 0; i < leftFields.length; i++) {
+                List<Condition> inner = new ArrayList<Condition>();
+
+                for (int j = 0; j < i; j++) {
+                    inner.add(leftFields[j].equal((Field) rightFields[j]));
+                }
+
+                inner.add(leftFields[i].compare(order, (Field) rightFields[i]));
+                outer.add(new CombinedCondition(Operator.AND, inner));
+            }
+
+            if (equal) {
+                outer.add(new RowCondition(left, right, Comparator.EQUALS));
+            }
+
+            Condition result = new CombinedCondition(Operator.OR, outer);
             return (QueryPartInternal) result;
         }
         else {

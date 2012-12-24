@@ -319,7 +319,7 @@ class Rows extends Generators {
                  *
                  * @see #lessThan(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition lessThan(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -362,7 +362,7 @@ class Rows extends Generators {
                  *
                  * @see #lessThan(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition lt(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -408,7 +408,7 @@ class Rows extends Generators {
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition lessOrEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -451,7 +451,7 @@ class Rows extends Generators {
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition le(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -497,7 +497,7 @@ class Rows extends Generators {
                  *
                  * @see #greaterThan(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition greaterThan(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -540,7 +540,7 @@ class Rows extends Generators {
                  *
                  * @see #greaterThan(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition gt(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -586,7 +586,7 @@ class Rows extends Generators {
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition greaterOrEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -629,7 +629,7 @@ class Rows extends Generators {
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition ge(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 // ------------------------------------------------------------------------

@@ -345,7 +345,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
      *
      * @see #lessThan(Row11)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lessThan(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     /**
@@ -388,7 +388,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
      *
      * @see #lessThan(Row11)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lt(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     /**
@@ -434,7 +434,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
      *
      * @see #lessOrEqual(Row11)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lessOrEqual(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     /**
@@ -477,7 +477,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
      *
      * @see #lessOrEqual(Row11)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition le(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     /**
@@ -523,7 +523,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
      *
      * @see #greaterThan(Row11)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition greaterThan(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     /**
@@ -566,7 +566,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
      *
      * @see #greaterThan(Row11)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition gt(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     /**
@@ -612,7 +612,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
      *
      * @see #greaterOrEqual(Row11)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition greaterOrEqual(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     /**
@@ -655,7 +655,7 @@ public interface Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> extends Row
      *
      * @see #greaterOrEqual(Row11)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition ge(Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     // ------------------------------------------------------------------------

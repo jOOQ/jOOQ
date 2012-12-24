@@ -1058,6 +1058,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRowValueExpressionOrderingSubselects() throws Exception {
+        new RowValueExpressionTests(this).testRowValueExpressionOrderingSubselects();
+    }
+
+    @Test
     public void testRowValueExpressionNULLPredicate() throws Exception {
         new RowValueExpressionTests(this).testRowValueExpressionNULLPredicate();
     }

@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_986_2", schema = "public")
 public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = 209933887;
+	private static final long serialVersionUID = -847078775;
 
 	/**
 	 * Setter for <code>public.t_986_2.ref</code>. 
@@ -27,10 +27,6 @@ public class T_986_2Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_986_2.T_986_2.REF);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation

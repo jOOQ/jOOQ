@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_author", schema = "public")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -1941781347;
+	private static final long serialVersionUID = -1987545837;
 
 	/**
 	 * Setter for <code>public.v_author.id</code>. 
@@ -102,10 +102,6 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record6 type implementation

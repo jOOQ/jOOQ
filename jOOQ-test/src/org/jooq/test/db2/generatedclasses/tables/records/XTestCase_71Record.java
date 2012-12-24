@@ -9,60 +9,34 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Short> {
 
-	private static final long serialVersionUID = 1391647823;
+	private static final long serialVersionUID = -1778237819;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>. 
+	 * Setter for <code>LUKAS.X_TEST_CASE_71.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_71.ID</code>. 
+	 * Getter for <code>LUKAS.X_TEST_CASE_71.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 * Setter for <code>LUKAS.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	public void setTestCase_64_69Id(java.lang.Short value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record}
-	 */
-	public void setTestCase_64_69Id(org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record value) {
-		if (value == null) {
-			setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value.getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID, Short.class));
-		}
-	}
-
-	/**
-	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 * Getter for <code>LUKAS.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	public java.lang.Short getTestCase_64_69Id() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>TEST.X_TEST_CASE_64_69</code> referenced by this <code>TEST.X_TEST_CASE_71</code>
-	 */
-	public org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
-		return create()
-			.selectFrom(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID.equal(getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, Integer.class)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

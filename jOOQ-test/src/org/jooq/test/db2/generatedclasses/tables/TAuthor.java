@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1487363014;
+	private static final long serialVersionUID = -1176290851;
 
 	/**
-	 * The singleton instance of <code>TEST.T_AUTHOR</code>
+	 * The singleton instance of <code>LUKAS.T_AUTHOR</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TAuthor T_AUTHOR = new org.jooq.test.db2.generatedclasses.tables.TAuthor();
 
@@ -25,40 +25,40 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 	}
 
 	/**
-	 * The column <code>TEST.T_AUTHOR.ID</code>. 
+	 * The column <code>LUKAS.T_AUTHOR.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 
 	/**
-	 * The column <code>TEST.T_AUTHOR.FIRST_NAME</code>. 
+	 * The column <code>LUKAS.T_AUTHOR.FIRST_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_AUTHOR);
 
 	/**
-	 * The column <code>TEST.T_AUTHOR.LAST_NAME</code>. 
+	 * The column <code>LUKAS.T_AUTHOR.LAST_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_AUTHOR);
 
 	/**
-	 * The column <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * The column <code>LUKAS.T_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, T_AUTHOR);
 
 	/**
-	 * The column <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * The column <code>LUKAS.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 
 	/**
-	 * The column <code>TEST.T_AUTHOR.ADDRESS</code>. 
+	 * The column <code>LUKAS.T_AUTHOR.ADDRESS</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(200), T_AUTHOR);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TAuthor() {
-		super("T_AUTHOR", org.jooq.test.db2.generatedclasses.Test.TEST);
+		super("T_AUTHOR", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 
 	/**

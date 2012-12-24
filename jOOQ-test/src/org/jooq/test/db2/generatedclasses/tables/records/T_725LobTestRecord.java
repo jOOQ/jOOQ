@@ -9,39 +9,35 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = -885526489;
+	private static final long serialVersionUID = -1543162899;
 
 	/**
-	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>. 
+	 * Setter for <code>LUKAS.T_725_LOB_TEST.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_725LobTest.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_725_LOB_TEST.ID</code>. 
+	 * Getter for <code>LUKAS.T_725_LOB_TEST.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_725LobTest.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_725_LOB_TEST.LOB</code>. 
+	 * Setter for <code>LUKAS.T_725_LOB_TEST.LOB</code>. 
 	 */
 	public void setLob(byte[] value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_725LobTest.LOB, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_725_LOB_TEST.LOB</code>. 
+	 * Getter for <code>LUKAS.T_725_LOB_TEST.LOB</code>. 
 	 */
 	public byte[] getLob() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_725LobTest.LOB);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

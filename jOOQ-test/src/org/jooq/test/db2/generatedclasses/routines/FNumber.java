@@ -9,15 +9,15 @@ package org.jooq.test.db2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1405944068;
+	private static final long serialVersionUID = 1527681810;
 
 	/**
-	 * The parameter <code>TEST.F_NUMBER.RETURN_VALUE</code>. 
+	 * The parameter <code>LUKAS.F_NUMBER.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The parameter <code>TEST.F_NUMBER.N</code>. 
+	 * The parameter <code>LUKAS.F_NUMBER.N</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> N = createParameter("N", org.jooq.impl.SQLDataType.INTEGER);
 
@@ -25,7 +25,7 @@ public class FNumber extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 	 * Create a new routine call instance
 	 */
 	public FNumber() {
-		super("F_NUMBER", org.jooq.test.db2.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.INTEGER);
+		super("F_NUMBER", org.jooq.test.db2.generatedclasses.Lukas.LUKAS, org.jooq.impl.SQLDataType.INTEGER);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(N);

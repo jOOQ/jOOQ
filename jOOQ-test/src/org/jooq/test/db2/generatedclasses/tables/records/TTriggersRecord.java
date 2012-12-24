@@ -9,53 +9,49 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1009938123;
+	private static final long serialVersionUID = 1764793109;
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
+	 * Setter for <code>LUKAS.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TTriggers.ID_GENERATED, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
+	 * Getter for <code>LUKAS.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public java.lang.Integer getIdGenerated() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TTriggers.ID_GENERATED);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.ID</code>. 
+	 * Setter for <code>LUKAS.T_TRIGGERS.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TTriggers.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.ID</code>. 
+	 * Getter for <code>LUKAS.T_TRIGGERS.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TTriggers.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
+	 * Setter for <code>LUKAS.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public void setCounter(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TTriggers.COUNTER, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
+	 * Getter for <code>LUKAS.T_TRIGGERS.COUNTER</code>. 
 	 */
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TTriggers.COUNTER);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

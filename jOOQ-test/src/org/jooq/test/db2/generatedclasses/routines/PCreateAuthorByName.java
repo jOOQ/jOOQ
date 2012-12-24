@@ -9,23 +9,23 @@ package org.jooq.test.db2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1252749544;
+	private static final long serialVersionUID = -1092077328;
 
 	/**
-	 * The parameter <code>TEST.P_CREATE_AUTHOR_BY_NAME.FIRST_NAME</code>. 
+	 * The parameter <code>LUKAS.P_CREATE_AUTHOR_BY_NAME.FIRST_NAME</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
-	 * The parameter <code>TEST.P_CREATE_AUTHOR_BY_NAME.LAST_NAME</code>. 
+	 * The parameter <code>LUKAS.P_CREATE_AUTHOR_BY_NAME.LAST_NAME</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthorByName() {
-		super("P_CREATE_AUTHOR_BY_NAME", org.jooq.test.db2.generatedclasses.Test.TEST);
+		super("P_CREATE_AUTHOR_BY_NAME", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 
 		addInParameter(FIRST_NAME);
 		addInParameter(LAST_NAME);

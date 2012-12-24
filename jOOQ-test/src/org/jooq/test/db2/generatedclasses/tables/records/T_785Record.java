@@ -9,53 +9,49 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1461877954;
+	private static final long serialVersionUID = 111049170;
 
 	/**
-	 * Setter for <code>TEST.T_785.ID</code>. 
+	 * Setter for <code>LUKAS.T_785.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_785.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.ID</code>. 
+	 * Getter for <code>LUKAS.T_785.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_785.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_785.NAME</code>. 
+	 * Setter for <code>LUKAS.T_785.NAME</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_785.NAME, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.NAME</code>. 
+	 * Getter for <code>LUKAS.T_785.NAME</code>. 
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_785.NAME);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_785.VALUE</code>. 
+	 * Setter for <code>LUKAS.T_785.VALUE</code>. 
 	 */
 	public void setValue(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_785.VALUE, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_785.VALUE</code>. 
+	 * Getter for <code>LUKAS.T_785.VALUE</code>. 
 	 */
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_785.VALUE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation

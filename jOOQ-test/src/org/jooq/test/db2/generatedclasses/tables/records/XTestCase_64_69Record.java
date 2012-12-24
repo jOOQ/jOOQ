@@ -9,70 +9,34 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 2095207035;
+	private static final long serialVersionUID = -641438310;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * Setter for <code>LUKAS.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * Getter for <code>LUKAS.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Setter for <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public void setUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord}
-	 */
-	public void setUnusedId(org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value.getValue(org.jooq.test.db2.generatedclasses.tables.XUnused.ID));
-		}
-	}
-
-	/**
-	 * Getter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Getter for <code>LUKAS.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public java.lang.Integer getUnusedId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>TEST.X_TEST_CASE_71</code> referencing this <code>TEST.X_TEST_CASE_64_69</code>
-	 */
-	public org.jooq.Result<org.jooq.test.db2.generatedclasses.tables.records.XTestCase_71Record> fetchXTestCase_71List() {
-		return create()
-			.selectFrom(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71)
-			.where(org.jooq.test.db2.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID.equal(getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.ID, Short.class)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_TEST_CASE_64_69</code>
-	 */
-	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.db2.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.db2.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.db2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

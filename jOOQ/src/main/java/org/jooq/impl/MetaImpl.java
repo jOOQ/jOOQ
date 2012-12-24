@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.ORACLE;
+
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -210,7 +212,13 @@ class MetaImpl implements Meta {
 
         private final void init() {
             try {
-                Result<Record> columns = executor.fetch(meta().getColumns(null, getSchema().getName(), getName(), "%"));
+                // The Oracle JDBC driver uses / as an escape character for the
+                // LIKE predicate. This should be considered here:
+                String searchName = executor.getDialect() == ORACLE
+                    ? getName().replace("/", "//")
+                    : getName();
+
+                Result<Record> columns = executor.fetch(meta().getColumns(null, getSchema().getName(), searchName, "%"));
 
                 for (Record column : columns) {
                     String columnName = column.getValue("COLUMN_NAME", String.class);

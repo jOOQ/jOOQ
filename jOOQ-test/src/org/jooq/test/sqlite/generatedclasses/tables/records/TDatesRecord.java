@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> {
 
-	private static final long serialVersionUID = -1978147051;
+	private static final long serialVersionUID = -1974266913;
 
 	/**
 	 * Setter for <code>t_dates.id</code>. 
@@ -94,10 +94,6 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TDates.TS_BIGINT);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

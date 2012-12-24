@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = 549391654;
+	private static final long serialVersionUID = -1426431010;
 
 	/**
 	 * Setter for <code>t_book_store.name</code>. 
@@ -23,20 +23,6 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>t_book_to_book_store</code> referencing this <code>t_book_store</code>
-	 */
-	public org.jooq.Result<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.TBookStore.NAME)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

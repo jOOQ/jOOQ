@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -2113915141;
+	private static final long serialVersionUID = 1308307264;
 
 	/**
 	 * The singleton instance of <code>t_language</code>
@@ -27,17 +27,17 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sq
 	/**
 	 * The column <code>t_language.cd</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE);
 
 	/**
 	 * The column <code>t_language.description</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>t_language.description_english</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>t_language.id</code>. 

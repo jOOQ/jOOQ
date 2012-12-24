@@ -35,21 +35,9 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
-import static org.jooq.Comparator.EQUALS;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.vals;
-import static org.jooq.impl.SubqueryOperator.NOT_IN;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -59,21 +47,9 @@ import javax.annotation.Generated;
 import org.jooq.BindContext;
 import org.jooq.Comparator;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.Operator;
-import org.jooq.QueryPart;
-import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Record2;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 import org.jooq.Record10;
 import org.jooq.Record11;
 import org.jooq.Record12;
@@ -84,20 +60,20 @@ import org.jooq.Record16;
 import org.jooq.Record17;
 import org.jooq.Record18;
 import org.jooq.Record19;
+import org.jooq.Record2;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Row1;
-import org.jooq.Row2;
-import org.jooq.Row3;
-import org.jooq.Row4;
-import org.jooq.Row5;
-import org.jooq.Row6;
-import org.jooq.Row7;
-import org.jooq.Row8;
-import org.jooq.Row9;
 import org.jooq.Row10;
 import org.jooq.Row11;
 import org.jooq.Row12;
@@ -108,9 +84,17 @@ import org.jooq.Row16;
 import org.jooq.Row17;
 import org.jooq.Row18;
 import org.jooq.Row19;
+import org.jooq.Row2;
 import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.RowN;
 import org.jooq.Select;
 
@@ -2920,20 +2904,20 @@ implements
 
     @Override
     public final Condition in(Collection rows) {
-        QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows);
-        return new InRows(list, SubqueryOperator.IN);
+        QueryPartList<Row> list = new QueryPartList<Row>(rows);
+        return new RowIn(this, list, SubqueryOperator.IN);
     }
 
     @Override
     public final Condition notIn(Collection rows) {
-        QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> list = new QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows);
-        return new InRows(list, SubqueryOperator.NOT_IN);
+        QueryPartList<Row> list = new QueryPartList<Row>(rows);
+        return new RowIn(this, list, SubqueryOperator.NOT_IN);
     }
 
     // ------------------------------------------------------------------------
     // Predicates involving subqueries
     // ------------------------------------------------------------------------
-    
+
     @Override
     public final Condition equal(Select select) {
         return new RowSubquery(this, select, SubqueryOperator.EQUALS);
@@ -2981,79 +2965,5 @@ implements
     @Override
     public final Condition overlaps(Row2<T1, T2> row) {
         return new RowOverlaps(this, row);
-    }
-
-    // ------------------------------------------------------------------------
-    // XXX: Implementation classes
-    // ------------------------------------------------------------------------
-
-    private class InRows extends AbstractCondition {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -1806139685201770706L;
-
-        private final QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> other;
-        private final SubqueryOperator operator;
-
-        InRows(QueryPartList<RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> other, SubqueryOperator operator) {
-            this.other = other;
-            this.operator = operator;
-        }
-
-        @Override
-        public final void toSQL(RenderContext context) {
-            delegate(context).toSQL(context);
-        }
-
-        @Override
-        public final void bind(BindContext context) {
-            delegate(context).bind(context);
-        }
-
-        private final QueryPartInternal delegate(Configuration configuration) {
-            if (asList(ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
-                List<Condition> conditions = new ArrayList<Condition>();
-
-                for (RowImpl<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row : other) {
-                    conditions.add(new RowCompare(RowImpl.this, row, EQUALS));
-                }
-
-                Condition result = new CombinedCondition(Operator.OR, conditions);
-
-                if (operator == NOT_IN) {
-                    result = result.not();
-                }
-
-                return (QueryPartInternal) result;
-            }
-            else {
-                return new Native();
-            }
-        }
-
-        private class Native extends AbstractCondition {
-
-            /**
-             * Generated UID
-             */
-            private static final long serialVersionUID = -7019193803316281371L;
-
-            @Override
-            public final void toSQL(RenderContext context) {
-                context.sql(RowImpl.this)
-                       .sql(" ")
-                       .keyword(operator.toSQL())
-                       .sql(" (")
-                       .sql(other)
-                       .sql(")");
-            }
-
-            @Override
-            public final void bind(BindContext context) {
-                context.bind(RowImpl.this).bind((QueryPart) other);
-            }
-        }
     }
 }

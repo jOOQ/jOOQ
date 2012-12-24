@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.impl.Factory.fieldByName;
 
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.Catalog;
 import org.jooq.DataType;
@@ -161,32 +162,46 @@ class MetaImpl implements Meta {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -2621899850912554198L;
+        private static final long                     serialVersionUID = -2621899850912554198L;
+
+        private transient List<Table<?>>              tableCache;
+        private transient Map<String, Result<Record>> columnCache;
 
         MetaSchema(String name) {
             super(name);
         }
 
         @Override
-        public final List<Table<?>> getTables() {
+        public final synchronized List<Table<?>> getTables() {
+            if (tableCache != null) {
+                return tableCache;
+            }
+
             try {
+                columnCache = executor
+                    .fetch(meta().getColumns(null, getName(), "%", "%"))
+                    .intoGroups(fieldByName(String.class, "TABLE_NAME"));
+
                 List<Table<?>> result = new ArrayList<Table<?>>();
                 Result<Record> tables = executor.fetch(meta().getTables(null, getName(), "%", null));
 
                 for (Record table : tables) {
-                    String catalog = table.getValue(0, String.class);
-                    String schema = table.getValue(1, String.class);
+//                  String catalog = table.getValue(0, String.class);
+//                  String schema = table.getValue(1, String.class);
                     String name = table.getValue(2, String.class);
 
-                    Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
-                                                       .sortAsc("KEY_SEQ");
+                    result.add(new MetaTable(name, this, columnCache.get(name)));
 
-                    if (pkColumns.size() == 0) {
-                        result.add(new MetaTable(name, this));
-                    }
-                    else {
-                        result.add(new MetaUpdatableTable(name, this));
-                    }
+//                  TODO: Find a more efficient way to do this
+//                  Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
+//                                                     .sortAsc("KEY_SEQ");
+//
+//                  if (pkColumns.size() == 0) {
+//                      result.add(new MetaTable(name, this, columnCache.get(name)));
+//                  }
+//                  else {
+//                      result.add(new MetaUpdatableTable(name, this, columnCache.get(name)));
+//                  }
                 }
 
                 return result;
@@ -204,58 +219,50 @@ class MetaImpl implements Meta {
          */
         private static final long serialVersionUID = 4843841667753000233L;
 
-        MetaTable(String name, Schema schema) {
+        MetaTable(String name, Schema schema, Result<Record> columns) {
             super(name, schema);
 
-            init();
+            // Possible scenarios for columns being null:
+            // - The "table" is in fact a SYNONYM
+            if (columns != null) {
+                init(columns);
+            }
         }
 
-        private final void init() {
-            try {
-                // The Oracle JDBC driver uses / as an escape character for the
-                // LIKE predicate. This should be considered here:
-                String searchName = executor.getDialect() == ORACLE
-                    ? getName().replace("/", "//")
-                    : getName();
+        private final void init(Result<Record> columns) {
+            for (Record column : columns) {
+                String columnName = column.getValue("COLUMN_NAME", String.class);
+                String typeName = column.getValue("TYPE_NAME", String.class);
+                int precision = column.getValue("COLUMN_SIZE", int.class);
+                int scale = column.getValue("DECIMAL_DIGITS", int.class);
 
-                Result<Record> columns = executor.fetch(meta().getColumns(null, getSchema().getName(), searchName, "%"));
+                // TODO: Exception handling should be moved inside SQLDataType
+                DataType<?> type = null;
+                try {
+                    type = DefaultDataType.getDataType(executor.getDialect(), typeName, precision, scale);
 
-                for (Record column : columns) {
-                    String columnName = column.getValue("COLUMN_NAME", String.class);
-                    String typeName = column.getValue("TYPE_NAME", String.class);
-                    int precision = column.getValue("COLUMN_SIZE", int.class);
-                    int scale = column.getValue("DECIMAL_DIGITS", int.class);
-
-                    // TODO: Exception handling should be moved inside SQLDataType
-                    DataType<?> type = null;
-                    try {
-                        type = DefaultDataType.getDataType(executor.getDialect(), typeName, precision, scale);
-
-                        if (type.hasPrecision()) {
-                            type = type.precision(precision);
-                        }
-                        if (type.hasScale()) {
-                            type = type.scale(scale);
-                        }
-                        if (type.hasLength()) {
-
-                            // JDBC doesn't distinguish between precision and length
-                            type = type.length(precision);
-                        }
+                    if (type.hasPrecision()) {
+                        type = type.precision(precision);
                     }
-                    catch (SQLDialectNotSupportedException e) {
-                        type = SQLDataType.OTHER;
+                    if (type.hasScale()) {
+                        type = type.scale(scale);
                     }
+                    if (type.hasLength()) {
 
-                    createField(columnName, type, this);
+                        // JDBC doesn't distinguish between precision and length
+                        type = type.length(precision);
+                    }
                 }
-            }
-            catch (SQLException e) {
-                throw new DataAccessException("Error while accessing DatabaseMetaData", e);
+                catch (SQLDialectNotSupportedException e) {
+                    type = SQLDataType.OTHER;
+                }
+
+                createField(columnName, type, this);
             }
         }
     }
 
+    @SuppressWarnings("unused")
     private class MetaUpdatableTable extends MetaTable implements UpdatableTable<Record> {
 
         /**
@@ -263,8 +270,8 @@ class MetaImpl implements Meta {
          */
         private static final long serialVersionUID = -4555457095396846609L;
 
-        MetaUpdatableTable(String name, Schema schema) {
-            super(name, schema);
+        MetaUpdatableTable(String name, Schema schema, Result<Record> columns) {
+            super(name, schema, columns);
         }
 
         @Override

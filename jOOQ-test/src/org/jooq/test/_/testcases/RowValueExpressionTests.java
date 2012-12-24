@@ -175,6 +175,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     }
 
     @Test
+    public void testRowValueExpressionNULLPredicate() throws Exception {
+        assertEquals(3, (int)
+        create().selectCount()
+                .from(TBook())
+                .where(row(TBook_CONTENT_PDF(), TBook_CONTENT_TEXT()).isNull())
+                .and(row(TBook_ID(), TBook_AUTHOR_ID()).isNotNull())
+                .fetchOne(0, Integer.class));
+
+    }
+
+    @Test
     public void testRowValueExpressionOverlapsCondition() throws Exception {
         // 1903-06-25
         // 1947-08-24

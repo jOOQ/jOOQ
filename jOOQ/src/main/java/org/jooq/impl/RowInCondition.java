@@ -36,43 +36,47 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Comparator.EQUALS;
 import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.SubqueryOperator.NOT_IN;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.DataType;
-import org.jooq.Field;
+import org.jooq.Operator;
+import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
-import org.jooq.Row2;
+import org.jooq.Row;
 
 /**
  * @author Lukas Eder
  */
-class RowOverlaps<T1, T2> extends AbstractCondition {
+class RowInCondition extends AbstractCondition {
 
     /**
      * Generated UID
      */
-    private static final long  serialVersionUID = 85887551884667824L;
+    private static final long                  serialVersionUID = -1806139685201770706L;
 
-    private final Row2<T1, T2> left;
-    private final Row2<T1, T2> right;
+    private final Row                          left;
+    private final QueryPartList<? extends Row> right;
+    private final SubqueryOperator             operator;
 
-    RowOverlaps(Row2<T1, T2> left, Row2<T1, T2> right) {
+    RowInCondition(Row left, QueryPartList<? extends Row> right, SubqueryOperator operator) {
         this.left = left;
         this.right = right;
+        this.operator = operator;
     }
 
     @Override
@@ -86,46 +90,21 @@ class RowOverlaps<T1, T2> extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        Field<T1> left1 = left.field1();
-        Field<T2> left2 = left.field2();
-        Field<T1> right1 = right.field1();
-        Field<T2> right2 = right.field2();
+        if (asList(ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+            List<Condition> conditions = new ArrayList<Condition>();
 
-        DataType<?> type0 = left1.getDataType();
-        DataType<?> type1 = left2.getDataType();
-
-        // The SQL standard only knows temporal OVERLAPS predicates:
-        // (DATE, DATE)     OVERLAPS (DATE, DATE)
-        // (DATE, INTERVAL) OVERLAPS (DATE, INTERVAL)
-        boolean standardOverlaps = type0.isDateTime() && type1.isTemporal();
-        boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
-
-        // The non-standard OVERLAPS predicate is always simulated
-        if (!standardOverlaps || asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
-
-            // Interval OVERLAPS predicates need some additional arithmetic
-            if (intervalOverlaps) {
-                return (QueryPartInternal)
-                       right1.le(left1.add(left2)).and(
-                       left1.le(right1.add(right2)));
+            for (Row row : right) {
+                conditions.add(new RowCondition(left, row, EQUALS));
             }
 
-            // All other OVERLAPS predicates can be simulated simply
-            else {
-                return (QueryPartInternal)
-                       right1.le(left2.cast(right1)).and(
-                       left1.le(right2.cast(left1)));
+            Condition result = new CombinedCondition(Operator.OR, conditions);
+
+            if (operator == NOT_IN) {
+                result = result.not();
             }
-        }
 
-        // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
-        else if (intervalOverlaps && asList(HSQLDB).contains(configuration.getDialect())) {
-                return (QueryPartInternal)
-                        right1.le(left1.add(left2)).and(
-                        left1.le(right1.add(right2)));
+            return (QueryPartInternal) result;
         }
-
-        // Everyone else can handle OVERLAPS (Postgres, Oracle)
         else {
             return new Native();
         }
@@ -136,20 +115,21 @@ class RowOverlaps<T1, T2> extends AbstractCondition {
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = -1552476981094856727L;
+        private static final long serialVersionUID = -7019193803316281371L;
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql("(")
-                   .sql(left)
-                   .keyword(" overlaps ")
+            context.sql(left)
+                   .sql(" ")
+                   .keyword(operator.toSQL())
+                   .sql(" (")
                    .sql(right)
                    .sql(")");
         }
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(left).bind(right);
+            context.bind(left).bind((QueryPart) right);
         }
     }
 }

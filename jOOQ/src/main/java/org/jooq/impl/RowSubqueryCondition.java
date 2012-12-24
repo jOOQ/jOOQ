@@ -46,7 +46,7 @@ import org.jooq.Select;
 /**
  * @author Lukas Eder
  */
-class RowSubquery extends AbstractCondition {
+class RowSubqueryCondition extends AbstractCondition {
 
     /**
      * Generated UID
@@ -57,7 +57,7 @@ class RowSubquery extends AbstractCondition {
     private final Select<?>        right;
     private final SubqueryOperator operator;
 
-    RowSubquery(Row left, Select<?> right, SubqueryOperator operator) {
+    RowSubqueryCondition(Row left, Select<?> right, SubqueryOperator operator) {
         this.left = left;
         this.right = right;
         this.operator = operator;

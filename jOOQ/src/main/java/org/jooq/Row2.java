@@ -300,7 +300,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lessThan(Select<? extends Record2<T1, T2>> select);
 
     /**
@@ -343,7 +343,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessThan(Row2)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lt(Select<? extends Record2<T1, T2>> select);
 
     /**
@@ -389,7 +389,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lessOrEqual(Select<? extends Record2<T1, T2>> select);
 
     /**
@@ -432,7 +432,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #lessOrEqual(Row2)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition le(Select<? extends Record2<T1, T2>> select);
 
     /**
@@ -478,7 +478,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition greaterThan(Select<? extends Record2<T1, T2>> select);
 
     /**
@@ -521,7 +521,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterThan(Row2)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition gt(Select<? extends Record2<T1, T2>> select);
 
     /**
@@ -567,7 +567,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition greaterOrEqual(Select<? extends Record2<T1, T2>> select);
 
     /**
@@ -610,7 +610,7 @@ public interface Row2<T1, T2> extends Row {
      *
      * @see #greaterOrEqual(Row2)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition ge(Select<? extends Record2<T1, T2>> select);
 
     // ------------------------------------------------------------------------

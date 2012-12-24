@@ -42,7 +42,6 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -252,11 +251,48 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     }
 
     @Test
+    public void testRowValueExpressionOrderingSubselects() throws Exception {
+        // IN with subselects - not supported by all DBs
+        // TODO [#1772] Simulate this for all dialects
+        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
+            log.info("SKIPPING", "Tuples and subselects");
+        }
+        else {
+            assertEquals(1, (int)
+            create().selectOne()
+                    .where(trueCondition())
+                    .and(row(1).lt(select(inline(2))))
+                    .and(row(1).le(select(inline(1))))
+                    .and(row(1).gt(select(inline(0))))
+                    .and(row(1).ge(select(inline(1))))
+                    .fetchOne(0, Integer.class));
+
+            assertEquals(1, (int)
+            create().selectOne()
+                    .where(trueCondition())
+                    .and(row(1, 1).lt(select(inline(1), inline(2))))
+                    .and(row(1, 1).le(select(inline(1), inline(2))))
+                    .and(row(1, 1).gt(select(inline(1), inline(0))))
+                    .and(row(1, 1).ge(select(inline(1), inline(0))))
+                    .fetchOne(0, Integer.class));
+
+            assertEquals(1, (int)
+            create().selectOne()
+                    .where(trueCondition())
+                    .and(row(1, 1, 1).lt(select(inline(1), inline(1), inline(2))))
+                    .and(row(1, 1, 1).le(select(inline(1), inline(1), inline(2))))
+                    .and(row(1, 1, 1).gt(select(inline(1), inline(1), inline(0))))
+                    .and(row(1, 1, 1).ge(select(inline(1), inline(1), inline(0))))
+                    .fetchOne(0, Integer.class));
+        }
+    }
+
+    @Test
     public void testRowValueExpressionInConditions() throws Exception {
 
         // IN with subselects - not supported by all DBs
         // TODO [#1772] Simulate this for all dialects
-        if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE, H2).contains(getDialect())) {
+        if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
             log.info("SKIPPING", "Tuples and subselects");
         }
         else {

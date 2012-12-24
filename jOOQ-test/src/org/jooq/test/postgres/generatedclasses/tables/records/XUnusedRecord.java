@@ -13,7 +13,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record15<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1530727934;
+	private static final long serialVersionUID = -1105440634;
 
 	/**
 	 * Setter for <code>public.x_unused.id</code>. 
@@ -238,53 +238,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
 	public java.math.BigDecimal getField_737() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.FIELD_737);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>public.x_test_case_85</code> referencing this <code>public.x_unused</code>
-	 */
-	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85)
-			.where(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID)))
-			.and(org.jooq.test.postgres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>public.x_unused</code> referencing this <code>public.x_unused</code>
-	 */
-	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID_REF.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID)))
-			.and(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>public.x_test_case_64_69</code> referencing this <code>public.x_unused</code>
-	 */
-	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>public.x_unused</code> referenced by this <code>public.x_unused</code>
-	 */
-	public org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.ID_REF)))
-			.and(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

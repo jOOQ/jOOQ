@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "public")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.postgres.generatedclasses.enums.UBookStatus> {
 
-	private static final long serialVersionUID = -1919384659;
+	private static final long serialVersionUID = -1105607323;
 
 	/**
 	 * Setter for <code>public.t_book.id</code>. 
@@ -37,18 +37,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setAuthorId(org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, value.getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>public.t_book.author_id</code>. 
 	 */
 	@javax.persistence.Column(name = "author_id", nullable = false, precision = 32)
@@ -61,18 +49,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setCoAuthorId(org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value.getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
-		}
 	}
 
 	/**
@@ -136,18 +112,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord}
-	 */
-	public void setLanguageId(org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>public.t_book.language_id</code>. 
 	 */
 	@javax.persistence.Column(name = "language_id", nullable = false, precision = 32)
@@ -198,50 +162,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@javax.persistence.Column(name = "status")
 	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.STATUS);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>public.t_book_to_book_store</code> referencing this <code>public.t_book</code>
-	 */
-	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>public.t_author</code> referenced by this <code>public.t_book</code>
-	 */
-	public org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>public.t_author</code> referenced by this <code>public.t_book</code>
-	 */
-	public org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>public.t_language</code> referenced by this <code>public.t_book</code>
-	 */
-	public org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

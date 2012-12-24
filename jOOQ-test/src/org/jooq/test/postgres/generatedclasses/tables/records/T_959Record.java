@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_959", schema = "public")
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> implements org.jooq.Record1<org.jooq.test.postgres.generatedclasses.enums.U_959> {
 
-	private static final long serialVersionUID = 1519953781;
+	private static final long serialVersionUID = -160391701;
 
 	/**
 	 * Setter for <code>public.t_959.java_keywords</code>. 
@@ -27,10 +27,6 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	public org.jooq.test.postgres.generatedclasses.enums.U_959 getJavaKeywords() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_959.T_959.JAVA_KEYWORDS);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation

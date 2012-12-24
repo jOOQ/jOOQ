@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "public")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = -1134715528;
+	private static final long serialVersionUID = -2004108591;
 
 	/**
 	 * Setter for <code>public.t_author.id</code>. 
@@ -102,30 +102,6 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@javax.persistence.Column(name = "address")
 	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>public.t_book</code> referencing this <code>public.t_author</code>
-	 */
-	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>public.t_book</code> referencing this <code>public.t_author</code>
-	 */
-	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

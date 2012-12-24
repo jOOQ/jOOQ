@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_book", schema = "public")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.postgres.generatedclasses.enums.UBookStatus> {
 
-	private static final long serialVersionUID = -1462994040;
+	private static final long serialVersionUID = -553811502;
 
 	/**
 	 * Setter for <code>public.v_book.id</code>. 
@@ -162,10 +162,6 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.STATUS);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record10 type implementation

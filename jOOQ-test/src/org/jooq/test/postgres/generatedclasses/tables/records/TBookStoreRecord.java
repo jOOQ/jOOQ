@@ -11,7 +11,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book_store", schema = "public")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -527135931;
+	private static final long serialVersionUID = -627700565;
 
 	/**
 	 * Setter for <code>public.t_book_store.name</code>. 
@@ -26,20 +26,6 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@javax.persistence.Column(name = "name", unique = true, nullable = false, length = 400)
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>public.t_book_to_book_store</code> referencing this <code>public.t_book_store</code>
-	 */
-	public org.jooq.Result<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.postgres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.postgres.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

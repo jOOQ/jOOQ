@@ -867,21 +867,9 @@ class Rows extends Generators {
         «classHeader»
         package org.jooq.impl;
         
-        import static java.util.Arrays.asList;
-        import static org.jooq.Comparator.EQUALS;
-        import static org.jooq.SQLDialect.ASE;
-        import static org.jooq.SQLDialect.DB2;
-        import static org.jooq.SQLDialect.DERBY;
-        import static org.jooq.SQLDialect.FIREBIRD;
-        import static org.jooq.SQLDialect.INGRES;
-        import static org.jooq.SQLDialect.SQLITE;
-        import static org.jooq.SQLDialect.SQLSERVER;
-        import static org.jooq.SQLDialect.SYBASE;
         import static org.jooq.impl.Factory.row;
         import static org.jooq.impl.Factory.vals;
-        import static org.jooq.impl.SubqueryOperator.NOT_IN;
         
-        import java.util.ArrayList;
         import java.util.Arrays;
         import java.util.Collection;
         import java.util.List;
@@ -891,11 +879,7 @@ class Rows extends Generators {
         import org.jooq.BindContext;
         import org.jooq.Comparator;
         import org.jooq.Condition;
-        import org.jooq.Configuration;
         import org.jooq.Field;
-        import org.jooq.Operator;
-        import org.jooq.QueryPart;
-        import org.jooq.QueryPartInternal;
         import org.jooq.Record;
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         import org.jooq.Record«degree»;
@@ -1672,14 +1656,14 @@ class Rows extends Generators {
 
             @Override
             public final Condition in(Collection rows) {
-                QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>> list = new QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>>(rows);
-                return new InRows(list, SubqueryOperator.IN);
+                QueryPartList<Row> list = new QueryPartList<Row>(rows);
+                return new RowIn(this, list, SubqueryOperator.IN);
             }
         
             @Override
             public final Condition notIn(Collection rows) {
-                QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>> list = new QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>>(rows);
-                return new InRows(list, SubqueryOperator.NOT_IN);
+                QueryPartList<Row> list = new QueryPartList<Row>(rows);
+                return new RowIn(this, list, SubqueryOperator.NOT_IN);
             }
         
             // ------------------------------------------------------------------------
@@ -1773,80 +1757,6 @@ class Rows extends Generators {
             @Override
             public final Condition overlaps(Row2<T1, T2> row) {
                 return new RowOverlaps(this, row);
-            }
-        
-            // ------------------------------------------------------------------------
-            // XXX: Implementation classes
-            // ------------------------------------------------------------------------
-        
-            private class InRows extends AbstractCondition {
-        
-                /**
-                 * Generated UID
-                 */
-                private static final long serialVersionUID = -1806139685201770706L;
-        
-                private final QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>> other;
-                private final SubqueryOperator operator;
-        
-                InRows(QueryPartList<RowImpl<«TN(Constants::MAX_ROW_DEGREE)»>> other, SubqueryOperator operator) {
-                    this.other = other;
-                    this.operator = operator;
-                }
-        
-                @Override
-                public final void toSQL(RenderContext context) {
-                    delegate(context).toSQL(context);
-                }
-        
-                @Override
-                public final void bind(BindContext context) {
-                    delegate(context).bind(context);
-                }
-        
-                private final QueryPartInternal delegate(Configuration configuration) {
-                    if (asList(ASE, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
-                        List<Condition> conditions = new ArrayList<Condition>();
-        
-                        for (RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> row : other) {
-                            conditions.add(new RowCompare(RowImpl.this, row, EQUALS));
-                        }
-        
-                        Condition result = new CombinedCondition(Operator.OR, conditions);
-        
-                        if (operator == NOT_IN) {
-                            result = result.not();
-                        }
-        
-                        return (QueryPartInternal) result;
-                    }
-                    else {
-                        return new Native();
-                    }
-                }
-        
-                private class Native extends AbstractCondition {
-        
-                    /**
-                     * Generated UID
-                     */
-                    private static final long serialVersionUID = -7019193803316281371L;
-        
-                    @Override
-                    public final void toSQL(RenderContext context) {
-                        context.sql(RowImpl.this)
-                               .sql(" ")
-                               .keyword(operator.toSQL())
-                               .sql(" (")
-                               .sql(other)
-                               .sql(")");
-                    }
-        
-                    @Override
-                    public final void bind(BindContext context) {
-                        context.bind(RowImpl.this).bind((QueryPart) other);
-                    }
-                }
             }
         }
         ''');

@@ -874,7 +874,6 @@ class Rows extends Generators {
         import static org.jooq.SQLDialect.DERBY;
         import static org.jooq.SQLDialect.FIREBIRD;
         import static org.jooq.SQLDialect.INGRES;
-        import static org.jooq.SQLDialect.ORACLE;
         import static org.jooq.SQLDialect.SQLITE;
         import static org.jooq.SQLDialect.SQLSERVER;
         import static org.jooq.SQLDialect.SYBASE;
@@ -1689,7 +1688,7 @@ class Rows extends Generators {
             
             @Override
             public final Condition equal(Select select) {
-                return new Subquery(select, SubqueryOperator.EQUALS);
+                return new RowSubquery(this, select, SubqueryOperator.EQUALS);
             }
         
             @Override
@@ -1699,7 +1698,7 @@ class Rows extends Generators {
         
             @Override
             public final Condition notEqual(Select select) {
-                return new Subquery(select, SubqueryOperator.NOT_EQUALS);
+                return new RowSubquery(this, select, SubqueryOperator.NOT_EQUALS);
             }
         
             @Override
@@ -1709,7 +1708,7 @@ class Rows extends Generators {
         
 «««            @Override
 «««            public final Condition greaterThan(Select select) {
-«««                return new Subquery(select, SubqueryOperator.GREATER);
+«««                return new RowSubquery(this, select, SubqueryOperator.GREATER);
 «««            }
 «««        
 «««            @Override
@@ -1719,7 +1718,7 @@ class Rows extends Generators {
 «««        
 «««            @Override
 «««            public final Condition greaterOrEqual(Select select) {
-«««                return new Subquery(select, SubqueryOperator.GREATER_OR_EQUAL);
+«««                return new RowSubquery(this, select, SubqueryOperator.GREATER_OR_EQUAL);
 «««            }
 «««        
 «««            @Override
@@ -1729,7 +1728,7 @@ class Rows extends Generators {
 «««        
 «««            @Override
 «««            public final Condition lessThan(Select select) {
-«««                return new Subquery(select, SubqueryOperator.LESS);
+«««                return new RowSubquery(this, select, SubqueryOperator.LESS);
 «««            }
 «««        
 «««            @Override
@@ -1739,7 +1738,7 @@ class Rows extends Generators {
 «««        
 «««            @Override
 «««            public final Condition lessOrEqual(Select select) {
-«««                return new Subquery(select, SubqueryOperator.LESS_OR_EQUAL);
+«««                return new RowSubquery(this, select, SubqueryOperator.LESS_OR_EQUAL);
 «««            }
 «««        
 «««            @Override
@@ -1749,12 +1748,12 @@ class Rows extends Generators {
 «««        
             @Override
             public final Condition in(Select select) {
-                return new Subquery(select, SubqueryOperator.IN);
+                return new RowSubquery(this, select, SubqueryOperator.IN);
             }
         
             @Override
             public final Condition notIn(Select select) {
-                return new Subquery(select, SubqueryOperator.NOT_IN);
+                return new RowSubquery(this, select, SubqueryOperator.NOT_IN);
             }
         
             // ------------------------------------------------------------------------
@@ -1847,46 +1846,6 @@ class Rows extends Generators {
                     public final void bind(BindContext context) {
                         context.bind(RowImpl.this).bind((QueryPart) other);
                     }
-                }
-            }
-        
-            private class Subquery extends AbstractCondition {
-        
-                /**
-                 * Generated UID
-                 */
-                private static final long      serialVersionUID = -1806139685201770706L;
-        
-                private final Select<?>        other;
-                private final SubqueryOperator operator;
-        
-                Subquery(Select<?> other, SubqueryOperator operator) {
-                    this.other = other;
-                    this.operator = operator;
-                }
-        
-                @Override
-                public final void toSQL(RenderContext context) {
-        
-                    // Some databases need extra parentheses around the RHS
-                    boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
-                    boolean subquery = context.subquery();
-        
-                    context.sql(RowImpl.this)
-                           .sql(" ")
-                           .keyword(operator.toSQL())
-                           .sql(" (")
-                           .sql(extraParentheses ? "(" : "")
-                           .subquery(true)
-                           .sql(other)
-                           .subquery(subquery)
-                           .sql(extraParentheses ? ")" : "")
-                           .sql(")");
-                }
-        
-                @Override
-                public final void bind(BindContext context) {
-                    context.bind(RowImpl.this).bind(other);
                 }
             }
         }

@@ -1048,6 +1048,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRowValueExpressionNULLPredicate() throws Exception {
+        new RowValueExpressionTests(this).testRowValueExpressionNULLPredicate();
+    }
+
+    @Test
     public void testRowValueExpressionOverlapsCondition() throws Exception {
         new RowValueExpressionTests(this).testRowValueExpressionOverlapsCondition();
     }

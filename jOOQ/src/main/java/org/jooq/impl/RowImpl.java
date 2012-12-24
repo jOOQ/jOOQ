@@ -305,6 +305,20 @@ implements
     }
 
     // ------------------------------------------------------------------------
+    // [NOT] NULL predicates
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Condition isNull() {
+    	return new RowIsNull(this, true);
+    }
+    
+    @Override
+    public final Condition isNotNull() {
+    	return new RowIsNull(this, false);
+	}
+
+    // ------------------------------------------------------------------------
     // Equal / Not equal comparison predicates
     // ------------------------------------------------------------------------
 

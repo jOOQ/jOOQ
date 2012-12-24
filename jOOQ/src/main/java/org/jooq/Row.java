@@ -62,4 +62,38 @@ public interface Row extends QueryPart {
      */
     Field<?>[] getFields();
 
+    // ------------------------------------------------------------------------
+    // [NOT] NULL predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Check if this row value expression contains only <code>NULL</code> values
+     * <p>
+     * Row NULL predicates can be simulated in those databases that do not support
+     * such predicates natively:
+     * <code>(A, B) IS NULL</code> is equivalent to
+     * <code>A IS NULL AND B IS NULL</code>
+     */
+    @Support
+    Condition isNull();
+
+    /**
+     * Check if this row value expression contains no <code>NULL</code> values
+     * <p>
+     * Row NOT NULL predicates can be simulated in those databases that do not support
+     * such predicates natively:
+     * <code>(A, B) IS NOT NULL</code> is equivalent to
+     * <code>A IS NOT NULL AND B IS NOT NULL</code>
+     * <p>
+     * Note that the two following predicates are NOT equivalent:
+     * <ul>
+     * <li><code>(A, B) IS NOT NULL</code>, which is the same as
+     * <code>(A IS NOT NULL) AND (B IS NOT NULL)</code></li>
+     * <li><code>NOT((A, B) IS NULL)</code>, which is the same as
+     * <code>(A IS NOT NULL) OR (B IS NOT NULL)</code></li>
+     * </ul>
+     */
+    @Support
+    Condition isNotNull();
+
 }

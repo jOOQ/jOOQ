@@ -9,46 +9,20 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -2092293869;
+	private static final long serialVersionUID = 1742881130;
 
 	/**
-	 * Setter for <code>TEST.T_986_1.REF</code>. 
+	 * Setter for <code>LUKAS.T_986_1.REF</code>. 
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_986_1.REF, value);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord}
-	 */
-	public void setRef(org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.db2.generatedclasses.tables.T_986_1.REF, null);
-		}
-		else {
-			setValue(org.jooq.test.db2.generatedclasses.tables.T_986_1.REF, value.getValue(org.jooq.test.db2.generatedclasses.tables.XUnused.ID));
-		}
-	}
-
-	/**
-	 * Getter for <code>TEST.T_986_1.REF</code>. 
+	 * Getter for <code>LUKAS.T_986_1.REF</code>. 
 	 */
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_986_1.REF);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.T_986_1</code>
-	 */
-	public org.jooq.test.db2.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.db2.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.db2.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.db2.generatedclasses.tables.T_986_1.REF)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

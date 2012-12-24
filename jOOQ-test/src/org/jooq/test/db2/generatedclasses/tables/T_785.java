@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -355761116;
+	private static final long serialVersionUID = -1355457266;
 
 	/**
-	 * The singleton instance of <code>TEST.T_785</code>
+	 * The singleton instance of <code>LUKAS.T_785</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.T_785 T_785 = new org.jooq.test.db2.generatedclasses.tables.T_785();
 
@@ -25,24 +25,24 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedcl
 	}
 
 	/**
-	 * The column <code>TEST.T_785.ID</code>. 
+	 * The column <code>LUKAS.T_785.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_785);
 
 	/**
-	 * The column <code>TEST.T_785.NAME</code>. 
+	 * The column <code>LUKAS.T_785.NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, T_785);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
 
 	/**
-	 * The column <code>TEST.T_785.VALUE</code>. 
+	 * The column <code>LUKAS.T_785.VALUE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, T_785);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_785);
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_785() {
-		super("T_785", org.jooq.test.db2.generatedclasses.Test.TEST);
+		super("T_785", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 }

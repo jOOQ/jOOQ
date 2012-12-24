@@ -9,39 +9,35 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 840579753;
+	private static final long serialVersionUID = -1750873817;
 
 	/**
-	 * Setter for <code>TEST.T_IDENTITY.ID</code>. 
+	 * Setter for <code>LUKAS.T_IDENTITY.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TIdentity.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_IDENTITY.ID</code>. 
+	 * Getter for <code>LUKAS.T_IDENTITY.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TIdentity.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_IDENTITY.VAL</code>. 
+	 * Setter for <code>LUKAS.T_IDENTITY.VAL</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TIdentity.VAL, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_IDENTITY.VAL</code>. 
+	 * Getter for <code>LUKAS.T_IDENTITY.VAL</code>. 
 	 */
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TIdentity.VAL);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1442231047;
+	private static final long serialVersionUID = 1414028120;
 
 	/**
-	 * The singleton instance of <code>TEST.T_BOOK_STORE</code>
+	 * The singleton instance of <code>LUKAS.T_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.db2.generatedclasses.tables.TBookStore();
 
@@ -25,15 +25,15 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.d
 	}
 
 	/**
-	 * The column <code>TEST.T_BOOK_STORE.NAME</code>. 
+	 * The column <code>LUKAS.T_BOOK_STORE.NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_STORE);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBookStore() {
-		super("T_BOOK_STORE", org.jooq.test.db2.generatedclasses.Test.TEST);
+		super("T_BOOK_STORE", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 
 	/**

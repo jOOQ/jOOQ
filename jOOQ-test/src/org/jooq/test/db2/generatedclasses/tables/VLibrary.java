@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -1185913766;
+	private static final long serialVersionUID = 1617647272;
 
 	/**
-	 * The singleton instance of <code>TEST.V_LIBRARY</code>
+	 * The singleton instance of <code>LUKAS.V_LIBRARY</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.VLibrary V_LIBRARY = new org.jooq.test.db2.generatedclasses.tables.VLibrary();
 
@@ -25,19 +25,19 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.db2.generate
 	}
 
 	/**
-	 * The column <code>TEST.V_LIBRARY.AUTHOR</code>. 
+	 * The column <code>LUKAS.V_LIBRARY.AUTHOR</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), V_LIBRARY);
 
 	/**
-	 * The column <code>TEST.V_LIBRARY.TITLE</code>. 
+	 * The column <code>LUKAS.V_LIBRARY.TITLE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_LIBRARY);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), V_LIBRARY);
 
 	/**
 	 * No further instances allowed
 	 */
 	private VLibrary() {
-		super("V_LIBRARY", org.jooq.test.db2.generatedclasses.Test.TEST);
+		super("V_LIBRARY", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 }

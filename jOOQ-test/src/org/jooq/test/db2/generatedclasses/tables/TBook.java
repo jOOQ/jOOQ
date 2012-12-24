@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 693381478;
+	private static final long serialVersionUID = 2066051912;
 
 	/**
-	 * The singleton instance of <code>TEST.T_BOOK</code>
+	 * The singleton instance of <code>LUKAS.T_BOOK</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.db2.generatedclasses.tables.TBook();
 
@@ -25,55 +25,55 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.ge
 	}
 
 	/**
-	 * The column <code>TEST.T_BOOK.ID</code>. 
+	 * The column <code>LUKAS.T_BOOK.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>TEST.T_BOOK.AUTHOR_ID</code>. 
+	 * The column <code>LUKAS.T_BOOK.AUTHOR_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>. 
+	 * The column <code>LUKAS.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>TEST.T_BOOK.DETAILS_ID</code>. 
+	 * The column <code>LUKAS.T_BOOK.DETAILS_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>TEST.T_BOOK.TITLE</code>. 
+	 * The column <code>LUKAS.T_BOOK.TITLE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK);
 
 	/**
-	 * The column <code>TEST.T_BOOK.PUBLISHED_IN</code>. 
+	 * The column <code>LUKAS.T_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>TEST.T_BOOK.LANGUAGE_ID</code>. 
+	 * The column <code>LUKAS.T_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>TEST.T_BOOK.CONTENT_TEXT</code>. 
+	 * The column <code>LUKAS.T_BOOK.CONTENT_TEXT</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR.length(32700), T_BOOK);
 
 	/**
-	 * The column <code>TEST.T_BOOK.CONTENT_PDF</code>. 
+	 * The column <code>LUKAS.T_BOOK.CONTENT_PDF</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(1048576), T_BOOK);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TBook() {
-		super("T_BOOK", org.jooq.test.db2.generatedclasses.Test.TEST);
+		super("T_BOOK", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 
 	/**

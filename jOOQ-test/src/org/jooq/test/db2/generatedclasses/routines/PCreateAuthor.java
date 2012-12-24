@@ -9,12 +9,12 @@ package org.jooq.test.db2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PCreateAuthor extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1688827384;
+	private static final long serialVersionUID = -1259837772;
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public PCreateAuthor() {
-		super("P_CREATE_AUTHOR", org.jooq.test.db2.generatedclasses.Test.TEST);
+		super("P_CREATE_AUTHOR", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 }

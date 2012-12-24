@@ -9,179 +9,175 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record12<java.lang.Integer, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double> {
 
-	private static final long serialVersionUID = -1755253033;
+	private static final long serialVersionUID = -1250111333;
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	public void setShort(java.lang.Short value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.SHORT, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	public java.lang.Short getShort() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.SHORT);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	public void setInteger(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.INTEGER, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	public java.lang.Integer getInteger() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.INTEGER);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.LONG</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	public void setLong(java.lang.Long value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.LONG, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.LONG</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	public java.lang.Long getLong() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.LONG);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	public void setByteDecimal(java.lang.Byte value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.BYTE_DECIMAL, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	public java.lang.Byte getByteDecimal() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.BYTE_DECIMAL);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	public void setShortDecimal(java.lang.Short value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.SHORT_DECIMAL, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	public java.lang.Short getShortDecimal() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.SHORT_DECIMAL);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	public void setIntegerDecimal(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.INTEGER_DECIMAL, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	public java.lang.Integer getIntegerDecimal() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.INTEGER_DECIMAL);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	public void setLongDecimal(java.lang.Long value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.LONG_DECIMAL, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	public java.lang.Long getLongDecimal() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.LONG_DECIMAL);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.BIG_INTEGER, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	public java.math.BigInteger getBigInteger() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.BIG_INTEGER);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	public void setBigDecimal(java.math.BigDecimal value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.BIG_DECIMAL, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	public java.math.BigDecimal getBigDecimal() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.BIG_DECIMAL);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.FLOAT</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.FLOAT</code>. 
 	 */
 	public void setFloat(java.lang.Float value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.FLOAT, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.FLOAT</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.FLOAT</code>. 
 	 */
 	public java.lang.Float getFloat() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.FLOAT);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.DOUBLE</code>. 
+	 * Setter for <code>LUKAS.T_639_NUMBERS_TABLE.DOUBLE</code>. 
 	 */
 	public void setDouble(java.lang.Double value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.DOUBLE, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.DOUBLE</code>. 
+	 * Getter for <code>LUKAS.T_639_NUMBERS_TABLE.DOUBLE</code>. 
 	 */
 	public java.lang.Double getDouble() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.T_639NumbersTable.DOUBLE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

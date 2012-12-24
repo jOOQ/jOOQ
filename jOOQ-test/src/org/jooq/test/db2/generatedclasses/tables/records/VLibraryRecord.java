@@ -9,39 +9,35 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1209631203;
+	private static final long serialVersionUID = -290600441;
 
 	/**
-	 * Setter for <code>TEST.V_LIBRARY.AUTHOR</code>. 
+	 * Setter for <code>LUKAS.V_LIBRARY.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VLibrary.AUTHOR, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_LIBRARY.AUTHOR</code>. 
+	 * Getter for <code>LUKAS.V_LIBRARY.AUTHOR</code>. 
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VLibrary.AUTHOR);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_LIBRARY.TITLE</code>. 
+	 * Setter for <code>LUKAS.V_LIBRARY.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.VLibrary.TITLE, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_LIBRARY.TITLE</code>. 
+	 * Getter for <code>LUKAS.V_LIBRARY.TITLE</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.VLibrary.TITLE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

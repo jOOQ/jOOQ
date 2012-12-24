@@ -9,95 +9,91 @@ package org.jooq.test.db2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.db2.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> {
 
-	private static final long serialVersionUID = -421906635;
+	private static final long serialVersionUID = -474345953;
 
 	/**
-	 * Setter for <code>TEST.T_DATES.ID</code>. 
+	 * Setter for <code>LUKAS.T_DATES.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.ID, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.ID</code>. 
+	 * Getter for <code>LUKAS.T_DATES.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.ID);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.D</code>. 
+	 * Setter for <code>LUKAS.T_DATES.D</code>. 
 	 */
 	public void setD(java.sql.Date value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.D, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.D</code>. 
+	 * Getter for <code>LUKAS.T_DATES.D</code>. 
 	 */
 	public java.sql.Date getD() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.D);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.T</code>. 
+	 * Setter for <code>LUKAS.T_DATES.T</code>. 
 	 */
 	public void setT(java.sql.Time value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.T, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.T</code>. 
+	 * Getter for <code>LUKAS.T_DATES.T</code>. 
 	 */
 	public java.sql.Time getT() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.T);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.TS</code>. 
+	 * Setter for <code>LUKAS.T_DATES.TS</code>. 
 	 */
 	public void setTs(java.sql.Timestamp value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.TS, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.TS</code>. 
+	 * Getter for <code>LUKAS.T_DATES.TS</code>. 
 	 */
 	public java.sql.Timestamp getTs() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.TS);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.D_INT</code>. 
+	 * Setter for <code>LUKAS.T_DATES.D_INT</code>. 
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.D_INT, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.D_INT</code>. 
+	 * Getter for <code>LUKAS.T_DATES.D_INT</code>. 
 	 */
 	public java.lang.Integer getDInt() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.D_INT);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * Setter for <code>LUKAS.T_DATES.TS_BIGINT</code>. 
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(org.jooq.test.db2.generatedclasses.tables.TDates.TS_BIGINT, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * Getter for <code>LUKAS.T_DATES.TS_BIGINT</code>. 
 	 */
 	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.db2.generatedclasses.tables.TDates.TS_BIGINT);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

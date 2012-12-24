@@ -9,10 +9,10 @@ package org.jooq.test.db2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = -782965971;
+	private static final long serialVersionUID = -1970060029;
 
 	/**
-	 * The singleton instance of <code>TEST.T_986_1</code>
+	 * The singleton instance of <code>LUKAS.T_986_1</code>
 	 */
 	public static final org.jooq.test.db2.generatedclasses.tables.T_986_1 T_986_1 = new org.jooq.test.db2.generatedclasses.tables.T_986_1();
 
@@ -25,7 +25,7 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 	}
 
 	/**
-	 * The column <code>TEST.T_986_1.REF</code>. 
+	 * The column <code>LUKAS.T_986_1.REF</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.db2.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, T_986_1);
 
@@ -33,7 +33,7 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.db2.
 	 * No further instances allowed
 	 */
 	private T_986_1() {
-		super("T_986_1", org.jooq.test.db2.generatedclasses.Test.TEST);
+		super("T_986_1", org.jooq.test.db2.generatedclasses.Lukas.LUKAS);
 	}
 
 	/**

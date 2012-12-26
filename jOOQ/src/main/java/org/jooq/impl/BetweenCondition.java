@@ -53,6 +53,7 @@ import static org.jooq.impl.Factory.val;
 import org.jooq.BetweenAndStep;
 import org.jooq.BindContext;
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -90,20 +91,37 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
 
     @Override
     public final void bind(BindContext context) {
-        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(context.getDialect())) {
-            simulateSymmetric().bind(context);
-        }
-        else {
-            context.bind(field).bind(minValue).bind(maxValue);
-        }
+        delegate(context).bind(context);
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(context.getDialect())) {
-            simulateSymmetric().toSQL(context);
+        delegate(context).toSQL(context);
+    }
+
+    private final QueryPartInternal delegate(Configuration configuration) {
+        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+            if (not) {
+                return (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue));
+            }
+            else {
+                return (QueryPartInternal) field.between(minValue, maxValue).or(field.between(maxValue, minValue));
+            }
         }
         else {
+            return new Native();
+        }
+    }
+
+    private class Native extends AbstractQueryPart {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 2915703568738921575L;
+
+        @Override
+        public final void toSQL(RenderContext context) {
             context.sql(field)
                    .keyword(not ? " not" : "")
                    .keyword(" between ")
@@ -112,14 +130,10 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
                    .keyword(" and ")
                    .sql(maxValue);
         }
-    }
 
-    private final QueryPartInternal simulateSymmetric() {
-        if (not) {
-            return (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue));
-        }
-        else {
-            return (QueryPartInternal) field.between(minValue, maxValue).or(field.between(maxValue, minValue));
+        @Override
+        public final void bind(BindContext context) {
+            context.bind(field).bind(minValue).bind(maxValue);
         }
     }
 }

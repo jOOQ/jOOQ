@@ -619,6 +619,258 @@ public interface Row3<T1, T2, T3> extends Row {
     Condition ge(Select<? extends Record3<T1, T2, T3>> select);
 
     // ------------------------------------------------------------------------
+    // [NOT] BETWEEN predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> between(T1 minValue1, T2 minValue2, T3 minValue3);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> between(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> between(Row3<T1, T2, T3> minValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     *
+     * @see #between(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> between(Record3<T1, T2, T3> minValue);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     * <p>
+     * This is the same as calling <code>between(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A BETWEEN B AND C</code> is equivalent to the
+     * expression <code>A >= B AND A <= C</code> for those SQL dialects that do
+     * not properly support the <code>BETWEEN</code> predicate for row value
+     * expressions
+     */
+    @Support
+    Condition between(Row3<T1, T2, T3> minValue,
+                      Row3<T1, T2, T3> maxValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     * <p>
+     * This is the same as calling <code>between(minValue).and(maxValue)</code>
+     *
+     * @see #between(Row3, Row3)
+     */
+    @Support
+    Condition between(Record3<T1, T2, T3> minValue,
+                      Record3<T1, T2, T3> maxValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> betweenSymmetric(T1 minValue1, T2 minValue2, T3 minValue3);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> betweenSymmetric(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> betweenSymmetric(Row3<T1, T2, T3> minValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * records
+     *
+     * @see #betweenSymmetric(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> betweenSymmetric(Record3<T1, T2, T3> minValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     * <p>
+     * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A BETWEEN SYMMETRIC B AND C</code> is equivalent to
+     * the expression <code>(A >= B AND A <= C) OR (A >= C AND A <= B)</code>
+     * for those SQL dialects that do not properly support the
+     * <code>BETWEEN</code> predicate for row value expressions
+     */
+    @Support
+    Condition betweenSymmetric(Row3<T1, T2, T3> minValue,
+                               Row3<T1, T2, T3> maxValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * records
+     * <p>
+     * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
+     *
+     * @see #betweenSymmetric(Row3, Row3)
+     */
+    @Support
+    Condition betweenSymmetric(Record3<T1, T2, T3> minValue,
+                               Record3<T1, T2, T3> maxValue);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #between(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> notBetween(T1 minValue1, T2 minValue2, T3 minValue3);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #notBetween(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> notBetween(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #notBetween(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> notBetween(Row3<T1, T2, T3> minValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     *
+     * @see #notBetween(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> notBetween(Record3<T1, T2, T3> minValue);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     * <p>
+     * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A NOT BETWEEN B AND C</code> is equivalent to the
+     * expression <code>A < B OR A > C</code> for those SQL dialects that do
+     * not properly support the <code>BETWEEN</code> predicate for row value
+     * expressions
+     */
+    @Support
+    Condition notBetween(Row3<T1, T2, T3> minValue,
+                         Row3<T1, T2, T3> maxValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     * <p>
+     * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
+     *
+     * @see #notBetween(Row3, Row3)
+     */
+    @Support
+    Condition notBetween(Record3<T1, T2, T3> minValue,
+                         Record3<T1, T2, T3> maxValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(T1 minValue1, T2 minValue2, T3 minValue3);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Row3<T1, T2, T3> minValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * records
+     *
+     * @see #notBetweenSymmetric(Row3, Row3)
+     */
+    @Support
+    BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Record3<T1, T2, T3> minValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     * <p>
+     * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A NOT BETWEEN SYMMETRIC B AND C</code> is equivalent
+     * to the expression <code>(A < B OR A > C) AND (A < C OR A > B)</code> for
+     * those SQL dialects that do not properly support the <code>BETWEEN</code>
+     * predicate for row value expressions
+     */
+    @Support
+    Condition notBetweenSymmetric(Row3<T1, T2, T3> minValue,
+                                  Row3<T1, T2, T3> maxValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * records
+     * <p>
+     * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+     *
+     * @see #notBetweenSymmetric(Row3, Row3)
+     */
+    @Support
+    Condition notBetweenSymmetric(Record3<T1, T2, T3> minValue,
+                                  Record3<T1, T2, T3> maxValue);
+
+    // ------------------------------------------------------------------------
     // [NOT] DISTINCT predicates
     // ------------------------------------------------------------------------
 

@@ -1048,6 +1048,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRowValueExpressionBetweenConditions() throws Exception {
+        new RowValueExpressionTests(this).testRowValueExpressionBetweenConditions();
+    }
+
+    @Test
     public void testRowValueExpressionInConditions() throws Exception {
         new RowValueExpressionTests(this).testRowValueExpressionInConditions();
     }

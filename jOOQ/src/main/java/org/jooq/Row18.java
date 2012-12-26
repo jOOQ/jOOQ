@@ -694,6 +694,258 @@ public interface Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition ge(Select<? extends Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select);
 
     // ------------------------------------------------------------------------
+    // [NOT] BETWEEN predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> between(T1 minValue1, T2 minValue2, T3 minValue3, T4 minValue4, T5 minValue5, T6 minValue6, T7 minValue7, T8 minValue8, T9 minValue9, T10 minValue10, T11 minValue11, T12 minValue12, T13 minValue13, T14 minValue14, T15 minValue15, T16 minValue16, T17 minValue17, T18 minValue18);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> between(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3, Field<T4> minValue4, Field<T5> minValue5, Field<T6> minValue6, Field<T7> minValue7, Field<T8> minValue8, Field<T9> minValue9, Field<T10> minValue10, Field<T11> minValue11, Field<T12> minValue12, Field<T13> minValue13, Field<T14> minValue14, Field<T15> minValue15, Field<T16> minValue16, Field<T17> minValue17, Field<T18> minValue18);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> between(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     *
+     * @see #between(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> between(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     * <p>
+     * This is the same as calling <code>between(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A BETWEEN B AND C</code> is equivalent to the
+     * expression <code>A >= B AND A <= C</code> for those SQL dialects that do
+     * not properly support the <code>BETWEEN</code> predicate for row value
+     * expressions
+     */
+    @Support
+    Condition between(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue,
+                      Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     * <p>
+     * This is the same as calling <code>between(minValue).and(maxValue)</code>
+     *
+     * @see #between(Row18, Row18)
+     */
+    @Support
+    Condition between(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue,
+                      Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> betweenSymmetric(T1 minValue1, T2 minValue2, T3 minValue3, T4 minValue4, T5 minValue5, T6 minValue6, T7 minValue7, T8 minValue8, T9 minValue9, T10 minValue10, T11 minValue11, T12 minValue12, T13 minValue13, T14 minValue14, T15 minValue15, T16 minValue16, T17 minValue17, T18 minValue18);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> betweenSymmetric(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3, Field<T4> minValue4, Field<T5> minValue5, Field<T6> minValue6, Field<T7> minValue7, Field<T8> minValue8, Field<T9> minValue9, Field<T10> minValue10, Field<T11> minValue11, Field<T12> minValue12, Field<T13> minValue13, Field<T14> minValue14, Field<T15> minValue15, Field<T16> minValue16, Field<T17> minValue17, Field<T18> minValue18);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> betweenSymmetric(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * records
+     *
+     * @see #betweenSymmetric(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> betweenSymmetric(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     * <p>
+     * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A BETWEEN SYMMETRIC B AND C</code> is equivalent to
+     * the expression <code>(A >= B AND A <= C) OR (A >= C AND A <= B)</code>
+     * for those SQL dialects that do not properly support the
+     * <code>BETWEEN</code> predicate for row value expressions
+     */
+    @Support
+    Condition betweenSymmetric(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue,
+                               Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * records
+     * <p>
+     * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
+     *
+     * @see #betweenSymmetric(Row18, Row18)
+     */
+    @Support
+    Condition betweenSymmetric(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue,
+                               Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #between(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetween(T1 minValue1, T2 minValue2, T3 minValue3, T4 minValue4, T5 minValue5, T6 minValue6, T7 minValue7, T8 minValue8, T9 minValue9, T10 minValue10, T11 minValue11, T12 minValue12, T13 minValue13, T14 minValue14, T15 minValue15, T16 minValue16, T17 minValue17, T18 minValue18);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #notBetween(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetween(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3, Field<T4> minValue4, Field<T5> minValue5, Field<T6> minValue6, Field<T7> minValue7, Field<T8> minValue8, Field<T9> minValue9, Field<T10> minValue10, Field<T11> minValue11, Field<T12> minValue12, Field<T13> minValue13, Field<T14> minValue14, Field<T15> minValue15, Field<T16> minValue16, Field<T17> minValue17, Field<T18> minValue18);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #notBetween(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetween(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     *
+     * @see #notBetween(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetween(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     * <p>
+     * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A NOT BETWEEN B AND C</code> is equivalent to the
+     * expression <code>A < B OR A > C</code> for those SQL dialects that do
+     * not properly support the <code>BETWEEN</code> predicate for row value
+     * expressions
+     */
+    @Support
+    Condition notBetween(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue,
+                         Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     * <p>
+     * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
+     *
+     * @see #notBetween(Row18, Row18)
+     */
+    @Support
+    Condition notBetween(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue,
+                         Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetweenSymmetric(T1 minValue1, T2 minValue2, T3 minValue3, T4 minValue4, T5 minValue5, T6 minValue6, T7 minValue7, T8 minValue8, T9 minValue9, T10 minValue10, T11 minValue11, T12 minValue12, T13 minValue13, T14 minValue14, T15 minValue15, T16 minValue16, T17 minValue17, T18 minValue18);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetweenSymmetric(Field<T1> minValue1, Field<T2> minValue2, Field<T3> minValue3, Field<T4> minValue4, Field<T5> minValue5, Field<T6> minValue6, Field<T7> minValue7, Field<T8> minValue8, Field<T9> minValue9, Field<T10> minValue10, Field<T11> minValue11, Field<T12> minValue12, Field<T13> minValue13, Field<T14> minValue14, Field<T15> minValue15, Field<T16> minValue16, Field<T17> minValue17, Field<T18> minValue18);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetweenSymmetric(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * records
+     *
+     * @see #notBetweenSymmetric(Row18, Row18)
+     */
+    @Support
+    BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetweenSymmetric(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     * <p>
+     * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A NOT BETWEEN SYMMETRIC B AND C</code> is equivalent
+     * to the expression <code>(A < B OR A > C) AND (A < C OR A > B)</code> for
+     * those SQL dialects that do not properly support the <code>BETWEEN</code>
+     * predicate for row value expressions
+     */
+    @Support
+    Condition notBetweenSymmetric(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue,
+                                  Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * records
+     * <p>
+     * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+     *
+     * @see #notBetweenSymmetric(Row18, Row18)
+     */
+    @Support
+    Condition notBetweenSymmetric(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue,
+                                  Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue);
+
+    // ------------------------------------------------------------------------
     // [NOT] DISTINCT predicates
     // ------------------------------------------------------------------------
 

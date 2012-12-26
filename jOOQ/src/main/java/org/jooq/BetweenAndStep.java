@@ -46,10 +46,12 @@ public interface BetweenAndStep<T> {
     /**
      * Create a condition to check this field against some bounds
      */
+    @Support
     Condition and(T value);
 
     /**
      * Create a condition to check this field against some bounds
      */
+    @Support
     Condition and(Field<T> field);
 }

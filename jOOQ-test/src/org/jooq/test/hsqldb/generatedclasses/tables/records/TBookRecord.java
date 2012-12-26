@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 1028679750;
+	private static final long serialVersionUID = 88365201;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. 
@@ -36,18 +36,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setAuthorId(org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, value.getValue(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>PUBLIC.T_BOOK.AUTHOR_ID</code>. 
 	 */
 	@Override
@@ -61,18 +49,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setCoAuthorId(org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value.getValue(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
-		}
 	}
 
 	/**
@@ -137,18 +113,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord}
-	 */
-	public void setLanguageId(org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.ID));
-		}
 	}
 
 	/**
@@ -221,50 +185,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.sql.Timestamp getRecTimestamp() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.REC_TIMESTAMP);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code> referencing this <code>PUBLIC.T_BOOK</code>
-	 */
-	public org.jooq.Result<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>PUBLIC.T_AUTHOR</code> referenced by this <code>PUBLIC.T_BOOK</code>
-	 */
-	public org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>PUBLIC.T_AUTHOR</code> referenced by this <code>PUBLIC.T_BOOK</code>
-	 */
-	public org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>PUBLIC.T_LANGUAGE</code> referenced by this <code>PUBLIC.T_BOOK</code>
-	 */
-	public org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Object>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IObject {
 
-	private static final long serialVersionUID = 1435078307;
+	private static final long serialVersionUID = -1592208915;
 
 	/**
 	 * Setter for <code>PUBLIC.OBJECT.ID</code>. 
@@ -42,10 +42,6 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	public java.lang.Object getOther() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT.OTHER);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

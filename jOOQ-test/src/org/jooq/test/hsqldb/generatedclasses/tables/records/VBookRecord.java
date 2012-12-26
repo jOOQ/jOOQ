@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = 630132210;
+	private static final long serialVersionUID = 741178684;
 
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>. 
@@ -186,10 +186,6 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	public java.sql.Timestamp getRecTimestamp() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.REC_TIMESTAMP);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record11 type implementation

@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITIdentityPk {
 
-	private static final long serialVersionUID = 1827133397;
+	private static final long serialVersionUID = -1733859637;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
@@ -42,10 +42,6 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.VAL);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = -311960296;
+	private static final long serialVersionUID = -1532661362;
 
 	/**
 	 * Setter for <code>PUBLIC.T_785.ID</code>. 
@@ -58,10 +58,6 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785.VALUE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation

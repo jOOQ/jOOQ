@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.SystemRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ISystem {
 
-	private static final long serialVersionUID = -990962220;
+	private static final long serialVersionUID = -876960054;
 
 	/**
 	 * Setter for <code>PUBLIC.SYSTEM.ID</code>. 
@@ -26,10 +26,6 @@ public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM.ID);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record1 type implementation

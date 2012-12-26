@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Short>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_71 {
 
-	private static final long serialVersionUID = 755990142;
+	private static final long serialVersionUID = 1367947689;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_71.ID</code>. 
@@ -36,37 +36,11 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_64_69Record}
-	 */
-	public void setTestCase_64_69Id(org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_64_69Record value) {
-		if (value == null) {
-			setValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID, value.getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID, Short.class));
-		}
-	}
-
-	/**
 	 * Getter for <code>PUBLIC.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	@Override
 	public java.lang.Short getTestCase_64_69Id() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>PUBLIC.X_TEST_CASE_64_69</code> referenced by this <code>PUBLIC.X_TEST_CASE_71</code>
-	 */
-	public org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID, Integer.class)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

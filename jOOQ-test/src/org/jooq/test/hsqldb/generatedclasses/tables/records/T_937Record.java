@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_937 {
 
-	private static final long serialVersionUID = 550340899;
+	private static final long serialVersionUID = -1380615783;
 
 	/**
 	 * Setter for <code>PUBLIC.T_937.T_937</code>. 
@@ -26,10 +26,6 @@ public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	public java.lang.Integer getT_937() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937.T_937_);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

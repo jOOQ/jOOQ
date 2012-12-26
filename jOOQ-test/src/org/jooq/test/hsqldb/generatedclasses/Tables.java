@@ -147,6 +147,11 @@ public final class Tables {
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.hsqldb.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 	/**
+	 * The table PUBLIC.X_TEST_CASE_2025
+	 */
+	public static final org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+
+	/**
 	 * The table PUBLIC.X_TEST_CASE_64_69
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;

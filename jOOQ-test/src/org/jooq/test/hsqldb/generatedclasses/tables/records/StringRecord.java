@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.StringRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IString {
 
-	private static final long serialVersionUID = 953937131;
+	private static final long serialVersionUID = 574574645;
 
 	/**
 	 * Setter for <code>PUBLIC.STRING.ID</code>. 
@@ -42,10 +42,6 @@ public class StringRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	public java.lang.String getOther() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.String.STRING.OTHER);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

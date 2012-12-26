@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = -159442042;
+	private static final long serialVersionUID = 1214956783;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_85.ID</code>. 
@@ -57,21 +57,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String getXUnusedName() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>PUBLIC.X_UNUSED</code> referenced by this <code>PUBLIC.X_TEST_CASE_85</code>
-	 */
-	public org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID)))
-			.and(org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.hsqldb.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

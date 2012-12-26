@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -682382255;
+	private static final long serialVersionUID = -1063413817;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ID</code>. 
@@ -186,10 +186,6 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	public java.lang.Boolean getNBoolean() {
 		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TBooleans.T_BOOLEANS.N_BOOLEAN);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

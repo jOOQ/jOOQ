@@ -158,6 +158,61 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     }
 
     @Test
+    public void testRowValueExpressionBetweenConditions() throws Exception {
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1).between(row(0), row(2)))
+                .and(row(1).between(0).and(2))
+                .and(row(1).betweenSymmetric(row(2), row(0)))
+                .and(row(1).betweenSymmetric(2).and(0))
+                .and(row(1).notBetween(row(2), row(0)))
+                .and(row(1).notBetween(2).and(0))
+                .and(row(1).notBetweenSymmetric(row(3), row(5)))
+                .and(row(1).notBetweenSymmetric(3).and(5))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1).between(row(1, 0), row(1, 2)))
+                .and(row(1, 1).between(1, 0).and(1, 2))
+                .and(row(1, 1).betweenSymmetric(row(1, 2), row(1, 0)))
+                .and(row(1, 1).betweenSymmetric(1, 2).and(1, 0))
+                .and(row(1, 1).notBetween(row(1, 2), row(1, 0)))
+                .and(row(1, 1).notBetween(1, 2).and(1, 0))
+                .and(row(1, 1).notBetweenSymmetric(row(1, 3), row(1, 5)))
+                .and(row(1, 1).notBetweenSymmetric(1, 3).and(1, 5))
+                .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+            .where(trueCondition())
+            .and(row(1, 1, 1).between(row(1, 1, 0), row(1, 1, 2)))
+            .and(row(1, 1, 1).between(1, 1, 0).and(1, 1, 2))
+            .and(row(1, 1, 1).betweenSymmetric(row(1, 1, 2), row(1, 1, 0)))
+            .and(row(1, 1, 1).betweenSymmetric(1, 1, 2).and(1, 1, 0))
+            .and(row(1, 1, 1).notBetween(row(1, 1, 2), row(1, 1, 0)))
+            .and(row(1, 1, 1).notBetween(1, 1, 2).and(1, 1, 0))
+            .and(row(1, 1, 1).notBetweenSymmetric(row(1, 1, 3), row(1, 1, 5)))
+            .and(row(1, 1, 1).notBetweenSymmetric(1, 1, 3).and(1, 1, 5))
+            .fetchOne(0, Integer.class));
+
+        assertEquals(1, (int)
+        create().selectOne()
+            .where(trueCondition())
+            .and(row(1, 1, 1, 1).between(row(1, 1, 1, 0), row(1, 1, 1, 2)))
+            .and(row(1, 1, 1, 1).between(1, 1, 1, 0).and(1, 1, 1, 2))
+            .and(row(1, 1, 1, 1).betweenSymmetric(row(1, 1, 1, 2), row(1, 1, 1, 0)))
+            .and(row(1, 1, 1, 1).betweenSymmetric(1, 1, 1, 2).and(1, 1, 1, 0))
+            .and(row(1, 1, 1, 1).notBetween(row(1, 1, 1, 2), row(1, 1, 1, 0)))
+            .and(row(1, 1, 1, 1).notBetween(1, 1, 1, 2).and(1, 1, 1, 0))
+            .and(row(1, 1, 1, 1).notBetweenSymmetric(row(1, 1, 1, 3), row(1, 1, 1, 5)))
+            .and(row(1, 1, 1, 1).notBetweenSymmetric(1, 1, 1, 3).and(1, 1, 1, 5))
+            .fetchOne(0, Integer.class));
+    }
+
+    @Test
     public void testRowValueExpressionOrderingConditions() throws Exception {
         assertEquals(1, (int)
         create().selectOne()

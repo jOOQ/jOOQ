@@ -597,6 +597,258 @@ public interface RowN extends Row {
     Condition ge(Select<? extends Record> select);
 
     // ------------------------------------------------------------------------
+    // [NOT] BETWEEN predicates
+    // ------------------------------------------------------------------------
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN between(Object... minValues);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN between(Field<?>... minValues);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     *
+     * @see #between(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN between(RowN minValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     *
+     * @see #between(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN between(Record minValue);
+
+    /**
+     * Check if this row value expression is within a range of two other row
+     * value expressions
+     * <p>
+     * This is the same as calling <code>between(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A BETWEEN B AND C</code> is equivalent to the
+     * expression <code>A >= B AND A <= C</code> for those SQL dialects that do
+     * not properly support the <code>BETWEEN</code> predicate for row value
+     * expressions
+     */
+    @Support
+    Condition between(RowN minValue,
+                      RowN maxValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     * <p>
+     * This is the same as calling <code>between(minValue).and(maxValue)</code>
+     *
+     * @see #between(RowN, RowN)
+     */
+    @Support
+    Condition between(Record minValue,
+                      Record maxValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN betweenSymmetric(Object... minValues);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN betweenSymmetric(Field<?>... minValues);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #betweenSymmetric(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN betweenSymmetric(RowN minValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * records
+     *
+     * @see #betweenSymmetric(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN betweenSymmetric(Record minValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * other row value expressions
+     * <p>
+     * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A BETWEEN SYMMETRIC B AND C</code> is equivalent to
+     * the expression <code>(A >= B AND A <= C) OR (A >= C AND A <= B)</code>
+     * for those SQL dialects that do not properly support the
+     * <code>BETWEEN</code> predicate for row value expressions
+     */
+    @Support
+    Condition betweenSymmetric(RowN minValue,
+                               RowN maxValue);
+
+    /**
+     * Check if this row value expression is within a symmetric range of two
+     * records
+     * <p>
+     * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
+     *
+     * @see #betweenSymmetric(RowN, RowN)
+     */
+    @Support
+    Condition betweenSymmetric(Record minValue,
+                               Record maxValue);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #between(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN notBetween(Object... minValues);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #notBetween(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN notBetween(Field<?>... minValues);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     *
+     * @see #notBetween(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN notBetween(RowN minValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     *
+     * @see #notBetween(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN notBetween(Record minValue);
+
+    /**
+     * Check if this row value expression is not within a range of two other
+     * row value expressions
+     * <p>
+     * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A NOT BETWEEN B AND C</code> is equivalent to the
+     * expression <code>A < B OR A > C</code> for those SQL dialects that do
+     * not properly support the <code>BETWEEN</code> predicate for row value
+     * expressions
+     */
+    @Support
+    Condition notBetween(RowN minValue,
+                         RowN maxValue);
+
+    /**
+     * Check if this row value expression is within a range of two records
+     * <p>
+     * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
+     *
+     * @see #notBetween(RowN, RowN)
+     */
+    @Support
+    Condition notBetween(Record minValue,
+                         Record maxValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN notBetweenSymmetric(Object... minValues);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN notBetweenSymmetric(Field<?>... minValues);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     *
+     * @see #notBetweenSymmetric(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN notBetweenSymmetric(RowN minValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * records
+     *
+     * @see #notBetweenSymmetric(RowN, RowN)
+     */
+    @Support
+    BetweenAndStepN notBetweenSymmetric(Record minValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * other row value expressions
+     * <p>
+     * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+     * <p>
+     * The expression <code>A NOT BETWEEN SYMMETRIC B AND C</code> is equivalent
+     * to the expression <code>(A < B OR A > C) AND (A < C OR A > B)</code> for
+     * those SQL dialects that do not properly support the <code>BETWEEN</code>
+     * predicate for row value expressions
+     */
+    @Support
+    Condition notBetweenSymmetric(RowN minValue,
+                                  RowN maxValue);
+
+    /**
+     * Check if this row value expression is not within a symmetric range of two
+     * records
+     * <p>
+     * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+     *
+     * @see #notBetweenSymmetric(RowN, RowN)
+     */
+    @Support
+    Condition notBetweenSymmetric(Record minValue,
+                                  Record maxValue);
+
+    // ------------------------------------------------------------------------
     // [NOT] DISTINCT predicates
     // ------------------------------------------------------------------------
 

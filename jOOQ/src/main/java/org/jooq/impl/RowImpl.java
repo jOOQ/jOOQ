@@ -44,6 +44,29 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import org.jooq.BetweenAndStep1;
+import org.jooq.BetweenAndStep2;
+import org.jooq.BetweenAndStep3;
+import org.jooq.BetweenAndStep4;
+import org.jooq.BetweenAndStep5;
+import org.jooq.BetweenAndStep6;
+import org.jooq.BetweenAndStep7;
+import org.jooq.BetweenAndStep8;
+import org.jooq.BetweenAndStep9;
+import org.jooq.BetweenAndStep10;
+import org.jooq.BetweenAndStep11;
+import org.jooq.BetweenAndStep12;
+import org.jooq.BetweenAndStep13;
+import org.jooq.BetweenAndStep14;
+import org.jooq.BetweenAndStep15;
+import org.jooq.BetweenAndStep16;
+import org.jooq.BetweenAndStep17;
+import org.jooq.BetweenAndStep18;
+import org.jooq.BetweenAndStep19;
+import org.jooq.BetweenAndStep20;
+import org.jooq.BetweenAndStep21;
+import org.jooq.BetweenAndStep22;
+import org.jooq.BetweenAndStepN;
 import org.jooq.BindContext;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -310,13 +333,13 @@ implements
 
     @Override
     public final Condition isNull() {
-    	return new RowIsNull(this, true);
+        return new RowIsNull(this, true);
     }
     
     @Override
     public final Condition isNotNull() {
-    	return new RowIsNull(this, false);
-	}
+        return new RowIsNull(this, false);
+    }
 
     // ------------------------------------------------------------------------
     // Equal / Not equal comparison predicates
@@ -5856,6 +5879,2778 @@ implements
     @Override
     public final Condition ge(Field<?>... values) {
         return greaterOrEqual(values);
+    }
+    
+    // ------------------------------------------------------------------------
+    // [NOT] BETWEEN predicates
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final BetweenAndStep1<T1> between(T1 t1) {
+        return between(row(t1));
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> between(T1 t1, T2 t2) {
+        return between(row(t1, t2));
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> between(T1 t1, T2 t2, T3 t3) {
+        return between(row(t1, t2, t3));
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> between(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return between(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return between(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return between(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> between(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final BetweenAndStepN between(Object... values) {
+        return between(row(values));
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> between(Field<T1> t1) {
+        return between(row(t1));
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> between(Field<T1> t1, Field<T2> t2) {
+        return between(row(t1, t2));
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> between(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return between(row(t1, t2, t3));
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return between(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return between(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return between(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> between(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return between(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final BetweenAndStepN between(Field<?>... f) {
+        return between(row(f));
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> between(Row1<T1> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> between(Row2<T1, T2> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> between(Row3<T1, T2, T3> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> between(Row4<T1, T2, T3, T4> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> between(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> between(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> between(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> between(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> between(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> between(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> between(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> between(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> between(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> between(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> between(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> between(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> between(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> between(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> between(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> between(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> between(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> between(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStepN between(RowN row) {
+        return new RowBetweenCondition(this, row, false, false);
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> between(Record1<T1> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> between(Record2<T1, T2> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> between(Record3<T1, T2, T3> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> between(Record4<T1, T2, T3, T4> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> between(Record5<T1, T2, T3, T4, T5> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> between(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> between(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> between(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> between(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> between(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> between(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> between(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> between(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> between(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> between(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> between(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> between(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> between(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> between(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> between(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> between(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> between(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return between(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStepN between(Record record) {
+        List<Field<?>> f = record.getFields();
+        RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return between(row);
+    }
+
+    @Override
+    public final Condition between(Row1<T1> minValue, Row1<T1> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row2<T1, T2> minValue, Row2<T1, T2> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row3<T1, T2, T3> minValue, Row3<T1, T2, T3> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row4<T1, T2, T3, T4> minValue, Row4<T1, T2, T3, T4> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row5<T1, T2, T3, T4, T5> minValue, Row5<T1, T2, T3, T4, T5> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row6<T1, T2, T3, T4, T5, T6> minValue, Row6<T1, T2, T3, T4, T5, T6> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row7<T1, T2, T3, T4, T5, T6, T7> minValue, Row7<T1, T2, T3, T4, T5, T6, T7> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row8<T1, T2, T3, T4, T5, T6, T7, T8> minValue, Row8<T1, T2, T3, T4, T5, T6, T7, T8> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> minValue, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> minValue, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> minValue, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> minValue, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> minValue, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> minValue, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> minValue, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> minValue, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> minValue, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> minValue, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> minValue, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(RowN minValue, RowN maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record1<T1> minValue, Record1<T1> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record2<T1, T2> minValue, Record2<T1, T2> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record3<T1, T2, T3> minValue, Record3<T1, T2, T3> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record4<T1, T2, T3, T4> minValue, Record4<T1, T2, T3, T4> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record5<T1, T2, T3, T4, T5> minValue, Record5<T1, T2, T3, T4, T5> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record6<T1, T2, T3, T4, T5, T6> minValue, Record6<T1, T2, T3, T4, T5, T6> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record7<T1, T2, T3, T4, T5, T6, T7> minValue, Record7<T1, T2, T3, T4, T5, T6, T7> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record8<T1, T2, T3, T4, T5, T6, T7, T8> minValue, Record8<T1, T2, T3, T4, T5, T6, T7, T8> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> minValue, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> minValue, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> minValue, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> minValue, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> minValue, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> minValue, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> minValue, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> minValue, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> minValue, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> minValue, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> minValue, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition between(Record minValue, Record maxValue) {
+        return between(minValue).and(maxValue);
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> betweenSymmetric(T1 t1) {
+        return betweenSymmetric(row(t1));
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> betweenSymmetric(T1 t1, T2 t2) {
+        return betweenSymmetric(row(t1, t2));
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> betweenSymmetric(T1 t1, T2 t2, T3 t3) {
+        return betweenSymmetric(row(t1, t2, t3));
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return betweenSymmetric(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> betweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final BetweenAndStepN betweenSymmetric(Object... values) {
+        return betweenSymmetric(row(values));
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> betweenSymmetric(Field<T1> t1) {
+        return betweenSymmetric(row(t1));
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> betweenSymmetric(Field<T1> t1, Field<T2> t2) {
+        return betweenSymmetric(row(t1, t2));
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return betweenSymmetric(row(t1, t2, t3));
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return betweenSymmetric(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> betweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return betweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final BetweenAndStepN betweenSymmetric(Field<?>... f) {
+        return betweenSymmetric(row(f));
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> betweenSymmetric(Row1<T1> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> betweenSymmetric(Row2<T1, T2> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> betweenSymmetric(Row3<T1, T2, T3> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> betweenSymmetric(Row4<T1, T2, T3, T4> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> betweenSymmetric(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> betweenSymmetric(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> betweenSymmetric(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> betweenSymmetric(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> betweenSymmetric(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> betweenSymmetric(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> betweenSymmetric(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> betweenSymmetric(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> betweenSymmetric(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> betweenSymmetric(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> betweenSymmetric(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> betweenSymmetric(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> betweenSymmetric(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> betweenSymmetric(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> betweenSymmetric(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> betweenSymmetric(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> betweenSymmetric(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> betweenSymmetric(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStepN betweenSymmetric(RowN row) {
+        return new RowBetweenCondition(this, row, false, true);
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> betweenSymmetric(Record1<T1> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> betweenSymmetric(Record2<T1, T2> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> betweenSymmetric(Record3<T1, T2, T3> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> betweenSymmetric(Record4<T1, T2, T3, T4> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> betweenSymmetric(Record5<T1, T2, T3, T4, T5> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> betweenSymmetric(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> betweenSymmetric(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> betweenSymmetric(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> betweenSymmetric(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> betweenSymmetric(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> betweenSymmetric(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> betweenSymmetric(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> betweenSymmetric(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> betweenSymmetric(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> betweenSymmetric(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> betweenSymmetric(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> betweenSymmetric(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> betweenSymmetric(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> betweenSymmetric(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> betweenSymmetric(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> betweenSymmetric(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> betweenSymmetric(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return betweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStepN betweenSymmetric(Record record) {
+        List<Field<?>> f = record.getFields();
+        RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return betweenSymmetric(row);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row1<T1> minValue, Row1<T1> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row2<T1, T2> minValue, Row2<T1, T2> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row3<T1, T2, T3> minValue, Row3<T1, T2, T3> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row4<T1, T2, T3, T4> minValue, Row4<T1, T2, T3, T4> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row5<T1, T2, T3, T4, T5> minValue, Row5<T1, T2, T3, T4, T5> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row6<T1, T2, T3, T4, T5, T6> minValue, Row6<T1, T2, T3, T4, T5, T6> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row7<T1, T2, T3, T4, T5, T6, T7> minValue, Row7<T1, T2, T3, T4, T5, T6, T7> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row8<T1, T2, T3, T4, T5, T6, T7, T8> minValue, Row8<T1, T2, T3, T4, T5, T6, T7, T8> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> minValue, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> minValue, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> minValue, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> minValue, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> minValue, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> minValue, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> minValue, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> minValue, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> minValue, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> minValue, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> minValue, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(RowN minValue, RowN maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record1<T1> minValue, Record1<T1> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record2<T1, T2> minValue, Record2<T1, T2> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record3<T1, T2, T3> minValue, Record3<T1, T2, T3> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record4<T1, T2, T3, T4> minValue, Record4<T1, T2, T3, T4> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record5<T1, T2, T3, T4, T5> minValue, Record5<T1, T2, T3, T4, T5> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record6<T1, T2, T3, T4, T5, T6> minValue, Record6<T1, T2, T3, T4, T5, T6> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record7<T1, T2, T3, T4, T5, T6, T7> minValue, Record7<T1, T2, T3, T4, T5, T6, T7> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record8<T1, T2, T3, T4, T5, T6, T7, T8> minValue, Record8<T1, T2, T3, T4, T5, T6, T7, T8> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> minValue, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> minValue, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> minValue, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> minValue, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> minValue, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> minValue, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> minValue, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> minValue, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> minValue, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> minValue, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> minValue, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition betweenSymmetric(Record minValue, Record maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> notBetween(T1 t1) {
+        return notBetween(row(t1));
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> notBetween(T1 t1, T2 t2) {
+        return notBetween(row(t1, t2));
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> notBetween(T1 t1, T2 t2, T3 t3) {
+        return notBetween(row(t1, t2, t3));
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> notBetween(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return notBetween(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return notBetween(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> notBetween(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final BetweenAndStepN notBetween(Object... values) {
+        return notBetween(row(values));
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> notBetween(Field<T1> t1) {
+        return notBetween(row(t1));
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> notBetween(Field<T1> t1, Field<T2> t2) {
+        return notBetween(row(t1, t2));
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return notBetween(row(t1, t2, t3));
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return notBetween(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return notBetween(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> notBetween(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return notBetween(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final BetweenAndStepN notBetween(Field<?>... f) {
+        return notBetween(row(f));
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> notBetween(Row1<T1> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> notBetween(Row2<T1, T2> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> notBetween(Row3<T1, T2, T3> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> notBetween(Row4<T1, T2, T3, T4> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> notBetween(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> notBetween(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> notBetween(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> notBetween(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> notBetween(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> notBetween(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> notBetween(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> notBetween(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetween(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> notBetween(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> notBetween(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> notBetween(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> notBetween(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetween(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetween(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> notBetween(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> notBetween(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> notBetween(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStepN notBetween(RowN row) {
+        return new RowBetweenCondition(this, row, true, false);
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> notBetween(Record1<T1> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> notBetween(Record2<T1, T2> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> notBetween(Record3<T1, T2, T3> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> notBetween(Record4<T1, T2, T3, T4> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> notBetween(Record5<T1, T2, T3, T4, T5> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> notBetween(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> notBetween(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> notBetween(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> notBetween(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> notBetween(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> notBetween(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> notBetween(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetween(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> notBetween(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> notBetween(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> notBetween(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> notBetween(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetween(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetween(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> notBetween(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> notBetween(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> notBetween(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return notBetween(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStepN notBetween(Record record) {
+        List<Field<?>> f = record.getFields();
+        RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return notBetween(row);
+    }
+
+    @Override
+    public final Condition notBetween(Row1<T1> minValue, Row1<T1> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row2<T1, T2> minValue, Row2<T1, T2> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row3<T1, T2, T3> minValue, Row3<T1, T2, T3> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row4<T1, T2, T3, T4> minValue, Row4<T1, T2, T3, T4> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row5<T1, T2, T3, T4, T5> minValue, Row5<T1, T2, T3, T4, T5> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row6<T1, T2, T3, T4, T5, T6> minValue, Row6<T1, T2, T3, T4, T5, T6> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row7<T1, T2, T3, T4, T5, T6, T7> minValue, Row7<T1, T2, T3, T4, T5, T6, T7> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row8<T1, T2, T3, T4, T5, T6, T7, T8> minValue, Row8<T1, T2, T3, T4, T5, T6, T7, T8> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> minValue, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> minValue, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> minValue, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> minValue, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> minValue, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> minValue, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> minValue, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> minValue, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> minValue, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> minValue, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> minValue, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(RowN minValue, RowN maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record1<T1> minValue, Record1<T1> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record2<T1, T2> minValue, Record2<T1, T2> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record3<T1, T2, T3> minValue, Record3<T1, T2, T3> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record4<T1, T2, T3, T4> minValue, Record4<T1, T2, T3, T4> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record5<T1, T2, T3, T4, T5> minValue, Record5<T1, T2, T3, T4, T5> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record6<T1, T2, T3, T4, T5, T6> minValue, Record6<T1, T2, T3, T4, T5, T6> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record7<T1, T2, T3, T4, T5, T6, T7> minValue, Record7<T1, T2, T3, T4, T5, T6, T7> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record8<T1, T2, T3, T4, T5, T6, T7, T8> minValue, Record8<T1, T2, T3, T4, T5, T6, T7, T8> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> minValue, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> minValue, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> minValue, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> minValue, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> minValue, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> minValue, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> minValue, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> minValue, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> minValue, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> minValue, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> minValue, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetween(Record minValue, Record maxValue) {
+        return notBetween(minValue).and(maxValue);
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> notBetweenSymmetric(T1 t1) {
+        return notBetweenSymmetric(row(t1));
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> notBetweenSymmetric(T1 t1, T2 t2) {
+        return notBetweenSymmetric(row(t1, t2));
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(T1 t1, T2 t2, T3 t3) {
+        return notBetweenSymmetric(row(t1, t2, t3));
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> notBetweenSymmetric(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final BetweenAndStepN notBetweenSymmetric(Object... values) {
+        return notBetweenSymmetric(row(values));
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> notBetweenSymmetric(Field<T1> t1) {
+        return notBetweenSymmetric(row(t1));
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> notBetweenSymmetric(Field<T1> t1, Field<T2> t2) {
+        return notBetweenSymmetric(row(t1, t2));
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
+        return notBetweenSymmetric(row(t1, t2, t3));
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4));
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5));
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6));
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7));
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8));
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> notBetweenSymmetric(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
+        return notBetweenSymmetric(row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+    }
+
+    @Override
+    public final BetweenAndStepN notBetweenSymmetric(Field<?>... f) {
+        return notBetweenSymmetric(row(f));
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> notBetweenSymmetric(Row1<T1> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> notBetweenSymmetric(Row2<T1, T2> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Row3<T1, T2, T3> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> notBetweenSymmetric(Row4<T1, T2, T3, T4> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> notBetweenSymmetric(Row5<T1, T2, T3, T4, T5> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> notBetweenSymmetric(Row6<T1, T2, T3, T4, T5, T6> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> notBetweenSymmetric(Row7<T1, T2, T3, T4, T5, T6, T7> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> notBetweenSymmetric(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> notBetweenSymmetric(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> notBetweenSymmetric(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> notBetweenSymmetric(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> notBetweenSymmetric(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetweenSymmetric(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> notBetweenSymmetric(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> notBetweenSymmetric(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> notBetweenSymmetric(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> notBetweenSymmetric(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetweenSymmetric(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetweenSymmetric(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> notBetweenSymmetric(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> notBetweenSymmetric(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> notBetweenSymmetric(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStepN notBetweenSymmetric(RowN row) {
+        return new RowBetweenCondition(this, row, true, true);
+    }
+
+    @Override
+    public final BetweenAndStep1<T1> notBetweenSymmetric(Record1<T1> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep2<T1, T2> notBetweenSymmetric(Record2<T1, T2> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep3<T1, T2, T3> notBetweenSymmetric(Record3<T1, T2, T3> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep4<T1, T2, T3, T4> notBetweenSymmetric(Record4<T1, T2, T3, T4> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep5<T1, T2, T3, T4, T5> notBetweenSymmetric(Record5<T1, T2, T3, T4, T5> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep6<T1, T2, T3, T4, T5, T6> notBetweenSymmetric(Record6<T1, T2, T3, T4, T5, T6> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep7<T1, T2, T3, T4, T5, T6, T7> notBetweenSymmetric(Record7<T1, T2, T3, T4, T5, T6, T7> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep8<T1, T2, T3, T4, T5, T6, T7, T8> notBetweenSymmetric(Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep9<T1, T2, T3, T4, T5, T6, T7, T8, T9> notBetweenSymmetric(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> notBetweenSymmetric(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> notBetweenSymmetric(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> notBetweenSymmetric(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> notBetweenSymmetric(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> notBetweenSymmetric(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> notBetweenSymmetric(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> notBetweenSymmetric(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> notBetweenSymmetric(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> notBetweenSymmetric(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetweenSymmetric(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> notBetweenSymmetric(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> notBetweenSymmetric(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> notBetweenSymmetric(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
+        return notBetweenSymmetric(record.valuesRow());
+    }
+
+    @Override
+    public final BetweenAndStepN notBetweenSymmetric(Record record) {
+        List<Field<?>> f = record.getFields();
+        RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        return notBetweenSymmetric(row);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row1<T1> minValue, Row1<T1> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row2<T1, T2> minValue, Row2<T1, T2> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row3<T1, T2, T3> minValue, Row3<T1, T2, T3> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row4<T1, T2, T3, T4> minValue, Row4<T1, T2, T3, T4> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row5<T1, T2, T3, T4, T5> minValue, Row5<T1, T2, T3, T4, T5> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row6<T1, T2, T3, T4, T5, T6> minValue, Row6<T1, T2, T3, T4, T5, T6> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row7<T1, T2, T3, T4, T5, T6, T7> minValue, Row7<T1, T2, T3, T4, T5, T6, T7> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row8<T1, T2, T3, T4, T5, T6, T7, T8> minValue, Row8<T1, T2, T3, T4, T5, T6, T7, T8> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> minValue, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> minValue, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> minValue, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> minValue, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> minValue, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> minValue, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> minValue, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> minValue, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> minValue, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> minValue, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> minValue, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(RowN minValue, RowN maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record1<T1> minValue, Record1<T1> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record2<T1, T2> minValue, Record2<T1, T2> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record3<T1, T2, T3> minValue, Record3<T1, T2, T3> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record4<T1, T2, T3, T4> minValue, Record4<T1, T2, T3, T4> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record5<T1, T2, T3, T4, T5> minValue, Record5<T1, T2, T3, T4, T5> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record6<T1, T2, T3, T4, T5, T6> minValue, Record6<T1, T2, T3, T4, T5, T6> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record7<T1, T2, T3, T4, T5, T6, T7> minValue, Record7<T1, T2, T3, T4, T5, T6, T7> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record8<T1, T2, T3, T4, T5, T6, T7, T8> minValue, Record8<T1, T2, T3, T4, T5, T6, T7, T8> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> minValue, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> minValue, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> minValue, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> minValue, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> minValue, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> minValue, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> minValue, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> minValue, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> minValue, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> minValue, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> minValue, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> minValue, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> minValue, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
+    }
+
+    @Override
+    public final Condition notBetweenSymmetric(Record minValue, Record maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
     }
 
     // ------------------------------------------------------------------------

@@ -579,7 +579,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition between(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), false, false).and(nullSafe(maxValue));
+        return between(nullSafe(minValue)).and(nullSafe(maxValue));
     }
 
     @Override
@@ -589,7 +589,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition betweenSymmetric(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), false, true).and(nullSafe(maxValue));
+        return betweenSymmetric(nullSafe(minValue)).and(nullSafe(maxValue));
     }
 
     @Override
@@ -599,7 +599,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notBetween(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), true, false).and(nullSafe(maxValue));
+        return notBetween(nullSafe(minValue)).and(nullSafe(maxValue));
     }
 
     @Override
@@ -609,7 +609,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue) {
-        return new BetweenCondition<T>(this, nullSafe(minValue), true, true).and(nullSafe(maxValue));
+        return notBetweenSymmetric(nullSafe(minValue)).and(nullSafe(maxValue));
     }
 
     @Override

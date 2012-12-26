@@ -36,13 +36,12 @@
 package org.jooq.xtend
 
 import org.jooq.Constants
-import java.util.Collections
 
 /**
  * @author Lukas Eder
  */
 class Rows extends Generators {
-	
+    
     def static void main(String[] args) {
         val rows = new Rows();
         rows.generateRowClasses();
@@ -633,6 +632,258 @@ class Rows extends Generators {
                 Condition ge(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 // ------------------------------------------------------------------------
+                // [NOT] BETWEEN predicates
+                // ------------------------------------------------------------------------
+            
+                /**
+                 * Check if this row value expression is within a range of two other row
+                 * value expressions
+                 *
+                 * @see #between(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> between(«TN_XXXn(degree, "minValue")»);
+            
+                /**
+                 * Check if this row value expression is within a range of two other row
+                 * value expressions
+                 *
+                 * @see #between(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> between(«Field_TN_XXXn(degree, "minValue")»);
+            
+                /**
+                 * Check if this row value expression is within a range of two other row
+                 * value expressions
+                 *
+                 * @see #between(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> between(Row«degree»<«TN(degree)»> minValue);
+            
+                /**
+                 * Check if this row value expression is within a range of two records
+                 *
+                 * @see #between(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> between(Record«degree»<«TN(degree)»> minValue);
+            
+                /**
+                 * Check if this row value expression is within a range of two other row
+                 * value expressions
+                 * <p>
+                 * This is the same as calling <code>between(minValue).and(maxValue)</code>
+                 * <p>
+                 * The expression <code>A BETWEEN B AND C</code> is equivalent to the
+                 * expression <code>A >= B AND A <= C</code> for those SQL dialects that do
+                 * not properly support the <code>BETWEEN</code> predicate for row value
+                 * expressions
+                 */
+                @Support
+                Condition between(Row«degree»<«TN(degree)»> minValue,
+                                  Row«degree»<«TN(degree)»> maxValue);
+            
+                /**
+                 * Check if this row value expression is within a range of two records
+                 * <p>
+                 * This is the same as calling <code>between(minValue).and(maxValue)</code>
+                 *
+                 * @see #between(Row«degree», Row«degree»)
+                 */
+                @Support
+                Condition between(Record«degree»<«TN(degree)»> minValue,
+                                  Record«degree»<«TN(degree)»> maxValue);
+            
+                /**
+                 * Check if this row value expression is within a symmetric range of two
+                 * other row value expressions
+                 *
+                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(«TN_XXXn(degree, "minValue")»);
+            
+                /**
+                 * Check if this row value expression is within a symmetric range of two
+                 * other row value expressions
+                 *
+                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(«Field_TN_XXXn(degree, "minValue")»);
+            
+                /**
+                 * Check if this row value expression is within a symmetric range of two
+                 * other row value expressions
+                 *
+                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(Row«degree»<«TN(degree)»> minValue);
+            
+                /**
+                 * Check if this row value expression is within a symmetric range of two
+                 * records
+                 *
+                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(Record«degree»<«TN(degree)»> minValue);
+            
+                /**
+                 * Check if this row value expression is within a symmetric range of two
+                 * other row value expressions
+                 * <p>
+                 * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
+                 * <p>
+                 * The expression <code>A BETWEEN SYMMETRIC B AND C</code> is equivalent to
+                 * the expression <code>(A >= B AND A <= C) OR (A >= C AND A <= B)</code>
+                 * for those SQL dialects that do not properly support the
+                 * <code>BETWEEN</code> predicate for row value expressions
+                 */
+                @Support
+                Condition betweenSymmetric(Row«degree»<«TN(degree)»> minValue,
+                                           Row«degree»<«TN(degree)»> maxValue);
+            
+                /**
+                 * Check if this row value expression is within a symmetric range of two
+                 * records
+                 * <p>
+                 * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
+                 *
+                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                Condition betweenSymmetric(Record«degree»<«TN(degree)»> minValue,
+                                           Record«degree»<«TN(degree)»> maxValue);
+
+                /**
+                 * Check if this row value expression is not within a range of two other
+                 * row value expressions
+                 *
+                 * @see #between(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> notBetween(«TN_XXXn(degree, "minValue")»);
+            
+                /**
+                 * Check if this row value expression is not within a range of two other
+                 * row value expressions
+                 *
+                 * @see #notBetween(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> notBetween(«Field_TN_XXXn(degree, "minValue")»);
+            
+                /**
+                 * Check if this row value expression is not within a range of two other
+                 * row value expressions
+                 *
+                 * @see #notBetween(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> notBetween(Row«degree»<«TN(degree)»> minValue);
+            
+                /**
+                 * Check if this row value expression is within a range of two records
+                 *
+                 * @see #notBetween(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> notBetween(Record«degree»<«TN(degree)»> minValue);
+            
+                /**
+                 * Check if this row value expression is not within a range of two other
+                 * row value expressions
+                 * <p>
+                 * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
+                 * <p>
+                 * The expression <code>A NOT BETWEEN B AND C</code> is equivalent to the
+                 * expression <code>A < B OR A > C</code> for those SQL dialects that do
+                 * not properly support the <code>BETWEEN</code> predicate for row value
+                 * expressions
+                 */
+                @Support
+                Condition notBetween(Row«degree»<«TN(degree)»> minValue,
+                                     Row«degree»<«TN(degree)»> maxValue);
+            
+                /**
+                 * Check if this row value expression is within a range of two records
+                 * <p>
+                 * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
+                 *
+                 * @see #notBetween(Row«degree», Row«degree»)
+                 */
+                @Support
+                Condition notBetween(Record«degree»<«TN(degree)»> minValue,
+                                     Record«degree»<«TN(degree)»> maxValue);
+
+                /**
+                 * Check if this row value expression is not within a symmetric range of two
+                 * other row value expressions
+                 *
+                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(«TN_XXXn(degree, "minValue")»);
+            
+                /**
+                 * Check if this row value expression is not within a symmetric range of two
+                 * other row value expressions
+                 *
+                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(«Field_TN_XXXn(degree, "minValue")»);
+            
+                /**
+                 * Check if this row value expression is not within a symmetric range of two
+                 * other row value expressions
+                 *
+                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(Row«degree»<«TN(degree)»> minValue);
+            
+                /**
+                 * Check if this row value expression is not within a symmetric range of two
+                 * records
+                 *
+                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(Record«degree»<«TN(degree)»> minValue);
+            
+                /**
+                 * Check if this row value expression is not within a symmetric range of two
+                 * other row value expressions
+                 * <p>
+                 * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+                 * <p>
+                 * The expression <code>A NOT BETWEEN SYMMETRIC B AND C</code> is equivalent
+                 * to the expression <code>(A < B OR A > C) AND (A < C OR A > B)</code> for
+                 * those SQL dialects that do not properly support the <code>BETWEEN</code>
+                 * predicate for row value expressions
+                 */
+                @Support
+                Condition notBetweenSymmetric(Row«degree»<«TN(degree)»> minValue,
+                                              Row«degree»<«TN(degree)»> maxValue);
+            
+                /**
+                 * Check if this row value expression is not within a symmetric range of two
+                 * records
+                 * <p>
+                 * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
+                 *
+                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 */
+                @Support
+                Condition notBetweenSymmetric(Record«degree»<«TN(degree)»> minValue,
+                                              Record«degree»<«TN(degree)»> maxValue);
+            
+                // ------------------------------------------------------------------------
                 // [NOT] DISTINCT predicates
                 // ------------------------------------------------------------------------
             
@@ -876,6 +1127,10 @@ class Rows extends Generators {
         
         import javax.annotation.Generated;
 
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+        import org.jooq.BetweenAndStep«degree»;
+        «ENDFOR»
+        import org.jooq.BetweenAndStepN;
         import org.jooq.BindContext;
         import org.jooq.Comparator;
         import org.jooq.Condition;
@@ -982,13 +1237,13 @@ class Rows extends Generators {
 
             @Override
             public final Condition isNull() {
-            	return new RowIsNull(this, true);
+                return new RowIsNull(this, true);
             }
             
             @Override
             public final Condition isNotNull() {
-            	return new RowIsNull(this, false);
-        	}
+                return new RowIsNull(this, false);
+            }
 
             // ------------------------------------------------------------------------
             // Equal / Not equal comparison predicates
@@ -1585,7 +1840,87 @@ class Rows extends Generators {
             public final Condition ge(Field<?>... values) {
                 return greaterOrEqual(values);
             }
+            
+            // ------------------------------------------------------------------------
+            // [NOT] BETWEEN predicates
+            // ------------------------------------------------------------------------
+            «FOR keyword : newArrayList("between", "betweenSymmetric", "notBetween", "notBetweenSymmetric")»
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
+            @Override
+            public final BetweenAndStep«degree»<«TN(degree)»> «keyword»(«TN_tn(degree)») {
+                return «keyword»(row(«tn(degree)»));
+            }
+            «ENDFOR»
+
+            @Override
+            public final BetweenAndStepN «keyword»(Object... values) {
+                return «keyword»(row(values));
+            }
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final BetweenAndStep«degree»<«TN(degree)»> «keyword»(«Field_TN_tn(degree)») {
+                return «keyword»(row(«tn(degree)»));
+            }
+            «ENDFOR»
+
+            @Override
+            public final BetweenAndStepN «keyword»(Field<?>... f) {
+                return «keyword»(row(f));
+            }
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final BetweenAndStep«degree»<«TN(degree)»> «keyword»(Row«degree»<«TN(degree)»> row) {
+                return new RowBetweenCondition(this, row, «keyword.startsWith("not")», «keyword.endsWith("Symmetric")»);
+            }
+            «ENDFOR»
+
+            @Override
+            public final BetweenAndStepN «keyword»(RowN row) {
+                return new RowBetweenCondition(this, row, «keyword.startsWith("not")», «keyword.endsWith("Symmetric")»);
+            }
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final BetweenAndStep«degree»<«TN(degree)»> «keyword»(Record«degree»<«TN(degree)»> record) {
+                return «keyword»(record.valuesRow());
+            }
+            «ENDFOR»
+
+            @Override
+            public final BetweenAndStepN «keyword»(Record record) {
+                List<Field<?>> f = record.getFields();
+                RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                return «keyword»(row);
+            }
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final Condition «keyword»(Row«degree»<«TN(degree)»> minValue, Row«degree»<«TN(degree)»> maxValue) {
+                return «keyword»(minValue).and(maxValue);
+            }
+            «ENDFOR»
+
+            @Override
+            public final Condition «keyword»(RowN minValue, RowN maxValue) {
+                return «keyword»(minValue).and(maxValue);
+            }
+            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final Condition «keyword»(Record«degree»<«TN(degree)»> minValue, Record«degree»<«TN(degree)»> maxValue) {
+                return «keyword»(minValue).and(maxValue);
+            }
+            «ENDFOR»
+
+            @Override
+            public final Condition «keyword»(Record minValue, Record maxValue) {
+                return «keyword»(minValue).and(maxValue);
+            }
+            «ENDFOR»
+        
             // ------------------------------------------------------------------------
             // [NOT] DISTINCT predicates
             // ------------------------------------------------------------------------

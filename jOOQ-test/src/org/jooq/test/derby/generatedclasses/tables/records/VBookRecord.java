@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1970351330;
+	private static final long serialVersionUID = 373892328;
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.ID</code>. 
@@ -150,10 +150,6 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.der
 	public java.sql.Timestamp getRecTimestamp() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.VBook.REC_TIMESTAMP);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record10 type implementation

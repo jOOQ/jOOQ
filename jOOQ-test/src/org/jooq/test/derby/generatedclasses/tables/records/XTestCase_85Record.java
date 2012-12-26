@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -931569678;
+	private static final long serialVersionUID = 1439364779;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
@@ -51,21 +51,6 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	public java.lang.String getXUnusedName() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_TEST_CASE_85</code>
-	 */
-	public org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.derby.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_85.X_UNUSED_ID)))
-			.and(org.jooq.test.derby.generatedclasses.tables.XUnused.NAME.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

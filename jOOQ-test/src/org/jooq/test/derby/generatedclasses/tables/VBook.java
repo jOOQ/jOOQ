@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1021893993;
+	private static final long serialVersionUID = 402566512;
 
 	/**
 	 * The singleton instance of <code>TEST.V_BOOK</code>
@@ -47,7 +47,7 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generated
 	/**
 	 * The column <code>TEST.V_BOOK.TITLE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), V_BOOK);
 
 	/**
 	 * The column <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
@@ -62,12 +62,12 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generated
 	/**
 	 * The column <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), V_BOOK);
 
 	/**
 	 * The column <code>TEST.V_BOOK.CONTENT_PDF</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(2147483647), V_BOOK);
 
 	/**
 	 * The column <code>TEST.V_BOOK.REC_TIMESTAMP</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -660157160;
+	private static final long serialVersionUID = -483851214;
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. 
@@ -65,20 +65,6 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>TEST.T_BOOK</code> referencing this <code>TEST.T_LANGUAGE</code>
-	 */
-	public org.jooq.Result<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

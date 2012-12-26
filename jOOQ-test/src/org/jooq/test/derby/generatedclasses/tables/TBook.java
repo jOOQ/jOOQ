@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 395232105;
+	private static final long serialVersionUID = 1764393836;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK</code>
@@ -47,7 +47,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	/**
 	 * The column <code>TEST.T_BOOK.TITLE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK);
 
 	/**
 	 * The column <code>TEST.T_BOOK.PUBLISHED_IN</code>. 
@@ -62,12 +62,12 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	/**
 	 * The column <code>TEST.T_BOOK.CONTENT_TEXT</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), T_BOOK);
 
 	/**
 	 * The column <code>TEST.T_BOOK.CONTENT_PDF</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB.length(2147483647), T_BOOK);
 
 	/**
 	 * The column <code>TEST.T_BOOK.REC_TIMESTAMP</code>. 

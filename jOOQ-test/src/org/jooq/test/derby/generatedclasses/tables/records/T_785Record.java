@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1848872822;
+	private static final long serialVersionUID = 1087923776;
 
 	/**
 	 * Setter for <code>TEST.T_785.ID</code>. 
@@ -52,10 +52,6 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.der
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.T_785.VALUE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation

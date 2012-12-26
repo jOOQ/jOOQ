@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -741512330;
+	private static final long serialVersionUID = -464246357;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK.ID</code>. 
@@ -33,18 +33,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setAuthorId(org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.derby.generatedclasses.tables.TBook.AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.derby.generatedclasses.tables.TBook.AUTHOR_ID, value.getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>TEST.T_BOOK.AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getAuthorId() {
@@ -56,18 +44,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.derby.generatedclasses.tables.TBook.CO_AUTHOR_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setCoAuthorId(org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.derby.generatedclasses.tables.TBook.CO_AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.derby.generatedclasses.tables.TBook.CO_AUTHOR_ID, value.getValue(org.jooq.test.derby.generatedclasses.tables.TAuthor.ID));
-		}
 	}
 
 	/**
@@ -127,18 +103,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord}
-	 */
-	public void setLanguageId(org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID, value.getValue(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>TEST.T_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public java.lang.Integer getLanguageId() {
@@ -185,50 +149,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public java.sql.Timestamp getRecTimestamp() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.TBook.REC_TIMESTAMP);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>TEST.T_BOOK_TO_BOOK_STORE</code> referencing this <code>TEST.T_BOOK</code>
-	 */
-	public org.jooq.Result<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.derby.generatedclasses.tables.TBookToBookStore.BOOK_ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TBook.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>TEST.T_AUTHOR</code> referenced by this <code>TEST.T_BOOK</code>
-	 */
-	public org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.derby.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TBook.AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>TEST.T_AUTHOR</code> referenced by this <code>TEST.T_BOOK</code>
-	 */
-	public org.jooq.test.derby.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.derby.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TBook.CO_AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>TEST.T_LANGUAGE</code> referenced by this <code>TEST.T_BOOK</code>
-	 */
-	public org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.TLanguage.T_LANGUAGE)
-			.where(org.jooq.test.derby.generatedclasses.tables.TLanguage.ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.TBook.LANGUAGE_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

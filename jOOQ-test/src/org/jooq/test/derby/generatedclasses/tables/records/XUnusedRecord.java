@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 1106084022;
+	private static final long serialVersionUID = 249829962;
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID</code>. 
@@ -205,53 +205,6 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public java.math.BigDecimal getField_737() {
 		return getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.FIELD_737);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>TEST.X_UNUSED</code> referencing this <code>TEST.X_UNUSED</code>
-	 */
-	public org.jooq.Result<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.derby.generatedclasses.tables.XUnused.ID_REF.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.ID)))
-			.and(org.jooq.test.derby.generatedclasses.tables.XUnused.NAME_REF.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.NAME)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>TEST.X_TEST_CASE_85</code> referencing this <code>TEST.X_UNUSED</code>
-	 */
-	public org.jooq.Result<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85)
-			.where(org.jooq.test.derby.generatedclasses.tables.XTestCase_85.X_UNUSED_ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.ID)))
-			.and(org.jooq.test.derby.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.NAME)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>TEST.X_TEST_CASE_64_69</code> referencing this <code>TEST.X_UNUSED</code>
-	 */
-	public org.jooq.Result<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.UNUSED_ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_UNUSED</code>
-	 */
-	public org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.derby.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.derby.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.ID_REF)))
-			.and(org.jooq.test.derby.generatedclasses.tables.XUnused.NAME.equal(getValue(org.jooq.test.derby.generatedclasses.tables.XUnused.NAME_REF)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

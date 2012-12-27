@@ -49,6 +49,7 @@ import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.Factory.val;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -303,6 +304,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         assertEquals(Integer.valueOf(2), result.getValue(0, TBook_ID()));
         assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testLimitBindValues() throws Exception {
+        Select<?> select = create().select().limit(1).offset(2);
+        assertSame(asList(1, 2), select.getBindValues());
+        assertSame(asList(val(1), val(2)), select.getParams().values());
     }
 
     @Test

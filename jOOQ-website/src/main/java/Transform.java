@@ -263,7 +263,7 @@ public class Transform {
 
         OutputStream out = null;
 
-        fopFactory.setUserConfig(new File("C:/Users/lukas/workspace/jOOQ-website/src/main/resources/fop.config.xml"));
+        fopFactory.setUserConfig(new File("C:/Users/lukas/workspace/jOOQ/jOOQ-website/src/main/resources/fop.config.xml"));
         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
         // configure foUserAgent as desired
 
@@ -293,7 +293,7 @@ public class Transform {
 
         // Open the PDF and check it
         Runtime.getRuntime().exec(new String[] {
-                "C:\\Program Files (x86)\\Adobe\\Reader 9.0\\Reader\\AcroRd32.exe",
+                "C:\\Program Files (x86)\\Adobe\\Reader 11.0\\Reader\\AcroRd32.exe",
                 file.getAbsolutePath() });
     }
 

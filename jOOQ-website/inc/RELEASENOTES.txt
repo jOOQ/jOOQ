@@ -10,6 +10,69 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.5.2 - December 27, 2012
+=================================================================
+
+This is a minor patch release with some useful fixes for the 
+2.5 branch
+
+Bug fixes
+---------
+#1850 - Record.equals() returns true as soon as both records hold
+        a "null" value for a given field
+#1876 - NULL constraint violation when storing a copied record
+#1890 - Bad Postgres array serialisation when " or \ characters 
+        are contained in a String[]
+#1937 - Inefficient implementations of AbstractDataType.equals() 
+        and hashCode()
+#1938 - Improve AbstractField.hashCode() and 
+        AbstractTable.hashCode() and similar, as these two are 
+        called very often
+#1942 - Inefficient call to String.split() in 
+        StringUtils.toCamelCase() leads to non-negligible 
+        performance overhead in POJO transformation calls
+#1954 - Bad SQL rendered when combining ORDER BY 
+        [ some-function ] with LIMIT .. OFFSET in DB2, SQL Server
+#1960 - Bad SQL rendered for OVER (ORDER BY [ some-function ]) 
+        for SQL Server and Sybase
+#1979 - Thread safety issue in org.jooq.impl.FieldList
+#1993 - Bad code generated when the same table name exists in 
+        multiple schemas in SQL Server
+#2007 - Bad type coercion on the right hand side of a comparison
+        predicate, when the left hand side is Field<Object>
+#2011 - Implement some micro-optimisations in 
+        DefaultRenderContext
+
+Version 2.5.1 - September 23, 2012
+=================================================================
+
+This is a minor patch release with some useful fixes for the 
+2.5 branch
+
+Bug fixes
+---------
+#1751 - Result.intoResultSet() generates wrong ResultSetMetaData
+        if runtime schema mapping is applied
+#1764 - Add missing @Support({ ... FIREBIRD ... }) annotations
+#1768 - NullPointerException when DAO.fetchOne() returns no 
+        record
+#1774 - QueryPart.toString() does not load default settings from 
+        classpath
+#1786 - Fix SEQUENCE support for Firebird
+#1792 - Factory.fieldByName() and tableByName() do not correctly
+        escape quotes
+#1797 - SQL syntax errors when plain SQL contains comments with
+        question marks and SQL is executed as 
+        StatementType.STATIC_STATEMENT
+#1802 - Result.into(Table) doesn't work correctly, if the same 
+        field name appears twice in Result
+#1819 - MappingException in Record.into(Class), when POJO setters
+        have applicable names but non-applicable argument types
+#1820 - Cannot fetch into non-public POJO classes. Their members
+        / getters / setters should be made accessible
+#1829 - Factory.execute(String) may cause errors when plain SQL
+        returns results
+
 Version 2.5.0 - August 26, 2012
 =================================================================
 

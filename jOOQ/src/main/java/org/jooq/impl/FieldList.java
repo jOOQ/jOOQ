@@ -37,9 +37,7 @@
 package org.jooq.impl;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.jooq.Field;
 import org.jooq.FieldProvider;
@@ -50,8 +48,6 @@ import org.jooq.FieldProvider;
 class FieldList extends NamedQueryPartList<Field<?>> implements FieldProvider {
 
     private static final long                serialVersionUID = -6911012275707591576L;
-
-    private transient Map<Field<?>, Integer> indexes;
 
     FieldList() {
         super();
@@ -120,23 +116,18 @@ class FieldList extends NamedQueryPartList<Field<?>> implements FieldProvider {
     }
 
     @Override
-    public final int getIndex(Field<?> field) throws IllegalArgumentException {
-        if (indexes == null) {
-            indexes = new LinkedHashMap<Field<?>, Integer>();
+    public final int getIndex(Field<?> field) {
 
-            for (int i = 0; i < size(); i++) {
-                indexes.put(get(i), i);
+        // Get an exact match, or a field with a similar name
+        Field<?> compareWith = getField(field);
+
+        if (compareWith != null) {
+            int size = size();
+
+            for (int i = 0; i < size; i++) {
+                if (get(i).equals(compareWith))
+                    return i;
             }
-        }
-
-        // Return the field's index itself, if it is contained
-        if (indexes.containsKey(field)) {
-            return indexes.get(field);
-        }
-
-        // Check if the field is an alias of a contained field
-        if (indexes.containsKey(getField(field))) {
-            return indexes.get(getField(field));
         }
 
         throw new IllegalArgumentException("Field " + field + " is not contained in list");

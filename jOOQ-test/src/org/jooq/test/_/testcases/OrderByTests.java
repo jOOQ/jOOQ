@@ -238,7 +238,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .from(TBook())
 
                 // Avoid fetching 1984 as ordering differs between DBs
-                .where(TBook_ID().between(2).and(4))
+                .where(TBook_ID().between(2, 4))
                 .orderBy(
                     TBook_AUTHOR_ID().mul(2).asc(),
                     lower(TBook_TITLE()).asc())
@@ -254,7 +254,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
                 .from(TBook())
 
                 // Avoid fetching 1984 as ordering differs between DBs
-                .where(TBook_ID().between(2).and(4))
+                .where(TBook_ID().between(2, 4))
                 .orderBy(
                     TBook_AUTHOR_ID().mul(2).asc(),
                     lower(TBook_TITLE()).asc())

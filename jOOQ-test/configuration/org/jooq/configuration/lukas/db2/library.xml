@@ -2,10 +2,10 @@
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd">
     <jdbc>
         <driver>com.ibm.db2.jcc.DB2Driver</driver>
-        <url>jdbc:db2://localhost:50000/SAMPLE:retrieveMessagesFromServerOnGetMessage=true;</url>
+        <url>jdbc:db2://localhost:50000/TEST:retrieveMessagesFromServerOnGetMessage=true;</url>
         <schema>LUKAS</schema>
-        <user>db2admin</user>
-        <password>password</password>
+        <user>lukas</user>
+        <password>lukas</password>
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>

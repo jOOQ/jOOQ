@@ -25,6 +25,7 @@ DROP TABLE t_book_details/
 DROP TABLE t_author/
 DROP TABLE t_language/
 DROP TABLE t_directory/
+DROP TABLE x_test_case_2025/
 DROP TABLE x_test_case_71/
 DROP TABLE x_test_case_64_69/
 DROP TABLE x_test_case_85/

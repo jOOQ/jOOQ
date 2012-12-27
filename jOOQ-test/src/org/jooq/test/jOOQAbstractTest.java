@@ -1469,6 +1469,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLimitBindValues() throws Exception {
+        new OrderByTests(this).testLimitBindValues();
+    }
+
+    @Test
     public void testLimitNested() throws Exception {
         new OrderByTests(this).testLimitNested();
     }

@@ -47,7 +47,11 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+
+import junit.framework.Assert;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
@@ -830,4 +834,10 @@ public abstract class BaseTest<
 
     // Dummy parameters for SQL Server
     protected static Integer DUMMY_OUT_INT = new Integer(0);
+
+    protected static void assertSame(Collection<?> expected, Collection<?> actual) {
+        if (!new HashSet<Object>(expected).equals(new HashSet<Object>(actual))) {
+            Assert.fail("Collections aren't the same : " + expected + " and " + actual);
+        }
+    }
 }

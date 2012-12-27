@@ -251,9 +251,23 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         else {
             switch (configuration.getDialect()) {
                 case MYSQL:
-                    sql("`").sql(literal.replace("`", "``")).sql("`");
+                    sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
                     break;
 
+                // SQLite is supposed to support all sorts of delimiters, but it
+                // seems too buggy
+                case SQLITE:
+                    sql(literal);
+                    break;
+
+                // T-SQL databases use brackets
+                case ASE:
+                case SQLSERVER:
+                case SYBASE:
+                    sql("[").sql(StringUtils.replace(literal, "]", "]]")).sql("]");
+                    break;
+
+                // Most dialects implement the SQL standard, using double quotes
                 case CUBRID:
                 case DB2:
                 case DERBY:
@@ -263,23 +277,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                 case INGRES:
                 case ORACLE:
                 case POSTGRES:
-                    sql('"').sql(literal.replace("\"", "\"\"")).sql('"');
-                    break;
-
-                // SQLite is supposed to support all sorts of delimiters, but it
-                // seems too buggy
-                case SQLITE:
-                    sql(literal);
-                    break;
-
-                case ASE:
-                case SQLSERVER:
-                case SYBASE:
-                    sql("[").sql(literal.replace("]", "]]")).sql("]");
-                    break;
-
                 default:
-                    sql(literal);
+                    sql('"').sql(StringUtils.replace(literal, "\"", "\"\"")).sql('"');
                     break;
             }
         }

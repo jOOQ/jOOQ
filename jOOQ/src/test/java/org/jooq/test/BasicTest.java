@@ -37,7 +37,6 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
 import static org.jooq.impl.Factory.avg;
 import static org.jooq.impl.Factory.condition;
@@ -118,9 +117,6 @@ import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
 import org.jooq.test.data.Table1Record;
 import org.jooq.test.data.TestDataType;
-import org.jooq.types.DayToSecond;
-import org.jooq.types.Interval;
-import org.jooq.types.YearToMonth;
 
 import org.jmock.Expectations;
 import org.junit.Test;
@@ -2521,55 +2517,5 @@ public class BasicTest extends AbstractTest {
         assertEquals("select 1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
         assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :2", r_refP.render(q));
         assertEquals("select ? from \"TABLE1\" where \"TABLE1\".\"ID1\" = ?", r_ref.render(q));
-    }
-
-    @Test
-    public void testYearToMonth() {
-        for (int i = 0; i <= 5; i++) {
-            intervalChecks(i * 12, new YearToMonth(i));
-            intervalChecks(i * -12, new YearToMonth(i).neg());
-            intervalChecks(i, new YearToMonth(0, i));
-        }
-    }
-
-    @Test
-    public void testDayToSecond() {
-        for (double i = -1394892834972.0; i <= 23487289374987.0; i += 283749827.3839293) {
-            intervalChecks(i, DayToSecond.valueOf(i));
-        }
-
-        for (int i = 0; i <= 5; i++) {
-            intervalChecks(i * 1000 * 86400.0, new DayToSecond(i));
-            intervalChecks(i * 1000 * 3600.0, new DayToSecond(0, i));
-            intervalChecks(i * 1000 * 60.0, new DayToSecond(0, 0, i));
-            intervalChecks(i * 1000, new DayToSecond(0, 0, 0, i));
-            intervalChecks(i / 1000000.0, new DayToSecond(0, 0, 0, 0, i));
-        }
-    }
-
-    private <I extends Number & Interval> void intervalChecks(Number expected, I interval) {
-        // Allow some floating point arithmetic inaccuracy
-        assertTrue(Math.abs(Double.doubleToLongBits(expected.doubleValue()) - Double.doubleToLongBits(interval.doubleValue())) < 50);
-        assertTrue(Math.abs(Float.floatToIntBits(expected.floatValue()) - Float.floatToIntBits(interval.floatValue())) < 5);
-
-        assertEquals(expected.byteValue(), interval.byteValue());
-        assertEquals(expected.shortValue(), interval.shortValue());
-        assertEquals(expected.intValue(), interval.intValue());
-        assertEquals(expected.longValue(), interval.longValue());
-
-        if (interval instanceof YearToMonth) {
-            YearToMonth y = YearToMonth.valueOf(interval.toString());
-            assertEquals(interval, y);
-        }
-        else {
-            DayToSecond m = DayToSecond.valueOf(interval.toString());
-            assertEquals(interval, m);
-            assertEquals(m.getDays(),
-                m.getSign() * (int) m.getTotalDays());
-            assertEquals(m.getDays() * 24 + m.getHours(),
-                m.getSign() * (int) m.getTotalHours());
-            assertEquals(m.getDays() * 24 * 60 + m.getHours() * 60 + m.getMinutes(),
-                m.getSign() * (int) m.getTotalMinutes());
-        }
     }
 }

@@ -33,7 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test;
+package org.jooq.test.data;
 
 import java.sql.Date;
 
@@ -44,25 +44,25 @@ import org.jooq.impl.TableImpl;
 /**
  * @author Lukas Eder
  */
-public class Table1 extends TableImpl<Table1Record> {
+public class Table3 extends TableImpl<Table3Record> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = 7621282509163949636L;
 
-    public static final Table<Table1Record>               TABLE1      = new Table1();
+    public static final Table<Table3Record>               TABLE3      = new Table3();
 
-    public static final TableField<Table1Record, Integer> FIELD_ID1   = createField("ID1", TestDataType.INTEGER_TYPE, TABLE1);
-    public static final TableField<Table1Record, String>  FIELD_NAME1 = createField("NAME1", TestDataType.STRING_TYPE, TABLE1);
-    public static final TableField<Table1Record, Date>    FIELD_DATE1 = createField("DATE1", TestDataType.DATE_TYPE, TABLE1);
+    public static final TableField<Table3Record, Integer> FIELD_ID3   = createField("ID3", TestDataType.INTEGER_TYPE, TABLE3);
+    public static final TableField<Table3Record, String>  FIELD_NAME3 = createField("NAME3", TestDataType.STRING_TYPE, TABLE3);
+    public static final TableField<Table3Record, Date>    FIELD_DATE3 = createField("DATE3", TestDataType.DATE_TYPE, TABLE3);
 
-    public Table1() {
-        super("TABLE1");
+    public Table3() {
+        super("TABLE3");
     }
 
     @Override
-    public Class<Table1Record> getRecordType() {
-        return Table1Record.class;
+    public Class<Table3Record> getRecordType() {
+        return Table3Record.class;
     }
 }

@@ -5807,8 +5807,37 @@ public class Factory implements FactoryOperations {
 
         // The default behaviour
         else {
-            return new Val<T>(type.convert(value), type);
+            T converted = type.convert(value);
+            return new Val<T>(converted, mostSpecific(converted, type));
         }
+    }
+
+    /**
+     * Get the "most specific" data type between a concrete value and an actual
+     * coercion data type
+     * <p>
+     * [#2007] When coercing a (previously converted) value to a type, it may be that
+     * the type is still more general than the actual type. This is typically
+     * the case when <code>dataType == SQLDataType.OTHER</code>, i.e. when
+     * <code>dataType.getType() == Object.class</code>. In that case, it is wise
+     * to keep the additional type information of the <code>value</code>
+     *
+     * @param value The value
+     * @param dataType The coercion data type
+     * @return The most specific data type
+     */
+    @SuppressWarnings("unchecked")
+    private static <T> DataType<T> mostSpecific(T value, DataType<T> dataType) {
+        if (value != null) {
+            Class<?> valueType = value.getClass();
+            Class<?> coercionType = dataType.getType();
+
+            if (valueType != coercionType && coercionType.isAssignableFrom(valueType)) {
+                return (DataType<T>) DefaultDataType.getDataType(null, valueType);
+            }
+        }
+
+        return dataType;
     }
 
     /**

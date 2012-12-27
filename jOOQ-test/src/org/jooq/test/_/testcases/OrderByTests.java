@@ -69,6 +69,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.impl.Factory;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -313,9 +314,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     @SuppressWarnings("unchecked")
     @Test
     public void testLimitBindValues() throws Exception {
-        Select<?> select = create().select().limit(1).offset(2);
-        assertSame(asList(1, 2), select.getBindValues());
-        assertSame(asList(val(1), val(2)), select.getParams().values());
+        Select<?> s1 = create().select().limit(1).offset(2);
+        assertSame(asList(1, 2), s1.getBindValues());
+        assertSame(asList(val(1), val(2)), s1.getParams().values());
+
+        Select<?> s2 = Factory.select().limit(1).offset(2);
+        assertSame(asList(1, 2), s2.getBindValues());
+        assertSame(asList(val(1), val(2)), s2.getParams().values());
     }
 
     @Test

@@ -1292,6 +1292,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testLimitBindValues() throws Exception {
+        new OrderByTests(this).testLimitBindValues();
+    }
+
+    @Test
     public void testJoinDuplicateFieldNames() throws Exception {
         new JoinTests(this).testJoinDuplicateFieldNames();
     }

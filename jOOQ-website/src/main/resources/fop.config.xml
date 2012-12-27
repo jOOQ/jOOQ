@@ -43,20 +43,20 @@
 			</filterList>
 			<fonts>
 				<font
-					metrics-url="C:/Users/lukas/workspace/jOOQ-website/src/main/resources/georgia.xml"
-					embed-url="C:/Users/lukas/workspace/jOOQ-website/src/main/resources/georgia.ttf"
+					metrics-url="C:/Users/lukas/workspace/jOOQ/jOOQ-website/src/main/resources/georgia.xml"
+					embed-url="C:/Users/lukas/workspace/jOOQ/jOOQ-website/src/main/resources/georgia.ttf"
 					kerning="yes">
 					<font-triplet name="Georgia" style="normal" weight="normal" />
 				</font>
 				<font
-					metrics-url="C:/Users/lukas/workspace/jOOQ-website/src/main/resources/oxygen.xml"
-					embed-url="C:/Users/lukas/workspace/jOOQ-website/src/main/resources/Oxygen-Regular.ttf"
+					metrics-url="C:/Users/lukas/workspace/jOOQ/jOOQ-website/src/main/resources/oxygen.xml"
+					embed-url="C:/Users/lukas/workspace/jOOQ/jOOQ-website/src/main/resources/Oxygen-Regular.ttf"
 					kerning="yes">
 					<font-triplet name="Oxygen" style="normal" weight="normal" />
 				</font>
 				<font
-					metrics-url="C:/Users/lukas/workspace/jOOQ-website/src/main/resources/special-elite.xml"
-					embed-url="C:/Users/lukas/workspace/jOOQ-website/src/main/resources/SpecialElite.ttf"
+					metrics-url="C:/Users/lukas/workspace/jOOQ/jOOQ-website/src/main/resources/special-elite.xml"
+					embed-url="C:/Users/lukas/workspace/jOOQ/jOOQ-website/src/main/resources/SpecialElite.ttf"
 					kerning="yes">
 					<font-triplet name="Special Elite" style="normal" weight="normal" />
 				</font>

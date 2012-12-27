@@ -858,8 +858,8 @@ public abstract class BaseTest<
     // Dummy parameters for SQL Server
     protected static Integer DUMMY_OUT_INT = new Integer(0);
 
-    protected static <E> void assertSame(Collection<E> expected, Collection<E> actual) {
-        if (!new HashSet<E>(expected).equals(new HashSet<E>(actual))) {
+    protected static void assertSame(Collection<?> expected, Collection<?> actual) {
+        if (!new HashSet<Object>(expected).equals(new HashSet<Object>(actual))) {
             Assert.fail("Collections aren't the same : " + expected + " and " + actual);
         }
     }

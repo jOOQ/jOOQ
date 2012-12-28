@@ -9,10 +9,10 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> {
 
-	private static final long serialVersionUID = -632125477;
+	private static final long serialVersionUID = 471249133;
 
 	/**
-	 * The singleton instance of T_937
+	 * The singleton instance of <code>T_937</code>
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.T_937 T_937 = new org.jooq.test.firebird.generatedclasses.tables.T_937();
 
@@ -25,31 +25,43 @@ public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebi
 	}
 
 	/**
-	 * The table column <code>T_937.T_937</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>T_937.T_937</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record, java.lang.Integer> T_937_ = createField("T_937", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>T_937</code> table reference
+	 */
 	public T_937() {
 		super("T_937");
 	}
 
+	/**
+	 * Create an aliased <code>T_937</code> table reference
+	 */
 	public T_937(java.lang.String alias) {
 		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.T_937.T_937);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> getMainKey() {
 		return org.jooq.test.firebird.generatedclasses.Keys.T_937;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record>>asList(org.jooq.test.firebird.generatedclasses.Keys.T_937);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.T_937 as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.T_937(alias);

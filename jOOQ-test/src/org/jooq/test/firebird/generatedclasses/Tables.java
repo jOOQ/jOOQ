@@ -87,6 +87,11 @@ public final class Tables {
 	public static final org.jooq.test.firebird.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.firebird.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 	/**
+	 * The table X_TEST_CASE_2025
+	 */
+	public static final org.jooq.test.firebird.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+
+	/**
 	 * The table X_TEST_CASE_64_69
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
@@ -107,7 +112,7 @@ public final class Tables {
 	public static final org.jooq.test.firebird.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

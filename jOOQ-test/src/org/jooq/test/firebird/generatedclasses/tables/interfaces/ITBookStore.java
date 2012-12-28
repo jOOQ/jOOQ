@@ -10,12 +10,26 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITBookStore extends java.io.Serializable {
 
 	/**
-	 * The table column <code>T_BOOK_STORE.NAME</code>
+	 * Setter for <code>T_BOOK_STORE.NAME</code>. 
 	 */
 	public void setName(java.lang.String value);
 
 	/**
-	 * The table column <code>T_BOOK_STORE.NAME</code>
+	 * Getter for <code>T_BOOK_STORE.NAME</code>. 
 	 */
 	public java.lang.String getName();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITBookStore
+	 */
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookStore from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITBookStore
+	 */
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookStore> E into(E into);
 }

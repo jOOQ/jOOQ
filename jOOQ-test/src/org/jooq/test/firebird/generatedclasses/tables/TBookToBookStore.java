@@ -9,10 +9,10 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -2120486997;
+	private static final long serialVersionUID = -64862851;
 
 	/**
-	 * The singleton instance of T_BOOK_TO_BOOK_STORE
+	 * The singleton instance of <code>T_BOOK_TO_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore();
 
@@ -25,61 +25,61 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES T_BOOK (ID)
-	 * </pre></code>
+	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.STOCK</code>
+	 * The column <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>T_BOOK_TO_BOOK_STORE</code> table reference
+	 */
 	public TBookToBookStore() {
 		super("T_BOOK_TO_BOOK_STORE");
 	}
 
+	/**
+	 * Create an aliased <code>T_BOOK_TO_BOOK_STORE</code> table reference
+	 */
 	public TBookToBookStore(java.lang.String alias) {
 		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
 		return org.jooq.test.firebird.generatedclasses.Keys.PK_B2BS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.firebird.generatedclasses.Keys.PK_B2BS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.firebird.generatedclasses.Keys.FK_B2BS_BS_NAME, org.jooq.test.firebird.generatedclasses.Keys.FK_B2BS_B_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore(alias);

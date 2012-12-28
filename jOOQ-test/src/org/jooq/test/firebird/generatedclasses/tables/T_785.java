@@ -9,10 +9,10 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -1365904909;
+	private static final long serialVersionUID = 89614045;
 
 	/**
-	 * The singleton instance of T_785
+	 * The singleton instance of <code>T_785</code>
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.T_785 T_785 = new org.jooq.test.firebird.generatedclasses.tables.T_785();
 
@@ -25,28 +25,37 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.genera
 	}
 
 	/**
-	 * The table column <code>T_785.ID</code>
+	 * The column <code>T_785.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>T_785.NAME</code>
+	 * The column <code>T_785.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
-	 * The table column <code>T_785.VALUE</code>
+	 * The column <code>T_785.VALUE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record, java.lang.String> VALUE = createField("VALUE", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
+	/**
+	 * Create a <code>T_785</code> table reference
+	 */
 	public T_785() {
 		super("T_785");
 	}
 
+	/**
+	 * Create an aliased <code>T_785</code> table reference
+	 */
 	public T_785(java.lang.String alias) {
 		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.T_785.T_785);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.T_785 as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.T_785(alias);

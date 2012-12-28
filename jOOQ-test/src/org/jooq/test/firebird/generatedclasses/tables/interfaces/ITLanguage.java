@@ -10,46 +10,56 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface ITLanguage extends java.io.Serializable {
 
 	/**
-	 * The table column <code>T_LANGUAGE.CD</code>
+	 * Setter for <code>T_LANGUAGE.CD</code>. 
 	 */
 	public void setCd(java.lang.String value);
 
 	/**
-	 * The table column <code>T_LANGUAGE.CD</code>
+	 * Getter for <code>T_LANGUAGE.CD</code>. 
 	 */
 	public java.lang.String getCd();
 
 	/**
-	 * The table column <code>T_LANGUAGE.DESCRIPTION</code>
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>. 
 	 */
 	public void setDescription(java.lang.String value);
 
 	/**
-	 * The table column <code>T_LANGUAGE.DESCRIPTION</code>
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>. 
 	 */
 	public java.lang.String getDescription();
 
 	/**
-	 * The table column <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value);
 
 	/**
-	 * The table column <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public java.lang.String getDescriptionEnglish();
 
 	/**
-	 * The table column <code>T_LANGUAGE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>T_LANGUAGE.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>T_LANGUAGE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>T_LANGUAGE.ID</code>. 
 	 */
 	public java.lang.Integer getId();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface ITLanguage
+	 */
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.ITLanguage from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface ITLanguage
+	 */
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.ITLanguage> E into(E into);
 }

@@ -12,17 +12,17 @@ package org.jooq.test.firebird.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence SQL$DEFAULT
+	 * The sequence <code>SQL$DEFAULT</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Long> SQL$DEFAULT = new org.jooq.impl.SequenceImpl<java.lang.Long>("SQL$DEFAULT", null, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * The sequence S_AUTHOR_ID
+	 * The sequence <code>S_AUTHOR_ID</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Long> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Long>("S_AUTHOR_ID", null, org.jooq.impl.SQLDataType.BIGINT);
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Sequences() {}
 }

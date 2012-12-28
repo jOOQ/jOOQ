@@ -9190,6 +9190,7 @@ for (Record record : create().select(
 								<li>Result&lt;Record> might change incompatibly</li>
 							</ul>
 							
+							<h3>SimpleSelectQuery and SimpleSelectXXXStep API were removed</h3>
 							<h3>Separation of query building and query execution, removed FactoryOperations</h3>
 							<h3>No sub-factories anymore (no deprecation yet)</h3>
 							<h3>Quantified comparison predicates (no deprecation yet)</h3>

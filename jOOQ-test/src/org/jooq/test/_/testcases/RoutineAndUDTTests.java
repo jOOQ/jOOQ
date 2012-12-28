@@ -316,7 +316,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // Null argument checks
         Field<Integer> f10 = FAuthorExistsField(null).cast(Integer.class);
 
-        SelectQuery q = create().selectQuery();
+        SelectQuery<Record> q = create().selectQuery();
         q.addSelect(
             f1a, f2a, f3a, f4a, f5a, f6a, f7a, f8a, f9a,
             f1b, f2b, f3b, f4b, f5b, f6b, f7b, f8b, f9b, f10);

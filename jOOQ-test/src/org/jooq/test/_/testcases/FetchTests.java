@@ -364,7 +364,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testFetch() throws Exception {
-        SelectQuery q = create().selectQuery();
+        SelectQuery<?> q = create().selectQuery();
         q.addFrom(TAuthor());
         q.addSelect(TAuthor().getFields());
         q.addOrderBy(TAuthor_LAST_NAME());

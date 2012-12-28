@@ -90,7 +90,7 @@ public class Library {
 	 */
 	public static void firstRun() throws Exception {
 		// Create the query
-		SelectQuery q = create().selectQuery();
+		SelectQuery<?> q = create().selectQuery();
 		q.addFrom(T_AUTHOR);
 		q.addJoin(T_BOOK, TAuthor.ID.equal(TBook.AUTHOR_ID));
 		q.addConditions(TAuthor.YEAR_OF_BIRTH.greaterThan(1920));

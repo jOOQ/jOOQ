@@ -186,7 +186,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * checking of database record state and the actual <code>UPDATE</code></li>
      * </ul>
      * <p>
-     * See {@link SimpleSelectQuery#setForUpdate(boolean)} for more details</li>
+     * See {@link SelectQuery#setForUpdate(boolean)} for more details</li>
      * </ul>
      * <h3>Statement examples</h3>
      * <p>
@@ -252,7 +252,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * checking of database record state and the actual <code>DELETE</code></li>
      * </ul>
      * <p>
-     * See {@link SimpleSelectQuery#setForUpdate(boolean)} for more details</li>
+     * See {@link SelectQuery#setForUpdate(boolean)} for more details</li>
      * </ul>
      * <h3>Statement examples</h3>
      * <p>

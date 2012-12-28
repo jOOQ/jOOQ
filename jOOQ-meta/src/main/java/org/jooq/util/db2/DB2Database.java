@@ -245,7 +245,7 @@ public class DB2Database extends AbstractDatabase {
     protected List<TableDefinition> getTables0() throws SQLException {
         List<TableDefinition> result = new ArrayList<TableDefinition>();
 
-        SelectQuery q = create().selectQuery();
+        SelectQuery<?> q = create().selectQuery();
         q.addFrom(TABLES);
         q.addSelect(Tables.TABSCHEMA.trim());
         q.addSelect(Tables.TABNAME);

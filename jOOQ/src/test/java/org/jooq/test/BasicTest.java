@@ -111,7 +111,6 @@ import org.jooq.RowN;
 import org.jooq.Select;
 import org.jooq.SelectFinalStep;
 import org.jooq.SelectQuery;
-import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.Truncate;
 import org.jooq.UpdateQuery;
@@ -1818,7 +1817,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testConditionalSelectQuery2() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
 
         q.addConditions(falseCondition());
         assertEquals("select 1 from dual where 1 = 0", r_refI().render(q));
@@ -1828,7 +1827,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testConditionalSelectQuery3() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
 
         q.addConditions(falseCondition());
         q.addConditions(trueCondition());
@@ -1839,7 +1838,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testConditionalSelectQuery4() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
         Condition c1 = FIELD_ID1.equal(10);
         Condition c2 = FIELD_ID1.equal(20);
 
@@ -1865,7 +1864,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testConditionalSelectQuery5() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
         Condition c1 = condition("\"TABLE1\".\"ID1\" = ?", "10");
         Condition c2 = condition("\"TABLE2\".\"ID2\" = 20 or \"TABLE2\".\"ID2\" = ?", 30);
 
@@ -1888,7 +1887,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testDistinctSelectQuery() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
         q.addSelect(FIELD_ID1, FIELD_ID2);
         q.setDistinct(true);
 
@@ -1902,7 +1901,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testProductSelectQuery() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addFrom(TABLE2);
@@ -1917,7 +1916,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testJoinSelectQuery() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addJoin(TABLE2);
@@ -1931,7 +1930,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testJoinOnConditionSelectQuery() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
         q.addFrom(TABLE1);
         q.addJoin(TABLE2, FIELD_ID1.equal(FIELD_ID2));
 
@@ -1952,7 +1951,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testJoinComplexSelectQuery() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addJoin(TABLE2,
@@ -2009,7 +2008,7 @@ public class BasicTest extends AbstractTest {
         Table<Table1Record> t1 = TABLE1.as("t1");
         Table<Table1Record> t2 = TABLE1.as("t2");
 
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
         q.addFrom(t1);
         q.addJoin(t2, t1.getField(FIELD_ID1).equal(t2.getField(FIELD_ID1)));
 
@@ -2025,7 +2024,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testJoinTypeSelectQuery() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
         q.addFrom(TABLE1);
         q.addJoin(TABLE2, LEFT_OUTER_JOIN, FIELD_ID1.equal(FIELD_ID2));
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\", \"TABLE2\".\"ID2\", \"TABLE2\".\"NAME2\", \"TABLE2\".\"DATE2\" from \"TABLE1\" left outer join \"TABLE2\" on \"TABLE1\".\"ID1\" = \"TABLE2\".\"ID2\"", r_refI().render(q));
@@ -2038,7 +2037,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testGroupSelectQuery() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
         q.addFrom(TABLE1);
 
         q.addGroupBy();
@@ -2107,7 +2106,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testOrderSelectQuery() throws Exception {
-        SimpleSelectQuery<Table1Record> q = create.selectQuery(TABLE1);
+        SelectQuery<Table1Record> q = create.selectQuery(TABLE1);
 
         q.addOrderBy(FIELD_ID1);
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\" order by \"TABLE1\".\"ID1\" asc", r_refI().render(q));
@@ -2127,7 +2126,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testCompleteSelectQuery() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
         q.addFrom(TABLE1);
         q.addJoin(TABLE2, FIELD_ID1.equal(FIELD_ID2));
         q.addSelect(FIELD_ID1, FIELD_ID2);
@@ -2198,8 +2197,8 @@ public class BasicTest extends AbstractTest {
     }
 
     private Select<?> createCombinedSelectQuery() {
-        SelectQuery q1 = create.selectQuery();
-        SelectQuery q2 = create.selectQuery();
+        SelectQuery<Record> q1 = create.selectQuery();
+        SelectQuery<Record> q2 = create.selectQuery();
 
         q1.addFrom(TABLE1);
         q2.addFrom(TABLE1);
@@ -2219,9 +2218,9 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testInnerSelect1() throws Exception {
-        SimpleSelectQuery<Table1Record> q1 = create.selectQuery(TABLE1);
-        SimpleSelectQuery<Table1Record> q2 = create.selectQuery(q1.asTable().as("inner_temp_table"));
-        SimpleSelectQuery<Table1Record> q3 = create.selectQuery(q2.asTable().as("outer_temp_table"));
+        SelectQuery<Table1Record> q1 = create.selectQuery(TABLE1);
+        SelectQuery<Table1Record> q2 = create.selectQuery(q1.asTable().as("inner_temp_table"));
+        SelectQuery<Table1Record> q3 = create.selectQuery(q2.asTable().as("outer_temp_table"));
 
         assertEquals("select \"inner_temp_table\".\"ID1\", \"inner_temp_table\".\"NAME1\", \"inner_temp_table\".\"DATE1\" from (select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\") \"inner_temp_table\"", r_refI().render(q2));
         assertEquals("select \"inner_temp_table\".\"ID1\", \"inner_temp_table\".\"NAME1\", \"inner_temp_table\".\"DATE1\" from (select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\" from \"TABLE1\") \"inner_temp_table\"", r_ref().render(q2));
@@ -2232,8 +2231,8 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testInnerSelect2() throws Exception {
-        SelectQuery q1 = create.selectQuery();
-        SelectQuery q2 = create.selectQuery();
+        SelectQuery<?> q1 = create.selectQuery();
+        SelectQuery<?> q2 = create.selectQuery();
 
         q1.addFrom(TABLE1);
         q2.addFrom(TABLE2);
@@ -2248,7 +2247,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testInnerSelect3() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addConditions(FIELD_ID1.in(select(FIELD_ID2).from(TABLE2)));
@@ -2259,7 +2258,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testInnerSelect4() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addConditions(FIELD_ID1.equal(select(FIELD_ID2).from(TABLE2)));
@@ -2270,7 +2269,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testInnerSelect5() throws Exception {
-        SelectQuery q = create.selectQuery();
+        SelectQuery<?> q = create.selectQuery();
 
         q.addFrom(TABLE1);
         q.addConditions(FIELD_ID1.greaterThan(any(select(FIELD_ID2).from(TABLE2))));
@@ -2281,8 +2280,8 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testInnerSelect6() throws Exception {
-        SelectQuery q1 = create.selectQuery();
-        SelectQuery q2 = create.selectQuery();
+        SelectQuery<?> q1 = create.selectQuery();
+        SelectQuery<?> q2 = create.selectQuery();
 
         q1.addFrom(TABLE1);
         q2.addFrom(TABLE2);

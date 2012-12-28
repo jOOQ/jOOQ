@@ -96,7 +96,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testSelectSimpleQuery() throws Exception {
-        SelectQuery q = create().selectQuery();
+        SelectQuery<?> q = create().selectQuery();
         Field<Integer> f1 = val(1).as("f1");
         Field<Double> f2 = val(2d).as("f2");
         Field<String> f3 = val("test").as("f3");
@@ -127,7 +127,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testSelectQuery() throws Exception {
-        SelectQuery q = create().selectQuery();
+        SelectQuery<?> q = create().selectQuery();
         q.addFrom(TAuthor());
         q.addSelect(TAuthor().getFields());
         q.addOrderBy(TAuthor_LAST_NAME());
@@ -301,11 +301,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testCombinedSelectQuery() throws Exception {
-        SelectQuery q1 = create().selectQuery();
-        SelectQuery q2 = create().selectQuery();
-
-        q1.addFrom(TBook());
-        q2.addFrom(TBook());
+        SelectQuery<B> q1 = create().selectQuery(TBook());
+        SelectQuery<B> q2 = create().selectQuery(TBook());
 
         q1.addConditions(TBook_AUTHOR_ID().equal(1));
         q2.addConditions(TBook_TITLE().equal("Brida"));

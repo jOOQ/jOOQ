@@ -299,6 +299,13 @@ class Limit extends AbstractQueryPart {
                 context.bind(getLowerRownum());
                 break;
             }
+
+            // [#2057] Bind the same values as rendered in toSQL() by default
+            default: {
+                context.bind(numberOfRows);
+                context.bind(offsetOrZero);
+                break;
+            }
         }
     }
 

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 1205731568;
+	private static final long serialVersionUID = 507263134;
 
 	/**
 	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
@@ -67,7 +67,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record2<java.lang.Integer, java.lang.String> key() {
+	public org.jooq.Record2<java.lang.String, java.lang.Integer> key() {
 		return (org.jooq.Record2) super.key();
 	}
 

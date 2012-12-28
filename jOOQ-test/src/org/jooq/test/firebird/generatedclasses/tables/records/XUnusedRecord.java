@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.lang.Long, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 953868832;
+	private static final long serialVersionUID = -1281416690;
 
 	/**
 	 * Setter for <code>X_UNUSED.ID</code>. 
@@ -275,7 +275,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record2<java.lang.String, java.lang.Integer> key() {
+	public org.jooq.Record2<java.lang.Integer, java.lang.String> key() {
 		return (org.jooq.Record2) super.key();
 	}
 

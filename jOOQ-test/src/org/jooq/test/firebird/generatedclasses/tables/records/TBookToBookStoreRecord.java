@@ -9,18 +9,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 1986336246;
+	private static final long serialVersionUID = 1205731568;
 
 	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	@Override
 	public void setBookStoreName(java.lang.String value) {
@@ -28,15 +20,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES T_BOOK_STORE (NAME)
-	 * </pre></code>
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
 	@Override
 	public java.lang.String getBookStoreName() {
@@ -44,46 +28,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
-	 */
-	public void setBookStoreName(org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, null);
-		}
-		else {
-			setValue(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value.getValue(org.jooq.test.firebird.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME));
-		}
-	}
-
-	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_BS_NAME
-	 * FOREIGN KEY (BOOK_STORE_NAME)
-	 * REFERENCES T_BOOK_STORE (NAME)
-	 * </pre></code>
-	 */
-	public org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.TBookStore.T_BOOK_STORE)
-			.where(org.jooq.test.firebird.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))
-			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES T_BOOK (ID)
-	 * </pre></code>
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	@Override
 	public void setBookId(java.lang.Integer value) {
@@ -91,15 +36,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES T_BOOK (ID)
-	 * </pre></code>
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getBookId() {
@@ -107,38 +44,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord 
-	 * TBookRecord}
-	 */
-	public void setBookId(org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value.getValue(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.ID));
-		}
-	}
-
-	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_B2BS_B_ID
-	 * FOREIGN KEY (BOOK_ID)
-	 * REFERENCES T_BOOK (ID)
-	 * </pre></code>
-	 */
-	public org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord fetchTBook() {
-		return create()
-			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK.ID.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.STOCK</code>
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	@Override
 	public void setStock(java.lang.Integer value) {
@@ -146,18 +52,23 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	}
 
 	/**
-	 * The table column <code>T_BOOK_TO_BOOK_STORE.STOCK</code>
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
 	@Override
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TBookToBookStoreRecord
+	 * {@inheritDoc}
 	 */
-	public TBookToBookStoreRecord() {
-		super(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	@Override
+	public org.jooq.Record2<java.lang.Integer, java.lang.String> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -226,5 +137,39 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer value3() {
 		return getStock();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookToBookStore from) {
+		setBookStoreName(from.getBookStoreName());
+		setBookId(from.getBookId());
+		setStock(from.getStock());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.ITBookToBookStore> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookToBookStoreRecord
+	 */
+	public TBookToBookStoreRecord() {
+		super(org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 }

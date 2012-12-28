@@ -9,12 +9,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_937 {
 
-	private static final long serialVersionUID = -662543783;
+	private static final long serialVersionUID = -200451996;
 
 	/**
-	 * The table column <code>T_937.T_937</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>T_937.T_937</code>. 
 	 */
 	@Override
 	public void setT_937(java.lang.Integer value) {
@@ -22,20 +20,23 @@ public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>T_937.T_937</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>T_937.T_937</code>. 
 	 */
 	@Override
 	public java.lang.Integer getT_937() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_937.T_937.T_937_);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached T_937Record
+	 * {@inheritDoc}
 	 */
-	public T_937Record() {
-		super(org.jooq.test.firebird.generatedclasses.tables.T_937.T_937);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -72,5 +73,37 @@ public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@Override
 	public java.lang.Integer value1() {
 		return getT_937();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_937 from) {
+		setT_937(from.getT_937());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_937> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_937Record
+	 */
+	public T_937Record() {
+		super(org.jooq.test.firebird.generatedclasses.tables.T_937.T_937);
 	}
 }

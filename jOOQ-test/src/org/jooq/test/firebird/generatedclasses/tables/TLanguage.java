@@ -9,10 +9,10 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1557283321;
+	private static final long serialVersionUID = -413699682;
 
 	/**
-	 * The singleton instance of T_LANGUAGE
+	 * The singleton instance of <code>T_LANGUAGE</code>
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.firebird.generatedclasses.tables.TLanguage();
 
@@ -25,46 +25,58 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	}
 
 	/**
-	 * The table column <code>T_LANGUAGE.CD</code>
+	 * The column <code>T_LANGUAGE.CD</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2), this);
 
 	/**
-	 * The table column <code>T_LANGUAGE.DESCRIPTION</code>
+	 * The column <code>T_LANGUAGE.DESCRIPTION</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
-	 * The table column <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>
+	 * The column <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
-	 * The table column <code>T_LANGUAGE.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>T_LANGUAGE.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>T_LANGUAGE</code> table reference
+	 */
 	public TLanguage() {
 		super("T_LANGUAGE");
 	}
 
+	/**
+	 * Create an aliased <code>T_LANGUAGE</code> table reference
+	 */
 	public TLanguage(java.lang.String alias) {
 		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> getMainKey() {
 		return org.jooq.test.firebird.generatedclasses.Keys.PK_T_LANGUAGE;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.firebird.generatedclasses.Keys.PK_T_LANGUAGE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TLanguage as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.TLanguage(alias);

@@ -10,62 +10,76 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IVAuthor extends java.io.Serializable {
 
 	/**
-	 * The table column <code>V_AUTHOR.ID</code>
+	 * Setter for <code>V_AUTHOR.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_AUTHOR.ID</code>
+	 * Getter for <code>V_AUTHOR.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>V_AUTHOR.FIRST_NAME</code>
+	 * Setter for <code>V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public void setFirstName(java.lang.String value);
 
 	/**
-	 * The table column <code>V_AUTHOR.FIRST_NAME</code>
+	 * Getter for <code>V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public java.lang.String getFirstName();
 
 	/**
-	 * The table column <code>V_AUTHOR.LAST_NAME</code>
+	 * Setter for <code>V_AUTHOR.LAST_NAME</code>. 
 	 */
 	public void setLastName(java.lang.String value);
 
 	/**
-	 * The table column <code>V_AUTHOR.LAST_NAME</code>
+	 * Getter for <code>V_AUTHOR.LAST_NAME</code>. 
 	 */
 	public java.lang.String getLastName();
 
 	/**
-	 * The table column <code>V_AUTHOR.DATE_OF_BIRTH</code>
+	 * Setter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public void setDateOfBirth(java.sql.Date value);
 
 	/**
-	 * The table column <code>V_AUTHOR.DATE_OF_BIRTH</code>
+	 * Getter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public java.sql.Date getDateOfBirth();
 
 	/**
-	 * The table column <code>V_AUTHOR.YEAR_OF_BIRTH</code>
+	 * Setter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public void setYearOfBirth(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_AUTHOR.YEAR_OF_BIRTH</code>
+	 * Getter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public java.lang.Integer getYearOfBirth();
 
 	/**
-	 * The table column <code>V_AUTHOR.ADDRESS</code>
+	 * Setter for <code>V_AUTHOR.ADDRESS</code>. 
 	 */
 	public void setAddress(java.lang.String value);
 
 	/**
-	 * The table column <code>V_AUTHOR.ADDRESS</code>
+	 * Getter for <code>V_AUTHOR.ADDRESS</code>. 
 	 */
 	public java.lang.String getAddress();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IVAuthor
+	 */
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.IVAuthor from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IVAuthor
+	 */
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.IVAuthor> E into(E into);
 }

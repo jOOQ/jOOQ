@@ -10,102 +10,116 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IVBook extends java.io.Serializable {
 
 	/**
-	 * The table column <code>V_BOOK.ID</code>
+	 * Setter for <code>V_BOOK.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_BOOK.ID</code>
+	 * Getter for <code>V_BOOK.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>V_BOOK.AUTHOR_ID</code>
+	 * Setter for <code>V_BOOK.AUTHOR_ID</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_BOOK.AUTHOR_ID</code>
+	 * Getter for <code>V_BOOK.AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getAuthorId();
 
 	/**
-	 * The table column <code>V_BOOK.CO_AUTHOR_ID</code>
+	 * Setter for <code>V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_BOOK.CO_AUTHOR_ID</code>
+	 * Getter for <code>V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId();
 
 	/**
-	 * The table column <code>V_BOOK.DETAILS_ID</code>
+	 * Setter for <code>V_BOOK.DETAILS_ID</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_BOOK.DETAILS_ID</code>
+	 * Getter for <code>V_BOOK.DETAILS_ID</code>. 
 	 */
 	public java.lang.Integer getDetailsId();
 
 	/**
-	 * The table column <code>V_BOOK.TITLE</code>
+	 * Setter for <code>V_BOOK.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * The table column <code>V_BOOK.TITLE</code>
+	 * Getter for <code>V_BOOK.TITLE</code>. 
 	 */
 	public java.lang.String getTitle();
 
 	/**
-	 * The table column <code>V_BOOK.PUBLISHED_IN</code>
+	 * Setter for <code>V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_BOOK.PUBLISHED_IN</code>
+	 * Getter for <code>V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public java.lang.Integer getPublishedIn();
 
 	/**
-	 * The table column <code>V_BOOK.LANGUAGE_ID</code>
+	 * Setter for <code>V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_BOOK.LANGUAGE_ID</code>
+	 * Getter for <code>V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public java.lang.Integer getLanguageId();
 
 	/**
-	 * The table column <code>V_BOOK.CONTENT_TEXT</code>
+	 * Setter for <code>V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public void setContentText(java.lang.String value);
 
 	/**
-	 * The table column <code>V_BOOK.CONTENT_TEXT</code>
+	 * Getter for <code>V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public java.lang.String getContentText();
 
 	/**
-	 * The table column <code>V_BOOK.CONTENT_PDF</code>
+	 * Setter for <code>V_BOOK.CONTENT_PDF</code>. 
 	 */
 	public void setContentPdf(byte[] value);
 
 	/**
-	 * The table column <code>V_BOOK.CONTENT_PDF</code>
+	 * Getter for <code>V_BOOK.CONTENT_PDF</code>. 
 	 */
 	public byte[] getContentPdf();
 
 	/**
-	 * The table column <code>V_BOOK.REC_VERSION</code>
+	 * Setter for <code>V_BOOK.REC_VERSION</code>. 
 	 */
 	public void setRecVersion(java.lang.Integer value);
 
 	/**
-	 * The table column <code>V_BOOK.REC_VERSION</code>
+	 * Getter for <code>V_BOOK.REC_VERSION</code>. 
 	 */
 	public java.lang.Integer getRecVersion();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IVBook
+	 */
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.IVBook from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IVBook
+	 */
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.IVBook> E into(E into);
 }

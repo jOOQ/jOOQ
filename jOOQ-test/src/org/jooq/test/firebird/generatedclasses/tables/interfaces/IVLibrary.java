@@ -10,22 +10,36 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IVLibrary extends java.io.Serializable {
 
 	/**
-	 * The table column <code>V_LIBRARY.AUTHOR</code>
+	 * Setter for <code>V_LIBRARY.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value);
 
 	/**
-	 * The table column <code>V_LIBRARY.AUTHOR</code>
+	 * Getter for <code>V_LIBRARY.AUTHOR</code>. 
 	 */
 	public java.lang.String getAuthor();
 
 	/**
-	 * The table column <code>V_LIBRARY.TITLE</code>
+	 * Setter for <code>V_LIBRARY.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value);
 
 	/**
-	 * The table column <code>V_LIBRARY.TITLE</code>
+	 * Getter for <code>V_LIBRARY.TITLE</code>. 
 	 */
 	public java.lang.String getTitle();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IVLibrary
+	 */
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.IVLibrary from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IVLibrary
+	 */
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.IVLibrary> E into(E into);
 }

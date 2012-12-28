@@ -9,12 +9,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_85 {
 
-	private static final long serialVersionUID = -1007458621;
+	private static final long serialVersionUID = 1222298004;
 
 	/**
-	 * The table column <code>X_TEST_CASE_85.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>X_TEST_CASE_85.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -22,9 +20,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>X_TEST_CASE_85.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>X_TEST_CASE_85.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -32,13 +28,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
-	 * </pre></code>
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	@Override
 	public void setXUnusedId(java.lang.Integer value) {
@@ -46,13 +36,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
-	 * </pre></code>
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getXUnusedId() {
@@ -60,30 +44,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>X_TEST_CASE_85.X_UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
-	 * </pre></code>
-	 */
-	public org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, String.class)))
-			.and(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, Integer.class)))
-			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
-	 * </pre></code>
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	@Override
 	public void setXUnusedName(java.lang.String value) {
@@ -91,24 +52,23 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * The table column <code>X_TEST_CASE_85.X_UNUSED_NAME</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT FK_X_TEST_CASE_85
-	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
-	 * </pre></code>
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	@Override
 	public java.lang.String getXUnusedName() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached XTestCase_85Record
+	 * {@inheritDoc}
 	 */
-	public XTestCase_85Record() {
-		super(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -177,5 +137,39 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String value3() {
 		return getXUnusedName();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_85 from) {
+		setId(from.getId());
+		setXUnusedId(from.getXUnusedId());
+		setXUnusedName(from.getXUnusedName());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.IXTestCase_85> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_85Record
+	 */
+	public XTestCase_85Record() {
+		super(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 }

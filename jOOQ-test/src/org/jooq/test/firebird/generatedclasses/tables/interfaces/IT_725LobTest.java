@@ -10,26 +10,36 @@ package org.jooq.test.firebird.generatedclasses.tables.interfaces;
 public interface IT_725LobTest extends java.io.Serializable {
 
 	/**
-	 * The table column <code>T_725_LOB_TEST.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>T_725_LOB_TEST.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value);
 
 	/**
-	 * The table column <code>T_725_LOB_TEST.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>T_725_LOB_TEST.ID</code>. 
 	 */
 	public java.lang.Integer getId();
 
 	/**
-	 * The table column <code>T_725_LOB_TEST.LOB</code>
+	 * Setter for <code>T_725_LOB_TEST.LOB</code>. 
 	 */
 	public void setLob(byte[] value);
 
 	/**
-	 * The table column <code>T_725_LOB_TEST.LOB</code>
+	 * Getter for <code>T_725_LOB_TEST.LOB</code>. 
 	 */
 	public byte[] getLob();
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Load data from another generated Record/POJO implementing the common interface IT_725LobTest
+	 */
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_725LobTest from);
+
+	/**
+	 * Copy data into another generated Record/POJO implementing the common interface IT_725LobTest
+	 */
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_725LobTest> E into(E into);
 }

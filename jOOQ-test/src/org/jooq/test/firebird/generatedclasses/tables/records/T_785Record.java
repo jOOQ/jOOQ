@@ -9,10 +9,10 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = 187563225;
+	private static final long serialVersionUID = 1264123853;
 
 	/**
-	 * The table column <code>T_785.ID</code>
+	 * Setter for <code>T_785.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
@@ -20,7 +20,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * The table column <code>T_785.ID</code>
+	 * Getter for <code>T_785.ID</code>. 
 	 */
 	@Override
 	public java.lang.Integer getId() {
@@ -28,7 +28,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * The table column <code>T_785.NAME</code>
+	 * Setter for <code>T_785.NAME</code>. 
 	 */
 	@Override
 	public void setName(java.lang.String value) {
@@ -36,7 +36,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * The table column <code>T_785.NAME</code>
+	 * Getter for <code>T_785.NAME</code>. 
 	 */
 	@Override
 	public java.lang.String getName() {
@@ -44,7 +44,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * The table column <code>T_785.VALUE</code>
+	 * Setter for <code>T_785.VALUE</code>. 
 	 */
 	@Override
 	public void setValue(java.lang.String value) {
@@ -52,18 +52,11 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	}
 
 	/**
-	 * The table column <code>T_785.VALUE</code>
+	 * Getter for <code>T_785.VALUE</code>. 
 	 */
 	@Override
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.firebird.generatedclasses.tables.T_785.T_785.VALUE);
-	}
-
-	/**
-	 * Create a detached T_785Record
-	 */
-	public T_785Record() {
-		super(org.jooq.test.firebird.generatedclasses.tables.T_785.T_785);
 	}
 
 	// -------------------------------------------------------------------------
@@ -132,5 +125,39 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.fir
 	@Override
 	public java.lang.String value3() {
 		return getValue();
+	}
+
+	// -------------------------------------------------------------------------
+	// FROM and INTO
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void from(org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_785 from) {
+		setId(from.getId());
+		setName(from.getName());
+		setValue(from.getValue());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public <E extends org.jooq.test.firebird.generatedclasses.tables.interfaces.IT_785> E into(E into) {
+		into.from(this);
+		return into;
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_785Record
+	 */
+	public T_785Record() {
+		super(org.jooq.test.firebird.generatedclasses.tables.T_785.T_785);
 	}
 }

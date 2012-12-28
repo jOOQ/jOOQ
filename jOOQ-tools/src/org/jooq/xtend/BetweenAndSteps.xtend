@@ -264,7 +264,7 @@ class BetweenAndSteps extends Generators {
         
                 // These dialects either don't support row value expressions, or they
                 // Can't handle row value expressions with the BETWEEN predicate
-                else if (row.getDegree() > 1 && asList(DERBY, ORACLE).contains(configuration.getDialect())) {
+                else if (row.getDegree() > 1 && asList(DERBY, FIREBIRD, ORACLE).contains(configuration.getDialect())) {
                     Condition result = r.ge(min).and(r.le(max));
         
                     if (not) {

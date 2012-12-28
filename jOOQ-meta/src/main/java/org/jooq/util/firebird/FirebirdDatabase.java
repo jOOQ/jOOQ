@@ -125,8 +125,12 @@ public class FirebirdDatabase extends AbstractDatabase {
             .join(RDB$INDEX_SEGMENTS)
             .on(RDB$INDEX_SEGMENTS.RDB$INDEX_NAME.eq(RDB$RELATION_CONSTRAINTS.RDB$INDEX_NAME))
             .where(RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_TYPE.eq(constraintType))
+            .orderBy(
+                RDB$RELATION_CONSTRAINTS.RDB$CONSTRAINT_NAME.asc(),
+                RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION.asc())
             .fetch();
     }
+
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
         Rdb$relationConstraints pk = RDB$RELATION_CONSTRAINTS.as("pk");

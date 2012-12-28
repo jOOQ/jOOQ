@@ -2332,10 +2332,25 @@ public class BasicTest extends AbstractTest {
         Param<?> p32 = q3.getParam("2");
         Param<?> p42 = q4.getParam("p2");
 
-        assertEquals(Arrays.asList("1", "2"), new ArrayList<String>(q1.getParams().keySet()));
-        assertEquals(Arrays.asList("p1", "p2"), new ArrayList<String>(q2.getParams().keySet()));
-        assertEquals(Arrays.asList("p1", "2"), new ArrayList<String>(q3.getParams().keySet()));
-        assertEquals(Arrays.asList("1", "p2"), new ArrayList<String>(q4.getParams().keySet()));
+        assertEquals(p11, create.extractParam(q1, "1"));
+        assertEquals(p21, create.extractParam(q2, "p1"));
+        assertEquals(p31, create.extractParam(q3, "p1"));
+        assertEquals(p41, create.extractParam(q4, "1"));
+
+        assertEquals(p12, create.extractParam(q1, "2"));
+        assertEquals(p22, create.extractParam(q2, "p2"));
+        assertEquals(p32, create.extractParam(q3, "2"));
+        assertEquals(p42, create.extractParam(q4, "p2"));
+
+        assertEquals(Arrays.asList("1", "2"), new ArrayList<String>(create.extractParams(q1).keySet()));
+        assertEquals(Arrays.asList("p1", "p2"), new ArrayList<String>(create.extractParams(q2).keySet()));
+        assertEquals(Arrays.asList("p1", "2"), new ArrayList<String>(create.extractParams(q3).keySet()));
+        assertEquals(Arrays.asList("1", "p2"), new ArrayList<String>(create.extractParams(q4).keySet()));
+
+        assertEquals(Arrays.asList("1", "2"), new ArrayList<String>(create.extractParams(q1).keySet()));
+        assertEquals(Arrays.asList("p1", "p2"), new ArrayList<String>(create.extractParams(q2).keySet()));
+        assertEquals(Arrays.asList("p1", "2"), new ArrayList<String>(create.extractParams(q3).keySet()));
+        assertEquals(Arrays.asList("1", "p2"), new ArrayList<String>(create.extractParams(q4).keySet()));
 
         // Types
         assertEquals(Integer.class, p11.getType());

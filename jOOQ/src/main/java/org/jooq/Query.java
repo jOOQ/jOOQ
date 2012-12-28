@@ -139,6 +139,8 @@ public interface Query extends QueryPart, Attachable {
      * Retrieve the bind values that will be bound by this Query. This
      * <code>List</code> cannot be modified. To modify bind values, use
      * {@link #getParams()} instead.
+     *
+     * @see Executor#extractBindValues(QueryPart)
      */
     List<Object> getBindValues();
 
@@ -152,6 +154,7 @@ public interface Query extends QueryPart, Attachable {
      *
      * @see Param
      * @see Factory#param(String, Object)
+     * @see Executor#extractParams(QueryPart)
      */
     Map<String, Param<?>> getParams();
 
@@ -163,6 +166,7 @@ public interface Query extends QueryPart, Attachable {
      *
      * @see Param
      * @see Factory#param(String, Object)
+     * @see Executor#extractParam(QueryPart, String)
      */
     Param<?> getParam(String name);
 

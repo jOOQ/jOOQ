@@ -41,8 +41,6 @@ import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -93,25 +91,17 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
     @Override
     public final List<Object> getBindValues() {
-        List<Object> result = new ArrayList<Object>();
-
-        for (Param<?> param : getParams().values()) {
-            result.add(param.getValue());
-        }
-
-        return Collections.unmodifiableList(result);
+        return create().extractBindValues(this);
     }
 
     @Override
     public final Map<String, Param<?>> getParams() {
-        ParamCollector collector = new ParamCollector(getConfiguration());
-        collector.bind(this);
-        return Collections.unmodifiableMap(collector.result);
+        return create().extractParams(this);
     }
 
     @Override
     public final Param<?> getParam(String name) {
-        return getParams().get(name);
+        return create().extractParam(this, name);
     }
 
     /**

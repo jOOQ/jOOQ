@@ -63,6 +63,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -93,6 +94,7 @@ import org.jooq.LoaderOptionsStep;
 import org.jooq.MergeKeyStep;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
+import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -403,6 +405,55 @@ public class Executor implements Configuration {
      */
     public final String renderInlined(QueryPart part) {
         return renderContext().inline(true).render(part);
+    }
+
+    /**
+     * Retrieve the bind values that will be bound by a given
+     * <code>QueryPart</code>
+     * <p>
+     * The returned <code>List</code> is immutable. To modify bind values, use
+     * {@link #extractParams(QueryPart)} instead.
+     */
+    public final List<Object> extractBindValues(QueryPart part) {
+        List<Object> result = new ArrayList<Object>();
+
+        for (Param<?> param : extractParams(part).values()) {
+            result.add(param.getValue());
+        }
+
+        return Collections.unmodifiableList(result);
+    }
+
+    /**
+     * Get a <code>Map</code> of named parameters
+     * <p>
+     * The <code>Map</code> itself is immutable, but the {@link Param} elements
+     * allow for modifying bind values on an existing {@link Query} (or any
+     * other {@link QueryPart}).
+     * <p>
+     * Bind values created with {@link Factory#val(Object)} will have their bind
+     * index as name.
+     *
+     * @see Param
+     * @see Factory#param(String, Object)
+     */
+    public final Map<String, Param<?>> extractParams(QueryPart part) {
+        ParamCollector collector = new ParamCollector(this);
+        collector.bind(part);
+        return Collections.unmodifiableMap(collector.result);
+    }
+
+    /**
+     * Get a named parameter from a {@link QueryPart}, provided its name.
+     * <p>
+     * Bind values created with {@link Factory#val(Object)} will have their bind
+     * index as name.
+     *
+     * @see Param
+     * @see Factory#param(String, Object)
+     */
+    public final Param<?> extractParam(QueryPart part, String name) {
+        return extractParams(part).get(name);
     }
 
     /**

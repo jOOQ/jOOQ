@@ -39,6 +39,7 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
@@ -90,7 +91,7 @@ class RowIsNull extends AbstractCondition {
 
         // CUBRID 9.0.0 and HSQLDB have buggy implementations of the NULL predicate.
         // Let's wait for them to be fixed
-        if (asList(CUBRID, DB2, DERBY, H2, HSQLDB, MYSQL, ORACLE, SQLITE, SQLSERVER).contains(configuration.getDialect())) {
+        if (asList(CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, SQLITE, SQLSERVER).contains(configuration.getDialect())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             for (Field<?> field : row.getFields()) {

@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -309,7 +310,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     public void testRowValueExpressionOrderingSubselects() throws Exception {
         // IN with subselects - not supported by all DBs
         // TODO [#1772] Simulate this for all dialects
-        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
+        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
             log.info("SKIPPING", "Tuples and subselects");
         }
         else {

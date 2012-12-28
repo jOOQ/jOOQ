@@ -87,7 +87,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalSt
      * <p>
      * Be careful not to confuse this with {@link Object#wait(long)} !
      *
-     * @see SimpleSelectQuery#setForUpdateWait(int) see LockProvider for more
+     * @see SelectQuery#setForUpdateWait(int) see LockProvider for more
      *      details
      */
     @Support(ORACLE)
@@ -97,7 +97,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalSt
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see SimpleSelectQuery#setForUpdateNoWait() see LockProvider for more
+     * @see SelectQuery#setForUpdateNoWait() see LockProvider for more
      *      details
      */
     @Support(ORACLE)
@@ -107,7 +107,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalSt
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see SimpleSelectQuery#setForUpdateSkipLocked() see LockProvider for more
+     * @see SelectQuery#setForUpdateSkipLocked() see LockProvider for more
      *      details
      */
     @Support(ORACLE)

@@ -95,7 +95,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see SimpleSelectQuery#setForUpdateOf(Field...) see LockProvider for more
+     * @see SelectQuery#setForUpdateOf(Field...) see LockProvider for more
      *      details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
@@ -105,7 +105,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see SimpleSelectQuery#setForUpdateOf(Collection) see LockProvider for
+     * @see SelectQuery#setForUpdateOf(Collection) see LockProvider for
      *      more details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
@@ -115,7 +115,7 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      * Add an <code>OF</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
-     * @see SimpleSelectQuery#setForUpdateOf(Table...) see LockProvider for more
+     * @see SelectQuery#setForUpdateOf(Table...) see LockProvider for more
      *      details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })

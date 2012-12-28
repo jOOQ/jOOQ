@@ -58,7 +58,7 @@ import org.jooq.LoaderCSVStep;
 import org.jooq.LoaderError;
 import org.jooq.LoaderOptionsStep;
 import org.jooq.LoaderXMLStep;
-import org.jooq.SimpleSelectQuery;
+import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableTable;
@@ -380,7 +380,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 // TODO: This can be implemented faster using a MERGE statement
                 // in some dialects
                 else if (onDuplicate == ON_DUPLICATE_KEY_IGNORE) {
-                    SimpleSelectQuery<R> select = create.selectQuery(table);
+                    SelectQuery<R> select = create.selectQuery(table);
 
                     for (int i = 0; i < row.length; i++) {
                         if (i < fields.length && mainKey[i]) {

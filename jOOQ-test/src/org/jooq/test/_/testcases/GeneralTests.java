@@ -168,7 +168,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testAccessInternalRepresentation() throws Exception {
-        SelectQuery query =
+        SelectQuery<Record> query =
         create().select(TBook_ID())
                 .from(TBook())
                 .where(TBook_ID().in(1, 2, 3))

@@ -180,7 +180,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             return;
         }
 
-        SelectQuery q = create().selectQuery();
+        SelectQuery<?> q = create().selectQuery();
         q.addFrom(VLibrary());
 
         Field<Integer> position = position(VLibrary_AUTHOR(), "o").as("p");
@@ -360,13 +360,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             .when(2, "B")
             .otherwise("C");
 
-        SelectQuery query = create().selectQuery();
+        SelectQuery<?> query = create().selectQuery();
         query.addSelect(case1, case2, case3);
         query.addFrom(TBook());
         query.addOrderBy(TBook_PUBLISHED_IN());
         query.execute();
 
-        Result<Record> result = query.getResult();
+        Result<?> result = query.getResult();
         assertEquals(null, result.getValue(0, case1));
         assertEquals(null, result.getValue(1, case1));
         assertEquals(null, result.getValue(2, case1));
@@ -440,7 +440,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     public void testFunctionsOnStrings_REPLACE() throws Exception {
 
         // Standard String functions
-        SelectQuery q = create().selectQuery();
+        SelectQuery<?> q = create().selectQuery();
         Field<String> constant = val("abc");
 
         switch (getDialect()) {
@@ -855,7 +855,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         // Some checks on current_timestamp functions
         // ------------------------------------------
-        SelectQuery q1 = create().selectQuery();
+        SelectQuery<?> q1 = create().selectQuery();
         Field<Timestamp> now = currentTimestamp();
         Field<Timestamp> ts = now.as("ts");
         Field<Date> date = currentDate().as("d");
@@ -982,7 +982,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         Field<Integer> f2 = val(10).div(5).add(val(3).sub(2));
         Field<Integer> f3 = val(10).mod(3);
 
-        SelectQuery q1 = create().selectQuery();
+        SelectQuery<?> q1 = create().selectQuery();
         q1.addSelect(f1, f2, f3);
         q1.execute();
 
@@ -995,7 +995,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         Field<Integer> f4 = TBook_PUBLISHED_IN().add(3).div(7);
         Field<Integer> f5 = TBook_PUBLISHED_IN().sub(4).mul(8).neg();
 
-        SelectQuery q2 = create().selectQuery();
+        SelectQuery<?> q2 = create().selectQuery();
         q2.addSelect(f4);
         q2.addSelect(f5);
         q2.addFrom(TBook());

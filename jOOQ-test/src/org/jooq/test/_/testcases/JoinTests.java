@@ -68,7 +68,6 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
-import org.jooq.SimpleSelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -128,7 +127,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testJoinQuery() throws Exception {
-        SimpleSelectQuery<L> q1 = create().selectQuery(VLibrary());
+        SelectQuery<L> q1 = create().selectQuery(VLibrary());
 
         // TODO: Fix this when funny issue is fixed in Derby:
         // https://sourceforge.net/apps/trac/jooq/ticket/238
@@ -144,7 +143,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         Field<Integer> b_authorID = b.getField(TBook_AUTHOR_ID());
         Field<String> b_title = b.getField(TBook_TITLE());
 
-        SelectQuery q2 = create().selectQuery();
+        SelectQuery<?> q2 = create().selectQuery();
         q2.addFrom(a);
         q2.addJoin(b, b_authorID.equal(a_authorID));
         q2.addConditions(b_title.notEqual("1984"));

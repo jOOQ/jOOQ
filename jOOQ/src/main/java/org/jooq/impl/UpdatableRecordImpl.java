@@ -54,7 +54,6 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
-import org.jooq.SimpleSelectQuery;
 import org.jooq.StoreQuery;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
@@ -335,7 +334,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final void refresh(Field<?>... fields) {
-        SelectQuery select = create().selectQuery();
+        SelectQuery<?> select = create().selectQuery();
         select.addSelect(fields);
         select.addFrom(getTable());
         Utils.addConditions(select, this, getMainKey().getFieldsArray());
@@ -419,7 +418,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
      * database record has been changed compared to this record.
      */
     private final void checkIfChanged(TableField<R, ?>[] keys) {
-        SimpleSelectQuery<R> select = create().selectQuery(getTable());
+        SelectQuery<R> select = create().selectQuery(getTable());
         Utils.addConditions(select, this, keys);
 
         // [#1547] SQLite doesn't support FOR UPDATE. CUBRID and SQL Server

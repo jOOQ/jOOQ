@@ -102,7 +102,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectFinalStep<R
      * {@link SQLDialect#ORACLE}. These incompatibilities are not reflected by
      * the jOOQ API.
      *
-     * @see SimpleSelectQuery#setForUpdate(boolean) see LockProvider for more
+     * @see SelectQuery#setForUpdate(boolean) see LockProvider for more
      *      details
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -111,7 +111,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectFinalStep<R
     /**
      * Add a <code>FOR SHARE</code> clause to the end of the query.
      *
-     * @see SimpleSelectQuery#setForShare(boolean) see LockProvider for more
+     * @see SelectQuery#setForShare(boolean) see LockProvider for more
      *      details
      */
     @Support({ MYSQL, POSTGRES })

@@ -104,9 +104,8 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
+import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
-import org.jooq.SimpleSelectQuery;
-import org.jooq.SimpleSelectWhereStep;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -1300,8 +1299,8 @@ public class Executor implements Configuration {
      * </pre></code>
      */
     @Support
-    public final <R extends Record> SimpleSelectWhereStep<R> selectFrom(Table<R> table) {
-        return new SimpleSelectImpl<R>(this, table);
+    public final <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
+        return new SelectImpl<R>(this).from(table);
     }
 
     /**
@@ -1518,7 +1517,7 @@ public class Executor implements Configuration {
      * Create a new {@link SelectQuery}
      */
     @Support
-    public final SelectQuery selectQuery() {
+    public final SelectQuery<Record> selectQuery() {
         return new SelectQueryImpl(this);
     }
 
@@ -1529,8 +1528,8 @@ public class Executor implements Configuration {
      * @return The new {@link SelectQuery}
      */
     @Support
-    public final <R extends Record> SimpleSelectQuery<R> selectQuery(TableLike<R> table) {
-        return new SimpleSelectQueryImpl<R>(this, table);
+    public final <R extends Record> SelectQuery<R> selectQuery(TableLike<R> table) {
+        return new SelectQueryImpl<R>(this, table);
     }
 
     /**

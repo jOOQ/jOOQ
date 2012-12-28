@@ -40,19 +40,30 @@ import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
 import static org.jooq.impl.Factory.table;
 
+import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Converter;
+import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.FutureResult;
 import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Operator;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.RecordHandler;
+import org.jooq.RecordMapper;
+import org.jooq.Result;
+import org.jooq.ResultQuery;
 import org.jooq.Select;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectConnectByConditionStep;
@@ -76,7 +87,7 @@ import org.jooq.exception.DataAccessException;
  *
  * @author Lukas Eder
  */
-class SelectImpl<R extends Record> extends AbstractDelegatingSelect<R> implements
+class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> implements
 
     // Cascading interface implementations for Select behaviour
     SelectSelectStep<R>,
@@ -128,9 +139,8 @@ class SelectImpl<R extends Record> extends AbstractDelegatingSelect<R> implement
         this(configuration, false);
     }
 
-    @SuppressWarnings("unchecked")
     SelectImpl(Configuration configuration, boolean distinct) {
-        this((Select<R>) new SelectQueryImpl(configuration, distinct));
+        this(new SelectQueryImpl<R>(configuration, distinct));
     }
 
     SelectImpl(Select<R> query) {
@@ -138,8 +148,8 @@ class SelectImpl<R extends Record> extends AbstractDelegatingSelect<R> implement
     }
 
     @Override
-    public final SelectQuery getQuery() {
-        return (SelectQuery) getDelegate();
+    public final SelectQuery<R> getQuery() {
+        return (SelectQuery<R>) getDelegate();
     }
 
     /**
@@ -895,6 +905,356 @@ class SelectImpl<R extends Record> extends AbstractDelegatingSelect<R> implement
     @Override
     public final SelectImpl<R> partitionBy(Collection<? extends Field<?>> fields) {
         return partitionBy(fields.toArray(new Field[fields.size()]));
+    }
+
+    @Override
+    public final ResultQuery<R> maxRows(int rows) {
+        return getDelegate().maxRows(rows);
+    }
+
+    @Override
+    public final Class<? extends R> getRecordType() {
+        return getDelegate().getRecordType();
+    }
+
+    @Override
+    public final List<Field<?>> getSelect() {
+        return getDelegate().getSelect();
+    }
+
+    @Override
+    public final Result<R> getResult() {
+        return getDelegate().getResult();
+    }
+
+    @Override
+    public final Result<R> fetch() {
+        return getDelegate().fetch();
+    }
+
+    @Override
+    public final ResultSet fetchResultSet() {
+        return getDelegate().fetchResultSet();
+    }
+
+    @Override
+    public final Cursor<R> fetchLazy() {
+        return getDelegate().fetchLazy();
+    }
+
+    @Override
+    public final Cursor<R> fetchLazy(int fetchSize) {
+        return getDelegate().fetchLazy(fetchSize);
+    }
+
+    @Override
+    public final List<Result<Record>> fetchMany() {
+        return getDelegate().fetchMany();
+    }
+
+    @Override
+    public final <T> List<T> fetch(Field<T> field) {
+        return getDelegate().fetch(field);
+    }
+
+    @Override
+    public final <T> List<T> fetch(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetch(field, type);
+    }
+
+    @Override
+    public final <T, U> List<U> fetch(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetch(field, converter);
+    }
+
+    @Override
+    public final List<?> fetch(int fieldIndex) {
+        return getDelegate().fetch(fieldIndex);
+    }
+
+    @Override
+    public final <T> List<T> fetch(int fieldIndex, Class<? extends T> type) {
+        return getDelegate().fetch(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> List<U> fetch(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetch(fieldIndex, converter);
+    }
+
+    @Override
+    public final List<?> fetch(String fieldName) {
+        return getDelegate().fetch(fieldName);
+    }
+
+    @Override
+    public final <T> List<T> fetch(String fieldName, Class<? extends T> type) {
+        return getDelegate().fetch(fieldName, type);
+    }
+
+    @Override
+    public final <U> List<U> fetch(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetch(fieldName, converter);
+    }
+
+    @Override
+    public final <T> T fetchOne(Field<T> field) {
+        return getDelegate().fetchOne(field);
+    }
+
+    @Override
+    public final <T> T fetchOne(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetchOne(field, type);
+    }
+
+    @Override
+    public final <T, U> U fetchOne(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetchOne(field, converter);
+    }
+
+    @Override
+    public final Object fetchOne(int fieldIndex) {
+        return getDelegate().fetchOne(fieldIndex);
+    }
+
+    @Override
+    public final <T> T fetchOne(int fieldIndex, Class<? extends T> type) {
+        return getDelegate().fetchOne(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> U fetchOne(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetchOne(fieldIndex, converter);
+    }
+
+    @Override
+    public final Object fetchOne(String fieldName) {
+        return getDelegate().fetchOne(fieldName);
+    }
+
+    @Override
+    public final <T> T fetchOne(String fieldName, Class<? extends T> type) {
+        return getDelegate().fetchOne(fieldName, type);
+    }
+
+    @Override
+    public final <U> U fetchOne(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetchOne(fieldName, converter);
+    }
+
+    @Override
+    public final R fetchOne() {
+        return getDelegate().fetchOne();
+    }
+
+    @Override
+    public final R fetchAny() {
+        return getDelegate().fetchAny();
+    }
+
+    @Override
+    public final <K> Map<K, R> fetchMap(Field<K> key) {
+        return getDelegate().fetchMap(key);
+    }
+
+    @Override
+    public final <K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value) {
+        return getDelegate().fetchMap(key, value);
+    }
+
+    @Override
+    public final Map<Record, R> fetchMap(Field<?>[] keys) {
+        return getDelegate().fetchMap(keys);
+    }
+
+    @Override
+    public final <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) {
+        return getDelegate().fetchMap(keys, type);
+    }
+
+    @Override
+    public final <K, E> Map<K, E> fetchMap(Field<K> key, Class<? extends E> type) {
+        return getDelegate().fetchMap(key, type);
+    }
+
+    @Override
+    public final List<Map<String, Object>> fetchMaps() {
+        return getDelegate().fetchMaps();
+    }
+
+    @Override
+    public final Map<String, Object> fetchOneMap() {
+        return getDelegate().fetchOneMap();
+    }
+
+    @Override
+    public final <K> Map<K, Result<R>> fetchGroups(Field<K> key) {
+        return getDelegate().fetchGroups(key);
+    }
+
+    @Override
+    public final <K, V> Map<K, List<V>> fetchGroups(Field<K> key, Field<V> value) {
+        return getDelegate().fetchGroups(key, value);
+    }
+
+    @Override
+    public final Map<Record, Result<R>> fetchGroups(Field<?>[] keys) {
+        return getDelegate().fetchGroups(keys);
+    }
+
+    @Override
+    public final <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) {
+        return getDelegate().fetchGroups(keys, type);
+    }
+
+    @Override
+    public final Object[][] fetchArrays() {
+        return getDelegate().fetchArrays();
+    }
+
+    @Override
+    public final Object[] fetchArray(int fieldIndex) {
+        return getDelegate().fetchArray(fieldIndex);
+    }
+
+    @Override
+    public final <T> T[] fetchArray(int fieldIndex, Class<? extends T> type) {
+        return getDelegate().fetchArray(fieldIndex, type);
+    }
+
+    @Override
+    public final <U> U[] fetchArray(int fieldIndex, Converter<?, U> converter) {
+        return getDelegate().fetchArray(fieldIndex, converter);
+    }
+
+    @Override
+    public final Object[] fetchArray(String fieldName) {
+        return getDelegate().fetchArray(fieldName);
+    }
+
+    @Override
+    public final <T> T[] fetchArray(String fieldName, Class<? extends T> type) {
+        return getDelegate().fetchArray(fieldName, type);
+    }
+
+    @Override
+    public final <U> U[] fetchArray(String fieldName, Converter<?, U> converter) {
+        return getDelegate().fetchArray(fieldName, converter);
+    }
+
+    @Override
+    public final <T> T[] fetchArray(Field<T> field) {
+        return getDelegate().fetchArray(field);
+    }
+
+    @Override
+    public final <T> T[] fetchArray(Field<?> field, Class<? extends T> type) {
+        return getDelegate().fetchArray(field, type);
+    }
+
+    @Override
+    public final <T, U> U[] fetchArray(Field<T> field, Converter<? super T, U> converter) {
+        return getDelegate().fetchArray(field, converter);
+    }
+
+    @Override
+    public final Object[] fetchOneArray() {
+        return getDelegate().fetchOneArray();
+    }
+
+    @Override
+    public final <T> List<T> fetchInto(Class<? extends T> type) {
+        return getDelegate().fetchInto(type);
+    }
+
+    @Override
+    public final <E> E fetchOneInto(Class<? extends E> type) {
+        return getDelegate().fetchOneInto(type);
+    }
+
+    @Override
+    public final <Z extends Record> Z fetchOneInto(Table<Z> table) {
+        return getDelegate().fetchOneInto(table);
+    }
+
+    @Override
+    public final <Z extends Record> Result<Z> fetchInto(Table<Z> table) {
+        return getDelegate().fetchInto(table);
+    }
+
+    @Override
+    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
+        return getDelegate().fetchInto(handler);
+    }
+
+    @Override
+    public final <E> List<E> fetch(RecordMapper<? super R, E> mapper) {
+        return getDelegate().fetch(mapper);
+    }
+
+    @Override
+    public final <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) {
+        return getDelegate().fetchGroups(key, type);
+    }
+
+    @Override
+    public final FutureResult<R> fetchLater() {
+        return getDelegate().fetchLater();
+    }
+
+    @Override
+    public final FutureResult<R> fetchLater(ExecutorService executor) {
+        return getDelegate().fetchLater(executor);
+    }
+
+    @Override
+    public final Table<R> asTable() {
+        return getDelegate().asTable();
+    }
+
+    @Override
+    public final Table<R> asTable(String alias) {
+        return getDelegate().asTable(alias);
+    }
+
+    @Override
+    public final <T> Field<T> asField() {
+        return getDelegate().asField();
+    }
+
+    @Override
+    public final <T> Field<T> asField(String alias) {
+        return getDelegate().asField(alias);
+    }
+
+    @Override
+    public final <T> Field<T> getField(Field<T> field) {
+        return getDelegate().asTable().getField(field);
+    }
+
+    @Override
+    public final Field<?> getField(String name) {
+        return getDelegate().asTable().getField(name);
+    }
+
+    @Override
+    public final Field<?> getField(int index) {
+        return getDelegate().asTable().getField(index);
+    }
+
+    @Override
+    public final List<Field<?>> getFields() {
+        return getDelegate().asTable().getFields();
+    }
+
+    @Override
+    public final int getIndex(Field<?> field) {
+        return getDelegate().asTable().getIndex(field);
+    }
+
+    @Override
+    public final int getIndex(String fieldName) {
+        return getDelegate().asTable().getIndex(fieldName);
     }
 
     /**

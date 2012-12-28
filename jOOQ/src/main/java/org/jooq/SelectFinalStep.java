@@ -82,6 +82,6 @@ public interface SelectFinalStep<R extends Record> extends Select<R> {
     /**
      * Get the underlying {@link Query} that is being constructed.
      */
-    SelectQuery getQuery();
+    SelectQuery<R> getQuery();
 
 }

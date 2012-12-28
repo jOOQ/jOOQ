@@ -62,10 +62,11 @@ class ConditionAsField extends AbstractFunction<Boolean> {
     final QueryPart getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
 
-            // Most databases don't accept predicates where column expressions
+            // Some databases don't accept predicates where column expressions
             // are expected.
             case CUBRID:
             case DB2:
+            case FIREBIRD:
             case ORACLE:
             case SQLSERVER:
                 return Factory.decode().when(condition, inline(true)).otherwise(inline(false));
@@ -80,7 +81,6 @@ class ConditionAsField extends AbstractFunction<Boolean> {
 
             // Unknown (to be evaluated):
             case ASE:
-            case FIREBIRD:
             case INGRES:
             case SYBASE:
                 return condition;

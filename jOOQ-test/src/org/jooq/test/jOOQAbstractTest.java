@@ -1308,6 +1308,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdateJoin() throws Exception {
+        new InsertUpdateTests(this).testUpdateJoin();
+    }
+
+    @Test
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
         new InsertUpdateTests(this).testInsertOnDuplicateKeyUpdate();
     }

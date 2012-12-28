@@ -35,6 +35,9 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.val;
 
 import java.util.Map;
@@ -61,8 +64,15 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
         if (size() > 0) {
             String separator = "";
 
-            // [#989] Avoid qualifying fields in INSERT field declaration
-            boolean qualify = context.qualify();
+            // [#989] Some dialects do not support qualified column references
+            // in the UPDATE statement's SET clause
+
+            // [#2055] Other dialects require qualified column references to
+            // disambiguated columns in queries like
+            // UPDATE t1 JOIN t2 .. SET t1.val = ..., t2.val = ...
+            boolean restoreQualify = context.qualify();
+            boolean supportsQualify = asList(POSTGRES, SQLITE).contains(context.getDialect()) ? false : restoreQualify;
+
             for (Entry<Field<?>, Field<?>> entry : entrySet()) {
                 context.sql(separator);
 
@@ -70,9 +80,9 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
                     context.formatNewLine();
                 }
 
-                context.qualify(false)
+                context.qualify(supportsQualify)
                        .sql(entry.getKey())
-                       .qualify(qualify)
+                       .qualify(restoreQualify)
                        .sql(" = ")
                        .sql(entry.getValue());
 

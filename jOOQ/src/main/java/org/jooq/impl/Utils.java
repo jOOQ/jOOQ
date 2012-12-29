@@ -139,6 +139,16 @@ final class Utils {
      */
     static final String          DATA_OMIT_RETURNING_CLAUSE = "org.jooq.configuration.omit-returning-clause";
 
+    /**
+     * [#1905] This constant is used internally by jOOQ to indicate to
+     * subqueries that they're being rendered in the context of a row value
+     * expression predicate.
+     * <p>
+     * This is particularly useful for H2, which pretends that ARRAYs and RVEs
+     * are the same
+     */
+    static final String          DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY = "org.jooq.configuration.row-value-expression-subquery";
+
     // ------------------------------------------------------------------------
     // Other constants
     // ------------------------------------------------------------------------

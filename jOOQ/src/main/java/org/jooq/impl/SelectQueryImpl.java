@@ -40,6 +40,7 @@ import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MYSQL;
@@ -50,6 +51,7 @@ import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.name;
 import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.rowNumber;
+import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -408,6 +410,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This part is common to any type of limited query
      */
     private final void toSQLReference0(RenderContext context, QueryPart limitOffsetRownumber) {
+        SQLDialect dialect = context.getDialect();
 
         // SELECT clause
         // -------------
@@ -423,7 +426,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         // Sybase and SQL Server have leading TOP clauses
-        switch (context.getDialect()) {
+        switch (dialect) {
             case ASE:
             case SQLSERVER: {
 
@@ -433,7 +436,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 }
 
                 // If we don't have a limit, some subqueries still need a "TOP" clause
-                else if (context.getDialect() == SQLSERVER && !getOrderBy().isEmpty()) {
+                else if (dialect == SQLSERVER && !getOrderBy().isEmpty()) {
 
                     // [#759] The TOP 100% is only rendered in subqueries
                     if (context.subquery() || getLimit().isApplicable()) {
@@ -458,7 +461,28 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         context.declareFields(true);
-        context.sql(getSelect1());
+
+        // [#1905] H2 only knows arrays, no row value expressions. Subqueries
+        // in the context of a row value expression predicate have to render
+        // arrays explicitly, as the subquery doesn't form an implicit RVE
+        if (context.subquery() && dialect == H2 && context.getData(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY) != null) {
+            Object data = context.getData(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
+
+            try {
+                context.setData(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+                context.sql("(")
+                       .sql(getSelect1())
+                       .sql(")");
+            }
+            finally {
+                context.setData(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, data);
+            }
+        }
+
+        // The default behaviour
+        else {
+            context.sql(getSelect1());
+        }
 
         if (limitOffsetRownumber != null) {
 
@@ -489,7 +513,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
             // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
             // To be able to GROUP BY () empty sets
-            if (grouping && getGroupBy().isEmpty() && asList(ASE, INGRES).contains(context.getDialect())) {
+            if (grouping && getGroupBy().isEmpty() && asList(ASE, INGRES).contains(dialect)) {
                 context.sql(", (select 1 as x) as empty_grouping_dummy_table");
             }
         }
@@ -525,12 +549,12 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             if (getGroupBy().isEmpty()) {
 
                 // [#1681] Use the constant field from the dummy table Sybase ASE, Ingres
-                if (asList(ASE, INGRES).contains(context.getDialect())) {
+                if (asList(ASE, INGRES).contains(dialect)) {
                     context.sql("empty_grouping_dummy_table.x");
                 }
 
                 // Some dialects don't support empty GROUP BY () clauses
-                else if (asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE).contains(context.getDialect())) {
+                else if (asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE).contains(dialect)) {
                     context.sql("1");
                 }
 

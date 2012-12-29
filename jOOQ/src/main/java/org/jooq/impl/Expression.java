@@ -365,14 +365,20 @@ class Expression<T> extends AbstractFunction<T> {
 
                 case DERBY:
                 case HSQLDB: {
+                    Field<T> result;
+
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }",
+                        result = field("{fn {timestampadd}({sql_tsi_month}, {0}, {1}) }",
                             getDataType(), val(sign * rhsAsYTM().intValue()), lhs);
                     }
                     else {
-                        return field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }",
+                        result = field("{fn {timestampadd}({sql_tsi_second}, {0}, {1}) }",
                             getDataType(), val(sign * (long) rhsAsDTS().getTotalSeconds()), lhs);
                     }
+
+                    // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
+                    // is a DATE column, cast it to DATE
+                    return castNonTimestamps(configuration, result);
                 }
 
                 case FIREBIRD: {
@@ -417,6 +423,18 @@ class Expression<T> extends AbstractFunction<T> {
         }
 
         /**
+         * Cast a field to its actual type if it is not a <code>TIMESTAMP</code>
+         * field
+         */
+        private final Field<T> castNonTimestamps(Configuration configuration, Field<T> result) {
+            if (getDataType().getType() != Timestamp.class) {
+                return field("{cast}({0} {as} " + getDataType().getCastTypeName(configuration) + ")", getDataType(), result);
+            }
+
+            return result;
+        }
+
+        /**
          * Return the expression to be rendered when the RHS is a number type
          */
         private final Field<T> getNumberExpression(Configuration configuration) {
@@ -444,12 +462,18 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case DERBY: {
+                    Field<T> result;
+
                     if (operator == ADD) {
-                        return field("{fn {timestampadd}({sql_tsi_day}, {0}, {1}) }", getDataType(), rhsAsNumber(), lhs);
+                        result = field("{fn {timestampadd}({sql_tsi_day}, {0}, {1}) }", getDataType(), rhsAsNumber(), lhs);
                     }
                     else {
-                        return field("{fn {timestampadd}({sql_tsi_day}, {0}, {1}) }", getDataType(), rhsAsNumber().neg(), lhs);
+                        result = field("{fn {timestampadd}({sql_tsi_day}, {0}, {1}) }", getDataType(), rhsAsNumber().neg(), lhs);
                     }
+
+                    // [#1883] TIMESTAMPADD returns TIMESTAMP columns. If this
+                    // is a DATE column, cast it to DATE
+                    return castNonTimestamps(configuration, result);
                 }
 
                 case CUBRID:

@@ -38,6 +38,7 @@ package org.jooq.impl;
 import static org.jooq.impl.SQLDataType.BLOB;
 import static org.jooq.impl.SQLDataType.CLOB;
 import static org.jooq.impl.SQLDataType.NCLOB;
+import static org.jooq.tools.reflect.Reflect.wrapper;
 
 import java.lang.reflect.Array;
 import java.math.BigDecimal;
@@ -595,6 +596,9 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
+
+        // Treat primitive types the same way as their respective wrapper types
+        type = (Class<T>) wrapper(type);
 
         // Recurse for arrays
         if (byte[].class != type && type.isArray()) {

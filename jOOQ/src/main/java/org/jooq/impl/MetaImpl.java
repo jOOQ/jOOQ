@@ -179,7 +179,23 @@ class MetaImpl implements Meta {
 
             try {
                 columnCache = executor
-                    .fetch(meta().getColumns(null, getName(), "%", "%"))
+                    .fetch(
+                        meta().getColumns(null, getName(), "%", "%"),
+
+                        // Work around a bug in the SQL Server JDBC driver by
+                        // coercing data types to the expected types
+                        // The bug was reported here:
+                        // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
+                        String.class, // TABLE_CAT
+                        String.class, // TABLE_SCHEM
+                        String.class, // TABLE_NAME
+                        String.class, // COLUMN_NAME
+                        int.class,    // DATA_TYPE
+                        String.class, // TYPE_NAME
+                        int.class,    // COLUMN_SIZE
+                        String.class, // BUFFER_LENGTH
+                        int.class     // DECIMAL_DIGITS
+                    )
                     .intoGroups(fieldByName(String.class, "TABLE_NAME"));
 
                 List<Table<?>> result = new ArrayList<Table<?>>();

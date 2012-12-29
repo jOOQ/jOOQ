@@ -9,97 +9,90 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1126455427;
+	private static final long serialVersionUID = -138138755;
 
 	/**
-	 * The table column <code>DBA.v_author.ID</code>
+	 * Setter for <code>DBA.v_author.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.ID, value);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.ID</code>
+	 * Getter for <code>DBA.v_author.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.ID);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.FIRST_NAME</code>
+	 * Setter for <code>DBA.v_author.FIRST_NAME</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME, value);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.FIRST_NAME</code>
+	 * Getter for <code>DBA.v_author.FIRST_NAME</code>. 
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.LAST_NAME</code>
+	 * Setter for <code>DBA.v_author.LAST_NAME</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME, value);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.LAST_NAME</code>
+	 * Getter for <code>DBA.v_author.LAST_NAME</code>. 
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.DATE_OF_BIRTH</code>
+	 * Setter for <code>DBA.v_author.DATE_OF_BIRTH</code>. 
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.DATE_OF_BIRTH</code>
+	 * Getter for <code>DBA.v_author.DATE_OF_BIRTH</code>. 
 	 */
 	public java.sql.Date getDateOfBirth() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.YEAR_OF_BIRTH</code>
+	 * Setter for <code>DBA.v_author.YEAR_OF_BIRTH</code>. 
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.YEAR_OF_BIRTH</code>
+	 * Getter for <code>DBA.v_author.YEAR_OF_BIRTH</code>. 
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.ADDRESS</code>
+	 * Setter for <code>DBA.v_author.ADDRESS</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS, value);
 	}
 
 	/**
-	 * The table column <code>DBA.v_author.ADDRESS</code>
+	 * Getter for <code>DBA.v_author.ADDRESS</code>. 
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS);
-	}
-
-	/**
-	 * Create a detached VAuthorRecord
-	 */
-	public VAuthorRecord() {
-		super(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 
 	// -------------------------------------------------------------------------
@@ -216,5 +209,16 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.s
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VAuthorRecord
+	 */
+	public VAuthorRecord() {
+		super(org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 }

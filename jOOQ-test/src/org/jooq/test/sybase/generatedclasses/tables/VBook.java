@@ -9,10 +9,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -613514233;
+	private static final long serialVersionUID = 269061726;
 
 	/**
-	 * The singleton instance of DBA.v_book
+	 * The singleton instance of <code>DBA.v_book</code>
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.sybase.generatedclasses.tables.VBook();
 
@@ -25,58 +25,67 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generate
 	}
 
 	/**
-	 * The table column <code>DBA.v_book.ID</code>
+	 * The column <code>DBA.v_book.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.v_book.AUTHOR_ID</code>
+	 * The column <code>DBA.v_book.AUTHOR_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.v_book.CO_AUTHOR_ID</code>
+	 * The column <code>DBA.v_book.CO_AUTHOR_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.v_book.DETAILS_ID</code>
+	 * The column <code>DBA.v_book.DETAILS_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.v_book.TITLE</code>
+	 * The column <code>DBA.v_book.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
-	 * The table column <code>DBA.v_book.PUBLISHED_IN</code>
+	 * The column <code>DBA.v_book.PUBLISHED_IN</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.v_book.LANGUAGE_ID</code>
+	 * The column <code>DBA.v_book.LANGUAGE_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.v_book.CONTENT_TEXT</code>
+	 * The column <code>DBA.v_book.CONTENT_TEXT</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR.length(32767), this);
 
 	/**
-	 * The table column <code>DBA.v_book.CONTENT_PDF</code>
+	 * The column <code>DBA.v_book.CONTENT_PDF</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.LONGVARBINARY, this);
 
+	/**
+	 * Create a <code>DBA.v_book</code> table reference
+	 */
 	public VBook() {
 		super("v_book", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * Create an aliased <code>DBA.v_book</code> table reference
+	 */
 	public VBook(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.VBook.V_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.VBook as(java.lang.String alias) {
 		return new org.jooq.test.sybase.generatedclasses.tables.VBook(alias);

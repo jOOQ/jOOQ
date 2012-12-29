@@ -9,10 +9,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1421867840;
+	private static final long serialVersionUID = 701236758;
 
 	/**
-	 * The singleton instance of DBA.x_test_case_85
+	 * The singleton instance of <code>DBA.x_test_case_85</code>
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.sybase.generatedclasses.tables.XTestCase_85();
 
@@ -25,59 +25,61 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>DBA.x_test_case_85.id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.x_unused_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES DBA.x_unused (ID, NAME)
-	 * </pre></code>
+	 * The column <code>DBA.x_test_case_85.x_unused_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.x_unused_name</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES DBA.x_unused (ID, NAME)
-	 * </pre></code>
+	 * The column <code>DBA.x_test_case_85.x_unused_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
+	/**
+	 * Create a <code>DBA.x_test_case_85</code> table reference
+	 */
 	public XTestCase_85() {
 		super("x_test_case_85", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * Create an aliased <code>DBA.x_test_case_85</code> table reference
+	 */
 	public XTestCase_85(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> getMainKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_85__PK_X_TEST_CASE_85;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_85__PK_X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_85__FK_X_TEST_CASE_85);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.XTestCase_85 as(java.lang.String alias) {
 		return new org.jooq.test.sybase.generatedclasses.tables.XTestCase_85(alias);

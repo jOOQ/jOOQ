@@ -9,21 +9,20 @@ package org.jooq.test.sybase.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -17222204;
-
+	private static final long serialVersionUID = 457764727;
 
 	/**
-	 * The procedure parameter <code>DBA.p_unused.in1</code>
+	 * The parameter <code>DBA.p_unused.in1</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> IN1 = createParameter("in1", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> IN1 = createParameter("in1", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
-	 * The procedure parameter <code>DBA.p_unused.out1</code>
+	 * The parameter <code>DBA.p_unused.out1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> OUT1 = createParameter("out1", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>DBA.p_unused.out2</code>
+	 * The parameter <code>DBA.p_unused.out2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> OUT2 = createParameter("out2", org.jooq.impl.SQLDataType.INTEGER);
 

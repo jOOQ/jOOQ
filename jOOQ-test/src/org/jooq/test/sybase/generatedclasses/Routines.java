@@ -12,10 +12,7 @@ package org.jooq.test.sybase.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Call DBA.f_author_exists
-	 *
-	 * @param authorName
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.f_author_exists</code>
 	 */
 	public static java.lang.Integer fAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
 		org.jooq.test.sybase.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sybase.generatedclasses.routines.FAuthorExists();
@@ -26,9 +23,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get DBA.f_author_exists as a field
-	 *
-	 * @param authorName
+	 * Get <code>DBA.f_author_exists</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fAuthorExists(java.lang.String authorName) {
 		org.jooq.test.sybase.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sybase.generatedclasses.routines.FAuthorExists();
@@ -38,9 +33,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get DBA.f_author_exists as a field
-	 *
-	 * @param authorName
+	 * Get <code>DBA.f_author_exists</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fAuthorExists(org.jooq.Field<java.lang.String> authorName) {
 		org.jooq.test.sybase.generatedclasses.routines.FAuthorExists f = new org.jooq.test.sybase.generatedclasses.routines.FAuthorExists();
@@ -50,10 +43,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call DBA.f_number
-	 *
-	 * @param n
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.f_number</code>
 	 */
 	public static java.lang.Integer fNumber(org.jooq.Configuration configuration, java.lang.Integer n) {
 		org.jooq.test.sybase.generatedclasses.routines.FNumber f = new org.jooq.test.sybase.generatedclasses.routines.FNumber();
@@ -64,9 +54,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get DBA.f_number as a field
-	 *
-	 * @param n
+	 * Get <code>DBA.f_number</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fNumber(java.lang.Integer n) {
 		org.jooq.test.sybase.generatedclasses.routines.FNumber f = new org.jooq.test.sybase.generatedclasses.routines.FNumber();
@@ -76,9 +64,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get DBA.f_number as a field
-	 *
-	 * @param n
+	 * Get <code>DBA.f_number</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fNumber(org.jooq.Field<java.lang.Integer> n) {
 		org.jooq.test.sybase.generatedclasses.routines.FNumber f = new org.jooq.test.sybase.generatedclasses.routines.FNumber();
@@ -88,9 +74,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call DBA.f_one
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.f_one</code>
 	 */
 	public static java.lang.Integer fOne(org.jooq.Configuration configuration) {
 		org.jooq.test.sybase.generatedclasses.routines.FOne f = new org.jooq.test.sybase.generatedclasses.routines.FOne();
@@ -100,8 +84,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get DBA.f_one as a field
-	 *
+	 * Get <code>DBA.f_one</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
 		org.jooq.test.sybase.generatedclasses.routines.FOne f = new org.jooq.test.sybase.generatedclasses.routines.FOne();
@@ -110,13 +93,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call DBA.f317
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.f317</code>
 	 */
 	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
 		org.jooq.test.sybase.generatedclasses.routines.F317 f = new org.jooq.test.sybase.generatedclasses.routines.F317();
@@ -130,12 +107,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get DBA.f317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
+	 * Get <code>DBA.f317</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
 		org.jooq.test.sybase.generatedclasses.routines.F317 f = new org.jooq.test.sybase.generatedclasses.routines.F317();
@@ -148,12 +120,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get DBA.f317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
+	 * Get <code>DBA.f317</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
 		org.jooq.test.sybase.generatedclasses.routines.F317 f = new org.jooq.test.sybase.generatedclasses.routines.F317();
@@ -166,11 +133,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call DBA.p_author_exists
-	 *
-	 * @param authorName IN parameter
-	 * @param result OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.p_author_exists</code>
 	 */
 	public static java.lang.Integer pAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
 		org.jooq.test.sybase.generatedclasses.routines.PAuthorExists p = new org.jooq.test.sybase.generatedclasses.routines.PAuthorExists();
@@ -181,9 +144,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call DBA.p_create_author
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.p_create_author</code>
 	 */
 	public static void pCreateAuthor(org.jooq.Configuration configuration) {
 		org.jooq.test.sybase.generatedclasses.routines.PCreateAuthor p = new org.jooq.test.sybase.generatedclasses.routines.PCreateAuthor();
@@ -192,11 +153,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call DBA.p_create_author_by_name
-	 *
-	 * @param pFirstName IN parameter
-	 * @param pLastName IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.p_create_author_by_name</code>
 	 */
 	public static void pCreateAuthorByName(org.jooq.Configuration configuration, java.lang.String pFirstName, java.lang.String pLastName) {
 		org.jooq.test.sybase.generatedclasses.routines.PCreateAuthorByName p = new org.jooq.test.sybase.generatedclasses.routines.PCreateAuthorByName();
@@ -207,12 +164,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call DBA.p_unused
-	 *
-	 * @param in1 IN parameter
-	 * @param out1 OUT parameter
-	 * @param out2 IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.p_unused</code>
 	 */
 	public static org.jooq.test.sybase.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Integer out2) {
 		org.jooq.test.sybase.generatedclasses.routines.PUnused p = new org.jooq.test.sybase.generatedclasses.routines.PUnused();
@@ -224,15 +176,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call DBA.p391
-	 *
-	 * @param i1 IN parameter
-	 * @param io1 IN OUT parameter
-	 * @param o1 OUT parameter
-	 * @param o2 OUT parameter
-	 * @param io2 IN OUT parameter
-	 * @param i2 IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>DBA.p391</code>
 	 */
 	public static org.jooq.test.sybase.generatedclasses.routines.P391 p391(org.jooq.Configuration configuration, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer io2, java.lang.Integer i2) {
 		org.jooq.test.sybase.generatedclasses.routines.P391 p = new org.jooq.test.sybase.generatedclasses.routines.P391();
@@ -246,7 +190,7 @@ public final class Routines {
 	}
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Routines() {}
 }

@@ -107,6 +107,11 @@ public final class Tables {
 	public static final org.jooq.test.sybase.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
+	 * The table DBA.x_test_case_2025
+	 */
+	public static final org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+
+	/**
 	 * The table DBA.V_LIBRARY
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY;
@@ -122,7 +127,7 @@ public final class Tables {
 	public static final org.jooq.test.sybase.generatedclasses.tables.VBook V_BOOK = org.jooq.test.sybase.generatedclasses.tables.VBook.V_BOOK;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

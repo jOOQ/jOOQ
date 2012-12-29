@@ -12,12 +12,18 @@ package org.jooq.test.sybase.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Keys {
 
+	// -------------------------------------------------------------------------
 	// IDENTITY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
 	public static final org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = Identities0.IDENTITY_T_IDENTITY;
 	public static final org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 
+	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord> T_IDENTITY_PK__PK_T_IDENTITY_PK = UniqueKeys0.T_IDENTITY_PK__PK_T_IDENTITY_PK;
 	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord> T_DATES__PK_T_DATES = UniqueKeys0.T_DATES__PK_T_DATES;
 	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord> T_BOOLEANS__PK_T_BOOLEANS = UniqueKeys0.T_BOOLEANS__PK_T_BOOLEANS;
@@ -39,7 +45,10 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_71Record> X_TEST_CASE_71__PK_X_TEST_CASE_71 = UniqueKeys0.X_TEST_CASE_71__PK_X_TEST_CASE_71;
 	public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> X_TEST_CASE_85__PK_X_TEST_CASE_85 = UniqueKeys0.X_TEST_CASE_85__PK_X_TEST_CASE_85;
 
+	// -------------------------------------------------------------------------
 	// FOREIGN KEY definitions
+	// -------------------------------------------------------------------------
+
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> T_BOOK__FK_T_BOOK_AUTHOR_ID = ForeignKeys0.T_BOOK__FK_T_BOOK_AUTHOR_ID;
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> T_BOOK__FK_T_BOOK_CO_AUTHOR_ID = ForeignKeys0.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID;
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> T_BOOK__FK_T_BOOK_LANGUAGE_ID = ForeignKeys0.T_BOOK__FK_T_BOOK_LANGUAGE_ID;
@@ -49,22 +58,28 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> T_986_1__FK_986 = ForeignKeys0.T_986_1__FK_986;
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> T_986_2__FK_986 = ForeignKeys0.T_986_2__FK_986;
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A = ForeignKeys0.X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A;
+	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69B = ForeignKeys0.X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69B;
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_71Record, org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record> X_TEST_CASE_71__FK_X_TEST_CASE_71 = ForeignKeys0.X_TEST_CASE_71__FK_X_TEST_CASE_71;
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_85__FK_X_TEST_CASE_85 = ForeignKeys0.X_TEST_CASE_85__FK_X_TEST_CASE_85;
+	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_1 = ForeignKeys0.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_1;
+	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_71Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2 = ForeignKeys0.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2;
+	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3 = ForeignKeys0.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Keys() {}
 
-	@SuppressWarnings("hiding")
+	// -------------------------------------------------------------------------
+	// [#1459] distribute members to avoid static initialisers > 64kb
+	// -------------------------------------------------------------------------
+
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = createIdentity(org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 		public static org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = createIdentity(org.jooq.test.sybase.generatedclasses.tables.TIdentity.T_IDENTITY, org.jooq.test.sybase.generatedclasses.tables.TIdentity.T_IDENTITY.ID);
 		public static org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sybase.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord> T_IDENTITY_PK__PK_T_IDENTITY_PK = createUniqueKey(org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.sybase.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord> T_DATES__PK_T_DATES = createUniqueKey(org.jooq.test.sybase.generatedclasses.tables.TDates.T_DATES, org.jooq.test.sybase.generatedclasses.tables.TDates.T_DATES.ID);
@@ -88,7 +103,6 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> X_TEST_CASE_85__PK_X_TEST_CASE_85 = createUniqueKey(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85, org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID);
 	}
 
-	@SuppressWarnings({"hiding", "unchecked"})
 	private static class ForeignKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> T_BOOK__FK_T_BOOK_AUTHOR_ID = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR, org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
 		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> T_BOOK__FK_T_BOOK_CO_AUTHOR_ID = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR, org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK, org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
@@ -99,7 +113,11 @@ public class Keys {
 		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> T_986_1__FK_986 = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__UK_X_UNUSED_ID, org.jooq.test.sybase.generatedclasses.tables.T_986_1.T_986_1, org.jooq.test.sybase.generatedclasses.tables.T_986_1.T_986_1.REF);
 		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> T_986_2__FK_986 = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__UK_X_UNUSED_ID, org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2, org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF);
 		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69A = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__UK_X_UNUSED_ID, org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
+		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_64_69__FK_X_TEST_CASE_64_69B = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__UK_X_UNUSED_ID, org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.UNUSED_ID);
 		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_71Record, org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_64_69Record> X_TEST_CASE_71__FK_X_TEST_CASE_71 = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_64_69__PK_X_TEST_CASE_64_69, org.jooq.test.sybase.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.sybase.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
 		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_85__FK_X_TEST_CASE_85 = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__PK_X_UNUSED, org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85, org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
+		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_1 = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_85__PK_X_TEST_CASE_85, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID);
+		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_71Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2 = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_TEST_CASE_71__PK_X_TEST_CASE_71, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID);
+		public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3 = createForeignKey(org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__PK_X_UNUSED, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID, org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025.REF_NAME);
 	}
 }

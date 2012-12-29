@@ -9,74 +9,32 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -91418978;
+	private static final long serialVersionUID = 1571763638;
 
 	/**
-	 * The table column <code>DBA.t_986_2.REF</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_986_2__fk_986
-	 * FOREIGN KEY (REF)
-	 * REFERENCES DBA.x_unused (ID)
-	 * </pre></code>
+	 * Setter for <code>DBA.t_986_2.REF</code>. 
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF, value);
 	}
 
 	/**
-	 * The table column <code>DBA.t_986_2.REF</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_986_2__fk_986
-	 * FOREIGN KEY (REF)
-	 * REFERENCES DBA.x_unused (ID)
-	 * </pre></code>
+	 * Getter for <code>DBA.t_986_2.REF</code>. 
 	 */
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF);
 	}
 
-	/**
-	 * Link this record to a given {@link org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord 
-	 * XUnusedRecord}
-	 */
-	public void setRef(org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF, null);
-		}
-		else {
-			setValue(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF, value.getValue(org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED.ID));
-		}
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>DBA.t_986_2.REF</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_986_2__fk_986
-	 * FOREIGN KEY (REF)
-	 * REFERENCES DBA.x_unused (ID)
-	 * </pre></code>
+	 * {@inheritDoc}
 	 */
-	public org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2.REF)))
-			.fetchOne();
-	}
-
-	/**
-	 * Create a detached T_986_2Record
-	 */
-	public T_986_2Record() {
-		super(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -113,5 +71,16 @@ public class T_986_2Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.Integer value1() {
 		return getRef();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached T_986_2Record
+	 */
+	public T_986_2Record() {
+		super(org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2);
 	}
 }

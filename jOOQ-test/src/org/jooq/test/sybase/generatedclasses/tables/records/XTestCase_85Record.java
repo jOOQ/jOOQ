@@ -9,100 +9,60 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 390172707;
+	private static final long serialVersionUID = -2061360655;
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>DBA.x_test_case_85.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID, value);
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>DBA.x_test_case_85.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID);
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.x_unused_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES DBA.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>DBA.x_test_case_85.x_unused_id</code>. 
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, value);
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.x_unused_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES DBA.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Getter for <code>DBA.x_test_case_85.x_unused_id</code>. 
 	 */
 	public java.lang.Integer getXUnusedId() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID);
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.x_unused_id</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES DBA.x_unused (ID, NAME)
-	 * </pre></code>
-	 */
-	public org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID)))
-			.and(org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME)))
-			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>DBA.x_test_case_85.x_unused_name</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES DBA.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Setter for <code>DBA.x_test_case_85.x_unused_name</code>. 
 	 */
 	public void setXUnusedName(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
 	}
 
 	/**
-	 * The table column <code>DBA.x_test_case_85.x_unused_name</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT x_test_case_85__fk_x_test_case_85
-	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES DBA.x_unused (ID, NAME)
-	 * </pre></code>
+	 * Getter for <code>DBA.x_test_case_85.x_unused_name</code>. 
 	 */
 	public java.lang.String getXUnusedName() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached XTestCase_85Record
+	 * {@inheritDoc}
 	 */
-	public XTestCase_85Record() {
-		super(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -171,5 +131,16 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.String value3() {
 		return getXUnusedName();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_85Record
+	 */
+	public XTestCase_85Record() {
+		super(org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 }

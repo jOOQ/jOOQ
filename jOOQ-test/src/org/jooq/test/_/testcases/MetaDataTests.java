@@ -487,30 +487,34 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     private void metaTableChecks(Collection<? extends Table<?>> metaTables) {
         for (Table<?> metaTable : metaTables) {
-            Table<?> generatedTable = schema().getTable(metaTable.getName());
 
-            // Every table returned from meta should have a corresponding
-            // table by name in the generated test tables
-            if (generatedTable != null) {
-                assertNotNull(generatedTable);
-                assertEquals(metaTable, generatedTable);
+            // Check only the "TEST" schema, not "MULTI_SCHEMA" and others
+            if (schema().equals(metaTable.getSchema())) {
+                Table<?> generatedTable = schema().getTable(metaTable.getName());
 
-                // Check if fields match, as well
-                List<Field<?>> metaFields = metaTable.getFields();
-                assertTrue(metaFields.containsAll(generatedTable.getFields()));
+                // Every table returned from meta should have a corresponding
+                // table by name in the generated test tables
+                if (generatedTable != null) {
+                    assertNotNull(generatedTable);
+                    assertEquals(metaTable, generatedTable);
 
-                // Check if relations are correctly loaded (and typed) as well
-                // [#1977] Fix this, once the "main key" concept has been removed
-                if (generatedTable instanceof UpdatableTable && metaTable instanceof UpdatableTable) {
-                    UpdatableTable<?> generatedUTable = (UpdatableTable<?>) generatedTable;
-                    UpdatableTable<?> metaUTable = (UpdatableTable<?>) metaTable;
+                    // Check if fields match, as well
+                    List<Field<?>> metaFields = metaTable.getFields();
+                    assertTrue(metaFields.containsAll(generatedTable.getFields()));
 
-                    // [#1977] TODO: Add key checks
-                }
+                    // Check if relations are correctly loaded (and typed) as well
+                    // [#1977] Fix this, once the "main key" concept has been removed
+                    if (generatedTable instanceof UpdatableTable && metaTable instanceof UpdatableTable) {
+                        UpdatableTable<?> generatedUTable = (UpdatableTable<?>) generatedTable;
+                        UpdatableTable<?> metaUTable = (UpdatableTable<?>) metaTable;
 
-                // Only truly updatable tables should be "Updatable"
-                else {
-                    assertFalse(metaTable instanceof UpdatableTable);
+                        // [#1977] TODO: Add key checks
+                    }
+
+                    // Only truly updatable tables should be "Updatable"
+                    else {
+                        assertFalse(metaTable instanceof UpdatableTable);
+                    }
                 }
             }
         }

@@ -813,6 +813,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchResultSetWithCoercedTypes() throws Exception {
+        new FetchTests(this).testFetchResultSetWithCoercedTypes();
+    }
+
+    @Test
     public void testFetchIntoResultSet() throws Exception {
         new FetchTests(this).testFetchIntoResultSet();
     }

@@ -69,6 +69,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             case FIREBIRD:
             case ORACLE:
             case SQLSERVER:
+            case SYBASE:
                 return Factory.decode().when(condition, inline(true)).otherwise(inline(false));
 
             // These databases can inline predicates in column expression contexts
@@ -82,7 +83,6 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             // Unknown (to be evaluated):
             case ASE:
             case INGRES:
-            case SYBASE:
                 return condition;
         }
 

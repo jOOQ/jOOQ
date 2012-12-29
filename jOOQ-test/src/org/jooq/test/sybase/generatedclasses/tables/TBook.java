@@ -11,10 +11,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1502877862;
+	private static final long serialVersionUID = 510508813;
 
 	/**
-	 * The singleton instance of DBA.t_book
+	 * The singleton instance of <code>DBA.t_book</code>
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.sybase.generatedclasses.tables.TBook();
 
@@ -27,95 +27,91 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase
 	}
 
 	/**
-	 * The table column <code>DBA.t_book.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>DBA.t_book.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.t_book.AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book__fk_t_book_author_id
-	 * FOREIGN KEY (AUTHOR_ID)
-	 * REFERENCES DBA.t_author (ID)
-	 * </pre></code>
+	 * The column <code>DBA.t_book.AUTHOR_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.t_book.CO_AUTHOR_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book__fk_t_book_co_author_id
-	 * FOREIGN KEY (CO_AUTHOR_ID)
-	 * REFERENCES DBA.t_author (ID)
-	 * </pre></code>
+	 * The column <code>DBA.t_book.CO_AUTHOR_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.t_book.DETAILS_ID</code>
+	 * The column <code>DBA.t_book.DETAILS_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.t_book.TITLE</code>
+	 * The column <code>DBA.t_book.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
-	 * The table column <code>DBA.t_book.PUBLISHED_IN</code>
+	 * The column <code>DBA.t_book.PUBLISHED_IN</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.t_book.LANGUAGE_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book__fk_t_book_language_id
-	 * FOREIGN KEY (LANGUAGE_ID)
-	 * REFERENCES DBA.t_language (id)
-	 * </pre></code>
+	 * The column <code>DBA.t_book.LANGUAGE_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.t_book.CONTENT_TEXT</code>
+	 * The column <code>DBA.t_book.CONTENT_TEXT</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.LONGVARCHAR.length(32767), this);
 
 	/**
-	 * The table column <code>DBA.t_book.CONTENT_PDF</code>
+	 * The column <code>DBA.t_book.CONTENT_PDF</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.LONGVARBINARY, this);
 
+	/**
+	 * Create a <code>DBA.t_book</code> table reference
+	 */
 	public TBook() {
 		super("t_book", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * Create an aliased <code>DBA.t_book</code> table reference
+	 */
 	public TBook(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> getMainKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__PK_T_BOOK;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__PK_T_BOOK);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID, org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.sybase.generatedclasses.Keys.T_BOOK__FK_T_BOOK_LANGUAGE_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TBook as(java.lang.String alias) {
 		return new org.jooq.test.sybase.generatedclasses.tables.TBook(alias);

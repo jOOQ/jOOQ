@@ -12,12 +12,12 @@ package org.jooq.test.sybase.generatedclasses;
 public final class Sequences {
 
 	/**
-	 * The sequence DBA.s_author_id
+	 * The sequence <code>DBA.s_author_id</code>
 	 */
-	public static final org.jooq.Sequence<java.math.BigInteger> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("s_author_id", org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.impl.SQLDataType.DECIMAL_INTEGER);
+	public static final org.jooq.Sequence<java.math.BigInteger> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("s_author_id", org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38));
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Sequences() {}
 }

@@ -9,10 +9,10 @@ package org.jooq.test.sybase.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Dba extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -427397434;
+	private static final long serialVersionUID = -2145196857;
 
 	/**
-	 * The singleton instance of DBA
+	 * The singleton instance of <code>DBA</code>
 	 */
 	public static final Dba DBA = new Dba();
 
@@ -25,7 +25,8 @@ public class Dba extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
-		return java.util.Arrays.<org.jooq.Sequence<?>>asList(org.jooq.test.sybase.generatedclasses.Sequences.S_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
+			org.jooq.test.sybase.generatedclasses.Sequences.S_AUTHOR_ID);
 	}
 
 	@Override
@@ -50,6 +51,7 @@ public class Dba extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.sybase.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71,
 			org.jooq.test.sybase.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85,
+			org.jooq.test.sybase.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025,
 			org.jooq.test.sybase.generatedclasses.tables.VLibrary.V_LIBRARY,
 			org.jooq.test.sybase.generatedclasses.tables.VAuthor.V_AUTHOR,
 			org.jooq.test.sybase.generatedclasses.tables.VBook.V_BOOK);

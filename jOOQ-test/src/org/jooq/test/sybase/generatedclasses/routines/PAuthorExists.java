@@ -9,16 +9,15 @@ package org.jooq.test.sybase.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -677601888;
-
+	private static final long serialVersionUID = 1334363992;
 
 	/**
-	 * The procedure parameter <code>DBA.p_author_exists.author_name</code>
+	 * The parameter <code>DBA.p_author_exists.author_name</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
-	 * The procedure parameter <code>DBA.p_author_exists.result</code>
+	 * The parameter <code>DBA.p_author_exists.result</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RESULT = createParameter("result", org.jooq.impl.SQLDataType.INTEGER);
 

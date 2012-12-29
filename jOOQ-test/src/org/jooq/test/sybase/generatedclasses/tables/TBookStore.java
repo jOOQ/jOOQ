@@ -11,10 +11,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1976789263;
+	private static final long serialVersionUID = 1694902922;
 
 	/**
-	 * The singleton instance of DBA.t_book_store
+	 * The singleton instance of <code>DBA.t_book_store</code>
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.sybase.generatedclasses.tables.TBookStore();
 
@@ -27,29 +27,43 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 	}
 
 	/**
-	 * The table column <code>DBA.t_book_store.name</code>
+	 * The column <code>DBA.t_book_store.name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
+	/**
+	 * Create a <code>DBA.t_book_store</code> table reference
+	 */
 	public TBookStore() {
 		super("t_book_store", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * Create an aliased <code>DBA.t_book_store</code> table reference
+	 */
 	public TBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> getMainKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_STORE__UK_T_BOOK_STORE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_STORE__UK_T_BOOK_STORE_NAME);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TBookStore as(java.lang.String alias) {
 		return new org.jooq.test.sybase.generatedclasses.tables.TBookStore(alias);

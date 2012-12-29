@@ -9,10 +9,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1307897863;
+	private static final long serialVersionUID = -36150519;
 
 	/**
-	 * The singleton instance of DBA.t_identity
+	 * The singleton instance of <code>DBA.t_identity</code>
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TIdentity T_IDENTITY = new org.jooq.test.sybase.generatedclasses.tables.TIdentity();
 
@@ -25,28 +25,40 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gene
 	}
 
 	/**
-	 * The table column <code>DBA.t_identity.id</code>
+	 * The column <code>DBA.t_identity.id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.t_identity.val</code>
+	 * The column <code>DBA.t_identity.val</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>DBA.t_identity</code> table reference
+	 */
 	public TIdentity() {
 		super("t_identity", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * Create an aliased <code>DBA.t_identity</code> table reference
+	 */
 	public TIdentity(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TIdentity.T_IDENTITY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> getIdentity() {
 		return org.jooq.test.sybase.generatedclasses.Keys.IDENTITY_T_IDENTITY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TIdentity as(java.lang.String alias) {
 		return new org.jooq.test.sybase.generatedclasses.tables.TIdentity(alias);

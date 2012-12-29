@@ -9,10 +9,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -1461135700;
+	private static final long serialVersionUID = -1813242174;
 
 	/**
-	 * The singleton instance of DBA.t_986_2
+	 * The singleton instance of <code>DBA.t_986_2</code>
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.T_986_2 T_986_2 = new org.jooq.test.sybase.generatedclasses.tables.T_986_2();
 
@@ -25,43 +25,51 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	}
 
 	/**
-	 * The table column <code>DBA.t_986_2.REF</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_986_2__fk_986
-	 * FOREIGN KEY (REF)
-	 * REFERENCES DBA.x_unused (ID)
-	 * </pre></code>
+	 * The column <code>DBA.t_986_2.REF</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>DBA.t_986_2</code> table reference
+	 */
 	public T_986_2() {
 		super("t_986_2", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * Create an aliased <code>DBA.t_986_2</code> table reference
+	 */
 	public T_986_2(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record> getMainKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.T_986_2__PK_986;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_986_2__PK_986, org.jooq.test.sybase.generatedclasses.Keys.T_986_2__UK_986);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_986_2__FK_986);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.T_986_2 as(java.lang.String alias) {
 		return new org.jooq.test.sybase.generatedclasses.tables.T_986_2(alias);

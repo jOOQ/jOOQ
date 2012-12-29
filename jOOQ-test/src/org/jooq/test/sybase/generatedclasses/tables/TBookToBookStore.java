@@ -11,10 +11,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 174801568;
+	private static final long serialVersionUID = -215329724;
 
 	/**
-	 * The singleton instance of DBA.t_book_to_book_store
+	 * The singleton instance of <code>DBA.t_book_to_book_store</code>
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore();
 
@@ -27,61 +27,61 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The table column <code>DBA.t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES DBA.t_book_store (name)
-	 * </pre></code>
+	 * The column <code>DBA.t_book_to_book_store.book_store_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
-	 * The table column <code>DBA.t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES DBA.t_book (ID)
-	 * </pre></code>
+	 * The column <code>DBA.t_book_to_book_store.book_id</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The table column <code>DBA.t_book_to_book_store.stock</code>
+	 * The column <code>DBA.t_book_to_book_store.stock</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, this);
 
+	/**
+	 * Create a <code>DBA.t_book_to_book_store</code> table reference
+	 */
 	public TBookToBookStore() {
 		super("t_book_to_book_store", org.jooq.test.sybase.generatedclasses.Dba.DBA);
 	}
 
+	/**
+	 * Create an aliased <code>DBA.t_book_to_book_store</code> table reference
+	 */
 	public TBookToBookStore(java.lang.String alias) {
 		super(alias, org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
 		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME, org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
 		return new org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore(alias);

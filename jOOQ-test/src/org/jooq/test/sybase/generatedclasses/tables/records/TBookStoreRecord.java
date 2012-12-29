@@ -11,37 +11,32 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -1949381787;
+	private static final long serialVersionUID = 1102610979;
 
 	/**
-	 * The table column <code>DBA.t_book_store.name</code>
+	 * Setter for <code>DBA.t_book_store.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME, value);
 	}
 
 	/**
-	 * The table column <code>DBA.t_book_store.name</code>
+	 * Getter for <code>DBA.t_book_store.name</code>. 
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
 	}
 
-	/**
-	 * The table column <code>DBA.t_book_store.name</code>
-	 */
-	public java.util.List<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME)))
-			.fetch();
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * Create a detached TBookStoreRecord
+	 * {@inheritDoc}
 	 */
-	public TBookStoreRecord() {
-		super(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE);
+	@Override
+	public org.jooq.Record1<java.lang.String> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -78,5 +73,16 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	@Override
 	public java.lang.String value1() {
 		return getName();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookStoreRecord
+	 */
+	public TBookStoreRecord() {
+		super(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE);
 	}
 }

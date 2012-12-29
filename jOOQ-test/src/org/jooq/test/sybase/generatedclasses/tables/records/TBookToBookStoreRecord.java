@@ -11,149 +11,60 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -137457085;
+	private static final long serialVersionUID = 793701325;
 
 	/**
-	 * The table column <code>DBA.t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES DBA.t_book_store (name)
-	 * </pre></code>
+	 * Setter for <code>DBA.t_book_to_book_store.book_store_name</code>. 
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value);
 	}
 
 	/**
-	 * The table column <code>DBA.t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES DBA.t_book_store (name)
-	 * </pre></code>
+	 * Getter for <code>DBA.t_book_to_book_store.book_store_name</code>. 
 	 */
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
-	 */
-	public void setBookStoreName(org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, null);
-		}
-		else {
-			setValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value.getValue(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME));
-		}
-	}
-
-	/**
-	 * The table column <code>DBA.t_book_to_book_store.book_store_name</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES DBA.t_book_store (name)
-	 * </pre></code>
-	 */
-	public org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE)
-			.where(org.jooq.test.sybase.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME.equal(getValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME)))
-			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>DBA.t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES DBA.t_book (ID)
-	 * </pre></code>
+	 * Setter for <code>DBA.t_book_to_book_store.book_id</code>. 
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value);
 	}
 
 	/**
-	 * The table column <code>DBA.t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES DBA.t_book (ID)
-	 * </pre></code>
+	 * Getter for <code>DBA.t_book_to_book_store.book_id</code>. 
 	 */
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord 
-	 * TBookRecord}
-	 */
-	public void setBookId(org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value.getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.ID));
-		}
-	}
-
-	/**
-	 * The table column <code>DBA.t_book_to_book_store.book_id</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT t_book_to_book_store__fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES DBA.t_book (ID)
-	 * </pre></code>
-	 */
-	public org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord fetchTBook() {
-		return create()
-			.selectFrom(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.ID.equal(getValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * The table column <code>DBA.t_book_to_book_store.stock</code>
+	 * Setter for <code>DBA.t_book_to_book_store.stock</code>. 
 	 */
 	public void setStock(java.lang.Integer value) {
 		setValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK, value);
 	}
 
 	/**
-	 * The table column <code>DBA.t_book_to_book_store.stock</code>
+	 * Getter for <code>DBA.t_book_to_book_store.stock</code>. 
 	 */
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TBookToBookStoreRecord
+	 * {@inheritDoc}
 	 */
-	public TBookToBookStoreRecord() {
-		super(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	@Override
+	public org.jooq.Record2<java.lang.String, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -222,5 +133,16 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer value3() {
 		return getStock();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookToBookStoreRecord
+	 */
+	public TBookToBookStoreRecord() {
+		super(org.jooq.test.sybase.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 }

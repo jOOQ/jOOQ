@@ -61,6 +61,7 @@ import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.Converter;
 import org.jooq.Cursor;
+import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
 import org.jooq.ExecuteContext;
@@ -1193,6 +1195,72 @@ public class Executor implements Configuration {
     }
 
     /**
+     * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Result}. After fetching all data, the JDBC ResultSet will be
+     * closed.
+     * <p>
+     * Use {@link #fetchLazy(ResultSet)}, to fetch one <code>Record</code> at a
+     * time, instead of load the entire <code>ResultSet</code> into a jOOQ
+     * <code>Result</code> at once.
+     * <p>
+     * The additional <code>fields</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param fields The fields to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    public final Result<Record> fetch(ResultSet rs, Field<?>... fields) throws DataAccessException {
+        return fetchLazy(rs, fields).fetch();
+    }
+
+    /**
+     * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Result}. After fetching all data, the JDBC ResultSet will be
+     * closed.
+     * <p>
+     * Use {@link #fetchLazy(ResultSet)}, to fetch one <code>Record</code> at a
+     * time, instead of load the entire <code>ResultSet</code> into a jOOQ
+     * <code>Result</code> at once.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce
+     * data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    public final Result<Record> fetch(ResultSet rs, DataType<?>... types) throws DataAccessException {
+        return fetchLazy(rs, types).fetch();
+    }
+
+    /**
+     * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Result}. After fetching all data, the JDBC ResultSet will be
+     * closed.
+     * <p>
+     * Use {@link #fetchLazy(ResultSet)}, to fetch one <code>Record</code> at a
+     * time, instead of load the entire <code>ResultSet</code> into a jOOQ
+     * <code>Result</code> at once.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce
+     * data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    public final Result<Record> fetch(ResultSet rs, Class<?>... types) throws DataAccessException {
+        return fetchLazy(rs, types).fetch();
+    }
+
+    /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
      * {@link Record}. This will internally fetch all records and throw an
      * exception if there was more than one resulting record.
@@ -1208,6 +1276,63 @@ public class Executor implements Configuration {
     }
 
     /**
+     * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Record}. This will internally fetch all records and throw an
+     * exception if there was more than one resulting record.
+     * <p>
+     * The additional <code>fields</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param fields The fields to use in the desired output
+     * @return The resulting jOOQ record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    @Support
+    public final Record fetchOne(ResultSet rs, Field<?>... fields) throws DataAccessException, InvalidResultException {
+        return Utils.filterOne(fetchLazy(rs, fields).fetch());
+    }
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Record}. This will internally fetch all records and throw an
+     * exception if there was more than one resulting record.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce
+     * data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    @Support
+    public final Record fetchOne(ResultSet rs, DataType<?>... types) throws DataAccessException, InvalidResultException {
+        return Utils.filterOne(fetchLazy(rs, types).fetch());
+    }
+
+    /**
+     * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
+     * {@link Record}. This will internally fetch all records and throw an
+     * exception if there was more than one resulting record.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce
+     * data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ record
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws InvalidResultException if the query returned more than one record
+     */
+    @Support
+    public final Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, InvalidResultException {
+        return Utils.filterOne(fetchLazy(rs, types).fetch());
+    }
+
+    /**
      * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Cursor}.
      * <p>
      * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
@@ -1219,20 +1344,94 @@ public class Executor implements Configuration {
      */
     @Support
     public final Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException {
+        try {
+            FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
+            return fetchLazy(rs, fields);
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Error while accessing ResultSet meta data", e);
+        }
+    }
+
+    /**
+     * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Cursor}.
+     * <p>
+     * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
+     * into a jOOQ <code>Result</code> at once.
+     * <p>
+     * The additional <code>fields</code> argument is used by jOOQ to coerce
+     * field names and data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param fields The fields to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    public final Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) throws DataAccessException {
+        return fetchLazy(rs, new FieldList(fields));
+    }
+
+    /**
+     * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Cursor}.
+     * <p>
+     * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
+     * into a jOOQ <code>Result</code> at once.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce
+     * data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    public final Cursor<Record> fetchLazy(ResultSet rs, DataType<?>... types) throws DataAccessException {
+        try {
+            Field<?>[] fields = new Field[types.length];
+            ResultSetMetaData meta = rs.getMetaData();
+            int columns = meta.getColumnCount();
+
+            for (int i = 0; i < types.length && i < columns; i++) {
+                fields[i] = field(meta.getColumnLabel(i + 1), types[i]);
+            }
+
+            return fetchLazy(rs, fields);
+        }
+        catch (SQLException e) {
+            throw new DataAccessException("Error while accessing ResultSet meta data", e);
+        }
+    }
+
+    /**
+     * Wrap a JDBC {@link ResultSet} into a jOOQ {@link Cursor}.
+     * <p>
+     * Use {@link #fetch(ResultSet)}, to load the entire <code>ResultSet</code>
+     * into a jOOQ <code>Result</code> at once.
+     * <p>
+     * The additional <code>types</code> argument is used by jOOQ to coerce
+     * data types to the desired output
+     *
+     * @param rs The JDBC ResultSet to fetch data from
+     * @param types The data types to use in the desired output
+     * @return The resulting jOOQ Result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    public final Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException {
+        return fetchLazy(rs, Utils.getDataTypes(types));
+    }
+
+    /**
+     * Do the actual work
+     */
+    private final Cursor<Record> fetchLazy(ResultSet rs, FieldProvider fields) throws DataAccessException {
         ExecuteContext ctx = new DefaultExecuteContext(this);
         ExecuteListener listener = new ExecuteListeners(ctx);
 
-        try {
-            FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
-
-            ctx.resultSet(rs);
-            return new CursorImpl<Record>(ctx, listener, fields, false);
-        }
-        catch (SQLException e) {
-            ctx.sqlException(e);
-            listener.exception(ctx);
-            throw ctx.exception();
-        }
+        ctx.resultSet(rs);
+        return new CursorImpl<Record>(ctx, listener, fields, false);
     }
 
     /**

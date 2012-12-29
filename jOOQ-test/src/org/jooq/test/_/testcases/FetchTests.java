@@ -45,6 +45,7 @@ import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.tools.reflect.Reflect.on;
 
@@ -85,6 +86,7 @@ import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.test._.AuthorWithoutAnnotations;
@@ -105,6 +107,7 @@ import org.jooq.test._.ImmutableAuthorWithConstructorPropertiesAndJPAAnnotations
 import org.jooq.test._.ImmutableAuthorWithConstructorPropertiesAndPublicFields;
 import org.jooq.test._.StaticWithAnnotations;
 import org.jooq.test._.StaticWithoutAnnotations;
+import org.jooq.tools.jdbc.JDBCUtils;
 
 import org.junit.Test;
 
@@ -1410,6 +1413,57 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             else {
                 break;
             }
+        }
+    }
+
+    @Test
+    public void testFetchResultSetWithCoercedTypes() throws Exception {
+        ResultSet rs1 = null;
+        ResultSet rs2 = null;
+        ResultSet rs3 = null;
+
+        try {
+
+            // Coerce classes
+            rs1 = getConnection().createStatement().executeQuery("select id, year_of_birth from t_author order by id");
+            Result<Record> r1 = create().fetch(rs1, String.class, Long.class);
+
+            assertEquals(2, r1.size());
+            assertEquals(String.class, r1.getField(0).getType());
+            assertEquals(Long.class, r1.getField(1).getType());
+            assertEquals("id", r1.getField(0).getName().toLowerCase());
+            assertEquals("year_of_birth", r1.getField(1).getName().toLowerCase());
+            assertEquals(asList("1", "2"), r1.getValues(0));
+            assertEquals(asList(1903L, 1947L), r1.getValues(1));
+
+            // Coerce data types
+            rs2 = getConnection().createStatement().executeQuery("select id, year_of_birth from t_author order by id");
+            Result<Record> r2 = create().fetch(rs2, SQLDataType.VARCHAR, SQLDataType.BIGINT);
+
+            assertEquals(2, r2.size());
+            assertEquals(String.class, r2.getField(0).getType());
+            assertEquals(Long.class, r2.getField(1).getType());
+            assertEquals("id", r2.getField(0).getName().toLowerCase());
+            assertEquals("year_of_birth", r2.getField(1).getName().toLowerCase());
+            assertEquals(asList("1", "2"), r2.getValues(0));
+            assertEquals(asList(1903L, 1947L), r2.getValues(1));
+
+            // Coerce fields
+            rs3 = getConnection().createStatement().executeQuery("select id, year_of_birth from t_author order by id");
+            Result<Record> r3 = create().fetch(rs3, field("x", String.class), field("y", Long.class));
+
+            assertEquals(2, r3.size());
+            assertEquals(String.class, r3.getField(0).getType());
+            assertEquals(Long.class, r3.getField(1).getType());
+            assertEquals("x", r3.getField(0).getName().toLowerCase());
+            assertEquals("y", r3.getField(1).getName().toLowerCase());
+            assertEquals(asList("1", "2"), r3.getValues(0));
+            assertEquals(asList(1903L, 1947L), r3.getValues(1));
+        }
+        finally {
+            JDBCUtils.safeClose(rs1);
+            JDBCUtils.safeClose(rs2);
+            JDBCUtils.safeClose(rs3);
         }
     }
 

@@ -74,11 +74,13 @@ class RowSubqueryCondition extends AbstractCondition {
                .sql(" ")
                .keyword(operator.toSQL())
                .sql(" (")
-               .sql(extraParentheses ? "(" : "")
-               .subquery(true)
+               .sql(extraParentheses ? "(" : "");
+        context.setData(Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
+        context.subquery(true)
                .sql(right)
-               .subquery(subquery)
-               .sql(extraParentheses ? ")" : "")
+               .subquery(subquery);
+        context.setData(Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+        context.sql(extraParentheses ? ")" : "")
                .sql(")");
     }
 

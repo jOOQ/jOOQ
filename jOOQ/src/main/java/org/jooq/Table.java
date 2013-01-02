@@ -98,6 +98,11 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
      * Note that the case-sensitivity of the returned table depends on
      * {@link Settings#getRenderNameStyle()}. By default, table aliases are
      * quoted, and thus case-sensitive!
+     * <p>
+     * Note, not all databases support derived column lists for their table
+     * aliases. On the other hand, some databases do support derived column
+     * lists, but only for derived tables. jOOQ will try to turn table
+     * references into derived tables to make this syntax work.
      *
      * @param alias The alias name
      * @param fieldAliases The field aliases. Excess aliases are ignored,
@@ -105,7 +110,7 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
      *            names.
      * @return The table alias
      */
-    @Support
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLSERVER, SYBASE })
     Table<R> as(String alias, String... fieldAliases);
 
     /**

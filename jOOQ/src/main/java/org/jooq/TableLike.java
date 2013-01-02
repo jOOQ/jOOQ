@@ -76,6 +76,11 @@ public interface TableLike<R extends Record> extends QueryPart {
      * ) AS alias(fieldAlias1, fieldAlias2)
      * WHERE ... </code>
      * <p>
+     * Note, not all databases support derived column lists for their table
+     * aliases. On the other hand, some databases do support derived column
+     * lists, but only for derived tables. jOOQ will try to turn table
+     * references into derived tables to make this syntax work.
+     * <p>
      * Note that the case-sensitivity of the returned table depends on
      * {@link Settings#getRenderNameStyle()}. By default, table aliases are
      * quoted, and thus case-sensitive!

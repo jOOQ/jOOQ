@@ -9,7 +9,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1764291088;
+	private static final long serialVersionUID = -1120328548;
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.RETURN_VALUE</code>. 
@@ -29,7 +29,7 @@ public class DisplaySqlset extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.PLAN_HASH_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
+	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38), true);
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_SQLSET.FORMAT</code>. 

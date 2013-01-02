@@ -9,7 +9,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = 1206857650;
+	private static final long serialVersionUID = 409053194;
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.RETURN_VALUE</code>. 
@@ -24,12 +24,12 @@ public class DisplayAwr extends org.jooq.impl.AbstractRoutine<org.jooq.examples.
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.PLAN_HASH_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
+	public static final org.jooq.Parameter<java.math.BigInteger> PLAN_HASH_VALUE = createParameter("PLAN_HASH_VALUE", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38), true);
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.DB_ID</code>. 
 	 */
-	public static final org.jooq.Parameter<java.math.BigInteger> DB_ID = createParameter("DB_ID", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
+	public static final org.jooq.Parameter<java.math.BigInteger> DB_ID = createParameter("DB_ID", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38), true);
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_AWR.FORMAT</code>. 

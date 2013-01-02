@@ -43,6 +43,8 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
@@ -92,7 +94,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // Feature requests placed here:
             // http://jira.cubrid.org/browse/ENGINE-96
             // http://tracker.firebirdsql.org/browse/CORE-4025
-            if (asList(CUBRID, FIREBIRD).contains(context.getDialect()) && fieldAliases != null && wrapped instanceof TableImpl) {
+            if (asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(context.getDialect()) && fieldAliases != null && wrapped instanceof TableImpl) {
                 context.keyword("(select * from ")
                        .sql(wrapped)
                        .sql(")");

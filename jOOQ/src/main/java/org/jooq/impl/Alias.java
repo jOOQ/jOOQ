@@ -36,12 +36,13 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
-
-import java.util.Arrays;
 
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
@@ -84,18 +85,34 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     @Override
     public final void toSQL(RenderContext context) {
         if (context.declareFields() || context.declareTables()) {
-            if (wrapInParentheses) {
-                context.sql("(");
+
+            // [#1801] Some databases don't allow "derived column names" in "simple
+            // class specifications". Hence, wrap the table reference in a subselect
+
+            // Feature requests placed here:
+            // http://jira.cubrid.org/browse/ENGINE-96
+            // http://tracker.firebirdsql.org/browse/CORE-4025
+            if (asList(CUBRID, FIREBIRD).contains(context.getDialect()) && fieldAliases != null && wrapped instanceof TableImpl) {
+                context.keyword("(select * from ")
+                       .sql(wrapped)
+                       .sql(")");
             }
 
-            context.sql(wrapped);
+            // The default behaviour
+            else {
+                if (wrapInParentheses) {
+                    context.sql("(");
+                }
 
-            if (wrapInParentheses) {
-                context.sql(")");
+                context.sql(wrapped);
+
+                if (wrapInParentheses) {
+                    context.sql(")");
+                }
             }
 
             // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
-            if (Arrays.asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(context.getDialect())) {
+            if (asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(context.getDialect())) {
                 context.keyword(" as");
             }
 

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 453157646;
+	private static final long serialVersionUID = -1711747034;
 
 	/**
 	 * The singleton instance of <code>V_LIBRARY</code>
@@ -45,7 +45,14 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gen
 	 * Create an aliased <code>V_LIBRARY</code> table reference
 	 */
 	public VLibrary(java.lang.String alias) {
-		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.VLibrary.V_LIBRARY);
+		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.VLibrary.V_LIBRARY);
+	}
+
+	/**
+	 * Create an aliased <code>V_LIBRARY</code> table reference
+	 */
+	public VLibrary(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
 	/**
@@ -54,5 +61,13 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gen
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.VLibrary as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.VLibrary(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.firebird.generatedclasses.tables.VLibrary as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.test.firebird.generatedclasses.tables.VLibrary(alias, fieldAliases);
 	}
 }

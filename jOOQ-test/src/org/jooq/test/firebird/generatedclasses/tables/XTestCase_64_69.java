@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1696469097;
+	private static final long serialVersionUID = -2071013613;
 
 	/**
 	 * The singleton instance of <code>X_TEST_CASE_64_69</code>
@@ -45,7 +45,14 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	 * Create an aliased <code>X_TEST_CASE_64_69</code> table reference
 	 */
 	public XTestCase_64_69(java.lang.String alias) {
-		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
+	}
+
+	/**
+	 * Create an aliased <code>X_TEST_CASE_64_69</code> table reference
+	 */
+	public XTestCase_64_69(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69);
 	}
 
 	/**
@@ -78,5 +85,13 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69 as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69 as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.test.firebird.generatedclasses.tables.XTestCase_64_69(alias, fieldAliases);
 	}
 }

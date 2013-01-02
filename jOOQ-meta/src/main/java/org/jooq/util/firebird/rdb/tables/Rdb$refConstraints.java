@@ -11,7 +11,7 @@ package org.jooq.util.firebird.rdb.tables;
 @java.lang.SuppressWarnings("all")
 public class Rdb$refConstraints extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 806221362;
+	private static final long serialVersionUID = -1129112793;
 
 	/**
 	 * The singleton instance of <code>RDB$REF_CONSTRAINTS</code>
@@ -29,27 +29,27 @@ public class Rdb$refConstraints extends org.jooq.impl.TableImpl<org.jooq.Record>
 	/**
 	 * The column <code>RDB$REF_CONSTRAINTS.RDB$CONSTRAINT_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$CONSTRAINT_NAME = createField("RDB$CONSTRAINT_NAME", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$CONSTRAINT_NAME = createField("RDB$CONSTRAINT_NAME", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$REF_CONSTRAINTS.RDB$CONST_NAME_UQ</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$CONST_NAME_UQ = createField("RDB$CONST_NAME_UQ", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$CONST_NAME_UQ = createField("RDB$CONST_NAME_UQ", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$REF_CONSTRAINTS.RDB$MATCH_OPTION</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$MATCH_OPTION = createField("RDB$MATCH_OPTION", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$MATCH_OPTION = createField("RDB$MATCH_OPTION", org.jooq.impl.SQLDataType.CHAR.length(7), this);
 
 	/**
 	 * The column <code>RDB$REF_CONSTRAINTS.RDB$UPDATE_RULE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$UPDATE_RULE = createField("RDB$UPDATE_RULE", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$UPDATE_RULE = createField("RDB$UPDATE_RULE", org.jooq.impl.SQLDataType.CHAR.length(11), this);
 
 	/**
 	 * The column <code>RDB$REF_CONSTRAINTS.RDB$DELETE_RULE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DELETE_RULE = createField("RDB$DELETE_RULE", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DELETE_RULE = createField("RDB$DELETE_RULE", org.jooq.impl.SQLDataType.CHAR.length(11), this);
 
 	/**
 	 * Create a <code>RDB$REF_CONSTRAINTS</code> table reference
@@ -62,7 +62,14 @@ public class Rdb$refConstraints extends org.jooq.impl.TableImpl<org.jooq.Record>
 	 * Create an aliased <code>RDB$REF_CONSTRAINTS</code> table reference
 	 */
 	public Rdb$refConstraints(java.lang.String alias) {
-		super(alias, null, org.jooq.util.firebird.rdb.tables.Rdb$refConstraints.RDB$REF_CONSTRAINTS);
+		super(alias, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$refConstraints.RDB$REF_CONSTRAINTS);
+	}
+
+	/**
+	 * Create an aliased <code>RDB$REF_CONSTRAINTS</code> table reference
+	 */
+	public Rdb$refConstraints(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$refConstraints.RDB$REF_CONSTRAINTS);
 	}
 
 	/**
@@ -71,5 +78,13 @@ public class Rdb$refConstraints extends org.jooq.impl.TableImpl<org.jooq.Record>
 	@Override
 	public org.jooq.util.firebird.rdb.tables.Rdb$refConstraints as(java.lang.String alias) {
 		return new org.jooq.util.firebird.rdb.tables.Rdb$refConstraints(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.util.firebird.rdb.tables.Rdb$refConstraints as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.util.firebird.rdb.tables.Rdb$refConstraints(alias, fieldAliases);
 	}
 }

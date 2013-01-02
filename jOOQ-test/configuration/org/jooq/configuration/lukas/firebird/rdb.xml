@@ -2,7 +2,7 @@
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd">
     <jdbc>
         <driver>org.firebirdsql.jdbc.FBDriver</driver>
-        <url>jdbc:firebirdsql:local:C:/data/firebird/test.db</url>
+        <url>jdbc:firebirdsql:localhost:C:/data/firebird/test.db</url>
         <user>TEST</user>
         <password>TEST</password>
     </jdbc>

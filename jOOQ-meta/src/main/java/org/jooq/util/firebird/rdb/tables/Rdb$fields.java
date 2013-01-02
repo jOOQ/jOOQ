@@ -11,7 +11,7 @@ package org.jooq.util.firebird.rdb.tables;
 @java.lang.SuppressWarnings("all")
 public class Rdb$fields extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 518345165;
+	private static final long serialVersionUID = 1035359883;
 
 	/**
 	 * The singleton instance of <code>RDB$FIELDS</code>
@@ -29,42 +29,42 @@ public class Rdb$fields extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>RDB$FIELDS.RDB$FIELD_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$FIELD_NAME = createField("RDB$FIELD_NAME", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$FIELD_NAME = createField("RDB$FIELD_NAME", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$QUERY_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$QUERY_NAME = createField("RDB$QUERY_NAME", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$QUERY_NAME = createField("RDB$QUERY_NAME", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$VALIDATION_BLR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$VALIDATION_BLR = createField("RDB$VALIDATION_BLR", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$VALIDATION_BLR = createField("RDB$VALIDATION_BLR", org.jooq.impl.SQLDataType.BLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$VALIDATION_SOURCE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$VALIDATION_SOURCE = createField("RDB$VALIDATION_SOURCE", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$VALIDATION_SOURCE = createField("RDB$VALIDATION_SOURCE", org.jooq.impl.SQLDataType.CLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$COMPUTED_BLR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$COMPUTED_BLR = createField("RDB$COMPUTED_BLR", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$COMPUTED_BLR = createField("RDB$COMPUTED_BLR", org.jooq.impl.SQLDataType.BLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$COMPUTED_SOURCE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$COMPUTED_SOURCE = createField("RDB$COMPUTED_SOURCE", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$COMPUTED_SOURCE = createField("RDB$COMPUTED_SOURCE", org.jooq.impl.SQLDataType.CLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$DEFAULT_VALUE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$DEFAULT_VALUE = createField("RDB$DEFAULT_VALUE", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$DEFAULT_VALUE = createField("RDB$DEFAULT_VALUE", org.jooq.impl.SQLDataType.BLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$DEFAULT_SOURCE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DEFAULT_SOURCE = createField("RDB$DEFAULT_SOURCE", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DEFAULT_SOURCE = createField("RDB$DEFAULT_SOURCE", org.jooq.impl.SQLDataType.CLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$FIELD_LENGTH</code>. 
@@ -89,17 +89,17 @@ public class Rdb$fields extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>RDB$FIELDS.RDB$MISSING_VALUE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$MISSING_VALUE = createField("RDB$MISSING_VALUE", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$MISSING_VALUE = createField("RDB$MISSING_VALUE", org.jooq.impl.SQLDataType.BLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$MISSING_SOURCE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$MISSING_SOURCE = createField("RDB$MISSING_SOURCE", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$MISSING_SOURCE = createField("RDB$MISSING_SOURCE", org.jooq.impl.SQLDataType.CLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$DESCRIPTION</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DESCRIPTION = createField("RDB$DESCRIPTION", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DESCRIPTION = createField("RDB$DESCRIPTION", org.jooq.impl.SQLDataType.CLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$SYSTEM_FLAG</code>. 
@@ -109,7 +109,7 @@ public class Rdb$fields extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>RDB$FIELDS.RDB$QUERY_HEADER</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$QUERY_HEADER = createField("RDB$QUERY_HEADER", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$QUERY_HEADER = createField("RDB$QUERY_HEADER", org.jooq.impl.SQLDataType.CLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$SEGMENT_LENGTH</code>. 
@@ -119,7 +119,7 @@ public class Rdb$fields extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>RDB$FIELDS.RDB$EDIT_STRING</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$EDIT_STRING = createField("RDB$EDIT_STRING", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$EDIT_STRING = createField("RDB$EDIT_STRING", org.jooq.impl.SQLDataType.VARCHAR.length(127), this);
 
 	/**
 	 * The column <code>RDB$FIELDS.RDB$EXTERNAL_LENGTH</code>. 
@@ -177,7 +177,14 @@ public class Rdb$fields extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	 * Create an aliased <code>RDB$FIELDS</code> table reference
 	 */
 	public Rdb$fields(java.lang.String alias) {
-		super(alias, null, org.jooq.util.firebird.rdb.tables.Rdb$fields.RDB$FIELDS);
+		super(alias, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$fields.RDB$FIELDS);
+	}
+
+	/**
+	 * Create an aliased <code>RDB$FIELDS</code> table reference
+	 */
+	public Rdb$fields(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$fields.RDB$FIELDS);
 	}
 
 	/**
@@ -186,5 +193,13 @@ public class Rdb$fields extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	@Override
 	public org.jooq.util.firebird.rdb.tables.Rdb$fields as(java.lang.String alias) {
 		return new org.jooq.util.firebird.rdb.tables.Rdb$fields(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.util.firebird.rdb.tables.Rdb$fields as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.util.firebird.rdb.tables.Rdb$fields(alias, fieldAliases);
 	}
 }

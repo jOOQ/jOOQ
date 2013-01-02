@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -451625969;
+	private static final long serialVersionUID = 788630493;
 
 	/**
 	 * The singleton instance of <code>T_TRIGGERS</code>
@@ -50,7 +50,14 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	 * Create an aliased <code>T_TRIGGERS</code> table reference
 	 */
 	public TTriggers(java.lang.String alias) {
-		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.TTriggers.T_TRIGGERS);
+		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TTriggers.T_TRIGGERS);
+	}
+
+	/**
+	 * Create an aliased <code>T_TRIGGERS</code> table reference
+	 */
+	public TTriggers(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TTriggers.T_TRIGGERS);
 	}
 
 	/**
@@ -75,5 +82,13 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TTriggers as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.TTriggers(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.firebird.generatedclasses.tables.TTriggers as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.test.firebird.generatedclasses.tables.TTriggers(alias, fieldAliases);
 	}
 }

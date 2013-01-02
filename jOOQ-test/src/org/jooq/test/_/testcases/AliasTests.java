@@ -39,6 +39,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectOne;
+import static org.jooq.impl.Factory.selectZero;
 import static org.jooq.impl.Factory.table;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.zero;
@@ -167,5 +168,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(0, r2.getValue("v2b"));
         assertNull(r2.getValue(3));
         assertNull(r2.getValue("v3"));
+    }
+
+    @Test
+    public void testAliasingJoins() throws Exception {
+        Record r1 = create()
+            .select()
+            .from(table(selectOne())
+                .crossJoin(table(selectZero())).as("t", "a", "b"))
+            .fetchOne();
+
+        assertEquals("a", r1.getField(0).getName());
+        assertEquals("b", r1.getField(1).getName());
+        assertEquals("a", r1.getField("a").getName());
+        assertEquals("b", r1.getField("b").getName());
+        assertEquals(1, r1.getValue(0));
+        assertEquals(0, r1.getValue(1));
+        assertEquals(1, r1.getValue("a"));
+        assertEquals(0, r1.getValue("b"));
+
     }
 }

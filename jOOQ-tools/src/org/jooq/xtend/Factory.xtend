@@ -49,6 +49,7 @@ class Factory extends Generators {
         factory.generateSelectDistinct();
         factory.generateRowValue();
         factory.generateRowField();
+        factory.generateValues();
     }
     
     def generateSelect() {
@@ -207,5 +208,44 @@ class Factory extends Generators {
         }
 
         insert("org.jooq.impl.Factory", out, "row-field");
+    }
+    
+    def generateValues() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Create a <code>VALUES()</code> expression of degree <code>«degree»</code>
+                 * <p>
+                 * The <code>VALUES()</code> constructor is a tool supported by some
+                 * databases to allow for constructing tables from constant values.
+                 * <p>
+                 * If a database doesn't support the <code>VALUES()</code> constructor, it
+                 * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+                 * expressions are equivalent:
+                 * <p>
+                 * <pre><code>
+                 * -- Using VALUES() constructor
+                 * VALUES(«field1_field2_fieldn(degree)»),
+                 *       («field1_field2_fieldn(degree)»),
+                 *       («field1_field2_fieldn(degree)»)
+                 *
+                 * -- Using UNION ALL
+                 * SELECT «field1_field2_fieldn(degree)» UNION ALL
+                 * SELECT «field1_field2_fieldn(degree)» UNION ALL
+                 * SELECT «field1_field2_fieldn(degree)»
+                 * </code></pre>
+                 */
+                «generatedMethod»
+                @Support
+                static <«TN(degree)»> Table<Record«degree»<«TN(degree)»>> values(Row«degree»<«TN(degree)»>... rows) {
+                    return new Values<Record«degree»<«TN(degree)»>>(rows);
+                }
+            ''');
+        }
+
+        insert("org.jooq.impl.Factory", out, "values");
     }
 }

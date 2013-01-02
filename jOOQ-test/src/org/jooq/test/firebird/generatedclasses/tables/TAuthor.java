@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -803481255;
+	private static final long serialVersionUID = -876538536;
 
 	/**
 	 * The singleton instance of <code>T_AUTHOR</code>
@@ -69,13 +69,6 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	}
 
 	/**
-	 * Create an aliased <code>T_AUTHOR</code> table reference
-	 */
-	public TAuthor(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TAuthor.T_AUTHOR);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -97,13 +90,5 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TAuthor as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.TAuthor(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.test.firebird.generatedclasses.tables.TAuthor as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.test.firebird.generatedclasses.tables.TAuthor(alias, fieldAliases);
 	}
 }

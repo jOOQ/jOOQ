@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> {
 
-	private static final long serialVersionUID = 186972697;
+	private static final long serialVersionUID = 1613743360;
 
 	/**
 	 * The singleton instance of <code>T_937</code>
@@ -44,13 +44,6 @@ public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebi
 	}
 
 	/**
-	 * Create an aliased <code>T_937</code> table reference
-	 */
-	public T_937(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.T_937.T_937);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -72,13 +65,5 @@ public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebi
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.T_937 as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.T_937(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.test.firebird.generatedclasses.tables.T_937 as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.test.firebird.generatedclasses.tables.T_937(alias, fieldAliases);
 	}
 }

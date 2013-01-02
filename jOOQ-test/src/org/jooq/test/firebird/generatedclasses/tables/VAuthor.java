@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 1903880075;
+	private static final long serialVersionUID = -573394490;
 
 	/**
 	 * The singleton instance of <code>V_AUTHOR</code>
@@ -69,25 +69,10 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.firebird.gene
 	}
 
 	/**
-	 * Create an aliased <code>V_AUTHOR</code> table reference
-	 */
-	public VAuthor(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.VAuthor.V_AUTHOR);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.VAuthor as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.VAuthor(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.test.firebird.generatedclasses.tables.VAuthor as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.test.firebird.generatedclasses.tables.VAuthor(alias, fieldAliases);
 	}
 }

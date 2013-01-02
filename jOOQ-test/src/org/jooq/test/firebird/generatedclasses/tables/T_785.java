@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = -1280654829;
+	private static final long serialVersionUID = -1831112848;
 
 	/**
 	 * The singleton instance of <code>T_785</code>
@@ -54,25 +54,10 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.genera
 	}
 
 	/**
-	 * Create an aliased <code>T_785</code> table reference
-	 */
-	public T_785(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.T_785.T_785);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.T_785 as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.T_785(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.test.firebird.generatedclasses.tables.T_785 as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.test.firebird.generatedclasses.tables.T_785(alias, fieldAliases);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> {
 
-	private static final long serialVersionUID = 1703164856;
+	private static final long serialVersionUID = -711522226;
 
 	/**
 	 * The singleton instance of <code>TEST.T_976</code>
@@ -37,7 +37,7 @@ public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.j
 	/**
 	 * The column <code>TEST.T_976.T</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord> DATE_AS_TIMESTAMP_T = createField("T", org.jooq.impl.SQLDataType.DATE.asArrayDataType(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord.class), this);
+	public final org.jooq.TableField<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record, org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord> DATE_AS_TIMESTAMP_T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP.asArrayDataType(org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord.class), this);
 
 	/**
 	 * The column <code>TEST.T_976.O</code>. 

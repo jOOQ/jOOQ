@@ -7510,41 +7510,624 @@ public class Factory {
     // [#915] TODO: These are experimental VALUES() table constructors
     // -------------------------------------------------------------------------
 
+// [jooq-tools] START [values]
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>1</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1),
+     *       (field1),
+     *       (field1)
+     *
+     * -- Using UNION ALL
+     * SELECT field1 UNION ALL
+     * SELECT field1 UNION ALL
+     * SELECT field1
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     static <T1> Table<Record1<T1>> values(Row1<T1>... rows) {
         return new Values<Record1<T1>>(rows);
     }
 
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>2</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2),
+     *       (field1, field2),
+     *       (field1, field2)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2 UNION ALL
+     * SELECT field1, field2 UNION ALL
+     * SELECT field1, field2
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     static <T1, T2> Table<Record2<T1, T2>> values(Row2<T1, T2>... rows) {
         return new Values<Record2<T1, T2>>(rows);
     }
 
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>3</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3),
+     *       (field1, field2, field3),
+     *       (field1, field2, field3)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3 UNION ALL
+     * SELECT field1, field2, field3 UNION ALL
+     * SELECT field1, field2, field3
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     static <T1, T2, T3> Table<Record3<T1, T2, T3>> values(Row3<T1, T2, T3>... rows) {
         return new Values<Record3<T1, T2, T3>>(rows);
     }
 
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>4</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, field4),
+     *       (field1, field2, field3, field4),
+     *       (field1, field2, field3, field4)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, field4 UNION ALL
+     * SELECT field1, field2, field3, field4 UNION ALL
+     * SELECT field1, field2, field3, field4
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     static <T1, T2, T3, T4> Table<Record4<T1, T2, T3, T4>> values(Row4<T1, T2, T3, T4>... rows) {
         return new Values<Record4<T1, T2, T3, T4>>(rows);
     }
 
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>5</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, field4, field5),
+     *       (field1, field2, field3, field4, field5),
+     *       (field1, field2, field3, field4, field5)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, field4, field5 UNION ALL
+     * SELECT field1, field2, field3, field4, field5 UNION ALL
+     * SELECT field1, field2, field3, field4, field5
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     static <T1, T2, T3, T4, T5> Table<Record5<T1, T2, T3, T4, T5>> values(Row5<T1, T2, T3, T4, T5>... rows) {
         return new Values<Record5<T1, T2, T3, T4, T5>>(rows);
     }
 
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>6</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field5, field6),
+     *       (field1, field2, field3, .., field5, field6),
+     *       (field1, field2, field3, .., field5, field6)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field5, field6 UNION ALL
+     * SELECT field1, field2, field3, .., field5, field6 UNION ALL
+     * SELECT field1, field2, field3, .., field5, field6
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     static <T1, T2, T3, T4, T5, T6> Table<Record6<T1, T2, T3, T4, T5, T6>> values(Row6<T1, T2, T3, T4, T5, T6>... rows) {
         return new Values<Record6<T1, T2, T3, T4, T5, T6>>(rows);
     }
 
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>7</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field6, field7),
+     *       (field1, field2, field3, .., field6, field7),
+     *       (field1, field2, field3, .., field6, field7)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field6, field7 UNION ALL
+     * SELECT field1, field2, field3, .., field6, field7 UNION ALL
+     * SELECT field1, field2, field3, .., field6, field7
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     static <T1, T2, T3, T4, T5, T6, T7> Table<Record7<T1, T2, T3, T4, T5, T6, T7>> values(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
         return new Values<Record7<T1, T2, T3, T4, T5, T6, T7>>(rows);
     }
 
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>8</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field7, field8),
+     *       (field1, field2, field3, .., field7, field8),
+     *       (field1, field2, field3, .., field7, field8)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field7, field8 UNION ALL
+     * SELECT field1, field2, field3, .., field7, field8 UNION ALL
+     * SELECT field1, field2, field3, .., field7, field8
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
     static <T1, T2, T3, T4, T5, T6, T7, T8> Table<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> values(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
         return new Values<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
     }
 
-    static Table<Record> values(RowN... rows) {
-        return new Values<Record>(rows);
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>9</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field8, field9),
+     *       (field1, field2, field3, .., field8, field9),
+     *       (field1, field2, field3, .., field8, field9)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field8, field9 UNION ALL
+     * SELECT field1, field2, field3, .., field8, field9 UNION ALL
+     * SELECT field1, field2, field3, .., field8, field9
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Table<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> values(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>... rows) {
+        return new Values<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(rows);
     }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>10</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field9, field10),
+     *       (field1, field2, field3, .., field9, field10),
+     *       (field1, field2, field3, .., field9, field10)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field9, field10 UNION ALL
+     * SELECT field1, field2, field3, .., field9, field10 UNION ALL
+     * SELECT field1, field2, field3, .., field9, field10
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Table<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> values(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... rows) {
+        return new Values<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>11</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field10, field11),
+     *       (field1, field2, field3, .., field10, field11),
+     *       (field1, field2, field3, .., field10, field11)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field10, field11 UNION ALL
+     * SELECT field1, field2, field3, .., field10, field11 UNION ALL
+     * SELECT field1, field2, field3, .., field10, field11
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Table<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> values(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... rows) {
+        return new Values<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>12</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field11, field12),
+     *       (field1, field2, field3, .., field11, field12),
+     *       (field1, field2, field3, .., field11, field12)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field11, field12 UNION ALL
+     * SELECT field1, field2, field3, .., field11, field12 UNION ALL
+     * SELECT field1, field2, field3, .., field11, field12
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Table<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> values(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>... rows) {
+        return new Values<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>13</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field12, field13),
+     *       (field1, field2, field3, .., field12, field13),
+     *       (field1, field2, field3, .., field12, field13)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field12, field13 UNION ALL
+     * SELECT field1, field2, field3, .., field12, field13 UNION ALL
+     * SELECT field1, field2, field3, .., field12, field13
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Table<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> values(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... rows) {
+        return new Values<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>14</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field13, field14),
+     *       (field1, field2, field3, .., field13, field14),
+     *       (field1, field2, field3, .., field13, field14)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field13, field14 UNION ALL
+     * SELECT field1, field2, field3, .., field13, field14 UNION ALL
+     * SELECT field1, field2, field3, .., field13, field14
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Table<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> values(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... rows) {
+        return new Values<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>15</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field14, field15),
+     *       (field1, field2, field3, .., field14, field15),
+     *       (field1, field2, field3, .., field14, field15)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field14, field15 UNION ALL
+     * SELECT field1, field2, field3, .., field14, field15 UNION ALL
+     * SELECT field1, field2, field3, .., field14, field15
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Table<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> values(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>... rows) {
+        return new Values<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>16</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field15, field16),
+     *       (field1, field2, field3, .., field15, field16),
+     *       (field1, field2, field3, .., field15, field16)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field15, field16 UNION ALL
+     * SELECT field1, field2, field3, .., field15, field16 UNION ALL
+     * SELECT field1, field2, field3, .., field15, field16
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Table<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> values(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... rows) {
+        return new Values<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>17</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field16, field17),
+     *       (field1, field2, field3, .., field16, field17),
+     *       (field1, field2, field3, .., field16, field17)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field16, field17 UNION ALL
+     * SELECT field1, field2, field3, .., field16, field17 UNION ALL
+     * SELECT field1, field2, field3, .., field16, field17
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Table<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> values(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>... rows) {
+        return new Values<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>18</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field17, field18),
+     *       (field1, field2, field3, .., field17, field18),
+     *       (field1, field2, field3, .., field17, field18)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field17, field18 UNION ALL
+     * SELECT field1, field2, field3, .., field17, field18 UNION ALL
+     * SELECT field1, field2, field3, .., field17, field18
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Table<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> values(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>... rows) {
+        return new Values<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>19</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field18, field19),
+     *       (field1, field2, field3, .., field18, field19),
+     *       (field1, field2, field3, .., field18, field19)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field18, field19 UNION ALL
+     * SELECT field1, field2, field3, .., field18, field19 UNION ALL
+     * SELECT field1, field2, field3, .., field18, field19
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Table<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> values(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... rows) {
+        return new Values<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>20</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field19, field20),
+     *       (field1, field2, field3, .., field19, field20),
+     *       (field1, field2, field3, .., field19, field20)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field19, field20 UNION ALL
+     * SELECT field1, field2, field3, .., field19, field20 UNION ALL
+     * SELECT field1, field2, field3, .., field19, field20
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Table<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> values(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>... rows) {
+        return new Values<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>21</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field20, field21),
+     *       (field1, field2, field3, .., field20, field21),
+     *       (field1, field2, field3, .., field20, field21)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field20, field21 UNION ALL
+     * SELECT field1, field2, field3, .., field20, field21 UNION ALL
+     * SELECT field1, field2, field3, .., field20, field21
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Table<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> values(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>... rows) {
+        return new Values<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(rows);
+    }
+
+    /**
+     * Create a <code>VALUES()</code> expression of degree <code>22</code>
+     * <p>
+     * The <code>VALUES()</code> constructor is a tool supported by some
+     * databases to allow for constructing tables from constant values.
+     * <p>
+     * If a database doesn't support the <code>VALUES()</code> constructor, it
+     * can be simulated using <code>SELECT .. UNION ALL ..</code>. The following
+     * expressions are equivalent:
+     * <p>
+     * <pre><code>
+     * -- Using VALUES() constructor
+     * VALUES(field1, field2, field3, .., field21, field22),
+     *       (field1, field2, field3, .., field21, field22),
+     *       (field1, field2, field3, .., field21, field22)
+     *
+     * -- Using UNION ALL
+     * SELECT field1, field2, field3, .., field21, field22 UNION ALL
+     * SELECT field1, field2, field3, .., field21, field22 UNION ALL
+     * SELECT field1, field2, field3, .., field21, field22
+     * </code></pre>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Table<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> values(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... rows) {
+        return new Values<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows);
+    }
+
+// [jooq-tools] END [values]
 
     // -------------------------------------------------------------------------
     // XXX Literals

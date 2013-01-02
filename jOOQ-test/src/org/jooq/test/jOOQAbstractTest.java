@@ -127,6 +127,7 @@ import org.jooq.test._.testcases.SchemaAndMappingTests;
 import org.jooq.test._.testcases.SelectTests;
 import org.jooq.test._.testcases.StatementTests;
 import org.jooq.test._.testcases.ThreadSafetyTests;
+import org.jooq.test._.testcases.ValuesConstructorTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -1445,6 +1446,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testComplexUnions() throws Exception {
         new SelectTests(this).testComplexUnions();
+    }
+
+    @Test
+    public void testValuesConstructor() throws Exception {
+        new ValuesConstructorTests(this).testValuesConstructor();
     }
 
     @Test

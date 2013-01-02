@@ -79,15 +79,19 @@ abstract class Generators {
 		result.append("\n");
 		result.append(original.substring(original.indexOf(end)));
 		
-		write(className, result);
+		write(className, result, section);
 	}
 	
-    def write(String className, CharSequence contents) {
+	def write(String className, CharSequence contents) {
+		write(className, contents, null);
+	}
+	
+    def write(String className, CharSequence contents, String section) {
         val file = file(className);
         file.getParentFile().mkdirs();
     
         try {
-            System::out.println("Generating " + file);
+            System::out.println("Generating " + file + (if (section != null) (" (section: " + section + ")") else ""));
             val fw = new FileWriter(file);
             fw.append(contents);
             fw.flush();

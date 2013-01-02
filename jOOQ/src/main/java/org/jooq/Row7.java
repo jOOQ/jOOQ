@@ -144,7 +144,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      *
      * @see #equal(Row7)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition equal(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
 
     /**
@@ -187,7 +187,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      *
      * @see #equal(Row7)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition eq(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
 
     /**
@@ -233,7 +233,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      *
      * @see #notEqual(Row7)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notEqual(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
 
     /**
@@ -275,7 +275,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      *
      * @see #notEqual(Row7)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition ne(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
 
     // ------------------------------------------------------------------------
@@ -933,7 +933,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      *
      * @see #in(Collection)
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition in(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
 
     /**
@@ -971,7 +971,7 @@ public interface Row7<T1, T2, T3, T4, T5, T6, T7> extends Row {
      *
      * @see #notIn(Collection)
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
 
 }

@@ -149,7 +149,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      *
      * @see #equal(Row8)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition equal(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
     /**
@@ -192,7 +192,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      *
      * @see #equal(Row8)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition eq(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
     /**
@@ -238,7 +238,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      *
      * @see #notEqual(Row8)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notEqual(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
     /**
@@ -280,7 +280,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      *
      * @see #notEqual(Row8)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition ne(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
     // ------------------------------------------------------------------------
@@ -938,7 +938,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      *
      * @see #in(Collection)
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition in(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
     /**
@@ -976,7 +976,7 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
      *
      * @see #notIn(Collection)
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
 }

@@ -137,7 +137,7 @@ class Rows extends Generators {
                  *
                  * @see #equal(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition equal(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -180,7 +180,7 @@ class Rows extends Generators {
                  *
                  * @see #equal(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition eq(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -226,7 +226,7 @@ class Rows extends Generators {
                  *
                  * @see #notEqual(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition notEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -268,7 +268,7 @@ class Rows extends Generators {
                  *
                  * @see #notEqual(Row«degree»)
                  */
-                @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition ne(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 // ------------------------------------------------------------------------
@@ -991,7 +991,7 @@ class Rows extends Generators {
                  *
                  * @see #in(Collection)
                  */
-                @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition in(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 /**
@@ -1029,7 +1029,7 @@ class Rows extends Generators {
                  *
                  * @see #notIn(Collection)
                  */
-                @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition notIn(Select<? extends Record«degree»<«TN(degree)»>> select);
             
                 «IF degree == 2»

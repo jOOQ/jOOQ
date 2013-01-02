@@ -9,7 +9,7 @@ package org.jooq.examples.oracle.sys.packages.dbms_xplan;
 @java.lang.SuppressWarnings("all")
 public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeTableRecord> {
 
-	private static final long serialVersionUID = -1407713580;
+	private static final long serialVersionUID = 455236296;
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.RETURN_VALUE</code>. 
@@ -24,7 +24,7 @@ public class DisplayCursor extends org.jooq.impl.AbstractRoutine<org.jooq.exampl
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.CURSOR_CHILD_NO</code>. 
 	 */
-	public static final org.jooq.Parameter<java.math.BigInteger> CURSOR_CHILD_NO = createParameter("CURSOR_CHILD_NO", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, true);
+	public static final org.jooq.Parameter<java.math.BigInteger> CURSOR_CHILD_NO = createParameter("CURSOR_CHILD_NO", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38), true);
 
 	/**
 	 * The parameter <code>SYS.DBMS_XPLAN.DISPLAY_CURSOR.FORMAT</code>. 

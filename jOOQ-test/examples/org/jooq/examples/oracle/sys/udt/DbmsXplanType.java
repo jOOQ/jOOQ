@@ -9,7 +9,7 @@ package org.jooq.examples.oracle.sys.udt;
 @java.lang.SuppressWarnings("all")
 public class DbmsXplanType extends org.jooq.impl.UDTImpl<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord> {
 
-	private static final long serialVersionUID = 389144356;
+	private static final long serialVersionUID = 762059086;
 
 	/**
 	 * The singleton instance of <code>SYS.DBMS_XPLAN_TYPE</code>
@@ -27,7 +27,7 @@ public class DbmsXplanType extends org.jooq.impl.UDTImpl<org.jooq.examples.oracl
 	/**
 	 * The attribute <code>SYS.DBMS_XPLAN_TYPE.PLAN_TABLE_OUTPUT</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord, java.lang.String> PLAN_TABLE_OUTPUT = createField("PLAN_TABLE_OUTPUT", org.jooq.impl.SQLDataType.VARCHAR, DBMS_XPLAN_TYPE);
+	public static final org.jooq.UDTField<org.jooq.examples.oracle.sys.udt.records.DbmsXplanTypeRecord, java.lang.String> PLAN_TABLE_OUTPUT = createField("PLAN_TABLE_OUTPUT", org.jooq.impl.SQLDataType.VARCHAR.length(300), DBMS_XPLAN_TYPE);
 
 	/**
 	 * No further instances allowed

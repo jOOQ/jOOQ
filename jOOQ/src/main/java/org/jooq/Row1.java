@@ -114,7 +114,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #equal(Row1)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition equal(Select<? extends Record1<T1>> select);
 
     /**
@@ -157,7 +157,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #equal(Row1)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition eq(Select<? extends Record1<T1>> select);
 
     /**
@@ -203,7 +203,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #notEqual(Row1)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notEqual(Select<? extends Record1<T1>> select);
 
     /**
@@ -245,7 +245,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #notEqual(Row1)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition ne(Select<? extends Record1<T1>> select);
 
     // ------------------------------------------------------------------------
@@ -903,7 +903,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #in(Collection)
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition in(Select<? extends Record1<T1>> select);
 
     /**
@@ -941,7 +941,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #notIn(Collection)
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
     Condition notIn(Select<? extends Record1<T1>> select);
 
 }

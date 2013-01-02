@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1444831577;
+	private static final long serialVersionUID = 1407670265;
 
 	/**
 	 * The singleton instance of <code>T_DATES</code>
@@ -65,7 +65,14 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fireb
 	 * Create an aliased <code>T_DATES</code> table reference
 	 */
 	public TDates(java.lang.String alias) {
-		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES);
+		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES);
+	}
+
+	/**
+	 * Create an aliased <code>T_DATES</code> table reference
+	 */
+	public TDates(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES);
 	}
 
 	/**
@@ -90,5 +97,13 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fireb
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TDates as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.TDates(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.firebird.generatedclasses.tables.TDates as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.test.firebird.generatedclasses.tables.TDates(alias, fieldAliases);
 	}
 }

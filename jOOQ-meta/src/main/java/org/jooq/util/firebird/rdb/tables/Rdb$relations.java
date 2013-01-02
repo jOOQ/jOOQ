@@ -11,7 +11,7 @@ package org.jooq.util.firebird.rdb.tables;
 @java.lang.SuppressWarnings("all")
 public class Rdb$relations extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = -587035771;
+	private static final long serialVersionUID = -312371648;
 
 	/**
 	 * The singleton instance of <code>RDB$RELATIONS</code>
@@ -29,17 +29,17 @@ public class Rdb$relations extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$VIEW_BLR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$VIEW_BLR = createField("RDB$VIEW_BLR", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$VIEW_BLR = createField("RDB$VIEW_BLR", org.jooq.impl.SQLDataType.BLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$VIEW_SOURCE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$VIEW_SOURCE = createField("RDB$VIEW_SOURCE", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$VIEW_SOURCE = createField("RDB$VIEW_SOURCE", org.jooq.impl.SQLDataType.CLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$DESCRIPTION</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DESCRIPTION = createField("RDB$DESCRIPTION", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DESCRIPTION = createField("RDB$DESCRIPTION", org.jooq.impl.SQLDataType.CLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$RELATION_ID</code>. 
@@ -69,37 +69,37 @@ public class Rdb$relations extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$RELATION_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$RELATION_NAME = createField("RDB$RELATION_NAME", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$RELATION_NAME = createField("RDB$RELATION_NAME", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$SECURITY_CLASS</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$SECURITY_CLASS = createField("RDB$SECURITY_CLASS", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$SECURITY_CLASS = createField("RDB$SECURITY_CLASS", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$EXTERNAL_FILE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$EXTERNAL_FILE = createField("RDB$EXTERNAL_FILE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$EXTERNAL_FILE = createField("RDB$EXTERNAL_FILE", org.jooq.impl.SQLDataType.VARCHAR.length(255), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$RUNTIME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$RUNTIME = createField("RDB$RUNTIME", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$RUNTIME = createField("RDB$RUNTIME", org.jooq.impl.SQLDataType.BLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$EXTERNAL_DESCRIPTION</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$EXTERNAL_DESCRIPTION = createField("RDB$EXTERNAL_DESCRIPTION", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.Record, byte[]> RDB$EXTERNAL_DESCRIPTION = createField("RDB$EXTERNAL_DESCRIPTION", org.jooq.impl.SQLDataType.BLOB.length(8), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$OWNER_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$OWNER_NAME = createField("RDB$OWNER_NAME", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$OWNER_NAME = createField("RDB$OWNER_NAME", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$DEFAULT_CLASS</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DEFAULT_CLASS = createField("RDB$DEFAULT_CLASS", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$DEFAULT_CLASS = createField("RDB$DEFAULT_CLASS", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$RELATIONS.RDB$FLAGS</code>. 
@@ -122,7 +122,14 @@ public class Rdb$relations extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	 * Create an aliased <code>RDB$RELATIONS</code> table reference
 	 */
 	public Rdb$relations(java.lang.String alias) {
-		super(alias, null, org.jooq.util.firebird.rdb.tables.Rdb$relations.RDB$RELATIONS);
+		super(alias, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$relations.RDB$RELATIONS);
+	}
+
+	/**
+	 * Create an aliased <code>RDB$RELATIONS</code> table reference
+	 */
+	public Rdb$relations(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$relations.RDB$RELATIONS);
 	}
 
 	/**
@@ -131,5 +138,13 @@ public class Rdb$relations extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	@Override
 	public org.jooq.util.firebird.rdb.tables.Rdb$relations as(java.lang.String alias) {
 		return new org.jooq.util.firebird.rdb.tables.Rdb$relations(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.util.firebird.rdb.tables.Rdb$relations as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.util.firebird.rdb.tables.Rdb$relations(alias, fieldAliases);
 	}
 }

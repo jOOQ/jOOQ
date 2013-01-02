@@ -11,7 +11,7 @@ package org.jooq.util.firebird.rdb.tables;
 @java.lang.SuppressWarnings("all")
 public class Rdb$indexSegments extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = -507682474;
+	private static final long serialVersionUID = -932301855;
 
 	/**
 	 * The singleton instance of <code>RDB$INDEX_SEGMENTS</code>
@@ -29,12 +29,12 @@ public class Rdb$indexSegments extends org.jooq.impl.TableImpl<org.jooq.Record> 
 	/**
 	 * The column <code>RDB$INDEX_SEGMENTS.RDB$INDEX_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$INDEX_NAME = createField("RDB$INDEX_NAME", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$INDEX_NAME = createField("RDB$INDEX_NAME", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$INDEX_SEGMENTS.RDB$FIELD_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$FIELD_NAME = createField("RDB$FIELD_NAME", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.Record, java.lang.String> RDB$FIELD_NAME = createField("RDB$FIELD_NAME", org.jooq.impl.SQLDataType.CHAR.length(31), this);
 
 	/**
 	 * The column <code>RDB$INDEX_SEGMENTS.RDB$FIELD_POSITION</code>. 
@@ -57,7 +57,14 @@ public class Rdb$indexSegments extends org.jooq.impl.TableImpl<org.jooq.Record> 
 	 * Create an aliased <code>RDB$INDEX_SEGMENTS</code> table reference
 	 */
 	public Rdb$indexSegments(java.lang.String alias) {
-		super(alias, null, org.jooq.util.firebird.rdb.tables.Rdb$indexSegments.RDB$INDEX_SEGMENTS);
+		super(alias, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$indexSegments.RDB$INDEX_SEGMENTS);
+	}
+
+	/**
+	 * Create an aliased <code>RDB$INDEX_SEGMENTS</code> table reference
+	 */
+	public Rdb$indexSegments(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$indexSegments.RDB$INDEX_SEGMENTS);
 	}
 
 	/**
@@ -66,5 +73,13 @@ public class Rdb$indexSegments extends org.jooq.impl.TableImpl<org.jooq.Record> 
 	@Override
 	public org.jooq.util.firebird.rdb.tables.Rdb$indexSegments as(java.lang.String alias) {
 		return new org.jooq.util.firebird.rdb.tables.Rdb$indexSegments(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.util.firebird.rdb.tables.Rdb$indexSegments as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.util.firebird.rdb.tables.Rdb$indexSegments(alias, fieldAliases);
 	}
 }

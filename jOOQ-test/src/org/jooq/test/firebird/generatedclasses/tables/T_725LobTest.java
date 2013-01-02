@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1106069853;
+	private static final long serialVersionUID = 1187112419;
 
 	/**
 	 * The singleton instance of <code>T_725_LOB_TEST</code>
@@ -45,7 +45,14 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * Create an aliased <code>T_725_LOB_TEST</code> table reference
 	 */
 	public T_725LobTest(java.lang.String alias) {
-		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
+		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
+	}
+
+	/**
+	 * Create an aliased <code>T_725_LOB_TEST</code> table reference
+	 */
+	public T_725LobTest(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST);
 	}
 
 	/**
@@ -70,5 +77,13 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.T_725LobTest as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.T_725LobTest(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.firebird.generatedclasses.tables.T_725LobTest as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.test.firebird.generatedclasses.tables.T_725LobTest(alias, fieldAliases);
 	}
 }

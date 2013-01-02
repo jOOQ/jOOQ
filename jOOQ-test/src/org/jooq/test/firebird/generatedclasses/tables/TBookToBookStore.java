@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -64862851;
+	private static final long serialVersionUID = -1670057841;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_TO_BOOK_STORE</code>
@@ -50,7 +50,14 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * Create an aliased <code>T_BOOK_TO_BOOK_STORE</code> table reference
 	 */
 	public TBookToBookStore(java.lang.String alias) {
-		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	}
+
+	/**
+	 * Create an aliased <code>T_BOOK_TO_BOOK_STORE</code> table reference
+	 */
+	public TBookToBookStore(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 
 	/**
@@ -83,5 +90,13 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.test.firebird.generatedclasses.tables.TBookToBookStore(alias, fieldAliases);
 	}
 }

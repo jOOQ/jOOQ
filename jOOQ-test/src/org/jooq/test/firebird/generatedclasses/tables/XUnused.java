@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1447051592;
+	private static final long serialVersionUID = 235163768;
 
 	/**
 	 * The singleton instance of <code>X_UNUSED</code>
@@ -115,7 +115,14 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	 * Create an aliased <code>X_UNUSED</code> table reference
 	 */
 	public XUnused(java.lang.String alias) {
-		super(alias, null, org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED);
+		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED);
+	}
+
+	/**
+	 * Create an aliased <code>X_UNUSED</code> table reference
+	 */
+	public XUnused(java.lang.String alias, java.lang.String... fieldAliases) {
+		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 
 	/**
@@ -148,5 +155,13 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.XUnused as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.XUnused(alias);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.firebird.generatedclasses.tables.XUnused as(java.lang.String alias, java.lang.String... fieldAliases) {
+		return new org.jooq.test.firebird.generatedclasses.tables.XUnused(alias, fieldAliases);
 	}
 }

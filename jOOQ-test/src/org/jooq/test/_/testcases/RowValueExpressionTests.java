@@ -120,6 +120,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .and(row(1, 2, 3).ne(3, 2, 1))
                 .fetchOne(0, Integer.class));
 
+        // Equality with various types
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(row(1, "a", Date.valueOf("2013-01-01")).eq(1, "a", Date.valueOf("2013-01-01")))
+                .fetchOne(0, Integer.class));
+
         // IN-condition tests
         assertEquals(1, (int)
         create().selectOne()
@@ -348,7 +354,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         // IN with subselects - not supported by all DBs
         // TODO [#1772] Simulate this for all dialects
-        if (asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
+        if (asList(ASE, CUBRID, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
             log.info("SKIPPING", "Tuples and subselects");
         }
         else {
@@ -365,16 +371,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                         .fetchOne(0, Integer.class));
             }
 
-            // CUBRID has a bug here http://jira.cubrid.org/browse/ENGINE-61
-            if (!asList(CUBRID).contains(getDialect())) {
-                assertEquals(1, (int)
-                    create().selectOne()
-                            .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
-                            .and(row(3, "2").notIn(
-                                select(val(2), val("3")).union(
-                                select(val(4), val("3")))))
-                            .fetchOne(0, Integer.class));
-            }
+            assertEquals(1, (int)
+                create().selectOne()
+                        .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
+                        .and(row(3, "2").notIn(
+                            select(val(2), val("3")).union(
+                            select(val(4), val("3")))))
+                        .fetchOne(0, Integer.class));
         }
     }
 

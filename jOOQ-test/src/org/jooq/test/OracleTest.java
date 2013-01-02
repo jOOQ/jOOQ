@@ -1124,6 +1124,7 @@ public class OracleTest extends jOOQAbstractTest<
     @Test
     public void testOracleDateAsTimestamp() throws Exception {
         Timestamp now = new Timestamp(System.currentTimeMillis() / 1000 * 1000);
+        Timestamp later = new Timestamp(System.currentTimeMillis() / 1000 * 1000 + 1000);
 
         // A record with nulls
         // -------------------
@@ -1144,7 +1145,6 @@ public class OracleTest extends jOOQAbstractTest<
         // --------------------
         DateAsTimestampT_976ObjectTypeRecord o = create().newRecord(DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE);
         o.setD(now);
-        // [#1034] TODO: Check proper use of Timestamp in array records
         DateAsTimestampT_976VarrayTypeRecord t = new DateAsTimestampT_976VarrayTypeRecord(create());
         t.set(now, now);
 
@@ -1153,6 +1153,15 @@ public class OracleTest extends jOOQAbstractTest<
         record.setD(now);
         record.setO(o);
         record.setT(t);
+        record.store();
+        assertEquals(record, create().fetchOne(DATE_AS_TIMESTAMP_T_976, DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID.equal(2)));
+
+        // Check updates, too
+        record.setD(later);
+        o.setD(later);
+        t.set(later, later, later);
+        record.changed(true, DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_O);
+        record.changed(true, DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_T);
         record.store();
         assertEquals(record, create().fetchOne(DATE_AS_TIMESTAMP_T_976, DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID.equal(2)));
 

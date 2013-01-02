@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.postgres.PostgresDatabase</name>
-            <includes>schemata,tables,columns,referential_constraints,table_constraints,key_column_usage,constraint_column_usage,attributes,routines,parameters,sequences</includes>
+            <includes>schemata|tables|columns|referential_constraints|table_constraints|key_column_usage|constraint_column_usage|attributes|routines|parameters|sequences</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

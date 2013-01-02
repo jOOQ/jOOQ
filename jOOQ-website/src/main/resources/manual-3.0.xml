@@ -593,11 +593,11 @@ CREATE TABLE `posts` (
            can be the owner, user, database name) to be generated -->
       <inputSchema>guestbook</inputSchema>
 
-      <!-- All elements that are generated from your schema (several Java regular expressions, separated by comma)
+      <!-- All elements that are generated from your schema (A Java regular expression. Use the pipe to separate several expressions)
            Watch out for case-sensitivity. Depending on your database, this might be important! -->
       <includes>.*</includes>
 
-      <!-- All elements that are excluded from your schema (several Java regular expressions, separated by comma).
+      <!-- All elements that are excluded from your schema (A Java regular expression. Use the pipe to separate several expressions).
               Excludes match before includes -->
       <excludes></excludes>
     </database>
@@ -7749,16 +7749,16 @@ Finishing                : Total: 4.814ms, +3.375ms
            read the database schema from a file, such as a Hibernate .hbm.xml file -->
       <name>org.jooq.util.oracle.OracleDatabase</name>
 
-      <!-- All elements that are generated from your schema (several Java
-           regular expressions, separated by comma) Watch out for
+      <!-- All elements that are generated from your schema (A Java regular expression. 
+           Use the pipe to separate several expressions) Watch out for
            case-sensitivity. Depending on your database, this might be
            important! You can create case-insensitive regular expressions
            using this syntax: (?i:expr)A comma-separated list of regular
            expressions -->
       <includes>.*</includes>
 
-      <!-- All elements that are excluded from your schema (several Java
-           regular expressions, separated by comma). Excludes match before
+      <!-- All elements that are excluded from your schema (A Java regular expression. 
+           Use the pipe to separate several expressions). Excludes match before
            includes -->
       <excludes></excludes>
 
@@ -8092,12 +8092,12 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
 <database>
 
   <!-- All table and view columns that are used as "version" fields for
-       optimistic locking (several Java regular expressions, separated by comma).
+       optimistic locking (A Java regular expression. Use the pipe to separate several expressions).
        See UpdatableRecord.store() and UpdatableRecord.delete() for details -->
   <recordVersionFields>REC_VERSION</recordVersionFields/>
 
   <!-- All table and view columns that are used as "timestamp" fields for
-       optimistic locking (several Java regular expressions, separated by comma).
+       optimistic locking (A Java regular expression. Use the pipe to separate several expressions).
        See UpdatableRecord.store() and UpdatableRecord.delete() for details -->
   <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields/>
       
@@ -8644,7 +8644,7 @@ public class Book implements java.io.Serializable
       <!-- Specify again he fully-qualified class name of your custom type -->
       <name>java.util.GregorianCalendar</name>
 
-      <!-- Add a list of comma-separated regular expressions matching columns -->
+      <!-- Add a Java regular expression matching columns. Use the pipe to separate several expressions -->
       <expressions>.*\.DATE_OF_.*</expressions>
     </forcedType>
   </forcedTypes>
@@ -9211,6 +9211,7 @@ for (Record record : create().select(
 							</ul>
 							
 							<h3>No more navigation methods and "foreign key setters"</h3>
+							<h3>No more comma-separated regular expressions</h3>
 							
 							<h3>Object renames</h3>
 							<ul>

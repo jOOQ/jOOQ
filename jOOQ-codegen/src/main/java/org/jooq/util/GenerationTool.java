@@ -323,10 +323,10 @@ public class GenerationTool {
 
             database.setConnection(connection);
             database.setConfiguredSchemata(schemata);
-            database.setIncludes(defaultString(g.getDatabase().getIncludes()).split(","));
-            database.setExcludes(defaultString(g.getDatabase().getExcludes()).split(","));
-            database.setRecordVersionFields(defaultString(g.getDatabase().getRecordVersionFields()).split(","));
-            database.setRecordTimestampFields(defaultString(g.getDatabase().getRecordTimestampFields()).split(","));
+            database.setIncludes(new String[] { defaultString(g.getDatabase().getIncludes()) });
+            database.setExcludes(new String[] { defaultString(g.getDatabase().getExcludes()) });
+            database.setRecordVersionFields(new String[] { defaultString(g.getDatabase().getRecordVersionFields()) });
+            database.setRecordTimestampFields(new String[] { defaultString(g.getDatabase().getRecordTimestampFields()) });
             database.setConfiguredCustomTypes(g.getDatabase().getCustomTypes());
             database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes());
             database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes());

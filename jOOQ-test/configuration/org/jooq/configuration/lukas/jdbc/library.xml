@@ -11,7 +11,7 @@
         <database>
             <name>org.jooq.util.jdbc.JDBCDatabase</name>
             <includes>.*</includes>
-            <excludes>T_BOOK_DETAILS,SYSTEM_SEQUENCE.*</excludes>
+            <excludes>T_BOOK_DETAILS|SYSTEM_SEQUENCE.*</excludes>
             <recordVersionFields>REC_VERSION</recordVersionFields>
             <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
             <dateAsTimestamp>false</dateAsTimestamp>

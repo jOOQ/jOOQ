@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.ase.ASEDatabase</name>
-            <includes>sysusers,sysindexes,sysobjects,sysreferences</includes>
+            <includes>sysusers|sysindexes|sysobjects|sysreferences</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

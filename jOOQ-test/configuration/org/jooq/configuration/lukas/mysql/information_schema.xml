@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.mysql.MySQLDatabase</name>
-            <includes>SCHEMATA,TABLES,COLUMNS,KEY_COLUMN_USAGE,REFERENTIAL_CONSTRAINTS,TABLE_CONSTRAINTS</includes>
+            <includes>SCHEMATA|TABLES|COLUMNS|KEY_COLUMN_USAGE|REFERENTIAL_CONSTRAINTS|TABLE_CONSTRAINTS</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

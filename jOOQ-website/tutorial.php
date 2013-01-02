@@ -106,11 +106,11 @@ that looks like this:
            can be the owner, user, database name) to be generated -->
       &lt;inputSchema>guestbook&lt;/inputSchema>
 
-      &lt;!-- All elements that are generated from your schema (several Java regular expressions, separated by comma)
+      &lt;!-- All elements that are generated from your schema (A Java regular expression. Use the pipe to separate several expressions)
            Watch out for case-sensitivity. Depending on your database, this might be important! -->
       &lt;includes>.*&lt;/includes>
 
-      &lt;!-- All elements that are excluded from your schema (several Java regular expressions, separated by comma).
+      &lt;!-- All elements that are excluded from your schema (A Java regular expression. Use the pipe to separate several expressions).
               Excludes match before includes -->
       &lt;excludes>&lt;/excludes>
     &lt;/database>

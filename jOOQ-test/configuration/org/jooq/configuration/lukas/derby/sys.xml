@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.derby.DerbyDatabase</name>
-            <includes>SYSSCHEMAS,SYSTABLES,SYSCOLUMNS,SYSCONSTRAINTS,SYSCONGLOMERATES,SYSKEYS,SYSSEQUENCES</includes>
+            <includes>SYSSCHEMAS|SYSTABLES|SYSCOLUMNS|SYSCONSTRAINTS|SYSCONGLOMERATES|SYSKEYS|SYSSEQUENCES</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

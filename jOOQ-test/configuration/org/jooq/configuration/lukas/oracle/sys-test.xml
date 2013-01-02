@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.oracle.OracleDatabase</name>
-            <includes>DBMS_XPLAN,DBMS_XPLAN_TYPE_TABLE,DBMS_XPLAN_TYPE</includes>
+            <includes>DBMS_XPLAN|DBMS_XPLAN_TYPE_TABLE|DBMS_XPLAN_TYPE</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

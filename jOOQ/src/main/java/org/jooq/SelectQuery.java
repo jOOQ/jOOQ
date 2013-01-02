@@ -654,7 +654,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <li>Oracle</li>
      * </ul>
      */
-    @Support(ORACLE)
+    @Support({ ORACLE, POSTGRES })
     void setForUpdateNoWait();
 
     /**

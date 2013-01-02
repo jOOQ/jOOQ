@@ -38,6 +38,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.countDistinct;
 import static org.jooq.impl.Factory.select;
@@ -470,50 +471,53 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
             case H2:
             case INGRES:
             case MYSQL:
-            case POSTGRES:
             case SYBASE:
                 log.info("SKIPPING", "FOR UPDATE .. WAIT/NOWAIT tests");
                 break;
 
+            case POSTGRES:
+            case ORACLE:
             default: {
-                Result<Record> result = create().select(TAuthor_ID())
-                        .from(TAuthor())
-                        .forUpdate()
-                        .wait(2)
-                        .fetch();
-                assertEquals(2, result.size());
-                result = create().select(TAuthor_ID())
+                Result<Record> r1a = create().select(TAuthor_ID())
                         .from(TAuthor())
                         .forUpdate()
                         .noWait()
                         .fetch();
-                assertEquals(2, result.size());
-                result = create().select(TAuthor_ID())
-                        .from(TAuthor())
-                        .forUpdate()
-                        .skipLocked()
-                        .fetch();
-                assertEquals(2, result.size());
+                assertEquals(2, r1a.size());
 
+                if (getDialect() == ORACLE) {
+                    Result<Record> r2a = create().select(TAuthor_ID())
+                            .from(TAuthor())
+                            .forUpdate()
+                            .wait(2)
+                            .fetch();
+                    assertEquals(2, r2a.size());
+                    Result<Record> r3a = create().select(TAuthor_ID())
+                            .from(TAuthor())
+                            .forUpdate()
+                            .skipLocked()
+                            .fetch();
+                    assertEquals(2, r3a.size());
 
-                Result<A> result2 = create().selectFrom(TAuthor())
-                        .forUpdate()
-                        .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
-                        .wait(2)
-                        .fetch();
-                assertEquals(2, result2.size());
-                result2 = create().selectFrom(TAuthor())
-                        .forUpdate()
-                        .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
-                        .noWait()
-                        .fetch();
-                assertEquals(2, result2.size());
-                result2 = create().selectFrom(TAuthor())
-                        .forUpdate()
-                        .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
-                        .skipLocked()
-                        .fetch();
-                assertEquals(2, result2.size());
+                    Result<A> r2b = create().selectFrom(TAuthor())
+                            .forUpdate()
+                            .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
+                            .wait(2)
+                            .fetch();
+                    assertEquals(2, r2b.size());
+                    Result<A> r1b = create().selectFrom(TAuthor())
+                            .forUpdate()
+                            .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
+                            .noWait()
+                            .fetch();
+                    assertEquals(2, r1b.size());
+                    Result<A> r3b = create().selectFrom(TAuthor())
+                            .forUpdate()
+                            .of(TAuthor_LAST_NAME(), TAuthor_FIRST_NAME())
+                            .skipLocked()
+                            .fetch();
+                    assertEquals(2, r3b.size());
+                }
             }
         }
 

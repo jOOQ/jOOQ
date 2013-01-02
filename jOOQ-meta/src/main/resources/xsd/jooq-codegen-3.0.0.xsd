@@ -125,8 +125,8 @@
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
 
       <!--
-        All elements that are generated from your schema (several Java
-        regular expressions, separated by comma) Watch out for
+        All elements that are generated from your schema (A Java regular expression. 
+        Use the pipe to separate several expressions) Watch out for
         case-sensitivity. Depending on your database, this might be
         important! You can create case-insensitive regular expressions
         using this syntax: (?i:expr)A comma-separated list of regular
@@ -135,22 +135,22 @@
       <element name="includes" type="string" default=".*" minOccurs="0" maxOccurs="1" />
 
       <!--
-        All elements that are excluded from your schema (several Java
-        regular expressions, separated by comma). Excludes match before
+        All elements that are excluded from your schema (A Java regular expression. 
+        Use the pipe to separate several expressions). Excludes match before
         includes
         -->
       <element name="excludes" type="string" default="" minOccurs="0" maxOccurs="1" />
 
       <!--
         All table and view columns that are used as "version" fields for
-        optimistic locking (several Java regular expressions, separated by comma).
+        optimistic locking (A Java regular expression. Use the pipe to separate several expressions).
         See UpdatableRecord.store() and UpdatableRecord.delete() for details
         -->
       <element name="recordVersionFields" type="string" default="" minOccurs="0" maxOccurs="1" />
 
       <!--
         All table and view columns that are used as "timestamp" fields for
-        optimistic locking (several Java regular expressions, separated by comma).
+        optimistic locking (A Java regular expression. Use the pipe to separate several expressions).
         See UpdatableRecord.store() and UpdatableRecord.delete() for details
         -->
       <element name="recordTimestampFields" type="string" default="" minOccurs="0" maxOccurs="1" />
@@ -280,9 +280,8 @@
       <element name="name" type="string" minOccurs="1" maxOccurs="1" />
 
       <!--
-        A comma-separated list of Java regular expressions matching
-        columns, parameters, attributes, etc to be forced to have this
-        type
+        A Java regular expression matching columns, parameters, attributes, 
+        etc to be forced to have this type
         -->
       <element name="expressions" type="string" minOccurs="1" maxOccurs="1" />
     </all>

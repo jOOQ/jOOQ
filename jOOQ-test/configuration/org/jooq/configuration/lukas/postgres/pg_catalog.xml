@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.postgres.PostgresDatabase</name>
-            <includes>pg_namespace,pg_enum,pg_type,pg_class,pg_attribute,pg_proc,format_type,count,pg_cursor</includes>
+            <includes>pg_namespace|pg_enum|pg_type|pg_class|pg_attribute|pg_proc|format_type|count|pg_cursor</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

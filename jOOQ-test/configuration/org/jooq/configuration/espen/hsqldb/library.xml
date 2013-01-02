@@ -12,7 +12,7 @@
         <database>
             <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
             <includes>.*</includes>
-            <excludes>T_BOOK_DETAILS,S_TRIGGERS_SEQUENCE</excludes>
+            <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
             <customTypes>

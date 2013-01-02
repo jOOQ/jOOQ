@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.db2.DB2Database</name>
-            <includes>T_.*,X_.*,V_.*,P_.*,F_.*,(F|P)[0-9]+,S_.*</includes>
+            <includes>T_.*|X_.*|V_.*|P_.*|F_.*|(F|P)[0-9]+|S_.*</includes>
             <excludes>T_BOOK_DETAILS</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>

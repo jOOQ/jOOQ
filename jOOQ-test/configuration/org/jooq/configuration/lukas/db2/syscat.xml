@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.db2.DB2Database</name>
-            <includes>SCHEMATA,TABLES,COLUMNS,TABCONST,KEYCOLUSE,REFERENCES,PROCEDURES,PROCPARMS,FUNCTIONS,FUNCPARMS,DATATYPES,ATTRIBUTES,SEQUENCES</includes>
+            <includes>SCHEMATA|TABLES|COLUMNS|TABCONST|KEYCOLUSE|REFERENCES|PROCEDURES|PROCPARMS|FUNCTIONS|FUNCPARMS|DATATYPES|ATTRIBUTES|SEQUENCES</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

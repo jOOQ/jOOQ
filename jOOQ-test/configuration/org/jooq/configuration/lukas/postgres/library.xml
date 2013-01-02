@@ -12,7 +12,7 @@
         <database>
             <name>org.jooq.util.postgres.PostgresDatabase</name>
             <includes>.*</includes>
-            <excludes>t_book_details,.*?_seq</excludes>
+            <excludes>t_book_details|.*?_seq</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
             <customTypes>

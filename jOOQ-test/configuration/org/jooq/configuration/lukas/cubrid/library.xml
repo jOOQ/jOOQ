@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.cubrid.CUBRIDDatabase</name>
-            <includes>t_.*,x_.*,v_.*,V_.*,p_.*,f_.*,(f|p)[0-9]+,s_.*</includes>
+            <includes>t_.*|x_.*|v_.*|V_.*|p_.*|f_.*|(f|p)[0-9]+|s_.*</includes>
             <excludes>t_book_details</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>

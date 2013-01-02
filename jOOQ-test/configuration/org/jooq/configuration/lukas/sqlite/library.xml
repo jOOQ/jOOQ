@@ -12,7 +12,7 @@
         <database>
             <name>org.jooq.util.sqlite.SQLiteDatabase</name>
             <includes>.*</includes>
-            <excludes>t_book_details,sqlite_sequence</excludes>
+            <excludes>t_book_details|sqlite_sequence</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
 

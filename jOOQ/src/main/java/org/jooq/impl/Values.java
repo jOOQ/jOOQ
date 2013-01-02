@@ -76,6 +76,11 @@ class Values<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
+    public final Table<R> as(String alias, String... fieldAliases) {
+        return new TableAlias<R>(this, alias, fieldAliases, true);
+    }
+
+    @Override
     public final void toSQL(RenderContext context) {
         context.keyword("values");
 

@@ -64,4 +64,21 @@ public interface TableLike<R extends Record> extends QueryPart {
      * quoted, and thus case-sensitive!
      */
     Table<R> asTable(String alias);
+
+    /**
+     * The underlying aliased table representation of this object
+     * <p>
+     * This method is useful for things like
+     * <code><pre>
+     * SELECT alias.fieldAlias1, alias.fieldAlias2
+     * FROM (
+     *   SELECT * FROM x WHERE x.a = '1'
+     * ) AS alias(fieldAlias1, fieldAlias2)
+     * WHERE ... </code>
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * quoted, and thus case-sensitive!
+     */
+    Table<R> asTable(String alias, String... fieldAliases);
 }

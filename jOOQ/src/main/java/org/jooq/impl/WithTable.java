@@ -90,6 +90,11 @@ class WithTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
+    public final Table<R> as(String alias, String... fieldAliases) {
+        return new WithTable<R>(new TableAlias<R>(delegate, alias, fieldAliases), hint);
+    }
+
+    @Override
     protected final FieldList getFieldList() {
         return delegate.getFieldList();
     }

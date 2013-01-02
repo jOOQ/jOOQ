@@ -75,6 +75,11 @@ class SQLTable extends AbstractTable<Record> {
     }
 
     @Override
+    public final Table<Record> as(String alias, String... fieldAliases) {
+        return new TableAlias<Record>(this, alias, fieldAliases);
+    }
+
+    @Override
     public final void toSQL(RenderContext context) {
         Utils.renderAndBind(context, null, sql, substitutes);
     }

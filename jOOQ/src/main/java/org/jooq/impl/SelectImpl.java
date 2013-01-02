@@ -1218,6 +1218,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final Table<R> asTable(String alias, String... fieldAliases) {
+        return getDelegate().asTable(alias, fieldAliases);
+    }
+
+    @Override
     public final <T> Field<T> asField() {
         return getDelegate().asField();
     }

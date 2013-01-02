@@ -64,6 +64,11 @@ class Dual extends AbstractTable<Record> {
     }
 
     @Override
+    public final Table<Record> as(String alias, String... fieldAliases) {
+        return new TableAlias<Record>(this, alias, fieldAliases);
+    }
+
+    @Override
     public final void toSQL(RenderContext context) {
         switch (context.getDialect()) {
             case ASE:

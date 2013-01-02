@@ -137,6 +137,11 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
     }
 
     @Override
+    public final Table<R> asTable(String alias, String... fieldAliases) {
+        return new SelectQueryAsTable<R>(this).as(alias, fieldAliases);
+    }
+
+    @Override
     protected final List<Field<?>> getFields(ResultSetMetaData meta) {
 
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()

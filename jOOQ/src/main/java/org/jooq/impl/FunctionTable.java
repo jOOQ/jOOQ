@@ -72,6 +72,11 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
+    public final Table<R> as(String as, String... fieldAliases) {
+        return new TableAlias<R>(new FunctionTable<R>(function), as, fieldAliases);
+    }
+
+    @Override
     public final void toSQL(RenderContext context) {
         switch (context.getDialect()) {
             case HSQLDB: {

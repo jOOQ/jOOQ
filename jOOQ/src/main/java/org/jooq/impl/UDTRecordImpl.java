@@ -111,4 +111,24 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     private final <T> void setValue(SQLOutput stream, Field<T> field) throws SQLException {
         Utils.writeToSQLOutput(stream, field, getValue(field));
     }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        String separator = "";
+
+        result.append(create().render(getUDT()));
+        result.append("(");
+
+        for (Object o : intoArray()) {
+            result.append(separator);
+            result.append(o);
+
+            separator = ", ";
+        }
+
+        result.append(")");
+
+        return result.toString();
+    }
 }

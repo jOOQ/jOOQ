@@ -196,7 +196,21 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " [values=" + getList() + "]";
+        StringBuilder result = new StringBuilder();
+        String separator = "";
+
+        result.append(getName());
+        result.append("(");
+
+        for (T t : array) {
+            result.append(separator);
+            result.append(t);
+
+            separator = ", ";
+        }
+
+        result.append(")");
+        return result.toString();
     }
 
     @Override

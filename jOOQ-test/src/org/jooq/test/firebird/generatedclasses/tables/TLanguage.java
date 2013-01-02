@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1587829272;
+	private static final long serialVersionUID = -959732629;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>
@@ -59,13 +59,6 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	}
 
 	/**
-	 * Create an aliased <code>T_LANGUAGE</code> table reference
-	 */
-	public TLanguage(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -87,13 +80,5 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TLanguage as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.TLanguage(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.test.firebird.generatedclasses.tables.TLanguage as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.test.firebird.generatedclasses.tables.TLanguage(alias, fieldAliases);
 	}
 }

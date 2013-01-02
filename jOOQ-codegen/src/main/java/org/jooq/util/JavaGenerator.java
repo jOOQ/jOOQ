@@ -1429,11 +1429,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public %s(%s alias) {", className, String.class);
             out.tab(2).println("super(alias, %s, %s);", schemaId, fullTableId);
             out.tab(1).println("}");
-
-            out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
-            out.tab(1).println("public %s(%s alias, %s... fieldAliases) {", className, String.class, String.class);
-            out.tab(2).println("super(alias, fieldAliases, %s, %s);", schemaId, fullTableId);
-            out.tab(1).println("}");
         }
 
         // Add primary / unique / foreign key information
@@ -1532,11 +1527,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s as(%s alias) {", fullClassName, String.class);
             out.tab(2).println("return new %s(alias);", fullClassName);
-            out.tab(1).println("}");
-
-            out.tab(1).overrideInherit();
-            out.tab(1).println("public %s as(%s alias, %s... fieldAliases) {", fullClassName, String.class, String.class);
-            out.tab(2).println("return new %s(alias, fieldAliases);", fullClassName);
             out.tab(1).println("}");
         }
 

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 12012988;
+	private static final long serialVersionUID = -788266501;
 
 	/**
 	 * The singleton instance of <code>T_BOOLEANS</code>
@@ -94,13 +94,6 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	}
 
 	/**
-	 * Create an aliased <code>T_BOOLEANS</code> table reference
-	 */
-	public TBooleans(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TBooleans.T_BOOLEANS);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -122,13 +115,5 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.TBooleans as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.TBooleans(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.test.firebird.generatedclasses.tables.TBooleans as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.test.firebird.generatedclasses.tables.TBooleans(alias, fieldAliases);
 	}
 }

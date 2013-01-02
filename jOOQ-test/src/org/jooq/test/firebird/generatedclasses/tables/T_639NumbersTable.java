@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -162724696;
+	private static final long serialVersionUID = -774908419;
 
 	/**
 	 * The singleton instance of <code>T_639_NUMBERS_TABLE</code>
@@ -94,13 +94,6 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	}
 
 	/**
-	 * Create an aliased <code>T_639_NUMBERS_TABLE</code> table reference
-	 */
-	public T_639NumbersTable(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -122,13 +115,5 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	@Override
 	public org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable as(java.lang.String alias) {
 		return new org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable(alias, fieldAliases);
 	}
 }

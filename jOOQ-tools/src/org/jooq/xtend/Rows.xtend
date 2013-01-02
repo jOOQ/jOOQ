@@ -56,7 +56,6 @@ class Rows extends Generators {
             «classHeader»
             package org.jooq;
 
-            import static org.jooq.SQLDialect.CUBRID;
             import static org.jooq.SQLDialect.DB2;
             import static org.jooq.SQLDialect.HSQLDB;
             import static org.jooq.SQLDialect.MYSQL;

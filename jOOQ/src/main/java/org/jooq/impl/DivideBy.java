@@ -179,6 +179,11 @@ implements
     }
 
     @Override
+    public final Table<Record> as(String alias, String... fieldAliases) {
+        return new TableAlias<Record>(this, alias, fieldAliases, true);
+    }
+
+    @Override
     protected final FieldList getFieldList() {
         return new FieldList();
     }

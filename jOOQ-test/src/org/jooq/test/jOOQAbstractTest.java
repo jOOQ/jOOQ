@@ -36,7 +36,6 @@
 package org.jooq.test;
 
 import static java.util.Arrays.asList;
-import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.tools.reflect.Reflect.on;
@@ -97,6 +96,7 @@ import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
+import org.jooq.test._.testcases.AliasTests;
 import org.jooq.test._.testcases.BatchTests;
 import org.jooq.test._.testcases.BenchmarkTests;
 import org.jooq.test._.testcases.CRUDTests;
@@ -1540,17 +1540,18 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testAliasing() throws Exception {
-        Table<B> b = TBook().as("b");
-        Field<Integer> b_ID = b.getField(TBook_ID());
+    public void testAliasingSimple() throws Exception {
+        new AliasTests(this).testAliasingSimple();
+    }
 
-        List<Integer> ids = create().select(b_ID).from(b).orderBy(b_ID).fetch(b_ID);
-        assertEquals(4, ids.size());
-        assertEquals(BOOK_IDS, ids);
+    @Test
+    public void testAliasingTablesAndFields() throws Exception {
+        new AliasTests(this).testAliasingTablesAndFields();
+    }
 
-        Result<Record> books = create().select().from(b).orderBy(b_ID).fetch();
-        assertEquals(4, books.size());
-        assertEquals(BOOK_IDS, books.getValues(b_ID));
+    @Test
+    public void testAliasingSelectAndFields() throws Exception {
+        new AliasTests(this).testAliasingSelectAndFields();
     }
 
     // @Test // TODO [#579] re-enable this test when fixing this bug

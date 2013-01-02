@@ -51,6 +51,7 @@ import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
+import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
 
@@ -266,13 +267,19 @@ implements
         }
 
         @Override
-        public Class<? extends Record> getRecordType() {
+        public final Class<? extends Record> getRecordType() {
             return RecordImpl.class;
         }
 
         @Override
-        public Table<Record> as(String as) {
+        public final Table<Record> as(String as) {
             return new TableAlias<Record>(this, as);
+        }
+
+        @Override
+        @Support
+        public final Table<Record> as(String as, String... fieldAliases) {
+            return new TableAlias<Record>(this, as, fieldAliases);
         }
 
         @Override
@@ -302,6 +309,11 @@ implements
     @Override
     public final Table<Record> as(String alias) {
         return new TableAlias<Record>(this, alias, true);
+    }
+
+    @Override
+    public final Table<Record> as(String alias, String... fieldAliases) {
+        return new TableAlias<Record>(this, alias, fieldAliases, true);
     }
 
     @Override

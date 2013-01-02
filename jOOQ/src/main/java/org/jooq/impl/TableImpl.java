@@ -57,24 +57,32 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     private final Alias<Table<R>> alias;
 
     public TableImpl(String name) {
-        this(name, null, null);
+        this(name, null, null, null);
     }
 
     public TableImpl(String name, Table<R> aliased) {
-        this(name, null, aliased);
+        this(name, null, null, aliased);
+    }
+
+    public TableImpl(String name, String[] fieldAliases, Table<R> aliased) {
+        this(name, fieldAliases, null, aliased);
     }
 
     public TableImpl(String name, Schema schema) {
-        this(name, schema, null);
+        this(name, null, schema, null);
     }
 
     public TableImpl(String name, Schema schema, Table<R> aliased) {
+        this(name, null, schema, aliased);
+    }
+
+    public TableImpl(String name, String[] fieldAliases, Schema schema, Table<R> aliased) {
         super(name, schema);
 
         this.fields = new FieldList();
 
         if (aliased != null) {
-            alias = new Alias<Table<R>>(aliased, name);
+            alias = new Alias<Table<R>>(aliased, name, fieldAliases);
         }
         else {
             alias = null;
@@ -136,6 +144,22 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         }
         else {
             return new TableAlias<R>(this, as);
+        }
+    }
+
+    /**
+     * Subclasses may override this method to provide custom aliasing
+     * implementations
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public Table<R> as(String as, String... fieldAliases) {
+        if (alias != null) {
+            return alias.wrapped().as(as, fieldAliases);
+        }
+        else {
+            return new TableAlias<R>(this, as, fieldAliases);
         }
     }
 

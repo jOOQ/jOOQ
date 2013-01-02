@@ -279,6 +279,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @Override
+    public final Table<Record> as(String alias, String... fieldAliases) {
+        return new TableAlias<Record>(this, alias, fieldAliases, true);
+    }
+
+    @Override
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
     }

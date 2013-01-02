@@ -55,15 +55,25 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     private static final long serialVersionUID = -2456848365524191614L;
     private final Q           wrapped;
     private final String      alias;
+    private final String[]    fieldAliases;
     private final boolean     wrapInParentheses;
 
-    Alias(Q aliasProvider, String alias) {
-        this(aliasProvider, alias, false);
+    Alias(Q wrapped, String alias) {
+        this(wrapped, alias, null, false);
     }
 
     Alias(Q wrapped, String alias, boolean wrapInParentheses) {
+        this(wrapped, alias, null, wrapInParentheses);
+    }
+
+    Alias(Q wrapped, String alias, String[] fieldAliases) {
+        this(wrapped, alias, fieldAliases, false);
+    }
+
+    Alias(Q wrapped, String alias, String[] fieldAliases, boolean wrapInParentheses) {
         this.wrapped = wrapped;
         this.alias = alias;
+        this.fieldAliases = fieldAliases;
         this.wrapInParentheses = wrapInParentheses;
     }
 
@@ -92,29 +102,47 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             context.sql(" ");
             context.literal(alias);
 
-            // [#756] If the aliased object is an anonymous table (usually an
-            // unnested array), then field names must be part of the alias
-            // declaration. For example:
-            //
-            // SELECT t.column_value FROM UNNEST(ARRAY[1, 2]) AS t(column_value)
+            // [#1801] Add field aliases to the table alias, if applicable
+            if (fieldAliases != null) {
+                String separator = "";
 
-            // TODO: Is this still needed?
+                context.sql("(");
 
-            switch (context.getDialect()) {
-                case HSQLDB:
-                case POSTGRES: {
-                    // The javac compiler doesn't like casting of generics
-                    Object o = wrapped;
+                for (int i = 0; i < fieldAliases.length; i++) {
+                    context.sql(separator);
+                    context.literal(fieldAliases[i]);
 
-                    if (context.declareTables() && o instanceof ArrayTable) {
-                        ArrayTable table = (ArrayTable) o;
+                    separator = ", ";
+                }
 
-                        context.sql("(");
-                        Utils.fieldNames(context, table.getFields());
-                        context.sql(")");
+                context.sql(")");
+            }
+
+            else {
+                // [#756] If the aliased object is an anonymous table (usually an
+                // unnested array), then field names must be part of the alias
+                // declaration. For example:
+                //
+                // SELECT t.column_value FROM UNNEST(ARRAY[1, 2]) AS t(column_value)
+
+                // TODO: Is this still needed?
+
+                switch (context.getDialect()) {
+                    case HSQLDB:
+                    case POSTGRES: {
+                        // The javac compiler doesn't like casting of generics
+                        Object o = wrapped;
+
+                        if (context.declareTables() && o instanceof ArrayTable) {
+                            ArrayTable table = (ArrayTable) o;
+
+                            context.sql("(");
+                            Utils.fieldNames(context, table.getFields());
+                            context.sql(")");
+                        }
+
+                        break;
                     }
-
-                    break;
                 }
             }
         }

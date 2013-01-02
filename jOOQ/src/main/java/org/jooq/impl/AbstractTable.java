@@ -97,6 +97,11 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
         return as(alias);
     }
 
+    @Override
+    public final Table<R> asTable(String alias, String... fieldAliases) {
+        return as(alias, fieldAliases);
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Table API
     // ------------------------------------------------------------------------

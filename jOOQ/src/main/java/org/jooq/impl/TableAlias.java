@@ -53,16 +53,53 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     private static final long     serialVersionUID = -8417114874567698325L;
 
     private final Alias<Table<R>> alias;
-    private FieldList             aliasedFields;
+    private final FieldList       aliasedFields;
 
     TableAlias(Table<R> table, String alias) {
-        this(table, alias, false);
+        this(table, alias, null, false);
     }
 
     TableAlias(Table<R> table, String alias, boolean wrapInParentheses) {
+        this(table, alias, null, wrapInParentheses);
+    }
+
+    TableAlias(Table<R> table, String alias, String[] fieldAliases) {
+        this(table, alias, fieldAliases, false);
+    }
+
+    TableAlias(Table<R> table, String alias, String[] fieldAliases, boolean wrapInParentheses) {
         super(alias, table.getSchema());
 
-        this.alias = new Alias<Table<R>>(table, alias, wrapInParentheses);
+        this.alias = new Alias<Table<R>>(table, alias, fieldAliases, wrapInParentheses);
+        this.aliasedFields = new FieldList();
+
+        registerFields(fieldAliases);
+    }
+
+    /**
+     * Register fields for this table alias
+     */
+    private final void registerFields(String[] fieldAliases) {
+        List<Field<?>> fields = this.alias.wrapped().getFields();
+        int size = fields.size();
+
+        for (int i = 0; i < size; i++) {
+            Field<?> field = fields.get(i);
+            String name = field.getName();
+
+            if (fieldAliases != null && fieldAliases.length > i) {
+                name = fieldAliases[i];
+            }
+
+            registerTableField(field, name);
+        }
+    }
+
+    /**
+     * Register a field for this table alias
+     */
+    private final <T> void registerTableField(Field<T> field, String name) {
+        aliasedFields.add(new TableFieldImpl<R, T>(name, field.getDataType(), this));
     }
 
     /**
@@ -97,28 +134,18 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
+    public final Table<R> as(String as, String... fieldAliases) {
+        return alias.wrapped().as(as, fieldAliases);
+    }
+
+    @Override
     public final boolean declaresTables() {
         return true;
     }
 
     @Override
-    protected FieldList getFieldList() {
-        if (aliasedFields == null) {
-            aliasedFields = new FieldList();
-
-            for (Field<?> field : alias.wrapped().getFields()) {
-                registerTableField(field);
-            }
-        }
-
+    protected final FieldList getFieldList() {
         return aliasedFields;
-    }
-
-    /**
-     * Register a field for this table alias
-     */
-    private <T> void registerTableField(Field<T> field) {
-        aliasedFields.add(new TableFieldImpl<R, T>(field.getName(), field.getDataType(), this));
     }
 
     @Override

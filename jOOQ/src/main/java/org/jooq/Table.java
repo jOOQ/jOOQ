@@ -93,6 +93,22 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
     Table<R> as(String alias);
 
     /**
+     * Create an alias for this table and its fields
+     * <p>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * quoted, and thus case-sensitive!
+     *
+     * @param alias The alias name
+     * @param fieldAliases The field aliases. Excess aliases are ignored,
+     *            missing aliases will be substituted by this table's field
+     *            names.
+     * @return The table alias
+     */
+    @Support
+    Table<R> as(String alias, String... fieldAliases);
+
+    /**
      * Retrieve the table's <code>IDENTITY</code> information, if available.
      * <p>
      * With SQL:2003, the concept of <code>IDENTITY</code> columns was

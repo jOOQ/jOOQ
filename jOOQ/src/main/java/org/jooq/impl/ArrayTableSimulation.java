@@ -64,20 +64,26 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     private final Object[]          array;
     private final FieldList         field;
     private final String            alias;
+    private final String            fieldAlias;
 
     private transient Table<Record> table;
 
     ArrayTableSimulation(Object[] array) {
-        this(array, "array_table");
+        this(array, "array_table", null);
     }
 
     ArrayTableSimulation(Object[] array, String alias) {
+        this(array, alias, null);
+    }
+
+    ArrayTableSimulation(Object[] array, String alias, String fieldAlias) {
         super(alias);
 
         this.array = array;
         this.field = new FieldList();
         this.alias = alias;
-        this.field.add(fieldByName(Factory.getDataType(array.getClass().getComponentType()), alias, "COLUMN_VALUE"));
+        this.fieldAlias = fieldAlias == null ? "COLUMN_VALUE" : fieldAlias;
+        this.field.add(fieldByName(Factory.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
     }
 
     @Override
@@ -88,6 +94,18 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     @Override
     public final Table<Record> as(String as) {
         return new ArrayTableSimulation(array, as);
+    }
+
+    @Override
+    public final Table<Record> as(String as, String... fieldAliases) {
+        if (fieldAliases == null) {
+            return new ArrayTableSimulation(array, as);
+        }
+        else if (fieldAliases.length == 1) {
+            return new ArrayTableSimulation(array, as, fieldAliases[0]);
+        }
+
+        throw new IllegalArgumentException("Array table simulations can only have a single field alias");
     }
 
     @Override

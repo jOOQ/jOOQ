@@ -123,6 +123,12 @@ class ArrayTable extends AbstractTable<Record> {
         }
     }
 
+    ArrayTable(Field<?> array, String alias, String[] fieldAliases) {
+        super(alias);
+
+        throw new UnsupportedOperationException("This constructor is not yet implemented");
+    }
+
     @Override
     public final Class<? extends Record> getRecordType() {
         return RecordImpl.class;
@@ -131,6 +137,11 @@ class ArrayTable extends AbstractTable<Record> {
     @Override
     public final Table<Record> as(String as) {
         return new ArrayTable(array, as);
+    }
+
+    @Override
+    public final Table<Record> as(String as, String... fieldAliases) {
+        return new ArrayTable(array, as, fieldAliases);
     }
 
     @Override
@@ -254,22 +265,27 @@ class ArrayTable extends AbstractTable<Record> {
         }
 
         @Override
-        public Class<? extends Record> getRecordType() {
+        public final Class<? extends Record> getRecordType() {
             return RecordImpl.class;
         }
 
         @Override
-        public Table<Record> as(String as) {
+        public final Table<Record> as(String as) {
             return new TableAlias<Record>(this, as);
         }
 
         @Override
-        public void bind(BindContext context) throws DataAccessException {
+        public final Table<Record> as(String as, String... fieldAliases) {
+            return new TableAlias<Record>(this, as, fieldAliases);
+        }
+
+        @Override
+        public final void bind(BindContext context) throws DataAccessException {
             context.bind(array);
         }
 
         @Override
-        protected FieldList getFieldList() {
+        protected final FieldList getFieldList() {
             return ArrayTable.this.getFieldList();
         }
     }

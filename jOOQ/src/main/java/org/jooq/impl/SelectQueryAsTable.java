@@ -63,6 +63,11 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
+    public final Table<R> as(String alias, String... fieldAliases) {
+        return new TableAlias<R>(this, alias, fieldAliases, true);
+    }
+
+    @Override
     protected final FieldList getFieldList() {
         return new FieldList(query.getSelect());
     }

@@ -7523,20 +7523,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1),
-     *       (field1),
-     *       (field1)
+     * VALUES(val1_1),
+     *       (val2_1),
+     *       (val3_1)
+     * AS "v"("c1"  )
      *
      * -- Using UNION ALL
-     * SELECT field1 UNION ALL
-     * SELECT field1 UNION ALL
-     * SELECT field1
+     * SELECT val1_1 AS "c1") UNION ALL
+     * SELECT val1_1 AS "c1") UNION ALL
+     * SELECT val1_1 AS "c1")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1> Table<Record1<T1>> values(Row1<T1>... rows) {
-        return new Values<Record1<T1>>(rows);
+    public static <T1> Table<Record1<T1>> values(Row1<T1>... rows) {
+        return new Values<Record1<T1>>(rows).as("v", "c1");
     }
 
     /**
@@ -7551,20 +7555,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2),
-     *       (field1, field2),
-     *       (field1, field2)
+     * VALUES(val1_1, val1_2),
+     *       (val2_1, val2_2),
+     *       (val3_1, val3_2)
+     * AS "v"("c1"  , "c2"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2 UNION ALL
-     * SELECT field1, field2 UNION ALL
-     * SELECT field1, field2
+     * SELECT val1_1 AS "c1", val1_2 AS "c2") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2> Table<Record2<T1, T2>> values(Row2<T1, T2>... rows) {
-        return new Values<Record2<T1, T2>>(rows);
+    public static <T1, T2> Table<Record2<T1, T2>> values(Row2<T1, T2>... rows) {
+        return new Values<Record2<T1, T2>>(rows).as("v", "c1", "c2");
     }
 
     /**
@@ -7579,20 +7587,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3),
-     *       (field1, field2, field3),
-     *       (field1, field2, field3)
+     * VALUES(val1_1, val1_2, val1_3),
+     *       (val2_1, val2_2, val2_3),
+     *       (val3_1, val3_2, val3_3)
+     * AS "v"("c1"  , "c2"  , "c3"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3 UNION ALL
-     * SELECT field1, field2, field3 UNION ALL
-     * SELECT field1, field2, field3
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3> Table<Record3<T1, T2, T3>> values(Row3<T1, T2, T3>... rows) {
-        return new Values<Record3<T1, T2, T3>>(rows);
+    public static <T1, T2, T3> Table<Record3<T1, T2, T3>> values(Row3<T1, T2, T3>... rows) {
+        return new Values<Record3<T1, T2, T3>>(rows).as("v", "c1", "c2", "c3");
     }
 
     /**
@@ -7607,20 +7619,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, field4),
-     *       (field1, field2, field3, field4),
-     *       (field1, field2, field3, field4)
+     * VALUES(val1_1, val1_2, val1_3, val1_4),
+     *       (val2_1, val2_2, val2_3, val2_4),
+     *       (val3_1, val3_2, val3_3, val3_4)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, field4 UNION ALL
-     * SELECT field1, field2, field3, field4 UNION ALL
-     * SELECT field1, field2, field3, field4
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4> Table<Record4<T1, T2, T3, T4>> values(Row4<T1, T2, T3, T4>... rows) {
-        return new Values<Record4<T1, T2, T3, T4>>(rows);
+    public static <T1, T2, T3, T4> Table<Record4<T1, T2, T3, T4>> values(Row4<T1, T2, T3, T4>... rows) {
+        return new Values<Record4<T1, T2, T3, T4>>(rows).as("v", "c1", "c2", "c3", "c4");
     }
 
     /**
@@ -7635,20 +7651,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, field4, field5),
-     *       (field1, field2, field3, field4, field5),
-     *       (field1, field2, field3, field4, field5)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, field4, field5 UNION ALL
-     * SELECT field1, field2, field3, field4, field5 UNION ALL
-     * SELECT field1, field2, field3, field4, field5
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5> Table<Record5<T1, T2, T3, T4, T5>> values(Row5<T1, T2, T3, T4, T5>... rows) {
-        return new Values<Record5<T1, T2, T3, T4, T5>>(rows);
+    public static <T1, T2, T3, T4, T5> Table<Record5<T1, T2, T3, T4, T5>> values(Row5<T1, T2, T3, T4, T5>... rows) {
+        return new Values<Record5<T1, T2, T3, T4, T5>>(rows).as("v", "c1", "c2", "c3", "c4", "c5");
     }
 
     /**
@@ -7663,20 +7683,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field5, field6),
-     *       (field1, field2, field3, .., field5, field6),
-     *       (field1, field2, field3, .., field5, field6)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field5, field6 UNION ALL
-     * SELECT field1, field2, field3, .., field5, field6 UNION ALL
-     * SELECT field1, field2, field3, .., field5, field6
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6> Table<Record6<T1, T2, T3, T4, T5, T6>> values(Row6<T1, T2, T3, T4, T5, T6>... rows) {
-        return new Values<Record6<T1, T2, T3, T4, T5, T6>>(rows);
+    public static <T1, T2, T3, T4, T5, T6> Table<Record6<T1, T2, T3, T4, T5, T6>> values(Row6<T1, T2, T3, T4, T5, T6>... rows) {
+        return new Values<Record6<T1, T2, T3, T4, T5, T6>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6");
     }
 
     /**
@@ -7691,20 +7715,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field6, field7),
-     *       (field1, field2, field3, .., field6, field7),
-     *       (field1, field2, field3, .., field6, field7)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field6, field7 UNION ALL
-     * SELECT field1, field2, field3, .., field6, field7 UNION ALL
-     * SELECT field1, field2, field3, .., field6, field7
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7> Table<Record7<T1, T2, T3, T4, T5, T6, T7>> values(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
-        return new Values<Record7<T1, T2, T3, T4, T5, T6, T7>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7> Table<Record7<T1, T2, T3, T4, T5, T6, T7>> values(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
+        return new Values<Record7<T1, T2, T3, T4, T5, T6, T7>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7");
     }
 
     /**
@@ -7719,20 +7747,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field7, field8),
-     *       (field1, field2, field3, .., field7, field8),
-     *       (field1, field2, field3, .., field7, field8)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field7, field8 UNION ALL
-     * SELECT field1, field2, field3, .., field7, field8 UNION ALL
-     * SELECT field1, field2, field3, .., field7, field8
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8> Table<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> values(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
-        return new Values<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8> Table<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> values(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
+        return new Values<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8");
     }
 
     /**
@@ -7747,20 +7779,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field8, field9),
-     *       (field1, field2, field3, .., field8, field9),
-     *       (field1, field2, field3, .., field8, field9)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field8, field9 UNION ALL
-     * SELECT field1, field2, field3, .., field8, field9 UNION ALL
-     * SELECT field1, field2, field3, .., field8, field9
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Table<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> values(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>... rows) {
-        return new Values<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Table<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> values(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>... rows) {
+        return new Values<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9");
     }
 
     /**
@@ -7775,20 +7811,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field9, field10),
-     *       (field1, field2, field3, .., field9, field10),
-     *       (field1, field2, field3, .., field9, field10)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field9, field10 UNION ALL
-     * SELECT field1, field2, field3, .., field9, field10 UNION ALL
-     * SELECT field1, field2, field3, .., field9, field10
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Table<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> values(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... rows) {
-        return new Values<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Table<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> values(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... rows) {
+        return new Values<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10");
     }
 
     /**
@@ -7803,20 +7843,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field10, field11),
-     *       (field1, field2, field3, .., field10, field11),
-     *       (field1, field2, field3, .., field10, field11)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field10, field11 UNION ALL
-     * SELECT field1, field2, field3, .., field10, field11 UNION ALL
-     * SELECT field1, field2, field3, .., field10, field11
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Table<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> values(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... rows) {
-        return new Values<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Table<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> values(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... rows) {
+        return new Values<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11");
     }
 
     /**
@@ -7831,20 +7875,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field11, field12),
-     *       (field1, field2, field3, .., field11, field12),
-     *       (field1, field2, field3, .., field11, field12)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field11, field12 UNION ALL
-     * SELECT field1, field2, field3, .., field11, field12 UNION ALL
-     * SELECT field1, field2, field3, .., field11, field12
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Table<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> values(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>... rows) {
-        return new Values<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Table<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> values(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>... rows) {
+        return new Values<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12");
     }
 
     /**
@@ -7859,20 +7907,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field12, field13),
-     *       (field1, field2, field3, .., field12, field13),
-     *       (field1, field2, field3, .., field12, field13)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field12, field13 UNION ALL
-     * SELECT field1, field2, field3, .., field12, field13 UNION ALL
-     * SELECT field1, field2, field3, .., field12, field13
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Table<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> values(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... rows) {
-        return new Values<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Table<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> values(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... rows) {
+        return new Values<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13");
     }
 
     /**
@@ -7887,20 +7939,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field13, field14),
-     *       (field1, field2, field3, .., field13, field14),
-     *       (field1, field2, field3, .., field13, field14)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field13, field14 UNION ALL
-     * SELECT field1, field2, field3, .., field13, field14 UNION ALL
-     * SELECT field1, field2, field3, .., field13, field14
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Table<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> values(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... rows) {
-        return new Values<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Table<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> values(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... rows) {
+        return new Values<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14");
     }
 
     /**
@@ -7915,20 +7971,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field14, field15),
-     *       (field1, field2, field3, .., field14, field15),
-     *       (field1, field2, field3, .., field14, field15)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14, val1_15),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14, val2_15),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14, val3_15)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  , "c15"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field14, field15 UNION ALL
-     * SELECT field1, field2, field3, .., field14, field15 UNION ALL
-     * SELECT field1, field2, field3, .., field14, field15
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Table<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> values(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>... rows) {
-        return new Values<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Table<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> values(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>... rows) {
+        return new Values<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15");
     }
 
     /**
@@ -7943,20 +8003,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field15, field16),
-     *       (field1, field2, field3, .., field15, field16),
-     *       (field1, field2, field3, .., field15, field16)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14, val1_15, val1_16),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14, val2_15, val2_16),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14, val3_15, val3_16)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  , "c15"  , "c16"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field15, field16 UNION ALL
-     * SELECT field1, field2, field3, .., field15, field16 UNION ALL
-     * SELECT field1, field2, field3, .., field15, field16
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Table<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> values(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... rows) {
-        return new Values<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Table<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> values(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... rows) {
+        return new Values<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16");
     }
 
     /**
@@ -7971,20 +8035,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field16, field17),
-     *       (field1, field2, field3, .., field16, field17),
-     *       (field1, field2, field3, .., field16, field17)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14, val1_15, val1_16, val1_17),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14, val2_15, val2_16, val2_17),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14, val3_15, val3_16, val3_17)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  , "c15"  , "c16"  , "c17"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field16, field17 UNION ALL
-     * SELECT field1, field2, field3, .., field16, field17 UNION ALL
-     * SELECT field1, field2, field3, .., field16, field17
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Table<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> values(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>... rows) {
-        return new Values<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Table<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> values(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>... rows) {
+        return new Values<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17");
     }
 
     /**
@@ -7999,20 +8067,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field17, field18),
-     *       (field1, field2, field3, .., field17, field18),
-     *       (field1, field2, field3, .., field17, field18)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14, val1_15, val1_16, val1_17, val1_18),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14, val2_15, val2_16, val2_17, val2_18),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14, val3_15, val3_16, val3_17, val3_18)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  , "c15"  , "c16"  , "c17"  , "c18"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field17, field18 UNION ALL
-     * SELECT field1, field2, field3, .., field17, field18 UNION ALL
-     * SELECT field1, field2, field3, .., field17, field18
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Table<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> values(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>... rows) {
-        return new Values<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Table<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> values(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>... rows) {
+        return new Values<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18");
     }
 
     /**
@@ -8027,20 +8099,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field18, field19),
-     *       (field1, field2, field3, .., field18, field19),
-     *       (field1, field2, field3, .., field18, field19)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14, val1_15, val1_16, val1_17, val1_18, val1_19),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14, val2_15, val2_16, val2_17, val2_18, val2_19),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14, val3_15, val3_16, val3_17, val3_18, val3_19)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  , "c15"  , "c16"  , "c17"  , "c18"  , "c19"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field18, field19 UNION ALL
-     * SELECT field1, field2, field3, .., field18, field19 UNION ALL
-     * SELECT field1, field2, field3, .., field18, field19
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Table<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> values(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... rows) {
-        return new Values<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Table<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> values(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... rows) {
+        return new Values<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19");
     }
 
     /**
@@ -8055,20 +8131,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field19, field20),
-     *       (field1, field2, field3, .., field19, field20),
-     *       (field1, field2, field3, .., field19, field20)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14, val1_15, val1_16, val1_17, val1_18, val1_19, val1_20),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14, val2_15, val2_16, val2_17, val2_18, val2_19, val2_20),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14, val3_15, val3_16, val3_17, val3_18, val3_19, val3_20)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  , "c15"  , "c16"  , "c17"  , "c18"  , "c19"  , "c20"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field19, field20 UNION ALL
-     * SELECT field1, field2, field3, .., field19, field20 UNION ALL
-     * SELECT field1, field2, field3, .., field19, field20
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Table<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> values(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>... rows) {
-        return new Values<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Table<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> values(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>... rows) {
+        return new Values<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20");
     }
 
     /**
@@ -8083,20 +8163,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field20, field21),
-     *       (field1, field2, field3, .., field20, field21),
-     *       (field1, field2, field3, .., field20, field21)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14, val1_15, val1_16, val1_17, val1_18, val1_19, val1_20, val1_21),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14, val2_15, val2_16, val2_17, val2_18, val2_19, val2_20, val2_21),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14, val3_15, val3_16, val3_17, val3_18, val3_19, val3_20, val3_21)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  , "c15"  , "c16"  , "c17"  , "c18"  , "c19"  , "c20"  , "c21"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field20, field21 UNION ALL
-     * SELECT field1, field2, field3, .., field20, field21 UNION ALL
-     * SELECT field1, field2, field3, .., field20, field21
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20", val1_21 AS "c21") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20", val1_21 AS "c21") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20", val1_21 AS "c21")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Table<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> values(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>... rows) {
-        return new Values<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Table<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> values(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>... rows) {
+        return new Values<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20", "c21");
     }
 
     /**
@@ -8111,20 +8195,24 @@ public class Factory {
      * <p>
      * <pre><code>
      * -- Using VALUES() constructor
-     * VALUES(field1, field2, field3, .., field21, field22),
-     *       (field1, field2, field3, .., field21, field22),
-     *       (field1, field2, field3, .., field21, field22)
+     * VALUES(val1_1, val1_2, val1_3, val1_4, val1_5, val1_6, val1_7, val1_8, val1_9, val1_10, val1_11, val1_12, val1_13, val1_14, val1_15, val1_16, val1_17, val1_18, val1_19, val1_20, val1_21, val1_22),
+     *       (val2_1, val2_2, val2_3, val2_4, val2_5, val2_6, val2_7, val2_8, val2_9, val2_10, val2_11, val2_12, val2_13, val2_14, val2_15, val2_16, val2_17, val2_18, val2_19, val2_20, val2_21, val2_22),
+     *       (val3_1, val3_2, val3_3, val3_4, val3_5, val3_6, val3_7, val3_8, val3_9, val3_10, val3_11, val3_12, val3_13, val3_14, val3_15, val3_16, val3_17, val3_18, val3_19, val3_20, val3_21, val3_22)
+     * AS "v"("c1"  , "c2"  , "c3"  , "c4"  , "c5"  , "c6"  , "c7"  , "c8"  , "c9"  , "c10"  , "c11"  , "c12"  , "c13"  , "c14"  , "c15"  , "c16"  , "c17"  , "c18"  , "c19"  , "c20"  , "c21"  , "c22"  )
      *
      * -- Using UNION ALL
-     * SELECT field1, field2, field3, .., field21, field22 UNION ALL
-     * SELECT field1, field2, field3, .., field21, field22 UNION ALL
-     * SELECT field1, field2, field3, .., field21, field22
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20", val1_21 AS "c21", val1_22 AS "c22") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20", val1_21 AS "c21", val1_22 AS "c22") UNION ALL
+     * SELECT val1_1 AS "c1", val1_2 AS "c2", val1_3 AS "c3", val1_4 AS "c4", val1_5 AS "c5", val1_6 AS "c6", val1_7 AS "c7", val1_8 AS "c8", val1_9 AS "c9", val1_10 AS "c10", val1_11 AS "c11", val1_12 AS "c12", val1_13 AS "c13", val1_14 AS "c14", val1_15 AS "c15", val1_16 AS "c16", val1_17 AS "c17", val1_18 AS "c18", val1_19 AS "c19", val1_20 AS "c20", val1_21 AS "c21", val1_22 AS "c22")
      * </code></pre>
+     * <p>
+     * Use {@link Table#as(String, String...)} to rename the resulting table and
+     * its columns.
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
-    static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Table<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> values(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... rows) {
-        return new Values<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows);
+    public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Table<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> values(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... rows) {
+        return new Values<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20", "c21", "c22");
     }
 
 // [jooq-tools] END [values]

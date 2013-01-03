@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-  - Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+  - Copyright (c) 2009-2013, Lukas Eder, lukas.eder@gmail.com
   - All rights reserved.
   -
   - This software is licensed to you under the Apache License, Version 2.0

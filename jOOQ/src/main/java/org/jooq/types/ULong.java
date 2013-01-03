@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2012, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2011-2013, Lukas Eder, lukas.eder@gmail.com
  * All rights reserved.
  *
  * This software is licensed to you under the Apache License, Version 2.0

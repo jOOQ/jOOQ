@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class V_INCOMPLETE extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_INCOMPLETE> implements java.lang.Cloneable, org.jooq.Record9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_INCOMPLETE_INTERFACE {
 
-	private static final long serialVersionUID = -2012306107;
+	private static final long serialVersionUID = -2013306107;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 

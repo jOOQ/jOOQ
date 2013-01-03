@@ -95,14 +95,17 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#1801] Some databases don't support "derived column names" at
             // all. They can be simulated using common table expressions
             if (fieldAliases != null && simulateDerivedColumnList) {
-                context.keyword("(with")
-                       .sql(" v");
+                context.sql("(").formatIndentStart().formatNewLine()
+                       .keyword("with").sql(" v");
                 toSQLDerivedColumnList(context);
-                context.keyword(" as (select * from ")
+                context.sql(" ").keyword("as").sql(" (").formatIndentStart().formatNewLine()
+                       .keyword("select * from").sql(" (")
                        .sql(wrapped)
-                       .sql(") ")
+                       .sql(")").formatIndentEnd().formatNewLine()
+                       .sql(")").formatSeparator()
                        .keyword("select * from")
-                       .sql(" v)");
+                       .sql(" v").formatIndentEnd().formatNewLine()
+                       .sql(")");
             }
 
             // [#1801] Some databases don't allow "derived column names" in
@@ -113,8 +116,10 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // http://jira.cubrid.org/browse/ENGINE-96
             // http://tracker.firebirdsql.org/browse/CORE-4025
             else if (fieldAliases != null && asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(dialect) && wrapped instanceof TableImpl) {
-                context.keyword("(select * from ")
+                context.sql("(").formatIndentStart().formatNewLine()
+                       .keyword("select * from")
                        .sql(wrapped)
+                       .formatIndentEnd().formatNewLine()
                        .sql(")");
             }
 

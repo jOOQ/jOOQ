@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2013, Lukas Eder, lukas.eder@gmail.com
  *                             Christopher Deckers, chrriis@gmail.com
  * All rights reserved.
  *

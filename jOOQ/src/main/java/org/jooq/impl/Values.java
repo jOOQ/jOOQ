@@ -39,6 +39,7 @@ import org.jooq.BindContext;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Row;
+import org.jooq.Select;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.exception.DataAccessException;
@@ -82,14 +83,58 @@ class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("values");
+        switch (context.getDialect()) {
 
-        String separator = "";
-        for (Row row : rows) {
-            context.sql(separator)
-                   .sql(row);
+            // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
+            // for those dialects that do not support a VALUES() constructor
+            case FIREBIRD:
+            case ORACLE:
+            case SYBASE: {
+                Select<Record> selects = null;
 
-            separator = ", ";
+                for (Row row : rows) {
+                    Select<Record> select = create().select(row.getFields());
+
+                    if (selects == null) {
+                        selects = select;
+                    }
+                    else {
+                        selects = selects.unionAll(select);
+                    }
+                }
+
+                context.formatIndentStart()
+                       .formatNewLine()
+                       .sql(selects)
+                       .formatIndentEnd()
+                       .formatNewLine();
+                break;
+            }
+
+            // [#915] Native support of VALUES(..)
+            case CUBRID:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case POSTGRES:
+            case SQLSERVER:
+            default: {
+                context.keyword("values")
+                       .formatIndentLockStart();
+
+                boolean firstRow = true;
+                for (Row row : rows) {
+                    if (!firstRow) {
+                        context.sql(",").formatSeparator();
+                    }
+
+                    context.sql(row);
+                    firstRow = false;
+                }
+
+                context.formatIndentEnd();
+                break;
+            }
         }
     }
 

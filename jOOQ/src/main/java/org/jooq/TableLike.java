@@ -35,7 +35,14 @@
  */
 package org.jooq;
 
-import org.jooq.conf.Settings;
+import static org.jooq.SQLDialect.CUBRID;
+import static org.jooq.SQLDialect.DERBY;
+import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SYBASE;
 
 /**
  * An object that can behave like a table (a table-like object)
@@ -55,35 +62,16 @@ public interface TableLike<R extends Record> extends QueryPart {
 
     /**
      * The underlying aliased table representation of this object
-     * <p>
-     * This method is useful for things like
-     * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') [alias] WHERE ... </code>
-     * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
-     * quoted, and thus case-sensitive!
+     *
+     * @see Table#as(String)
      */
     Table<R> asTable(String alias);
 
     /**
      * The underlying aliased table representation of this object
-     * <p>
-     * This method is useful for things like
-     * <code><pre>
-     * SELECT alias.fieldAlias1, alias.fieldAlias2
-     * FROM (
-     *   SELECT * FROM x WHERE x.a = '1'
-     * ) AS alias(fieldAlias1, fieldAlias2)
-     * WHERE ... </code>
-     * <p>
-     * Note, not all databases support derived column lists for their table
-     * aliases. On the other hand, some databases do support derived column
-     * lists, but only for derived tables. jOOQ will try to turn table
-     * references into derived tables to make this syntax work.
-     * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
-     * quoted, and thus case-sensitive!
+     *
+     * @see Table#as(String, String...)
      */
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<R> asTable(String alias, String... fieldAliases);
 }

@@ -123,7 +123,7 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
      *            names.
      * @return The table alias
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<R> as(String alias, String... fieldAliases);
 
     /**

@@ -35,12 +35,17 @@
  */
 package org.jooq.test._.testcases;
 
+import static junit.framework.Assert.assertEquals;
+import static org.jooq.impl.Factory.row;
+import static org.jooq.impl.Factory.values;
+
 import java.sql.Date;
 
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
@@ -76,8 +81,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     @SuppressWarnings("unchecked")
     @Test
     public void testValuesConstructor() throws Exception {
-//        Result<Record2<Integer, String>> r21 = create().selectFrom(values(row(1, "a"))).fetch();
-//
-//        assertEquals(1, r21.size());
+        Result<Record2<Integer, String>> r21 = create().selectFrom(values(row(1, "a"))).fetch();
+
+        assertEquals(1, r21.size());
+        assertEquals(2, r21.get(0).size());
+        assertEquals("c1", r21.getField(0).getName());
+        assertEquals("c2", r21.getField(1).getName());
+        assertEquals(Integer.class, r21.getField(0).getType());
+        assertEquals(String.class, r21.getField(1).getType());
+        assertEquals("c1", r21.get(0).getField(0).getName());
+        assertEquals("c2", r21.get(0).getField(1).getName());
+        assertEquals(Integer.class, r21.get(0).getField(0).getType());
+        assertEquals(String.class, r21.get(0).getField(1).getType());
+        assertEquals(1, r21.getValue(0, 0));
+        assertEquals("a", r21.getValue(0, 1));
+
+        create().selectFrom(values(
+            row(1, "a", Date.valueOf("2013-01-01")),
+            row(2, "b", Date.valueOf("2013-01-02"))).as("my_table", "int_col", "string_col", "date_col")).fetch();
     }
 }

@@ -228,20 +228,24 @@ class Factory extends Generators {
                  * <p>
                  * <pre><code>
                  * -- Using VALUES() constructor
-                 * VALUES(«field1_field2_fieldn(degree)»),
-                 *       («field1_field2_fieldn(degree)»),
-                 *       («field1_field2_fieldn(degree)»)
+                 * VALUES(«FOR d : (1..degree) SEPARATOR ', '»val1_«d»«ENDFOR»),
+                 *       («FOR d : (1..degree) SEPARATOR ', '»val2_«d»«ENDFOR»),
+                 *       («FOR d : (1..degree) SEPARATOR ', '»val3_«d»«ENDFOR»)
+                 * AS "v"(«FOR d : (1..degree) SEPARATOR ', '»"c«d»"  «ENDFOR»)
                  *
                  * -- Using UNION ALL
-                 * SELECT «field1_field2_fieldn(degree)» UNION ALL
-                 * SELECT «field1_field2_fieldn(degree)» UNION ALL
-                 * SELECT «field1_field2_fieldn(degree)»
+                 * SELECT «FOR d : (1..degree) SEPARATOR ', '»val1_«d» AS "c«d»"«ENDFOR») UNION ALL
+                 * SELECT «FOR d : (1..degree) SEPARATOR ', '»val1_«d» AS "c«d»"«ENDFOR») UNION ALL
+                 * SELECT «FOR d : (1..degree) SEPARATOR ', '»val1_«d» AS "c«d»"«ENDFOR»)
                  * </code></pre>
+                 * <p>
+                 * Use {@link Table#as(String, String...)} to rename the resulting table and
+                 * its columns.
                  */
                 «generatedMethod»
                 @Support
-                static <«TN(degree)»> Table<Record«degree»<«TN(degree)»>> values(Row«degree»<«TN(degree)»>... rows) {
-                    return new Values<Record«degree»<«TN(degree)»>>(rows);
+                public static <«TN(degree)»> Table<Record«degree»<«TN(degree)»>> values(Row«degree»<«TN(degree)»>... rows) {
+                    return new Values<Record«degree»<«TN(degree)»>>(rows).as("v", «FOR d : (1..degree) SEPARATOR ', '»"c«d»"«ENDFOR»);
                 }
             ''');
         }

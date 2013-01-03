@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -49,6 +50,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
+import org.jooq.SQLDialect;
 
 /**
  * @author Lukas Eder
@@ -87,14 +89,30 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     @Override
     public final void toSQL(RenderContext context) {
         if (context.declareFields() || context.declareTables()) {
+            SQLDialect dialect = context.getDialect();
+            boolean simulateDerivedColumnList = asList(ORACLE).contains(dialect);
 
-            // [#1801] Some databases don't allow "derived column names" in "simple
-            // class specifications". Hence, wrap the table reference in a subselect
+            // [#1801] Some databases don't support "derived column names" at
+            // all. They can be simulated using common table expressions
+            if (fieldAliases != null && simulateDerivedColumnList) {
+                context.keyword("(with")
+                       .sql(" v");
+                toSQLDerivedColumnList(context);
+                context.keyword(" as (select * from ")
+                       .sql(wrapped)
+                       .sql(") ")
+                       .keyword("select * from")
+                       .sql(" v)");
+            }
+
+            // [#1801] Some databases don't allow "derived column names" in
+            // "simple class specifications". Hence, wrap the table reference in
+            // a subselect
 
             // Feature requests placed here:
             // http://jira.cubrid.org/browse/ENGINE-96
             // http://tracker.firebirdsql.org/browse/CORE-4025
-            if (asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(context.getDialect()) && fieldAliases != null && wrapped instanceof TableImpl) {
+            else if (fieldAliases != null && asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(dialect) && wrapped instanceof TableImpl) {
                 context.keyword("(select * from ")
                        .sql(wrapped)
                        .sql(")");
@@ -114,7 +132,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             }
 
             // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
-            if (asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(context.getDialect())) {
+            if (asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(dialect)) {
                 context.keyword(" as");
             }
 
@@ -122,19 +140,8 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             context.literal(alias);
 
             // [#1801] Add field aliases to the table alias, if applicable
-            if (fieldAliases != null) {
-                String separator = "";
-
-                context.sql("(");
-
-                for (int i = 0; i < fieldAliases.length; i++) {
-                    context.sql(separator);
-                    context.literal(fieldAliases[i]);
-
-                    separator = ", ";
-                }
-
-                context.sql(")");
+            if (fieldAliases != null && !simulateDerivedColumnList) {
+                toSQLDerivedColumnList(context);
             }
 
             else {
@@ -145,8 +152,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                 // SELECT t.column_value FROM UNNEST(ARRAY[1, 2]) AS t(column_value)
 
                 // TODO: Is this still needed?
-
-                switch (context.getDialect()) {
+                switch (dialect) {
                     case HSQLDB:
                     case POSTGRES: {
                         // The javac compiler doesn't like casting of generics
@@ -168,6 +174,21 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         else {
             context.literal(alias);
         }
+    }
+
+    private void toSQLDerivedColumnList(RenderContext context) {
+        String separator = "";
+
+        context.sql("(");
+
+        for (int i = 0; i < fieldAliases.length; i++) {
+            context.sql(separator);
+            context.literal(fieldAliases[i]);
+
+            separator = ", ";
+        }
+
+        context.sql(")");
     }
 
     @Override

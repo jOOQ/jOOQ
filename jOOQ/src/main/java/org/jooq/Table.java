@@ -103,6 +103,19 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
      * aliases. On the other hand, some databases do support derived column
      * lists, but only for derived tables. jOOQ will try to turn table
      * references into derived tables to make this syntax work.
+     * <p>
+     * Other databases may not support derived column lists at all, but they do
+     * support common table expressions. The following two statements are
+     * equivalent: <code><pre>
+     * -- Using derived column lists to rename columns (e.g. Postgres)
+     * select * from (select 1) as u(b)
+     *
+     * -- Using common table expressions to rename columns (e.g. Oracle)
+     * select * from (
+     *   with u(b) as (select 1 from dual)
+     *   select * from u
+     * ) u
+     * </pre></code>
      *
      * @param alias The alias name
      * @param fieldAliases The field aliases. Excess aliases are ignored,

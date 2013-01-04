@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -921168069;
+	private static final long serialVersionUID = 1024461079;
 
 	/**
 	 * The singleton instance of <code>t_dates</code>
@@ -58,7 +58,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubri
 	 * No further instances allowed
 	 */
 	private TDates() {
-		super("t_dates");
+		super("t_dates", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**

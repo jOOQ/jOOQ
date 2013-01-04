@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -62603474;
+	private static final long serialVersionUID = -966110638;
 
 	/**
 	 * The singleton instance of <code>v_library</code>
@@ -38,6 +38,6 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.gener
 	 * No further instances allowed
 	 */
 	private VLibrary() {
-		super("v_library");
+		super("v_library", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

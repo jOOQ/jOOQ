@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_785Record> {
 
-	private static final long serialVersionUID = 1233189333;
+	private static final long serialVersionUID = 475933049;
 
 	/**
 	 * The singleton instance of <code>t_785</code>
@@ -43,6 +43,6 @@ public class T_785 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	 * No further instances allowed
 	 */
 	private T_785() {
-		super("t_785");
+		super("t_785", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

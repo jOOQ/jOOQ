@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = 1700069373;
+	private static final long serialVersionUID = 743283617;
 
 	/**
 	 * The singleton instance of <code>t_959</code>
@@ -25,14 +25,19 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	}
 
 	/**
-	 * The column <code>t_959.java_keywords</code>.
+	 * The column <code>t_959.java_keywords</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_959Record, org.jooq.test.cubrid.generatedclasses.enums.T_959JavaKeywords> JAVA_KEYWORDS = createField("java_keywords", org.jooq.util.cubrid.CUBRIDDataType.VARCHAR.asEnumDataType(org.jooq.test.cubrid.generatedclasses.enums.T_959JavaKeywords.class), T_959);
+
+	/**
+	 * The column <code>t_959.special_characters</code>. 
+	 */
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_959Record, org.jooq.test.cubrid.generatedclasses.enums.T_959SpecialCharacters> SPECIAL_CHARACTERS = createField("special_characters", org.jooq.util.cubrid.CUBRIDDataType.VARCHAR.asEnumDataType(org.jooq.test.cubrid.generatedclasses.enums.T_959SpecialCharacters.class), T_959);
 
 	/**
 	 * No further instances allowed
 	 */
 	private T_959() {
-		super("t_959");
+		super("t_959", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

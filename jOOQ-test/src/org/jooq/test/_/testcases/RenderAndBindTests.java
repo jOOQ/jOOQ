@@ -128,7 +128,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         ResultSet rs = stmt.executeQuery();
         Result<Record> result = create().fetch(rs);
-        assertEquals(BOOK_IDS, result.getValues(TBook_ID(), Integer.class));
+        assertEquals(BOOK_IDS, result.getValues(0, Integer.class));
         assertEquals(BOOK_IDS, result.getValues(1, Integer.class));
 
         try {

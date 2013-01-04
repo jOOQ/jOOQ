@@ -9,34 +9,20 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -1982616748;
+	private static final long serialVersionUID = 1620436348;
 
 	/**
-	 * Setter for <code>DBA.t_book_store.name</code>. 
+	 * Setter for <code>t_book_store.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBookStore.NAME, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_book_store.name</code>. 
+	 * Getter for <code>t_book_store.name</code>. 
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBookStore.NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>DBA.t_book_to_book_store</code> referencing this <code>DBA.t_book_store</code>
-	 */
-	public org.jooq.Result<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TBookStore.NAME)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

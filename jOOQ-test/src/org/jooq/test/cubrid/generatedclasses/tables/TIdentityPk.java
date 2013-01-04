@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -1626891946;
+	private static final long serialVersionUID = 1452162252;
 
 	/**
-	 * The singleton instance of <code>DBA.t_identity_pk</code>
+	 * The singleton instance of <code>t_identity_pk</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = new org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk();
 
@@ -25,12 +25,12 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	}
 
 	/**
-	 * The column <code>DBA.t_identity_pk.id</code>. 
+	 * The column <code>t_identity_pk.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
 
 	/**
-	 * The column <code>DBA.t_identity_pk.val</code>. 
+	 * The column <code>t_identity_pk.val</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> VAL = createField("val", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
 
@@ -38,7 +38,7 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	 * No further instances allowed
 	 */
 	private TIdentityPk() {
-		super("t_identity_pk", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_identity_pk");
 	}
 
 	/**

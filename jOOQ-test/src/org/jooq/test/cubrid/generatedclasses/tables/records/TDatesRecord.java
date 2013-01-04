@@ -9,95 +9,91 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> {
 
-	private static final long serialVersionUID = -1286497546;
+	private static final long serialVersionUID = -1004226452;
 
 	/**
-	 * Setter for <code>DBA.t_dates.id</code>. 
+	 * Setter for <code>t_dates.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_dates.id</code>. 
+	 * Getter for <code>t_dates.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_dates.d</code>. 
+	 * Setter for <code>t_dates.d</code>. 
 	 */
 	public void setD(java.sql.Date value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.D, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_dates.d</code>. 
+	 * Getter for <code>t_dates.d</code>. 
 	 */
 	public java.sql.Date getD() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.D);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_dates.t</code>. 
+	 * Setter for <code>t_dates.t</code>. 
 	 */
 	public void setT(java.sql.Time value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.T, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_dates.t</code>. 
+	 * Getter for <code>t_dates.t</code>. 
 	 */
 	public java.sql.Time getT() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.T);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_dates.ts</code>. 
+	 * Setter for <code>t_dates.ts</code>. 
 	 */
 	public void setTs(java.sql.Timestamp value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.TS, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_dates.ts</code>. 
+	 * Getter for <code>t_dates.ts</code>. 
 	 */
 	public java.sql.Timestamp getTs() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.TS);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_dates.d_int</code>. 
+	 * Setter for <code>t_dates.d_int</code>. 
 	 */
 	public void setDInt(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.D_INT, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_dates.d_int</code>. 
+	 * Getter for <code>t_dates.d_int</code>. 
 	 */
 	public java.lang.Integer getDInt() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.D_INT);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_dates.ts_bigint</code>. 
+	 * Setter for <code>t_dates.ts_bigint</code>. 
 	 */
 	public void setTsBigint(java.lang.Long value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.TS_BIGINT, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_dates.ts_bigint</code>. 
+	 * Getter for <code>t_dates.ts_bigint</code>. 
 	 */
 	public java.lang.Long getTsBigint() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDates.TS_BIGINT);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

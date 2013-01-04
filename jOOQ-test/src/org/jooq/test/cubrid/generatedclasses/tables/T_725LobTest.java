@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 1485019218;
+	private static final long serialVersionUID = -2039507488;
 
 	/**
-	 * The singleton instance of <code>DBA.t_725_lob_test</code>
+	 * The singleton instance of <code>t_725_lob_test</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = new org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest();
 
@@ -25,12 +25,12 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The column <code>DBA.t_725_lob_test.id</code>. 
+	 * The column <code>t_725_lob_test.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_725_LOB_TEST);
 
 	/**
-	 * The column <code>DBA.t_725_lob_test.lob</code>. 
+	 * The column <code>t_725_lob_test.lob</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("lob", org.jooq.impl.SQLDataType.BLOB, T_725_LOB_TEST);
 
@@ -38,7 +38,7 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * No further instances allowed
 	 */
 	private T_725LobTest() {
-		super("t_725_lob_test", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_725_lob_test");
 	}
 
 	/**

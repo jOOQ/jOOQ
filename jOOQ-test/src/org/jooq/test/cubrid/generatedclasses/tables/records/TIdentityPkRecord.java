@@ -9,39 +9,35 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -120390706;
+	private static final long serialVersionUID = -687583474;
 
 	/**
-	 * Setter for <code>DBA.t_identity_pk.id</code>. 
+	 * Setter for <code>t_identity_pk.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_identity_pk.id</code>. 
+	 * Getter for <code>t_identity_pk.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk.ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_identity_pk.val</code>. 
+	 * Setter for <code>t_identity_pk.val</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk.VAL, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_identity_pk.val</code>. 
+	 * Getter for <code>t_identity_pk.val</code>. 
 	 */
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk.VAL);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

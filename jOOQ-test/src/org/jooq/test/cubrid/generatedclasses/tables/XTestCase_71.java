@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -453062710;
+	private static final long serialVersionUID = 1547426141;
 
 	/**
-	 * The singleton instance of <code>DBA.x_test_case_71</code>
+	 * The singleton instance of <code>x_test_case_71</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.XTestCase_71 X_TEST_CASE_71 = new org.jooq.test.cubrid.generatedclasses.tables.XTestCase_71();
 
@@ -25,12 +25,12 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The column <code>DBA.x_test_case_71.id</code>. 
+	 * The column <code>x_test_case_71.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71);
 
 	/**
-	 * The column <code>DBA.x_test_case_71.test_case_64_69_id</code>. 
+	 * The column <code>x_test_case_71.test_case_64_69_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> TEST_CASE_64_69_ID = createField("test_case_64_69_id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71);
 
@@ -38,7 +38,7 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * No further instances allowed
 	 */
 	private XTestCase_71() {
-		super("x_test_case_71", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("x_test_case_71");
 	}
 
 	/**
@@ -62,6 +62,6 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.cubrid.generatedclasses.Keys.X_TEST_CASE_71__FK_X_TEST_CASE_71A);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.cubrid.generatedclasses.Keys.X_TEST_CASE_71__FK_X_TEST_CASE_71A, org.jooq.test.cubrid.generatedclasses.Keys.X_TEST_CASE_71__FK_X_TEST_CASE_71B);
 	}
 }

@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1297738707;
+	private static final long serialVersionUID = -2053361398;
 
 	/**
-	 * The singleton instance of <code>DBA.t_triggers</code>
+	 * The singleton instance of <code>t_triggers</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TTriggers T_TRIGGERS = new org.jooq.test.cubrid.generatedclasses.tables.TTriggers();
 
@@ -25,17 +25,17 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 	}
 
 	/**
-	 * The column <code>DBA.t_triggers.id_generated</code>. 
+	 * The column <code>t_triggers.id_generated</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("id_generated", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
-	 * The column <code>DBA.t_triggers.id</code>. 
+	 * The column <code>t_triggers.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
-	 * The column <code>DBA.t_triggers.counter</code>. 
+	 * The column <code>t_triggers.counter</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("counter", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
@@ -43,7 +43,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 	 * No further instances allowed
 	 */
 	private TTriggers() {
-		super("t_triggers", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_triggers");
 	}
 
 	/**

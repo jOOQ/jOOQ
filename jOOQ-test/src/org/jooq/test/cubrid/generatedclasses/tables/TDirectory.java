@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = 1460867912;
+	private static final long serialVersionUID = 512081430;
 
 	/**
-	 * The singleton instance of <code>DBA.t_directory</code>
+	 * The singleton instance of <code>t_directory</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TDirectory T_DIRECTORY = new org.jooq.test.cubrid.generatedclasses.tables.TDirectory();
 
@@ -25,22 +25,22 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.c
 	}
 
 	/**
-	 * The column <code>DBA.t_directory.id</code>. 
+	 * The column <code>t_directory.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
 
 	/**
-	 * The column <code>DBA.t_directory.parent_id</code>. 
+	 * The column <code>t_directory.parent_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
 
 	/**
-	 * The column <code>DBA.t_directory.is_directory</code>. 
+	 * The column <code>t_directory.is_directory</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> IS_DIRECTORY = createField("is_directory", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
 
 	/**
-	 * The column <code>DBA.t_directory.name</code>. 
+	 * The column <code>t_directory.name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, T_DIRECTORY);
 
@@ -48,7 +48,7 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.c
 	 * No further instances allowed
 	 */
 	private TDirectory() {
-		super("t_directory", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_directory");
 	}
 
 	/**

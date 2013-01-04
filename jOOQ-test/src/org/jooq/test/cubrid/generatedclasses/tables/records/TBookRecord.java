@@ -9,226 +9,146 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.cubrid.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = 1772884443;
+	private static final long serialVersionUID = 1261408429;
 
 	/**
-	 * Setter for <code>DBA.t_book.id</code>. 
+	 * Setter for <code>t_book.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_book.id</code>. 
+	 * Getter for <code>t_book.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.author_id</code>. 
+	 * Setter for <code>t_book.author_id</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.AUTHOR_ID, value);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setAuthorId(org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.AUTHOR_ID, value.getValue(org.jooq.test.cubrid.generatedclasses.tables.TAuthor.ID));
-		}
-	}
-
-	/**
-	 * Getter for <code>DBA.t_book.author_id</code>. 
+	 * Getter for <code>t_book.author_id</code>. 
 	 */
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.AUTHOR_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.co_author_id</code>. 
+	 * Setter for <code>t_book.co_author_id</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setCoAuthorId(org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CO_AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CO_AUTHOR_ID, value.getValue(org.jooq.test.cubrid.generatedclasses.tables.TAuthor.ID));
-		}
-	}
-
-	/**
-	 * Getter for <code>DBA.t_book.co_author_id</code>. 
+	 * Getter for <code>t_book.co_author_id</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CO_AUTHOR_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.details_id</code>. 
+	 * Setter for <code>t_book.details_id</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.DETAILS_ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_book.details_id</code>. 
+	 * Getter for <code>t_book.details_id</code>. 
 	 */
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.DETAILS_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.title</code>. 
+	 * Setter for <code>t_book.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.TITLE, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_book.title</code>. 
+	 * Getter for <code>t_book.title</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.TITLE);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.published_in</code>. 
+	 * Setter for <code>t_book.published_in</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_book.published_in</code>. 
+	 * Getter for <code>t_book.published_in</code>. 
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.PUBLISHED_IN);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.language_id</code>. 
+	 * Setter for <code>t_book.language_id</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord}
-	 */
-	public void setLanguageId(org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID, value.getValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.ID));
-		}
-	}
-
-	/**
-	 * Getter for <code>DBA.t_book.language_id</code>. 
+	 * Getter for <code>t_book.language_id</code>. 
 	 */
 	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.content_text</code>. 
+	 * Setter for <code>t_book.content_text</code>. 
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_book.content_text</code>. 
+	 * Getter for <code>t_book.content_text</code>. 
 	 */
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CONTENT_TEXT);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.content_pdf</code>. 
+	 * Setter for <code>t_book.content_pdf</code>. 
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CONTENT_PDF, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_book.content_pdf</code>. 
+	 * Getter for <code>t_book.content_pdf</code>. 
 	 */
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CONTENT_PDF);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_book.status</code>. 
+	 * Setter for <code>t_book.status</code>. 
 	 */
 	public void setStatus(org.jooq.test.cubrid.generatedclasses.enums.TBookStatus value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.STATUS, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_book.status</code>. 
+	 * Getter for <code>t_book.status</code>. 
 	 */
 	public org.jooq.test.cubrid.generatedclasses.enums.TBookStatus getStatus() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.STATUS);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>DBA.t_book_to_book_store</code> referencing this <code>DBA.t_book</code>
-	 */
-	public org.jooq.Result<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.TBookToBookStore.BOOK_ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>DBA.t_author</code> referenced by this <code>DBA.t_book</code>
-	 */
-	public org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>DBA.t_author</code> referenced by this <code>DBA.t_book</code>
-	 */
-	public org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.TAuthor.ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CO_AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>DBA.t_language</code> referenced by this <code>DBA.t_book</code>
-	 */
-	public org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.T_LANGUAGE)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

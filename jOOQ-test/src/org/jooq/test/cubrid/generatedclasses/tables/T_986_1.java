@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 94168228;
+	private static final long serialVersionUID = -1071358225;
 
 	/**
-	 * The singleton instance of <code>DBA.t_986_1</code>
+	 * The singleton instance of <code>t_986_1</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.T_986_1 T_986_1 = new org.jooq.test.cubrid.generatedclasses.tables.T_986_1();
 
@@ -25,7 +25,7 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 	}
 
 	/**
-	 * The column <code>DBA.t_986_1.ref</code>. 
+	 * The column <code>t_986_1.ref</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("ref", org.jooq.impl.SQLDataType.INTEGER, T_986_1);
 
@@ -33,7 +33,7 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 	 * No further instances allowed
 	 */
 	private T_986_1() {
-		super("t_986_1", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_986_1");
 	}
 
 	/**

@@ -9,95 +9,91 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -732500433;
+	private static final long serialVersionUID = 763570883;
 
 	/**
-	 * Setter for <code>DBA.v_author.id</code>. 
+	 * Setter for <code>v_author.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_author.id</code>. 
+	 * Getter for <code>v_author.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_author.first_name</code>. 
+	 * Setter for <code>v_author.first_name</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.FIRST_NAME, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_author.first_name</code>. 
+	 * Getter for <code>v_author.first_name</code>. 
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.FIRST_NAME);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_author.last_name</code>. 
+	 * Setter for <code>v_author.last_name</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.LAST_NAME, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_author.last_name</code>. 
+	 * Getter for <code>v_author.last_name</code>. 
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.LAST_NAME);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_author.date_of_birth</code>. 
+	 * Setter for <code>v_author.date_of_birth</code>. 
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_author.date_of_birth</code>. 
+	 * Getter for <code>v_author.date_of_birth</code>. 
 	 */
 	public java.sql.Date getDateOfBirth() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.DATE_OF_BIRTH);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_author.year_of_birth</code>. 
+	 * Setter for <code>v_author.year_of_birth</code>. 
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_author.year_of_birth</code>. 
+	 * Getter for <code>v_author.year_of_birth</code>. 
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_author.address</code>. 
+	 * Setter for <code>v_author.address</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.ADDRESS, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_author.address</code>. 
+	 * Getter for <code>v_author.address</code>. 
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.ADDRESS);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record6 type implementation

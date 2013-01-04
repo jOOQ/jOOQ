@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 2025579151;
+	private static final long serialVersionUID = 1895538328;
 
 	/**
 	 * The singleton instance of <code>v_book</code>
@@ -47,7 +47,7 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	/**
 	 * The column <code>v_book.title</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), V_BOOK);
 
 	/**
 	 * The column <code>v_book.published_in</code>. 

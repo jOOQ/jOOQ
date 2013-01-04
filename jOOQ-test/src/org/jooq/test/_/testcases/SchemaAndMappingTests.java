@@ -97,6 +97,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     public void testUse() throws Exception {
         switch (getDialect()) {
             case ASE:
+            case CUBRID:
             case FIREBIRD:
             case SQLITE:
             case SQLSERVER:

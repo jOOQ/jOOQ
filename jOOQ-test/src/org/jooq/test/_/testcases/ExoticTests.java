@@ -379,12 +379,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .from(TBookToBookStore()
                 .divideBy(TBookStore())
                 .on(TBookToBookStore_BOOK_STORE_NAME().equal(TBookStore_NAME()))
-                .returning(TBookToBookStore_BOOK_ID(), TBookToBookStore_BOOK_ID())
-                .as("division", "x", "y"))
+                .returning(TBookToBookStore_BOOK_ID())
+                .as("division", "x"))
                 .fetchOne();
 
         assertEquals(3, record.getValue("x"));
-        assertEquals(3, record.getValue("y"));
     }
 
     @Test

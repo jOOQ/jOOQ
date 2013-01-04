@@ -78,10 +78,6 @@ public class CUBRIDDataType {
     public static final DataType<String>     CHARACTER                = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.CHAR, "character", "varchar");
     public static final DataType<String>     STRING                   = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.VARCHAR, "string");
     public static final DataType<String>     NCHAR                    = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NCHAR, "nchar");
-    public static final DataType<String>     NCHARVARYING             = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "nchar varying");
-    public static final DataType<String>     NATIONALCHARVARYING      = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "national char varying");
-    public static final DataType<String>     NATIONALCHARACTERVARYING = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "national character varying");
-    public static final DataType<String>     VARNCHAR                 = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "varnchar");
     public static final DataType<String>     CLOB                     = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.CLOB, "clob");
 
     public static final DataType<Date>       DATE                     = new DefaultDataType<Date>(SQLDialect.CUBRID, SQLDataType.DATE, "date");
@@ -89,7 +85,7 @@ public class CUBRIDDataType {
     public static final DataType<Timestamp>  DATETIME                 = new DefaultDataType<Timestamp>(SQLDialect.CUBRID, SQLDataType.TIMESTAMP, "datetime");
     public static final DataType<Timestamp>  TIMESTAMP                = new DefaultDataType<Timestamp>(SQLDialect.CUBRID, SQLDataType.TIMESTAMP, "timestamp");
 
-    public static final DataType<byte[]>     BITVARYING               = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.VARBINARY, "bitvarying");
+    public static final DataType<byte[]>     BITVARYING               = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.VARBINARY, "bit varying");
     public static final DataType<byte[]>     VARBIT                   = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.VARBINARY, "varbit");
     public static final DataType<byte[]>     BIT                      = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.BINARY, "bit");
     public static final DataType<byte[]>     BLOB                     = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.BLOB, "blob");
@@ -100,8 +96,9 @@ public class CUBRIDDataType {
 
     protected static final DataType<Boolean>    __BOOL                = new DefaultDataType<Boolean>(SQLDialect.CUBRID, SQLDataType.BOOLEAN, "bit", "bit(1)");
     protected static final DataType<Boolean>    __BIT                 = new DefaultDataType<Boolean>(SQLDialect.CUBRID, SQLDataType.BIT, "bit", "bit(1)");
-    protected static final DataType<String>     __LONGNVARCHAR        = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.LONGNVARCHAR, "nvarchar");
+    protected static final DataType<String>     __LONGNVARCHAR        = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.LONGNVARCHAR, "varchar");
     protected static final DataType<String>     __NCLOB               = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NCLOB, "clob");
+    protected static final DataType<String>     __NVARCHAR            = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.NVARCHAR, "varchar");
     protected static final DataType<String>     __LONGVARCHAR         = new DefaultDataType<String>(SQLDialect.CUBRID, SQLDataType.LONGVARCHAR, "varchar");
     protected static final DataType<byte[]>     __LONGVARBINARY       = new DefaultDataType<byte[]>(SQLDialect.CUBRID, SQLDataType.LONGVARBINARY, "blob");
     protected static final DataType<Byte>       __TINYINT             = new DefaultDataType<Byte>(SQLDialect.CUBRID, SQLDataType.TINYINT, "smallint");

@@ -70,7 +70,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
             // [#650] TODO Use the central type registry to find the right
             // data type instead of pattern matching
-            if (typeName.toLowerCase().matches(".*?(char|text|lob|xml|graphic).*?")) {
+            if (typeName.toLowerCase().matches(".*?(char|text|lob|xml|graphic|string).*?")) {
                 precision = null;
                 scale = null;
             }

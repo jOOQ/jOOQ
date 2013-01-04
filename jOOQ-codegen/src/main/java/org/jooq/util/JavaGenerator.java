@@ -179,9 +179,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     private final void generate(SchemaDefinition schema) {
-        if (!schema.isDefaultSchema()) {
-            generateSchema(schema);
-        }
+        generateSchema(schema);
 
         if (database.getSequences(schema).size() > 0) {
             generateSequences(schema);
@@ -742,7 +740,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
         out.tab(1).println("private %s() {", className);
-        out.tab(2).println("super(\"%s\"[[before=, ][%s]]);", udt.getOutputName(), list(schemaId));
+        out.tab(2).println("super(\"%s\", %s);", udt.getOutputName(), schemaId);
 
         out.println();
         out.tab(2).println("// Initialise data type");
@@ -1411,8 +1409,7 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("private %s() {", className);
         }
 
-        out.tab(2).println("super(\"%s\"[[before=, ][%s]]);", table.getOutputName(),
-            list(schema.isDefaultSchema() ? null : getStrategy().getFullJavaIdentifier(schema)));
+        out.tab(2).println("super(\"%s\", %s);", table.getOutputName(), getStrategy().getFullJavaIdentifier(schema));
         out.tab(1).println("}");
 
         // [#117] With instance fields, it makes sense to create a
@@ -1420,10 +1417,7 @@ public class JavaGenerator extends AbstractGenerator {
         // [#1255] With instance fields, the table constructor may
         // be public, as tables are no longer singletons
         if (generateInstanceFields()) {
-
-            // [#1730] Prevent compilation errors
-            // [#1801] Cast to org.jooq.Schema to prevent ambiguities
-            final String schemaId = schema.isDefaultSchema() ? "(org.jooq.Schema) null" : getStrategy().getFullJavaIdentifier(schema);
+            final String schemaId = getStrategy().getFullJavaIdentifier(schema);
 
             out.tab(1).javadoc("Create an aliased <code>%s</code> table reference", table.getQualifiedOutputName());
             out.tab(1).println("public %s(%s alias) {", className, String.class);
@@ -1546,7 +1540,7 @@ public class JavaGenerator extends AbstractGenerator {
             final String seqType = getJavaType(sequence.getType());
             final String seqId = getStrategy().getJavaIdentifier(sequence);
             final String seqName = sequence.getOutputName();
-            final String schemaId = !schema.isDefaultSchema() ? getStrategy().getFullJavaIdentifier(schema) : "null";
+            final String schemaId = getStrategy().getFullJavaIdentifier(schema);
             final String typeRef = getJavaTypeReference(sequence.getDatabase(), sequence.getType());
 
             out.tab(1).javadoc("The sequence <code>%s</code>", sequence.getQualifiedOutputName());

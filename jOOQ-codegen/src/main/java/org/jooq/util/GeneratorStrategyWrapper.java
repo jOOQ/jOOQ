@@ -111,6 +111,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             return "IDENTITY_" + getJavaIdentifier(((IdentityDefinition) definition).getColumn().getContainer());
         }
 
+        // [#2089] Intercept default schema
+        if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
+            return "DEFAULT_SCHEMA";
+        }
+
         String identifier = convertToJavaIdentifier(delegate.getJavaIdentifier(definition));
 
         // [#1212] Don't trust custom strategies and disambiguate identifiers here
@@ -271,6 +276,11 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
         // [#1150] Intercept Mode.RECORD calls for tables
         if (!generator.generateRecords() && mode == Mode.RECORD && definition instanceof TableDefinition) {
             return Record.class.getSimpleName();
+        }
+
+        // [#2089] Intercept default schema
+        if (definition instanceof SchemaDefinition && ((SchemaDefinition) definition).isDefaultSchema()) {
+            return "DefaultSchema";
         }
 
         String className;

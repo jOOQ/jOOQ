@@ -1564,6 +1564,11 @@ public abstract class jOOQAbstractTest<
         new AliasTests(this).testAliasingJoins();
     }
 
+    @Test
+    public void testAliasingPivot() throws Exception {
+        new ExoticTests(this).testAliasingPivot();
+    }
+
     // @Test // TODO [#579] re-enable this test when fixing this bug
     public void testUnaliasedSubqueryProjections() throws Exception {
         new SelectTests(this).testUnaliasedSubqueryProjections();

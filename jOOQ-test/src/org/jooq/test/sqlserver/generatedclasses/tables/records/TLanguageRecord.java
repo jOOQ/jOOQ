@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1489928584;
+	private static final long serialVersionUID = 1901520289;
 
 	/**
 	 * Setter for <code>dbo.t_language.cd</code>. 
@@ -65,20 +65,6 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TLanguage.T_LANGUAGE.ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>dbo.t_book</code> referencing this <code>dbo.t_language</code>
-	 */
-	public org.jooq.Result<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
-		return create()
-			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID.equal(getValue(org.jooq.test.sqlserver.generatedclasses.tables.TLanguage.T_LANGUAGE.ID)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

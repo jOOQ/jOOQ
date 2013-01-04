@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1970233474;
+	private static final long serialVersionUID = 1110895160;
 
 	/**
 	 * The parameter <code>dbo.p_default.p_in_number</code>. 
@@ -24,12 +24,12 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>dbo.p_default.p_in_varchar</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("p_in_varchar", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("p_in_varchar", org.jooq.impl.SQLDataType.VARCHAR.length(10));
 
 	/**
 	 * The parameter <code>dbo.p_default.p_out_varchar</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("p_out_varchar", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> P_OUT_VARCHAR = createParameter("p_out_varchar", org.jooq.impl.SQLDataType.VARCHAR.length(10));
 
 	/**
 	 * The parameter <code>dbo.p_default.p_in_date</code>. 

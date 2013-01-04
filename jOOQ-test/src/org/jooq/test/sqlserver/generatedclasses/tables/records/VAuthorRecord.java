@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -322949685;
+	private static final long serialVersionUID = 344840853;
 
 	/**
 	 * Setter for <code>dbo.v_author.ID</code>. 
@@ -94,10 +94,6 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.s
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record6 type implementation

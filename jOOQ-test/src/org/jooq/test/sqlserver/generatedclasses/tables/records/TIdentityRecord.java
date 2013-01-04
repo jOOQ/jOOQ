@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 642867234;
+	private static final long serialVersionUID = 1338015468;
 
 	/**
 	 * Setter for <code>dbo.t_identity.id</code>. 
@@ -38,10 +38,6 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.VAL);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

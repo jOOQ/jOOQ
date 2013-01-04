@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -536990840;
+	private static final long serialVersionUID = -1281355950;
 
 	/**
 	 * Setter for <code>dbo.v_library.author</code>. 
@@ -38,10 +38,6 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

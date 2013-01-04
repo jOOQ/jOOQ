@@ -92,6 +92,11 @@ public final class Tables {
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.sqlserver.generatedclasses.tables.VLibrary.V_LIBRARY;
 
 	/**
+	 * The table dbo.x_test_case_2025
+	 */
+	public static final org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+
+	/**
 	 * The table dbo.x_test_case_64_69
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.sqlserver.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;

@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -95043627;
+	private static final long serialVersionUID = -602303284;
 
 	/**
 	 * Setter for <code>dbo.t_author.ID</code>. 
@@ -93,30 +93,6 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>dbo.t_book</code> referencing this <code>dbo.t_author</code>
-	 */
-	public org.jooq.Result<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>dbo.t_book</code> referencing this <code>dbo.t_author</code>
-	 */
-	public org.jooq.Result<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.sqlserver.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

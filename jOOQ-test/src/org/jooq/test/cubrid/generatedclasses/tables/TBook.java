@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -490541043;
+	private static final long serialVersionUID = 1627117859;
 
 	/**
-	 * The singleton instance of <code>DBA.t_book</code>
+	 * The singleton instance of <code>t_book</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TBook T_BOOK = new org.jooq.test.cubrid.generatedclasses.tables.TBook();
 
@@ -25,52 +25,52 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid
 	}
 
 	/**
-	 * The column <code>DBA.t_book.id</code>. 
+	 * The column <code>t_book.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.author_id</code>. 
+	 * The column <code>t_book.author_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.co_author_id</code>. 
+	 * The column <code>t_book.co_author_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.details_id</code>. 
+	 * The column <code>t_book.details_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("details_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.title</code>. 
+	 * The column <code>t_book.title</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.published_in</code>. 
+	 * The column <code>t_book.published_in</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.language_id</code>. 
+	 * The column <code>t_book.language_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.content_text</code>. 
+	 * The column <code>t_book.content_text</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, java.lang.String> CONTENT_TEXT = createField("content_text", org.jooq.impl.SQLDataType.CLOB, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.content_pdf</code>. 
+	 * The column <code>t_book.content_pdf</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, byte[]> CONTENT_PDF = createField("content_pdf", org.jooq.impl.SQLDataType.BLOB, T_BOOK);
 
 	/**
-	 * The column <code>DBA.t_book.status</code>. 
+	 * The column <code>t_book.status</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord, org.jooq.test.cubrid.generatedclasses.enums.TBookStatus> STATUS = createField("status", org.jooq.util.cubrid.CUBRIDDataType.VARCHAR.asEnumDataType(org.jooq.test.cubrid.generatedclasses.enums.TBookStatus.class), T_BOOK);
 
@@ -78,7 +78,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid
 	 * No further instances allowed
 	 */
 	private TBook() {
-		super("t_book", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_book");
 	}
 
 	/**

@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -1746074545;
+	private static final long serialVersionUID = 710132215;
 
 	/**
-	 * The singleton instance of <code>DBA.x_test_case_64_69</code>
+	 * The singleton instance of <code>x_test_case_64_69</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = new org.jooq.test.cubrid.generatedclasses.tables.XTestCase_64_69();
 
@@ -25,12 +25,12 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	}
 
 	/**
-	 * The column <code>DBA.x_test_case_64_69.id</code>. 
+	 * The column <code>x_test_case_64_69.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_64_69);
 
 	/**
-	 * The column <code>DBA.x_test_case_64_69.unused_id</code>. 
+	 * The column <code>x_test_case_64_69.unused_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("unused_id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_64_69);
 
@@ -38,7 +38,7 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	 * No further instances allowed
 	 */
 	private XTestCase_64_69() {
-		super("x_test_case_64_69", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("x_test_case_64_69");
 	}
 
 	/**

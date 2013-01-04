@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1770815000;
+	private static final long serialVersionUID = -561704737;
 
 	/**
-	 * The singleton instance of <code>DBA.x_test_case_85</code>
+	 * The singleton instance of <code>x_test_case_85</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = new org.jooq.test.cubrid.generatedclasses.tables.XTestCase_85();
 
@@ -25,17 +25,17 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The column <code>DBA.x_test_case_85.id</code>. 
+	 * The column <code>x_test_case_85.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * The column <code>DBA.x_test_case_85.x_unused_id</code>. 
+	 * The column <code>x_test_case_85.x_unused_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> X_UNUSED_ID = createField("x_unused_id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
 
 	/**
-	 * The column <code>DBA.x_test_case_85.x_unused_name</code>. 
+	 * The column <code>x_test_case_85.x_unused_name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record, java.lang.String> X_UNUSED_NAME = createField("x_unused_name", org.jooq.impl.SQLDataType.VARCHAR, X_TEST_CASE_85);
 
@@ -43,7 +43,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * No further instances allowed
 	 */
 	private XTestCase_85() {
-		super("x_test_case_85", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("x_test_case_85");
 	}
 
 	/**

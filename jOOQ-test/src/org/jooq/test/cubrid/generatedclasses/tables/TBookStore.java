@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1351454582;
+	private static final long serialVersionUID = -520483289;
 
 	/**
-	 * The singleton instance of <code>DBA.t_book_store</code>
+	 * The singleton instance of <code>t_book_store</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.cubrid.generatedclasses.tables.TBookStore();
 
@@ -25,7 +25,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.c
 	}
 
 	/**
-	 * The column <code>DBA.t_book_store.name</code>. 
+	 * The column <code>t_book_store.name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_STORE);
 
@@ -33,7 +33,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.c
 	 * No further instances allowed
 	 */
 	private TBookStore() {
-		super("t_book_store", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_book_store");
 	}
 
 	/**

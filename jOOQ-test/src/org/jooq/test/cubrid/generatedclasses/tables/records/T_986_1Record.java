@@ -9,25 +9,21 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_1Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = -21973294;
+	private static final long serialVersionUID = 1855774514;
 
 	/**
-	 * Setter for <code>DBA.t_986_1.ref</code>. 
+	 * Setter for <code>t_986_1.ref</code>. 
 	 */
 	public void setRef(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.T_986_1.REF, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_986_1.ref</code>. 
+	 * Getter for <code>t_986_1.ref</code>. 
 	 */
 	public java.lang.Integer getRef() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.T_986_1.REF);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

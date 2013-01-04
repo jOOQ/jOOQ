@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = -1515384882;
+	private static final long serialVersionUID = 1700069373;
 
 	/**
-	 * The singleton instance of <code>DBA.t_959</code>
+	 * The singleton instance of <code>t_959</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.T_959 T_959 = new org.jooq.test.cubrid.generatedclasses.tables.T_959();
 
@@ -25,7 +25,7 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	}
 
 	/**
-	 * The column <code>DBA.t_959.java_keywords</code>. 
+	 * The column <code>t_959.java_keywords</code>.
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_959Record, org.jooq.test.cubrid.generatedclasses.enums.T_959JavaKeywords> JAVA_KEYWORDS = createField("java_keywords", org.jooq.util.cubrid.CUBRIDDataType.VARCHAR.asEnumDataType(org.jooq.test.cubrid.generatedclasses.enums.T_959JavaKeywords.class), T_959);
 
@@ -33,6 +33,6 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	 * No further instances allowed
 	 */
 	private T_959() {
-		super("t_959", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_959");
 	}
 }

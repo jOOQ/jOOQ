@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -593149993;
+	private static final long serialVersionUID = 1830347274;
 
 	/**
-	 * The singleton instance of <code>DBA.t_book_to_book_store</code>
+	 * The singleton instance of <code>t_book_to_book_store</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TBookToBookStore T_BOOK_TO_BOOK_STORE = new org.jooq.test.cubrid.generatedclasses.tables.TBookToBookStore();
 
@@ -25,17 +25,17 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	/**
-	 * The column <code>DBA.t_book_to_book_store.book_store_name</code>. 
+	 * The column <code>t_book_to_book_store.book_store_name</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * The column <code>DBA.t_book_to_book_store.book_id</code>. 
+	 * The column <code>t_book_to_book_store.book_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
 	/**
-	 * The column <code>DBA.t_book_to_book_store.stock</code>. 
+	 * The column <code>t_book_to_book_store.stock</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("stock", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
@@ -43,7 +43,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * No further instances allowed
 	 */
 	private TBookToBookStore() {
-		super("t_book_to_book_store", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_book_to_book_store");
 	}
 
 	/**

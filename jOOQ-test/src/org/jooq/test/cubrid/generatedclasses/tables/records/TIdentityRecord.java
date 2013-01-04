@@ -9,39 +9,35 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1988320630;
+	private static final long serialVersionUID = 875765750;
 
 	/**
-	 * Setter for <code>DBA.t_identity.id</code>. 
+	 * Setter for <code>t_identity.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TIdentity.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_identity.id</code>. 
+	 * Getter for <code>t_identity.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TIdentity.ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_identity.val</code>. 
+	 * Setter for <code>t_identity.val</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TIdentity.VAL, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_identity.val</code>. 
+	 * Getter for <code>t_identity.val</code>. 
 	 */
 	public java.lang.Integer getVal() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TIdentity.VAL);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

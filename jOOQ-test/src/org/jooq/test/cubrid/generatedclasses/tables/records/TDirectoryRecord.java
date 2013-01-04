@@ -9,98 +9,62 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1734457909;
+	private static final long serialVersionUID = -1274396880;
 
 	/**
-	 * Setter for <code>DBA.t_directory.id</code>. 
+	 * Setter for <code>t_directory.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_directory.id</code>. 
+	 * Getter for <code>t_directory.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_directory.parent_id</code>. 
+	 * Setter for <code>t_directory.parent_id</code>. 
 	 */
 	public void setParentId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.PARENT_ID, value);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord}
-	 */
-	public void setParentId(org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.PARENT_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.PARENT_ID, value.getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.ID));
-		}
-	}
-
-	/**
-	 * Getter for <code>DBA.t_directory.parent_id</code>. 
+	 * Getter for <code>t_directory.parent_id</code>. 
 	 */
 	public java.lang.Integer getParentId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.PARENT_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_directory.is_directory</code>. 
+	 * Setter for <code>t_directory.is_directory</code>. 
 	 */
 	public void setIsDirectory(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.IS_DIRECTORY, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_directory.is_directory</code>. 
+	 * Getter for <code>t_directory.is_directory</code>. 
 	 */
 	public java.lang.Integer getIsDirectory() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.IS_DIRECTORY);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_directory.name</code>. 
+	 * Setter for <code>t_directory.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.NAME, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_directory.name</code>. 
+	 * Getter for <code>t_directory.name</code>. 
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>DBA.t_directory</code> referencing this <code>DBA.t_directory</code>
-	 */
-	public org.jooq.Result<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> fetchTDirectoryList() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.T_DIRECTORY)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.PARENT_ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>DBA.t_directory</code> referenced by this <code>DBA.t_directory</code>
-	 */
-	public org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord fetchTDirectory() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.T_DIRECTORY)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.PARENT_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

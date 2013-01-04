@@ -9,76 +9,62 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -107311647;
+	private static final long serialVersionUID = 883266199;
 
 	/**
-	 * Setter for <code>DBA.t_language.cd</code>. 
+	 * Setter for <code>t_language.cd</code>. 
 	 */
 	public void setCd(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.CD, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_language.cd</code>. 
+	 * Getter for <code>t_language.cd</code>. 
 	 */
 	public java.lang.String getCd() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.CD);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_language.description</code>. 
+	 * Setter for <code>t_language.description</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.DESCRIPTION, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_language.description</code>. 
+	 * Getter for <code>t_language.description</code>. 
 	 */
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.DESCRIPTION);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_language.description_english</code>. 
+	 * Setter for <code>t_language.description_english</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_language.description_english</code>. 
+	 * Getter for <code>t_language.description_english</code>. 
 	 */
 	public java.lang.String getDescriptionEnglish() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH);
 	}
 
 	/**
-	 * Setter for <code>DBA.t_language.id</code>. 
+	 * Setter for <code>t_language.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.t_language.id</code>. 
+	 * Getter for <code>t_language.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>DBA.t_book</code> referencing this <code>DBA.t_language</code>
-	 */
-	public org.jooq.Result<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.TLanguage.ID)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

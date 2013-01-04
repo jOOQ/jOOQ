@@ -9,239 +9,202 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -551852459;
+	private static final long serialVersionUID = 1227401749;
 
 	/**
-	 * Setter for <code>DBA.x_unused.id</code>. 
+	 * Setter for <code>x_unused.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.id</code>. 
+	 * Getter for <code>x_unused.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.name</code>. 
+	 * Setter for <code>x_unused.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.name</code>. 
+	 * Getter for <code>x_unused.name</code>. 
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.big_integer</code>. 
+	 * Setter for <code>x_unused.big_integer</code>. 
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.BIG_INTEGER, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.big_integer</code>. 
+	 * Getter for <code>x_unused.big_integer</code>. 
 	 */
 	public java.math.BigInteger getBigInteger() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.BIG_INTEGER);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.id_ref</code>. 
+	 * Setter for <code>x_unused.id_ref</code>. 
 	 */
 	public void setIdRef(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID_REF, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.id_ref</code>. 
+	 * Getter for <code>x_unused.id_ref</code>. 
 	 */
 	public java.lang.Integer getIdRef() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID_REF);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.name_ref</code>. 
+	 * Setter for <code>x_unused.name_ref</code>. 
 	 */
 	public void setNameRef(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME_REF, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.name_ref</code>. 
+	 * Getter for <code>x_unused.name_ref</code>. 
 	 */
 	public java.lang.String getNameRef() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME_REF);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.class</code>. 
+	 * Setter for <code>x_unused.class</code>. 
 	 */
 	public void setClass_(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.CLASS, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.class</code>. 
+	 * Getter for <code>x_unused.class</code>. 
 	 */
 	public java.lang.Integer getClass_() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.CLASS);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.fields</code>. 
+	 * Setter for <code>x_unused.fields</code>. 
 	 */
 	public void setFields_(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.FIELDS, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.fields</code>. 
+	 * Getter for <code>x_unused.fields</code>. 
 	 */
 	public java.lang.Integer getFields_() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.FIELDS);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.configuration</code>. 
+	 * Setter for <code>x_unused.configuration</code>. 
 	 */
 	public void setConfiguration_(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.CONFIGURATION, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.configuration</code>. 
+	 * Getter for <code>x_unused.configuration</code>. 
 	 */
 	public java.lang.Integer getConfiguration_() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.CONFIGURATION);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.u_d_t</code>. 
+	 * Setter for <code>x_unused.u_d_t</code>. 
 	 */
 	public void setUDT(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.U_D_T, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.u_d_t</code>. 
+	 * Getter for <code>x_unused.u_d_t</code>. 
 	 */
 	public java.lang.Integer getUDT() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.U_D_T);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.meta_data</code>. 
+	 * Setter for <code>x_unused.meta_data</code>. 
 	 */
 	public void setMetaData(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.META_DATA, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.meta_data</code>. 
+	 * Getter for <code>x_unused.meta_data</code>. 
 	 */
 	public java.lang.Integer getMetaData() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.META_DATA);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.type0</code>. 
+	 * Setter for <code>x_unused.type0</code>. 
 	 */
 	public void setType0(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.TYPE0, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.type0</code>. 
+	 * Getter for <code>x_unused.type0</code>. 
 	 */
 	public java.lang.Integer getType0() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.TYPE0);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.primary_key</code>. 
+	 * Setter for <code>x_unused.primary_key</code>. 
 	 */
 	public void setPrimaryKey(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.PRIMARY_KEY, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.primary_key</code>. 
+	 * Getter for <code>x_unused.primary_key</code>. 
 	 */
 	public java.lang.Integer getPrimaryKey() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.PRIMARY_KEY);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.primarykey</code>. 
+	 * Setter for <code>x_unused.primarykey</code>. 
 	 */
 	public void setPrimarykey(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.PRIMARYKEY, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.primarykey</code>. 
+	 * Getter for <code>x_unused.primarykey</code>. 
 	 */
 	public java.lang.Integer getPrimarykey() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.PRIMARYKEY);
 	}
 
 	/**
-	 * Setter for <code>DBA.x_unused.field 737</code>. 
+	 * Setter for <code>x_unused.field 737</code>. 
 	 */
 	public void setField_737(java.math.BigDecimal value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.FIELD_737, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.x_unused.field 737</code>. 
+	 * Getter for <code>x_unused.field 737</code>. 
 	 */
 	public java.math.BigDecimal getField_737() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.FIELD_737);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>DBA.x_test_case_85</code> referencing this <code>DBA.x_unused</code>
-	 */
-	public org.jooq.Result<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_85.X_UNUSED_ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID)))
-			.and(org.jooq.test.cubrid.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>DBA.x_unused</code> referencing this <code>DBA.x_unused</code>
-	 */
-	public org.jooq.Result<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME_REF.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID, String.class)))
-			.and(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID_REF.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME, Integer.class)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>DBA.x_unused</code> referenced by this <code>DBA.x_unused</code>
-	 */
-	public org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
-		return create()
-			.selectFrom(org.jooq.test.cubrid.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME_REF, Integer.class)))
-			.and(org.jooq.test.cubrid.generatedclasses.tables.XUnused.NAME.equal(getValue(org.jooq.test.cubrid.generatedclasses.tables.XUnused.ID_REF, String.class)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

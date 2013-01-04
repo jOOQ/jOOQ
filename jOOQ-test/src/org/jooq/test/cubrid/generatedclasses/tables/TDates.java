@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1897622473;
+	private static final long serialVersionUID = -921168069;
 
 	/**
-	 * The singleton instance of <code>DBA.t_dates</code>
+	 * The singleton instance of <code>t_dates</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TDates T_DATES = new org.jooq.test.cubrid.generatedclasses.tables.TDates();
 
@@ -25,32 +25,32 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubri
 	}
 
 	/**
-	 * The column <code>DBA.t_dates.id</code>. 
+	 * The column <code>t_dates.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * The column <code>DBA.t_dates.d</code>. 
+	 * The column <code>t_dates.d</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord, java.sql.Date> D = createField("d", org.jooq.impl.SQLDataType.DATE, T_DATES);
 
 	/**
-	 * The column <code>DBA.t_dates.t</code>. 
+	 * The column <code>t_dates.t</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord, java.sql.Time> T = createField("t", org.jooq.impl.SQLDataType.TIME, T_DATES);
 
 	/**
-	 * The column <code>DBA.t_dates.ts</code>. 
+	 * The column <code>t_dates.ts</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("ts", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
 
 	/**
-	 * The column <code>DBA.t_dates.d_int</code>. 
+	 * The column <code>t_dates.d_int</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("d_int", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
 
 	/**
-	 * The column <code>DBA.t_dates.ts_bigint</code>. 
+	 * The column <code>t_dates.ts_bigint</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("ts_bigint", org.jooq.impl.SQLDataType.BIGINT, T_DATES);
 
@@ -58,7 +58,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubri
 	 * No further instances allowed
 	 */
 	private TDates() {
-		super("t_dates", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_dates");
 	}
 
 	/**

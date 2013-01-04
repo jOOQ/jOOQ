@@ -9,151 +9,147 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.cubrid.generatedclasses.enums.VBookStatus> {
 
-	private static final long serialVersionUID = -156774632;
+	private static final long serialVersionUID = -110399588;
 
 	/**
-	 * Setter for <code>DBA.v_book.id</code>. 
+	 * Setter for <code>v_book.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.id</code>. 
+	 * Getter for <code>v_book.id</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.author_id</code>. 
+	 * Setter for <code>v_book.author_id</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.AUTHOR_ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.author_id</code>. 
+	 * Getter for <code>v_book.author_id</code>. 
 	 */
 	public java.lang.Integer getAuthorId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.AUTHOR_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.co_author_id</code>. 
+	 * Setter for <code>v_book.co_author_id</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.CO_AUTHOR_ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.co_author_id</code>. 
+	 * Getter for <code>v_book.co_author_id</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.CO_AUTHOR_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.details_id</code>. 
+	 * Setter for <code>v_book.details_id</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.DETAILS_ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.details_id</code>. 
+	 * Getter for <code>v_book.details_id</code>. 
 	 */
 	public java.lang.Integer getDetailsId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.DETAILS_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.title</code>. 
+	 * Setter for <code>v_book.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.TITLE, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.title</code>. 
+	 * Getter for <code>v_book.title</code>. 
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.TITLE);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.published_in</code>. 
+	 * Setter for <code>v_book.published_in</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.PUBLISHED_IN, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.published_in</code>. 
+	 * Getter for <code>v_book.published_in</code>. 
 	 */
 	public java.lang.Integer getPublishedIn() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.PUBLISHED_IN);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.language_id</code>. 
+	 * Setter for <code>v_book.language_id</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.LANGUAGE_ID, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.language_id</code>. 
+	 * Getter for <code>v_book.language_id</code>. 
 	 */
 	public java.lang.Integer getLanguageId() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.LANGUAGE_ID);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.content_text</code>. 
+	 * Setter for <code>v_book.content_text</code>. 
 	 */
 	public void setContentText(java.lang.String value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.CONTENT_TEXT, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.content_text</code>. 
+	 * Getter for <code>v_book.content_text</code>. 
 	 */
 	public java.lang.String getContentText() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.CONTENT_TEXT);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.content_pdf</code>. 
+	 * Setter for <code>v_book.content_pdf</code>. 
 	 */
 	public void setContentPdf(byte[] value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.CONTENT_PDF, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.content_pdf</code>. 
+	 * Getter for <code>v_book.content_pdf</code>. 
 	 */
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.CONTENT_PDF);
 	}
 
 	/**
-	 * Setter for <code>DBA.v_book.status</code>. 
+	 * Setter for <code>v_book.status</code>. 
 	 */
 	public void setStatus(org.jooq.test.cubrid.generatedclasses.enums.VBookStatus value) {
 		setValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.STATUS, value);
 	}
 
 	/**
-	 * Getter for <code>DBA.v_book.status</code>. 
+	 * Getter for <code>v_book.status</code>. 
 	 */
 	public org.jooq.test.cubrid.generatedclasses.enums.VBookStatus getStatus() {
 		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VBook.STATUS);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record10 type implementation

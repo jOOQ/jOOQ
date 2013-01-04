@@ -9,10 +9,10 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -785373190;
+	private static final long serialVersionUID = -978584473;
 
 	/**
-	 * The singleton instance of <code>DBA.t_language</code>
+	 * The singleton instance of <code>t_language</code>
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TLanguage T_LANGUAGE = new org.jooq.test.cubrid.generatedclasses.tables.TLanguage();
 
@@ -25,22 +25,22 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 	}
 
 	/**
-	 * The column <code>DBA.t_language.cd</code>. 
+	 * The column <code>t_language.cd</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE);
 
 	/**
-	 * The column <code>DBA.t_language.description</code>. 
+	 * The column <code>t_language.description</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
 
 	/**
-	 * The column <code>DBA.t_language.description_english</code>. 
+	 * The column <code>t_language.description_english</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
 
 	/**
-	 * The column <code>DBA.t_language.id</code>. 
+	 * The column <code>t_language.id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
 
@@ -48,7 +48,7 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 	 * No further instances allowed
 	 */
 	private TLanguage() {
-		super("t_language", org.jooq.test.cubrid.generatedclasses.Dba.DBA);
+		super("t_language");
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = -989197290;
+	private static final long serialVersionUID = 1589841763;
 
 	/**
 	 * The singleton instance of <code>x_test_case_2025</code>
@@ -38,7 +38,7 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.sqlite
 	 * No further instances allowed
 	 */
 	private XTestCase_2025() {
-		super("x_test_case_2025");
+		super("x_test_case_2025", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**

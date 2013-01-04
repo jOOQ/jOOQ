@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 476407094;
+	private static final long serialVersionUID = -262484221;
 
 	/**
 	 * The singleton instance of <code>t_triggers</code>
@@ -43,7 +43,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sq
 	 * No further instances allowed
 	 */
 	private TTriggers() {
-		super("t_triggers");
+		super("t_triggers", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**

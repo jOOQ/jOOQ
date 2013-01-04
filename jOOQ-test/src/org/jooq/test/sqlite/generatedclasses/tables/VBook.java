@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 156390084;
+	private static final long serialVersionUID = 1531345111;
 
 	/**
 	 * The singleton instance of <code>v_book</code>
@@ -73,6 +73,6 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generate
 	 * No further instances allowed
 	 */
 	private VBook() {
-		super("v_book");
+		super("v_book", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

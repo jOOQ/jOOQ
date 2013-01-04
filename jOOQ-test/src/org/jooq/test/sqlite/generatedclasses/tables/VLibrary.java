@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -1040605435;
+	private static final long serialVersionUID = 750597272;
 
 	/**
 	 * The singleton instance of <code>V_LIBRARY</code>
@@ -38,6 +38,6 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.gener
 	 * No further instances allowed
 	 */
 	private VLibrary() {
-		super("V_LIBRARY");
+		super("V_LIBRARY", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

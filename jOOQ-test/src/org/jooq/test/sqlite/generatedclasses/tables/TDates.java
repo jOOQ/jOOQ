@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 950406246;
+	private static final long serialVersionUID = 618851059;
 
 	/**
 	 * The singleton instance of <code>t_dates</code>
@@ -58,7 +58,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlit
 	 * No further instances allowed
 	 */
 	private TDates() {
-		super("t_dates");
+		super("t_dates", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**

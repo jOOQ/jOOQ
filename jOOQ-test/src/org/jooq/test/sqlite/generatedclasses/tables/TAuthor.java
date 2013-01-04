@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -771316680;
+	private static final long serialVersionUID = -1728221493;
 
 	/**
 	 * The singleton instance of <code>t_author</code>
@@ -58,7 +58,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	 * No further instances allowed
 	 */
 	private TAuthor() {
-		super("t_author");
+		super("t_author", org.jooq.test.sqlite.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**

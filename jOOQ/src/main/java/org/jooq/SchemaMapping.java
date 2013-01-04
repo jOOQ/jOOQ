@@ -51,6 +51,7 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.tools.JooqLogger;
+import org.jooq.tools.StringUtils;
 
 /**
  * General mapping of generated artefacts onto run-time substitutes.
@@ -310,41 +311,45 @@ public class SchemaMapping implements Serializable {
         if (schema != null) {
             String schemaName = schema.getName();
 
-            // Lazy initialise schema mapping
-            if (!getSchemata().containsKey(schemaName)) {
+            // [#2089] DefaultSchema has an empty schema name
+            if (!StringUtils.isEmpty(schemaName)) {
 
-                // [#1857] thread-safe lazy initialisation for those users who
-                // want to use Factory and dependent objects in a "thread-safe" manner
-                synchronized (this) {
-                    if (!getSchemata().containsKey(schemaName)) {
-                        Schema mapped = schema;
+                // Lazy initialise schema mapping
+                if (!getSchemata().containsKey(schemaName)) {
 
-                        for (MappedSchema s : mapping.getSchemata()) {
+                    // [#1857] thread-safe lazy initialisation for those users who
+                    // want to use Factory and dependent objects in a "thread-safe" manner
+                    synchronized (this) {
+                        if (!getSchemata().containsKey(schemaName)) {
+                            Schema mapped = schema;
 
-                            // A configured mapping was found, add a renamed schema
-                            if (schemaName.equals(s.getInput())) {
+                            for (MappedSchema s : mapping.getSchemata()) {
 
-                                // Ignore self-mappings and void-mappings
-                                if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
-                                    mapped = new RenamedSchema(schema, s.getOutput());
+                                // A configured mapping was found, add a renamed schema
+                                if (schemaName.equals(s.getInput())) {
+
+                                    // Ignore self-mappings and void-mappings
+                                    if (!isBlank(s.getOutput()) && !s.getOutput().equals(s.getInput())) {
+                                        mapped = new RenamedSchema(schema, s.getOutput());
+                                    }
+
+                                    break;
                                 }
-
-                                break;
                             }
-                        }
 
-                        // Add mapped schema or self if no mapping was found
-                        getSchemata().put(schemaName, mapped);
+                            // Add mapped schema or self if no mapping was found
+                            getSchemata().put(schemaName, mapped);
+                        }
                     }
                 }
-            }
 
-            result = getSchemata().get(schemaName);
+                result = getSchemata().get(schemaName);
 
-            // The configured default schema is mapped to "null". This prevents
-            // it from being rendered to SQL
-            if (result.getName().equals(mapping.getDefaultSchema())) {
-                result = null;
+                // The configured default schema is mapped to "null". This prevents
+                // it from being rendered to SQL
+                if (result.getName().equals(mapping.getDefaultSchema())) {
+                    result = null;
+                }
             }
         }
 
@@ -365,10 +370,11 @@ public class SchemaMapping implements Serializable {
             Schema schema = table.getSchema();
 
             // [#1189] Schema can be null in SQLite
+            // [#2089] DefaultSchema have empty schema names
             // [#1186] TODO: replace this by calling table.getQualifiedName()
             String schemaName = (schema == null) ? "" : schema.getName();
             String tableName = table.getName();
-            String key = (schema == null) ? tableName : (schemaName + "." + tableName);
+            String key = (schema == null || StringUtils.isEmpty(schemaName)) ? tableName : (schemaName + "." + tableName);
 
             // Lazy initialise table mapping
             if (!getTables().containsKey(key)) {

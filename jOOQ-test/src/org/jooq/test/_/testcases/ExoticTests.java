@@ -325,11 +325,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         assertEquals(1, r2.size());
         assertEquals(5, r2.getFields().size());
-        assertEquals(1, r2.getValue(0, "a", Integer.class));
-        assertEquals(2, r2.getValue(0, "b", Integer.class));
-        assertEquals(3, r2.getValue(0, "c", Integer.class));
-        assertEquals(4, r2.getValue(0, "d", Integer.class));
-        assertEquals(5, r2.getValue(0, "e", Integer.class));
+        assertEquals(1, (int) r2.get(0).getValue("a", Integer.class));
+        assertEquals(2, (int) r2.get(0).getValue("b", Integer.class));
+        assertEquals(3, (int) r2.get(0).getValue("c", Integer.class));
+        assertEquals(4, (int) r2.get(0).getValue("d", Integer.class));
+        assertEquals(5, (int) r2.get(0).getValue("e", Integer.class));
     }
 
     @Test

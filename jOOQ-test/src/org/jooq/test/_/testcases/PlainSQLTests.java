@@ -278,7 +278,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(asList(1, 2, 1, 2), result1.getValues(1, int.class));
 
         Result<Record> result2 =
-        create().fetch("select * from (select id from t_author) a1 left outer join (select id from t_author where 1 = 0) a2 on a1.id = a2.id");
+        create().fetch("select * from (select id from t_author) a1 left outer join (select id from t_author where 1 = 0) a2 on a1.id = a2.id order by a1.id");
 
         assertEquals(asList(1, 2), result2.getValues(0, Integer.class));
         assertEquals(asList(null, null), result2.getValues(1, Integer.class));

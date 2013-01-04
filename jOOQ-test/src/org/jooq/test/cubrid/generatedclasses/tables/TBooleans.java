@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 317221834;
+	private static final long serialVersionUID = -671034214;
 
 	/**
 	 * The singleton instance of <code>t_booleans</code>
@@ -37,12 +37,12 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 	/**
 	 * The column <code>t_booleans.true_false_lc</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_LC> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_LC_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_LC> TRUE_FALSE_LC = createField("true_false_lc", org.jooq.impl.SQLDataType.VARCHAR.length(5).asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_LC_Converter()), T_BOOLEANS);
 
 	/**
 	 * The column <code>t_booleans.true_false_uc</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_UC> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.impl.SQLDataType.VARCHAR.asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_UC_Converter()), T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, org.jooq.test._.converters.Boolean_TF_UC> TRUE_FALSE_UC = createField("true_false_uc", org.jooq.impl.SQLDataType.VARCHAR.length(5).asConvertedDataType(new org.jooq.test._.converters.Boolean_TF_UC_Converter()), T_BOOLEANS);
 
 	/**
 	 * The column <code>t_booleans.yes_no_lc</code>. 

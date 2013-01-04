@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1353190465;
+	private static final long serialVersionUID = 1013134945;
 
 	/**
 	 * The singleton instance of <code>x_unused</code>
@@ -32,7 +32,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 	/**
 	 * The column <code>x_unused.name</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, X_UNUSED);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(10), X_UNUSED);
 
 	/**
 	 * The column <code>x_unused.big_integer</code>. 
@@ -47,7 +47,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 	/**
 	 * The column <code>x_unused.name_ref</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("name_ref", org.jooq.impl.SQLDataType.VARCHAR, X_UNUSED);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("name_ref", org.jooq.impl.SQLDataType.VARCHAR.length(10), X_UNUSED);
 
 	/**
 	 * The column <code>x_unused.class</code>. 

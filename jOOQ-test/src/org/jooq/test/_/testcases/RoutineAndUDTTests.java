@@ -376,6 +376,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     }
 
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Test
     public void testARRAYType() throws Exception {
         if (TArrays() == null) {
@@ -414,9 +415,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
             InsertQuery<?> insert = create().insertQuery(TArrays());
             insert.addValue(TArrays_ID(), 5);
-            insert.addValueAsArray(TArrays_NUMBER_R(), 1, 2, 3);
-            insert.addValueAsArray(TArrays_STRING_R(), "a", "b", "c", "d\"\\d");
-            insert.addValueAsArray(TArrays_DATE_R(), new Date(0), new Date(84600 * 1000), new Date(84600 * 2000));
+            insert.addValue((Field) TArrays_NUMBER_R(),
+                on(TArrays_NUMBER_R().getType()).create(create(), new Integer[] { 1, 2, 3 }).get());
+            insert.addValue((Field) TArrays_STRING_R(),
+                on(TArrays_STRING_R().getType()).create(create(), new String[] { "a", "b", "c", "d\"\\d" }).get());
+            insert.addValue((Field) TArrays_DATE_R(),
+                on(TArrays_DATE_R().getType()).create(create(), new Date[] { new Date(0), new Date(84600 * 1000), new Date(84600 * 2000) }).get());
             insert.execute();
 
             Record array = create().select(
@@ -434,9 +438,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
 
             UpdateQuery<X> update = create().updateQuery(TArrays());
-            update.addValueAsArray(TArrays_NUMBER_R(), 3, 2, 1);
-            update.addValueAsArray(TArrays_STRING_R(), "d\"\\d", "c", "b", "a");
-            update.addValueAsArray(TArrays_DATE_R(), new Date(84600 * 2000), new Date(84600 * 1000), new Date(0));
+            update.addValue((Field) TArrays_NUMBER_R(),
+                on(TArrays_NUMBER_R().getType()).create(create(), new Integer[] { 3, 2, 1 }).get());
+            update.addValue((Field) TArrays_STRING_R(),
+                on(TArrays_STRING_R().getType()).create(create(), new String[] { "d\"\\d", "c", "b", "a" }).get());
+            update.addValue((Field) TArrays_DATE_R(),
+                on(TArrays_DATE_R().getType()).create(create(), new Date[] { new Date(84600 * 2000), new Date(84600 * 1000), new Date(0) }).get());
             update.addConditions(TArrays_ID().equal(5));
             update.execute();
 

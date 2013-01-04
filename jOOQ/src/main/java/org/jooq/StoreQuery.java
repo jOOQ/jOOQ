@@ -35,9 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE;
-
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -85,27 +82,5 @@ public interface StoreQuery<R extends Record> extends Query {
      */
     @Support
     void addValues(Map<? extends Field<?>, ?> map);
-
-    /**
-     * Add a value to the store statement
-     *
-     * @param <A> The field type
-     * @param <T> The array type
-     * @param field The field
-     * @param value The value
-     */
-    @Support(ORACLE)
-    <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, T... value);
-
-    /**
-     * Add a value to the store statement
-     *
-     * @param <A> The field type
-     * @param <T> The array type
-     * @param field The field
-     * @param value The value
-     */
-    @Support(ORACLE)
-    <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, List<T> value);
 
 }

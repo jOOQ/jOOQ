@@ -40,16 +40,10 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
-import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SYBASE;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -145,72 +139,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 assertEquals(sequence, schema.getSequence(sequence.getName()));
             }
 
-            int tables = 18;
+            // Some selective tables
+            assertTrue(schema.getTables().contains(T639()));
+            assertTrue(schema.getTables().contains(TAuthor()));
+            assertTrue(schema.getTables().contains(TBook()));
+            assertTrue(schema.getTables().contains(TBookStore()));
+            assertTrue(schema.getTables().contains(TBookToBookStore()));
 
             // The additional T_DIRECTORY table for recursive queries
-            if (supportsRecursiveQueries()) {
-                tables++;
+            if (TDirectory() != null) {
+                schema.getTables().contains(TDirectory());
             }
 
             // The additional T_TRIGGERS table for INSERT .. RETURNING
             if (TTriggers() != null) {
-                tables++;
+                schema.getTables().contains(TTriggers());
             }
 
             // The additional T_UNSIGNED table
             if (TUnsigned() != null) {
-                tables++;
+                schema.getTables().contains(TUnsigned());
             }
 
             // The additional T_IDENTITY table
             if (TIdentity() != null) {
-                tables++;
+                schema.getTables().contains(TIdentity());
             }
 
             // The additional T_IDENTITY_PK table
             if (TIdentityPK() != null) {
-                tables++;
-            }
-
-            // [#959] The T_959 table for enum collisions with Java keywords
-            if (getDialect() == CUBRID ||
-                getDialect() == MYSQL ||
-                getDialect() == POSTGRES) {
-                tables++;
-            }
-
-            // [#986] Some foreign key name collision checks
-            if (getDialect() == ASE ||
-                getDialect() == CUBRID ||
-                getDialect() == DB2 ||
-                getDialect() == POSTGRES ||
-                getDialect() == SQLITE ||
-                getDialect() == SYBASE) {
-
-                tables += 2;
-            }
-
-            if (TArrays() == null) {
-                assertEquals(tables, schema.getTables().size());
-            }
-
-            // [#877] The T_877 table is only available in H2
-            else if (getDialect() == H2) {
-                assertEquals(tables + 2, schema.getTables().size());
-            }
-
-            // [#624] The V_INCOMPLETE view is only available in Oracle
-            else if (getDialect() == ORACLE) {
-                assertEquals(tables + 3, schema.getTables().size());
-            }
-
-            // [#610] Collision-prone entities are only available in HSQLDB
-            else if (getDialect() == HSQLDB) {
-                assertEquals(tables + 11, schema.getTables().size());
-            }
-
-            else {
-                assertEquals(tables + 1, schema.getTables().size());
+                schema.getTables().contains(TIdentityPK());
             }
 
             if (cUAddressType() == null) {

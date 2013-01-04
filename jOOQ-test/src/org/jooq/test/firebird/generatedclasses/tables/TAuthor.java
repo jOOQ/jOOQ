@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -876538536;
+	private static final long serialVersionUID = 349883836;
 
 	/**
 	 * The singleton instance of <code>T_AUTHOR</code>
@@ -58,14 +58,14 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	 * Create a <code>T_AUTHOR</code> table reference
 	 */
 	public TAuthor() {
-		super("T_AUTHOR");
+		super("T_AUTHOR", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>T_AUTHOR</code> table reference
 	 */
 	public TAuthor(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TAuthor.T_AUTHOR);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 
 	/**

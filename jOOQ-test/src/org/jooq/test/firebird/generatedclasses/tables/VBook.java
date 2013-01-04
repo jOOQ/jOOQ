@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -292419945;
+	private static final long serialVersionUID = -1673228421;
 
 	/**
 	 * The singleton instance of <code>V_BOOK</code>
@@ -78,14 +78,14 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.firebird.genera
 	 * Create a <code>V_BOOK</code> table reference
 	 */
 	public VBook() {
-		super("V_BOOK");
+		super("V_BOOK", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>V_BOOK</code> table reference
 	 */
 	public VBook(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.VBook.V_BOOK);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.VBook.V_BOOK);
 	}
 
 	/**

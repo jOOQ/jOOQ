@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -788266501;
+	private static final long serialVersionUID = -357922081;
 
 	/**
 	 * The singleton instance of <code>T_BOOLEANS</code>
@@ -83,14 +83,14 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	 * Create a <code>T_BOOLEANS</code> table reference
 	 */
 	public TBooleans() {
-		super("T_BOOLEANS");
+		super("T_BOOLEANS", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>T_BOOLEANS</code> table reference
 	 */
 	public TBooleans(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TBooleans.T_BOOLEANS);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.TBooleans.T_BOOLEANS);
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -959732629;
+	private static final long serialVersionUID = 876623183;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>
@@ -48,14 +48,14 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	 * Create a <code>T_LANGUAGE</code> table reference
 	 */
 	public TLanguage() {
-		super("T_LANGUAGE");
+		super("T_LANGUAGE", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>T_LANGUAGE</code> table reference
 	 */
 	public TLanguage(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -774908419;
+	private static final long serialVersionUID = 152758661;
 
 	/**
 	 * The singleton instance of <code>T_639_NUMBERS_TABLE</code>
@@ -83,14 +83,14 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * Create a <code>T_639_NUMBERS_TABLE</code> table reference
 	 */
 	public T_639NumbersTable() {
-		super("T_639_NUMBERS_TABLE");
+		super("T_639_NUMBERS_TABLE", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>T_639_NUMBERS_TABLE</code> table reference
 	 */
 	public T_639NumbersTable(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE);
 	}
 
 	/**

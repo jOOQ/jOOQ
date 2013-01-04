@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 483674874;
+	private static final long serialVersionUID = 1223862934;
 
 	/**
 	 * The singleton instance of <code>T_DATES</code>
@@ -58,14 +58,14 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fireb
 	 * Create a <code>T_DATES</code> table reference
 	 */
 	public TDates() {
-		super("T_DATES");
+		super("T_DATES", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>T_DATES</code> table reference
 	 */
 	public TDates(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES);
 	}
 
 	/**

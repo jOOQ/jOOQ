@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 1638246328;
+	private static final long serialVersionUID = -1811216064;
 
 	/**
 	 * The singleton instance of <code>X_TEST_CASE_2025</code>
@@ -38,14 +38,14 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.firebi
 	 * Create a <code>X_TEST_CASE_2025</code> table reference
 	 */
 	public XTestCase_2025() {
-		super("X_TEST_CASE_2025");
+		super("X_TEST_CASE_2025", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>X_TEST_CASE_2025</code> table reference
 	 */
 	public XTestCase_2025(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025);
 	}
 
 	/**

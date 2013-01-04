@@ -37,14 +37,12 @@
 package org.jooq.util.cubrid;
 
 import static org.jooq.impl.Factory.concat;
-import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.val;
 import static org.jooq.util.cubrid.dba.Tables.DB_CLASS;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX_KEY;
 import static org.jooq.util.cubrid.dba.Tables.DB_SERIAL;
-import static org.jooq.util.cubrid.dba.Tables.DB_USER;
 
 import java.math.BigInteger;
 import java.sql.DatabaseMetaData;
@@ -80,12 +78,11 @@ public class CUBRIDDatabase extends AbstractDatabase {
     @Override
     protected void loadPrimaryKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(DB_INDEX.IS_UNIQUE.isTrue().and(DB_INDEX.IS_PRIMARY_KEY.isFalse()))) {
-            SchemaDefinition schema = getSchema(record.getValue(DB_CLASS.OWNER_NAME));
             String key = record.getValue("constraint_name", String.class);
             String tableName = record.getValue(DB_CLASS.CLASS_NAME);
             String columnName = record.getValue(DB_INDEX_KEY.KEY_ATTR_NAME);
 
-            TableDefinition table = getTable(schema, tableName);
+            TableDefinition table = getTable(getSchemata().get(0), tableName);
             if (table != null) {
                 relations.addUniqueKey(key, table.getColumn(columnName));
             }
@@ -95,12 +92,11 @@ public class CUBRIDDatabase extends AbstractDatabase {
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
         for (Record record : fetchKeys(DB_INDEX.IS_PRIMARY_KEY.isTrue())) {
-            SchemaDefinition schema = getSchema(record.getValue(DB_CLASS.OWNER_NAME));
             String key = record.getValue("constraint_name", String.class);
             String tableName = record.getValue(DB_CLASS.CLASS_NAME);
             String columnName = record.getValue(DB_INDEX_KEY.KEY_ATTR_NAME);
 
-            TableDefinition table = getTable(schema, tableName);
+            TableDefinition table = getTable(getSchemata().get(0), tableName);
             if (table != null) {
                 relations.addPrimaryKey(key, table.getColumn(columnName));
             }
@@ -112,17 +108,14 @@ public class CUBRIDDatabase extends AbstractDatabase {
         create().select(
                     concat(DB_CLASS.CLASS_NAME, val("__"), DB_INDEX.INDEX_NAME).as("constraint_name"),
                     DB_INDEX_KEY.KEY_ATTR_NAME,
-                    DB_CLASS.CLASS_NAME,
-                    DB_CLASS.OWNER_NAME)
+                    DB_CLASS.CLASS_NAME)
                 .from(DB_INDEX)
                 .join(DB_CLASS).on(DB_INDEX.CLASS_NAME.equal(DB_CLASS.CLASS_NAME))
                 .join(DB_INDEX_KEY).on(
                     DB_INDEX_KEY.INDEX_NAME.equal(DB_INDEX.INDEX_NAME).and(
                     DB_INDEX_KEY.CLASS_NAME.equal(DB_INDEX.CLASS_NAME)))
                 .where(condition)
-                .and(DB_CLASS.OWNER_NAME.in(getInputSchemata()))
                 .orderBy(
-                    DB_CLASS.OWNER_NAME.asc(),
                     DB_INDEX.INDEX_NAME.asc())
                 .fetch();
     }
@@ -138,9 +131,6 @@ public class CUBRIDDatabase extends AbstractDatabase {
                 .fetch(DB_INDEX.CLASS_NAME)) {
 
             for (Record record : create().fetch(meta.getImportedKeys(null, null, table))) {
-                SchemaDefinition foreignKeySchema = getSchema(getInputSchemata().get(0));
-                SchemaDefinition uniqueKeySchema = getSchema(getInputSchemata().get(0));
-
                 String foreignKeyName =
                     record.getValue("FKTABLE_NAME", String.class) +
                     "__" +
@@ -152,10 +142,10 @@ public class CUBRIDDatabase extends AbstractDatabase {
                     "__" +
                     record.getValue("PK_NAME", String.class);
 
-                TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTableName);
+                TableDefinition referencingTable = getTable(getSchemata().get(0), foreignKeyTableName);
                 if (referencingTable != null) {
                     ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
-                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column, uniqueKeySchema);
+                    relations.addForeignKey(foreignKeyName, uniqueKeyName, column, getSchemata().get(0));
                 }
             }
         }
@@ -164,15 +154,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
     @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
-
-        for (String name : create()
-                .select(DB_USER.NAME)
-                .from(DB_USER)
-                .fetch(DB_USER.NAME)) {
-
-            result.add(new SchemaDefinition(this, name, ""));
-        }
-
+        result.add(new SchemaDefinition(this, "", ""));
         return result;
     }
 
@@ -183,18 +165,15 @@ public class CUBRIDDatabase extends AbstractDatabase {
         for (Record record : create()
                 .select(
                     DB_SERIAL.NAME,
-                    DB_SERIAL.MAX_VAL,
-                    field("owner.name", String.class).as("owner"))
+                    DB_SERIAL.MAX_VAL)
                 .from(DB_SERIAL)
-                .where(field("owner.name", String.class).in(getInputSchemata()))
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue("owner", String.class));
             BigInteger value = record.getValue(DB_SERIAL.MAX_VAL, BigInteger.class, BigInteger.valueOf(Long.MAX_VALUE));
-            DataTypeDefinition type = getDataTypeForMAX_VAL(schema, value);
+            DataTypeDefinition type = getDataTypeForMAX_VAL(getSchemata().get(0), value);
 
             result.add(new DefaultSequenceDefinition(
-                schema,
+                getSchemata().get(0),
                 record.getValue(DB_SERIAL.NAME),
                 type));
         }
@@ -208,19 +187,15 @@ public class CUBRIDDatabase extends AbstractDatabase {
 
         for (Record record : create()
                 .select(
-                    DB_CLASS.OWNER_NAME,
                     DB_CLASS.CLASS_NAME)
                 .from(DB_CLASS)
-                .where(DB_CLASS.OWNER_NAME.in(getInputSchemata()))
                 .orderBy(
-                    DB_CLASS.OWNER_NAME.asc(),
                     DB_CLASS.CLASS_NAME.asc())
                 .fetch()) {
 
-            SchemaDefinition schema = getSchema(record.getValue(DB_CLASS.OWNER_NAME));
             String name = record.getValue(DB_CLASS.CLASS_NAME);
 
-            CUBRIDTableDefinition table = new CUBRIDTableDefinition(schema, name, null);
+            CUBRIDTableDefinition table = new CUBRIDTableDefinition(getSchemata().get(0), name, null);
             result.add(table);
         }
 
@@ -231,26 +206,24 @@ public class CUBRIDDatabase extends AbstractDatabase {
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
-        for (SchemaDefinition schemaDefinition : getSchemata()) {
-            for (TableDefinition tableDefinition : getTables(schemaDefinition)) {
-                for (Record record : create().fetch("SHOW COLUMNS FROM {0} WHERE TYPE LIKE 'ENUM(%)'", fieldByName(tableDefinition.getInputName()))) {
-                    String table = tableDefinition.getInputName();
-                    String column = record.getValue("Field", String.class);
-                    String columnType = record.getValue("Type", String.class);
-                    String name = table + "_" + column;
+        for (TableDefinition tableDefinition : getTables(getSchemata().get(0))) {
+            for (Record record : create().fetch("SHOW COLUMNS FROM {0} WHERE TYPE LIKE 'ENUM(%)'", fieldByName(tableDefinition.getInputName()))) {
+                String table = tableDefinition.getInputName();
+                String column = record.getValue("Field", String.class);
+                String columnType = record.getValue("Type", String.class);
+                String name = table + "_" + column;
 
-                    ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
+                ColumnDefinition columnDefinition = tableDefinition.getColumn(column);
 
-                    // [#1137] Avoid generating enum classes for enum types that
-                    // are explicitly forced to another type
-                    if (getConfiguredForcedType(columnDefinition) == null) {
-                        DefaultEnumDefinition definition = new DefaultEnumDefinition(schemaDefinition, name, "");
-                        for (String string : columnType.replaceAll("ENUM\\(|\\)", "").split(",")) {
-                            definition.addLiteral(string.trim().replaceAll("'", ""));
-                        }
-
-                        result.add(definition);
+                // [#1137] Avoid generating enum classes for enum types that
+                // are explicitly forced to another type
+                if (getConfiguredForcedType(columnDefinition) == null) {
+                    DefaultEnumDefinition definition = new DefaultEnumDefinition(getSchemata().get(0), name, "");
+                    for (String string : columnType.replaceAll("ENUM\\(|\\)", "").split(",")) {
+                        definition.addLiteral(string.trim().replaceAll("'", ""));
                     }
+
+                    result.add(definition);
                 }
             }
         }

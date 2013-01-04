@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1012230075;
+	private static final long serialVersionUID = -998304343;
 
 	/**
 	 * The singleton instance of <code>X_UNUSED</code>
@@ -108,14 +108,14 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	 * Create a <code>X_UNUSED</code> table reference
 	 */
 	public XUnused() {
-		super("X_UNUSED");
+		super("X_UNUSED", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>X_UNUSED</code> table reference
 	 */
 	public XUnused(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED);
 	}
 
 	/**

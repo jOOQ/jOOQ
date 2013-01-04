@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -128548119;
+	private static final long serialVersionUID = 1990241997;
 
 	/**
 	 * The singleton instance of <code>T_BOOK</code>
@@ -78,14 +78,14 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebi
 	 * Create a <code>T_BOOK</code> table reference
 	 */
 	public TBook() {
-		super("T_BOOK");
+		super("T_BOOK", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>T_BOOK</code> table reference
 	 */
 	public TBook(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.TBook.T_BOOK);
 	}
 
 	/**

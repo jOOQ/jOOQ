@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -438391628;
+	private static final long serialVersionUID = -766816212;
 
 	/**
 	 * The singleton instance of <code>X_TEST_CASE_85</code>
@@ -43,14 +43,14 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * Create a <code>X_TEST_CASE_85</code> table reference
 	 */
 	public XTestCase_85() {
-		super("X_TEST_CASE_85");
+		super("X_TEST_CASE_85", org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>X_TEST_CASE_85</code> table reference
 	 */
 	public XTestCase_85(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
+		super(alias, org.jooq.test.firebird.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85);
 	}
 
 	/**

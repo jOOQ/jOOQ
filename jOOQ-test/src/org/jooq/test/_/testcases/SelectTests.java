@@ -167,62 +167,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testSubSelect() throws Exception {
-        // ---------------------------------------------------------------------
-        // Testing the IN condition
-        // ---------------------------------------------------------------------
-        assertEquals(3,
-            create().selectFrom(TBook())
-                .where(TBook_TITLE().notIn(
-                    select(TBook_TITLE())
-                    .from(TBook())
-                    .where(TBook_TITLE().in("1984"))))
-                .execute());
-
-        // ---------------------------------------------------------------------
-        // Testing the EXISTS condition
-        // ---------------------------------------------------------------------
-        assertEquals(3,
-            create()
-                .selectFrom(TBook())
-                .whereNotExists(
-                    selectOne()
-                    .from(TAuthor())
-                    .where(TAuthor_YEAR_OF_BIRTH().greaterOrEqual(TBook_PUBLISHED_IN())))
-
-                // Add additional useless queries to check query correctness
-                .orNotExists(select())
-                .andExists(select()).execute());
-
-        // ---------------------------------------------------------------------
-        // Testing selecting from a select
-        // ---------------------------------------------------------------------
-        Table<Record> nested = create().select(TBook_AUTHOR_ID(), count().as("books"))
-            .from(TBook())
-            .groupBy(TBook_AUTHOR_ID()).asTable("nested");
-
-        Result<Record> records = create().select(nested.getFields())
-            .from(nested)
-            .orderBy(nested.getField("books"), nested.getField(TBook_AUTHOR_ID())).fetch();
-
-        assertEquals(2, records.size());
-        assertEquals(Integer.valueOf(1), records.getValue(0, nested.getField(TBook_AUTHOR_ID())));
-        assertEquals(Integer.valueOf(2), records.getValue(0, nested.getField("books")));
-        assertEquals(Integer.valueOf(2), records.getValue(1, nested.getField(TBook_AUTHOR_ID())));
-        assertEquals(Integer.valueOf(2), records.getValue(1, nested.getField("books")));
-
-        Field<Object> books = create().select(count())
-                .from(TBook())
-                .where(TBook_AUTHOR_ID().equal(TAuthor_ID())).asField("books");
-
-        records = create().select(TAuthor_ID(), books)
-                          .from(TAuthor())
-                          .orderBy(books, TAuthor_ID()).fetch();
-
-        assertEquals(2, records.size());
-        assertEquals(Integer.valueOf(1), records.getValue(0, TAuthor_ID()));
-        assertEquals(Integer.valueOf(2), records.getValue(0, books));
-        assertEquals(Integer.valueOf(2), records.getValue(1, TAuthor_ID()));
-        assertEquals(Integer.valueOf(2), records.getValue(1, books));
 
         // ---------------------------------------------------------------------
         // [#493, #632] Testing filtering by a select's outcome
@@ -248,6 +192,66 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .and(val(0).greaterOrEqual(selectZero()))
                 .limit(1)
                 .fetchOne(TAuthor_LAST_NAME()));
+    }
+
+    @Test
+    public void testSelectWithINPredicate() throws Exception {
+        assertEquals(3,
+            create().selectFrom(TBook())
+                .where(TBook_TITLE().notIn(
+                    select(TBook_TITLE())
+                    .from(TBook())
+                    .where(TBook_TITLE().in("1984"))))
+                .execute());
+    }
+
+    @Test
+    public void testSelectWithExistsPredicate() throws Exception {
+        assertEquals(3,
+            create()
+                .selectFrom(TBook())
+                .whereNotExists(
+                    selectOne()
+                    .from(TAuthor())
+                    .where(TAuthor_YEAR_OF_BIRTH().greaterOrEqual(TBook_PUBLISHED_IN())))
+
+                // Add additional useless queries to check query correctness
+                .orNotExists(select())
+                .andExists(select()).execute());
+    }
+
+    @Test
+    public void testSelectFromSelect() throws Exception {
+        Table<Record> nested = create().select(TBook_AUTHOR_ID(), count().as("books"))
+            .from(TBook())
+            .groupBy(TBook_AUTHOR_ID()).asTable("nested");
+
+        Result<Record> records = create().select(nested.getFields())
+            .from(nested)
+            .orderBy(nested.getField("books"), nested.getField(TBook_AUTHOR_ID())).fetch();
+
+        assertEquals(2, records.size());
+        assertEquals(Integer.valueOf(1), records.getValue(0, nested.getField(TBook_AUTHOR_ID())));
+        assertEquals(Integer.valueOf(2), records.getValue(0, nested.getField("books")));
+        assertEquals(Integer.valueOf(2), records.getValue(1, nested.getField(TBook_AUTHOR_ID())));
+        assertEquals(Integer.valueOf(2), records.getValue(1, nested.getField("books")));
+    }
+
+    @Test
+    public void testSelectWithSubselectProjection() throws Exception {
+        Field<Object> books = create().select(count())
+                .from(TBook())
+                .where(TBook_AUTHOR_ID().equal(TAuthor_ID())).asField("books");
+
+        Result<Record> records = create().select(TAuthor_ID(), books)
+                          .from(TAuthor())
+                          .orderBy(books, TAuthor_ID()).fetch();
+
+        assertEquals(2, records.size());
+        assertEquals(Integer.valueOf(1), records.getValue(0, TAuthor_ID()));
+        assertEquals(Integer.valueOf(2), records.getValue(0, books));
+        assertEquals(Integer.valueOf(2), records.getValue(1, TAuthor_ID()));
+        assertEquals(Integer.valueOf(2), records.getValue(1, books));
     }
 
     @Test

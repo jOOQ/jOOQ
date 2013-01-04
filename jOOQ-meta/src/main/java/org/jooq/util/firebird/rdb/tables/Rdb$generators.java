@@ -11,7 +11,7 @@ package org.jooq.util.firebird.rdb.tables;
 @java.lang.SuppressWarnings("all")
 public class Rdb$generators extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 284985218;
+	private static final long serialVersionUID = -1583847092;
 
 	/**
 	 * The singleton instance of <code>RDB$GENERATORS</code>
@@ -50,21 +50,14 @@ public class Rdb$generators extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	 * Create a <code>RDB$GENERATORS</code> table reference
 	 */
 	public Rdb$generators() {
-		super("RDB$GENERATORS");
+		super("RDB$GENERATORS", org.jooq.util.firebird.rdb.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>RDB$GENERATORS</code> table reference
 	 */
 	public Rdb$generators(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS);
-	}
-
-	/**
-	 * Create an aliased <code>RDB$GENERATORS</code> table reference
-	 */
-	public Rdb$generators(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS);
+		super(alias, org.jooq.util.firebird.rdb.DefaultSchema.DEFAULT_SCHEMA, org.jooq.util.firebird.rdb.tables.Rdb$generators.RDB$GENERATORS);
 	}
 
 	/**
@@ -73,13 +66,5 @@ public class Rdb$generators extends org.jooq.impl.TableImpl<org.jooq.Record> {
 	@Override
 	public org.jooq.util.firebird.rdb.tables.Rdb$generators as(java.lang.String alias) {
 		return new org.jooq.util.firebird.rdb.tables.Rdb$generators(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.util.firebird.rdb.tables.Rdb$generators as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.util.firebird.rdb.tables.Rdb$generators(alias, fieldAliases);
 	}
 }

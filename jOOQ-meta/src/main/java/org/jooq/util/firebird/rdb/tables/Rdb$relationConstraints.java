@@ -11,7 +11,7 @@ package org.jooq.util.firebird.rdb.tables;
 @java.lang.SuppressWarnings("all")
 public class Rdb$relationConstraints extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = 1819464810;
+	private static final long serialVersionUID = -1796820184;
 
 	/**
 	 * The singleton instance of <code>RDB$RELATION_CONSTRAINTS</code>
@@ -60,21 +60,14 @@ public class Rdb$relationConstraints extends org.jooq.impl.TableImpl<org.jooq.Re
 	 * Create a <code>RDB$RELATION_CONSTRAINTS</code> table reference
 	 */
 	public Rdb$relationConstraints() {
-		super("RDB$RELATION_CONSTRAINTS");
+		super("RDB$RELATION_CONSTRAINTS", org.jooq.util.firebird.rdb.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>RDB$RELATION_CONSTRAINTS</code> table reference
 	 */
 	public Rdb$relationConstraints(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS);
-	}
-
-	/**
-	 * Create an aliased <code>RDB$RELATION_CONSTRAINTS</code> table reference
-	 */
-	public Rdb$relationConstraints(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS);
+		super(alias, org.jooq.util.firebird.rdb.DefaultSchema.DEFAULT_SCHEMA, org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints.RDB$RELATION_CONSTRAINTS);
 	}
 
 	/**
@@ -83,13 +76,5 @@ public class Rdb$relationConstraints extends org.jooq.impl.TableImpl<org.jooq.Re
 	@Override
 	public org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints as(java.lang.String alias) {
 		return new org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.util.firebird.rdb.tables.Rdb$relationConstraints(alias, fieldAliases);
 	}
 }

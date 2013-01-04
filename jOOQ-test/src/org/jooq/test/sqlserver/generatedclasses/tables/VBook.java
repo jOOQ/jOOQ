@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 263614066;
+	private static final long serialVersionUID = 317046682;
 
 	/**
 	 * The singleton instance of <code>dbo.v_book</code>
@@ -47,7 +47,7 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 	/**
 	 * The column <code>dbo.v_book.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
 	 * The column <code>dbo.v_book.PUBLISHED_IN</code>. 
@@ -62,7 +62,7 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gener
 	/**
 	 * The column <code>dbo.v_book.CONTENT_TEXT</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB.length(2147483647), this);
 
 	/**
 	 * The column <code>dbo.v_book.CONTENT_PDF</code>. 

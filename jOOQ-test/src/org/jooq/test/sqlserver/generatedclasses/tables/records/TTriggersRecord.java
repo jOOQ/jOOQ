@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1635261433;
+	private static final long serialVersionUID = -1494122927;
 
 	/**
 	 * Setter for <code>dbo.t_triggers.id_generated</code>. 
@@ -52,10 +52,6 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

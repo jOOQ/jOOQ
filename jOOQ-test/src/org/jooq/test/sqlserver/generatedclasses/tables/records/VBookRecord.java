@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
 
-	private static final long serialVersionUID = -161923499;
+	private static final long serialVersionUID = -161402593;
 
 	/**
 	 * Setter for <code>dbo.v_book.ID</code>. 
@@ -136,10 +136,6 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sql
 	public byte[] getContentPdf() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record9 type implementation

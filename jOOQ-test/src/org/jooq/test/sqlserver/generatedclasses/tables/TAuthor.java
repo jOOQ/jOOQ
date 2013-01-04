@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -415014491;
+	private static final long serialVersionUID = -1405115913;
 
 	/**
 	 * The singleton instance of <code>dbo.t_author</code>
@@ -32,12 +32,12 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqls
 	/**
 	 * The column <code>dbo.t_author.FIRST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>dbo.t_author.LAST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>dbo.t_author.DATE_OF_BIRTH</code>. 
@@ -52,7 +52,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqls
 	/**
 	 * The column <code>dbo.t_author.ADDRESS</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * Create a <code>dbo.t_author</code> table reference

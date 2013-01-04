@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -551043348;
+	private static final long serialVersionUID = 1689590854;
 
 	/**
 	 * Setter for <code>dbo.t_book_store.NAME</code>. 
@@ -23,20 +23,6 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	public java.lang.String getName() {
 		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>dbo.t_book_to_book_store</code> referencing this <code>dbo.t_book_store</code>
-	 */
-	public org.jooq.Result<org.jooq.test.sqlserver.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME.equal(getValue(org.jooq.test.sqlserver.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

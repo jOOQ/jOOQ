@@ -1114,6 +1114,26 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testSelectWithINPredicate() throws Exception {
+        new SelectTests(this).testSelectWithINPredicate();
+    }
+
+    @Test
+    public void testSelectWithExistsPredicate() throws Exception {
+        new SelectTests(this).testSelectWithExistsPredicate();
+    }
+
+    @Test
+    public void testSelectFromSelect() throws Exception {
+        new SelectTests(this).testSelectFromSelect();
+    }
+
+    @Test
+    public void testSelectWithSubselectProjection() throws Exception {
+        new SelectTests(this).testSelectWithSubselectProjection();
+    }
+
+    @Test
     public void testDistinctQuery() throws Exception {
         new SelectTests(this).testDistinctQuery();
     }

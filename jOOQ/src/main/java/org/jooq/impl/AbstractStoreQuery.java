@@ -37,11 +37,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.val;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
-import org.jooq.ArrayRecord;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -90,33 +87,6 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         }
         else {
             getValues().put(field, value);
-        }
-    }
-
-    @Override
-    public final <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, T... value) {
-        if (value == null) {
-            getValues().put(field, val(null, field));
-        }
-        else {
-            addValueAsArray(field, Arrays.asList(value));
-        }
-    }
-
-    @Override
-    public final <A extends ArrayRecord<T>, T> void addValueAsArray(Field<A> field, List<T> value) {
-        if (value == null) {
-            getValues().put(field, val(null, field));
-        }
-        else {
-            try {
-                A record = Utils.newArrayRecord(field.getType(), getConfiguration());
-                record.setList(value);
-                addValue(field, record);
-            }
-            catch (Exception e) {
-                throw new IllegalArgumentException("Field is not a valid ArrayRecord field: " + field);
-            }
         }
     }
 }

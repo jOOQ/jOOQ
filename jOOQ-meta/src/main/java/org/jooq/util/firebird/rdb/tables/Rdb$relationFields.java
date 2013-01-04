@@ -11,7 +11,7 @@ package org.jooq.util.firebird.rdb.tables;
 @java.lang.SuppressWarnings("all")
 public class Rdb$relationFields extends org.jooq.impl.TableImpl<org.jooq.Record> {
 
-	private static final long serialVersionUID = -1626632676;
+	private static final long serialVersionUID = 1712305894;
 
 	/**
 	 * The singleton instance of <code>RDB$RELATION_FIELDS</code>
@@ -125,21 +125,14 @@ public class Rdb$relationFields extends org.jooq.impl.TableImpl<org.jooq.Record>
 	 * Create a <code>RDB$RELATION_FIELDS</code> table reference
 	 */
 	public Rdb$relationFields() {
-		super("RDB$RELATION_FIELDS");
+		super("RDB$RELATION_FIELDS", org.jooq.util.firebird.rdb.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
 	 * Create an aliased <code>RDB$RELATION_FIELDS</code> table reference
 	 */
 	public Rdb$relationFields(java.lang.String alias) {
-		super(alias, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$relationFields.RDB$RELATION_FIELDS);
-	}
-
-	/**
-	 * Create an aliased <code>RDB$RELATION_FIELDS</code> table reference
-	 */
-	public Rdb$relationFields(java.lang.String alias, java.lang.String... fieldAliases) {
-		super(alias, fieldAliases, (org.jooq.Schema) null, org.jooq.util.firebird.rdb.tables.Rdb$relationFields.RDB$RELATION_FIELDS);
+		super(alias, org.jooq.util.firebird.rdb.DefaultSchema.DEFAULT_SCHEMA, org.jooq.util.firebird.rdb.tables.Rdb$relationFields.RDB$RELATION_FIELDS);
 	}
 
 	/**
@@ -148,13 +141,5 @@ public class Rdb$relationFields extends org.jooq.impl.TableImpl<org.jooq.Record>
 	@Override
 	public org.jooq.util.firebird.rdb.tables.Rdb$relationFields as(java.lang.String alias) {
 		return new org.jooq.util.firebird.rdb.tables.Rdb$relationFields(alias);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public org.jooq.util.firebird.rdb.tables.Rdb$relationFields as(java.lang.String alias, java.lang.String... fieldAliases) {
-		return new org.jooq.util.firebird.rdb.tables.Rdb$relationFields(alias, fieldAliases);
 	}
 }

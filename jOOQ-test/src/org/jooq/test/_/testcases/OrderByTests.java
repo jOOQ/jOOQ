@@ -311,6 +311,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(Integer.valueOf(3), result.getValue(1, TBook_ID()));
     }
 
+    @Test
+    public void testLimitAliased() throws Exception {
+        if (getDialect() == SQLDialect.ASE) {
+            log.info("SKIPPING", "LIMIT .. OFFSET tests");
+            return;
+        }
+
+        // [#2080] Some databases generate ORDER BY clauses within their ranking
+        // functions. There are some syntax problems, when selectable columns
+        // have aliases
+
+        // Inline LIMIT .. OFFSET
+        Result<Record> r1 =
+        create().select(TBook_ID().as("xx"), TBook_TITLE().as("yy"))
+                .from(TBook())
+                .limit(1, 2)
+                .fetch();
+
+        assertEquals(2, r1.size());
+
+        // Bind values for LIMIT .. OFFSET
+        Result<Record> r2 =
+        create().select(TBook_ID().as("xx"), TBook_TITLE().as("yy"))
+                .from(TBook())
+                .limit(param("x", 1), param("y", 2))
+                .fetch();
+
+        assertEquals(2, r2.size());
+    }
+
     @SuppressWarnings("unchecked")
     @Test
     public void testLimitBindValues() throws Exception {

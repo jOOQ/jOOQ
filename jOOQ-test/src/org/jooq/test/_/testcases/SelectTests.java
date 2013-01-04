@@ -252,6 +252,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
     @Test
     public void testUnaliasedSubqueryProjections() throws Exception {
+        // TODO [#579] re-enable this test when fixing this bug
+
         // Test whether unaliased literals in subquery projections are correctly
         // handled
         Result<Record> result =

@@ -61,23 +61,15 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
     private static final long serialVersionUID = 8214807990871116060L;
 
     public UpdatableTableImpl(String name) {
-        super(name, null, null, null);
+        super(name, null, null);
     }
 
     public UpdatableTableImpl(String name, Schema schema) {
-        super(name, null, schema, null);
+        super(name, schema, null);
     }
 
     public UpdatableTableImpl(String name, Schema schema, Table<R> aliased) {
-        super(name, null, schema, aliased);
-    }
-
-    public UpdatableTableImpl(String name, String[] aliasedFields, Schema schema) {
-        super(name, aliasedFields, schema, null);
-    }
-
-    public UpdatableTableImpl(String name, String[] aliasedFields, Schema schema, Table<R> aliased) {
-        super(name, aliasedFields, schema, aliased);
+        super(name, schema, aliased);
     }
 
     /**

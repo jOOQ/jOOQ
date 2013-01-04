@@ -44,6 +44,8 @@ import static org.jooq.impl.Factory.connectByIsLeaf;
 import static org.jooq.impl.Factory.connectByRoot;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.fieldByName;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.level;
 import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.max;
@@ -266,6 +268,60 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(
             asList(1, 2, 0, 0, 0),
             asList(result3.get(0).into(Integer[].class)));
+    }
+
+    @Test
+    public void testAliasingPivot() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case CUBRID:
+            case DB2:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case POSTGRES:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "PIVOT clause tests");
+                return;
+        }
+
+        Result<?> r1 =
+        create().select()
+                .from(TBookToBookStore()
+                .pivot(max(TBookToBookStore_STOCK()).as("max"),
+                       count(TBookToBookStore_STOCK()).as("cnt"))
+                .on(TBookToBookStore_BOOK_STORE_NAME())
+                .in("Orell Füssli",
+                    "Ex Libris",
+                    "Buchhandlung im Volkshaus")
+                .as("pivot_table", "book_id", "of_max", "of_cnt",
+                                              "ex_max", "ex_cnt",
+                                              "bv_max", "bv_cnt"))
+                .orderBy(val(1).asc())
+                .fetch();
+
+        assertEquals(3, r1.size());
+        assertEquals(7, r1.getFields().size());
+        assertEquals(asList(1, 2, 3), r1.getValues("book_id", Integer.class));
+        assertEquals(asList(10, 10, 10), r1.getValues("of_max", Integer.class));
+        assertEquals(asList(1, 1, 1), r1.getValues("of_cnt", Integer.class));
+        assertEquals(asList(1, null, 2), r1.getValues("ex_max", Integer.class));
+        assertEquals(asList(1, 0, 1), r1.getValues("ex_cnt", Integer.class));
+        assertEquals(asList(null, null, 1), r1.getValues("bv_max", Integer.class));
+        assertEquals(asList(0, 0, 1), r1.getValues("bv_cnt", Integer.class));
+
+        create().select()
+                .from(table(select(level().as("lvl")).connectBy(level().le(inline(5))))
+                    .pivot(max(fieldByName("lvl")))
+                    .on(fieldByName("lvl"))
+                    .in(1, 2, 3, 4, 5)
+                    .as("t", "a", "b", "c", "d", "e"))
+                .fetch();
     }
 
     @Test

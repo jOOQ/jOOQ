@@ -42,6 +42,9 @@ import static junit.framework.Assert.assertTrue;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jooq.Record1;
@@ -116,8 +119,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals("George", on(authors1.get(0)).get("firstName"));
         assertEquals("Orwell", on(authors1.get(0)).get("lastName"));
 
-        List<AP> authors2 = on(TAuthorDao()).call("fetchByLastName", (Object) new String[] { "Orwell", "Coelho"}).<List<AP>>get();
+        List<AP> authors2 = new ArrayList<AP>(on(TAuthorDao()).call("fetchByLastName", (Object) new String[] { "Orwell", "Coelho"}).<List<AP>>get());
         assertEquals(2, authors2.size());
+
+        // Fetched records are not ordered deterministically
+        Collections.sort(authors2, new Comparator<AP>() {
+            @Override
+            public int compare(AP o1, AP o2) {
+                return on(o1).<Integer>get("id").compareTo(on(o2).<Integer>get("id"));
+            }});
         assertEquals(1, on(authors2.get(0)).get("id"));
         assertEquals("George", on(authors2.get(0)).get("firstName"));
         assertEquals("Orwell", on(authors2.get(0)).get("lastName"));

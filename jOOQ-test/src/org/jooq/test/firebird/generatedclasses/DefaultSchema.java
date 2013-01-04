@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -616879670;
+	private static final long serialVersionUID = -1757261929;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -26,7 +26,6 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 	@Override
 	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
 		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
-			org.jooq.test.firebird.generatedclasses.Sequences.SQL$DEFAULT,
 			org.jooq.test.firebird.generatedclasses.Sequences.S_AUTHOR_ID);
 	}
 

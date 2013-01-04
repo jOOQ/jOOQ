@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -1555145237;
+	private static final long serialVersionUID = 2025579151;
 
 	/**
 	 * The singleton instance of <code>v_book</code>
@@ -78,6 +78,6 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generate
 	 * No further instances allowed
 	 */
 	private VBook() {
-		super("v_book");
+		super("v_book", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

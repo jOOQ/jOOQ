@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -901515354;
+	private static final long serialVersionUID = 317221834;
 
 	/**
 	 * The singleton instance of <code>t_booleans</code>
@@ -83,7 +83,7 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 	 * No further instances allowed
 	 */
 	private TBooleans() {
-		super("t_booleans");
+		super("t_booleans", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**

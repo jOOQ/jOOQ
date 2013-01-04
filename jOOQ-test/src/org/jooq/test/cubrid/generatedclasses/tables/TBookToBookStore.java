@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1830347274;
+	private static final long serialVersionUID = 1803305902;
 
 	/**
 	 * The singleton instance of <code>t_book_to_book_store</code>
@@ -43,7 +43,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * No further instances allowed
 	 */
 	private TBookToBookStore() {
-		super("t_book_to_book_store");
+		super("t_book_to_book_store", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**

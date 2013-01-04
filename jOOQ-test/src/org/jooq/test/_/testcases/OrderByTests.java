@@ -322,7 +322,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         // functions. There are some syntax problems, when selectable columns
         // have aliases
 
-        // Inline LIMIT .. OFFSET
+        // Arbitrary ordering
+        // ------------------
+
+        // Inline LIMIT .. OFFSET with arbitrary ordering
         Result<Record> r1 =
         create().select(TBook_ID().as("xx"), TBook_TITLE().as("yy"))
                 .from(TBook())
@@ -331,7 +334,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
 
         assertEquals(2, r1.size());
 
-        // Bind values for LIMIT .. OFFSET
+        // Bind values for LIMIT .. OFFSET with arbitrary ordering
         Result<Record> r2 =
         create().select(TBook_ID().as("xx"), TBook_TITLE().as("yy"))
                 .from(TBook())
@@ -339,6 +342,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
                 .fetch();
 
         assertEquals(2, r2.size());
+
+        // Explicit ordering
+        // -----------------
+
+        // Inline LIMIT .. OFFSET with explicit ordering
+        Result<Record> r3 =
+        create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
+                .from(TBook())
+                .orderBy(TBook_ID().as("xx").desc())
+                .limit(1, 2)
+                .fetch();
+
+        assertEquals(2, r3.size());
+        assertEquals(asList(3, 2), r3.getValues("xx"));
+
+        // Bind values for LIMIT .. OFFSET with arbitrary ordering
+        Result<Record> r4 =
+        create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
+                .from(TBook())
+                .orderBy(TBook_ID().as("xx").desc())
+                .limit(param("x", 1), param("y", 2))
+                .fetch();
+
+        assertEquals(2, r4.size());
+        assertEquals(asList(3, 2), r4.getValues("xx"));
     }
 
     @SuppressWarnings("unchecked")

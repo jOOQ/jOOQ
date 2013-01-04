@@ -19,7 +19,7 @@
         <database>
             <name>org.jooq.util.firebird.FirebirdDatabase</name>
             <includes>.*</includes>
-            <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|^MON.*|^RDB.*</excludes>
+            <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|^MON.*|^RDB.*|^SQL.*</excludes>
             <recordVersionFields>REC_VERSION</recordVersionFields>
             <recordTimestampFields>REC_TIMESTAMP</recordTimestampFields>
             <dateAsTimestamp>false</dateAsTimestamp>

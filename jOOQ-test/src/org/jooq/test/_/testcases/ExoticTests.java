@@ -369,6 +369,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
     }
 
     @Test
+    public void testAliasingRelationalDivision() throws Exception {
+
+        // Books and bookstores. There's only one book that is contained in
+        // every bookstore:
+        // ----------------------------------------------------------------
+        Record record =
+        create().select()
+                .from(TBookToBookStore()
+                .divideBy(TBookStore())
+                .on(TBookToBookStore_BOOK_STORE_NAME().equal(TBookStore_NAME()))
+                .returning(TBookToBookStore_BOOK_ID(), TBookToBookStore_BOOK_ID())
+                .as("division", "x", "y"))
+                .fetchOne();
+
+        assertEquals(3, record.getValue("x"));
+        assertEquals(3, record.getValue("y"));
+    }
+
+    @Test
     public void testConnectBySimple() throws Exception {
         switch (getDialect()) {
             case ASE:

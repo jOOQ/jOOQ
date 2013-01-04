@@ -38,20 +38,19 @@ package org.jooq.impl;
 import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
+import static org.jooq.impl.Factory.selectDistinct;
+import static org.jooq.impl.Factory.selectOne;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.Configuration;
 import org.jooq.DivideByOnConditionStep;
 import org.jooq.DivideByOnStep;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -59,15 +58,9 @@ import org.jooq.Table;
  * @author Lukas Eder
  */
 class DivideBy
-extends AbstractTable<Record>
 implements
     DivideByOnStep,
     DivideByOnConditionStep {
-
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -4999896035630325449L;
 
     private final Table<?>              dividend;
     private final Table<?>              divisor;
@@ -75,8 +68,6 @@ implements
     private final FieldList             returning;
 
     DivideBy(Table<?> dividend, Table<?> divisor) {
-        super("division");
-
         this.dividend = dividend;
         this.divisor = divisor;
 
@@ -88,26 +79,6 @@ implements
     // XXX: Table API
     // ------------------------------------------------------------------------
 
-    @Override
-    public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
-    }
-
-    @Override
-    public final boolean declaresTables() {
-        return true;
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(table(context));
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.bind(table(context));
-    }
-
     /**
      * Transform the relational division operation into SQL.
      * <p>
@@ -117,9 +88,7 @@ implements
      * >http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-
      * sql-of-relational-division/</a>
      */
-    private final Table<?> table(Configuration configuration) {
-        Executor create = create(configuration);
-
+    private final Table<Record> table() {
         ConditionProviderImpl selfJoin = new ConditionProviderImpl();
         FieldList select = new FieldList();
         Table<?> outer = dividend.as("dividend");
@@ -144,17 +113,17 @@ implements
         // Apply relational division using double-nested NOT EXISTS clauses
         // There are more efficient ways to express division in SQL, but those
         // are hard to simulate with jOOQ
-        return create.selectDistinct(select)
-                     .from(outer)
-                     .whereNotExists(create
-                         .selectOne()
-                         .from(divisor)
-                         .whereNotExists(create
-                             .selectOne()
-                             .from(dividend)
-                             .where(selfJoin)
-                             .and(condition)))
-                     .asTable();
+        return selectDistinct(select)
+              .from(outer)
+              .whereNotExists(
+                   selectOne()
+                  .from(divisor)
+                  .whereNotExists(
+                       selectOne()
+                      .from(dividend)
+                      .where(selfJoin)
+                      .and(condition)))
+              .asTable();
     }
 
     /**
@@ -171,21 +140,6 @@ implements
         else {
             selfJoin.addConditions(outerField.equal(innerField));
         }
-    }
-
-    @Override
-    public final Table<Record> as(String alias) {
-        return new TableAlias<Record>(this, alias, true);
-    }
-
-    @Override
-    public final Table<Record> as(String alias, String... fieldAliases) {
-        return new TableAlias<Record>(this, alias, fieldAliases, true);
-    }
-
-    @Override
-    protected final FieldList getFieldList() {
-        return new FieldList();
     }
 
     // ------------------------------------------------------------------------
@@ -224,7 +178,7 @@ implements
     @Override
     public final Table<Record> returning(Collection<? extends Field<?>> fields) {
         returning.addAll(fields);
-        return this;
+        return table();
     }
 
     @Override

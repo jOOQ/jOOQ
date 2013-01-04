@@ -1870,6 +1870,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAliasingRelationalDivision() throws Exception {
+        new ExoticTests(this).testAliasingRelationalDivision();
+    }
+
+    @Test
     public void testConnectBySimple() throws Exception {
         new ExoticTests(this).testConnectBySimple();
     }

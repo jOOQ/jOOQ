@@ -45,7 +45,6 @@ import static org.jooq.impl.Factory.connectByRoot;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.fieldByName;
-import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.level;
 import static org.jooq.impl.Factory.lower;
 import static org.jooq.impl.Factory.max;
@@ -315,13 +314,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         assertEquals(asList(null, null, 1), r1.getValues("bv_max", Integer.class));
         assertEquals(asList(0, 0, 1), r1.getValues("bv_cnt", Integer.class));
 
+        Result<?> r2 =
         create().select()
-                .from(table(select(level().as("lvl")).connectBy(level().le(inline(5))))
+                .from(table(select(level().as("lvl")).connectBy(level().le(5)))
                     .pivot(max(fieldByName("lvl")))
                     .on(fieldByName("lvl"))
                     .in(1, 2, 3, 4, 5)
                     .as("t", "a", "b", "c", "d", "e"))
                 .fetch();
+
+        assertEquals(1, r2.size());
+        assertEquals(5, r2.getFields().size());
+        assertEquals(1, r2.getValue(0, "a", Integer.class));
+        assertEquals(2, r2.getValue(0, "b", Integer.class));
+        assertEquals(3, r2.getValue(0, "c", Integer.class));
+        assertEquals(4, r2.getValue(0, "d", Integer.class));
+        assertEquals(5, r2.getValue(0, "e", Integer.class));
     }
 
     @Test

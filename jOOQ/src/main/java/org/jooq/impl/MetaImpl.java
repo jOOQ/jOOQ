@@ -149,6 +149,11 @@ class MetaImpl implements Meta {
                     result.add(new MetaSchema(name));
                 }
 
+                // There should always be at least one (empty) schema in a database
+                if (result.isEmpty()) {
+                    result.add(new MetaSchema(""));
+                }
+
                 return result;
             }
             catch (SQLException e) {

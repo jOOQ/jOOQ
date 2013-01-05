@@ -120,6 +120,7 @@ public class CUBRIDTest extends jOOQAbstractTest<
         TDirectoryRecord,
         TTriggersRecord,
         XUnusedRecord,
+        XUnusedRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,

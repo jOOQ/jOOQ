@@ -77,6 +77,11 @@ public final class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.TDates T_DATES = org.jooq.test.postgres.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table public.t_exotic_types
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.postgres.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table public.t_identity
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY;

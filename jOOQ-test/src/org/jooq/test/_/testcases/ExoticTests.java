@@ -63,6 +63,7 @@ import static org.jooq.util.oracle.OracleFactory.rownum;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.UUID;
 
 import org.jooq.Field;
 import org.jooq.Record;
@@ -93,15 +94,37 @@ public class ExoticTests<
     D    extends UpdatableRecord<D>,
     T    extends UpdatableRecord<T>,
     U    extends TableRecord<U>,
+    UU   extends UpdatableRecord<UU>,
     I    extends TableRecord<I>,
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
 
-    public ExoticTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
+    public ExoticTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testUUIDDataType() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UUID())
+                .values(1, uuid1)
+                .execute());
+        assertEquals(uuid1, create().fetchOne(TExoticTypes()).getValue(TExoticTypes_UUID()));
+
+        assertEquals(1,
+        create().update(TExoticTypes())
+                .set(TExoticTypes_UUID(), uuid2)
+                .where(TExoticTypes_UUID().eq(uuid1))
+                .execute());
+        assertEquals(uuid2, create().fetchOne(TExoticTypes()).getValue(TExoticTypes_UUID()));
     }
 
     @Test

@@ -41,6 +41,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.Record;
@@ -132,6 +133,7 @@ public class PostgresDataType {
     public static final DataType<Timestamp>  TIMESTAMPTZ                = new DefaultDataType<Timestamp>(SQLDialect.POSTGRES, SQLDataType.TIMESTAMP, "timestamptz");
     public static final DataType<Result<Record>> REFCURSOR              = new DefaultDataType<Result<Record>>(SQLDialect.POSTGRES, SQLDataType.RESULT, "refcursor");
     public static final DataType<Object>     ANY                        = new DefaultDataType<Object>(SQLDialect.POSTGRES, SQLDataType.OTHER, "any");
+    public static final DataType<UUID>       UUID                       = new DefaultDataType<UUID>(SQLDialect.POSTGRES, SQLDataType.UUID, "uuid");
 
     // Meta-table types
     public static final DataType<Long>       OID                        = new DefaultDataType<Long>(SQLDialect.POSTGRES, SQLDataType.BIGINT, "oid");

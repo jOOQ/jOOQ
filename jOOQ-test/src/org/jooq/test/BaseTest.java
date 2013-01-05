@@ -48,6 +48,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 import junit.framework.Assert;
 
@@ -128,6 +129,9 @@ public abstract class BaseTest<
     // T_UNSIGNED table
     U extends TableRecord<U>,
 
+    // T_1624_UUID table
+    UU extends UpdatableRecord<UU>,
+
     // T_IDENTITY table
     I extends TableRecord<I>,
 
@@ -153,9 +157,9 @@ public abstract class BaseTest<
 
     protected static final JooqLogger      log                = JooqLogger.getLogger(jOOQAbstractTest.class);
 
-    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate;
+    protected final jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate;
 
-    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
+    protected BaseTest(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         this.delegate = delegate;
     }
 
@@ -261,6 +265,18 @@ public abstract class BaseTest<
 
     protected TableField<U, ULong> TUnsigned_U_LONG() {
         return delegate.TUnsigned_U_LONG();
+    }
+
+    protected Table<UU> TExoticTypes() {
+        return delegate.TExoticTypes();
+    }
+
+    protected TableField<UU, Integer> TExoticTypes_ID() {
+        return delegate.TExoticTypes_ID();
+    }
+
+    protected TableField<UU, UUID> TExoticTypes_UUID() {
+        return delegate.TExoticTypes_UUID();
     }
 
     public Table<DATE> TDates() {

@@ -179,6 +179,7 @@ public class OracleTest extends jOOQAbstractTest<
         XUnusedRecord,
         XUnusedRecord,
         XUnusedRecord,
+        XUnusedRecord,
         T_725LobTestRecord,
         T_639NumbersTableRecord,
         T_785Record> {

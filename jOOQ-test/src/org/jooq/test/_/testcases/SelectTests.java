@@ -84,14 +84,15 @@ public class SelectTests<
     D    extends UpdatableRecord<D>,
     T    extends UpdatableRecord<T>,
     U    extends TableRecord<U>,
+    UU   extends UpdatableRecord<UU>,
     I    extends TableRecord<I>,
     IPK  extends UpdatableRecord<IPK>,
     T725 extends UpdatableRecord<T725>,
     T639 extends UpdatableRecord<T639>,
     T785 extends TableRecord<T785>>
-extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> {
+extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
 
-    public SelectTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, T639, T785> delegate) {
+    public SelectTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
     }
 
@@ -263,14 +264,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T725, 
         Result<Record> result =
         create().select()
                 .from(
-                    create().selectOne(),
-                    create().select(val(2)),
-                    create().select(val(2)),
-                    create().select(val(2)),
-                    create().select(val(3).add(4)),
-                    create().select(val(3).add(4)),
-                    create().select(trim(" test ")),
-                    create().select(trim(" test ")))
+                    selectOne(),
+                    select(val(2)),
+                    select(val(2)),
+                    select(val(2)),
+                    select(val(3).add(4)),
+                    select(val(3).add(4)),
+                    select(trim(" test ")),
+                    select(trim(" test ")))
                 .fetch();
 
         assertEquals(1, result.size());

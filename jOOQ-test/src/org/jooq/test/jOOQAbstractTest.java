@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 import javax.swing.UIManager;
 
@@ -195,6 +196,9 @@ public abstract class jOOQAbstractTest<
 
         // T_UNSIGNED table
         U extends TableRecord<U>,
+
+        // T_1624_UUID table
+        UU extends UpdatableRecord<UU>,
 
         // T_IDENTITY table
         I extends TableRecord<I>,
@@ -582,6 +586,16 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<U, UShort> TUnsigned_U_SHORT();
     protected abstract TableField<U, UInteger> TUnsigned_U_INT();
     protected abstract TableField<U, ULong> TUnsigned_U_LONG();
+
+    protected Table<UU> TExoticTypes() {
+        return null;
+    }
+    protected TableField<UU, Integer> TExoticTypes_ID() {
+        return null;
+    }
+    protected TableField<UU, UUID> TExoticTypes_UUID() {
+        return null;
+    }
 
     protected abstract Table<DATE> TDates();
 
@@ -1872,6 +1886,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testInlinedBindValuesForDatetime() throws Exception {
         new RenderAndBindTests(this).testInlinedBindValuesForDatetime();
+    }
+
+    @Test
+    public void testUUIDDataType() throws Exception {
+        new ExoticTests(this).testUUIDDataType();
     }
 
     @Test

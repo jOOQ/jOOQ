@@ -42,6 +42,7 @@ import java.sql.ResultSet;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.Record;
@@ -296,6 +297,14 @@ public final class SQLDataType {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final DataType<Result<Record>> RESULT = new DefaultDataType<Result<Record>>(null, (Class) Result.class, "result");
+
+    /**
+     * The {@link UUID} type
+     * <p>
+     * This is not a SQL or JDBC standard. This type handles UUID types where
+     * they are supported
+     */
+    public static final DataType<UUID> UUID = new DefaultDataType<UUID>(null, UUID.class, "uuid");
 
     // -------------------------------------------------------------------------
     // Static initialisation of dialect-specific data types

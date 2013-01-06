@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1700163586;
+	private static final long serialVersionUID = 27100874;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -38,6 +38,7 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			org.jooq.test.sqlite.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.sqlite.generatedclasses.tables.TDates.T_DATES,
+			org.jooq.test.sqlite.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.sqlite.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.sqlite.generatedclasses.tables.VAuthor.V_AUTHOR,

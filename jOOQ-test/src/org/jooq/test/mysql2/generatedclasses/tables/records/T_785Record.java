@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_785", schema = "test2")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -243247716;
+	private static final long serialVersionUID = 790044902;
 
 	/**
 	 * Setter for <code>test2.t_785.ID</code>. 
@@ -57,10 +57,6 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	public java.lang.String getValue() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.VALUE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation

@@ -25,6 +25,9 @@ public class TBookStoreDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.gen
 		super(org.jooq.test.mysql.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.mysql.generatedclasses.tables.pojos.TBookStore.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.String getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TBookStore object) {
 		return object.getName();
@@ -38,7 +41,7 @@ public class TBookStoreDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.gen
 	}
 
 	/**
-	 * Fetch a unique that has <code>name = value</code>
+	 * Fetch a unique record that has <code>name = value</code>
 	 */
 	public org.jooq.test.mysql.generatedclasses.tables.pojos.TBookStore fetchOneByName(java.lang.String value) {
 		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.TBookStore.NAME, value);

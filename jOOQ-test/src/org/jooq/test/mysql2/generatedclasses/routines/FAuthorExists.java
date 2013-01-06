@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1774170916;
+	private static final long serialVersionUID = 935560056;
 
 	/**
 	 * The parameter <code>test2.f_author_exists.RETURN_VALUE</code>. 
@@ -21,7 +21,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	/**
 	 * The parameter <code>test2.f_author_exists.author_name</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
 	 * Create a new routine call instance

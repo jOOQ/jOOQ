@@ -38,6 +38,7 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> PK_T_ARRAYS = UniqueKeys0.PK_T_ARRAYS;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> PK_X_UNUSED = UniqueKeys0.PK_X_UNUSED;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> UK_X_UNUSED_ID = UniqueKeys0.UK_X_UNUSED_ID;
+	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord> PK_T_EXOTIC_TYPES = UniqueKeys0.PK_T_EXOTIC_TYPES;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = UniqueKeys0.PK_T_639_NUMBERS_TABLE;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = UniqueKeys0.PK_X_TEST_CASE_64_69;
 	public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> PK_X_TEST_CASE_71 = UniqueKeys0.PK_X_TEST_CASE_71;
@@ -91,6 +92,7 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> PK_T_ARRAYS = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS, org.jooq.test.h2.generatedclasses.tables.TArrays.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> PK_X_UNUSED = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.h2.generatedclasses.tables.XUnused.ID, org.jooq.test.h2.generatedclasses.tables.XUnused.NAME);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> UK_X_UNUSED_ID = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED, org.jooq.test.h2.generatedclasses.tables.XUnused.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord> PK_T_EXOTIC_TYPES = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES, org.jooq.test.h2.generatedclasses.tables.TExoticTypes.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> PK_X_TEST_CASE_71 = createUniqueKey(org.jooq.test.h2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.h2.generatedclasses.tables.XTestCase_71.ID);

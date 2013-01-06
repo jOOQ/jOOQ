@@ -23,6 +23,9 @@ public class TTriggersDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.gene
 		super(org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers object) {
 		return object.getIdGenerated();
@@ -36,7 +39,7 @@ public class TTriggersDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.gene
 	}
 
 	/**
-	 * Fetch a unique that has <code>id_generated = value</code>
+	 * Fetch a unique record that has <code>id_generated = value</code>
 	 */
 	public org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers fetchOneByIdGenerated(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.TTriggers.ID_GENERATED, value);

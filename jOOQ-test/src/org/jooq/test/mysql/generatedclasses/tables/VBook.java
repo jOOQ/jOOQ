@@ -11,10 +11,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 1229454572;
+	private static final long serialVersionUID = -640955079;
 
 	/**
-	 * The singleton instance of test.v_book
+	 * The singleton instance of <code>test.v_book</code>
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.VBook V_BOOK = new org.jooq.test.mysql.generatedclasses.tables.VBook();
 
@@ -27,52 +27,52 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generated
 	}
 
 	/**
-	 * The book ID
+	 * The column <code>test.v_book.ID</code>. The book ID
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The author ID in entity 'author'
+	 * The column <code>test.v_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The table column <code>test.v_book.co_author_id</code>
+	 * The column <code>test.v_book.co_author_id</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("co_author_id", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * Some more details about the book
+	 * The column <code>test.v_book.DETAILS_ID</code>. Some more details about the book
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The book's title
+	 * The column <code>test.v_book.TITLE</code>. The book's title
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535), V_BOOK);
 
 	/**
-	 * The year the book was published in
+	 * The column <code>test.v_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * The language of the book
+	 * The column <code>test.v_book.LANGUAGE_ID</code>. The language of the book
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
 
 	/**
-	 * Some textual content of the book
+	 * The column <code>test.v_book.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.String> CONTENT_TEXT = createField("CONTENT_TEXT", org.jooq.impl.SQLDataType.CLOB, V_BOOK);
 
 	/**
-	 * Some binary content of the book
+	 * The column <code>test.v_book.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, byte[]> CONTENT_PDF = createField("CONTENT_PDF", org.jooq.impl.SQLDataType.BLOB, V_BOOK);
 
 	/**
-	 * The book's stock status
+	 * The column <code>test.v_book.STATUS</code>. The book's stock status
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, org.jooq.test.mysql.generatedclasses.enums.VBookStatus> STATUS = createField("STATUS", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql.generatedclasses.enums.VBookStatus.class), V_BOOK);
 

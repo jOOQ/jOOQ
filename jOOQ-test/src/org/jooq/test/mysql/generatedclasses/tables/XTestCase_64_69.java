@@ -11,10 +11,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -1594904005;
+	private static final long serialVersionUID = 1476906178;
 
 	/**
-	 * The singleton instance of test.x_test_case_64_69
+	 * The singleton instance of <code>test.x_test_case_64_69</code>
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = new org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69();
 
@@ -27,20 +27,12 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	}
 
 	/**
-	 * The table column <code>test.x_test_case_64_69.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * The column <code>test.x_test_case_64_69.ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_64_69);
 
 	/**
-	 * The table column <code>test.x_test_case_64_69.UNUSED_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_64_69a
-	 * FOREIGN KEY (UNUSED_ID)
-	 * REFERENCES test.x_unused (ID, NAME)
-	 * </pre></code>
+	 * The column <code>test.x_test_case_64_69.UNUSED_ID</code>. 
 	 */
 	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_64_69);
 
@@ -51,20 +43,27 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 		super("x_test_case_64_69", org.jooq.test.mysql.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record> getMainKey() {
 		return org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_64_69_PRIMARY;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_64_69_PRIMARY);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_64_69A);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record, ?>>asList(org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_64_69A, org.jooq.test.mysql.generatedclasses.Keys.FK_X_TEST_CASE_64_69B);
 	}
 }

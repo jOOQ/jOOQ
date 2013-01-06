@@ -37,7 +37,7 @@ package org.jooq.examples;
 
 import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectDistinct;
-import static org.jooq.test.mysql.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID;
+import static org.jooq.test.mysql.generatedclasses.Keys.*;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_LANGUAGE;
 import static org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK;

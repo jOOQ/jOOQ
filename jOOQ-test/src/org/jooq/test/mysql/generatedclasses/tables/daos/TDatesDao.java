@@ -23,6 +23,9 @@ public class TDatesDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generat
 		super(org.jooq.test.mysql.generatedclasses.tables.TDates.T_DATES, org.jooq.test.mysql.generatedclasses.tables.pojos.TDates.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TDates object) {
 		return object.getId();
@@ -36,7 +39,7 @@ public class TDatesDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generat
 	}
 
 	/**
-	 * Fetch a unique that has <code>id = value</code>
+	 * Fetch a unique record that has <code>id = value</code>
 	 */
 	public org.jooq.test.mysql.generatedclasses.tables.pojos.TDates fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.TDates.ID, value);

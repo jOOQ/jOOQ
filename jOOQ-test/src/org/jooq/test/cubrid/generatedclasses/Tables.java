@@ -77,6 +77,11 @@ public final class Tables {
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TDirectory T_DIRECTORY = org.jooq.test.cubrid.generatedclasses.tables.TDirectory.T_DIRECTORY;
 
 	/**
+	 * The table t_exotic_types
+	 */
+	public static final org.jooq.test.cubrid.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.cubrid.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table t_identity
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.cubrid.generatedclasses.tables.TIdentity.T_IDENTITY;

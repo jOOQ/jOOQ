@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 437131721;
+	private static final long serialVersionUID = -1680999751;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -41,6 +41,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.derby.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			org.jooq.test.derby.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.derby.generatedclasses.tables.TDates.T_DATES,
+			org.jooq.test.derby.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.derby.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.derby.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.derby.generatedclasses.tables.TLanguage.T_LANGUAGE,

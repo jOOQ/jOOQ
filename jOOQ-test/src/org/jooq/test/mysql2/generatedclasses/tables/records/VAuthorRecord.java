@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_author", schema = "test2")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -300838348;
+	private static final long serialVersionUID = 1323522858;
 
 	/**
 	 * Setter for <code>test2.v_author.ID</code>. The author ID
@@ -104,10 +104,6 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record6 type implementation

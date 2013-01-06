@@ -9,10 +9,10 @@ package org.jooq.test.mysql.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -877524307;
+	private static final long serialVersionUID = 1042699706;
 
 	/**
-	 * The singleton instance of test
+	 * The singleton instance of <code>test</code>
 	 */
 	public static final Test TEST = new Test();
 
@@ -36,6 +36,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			org.jooq.test.mysql.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.mysql.generatedclasses.tables.TDates.T_DATES,
+			org.jooq.test.mysql.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.mysql.generatedclasses.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS,
@@ -43,6 +44,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR,
 			org.jooq.test.mysql.generatedclasses.tables.VBook.V_BOOK,
 			org.jooq.test.mysql.generatedclasses.tables.VLibrary.V_LIBRARY,
+			org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025,
 			org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71,
 			org.jooq.test.mysql.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85,

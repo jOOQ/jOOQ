@@ -72,6 +72,11 @@ public final class Tables {
 	public static final org.jooq.test.sqlite.generatedclasses.tables.TDates T_DATES = org.jooq.test.sqlite.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table t_exotic_types
+	 */
+	public static final org.jooq.test.sqlite.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.sqlite.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table t_language
 	 */
 	public static final org.jooq.test.sqlite.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.sqlite.generatedclasses.tables.TLanguage.T_LANGUAGE;

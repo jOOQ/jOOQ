@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -2112906140;
+	private static final long serialVersionUID = 649816319;
 
 	/**
 	 * The singleton instance of <code>test2.t_book</code>
@@ -49,7 +49,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2
 	/**
 	 * The column <code>test2.t_book.TITLE</code>. The book's title
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
 
 	/**
 	 * The column <code>test2.t_book.PUBLISHED_IN</code>. The year the book was published in

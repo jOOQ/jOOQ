@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_booleans", schema = "test2")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean> {
 
-	private static final long serialVersionUID = -752524609;
+	private static final long serialVersionUID = -204779895;
 
 	/**
 	 * Setter for <code>test2.t_booleans.id</code>. 
@@ -178,10 +178,6 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	public java.lang.Boolean getNBoolean() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBooleans.T_BOOLEANS.N_BOOLEAN);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

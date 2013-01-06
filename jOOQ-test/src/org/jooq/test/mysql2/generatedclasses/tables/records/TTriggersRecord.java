@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_triggers", schema = "test2")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1682332788;
+	private static final long serialVersionUID = 1283237078;
 
 	/**
 	 * Setter for <code>test2.t_triggers.id_generated</code>. 
@@ -58,10 +58,6 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	public java.lang.Integer getCounter() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

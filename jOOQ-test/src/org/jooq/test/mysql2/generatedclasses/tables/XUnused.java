@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 616232799;
+	private static final long serialVersionUID = -1892738993;
 
 	/**
 	 * The singleton instance of <code>test2.x_unused</code>
@@ -34,12 +34,12 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	/**
 	 * The column <code>test2.x_unused.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * The column <code>test2.x_unused.BIG_INTEGER</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(25), this);
 
 	/**
 	 * The column <code>test2.x_unused.ID_REF</code>. 
@@ -49,7 +49,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	/**
 	 * The column <code>test2.x_unused.NAME_REF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
 	 * The column <code>test2.x_unused.CLASS</code>. 
@@ -94,7 +94,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	/**
 	 * The column <code>test2.x_unused.FIELD 737</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.DECIMAL.precision(25, 2), this);
 
 	/**
 	 * Create a <code>test2.x_unused</code> table reference

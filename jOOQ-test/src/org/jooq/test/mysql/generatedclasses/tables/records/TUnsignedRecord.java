@@ -9,69 +9,62 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord> implements org.jooq.Record4<org.jooq.types.UByte, org.jooq.types.UShort, org.jooq.types.UInteger, org.jooq.types.ULong> {
 
-	private static final long serialVersionUID = 2001364459;
+	private static final long serialVersionUID = 489490591;
 
 	/**
-	 * The table column <code>test.t_unsigned.u_byte</code>
+	 * Setter for <code>test.t_unsigned.u_byte</code>. 
 	 */
 	public void setUByte(org.jooq.types.UByte value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_BYTE, value);
 	}
 
 	/**
-	 * The table column <code>test.t_unsigned.u_byte</code>
+	 * Getter for <code>test.t_unsigned.u_byte</code>. 
 	 */
 	public org.jooq.types.UByte getUByte() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_BYTE);
 	}
 
 	/**
-	 * The table column <code>test.t_unsigned.u_short</code>
+	 * Setter for <code>test.t_unsigned.u_short</code>. 
 	 */
 	public void setUShort(org.jooq.types.UShort value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_SHORT, value);
 	}
 
 	/**
-	 * The table column <code>test.t_unsigned.u_short</code>
+	 * Getter for <code>test.t_unsigned.u_short</code>. 
 	 */
 	public org.jooq.types.UShort getUShort() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_SHORT);
 	}
 
 	/**
-	 * The table column <code>test.t_unsigned.u_int</code>
+	 * Setter for <code>test.t_unsigned.u_int</code>. 
 	 */
 	public void setUInt(org.jooq.types.UInteger value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_INT, value);
 	}
 
 	/**
-	 * The table column <code>test.t_unsigned.u_int</code>
+	 * Getter for <code>test.t_unsigned.u_int</code>. 
 	 */
 	public org.jooq.types.UInteger getUInt() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_INT);
 	}
 
 	/**
-	 * The table column <code>test.t_unsigned.u_long</code>
+	 * Setter for <code>test.t_unsigned.u_long</code>. 
 	 */
 	public void setULong(org.jooq.types.ULong value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_LONG, value);
 	}
 
 	/**
-	 * The table column <code>test.t_unsigned.u_long</code>
+	 * Getter for <code>test.t_unsigned.u_long</code>. 
 	 */
 	public org.jooq.types.ULong getULong() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.U_LONG);
-	}
-
-	/**
-	 * Create a detached TUnsignedRecord
-	 */
-	public TUnsignedRecord() {
-		super(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.T_UNSIGNED);
 	}
 
 	// -------------------------------------------------------------------------
@@ -156,5 +149,16 @@ public class TUnsignedRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	@Override
 	public org.jooq.types.ULong value4() {
 		return getULong();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TUnsignedRecord
+	 */
+	public TUnsignedRecord() {
+		super(org.jooq.test.mysql.generatedclasses.tables.TUnsigned.T_UNSIGNED);
 	}
 }

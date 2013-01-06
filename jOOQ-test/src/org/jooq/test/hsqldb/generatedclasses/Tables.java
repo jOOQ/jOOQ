@@ -112,6 +112,11 @@ public final class Tables {
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.TDates T_DATES = org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table PUBLIC.T_EXOTIC_TYPES
+	 */
+	public static final org.jooq.test.hsqldb.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.hsqldb.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table PUBLIC.T_IDENTITY
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.hsqldb.generatedclasses.tables.TIdentity.T_IDENTITY;

@@ -11,85 +11,74 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1303566323;
+	private static final long serialVersionUID = -1365200269;
 
 	/**
-	 * The language ISO code
+	 * Setter for <code>test.t_language.CD</code>. The language ISO code
 	 */
 	public void setCd(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.CD, value);
 	}
 
 	/**
-	 * The language ISO code
+	 * Getter for <code>test.t_language.CD</code>. The language ISO code
 	 */
 	public java.lang.String getCd() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.CD);
 	}
 
 	/**
-	 * The language description
+	 * Setter for <code>test.t_language.DESCRIPTION</code>. The language description
 	 */
 	public void setDescription(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION, value);
 	}
 
 	/**
-	 * The language description
+	 * Getter for <code>test.t_language.DESCRIPTION</code>. The language description
 	 */
 	public java.lang.String getDescription() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION);
 	}
 
 	/**
-	 * The table column <code>test.t_language.description_english</code>
+	 * Setter for <code>test.t_language.description_english</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH, value);
 	}
 
 	/**
-	 * The table column <code>test.t_language.description_english</code>
+	 * Getter for <code>test.t_language.description_english</code>. 
 	 */
 	public java.lang.String getDescriptionEnglish() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH);
 	}
 
 	/**
-	 * The language ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test.t_language.ID</code>. The language ID
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID, value);
 	}
 
 	/**
-	 * The language ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test.t_language.ID</code>. The language ID
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID);
 	}
 
-	/**
-	 * The language ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
-		return create()
-			.selectFrom(org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql.generatedclasses.tables.TBook.LANGUAGE_ID.equal(getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID)))
-			.fetch();
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * Create a detached TLanguageRecord
+	 * {@inheritDoc}
 	 */
-	public TLanguageRecord() {
-		super(org.jooq.test.mysql.generatedclasses.tables.TLanguage.T_LANGUAGE);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -174,5 +163,16 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@Override
 	public java.lang.Integer value4() {
 		return getId();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TLanguageRecord
+	 */
+	public TLanguageRecord() {
+		super(org.jooq.test.mysql.generatedclasses.tables.TLanguage.T_LANGUAGE);
 	}
 }

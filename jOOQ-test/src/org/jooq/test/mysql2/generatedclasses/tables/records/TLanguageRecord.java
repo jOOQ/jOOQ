@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_language", schema = "test2")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1828293120;
+	private static final long serialVersionUID = 712956807;
 
 	/**
 	 * Setter for <code>test2.t_language.CD</code>. The language ISO code
@@ -74,20 +74,6 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE.ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>test2.t_book</code> referencing this <code>test2.t_language</code>
-	 */
-	public org.jooq.Result<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE.ID)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

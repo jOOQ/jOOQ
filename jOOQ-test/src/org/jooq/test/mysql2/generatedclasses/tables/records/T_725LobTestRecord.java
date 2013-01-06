@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_725_lob_test", schema = "test2")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = -615095267;
+	private static final long serialVersionUID = -241715693;
 
 	/**
 	 * Setter for <code>test2.t_725_lob_test.ID</code>. 
@@ -43,10 +43,6 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	public byte[] getLob() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information

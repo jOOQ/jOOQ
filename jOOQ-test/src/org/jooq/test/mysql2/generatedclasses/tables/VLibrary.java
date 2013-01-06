@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = -1059244108;
+	private static final long serialVersionUID = -1751562428;
 
 	/**
 	 * The singleton instance of <code>test2.v_library</code>
@@ -29,12 +29,12 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.gener
 	/**
 	 * The column <code>test2.v_library.AUTHOR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this);
 
 	/**
 	 * The column <code>test2.v_library.TITLE</code>. The book's title
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
 
 	/**
 	 * Create a <code>test2.v_library</code> table reference

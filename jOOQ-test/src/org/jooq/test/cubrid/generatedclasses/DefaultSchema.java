@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -746458839;
+	private static final long serialVersionUID = -327919862;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -48,6 +48,7 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.cubrid.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.cubrid.generatedclasses.tables.TDates.T_DATES,
 			org.jooq.test.cubrid.generatedclasses.tables.TDirectory.T_DIRECTORY,
+			org.jooq.test.cubrid.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.cubrid.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.cubrid.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.cubrid.generatedclasses.tables.TLanguage.T_LANGUAGE,

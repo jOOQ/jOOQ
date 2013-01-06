@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 156757380;
+	private static final long serialVersionUID = 1948324205;
 
 	/**
 	 * The singleton instance of <code>test2.v_author</code>
@@ -34,12 +34,12 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	/**
 	 * The column <code>test2.v_author.FIRST_NAME</code>. The author's first name
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>test2.v_author.LAST_NAME</code>. The author's last name
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>test2.v_author.DATE_OF_BIRTH</code>. The author's date of birth
@@ -54,7 +54,7 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.genera
 	/**
 	 * The column <code>test2.v_author.ADDRESS</code>. The author's address
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(200), this);
 
 	/**
 	 * Create a <code>test2.v_author</code> table reference

@@ -87,6 +87,11 @@ public final class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
+	 * The table PUBLIC.T_EXOTIC_TYPES
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.h2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table PUBLIC.T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

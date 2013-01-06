@@ -11,149 +11,60 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 2132289076;
+	private static final long serialVersionUID = 607022569;
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES test.t_book_store (name)
-	 * </pre></code>
+	 * Setter for <code>test.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
 	public void setBookStoreName(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value);
 	}
 
 	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES test.t_book_store (name)
-	 * </pre></code>
+	 * Getter for <code>test.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
 	public java.lang.String getBookStoreName() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord 
-	 * TBookStoreRecord}
-	 */
-	public void setBookStoreName(org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, null);
-		}
-		else {
-			setValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value.getValue(org.jooq.test.mysql.generatedclasses.tables.TBookStore.NAME));
-		}
-	}
-
-	/**
-	 * The book store name
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_b2bs_bs_name
-	 * FOREIGN KEY (book_store_name)
-	 * REFERENCES test.t_book_store (name)
-	 * </pre></code>
-	 */
-	public org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.mysql.generatedclasses.tables.TBookStore.T_BOOK_STORE)
-			.where(org.jooq.test.mysql.generatedclasses.tables.TBookStore.NAME.equal(getValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME)))
-			.fetchOne();
-	}
-
-	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES test.t_book (ID)
-	 * </pre></code>
+	 * Setter for <code>test.t_book_to_book_store.book_id</code>. The book ID
 	 */
 	public void setBookId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_ID, value);
 	}
 
 	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES test.t_book (ID)
-	 * </pre></code>
+	 * Getter for <code>test.t_book_to_book_store.book_id</code>. The book ID
 	 */
 	public java.lang.Integer getBookId() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_ID);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord 
-	 * TBookRecord}
-	 */
-	public void setBookId(org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_ID, value.getValue(org.jooq.test.mysql.generatedclasses.tables.TBook.ID));
-		}
-	}
-
-	/**
-	 * The book ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_b2bs_b_id
-	 * FOREIGN KEY (book_id)
-	 * REFERENCES test.t_book (ID)
-	 * </pre></code>
-	 */
-	public org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord fetchTBook() {
-		return create()
-			.selectFrom(org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql.generatedclasses.tables.TBook.ID.equal(getValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.BOOK_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * The number of books on stock
+	 * Setter for <code>test.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
 	public void setStock(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.STOCK, value);
 	}
 
 	/**
-	 * The number of books on stock
+	 * Getter for <code>test.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
 	public java.lang.Integer getStock() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.STOCK);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TBookToBookStoreRecord
+	 * {@inheritDoc}
 	 */
-	public TBookToBookStoreRecord() {
-		super(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
+	@Override
+	public org.jooq.Record2<java.lang.String, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -222,5 +133,16 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	@Override
 	public java.lang.Integer value3() {
 		return getStock();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TBookToBookStoreRecord
+	 */
+	public TBookToBookStoreRecord() {
+		super(org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE);
 	}
 }

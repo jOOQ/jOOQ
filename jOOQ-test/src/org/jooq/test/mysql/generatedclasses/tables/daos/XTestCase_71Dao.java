@@ -25,6 +25,9 @@ public class XTestCase_71Dao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.g
 		super(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.mysql.generatedclasses.tables.pojos.XTestCase_71.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.XTestCase_71 object) {
 		return object.getId();
@@ -38,7 +41,7 @@ public class XTestCase_71Dao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.g
 	}
 
 	/**
-	 * Fetch a unique that has <code>ID = value</code>
+	 * Fetch a unique record that has <code>ID = value</code>
 	 */
 	public org.jooq.test.mysql.generatedclasses.tables.pojos.XTestCase_71 fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.ID, value);

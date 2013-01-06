@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = -1749211720;
+	private static final long serialVersionUID = -91846097;
 
 	/**
 	 * Setter for <code>test2.t_book.ID</code>. The book ID
@@ -39,18 +39,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setAuthorId(org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, value.getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>test2.t_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 10)
@@ -63,18 +51,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord}
-	 */
-	public void setCoAuthorId(org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value.getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID));
-		}
 	}
 
 	/**
@@ -138,18 +114,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord}
-	 */
-	public void setLanguageId(org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value.getValue(org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>test2.t_book.LANGUAGE_ID</code>. The language of the book
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 10)
@@ -200,50 +164,6 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@javax.persistence.Column(name = "STATUS", length = 8)
 	public org.jooq.test.mysql2.generatedclasses.enums.TBookStatus getStatus() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.STATUS);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>test2.t_book_to_book_store</code> referencing this <code>test2.t_book</code>
-	 */
-	public org.jooq.Result<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>test2.t_author</code> referenced by this <code>test2.t_book</code>
-	 */
-	public org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>test2.t_author</code> referenced by this <code>test2.t_book</code>
-	 */
-	public org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord fetchTAuthorByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>test2.t_language</code> referenced by this <code>test2.t_book</code>
-	 */
-	public org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord fetchTLanguage() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TLanguage.T_LANGUAGE.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

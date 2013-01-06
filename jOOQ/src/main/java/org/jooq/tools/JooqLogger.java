@@ -47,9 +47,35 @@ import java.util.logging.Level;
  */
 public final class JooqLogger {
 
-    private org.slf4j.Logger slf4j;
-    private org.apache.log4j.Logger log4j;
+    /**
+     * The SLF4j Logger instance, if available
+     */
+    private org.slf4j.Logger         slf4j;
+
+    /**
+     * The log4j Logger instance, if available
+     */
+    private org.apache.log4j.Logger  log4j;
+
+    /**
+     * The JDK Logger instance, if available
+     */
     private java.util.logging.Logger util;
+
+    /**
+     * Whether calls to {@link #trace(Object)} are possible
+     */
+    private boolean                  supportsTrace = true;
+
+    /**
+     * Whether calls to {@link #debug(Object)} are possible
+     */
+    private boolean                  supportsDebug = true;
+
+    /**
+     * Whether calls to {@link #info(Object)} are possible
+     */
+    private boolean                  supportsInfo = true;
 
     public static JooqLogger getLogger(Class<?> clazz) {
         JooqLogger result = new JooqLogger();
@@ -71,11 +97,39 @@ public final class JooqLogger {
             }
         }
 
+        // [#2085] Check if any of the INFO, DEBUG, TRACE levels might be
+        // unavailable, e.g. because client code isn't using the latest version
+        // of log4j or any other logger
+
+        try {
+            result.isInfoEnabled();
+        }
+        catch (Throwable e) {
+            result.supportsInfo = false;
+        }
+
+        try {
+            result.isDebugEnabled();
+        }
+        catch (Throwable e) {
+            result.supportsDebug = false;
+        }
+
+        try {
+            result.isTraceEnabled();
+        }
+        catch (Throwable e) {
+            result.supportsTrace = false;
+        }
+
         return result;
     }
 
     public boolean isTraceEnabled() {
-        if (slf4j != null) {
+        if (!supportsTrace) {
+            return false;
+        }
+        else if (slf4j != null) {
             return slf4j.isTraceEnabled();
         }
         else if (log4j != null) {
@@ -120,7 +174,9 @@ public final class JooqLogger {
 
 
     public boolean isDebugEnabled() {
-        if (slf4j != null) {
+        if (!supportsDebug) {
+            return false;
+        } else if (slf4j != null) {
             return slf4j.isDebugEnabled();
         }
         else if (log4j != null) {
@@ -165,7 +221,10 @@ public final class JooqLogger {
 
 
     public boolean isInfoEnabled() {
-        if (slf4j != null) {
+        if (!supportsInfo) {
+            return false;
+        }
+        else if (slf4j != null) {
             return slf4j.isInfoEnabled();
         }
         else if (log4j != null) {

@@ -1,5 +1,6 @@
 DELETE FROM multi_schema.t_book_sale/
 
+DELETE FROM t_exotic_types/
 DELETE FROM t_639_numbers_table/
 DELETE FROM t_arrays/
 DELETE FROM t_book_to_book_store/

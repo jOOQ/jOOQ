@@ -41,6 +41,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.Record;
@@ -112,6 +113,7 @@ public class HSQLDBDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<BigInteger> __BIGINTEGER       = new DefaultDataType<BigInteger>(SQLDialect.HSQLDB, SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DataType<UUID>       __UUID             = new DefaultDataType<UUID>(SQLDialect.HSQLDB, SQLDataType.UUID, "varchar", "varchar(36)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

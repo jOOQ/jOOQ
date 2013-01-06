@@ -42,6 +42,7 @@ import static org.jooq.test.ase.generatedclasses.Tables.V_BOOK;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -285,6 +286,21 @@ public class ASETest extends jOOQAbstractTest<
 
     @Override
     protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
+        return null;
+    }
+
+    @Override
+    protected Table<XUnusedRecord> TExoticTypes() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, Integer> TExoticTypes_ID() {
+        return null;
+    }
+
+    @Override
+    protected TableField<XUnusedRecord, UUID> TExoticTypes_UUID() {
         return null;
     }
 

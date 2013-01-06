@@ -74,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import org.jooq.Converter;
 import org.jooq.DataType;
@@ -1561,5 +1562,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(-3600000);
         return cal;
+    }
+
+    @Test
+    public void testUUIDDataType() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
+
+        assertEquals(1,
+        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UUID())
+                .values(1, uuid1)
+                .execute());
+        assertEquals(uuid1, create().fetchOne(TExoticTypes()).getValue(TExoticTypes_UUID()));
+
+        assertEquals(1,
+        create().update(TExoticTypes())
+                .set(TExoticTypes_UUID(), uuid2)
+                .where(TExoticTypes_UUID().eq(uuid1))
+                .execute());
+        assertEquals(uuid2, create().fetchOne(TExoticTypes()).getValue(TExoticTypes_UUID()));
     }
  }

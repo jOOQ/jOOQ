@@ -72,6 +72,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
@@ -1287,6 +1288,9 @@ final class Utils {
             String string = stream.readString();
             return (T) (string == null ? null : ULong.valueOf(string));
         }
+        else if (type == UUID.class) {
+            return (T) Convert.convert(stream.readString(), UUID.class);
+        }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
@@ -1416,6 +1420,9 @@ final class Utils {
 //            stream.writeArray(value);
 //        }
         else if (UNumber.class.isAssignableFrom(type)) {
+            stream.writeString(value.toString());
+        }
+        else if (type == UUID.class) {
             stream.writeString(value.toString());
         }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
@@ -1551,6 +1558,28 @@ final class Utils {
         else if (type == ULong.class) {
             String string = rs.getString(index);
             return (T) (string == null ? null : ULong.valueOf(string));
+        }
+        else if (type == UUID.class) {
+            switch (ctx.getDialect()) {
+
+                // [#1624] Some JDBC drivers natively support the
+                // java.util.UUID data type
+                case H2:
+                case POSTGRES: {
+                    return (T) rs.getObject(index);
+                }
+
+                // Other SQL dialects deal with UUIDs as if they were CHAR(36)
+                // even if they explicitly support them (UNIQUEIDENTIFIER)
+                case SQLSERVER:
+                case SYBASE:
+
+                // Most databases don't have such a type. In this case, jOOQ
+                // simulates the type
+                default: {
+                    return (T) Convert.convert(rs.getString(index), UUID.class);
+                }
+            }
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here
@@ -1830,6 +1859,28 @@ final class Utils {
         else if (type == ULong.class) {
             String string = stmt.getString(index);
             return (T) (string == null ? null : ULong.valueOf(string));
+        }
+        else if (type == UUID.class) {
+            switch (ctx.getDialect()) {
+
+                // [#1624] Some JDBC drivers natively support the
+                // java.util.UUID data type
+                case H2:
+                case POSTGRES: {
+                    return (T) stmt.getObject(index);
+                }
+
+                // Other SQL dialects deal with UUIDs as if they were CHAR(36)
+                // even if they explicitly support them (UNIQUEIDENTIFIER)
+                case SQLSERVER:
+                case SYBASE:
+
+                // Most databases don't have such a type. In this case, jOOQ
+                // simulates the type
+                default: {
+                    return (T) Convert.convert(stmt.getString(index), UUID.class);
+                }
+            }
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here

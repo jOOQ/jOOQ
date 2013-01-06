@@ -20,6 +20,7 @@ DROP TABLE x_test_case_64_69/
 DROP TABLE t_986_1/
 DROP TABLE t_986_2/
 DROP TABLE x_unused/
+DROP TABLE t_exotic_types/
 DROP TABLE t_639_numbers_table/
 DROP TABLE t_658_ref/
 DROP TABLE t_658_11/
@@ -238,6 +239,14 @@ CREATE TABLE t_986_2 (
   "REF" INT,
 
   CONSTRAINT pk_986 PRIMARY KEY("REF")
+)
+/
+
+CREATE TABLE t_exotic_types (
+  ID INT NOT NULL,
+  UU CHAR(36),
+  
+  CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )
 /
 

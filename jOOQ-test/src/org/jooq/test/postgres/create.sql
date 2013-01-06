@@ -356,14 +356,6 @@ CREATE TABLE x_unused (
 COMMENT ON TABLE x_unused IS 'An unused table in the same schema.'
 /
 
-CREATE TABLE t_exotic_types (
-  ID INT NOT NULL,
-  UU UUID,
-  
-  CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
-)
-/
-
 CREATE TABLE t_986_1 (
   REF INT,
 
@@ -375,6 +367,14 @@ CREATE TABLE t_986_2 (
   REF INT,
 
   CONSTRAINT fk_986 FOREIGN KEY(REF) REFERENCES X_UNUSED(ID)
+)
+/
+
+CREATE TABLE t_exotic_types (
+  ID INT NOT NULL,
+  UU UUID,
+  
+  CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )
 /
 

@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS x_test_case_71/
 DROP TABLE IF EXISTS x_test_case_64_69/
 DROP TABLE IF EXISTS x_test_case_85/
 DROP TABLE IF EXISTS x_unused/
+DROP TABLE IF EXISTS t_exotic_types/
 DROP TABLE IF EXISTS t_639_numbers_table/
 DROP TABLE IF EXISTS t_658_ref/
 DROP TABLE IF EXISTS t_658_11/
@@ -238,6 +239,14 @@ CREATE TABLE x_unused (
 )
 /
 COMMENT ON TABLE x_unused IS 'An unused table in the same schema.'
+/
+
+CREATE TABLE t_exotic_types (
+  ID INT NOT NULL,
+  UU CHAR(36),
+  
+  CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
+)
 /
 
 CREATE TABLE t_639_numbers_table (

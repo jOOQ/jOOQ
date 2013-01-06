@@ -39,6 +39,7 @@ package org.jooq.test;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.h2.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.h2.generatedclasses.Tables.V_AUTHOR;
@@ -48,6 +49,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
@@ -79,6 +81,7 @@ import org.jooq.test.h2.generatedclasses.tables.TBook;
 import org.jooq.test.h2.generatedclasses.tables.TBookStore;
 import org.jooq.test.h2.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.h2.generatedclasses.tables.TBooleans;
+import org.jooq.test.h2.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.h2.generatedclasses.tables.TIdentity;
 import org.jooq.test.h2.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.h2.generatedclasses.tables.TTriggers;
@@ -94,6 +97,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
@@ -127,7 +131,7 @@ public class H2Test extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
-        XUnusedRecord,
+        TExoticTypesRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,
@@ -372,6 +376,21 @@ public class H2Test extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
         return null;
+    }
+
+    @Override
+    protected Table<TExoticTypesRecord> TExoticTypes() {
+        return T_EXOTIC_TYPES;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, Integer> TExoticTypes_ID() {
+        return TExoticTypes.ID;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UUID() {
+        return TExoticTypes.UU;
     }
 
     @Override

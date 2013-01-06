@@ -40,6 +40,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.Record;
@@ -106,6 +107,7 @@ public class OracleDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<BigInteger>   __BIGINTEGER        = new DefaultDataType<BigInteger>(SQLDialect.ORACLE, SQLDataType.DECIMAL_INTEGER, "number");
+    protected static final DataType<UUID>       __UUID                = new DefaultDataType<UUID>(SQLDialect.ORACLE, SQLDataType.UUID, "varchar2", "varchar2(36)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

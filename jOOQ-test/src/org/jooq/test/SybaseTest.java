@@ -40,6 +40,7 @@ import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOK_STORE;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.sybase.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.sybase.generatedclasses.Tables.T_TRIGGERS;
@@ -50,6 +51,7 @@ import static org.jooq.test.sybase.generatedclasses.Tables.V_LIBRARY;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -80,6 +82,7 @@ import org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord;
@@ -99,6 +102,7 @@ import org.jooq.util.sybase.SybaseDataType;
  * Integration test that creates tables and performs various sql operations.
  *
  * @author Espen Stromsnes
+ * @author Lukas Eder
  */
 public class SybaseTest extends jOOQAbstractTest<
         TAuthorRecord,
@@ -114,7 +118,7 @@ public class SybaseTest extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
-        XUnusedRecord,
+        TExoticTypesRecord,
         TIdentityRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,
@@ -275,6 +279,21 @@ public class SybaseTest extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
         return null;
+    }
+
+    @Override
+    protected Table<TExoticTypesRecord> TExoticTypes() {
+        return T_EXOTIC_TYPES;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, Integer> TExoticTypes_ID() {
+        return T_EXOTIC_TYPES.ID;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UUID() {
+        return T_EXOTIC_TYPES.UU;
     }
 
     @Override

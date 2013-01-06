@@ -40,6 +40,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
@@ -107,7 +108,7 @@ public class SQLServerDataType {
     public static final DataType<BigDecimal> MONEY            = new DefaultDataType<BigDecimal>(SQLDialect.SQLSERVER, SQLDataType.DECIMAL, "money");
     public static final DataType<BigDecimal> SMALLMONEY       = new DefaultDataType<BigDecimal>(SQLDialect.SQLSERVER, SQLDataType.DECIMAL, "smallmoney");
     public static final DataType<byte[]>     IMAGE            = new DefaultDataType<byte[]>(SQLDialect.SQLSERVER, SQLDataType.BINARY, "image");
-    public static final DataType<String>     UNIQUEIDENTIFIER = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.VARCHAR, "uniqueidentifier");
+    public static final DataType<UUID>       UNIQUEIDENTIFIER = new DefaultDataType<UUID>(SQLDialect.SQLSERVER, SQLDataType.UUID, "uniqueidentifier");
     public static final DataType<Long>       ROWVERSION       = new DefaultDataType<Long>(SQLDialect.SQLSERVER, SQLDataType.BIGINT, "rowversion");
     public static final DataType<Long>       TIMESTAMP        = new DefaultDataType<Long>(SQLDialect.SQLSERVER, SQLDataType.BIGINT, "timestamp");
 }

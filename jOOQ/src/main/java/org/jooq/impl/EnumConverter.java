@@ -83,7 +83,10 @@ public class EnumConverter<T, U extends Enum<U>> implements Converter<T, U> {
      */
     @Override
     public T to(U userObject) {
-        if (enumType == EnumType.ORDINAL) {
+        if (userObject == null) {
+            return null;
+        }
+        else if (enumType == EnumType.ORDINAL) {
             return convert(userObject.ordinal(), fromType);
         }
         else {

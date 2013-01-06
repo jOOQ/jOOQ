@@ -7932,17 +7932,6 @@ Finishing                : Total: 4.814ms, +3.375ms
 								  title="jOOQ-codegen-maven example pom.xml file">https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen-maven-example/pom.xml</a>
 							  </p>
 
-                            <h3>Migrate properties files from jOOQ 1.7, early versions of jOOQ 2.0.x:</h3>
-                            <p>
-                                Before jOOQ 2.0.4, the code generator was configured using properties files. These files are still supported for source code generation, but their syntax won't be maintained any longer. If you wish to migrate to XML, you can migrate the file using this command on the command line
-                            </p>
-
-<config>org.jooq.util.GenerationTool /jooq-config.properties migrate</config>
-
-							<p>
-								Using the migrate flag, jOOQ will read the properties file and output a corresponding XML file on system out
-							</p>
-
 							<h3>Use jOOQ generated classes in your application</h3>
 							<p>
 								Be sure, both jooq-{jooq-version}.jar and your generated package (see configuration) are located on your classpath. Once this is done, you can execute SQL statements with your generated classes.
@@ -9212,6 +9201,7 @@ for (Record record : create().select(
 							
 							<h3>No more navigation methods and "foreign key setters"</h3>
 							<h3>No more comma-separated regular expressions</h3>
+							<h3>No more .properties files for code generation</h3>
 							
 							<h3>Object renames</h3>
 							<ul>

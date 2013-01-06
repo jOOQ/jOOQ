@@ -138,6 +138,9 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.GenerationTool;
+import org.jooq.util.jaxb.Configuration;
+import org.jooq.util.jaxb.Jdbc;
+import org.jooq.util.jaxb.Property;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -221,12 +224,6 @@ public abstract class jOOQAbstractTest<
     protected static final List<String>  AUTHOR_FIRST_NAMES     = Arrays.asList("George", "Paulo");
     protected static final List<String>  AUTHOR_LAST_NAMES      = Arrays.asList("Orwell", "Coelho");
 
-    private static final String          JDBC_SCHEMA            = "jdbc.Schema";
-    private static final String          JDBC_PASSWORD          = "jdbc.Password";
-    private static final String          JDBC_USER              = "jdbc.User";
-    private static final String          JDBC_URL               = "jdbc.URL";
-    private static final String          JDBC_DRIVER            = "jdbc.Driver";
-
     public static final JooqLogger       log                    = JooqLogger.getLogger(jOOQAbstractTest.class);
     public static final StopWatch        testSQLWatch           = new StopWatch();
     public static boolean                initialised;
@@ -266,7 +263,7 @@ public abstract class jOOQAbstractTest<
         for (String sql : allSQL.split("/")) {
             try {
                 if (!StringUtils.isBlank(sql)) {
-                    sql = sql.replace("{" + JDBC_SCHEMA + "}", jdbcSchema);
+                    sql = sql.replace("{jdbc.Schema}", jdbcSchema);
 
                     if (sql.toLowerCase().contains("multi_schema_unused.") &&
                        !sql.toLowerCase().contains("references multi_schema_unused")) {
@@ -489,13 +486,23 @@ public abstract class jOOQAbstractTest<
         return connectionMultiSchemaUnused;
     }
 
+    private final String getProperty(List<Property> properties, String key) {
+        for (Property p : properties) {
+            if (p.getKey().equals(key)) {
+                return p.getValue();
+            }
+        }
+
+        return null;
+    }
+
     final Connection getConnection0(String jdbcUser, String jdbcPassword) {
         try {
-            String configuration = System.getProperty("jdbc.properties");
+            String configuration = System.getProperty("org.jooq.configuration");
             if (configuration == null) {
-                log.error("No system property 'jdbc.properties' found");
+                log.error("No system property 'org.jooq.configuration' found");
                 log.error("-----------");
-                log.error("Please be sure property is set; example: -Djdbc.properties=/org/jooq/configuration/${env_var:USERNAME}/db2/library.properties");
+                log.error("Please be sure property is set; example: -Dorg.jooq.configuration=/org/jooq/configuration/${env_var:USERNAME}/db2/library.xml");
                 throw new Error();
             }
             InputStream in = GenerationTool.class.getResourceAsStream(configuration);
@@ -507,20 +514,20 @@ public abstract class jOOQAbstractTest<
                 throw new Error();
             }
 
-            Properties properties = new Properties();
+            Configuration c = GenerationTool.load(in);
+            Jdbc jdbc = c.getJdbc();
 
-            try {
-                properties.load(in);
-            }
-            finally {
-                in.close();
-            }
-
-            String driver = properties.getProperty(JDBC_DRIVER);
-            jdbcURL = properties.getProperty(JDBC_URL) + getSchemaSuffix();
-            jdbcUser = jdbcUser != null ? jdbcUser : properties.getProperty(JDBC_USER);
-            jdbcPassword = jdbcPassword != null ? jdbcPassword : properties.getProperty(JDBC_PASSWORD);
-            jdbcSchema = properties.getProperty(JDBC_SCHEMA) + getSchemaSuffix();
+            String driver = jdbc.getDriver();
+            jdbcURL = jdbc.getUrl() + getSchemaSuffix();
+            jdbcSchema = jdbc.getSchema() + getSchemaSuffix();
+            jdbcUser =
+                jdbcUser != null ? jdbcUser :
+                jdbc.getUser() != null ? jdbc.getUser() :
+                getProperty(jdbc.getProperties(), "user");
+            jdbcPassword =
+                jdbcPassword != null ? jdbcPassword :
+                jdbc.getPassword() != null ? jdbc.getPassword() :
+                getProperty(jdbc.getProperties(), "password");
 
             Class.forName(driver);
             if (StringUtils.isBlank(jdbcUser)) {

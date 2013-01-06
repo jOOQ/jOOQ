@@ -45,6 +45,7 @@ DROP TABLE x_test_case_2025/
 DROP TABLE x_test_case_71/
 DROP TABLE x_test_case_64_69/
 DROP TABLE x_test_case_85/
+DROP TABLE t_exotic_types/
 DROP TABLE x_unused/
 DROP TABLE x_many_fields/
 DROP TABLE t_639_numbers_table/
@@ -242,6 +243,14 @@ CREATE TABLE x_unused (
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
   CONSTRAINT uk_x_unused_id UNIQUE(ID),
   CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
+)
+/
+
+CREATE TABLE t_exotic_types (
+  ID INT NOT NULL,
+  UU UNIQUEIDENTIFIER,
+  
+  CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )
 /
 

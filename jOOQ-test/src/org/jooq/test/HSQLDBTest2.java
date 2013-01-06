@@ -45,6 +45,7 @@ import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_STORE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.h2.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.h2.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.h2.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
@@ -54,6 +55,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -88,6 +90,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
@@ -118,7 +121,7 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
-        XUnusedRecord,
+        TExoticTypesRecord,
         XUnusedRecord,
         XUnusedRecord,
         T_725LobTestRecord,
@@ -423,6 +426,21 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
     @Override
     protected TableField<TBooleansRecord, Boolean> TBooleans_N() {
         return T_BOOLEANS.N_BOOLEAN;
+    }
+
+    @Override
+    protected Table<TExoticTypesRecord> TExoticTypes() {
+        return T_EXOTIC_TYPES;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, Integer> TExoticTypes_ID() {
+        return T_EXOTIC_TYPES.ID;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UUID() {
+        return T_EXOTIC_TYPES.UU;
     }
 
     @Override

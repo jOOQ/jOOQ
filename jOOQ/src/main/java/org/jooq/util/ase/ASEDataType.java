@@ -35,6 +35,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
@@ -95,6 +96,7 @@ public class ASEDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<BigInteger> __BIGINTEGER            = new DefaultDataType<BigInteger>(SQLDialect.ASE, SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DataType<UUID>       __UUID                  = new DefaultDataType<UUID>(SQLDialect.ASE, SQLDataType.UUID, "varchar");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

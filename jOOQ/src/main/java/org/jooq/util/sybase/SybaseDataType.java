@@ -35,6 +35,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
@@ -104,7 +105,7 @@ public class SybaseDataType {
     public static final DataType<BigDecimal> SMALLMONEY                 = new DefaultDataType<BigDecimal>(SQLDialect.SYBASE, SQLDataType.DECIMAL, "smallmoney");
     public static final DataType<String>     UNIQUEIDENTIFIERSTR        = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.VARCHAR, "uniqueidentifierstr");
     public static final DataType<String>     XML                        = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.VARCHAR, "xml");
-    public static final DataType<String>     UNIQUEIDENTIFIER           = new DefaultDataType<String>(SQLDialect.SYBASE, SQLDataType.VARCHAR, "uniqueidentifier");
+    public static final DataType<UUID>       UNIQUEIDENTIFIER           = new DefaultDataType<UUID>(SQLDialect.SYBASE, SQLDataType.UUID, "uniqueidentifier");
     public static final DataType<Timestamp>  DATETIMEOFFSET             = new DefaultDataType<Timestamp>(SQLDialect.SYBASE, SQLDataType.TIMESTAMP, "datetimeoffset");
     public static final DataType<Timestamp>  SMALLDATETIME              = new DefaultDataType<Timestamp>(SQLDialect.SYBASE, SQLDataType.TIMESTAMP, "smalldatetime");
     public static final DataType<Timestamp>  TIMESTAMPWITHTIMEZONE      = new DefaultDataType<Timestamp>(SQLDialect.SYBASE, SQLDataType.TIMESTAMP, "timestampwithtimezone");

@@ -41,6 +41,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
@@ -112,6 +113,7 @@ public class MySQLDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<BigInteger> __BIGINTEGER    = new DefaultDataType<BigInteger>(SQLDialect.MYSQL, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal");
+    protected static final DataType<UUID>       __UUID          = new DefaultDataType<UUID>(SQLDialect.MYSQL, SQLDataType.UUID, "varchar", "char");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

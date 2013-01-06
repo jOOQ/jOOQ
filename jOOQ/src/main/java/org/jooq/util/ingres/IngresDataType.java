@@ -41,6 +41,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
@@ -115,6 +116,7 @@ public class IngresDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<BigInteger> __BIGINTEGER              = new DefaultDataType<BigInteger>(SQLDialect.INGRES, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(38, 0)");
+    protected static final DataType<UUID>       __UUID                    = new DefaultDataType<UUID>(SQLDialect.INGRES, SQLDataType.UUID, "varchar");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

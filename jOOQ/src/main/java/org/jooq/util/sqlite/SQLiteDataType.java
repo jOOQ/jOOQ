@@ -40,6 +40,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
@@ -104,6 +105,8 @@ public class SQLiteDataType {
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
+
+    protected static final DataType<UUID>    __UUID           = new DefaultDataType<UUID>(SQLDialect.SQLITE, SQLDataType.UUID, "varchar");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

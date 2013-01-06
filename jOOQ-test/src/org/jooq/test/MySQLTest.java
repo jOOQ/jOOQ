@@ -42,6 +42,7 @@ import static org.jooq.impl.Factory.val;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.mysql.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.mysql.generatedclasses.Tables.V_AUTHOR;
@@ -65,6 +66,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
@@ -96,6 +98,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBooleans;
+import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
 import org.jooq.test.mysql.generatedclasses.tables.TUnsigned;
@@ -111,6 +114,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.mysql.generatedclasses.tables.records.TUnsignedRecord;
@@ -146,7 +150,7 @@ public class MySQLTest extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         TUnsignedRecord,
-        XUnusedRecord,
+        TExoticTypesRecord,
         XUnusedRecord,
         TIdentityPkRecord,
         T_725LobTestRecord,
@@ -381,6 +385,21 @@ public class MySQLTest extends jOOQAbstractTest<
     @Override
     protected TableField<TUnsignedRecord, ULong> TUnsigned_U_LONG() {
         return TUnsigned.U_LONG;
+    }
+
+    @Override
+    protected Table<TExoticTypesRecord> TExoticTypes() {
+        return T_EXOTIC_TYPES;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, Integer> TExoticTypes_ID() {
+        return TExoticTypes.ID;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UUID() {
+        return TExoticTypes.UU;
     }
 
     @Override

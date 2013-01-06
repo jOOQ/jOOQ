@@ -58,10 +58,13 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 import org.jooq.Converter;
 import org.jooq.EnumType;
 import org.jooq.Field;
+import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -81,8 +84,20 @@ import org.jooq.types.UShort;
  */
 public final class Convert {
 
+    /**
+     * All string values that can be transformed into a boolean <code>true</code> value.
+     */
     public static final Set<String> TRUE_VALUES;
+
+    /**
+     * All string values that can be transformed into a boolean <code>false</code> value.
+     */
     public static final Set<String> FALSE_VALUES;
+
+    /**
+     * A UUID pattern for UUIDs with or without hyphens
+     */
+    private static final Pattern UUID_PATTERN = Pattern.compile("(\\p{XDigit}{8})-?(\\p{XDigit}{4})-?(\\p{XDigit}{4})-?(\\p{XDigit}{4})-?(\\p{XDigit}{12})");
 
     static {
         Set<String> trueValues = new HashSet<String>();
@@ -653,7 +668,17 @@ public final class Convert {
                         Class raw = toClass;
                         return (U) java.lang.Enum.valueOf(raw, (String) from);
                     }
-                    catch (java.lang.IllegalArgumentException e) {
+                    catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                }
+
+                // [#1624] UUID data types can be read from Strings
+                else if ((fromClass == String.class) && toClass == UUID.class) {
+                    try {
+                        return (U) parseUUID((String) from);
+                    }
+                    catch (IllegalArgumentException e) {
                         return null;
                     }
                 }
@@ -702,6 +727,22 @@ public final class Convert {
             }
 
             throw fail(time, toClass);
+        }
+
+        /**
+         * Some databases do not implement the standard very well. Specifically,
+         * {@link SQLDialect#SYBASE} seems to omit hyphens
+         */
+        private static final UUID parseUUID(String string) {
+            if (string == null) {
+                return null;
+            }
+            else if (string.contains("-")) {
+                return UUID.fromString(string);
+            }
+            else {
+                return UUID.fromString(UUID_PATTERN.matcher(string).replaceAll("$1-$2-$3-$4-$5"));
+            }
         }
 
         private static DataTypeException fail(Object from, Class<?> toClass) {

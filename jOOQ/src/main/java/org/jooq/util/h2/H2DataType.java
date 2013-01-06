@@ -40,6 +40,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.Record;
@@ -131,7 +132,7 @@ public class H2DataType {
     public static final DataType<byte[]>     OID                   = new DefaultDataType<byte[]>(SQLDialect.H2, SQLDataType.BLOB, "oid");
     public static final DataType<String>     VARCHAR_CASESENSITIVE = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.VARCHAR, "varchar_casesensitive");
     public static final DataType<String>     VARCHAR_IGNORECASE    = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.VARCHAR, "varchar_ignorecase");
-    public static final DataType<String>     UUID                  = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.VARCHAR, "uuid");
+    public static final DataType<UUID>       UUID                  = new DefaultDataType<UUID>(SQLDialect.H2, SQLDataType.UUID, "uuid");
     public static final DataType<String>     TINYTEXT              = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CLOB, "tinytext");
     public static final DataType<String>     TEXT                  = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CLOB, "text");
     public static final DataType<String>     MEDIUMTEXT            = new DefaultDataType<String>(SQLDialect.H2, SQLDataType.CLOB, "mediumtext");

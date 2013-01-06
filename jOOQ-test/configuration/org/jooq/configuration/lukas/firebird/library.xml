@@ -111,6 +111,10 @@
                     <name>BOOLEAN</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expressions>
                 </forcedType>
+                <forcedType>
+                    <name>UUID</name>
+                    <expressions>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expressions>
+                </forcedType>
 
                 <forcedType>
                     <name>org.jooq.test._.converters.Boolean_YES_NO_LC</name>

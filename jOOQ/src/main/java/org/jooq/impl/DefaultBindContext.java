@@ -57,6 +57,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Arrays;
+import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
@@ -263,6 +264,30 @@ class DefaultBindContext extends AbstractBindContext {
         }
         else if (UNumber.class.isAssignableFrom(type)) {
             stmt.setString(nextIndex(), value.toString());
+        }
+        else if (type == UUID.class) {
+            switch (dialect) {
+
+                // [#1624] Some JDBC drivers natively support the
+                // java.util.UUID data type
+                case H2:
+                case POSTGRES: {
+                    stmt.setObject(nextIndex(), value);
+                    break;
+                }
+
+                // Other SQL dialects deal with UUIDs as if they were CHAR(36)
+                // even if they explicitly support them (UNIQUEIDENTIFIER)
+                case SQLSERVER:
+                case SYBASE:
+
+                // Most databases don't have such a type. In this case, jOOQ
+                // simulates the type
+                default: {
+                    stmt.setString(nextIndex(), value.toString());
+                    break;
+                }
+            }
         }
 
         // The type byte[] is handled earlier. byte[][] can be handled here

@@ -587,15 +587,9 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<U, UInteger> TUnsigned_U_INT();
     protected abstract TableField<U, ULong> TUnsigned_U_LONG();
 
-    protected Table<UU> TExoticTypes() {
-        return null;
-    }
-    protected TableField<UU, Integer> TExoticTypes_ID() {
-        return null;
-    }
-    protected TableField<UU, UUID> TExoticTypes_UUID() {
-        return null;
-    }
+    protected abstract Table<UU> TExoticTypes();
+    protected abstract TableField<UU, Integer> TExoticTypes_ID();
+    protected abstract TableField<UU, UUID> TExoticTypes_UUID();
 
     protected abstract Table<DATE> TDates();
 
@@ -1890,7 +1884,7 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testUUIDDataType() throws Exception {
-        new ExoticTests(this).testUUIDDataType();
+        new DataTypeTests(this).testUUIDDataType();
     }
 
     @Test

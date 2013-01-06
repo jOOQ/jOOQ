@@ -41,6 +41,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.jooq.DataType;
 import org.jooq.SQLDialect;
@@ -104,6 +105,7 @@ public class DerbyDataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<BigInteger> __BIGINTEGER            = new DefaultDataType<BigInteger>(SQLDialect.DERBY, SQLDataType.DECIMAL_INTEGER, "decimal", "decimal(31)");
+    protected static final DataType<UUID>       __UUID                  = new DefaultDataType<UUID>(SQLDialect.DERBY, SQLDataType.UUID, "varchar", "varchar(36)");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

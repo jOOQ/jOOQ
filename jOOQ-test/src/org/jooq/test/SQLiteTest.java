@@ -39,12 +39,14 @@ package org.jooq.test;
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.sqlite.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.sqlite.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.sqlite.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.sqlite.generatedclasses.Tables.V_BOOK;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.util.UUID;
 
 import org.jooq.ArrayRecord;
 import org.jooq.DataType;
@@ -72,6 +74,7 @@ import org.jooq.test.sqlite.generatedclasses.tables.TBook;
 import org.jooq.test.sqlite.generatedclasses.tables.TBookStore;
 import org.jooq.test.sqlite.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.sqlite.generatedclasses.tables.TBooleans;
+import org.jooq.test.sqlite.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.sqlite.generatedclasses.tables.TTriggers;
 import org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.sqlite.generatedclasses.tables.T_725LobTest;
@@ -83,6 +86,7 @@ import org.jooq.test.sqlite.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.sqlite.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord;
@@ -114,7 +118,7 @@ public class SQLiteTest extends jOOQAbstractTest<
         XUnusedRecord,
         TTriggersRecord,
         XUnusedRecord,
-        XUnusedRecord,
+        TExoticTypesRecord,
         XUnusedRecord,
         XUnusedRecord,
         T_725LobTestRecord,
@@ -344,6 +348,21 @@ public class SQLiteTest extends jOOQAbstractTest<
     @Override
     protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
         return null;
+    }
+
+    @Override
+    protected Table<TExoticTypesRecord> TExoticTypes() {
+        return T_EXOTIC_TYPES;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, Integer> TExoticTypes_ID() {
+        return TExoticTypes.ID;
+    }
+
+    @Override
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UUID() {
+        return TExoticTypes.UU;
     }
 
     @Override

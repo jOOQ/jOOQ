@@ -32,6 +32,7 @@ DROP TABLE x_test_case_64_69/
 DROP TABLE x_test_case_85/
 DROP TABLE x_unused/
 DROP TABLE x_many_fields/
+DROP TABLE t_exotic_types/
 DROP TABLE t_639_numbers_table/
 DROP TABLE t_658_ref/
 DROP TABLE t_658_11/
@@ -622,6 +623,14 @@ CREATE TABLE x_unused (
 )
 /
 COMMENT ON TABLE x_unused IS 'An unused table in the same schema.'
+/
+
+CREATE TABLE t_exotic_types (
+  ID NUMBER(7) NOT NULL,
+  UU CHAR(36),
+  
+  CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
+)
 /
 
 CREATE TABLE t_639_numbers_table (

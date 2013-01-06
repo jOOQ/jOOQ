@@ -88,9 +88,9 @@ class MetaImpl implements Meta {
     public final List<Catalog> getCatalogs() {
         try {
             List<Catalog> result = new ArrayList<Catalog>();
-            Result<Record> schemas = executor.fetch(meta().getCatalogs());
+            Result<Record> catalogs = executor.fetch(meta().getCatalogs());
 
-            for (String name : schemas.getValues(0, String.class)) {
+            for (String name : catalogs.getValues(0, String.class)) {
                 result.add(new MetaCatalog(name));
             }
 

@@ -11,41 +11,34 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1227963962;
+	private static final long serialVersionUID = -332221268;
 
 	/**
-	 * The table column <code>test.v_library.AUTHOR</code>
+	 * Setter for <code>test.v_library.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.AUTHOR, value);
 	}
 
 	/**
-	 * The table column <code>test.v_library.AUTHOR</code>
+	 * Getter for <code>test.v_library.AUTHOR</code>. 
 	 */
 	public java.lang.String getAuthor() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.AUTHOR);
 	}
 
 	/**
-	 * The book's title
+	 * Setter for <code>test.v_library.TITLE</code>. The book's title
 	 */
 	public void setTitle(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.TITLE, value);
 	}
 
 	/**
-	 * The book's title
+	 * Getter for <code>test.v_library.TITLE</code>. The book's title
 	 */
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.TITLE);
-	}
-
-	/**
-	 * Create a detached VLibraryRecord
-	 */
-	public VLibraryRecord() {
-		super(org.jooq.test.mysql.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 
 	// -------------------------------------------------------------------------
@@ -98,5 +91,16 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	@Override
 	public java.lang.String value2() {
 		return getTitle();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VLibraryRecord
+	 */
+	public VLibraryRecord() {
+		super(org.jooq.test.mysql.generatedclasses.tables.VLibrary.V_LIBRARY);
 	}
 }

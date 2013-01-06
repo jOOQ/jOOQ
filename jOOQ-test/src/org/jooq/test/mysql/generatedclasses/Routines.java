@@ -12,13 +12,7 @@ package org.jooq.test.mysql.generatedclasses;
 public final class Routines {
 
 	/**
-	 * Call test.f317
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.f317</code>
 	 */
 	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
 		org.jooq.test.mysql.generatedclasses.routines.F317 f = new org.jooq.test.mysql.generatedclasses.routines.F317();
@@ -32,12 +26,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get test.f317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
+	 * Get <code>test.f317</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> f317(java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
 		org.jooq.test.mysql.generatedclasses.routines.F317 f = new org.jooq.test.mysql.generatedclasses.routines.F317();
@@ -50,12 +39,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get test.f317 as a field
-	 *
-	 * @param p1
-	 * @param p2
-	 * @param p3
-	 * @param p4
+	 * Get <code>test.f317</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> f317(org.jooq.Field<java.lang.Integer> p1, org.jooq.Field<java.lang.Integer> p2, org.jooq.Field<java.lang.Integer> p3, org.jooq.Field<java.lang.Integer> p4) {
 		org.jooq.test.mysql.generatedclasses.routines.F317 f = new org.jooq.test.mysql.generatedclasses.routines.F317();
@@ -68,10 +52,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call test.f_author_exists
-	 *
-	 * @param authorName
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.f_author_exists</code>
 	 */
 	public static java.lang.Integer fAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
 		org.jooq.test.mysql.generatedclasses.routines.FAuthorExists f = new org.jooq.test.mysql.generatedclasses.routines.FAuthorExists();
@@ -82,9 +63,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get test.f_author_exists as a field
-	 *
-	 * @param authorName
+	 * Get <code>test.f_author_exists</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fAuthorExists(java.lang.String authorName) {
 		org.jooq.test.mysql.generatedclasses.routines.FAuthorExists f = new org.jooq.test.mysql.generatedclasses.routines.FAuthorExists();
@@ -94,9 +73,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get test.f_author_exists as a field
-	 *
-	 * @param authorName
+	 * Get <code>test.f_author_exists</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fAuthorExists(org.jooq.Field<java.lang.String> authorName) {
 		org.jooq.test.mysql.generatedclasses.routines.FAuthorExists f = new org.jooq.test.mysql.generatedclasses.routines.FAuthorExists();
@@ -106,10 +83,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call test.f_number
-	 *
-	 * @param n
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.f_number</code>
 	 */
 	public static java.lang.Integer fNumber(org.jooq.Configuration configuration, java.lang.Integer n) {
 		org.jooq.test.mysql.generatedclasses.routines.FNumber f = new org.jooq.test.mysql.generatedclasses.routines.FNumber();
@@ -120,9 +94,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get test.f_number as a field
-	 *
-	 * @param n
+	 * Get <code>test.f_number</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fNumber(java.lang.Integer n) {
 		org.jooq.test.mysql.generatedclasses.routines.FNumber f = new org.jooq.test.mysql.generatedclasses.routines.FNumber();
@@ -132,9 +104,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get test.f_number as a field
-	 *
-	 * @param n
+	 * Get <code>test.f_number</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fNumber(org.jooq.Field<java.lang.Integer> n) {
 		org.jooq.test.mysql.generatedclasses.routines.FNumber f = new org.jooq.test.mysql.generatedclasses.routines.FNumber();
@@ -144,9 +114,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call test.f_one
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.f_one</code>
 	 */
 	public static java.lang.Integer fOne(org.jooq.Configuration configuration) {
 		org.jooq.test.mysql.generatedclasses.routines.FOne f = new org.jooq.test.mysql.generatedclasses.routines.FOne();
@@ -156,8 +124,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Get test.f_one as a field
-	 *
+	 * Get <code>test.f_one</code> as a field
 	 */
 	public static org.jooq.Field<java.lang.Integer> fOne() {
 		org.jooq.test.mysql.generatedclasses.routines.FOne f = new org.jooq.test.mysql.generatedclasses.routines.FOne();
@@ -166,15 +133,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call test.p391
-	 *
-	 * @param i1 IN parameter
-	 * @param io1 IN OUT parameter
-	 * @param o1 OUT parameter
-	 * @param o2 OUT parameter
-	 * @param io2 IN OUT parameter
-	 * @param i2 IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.p391</code>
 	 */
 	public static org.jooq.test.mysql.generatedclasses.routines.P391 p391(org.jooq.Configuration configuration, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer io2, java.lang.Integer i2) {
 		org.jooq.test.mysql.generatedclasses.routines.P391 p = new org.jooq.test.mysql.generatedclasses.routines.P391();
@@ -188,11 +147,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call test.p_author_exists
-	 *
-	 * @param authorName IN parameter
-	 * @param result OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.p_author_exists</code>
 	 */
 	public static java.lang.Integer pAuthorExists(org.jooq.Configuration configuration, java.lang.String authorName) {
 		org.jooq.test.mysql.generatedclasses.routines.PAuthorExists p = new org.jooq.test.mysql.generatedclasses.routines.PAuthorExists();
@@ -203,9 +158,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call test.p_create_author
-	 *
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.p_create_author</code>
 	 */
 	public static void pCreateAuthor(org.jooq.Configuration configuration) {
 		org.jooq.test.mysql.generatedclasses.routines.PCreateAuthor p = new org.jooq.test.mysql.generatedclasses.routines.PCreateAuthor();
@@ -214,11 +167,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call test.p_create_author_by_name
-	 *
-	 * @param firstName IN parameter
-	 * @param lastName IN parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.p_create_author_by_name</code>
 	 */
 	public static void pCreateAuthorByName(org.jooq.Configuration configuration, java.lang.String firstName, java.lang.String lastName) {
 		org.jooq.test.mysql.generatedclasses.routines.PCreateAuthorByName p = new org.jooq.test.mysql.generatedclasses.routines.PCreateAuthorByName();
@@ -229,12 +178,7 @@ public final class Routines {
 	}
 
 	/**
-	 * Call test.p_unused
-	 *
-	 * @param in1 IN parameter
-	 * @param out1 OUT parameter
-	 * @param out2 IN OUT parameter
-	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 * Call <code>test.p_unused</code>
 	 */
 	public static org.jooq.test.mysql.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Boolean out2) {
 		org.jooq.test.mysql.generatedclasses.routines.PUnused p = new org.jooq.test.mysql.generatedclasses.routines.PUnused();
@@ -246,7 +190,16 @@ public final class Routines {
 	}
 
 	/**
-	 * No instances
+	 * Call <code>test.test_multi_sets</code>
+	 */
+	public static void testMultiSets(org.jooq.Configuration configuration) {
+		org.jooq.test.mysql.generatedclasses.routines.TestMultiSets p = new org.jooq.test.mysql.generatedclasses.routines.TestMultiSets();
+
+		p.execute(configuration);
+	}
+
+	/**
+	 * No further instances allowed
 	 */
 	private Routines() {}
 }

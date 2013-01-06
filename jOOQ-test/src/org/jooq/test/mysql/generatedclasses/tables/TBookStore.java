@@ -11,10 +11,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1535223683;
+	private static final long serialVersionUID = 792823576;
 
 	/**
-	 * The singleton instance of test.t_book_store
+	 * The singleton instance of <code>test.t_book_store</code>
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.TBookStore T_BOOK_STORE = new org.jooq.test.mysql.generatedclasses.tables.TBookStore();
 
@@ -27,9 +27,9 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.m
 	}
 
 	/**
-	 * The books store name
+	 * The column <code>test.t_book_store.name</code>. The books store name
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_STORE);
 
 	/**
 	 * No further instances allowed
@@ -38,13 +38,18 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.m
 		super("t_book_store", org.jooq.test.mysql.generatedclasses.Test.TEST);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> getMainKey() {
 		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_STORE_UK_T_BOOK_STORE_NAME;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
 		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_STORE_UK_T_BOOK_STORE_NAME);
 	}

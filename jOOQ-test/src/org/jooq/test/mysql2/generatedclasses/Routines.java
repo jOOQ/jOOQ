@@ -190,6 +190,15 @@ public final class Routines {
 	}
 
 	/**
+	 * Call <code>test2.test_multi_sets</code>
+	 */
+	public static void testMultiSets(org.jooq.Configuration configuration) {
+		org.jooq.test.mysql2.generatedclasses.routines.TestMultiSets p = new org.jooq.test.mysql2.generatedclasses.routines.TestMultiSets();
+
+		p.execute(configuration);
+	}
+
+	/**
 	 * No further instances allowed
 	 */
 	private Routines() {}

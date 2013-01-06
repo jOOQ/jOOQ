@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> {
 
-	private static final long serialVersionUID = -638980650;
+	private static final long serialVersionUID = -753911525;
 
 	/**
 	 * The singleton instance of <code>test2.t_959</code>
@@ -28,6 +28,11 @@ public class T_959 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generate
 	 * The column <code>test2.t_959.java_keywords</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record, org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords> JAVA_KEYWORDS = createField("java_keywords", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords.class), this);
+
+	/**
+	 * The column <code>test2.t_959.special_characters</code>. 
+	 */
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record, org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters> SPECIAL_CHARACTERS = createField("special_characters", org.jooq.util.mysql.MySQLDataType.VARCHAR.asEnumDataType(org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters.class), this);
 
 	/**
 	 * Create a <code>test2.t_959</code> table reference

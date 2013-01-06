@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "test2")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1132075942;
+	private static final long serialVersionUID = -266066297;
 
 	/**
 	 * Setter for <code>test2.t_author.ID</code>. The author ID
@@ -104,30 +104,6 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@javax.persistence.Column(name = "ADDRESS", length = 200)
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>test2.t_book</code> referencing this <code>test2.t_author</code>
-	 */
-	public org.jooq.Result<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>test2.t_book</code> referencing this <code>test2.t_author</code>
-	 */
-	public org.jooq.Result<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID)))
-			.fetch();
 	}
 
 	// -------------------------------------------------------------------------

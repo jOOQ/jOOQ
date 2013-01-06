@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_book", schema = "test2")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.VBookStatus> {
 
-	private static final long serialVersionUID = 1710272839;
+	private static final long serialVersionUID = 366212369;
 
 	/**
 	 * Setter for <code>test2.v_book.ID</code>. The book ID
@@ -164,10 +164,6 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	public org.jooq.test.mysql2.generatedclasses.enums.VBookStatus getStatus() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VBook.V_BOOK.STATUS);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record10 type implementation

@@ -11,97 +11,90 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1028980623;
+	private static final long serialVersionUID = 1865150463;
 
 	/**
-	 * The author ID
+	 * Setter for <code>test.v_author.ID</code>. The author ID
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.ID, value);
 	}
 
 	/**
-	 * The author ID
+	 * Getter for <code>test.v_author.ID</code>. The author ID
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.ID);
 	}
 
 	/**
-	 * The author's first name
+	 * Setter for <code>test.v_author.FIRST_NAME</code>. The author's first name
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.FIRST_NAME, value);
 	}
 
 	/**
-	 * The author's first name
+	 * Getter for <code>test.v_author.FIRST_NAME</code>. The author's first name
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.FIRST_NAME);
 	}
 
 	/**
-	 * The author's last name
+	 * Setter for <code>test.v_author.LAST_NAME</code>. The author's last name
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.LAST_NAME, value);
 	}
 
 	/**
-	 * The author's last name
+	 * Getter for <code>test.v_author.LAST_NAME</code>. The author's last name
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.LAST_NAME);
 	}
 
 	/**
-	 * The author's date of birth
+	 * Setter for <code>test.v_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * The author's date of birth
+	 * Getter for <code>test.v_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public java.sql.Date getDateOfBirth() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.DATE_OF_BIRTH);
 	}
 
 	/**
-	 * The author's year of birth
+	 * Setter for <code>test.v_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * The author's year of birth
+	 * Getter for <code>test.v_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH);
 	}
 
 	/**
-	 * The author's address
+	 * Setter for <code>test.v_author.ADDRESS</code>. The author's address
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.ADDRESS, value);
 	}
 
 	/**
-	 * The author's address
+	 * Getter for <code>test.v_author.ADDRESS</code>. The author's address
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.VAuthor.ADDRESS);
-	}
-
-	/**
-	 * Create a detached VAuthorRecord
-	 */
-	public VAuthorRecord() {
-		super(org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 
 	// -------------------------------------------------------------------------
@@ -218,5 +211,16 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.m
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached VAuthorRecord
+	 */
+	public VAuthorRecord() {
+		super(org.jooq.test.mysql.generatedclasses.tables.VAuthor.V_AUTHOR);
 	}
 }

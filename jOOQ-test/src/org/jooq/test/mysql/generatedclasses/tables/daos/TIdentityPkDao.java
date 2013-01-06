@@ -23,6 +23,9 @@ public class TIdentityPkDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.ge
 		super(org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql.generatedclasses.tables.pojos.TIdentityPk.class, factory);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected java.lang.Integer getId(org.jooq.test.mysql.generatedclasses.tables.pojos.TIdentityPk object) {
 		return object.getId();
@@ -36,7 +39,7 @@ public class TIdentityPkDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.ge
 	}
 
 	/**
-	 * Fetch a unique that has <code>id = value</code>
+	 * Fetch a unique record that has <code>id = value</code>
 	 */
 	public org.jooq.test.mysql.generatedclasses.tables.pojos.TIdentityPk fetchOneById(java.lang.Integer value) {
 		return fetchOne(org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.ID, value);

@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Dbo extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1700576923;
+	private static final long serialVersionUID = 1109387404;
 
 	/**
 	 * The singleton instance of <code>dbo</code>
@@ -35,6 +35,7 @@ public class Dbo extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.sqlserver.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE,
 			org.jooq.test.sqlserver.generatedclasses.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.sqlserver.generatedclasses.tables.TDates.T_DATES,
+			org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.sqlserver.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.sqlserver.generatedclasses.tables.TLanguage.T_LANGUAGE,

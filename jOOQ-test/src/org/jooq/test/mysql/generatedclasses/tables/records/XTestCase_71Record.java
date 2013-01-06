@@ -11,86 +11,46 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 301580522;
+	private static final long serialVersionUID = -1574617669;
 
 	/**
-	 * The table column <code>test.x_test_case_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test.x_test_case_71.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.ID, value);
 	}
 
 	/**
-	 * The table column <code>test.x_test_case_71.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test.x_test_case_71.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.ID);
 	}
 
 	/**
-	 * The table column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES test.x_test_case_64_69 (ID)
-	 * </pre></code>
+	 * Setter for <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	public void setTestCase_64_69Id(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value);
 	}
 
 	/**
-	 * The table column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES test.x_test_case_64_69 (ID)
-	 * </pre></code>
+	 * Getter for <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	public java.lang.Integer getTestCase_64_69Id() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID);
 	}
 
-	/**
-	 * Link this record to a given {@link org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record 
-	 * XTestCase_64_69Record}
-	 */
-	public void setTestCase_64_69Id(org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record value) {
-		if (value == null) {
-			setValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID, value.getValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.ID));
-		}
-	}
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
 
 	/**
-	 * The table column <code>test.x_test_case_71.TEST_CASE_64_69_ID</code>
-	 * <p>
-	 * This column is part of a FOREIGN KEY: <code><pre>
-	 * CONSTRAINT fk_x_test_case_71
-	 * FOREIGN KEY (TEST_CASE_64_69_ID)
-	 * REFERENCES test.x_test_case_64_69 (ID)
-	 * </pre></code>
+	 * {@inheritDoc}
 	 */
-	public org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
-		return create()
-			.selectFrom(org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.ID.equal(getValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.TEST_CASE_64_69_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Create a detached XTestCase_71Record
-	 */
-	public XTestCase_71Record() {
-		super(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -143,5 +103,16 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@Override
 	public java.lang.Integer value2() {
 		return getTestCase_64_69Id();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached XTestCase_71Record
+	 */
+	public XTestCase_71Record() {
+		super(org.jooq.test.mysql.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71);
 	}
 }

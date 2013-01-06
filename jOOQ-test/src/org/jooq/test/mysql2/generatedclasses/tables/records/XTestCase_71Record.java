@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_71", schema = "test2")
 public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_71Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1558834988;
+	private static final long serialVersionUID = -271541451;
 
 	/**
 	 * Setter for <code>test2.x_test_case_71.ID</code>. 
@@ -39,37 +39,11 @@ public class XTestCase_71Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record}
-	 */
-	public void setTestCase_64_69Id(org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record value) {
-		if (value == null) {
-			setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID, value.getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID));
-		}
-	}
-
-	/**
 	 * Getter for <code>test2.x_test_case_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "TEST_CASE_64_69_ID", precision = 10)
 	public java.lang.Integer getTestCase_64_69Id() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>test2.x_test_case_64_69</code> referenced by this <code>test2.x_test_case_71</code>
-	 */
-	public org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_64_69Record fetchXTestCase_64_69() {
-		return create()
-			.selectFrom(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID.equal(getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.TEST_CASE_64_69_ID)))
-			.fetchOne();
 	}
 
 	// -------------------------------------------------------------------------

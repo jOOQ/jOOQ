@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Dba extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -2145196857;
+	private static final long serialVersionUID = -964862754;
 
 	/**
 	 * The singleton instance of <code>DBA</code>
@@ -47,6 +47,7 @@ public class Dba extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.sybase.generatedclasses.tables.XUnused.X_UNUSED,
 			org.jooq.test.sybase.generatedclasses.tables.T_986_1.T_986_1,
 			org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2,
+			org.jooq.test.sybase.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.sybase.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.sybase.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69,
 			org.jooq.test.sybase.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71,

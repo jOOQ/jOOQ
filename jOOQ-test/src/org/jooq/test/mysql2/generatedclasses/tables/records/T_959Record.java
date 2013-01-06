@@ -9,9 +9,9 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_959", schema = "test2")
-public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> implements org.jooq.Record1<org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords> {
+public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_959Record> implements org.jooq.Record2<org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters> {
 
-	private static final long serialVersionUID = -710290876;
+	private static final long serialVersionUID = -1708328868;
 
 	/**
 	 * Setter for <code>test2.t_959.java_keywords</code>. 
@@ -28,28 +28,39 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959.JAVA_KEYWORDS);
 	}
 
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
+	/**
+	 * Setter for <code>test2.t_959.special_characters</code>. 
+	 */
+	public void setSpecialCharacters(org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters value) {
+		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959.SPECIAL_CHARACTERS, value);
+	}
+
+	/**
+	 * Getter for <code>test2.t_959.special_characters</code>. 
+	 */
+	@javax.persistence.Column(name = "special_characters", length = 5)
+	public org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters getSpecialCharacters() {
+		return getValue(org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959.SPECIAL_CHARACTERS);
+	}
 
 	// -------------------------------------------------------------------------
-	// Record1 type implementation
+	// Record2 type implementation
 	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row1<org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+	public org.jooq.Row2<org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters> fieldsRow() {
+		return org.jooq.impl.Factory.row(field1(), field2());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Row1<org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+	public org.jooq.Row2<org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters> valuesRow() {
+		return org.jooq.impl.Factory.row(value1(), value2());
 	}
 
 	/**
@@ -64,8 +75,24 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Field<org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters> field2() {
+		return org.jooq.test.mysql2.generatedclasses.tables.T_959.T_959.SPECIAL_CHARACTERS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public org.jooq.test.mysql2.generatedclasses.enums.T_959JavaKeywords value1() {
 		return getJavaKeywords();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.test.mysql2.generatedclasses.enums.T_959SpecialCharacters value2() {
+		return getSpecialCharacters();
 	}
 
 	// -------------------------------------------------------------------------

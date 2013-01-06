@@ -62,6 +62,11 @@ public final class Tables {
 	public static final org.jooq.test.mysql.generatedclasses.tables.TDates T_DATES = org.jooq.test.mysql.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table test.t_exotic_types
+	 */
+	public static final org.jooq.test.mysql.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.mysql.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table test.t_identity_pk
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
@@ -99,6 +104,11 @@ public final class Tables {
 	/**
 	 * An unused table in the same schema.
 	 */
+	public static final org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
+
+	/**
+	 * An unused table in the same schema.
+	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69 X_TEST_CASE_64_69 = org.jooq.test.mysql.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69;
 
 	/**
@@ -117,7 +127,7 @@ public final class Tables {
 	public static final org.jooq.test.mysql.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.mysql.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
-	 * No instances
+	 * No further instances allowed
 	 */
 	private Tables() {}
 }

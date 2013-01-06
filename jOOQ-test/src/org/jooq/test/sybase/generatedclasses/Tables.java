@@ -87,6 +87,11 @@ public final class Tables {
 	public static final org.jooq.test.sybase.generatedclasses.tables.T_986_2 T_986_2 = org.jooq.test.sybase.generatedclasses.tables.T_986_2.T_986_2;
 
 	/**
+	 * The table DBA.t_exotic_types
+	 */
+	public static final org.jooq.test.sybase.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.sybase.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table DBA.t_639_numbers_table
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.sybase.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;

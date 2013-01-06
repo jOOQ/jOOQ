@@ -11,125 +11,102 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1120937647;
+	private static final long serialVersionUID = -1756818167;
 
 	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Setter for <code>test.t_author.ID</code>. The author ID
 	 */
 	public void setId(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.ID, value);
 	}
 
 	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
+	 * Getter for <code>test.t_author.ID</code>. The author ID
 	 */
 	public java.lang.Integer getId() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.ID);
 	}
 
 	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql.generatedclasses.tables.TBook.AUTHOR_ID.equal(getValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The author ID
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.mysql.generatedclasses.tables.TBook.CO_AUTHOR_ID.equal(getValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The author's first name
+	 * Setter for <code>test.t_author.FIRST_NAME</code>. The author's first name
 	 */
 	public void setFirstName(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.FIRST_NAME, value);
 	}
 
 	/**
-	 * The author's first name
+	 * Getter for <code>test.t_author.FIRST_NAME</code>. The author's first name
 	 */
 	public java.lang.String getFirstName() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.FIRST_NAME);
 	}
 
 	/**
-	 * The author's last name
+	 * Setter for <code>test.t_author.LAST_NAME</code>. The author's last name
 	 */
 	public void setLastName(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.LAST_NAME, value);
 	}
 
 	/**
-	 * The author's last name
+	 * Getter for <code>test.t_author.LAST_NAME</code>. The author's last name
 	 */
 	public java.lang.String getLastName() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.LAST_NAME);
 	}
 
 	/**
-	 * The author's date of birth
+	 * Setter for <code>test.t_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, value);
 	}
 
 	/**
-	 * The author's date of birth
+	 * Getter for <code>test.t_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public java.sql.Date getDateOfBirth() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.DATE_OF_BIRTH);
 	}
 
 	/**
-	 * The author's year of birth
+	 * Setter for <code>test.t_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, value);
 	}
 
 	/**
-	 * The author's year of birth
+	 * Getter for <code>test.t_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public java.lang.Integer getYearOfBirth() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH);
 	}
 
 	/**
-	 * The author's address
+	 * Setter for <code>test.t_author.ADDRESS</code>. The author's address
 	 */
 	public void setAddress(java.lang.String value) {
 		setValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.ADDRESS, value);
 	}
 
 	/**
-	 * The author's address
+	 * Getter for <code>test.t_author.ADDRESS</code>. The author's address
 	 */
 	public java.lang.String getAddress() {
 		return getValue(org.jooq.test.mysql.generatedclasses.tables.TAuthor.ADDRESS);
 	}
 
+	// -------------------------------------------------------------------------
+	// Primary key information
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Create a detached TAuthorRecord
+	 * {@inheritDoc}
 	 */
-	public TAuthorRecord() {
-		super(org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR);
+	@Override
+	public org.jooq.Record1<java.lang.Integer> key() {
+		return (org.jooq.Record1) super.key();
 	}
 
 	// -------------------------------------------------------------------------
@@ -246,5 +223,16 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@Override
 	public java.lang.String value6() {
 		return getAddress();
+	}
+
+	// -------------------------------------------------------------------------
+	// Constructors
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Create a detached TAuthorRecord
+	 */
+	public TAuthorRecord() {
+		super(org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR);
 	}
 }

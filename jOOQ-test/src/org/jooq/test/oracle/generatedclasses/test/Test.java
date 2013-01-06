@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1139614473;
+	private static final long serialVersionUID = -120925387;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -46,6 +46,7 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS,
 			org.jooq.test.oracle.generatedclasses.test.tables.TDates.T_DATES,
 			org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY,
+			org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES,
 			org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE,
 			org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.oracle.generatedclasses.test.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,

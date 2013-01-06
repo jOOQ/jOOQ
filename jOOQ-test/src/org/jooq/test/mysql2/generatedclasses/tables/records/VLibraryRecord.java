@@ -13,7 +13,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "v_library", schema = "test2")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 1534814726;
+	private static final long serialVersionUID = -497978628;
 
 	/**
 	 * Setter for <code>test2.v_library.AUTHOR</code>. 
@@ -44,10 +44,6 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	public java.lang.String getTitle() {
 		return getValue(org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY.TITLE);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation

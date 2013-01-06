@@ -62,6 +62,11 @@ public final class Tables {
 	public static final org.jooq.test.mysql2.generatedclasses.tables.TDates T_DATES = org.jooq.test.mysql2.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table test2.t_exotic_types
+	 */
+	public static final org.jooq.test.mysql2.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.mysql2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table test2.t_identity_pk
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.mysql2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;
@@ -95,6 +100,11 @@ public final class Tables {
 	 * VIEW
 	 */
 	public static final org.jooq.test.mysql2.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.mysql2.generatedclasses.tables.VLibrary.V_LIBRARY;
+
+	/**
+	 * An unused table in the same schema.
+	 */
+	public static final org.jooq.test.mysql2.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.mysql2.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
 
 	/**
 	 * An unused table in the same schema.

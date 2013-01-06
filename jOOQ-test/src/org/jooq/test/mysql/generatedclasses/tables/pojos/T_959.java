@@ -9,17 +9,24 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings("all")
 public class T_959 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -508572172;
+	private static final long serialVersionUID = -1138670829;
 
-	private final org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords javaKeywords;
+	private final org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords      javaKeywords;
+	private final org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters specialCharacters;
 
 	public T_959(
-		org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords javaKeywords
+		org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords      javaKeywords,
+		org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters specialCharacters
 	) {
 		this.javaKeywords = javaKeywords;
+		this.specialCharacters = specialCharacters;
 	}
 
 	public org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords getJavaKeywords() {
 		return this.javaKeywords;
+	}
+
+	public org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters getSpecialCharacters() {
+		return this.specialCharacters;
 	}
 }

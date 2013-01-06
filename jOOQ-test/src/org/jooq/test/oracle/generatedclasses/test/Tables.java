@@ -57,6 +57,11 @@ public final class Tables {
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TDirectory T_DIRECTORY = org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY;
 
 	/**
+	 * The table TEST.T_EXOTIC_TYPES
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * An entity holding language master data
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TLanguage T_LANGUAGE = org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE;

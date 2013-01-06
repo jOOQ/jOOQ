@@ -11,18 +11,17 @@ package org.jooq.test.mysql.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = -977156658;
-
+	private static final long serialVersionUID = 1214479602;
 
 	/**
-	 * The procedure parameter <code>test.f_author_exists.RETURN_VALUE</code>
+	 * The parameter <code>test.f_author_exists.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.Integer> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER);
 
 	/**
-	 * The procedure parameter <code>test.f_author_exists.author_name</code>
+	 * The parameter <code>test.f_author_exists.author_name</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("author_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
 	 * Create a new routine call instance
@@ -42,9 +41,7 @@ public class FAuthorExists extends org.jooq.impl.AbstractRoutine<java.lang.Integ
 	}
 
 	/**
-	 * Set the <code>author_name</code> parameter to the function
-	 * <p>
-	 * Use this method only, if the function is called as a {@link org.jooq.Field} in a {@link org.jooq.Select} statement!
+	 * Set the <code>author_name</code> parameter to the function to be used with a {@link org.jooq.Select} statement
 	 */
 	public void setAuthorName(org.jooq.Field<java.lang.String> field) {
 		setField(AUTHOR_NAME, field);

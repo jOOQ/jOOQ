@@ -11,18 +11,17 @@ package org.jooq.test.mysql.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class PCreateAuthorByName extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -872491234;
-
-
-	/**
-	 * The procedure parameter <code>test.p_create_author_by_name.first_name</code>
-	 */
-	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("first_name", org.jooq.impl.SQLDataType.VARCHAR);
+	private static final long serialVersionUID = 1849586962;
 
 	/**
-	 * The procedure parameter <code>test.p_create_author_by_name.last_name</code>
+	 * The parameter <code>test.p_create_author_by_name.first_name</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("last_name", org.jooq.impl.SQLDataType.VARCHAR);
+	public static final org.jooq.Parameter<java.lang.String> FIRST_NAME = createParameter("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
+
+	/**
+	 * The parameter <code>test.p_create_author_by_name.last_name</code>. 
+	 */
+	public static final org.jooq.Parameter<java.lang.String> LAST_NAME = createParameter("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50));
 
 	/**
 	 * Create a new routine call instance

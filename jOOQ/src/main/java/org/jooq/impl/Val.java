@@ -496,6 +496,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             // Known fall-through types:
             // - Blob, Clob (both not supported by jOOQ)
             // - String
+            // - UUID
             else {
                 context.sql("'")
                        .sql(val.toString().replace("'", "''"))

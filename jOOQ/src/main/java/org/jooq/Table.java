@@ -95,26 +95,43 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
     /**
      * Create an alias for this table and its fields
      * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * Note that the case-sensitivity of the returned table and columns depends
+     * on {@link Settings#getRenderNameStyle()}. By default, table aliases are
      * quoted, and thus case-sensitive!
      * <p>
-     * Note, not all databases support derived column lists for their table
-     * aliases. On the other hand, some databases do support derived column
-     * lists, but only for derived tables. jOOQ will try to turn table
-     * references into derived tables to make this syntax work.
-     * <p>
-     * Other databases may not support derived column lists at all, but they do
-     * support common table expressions. The following two statements are
-     * equivalent: <code><pre>
+     * <h3>Derived column lists for table references</h3> Note, not all
+     * databases support derived column lists for their table aliases. On the
+     * other hand, some databases do support derived column lists, but only for
+     * derived tables. jOOQ will try to turn table references into derived
+     * tables to make this syntax work. In other words, the following statements
+     * are equivalent: <code><pre>
      * -- Using derived column lists to rename columns (e.g. Postgres)
-     * select * from (select 1) as u(b)
+     * SELECT t.a, t.b
+     * FROM my_table t(a, b)
      *
-     * -- Using common table expressions to rename columns (e.g. Oracle)
-     * select * from (
-     *   with u(b) as (select 1 from dual)
-     *   select * from u
-     * ) u
+     * -- Nesting table references within derived tables (e.g. SQL Server)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT * FROM my_table
+     * ) t(a, b)
+     * </pre></code>
+     * <p>
+     * <h3>Derived column lists for derived tables</h3> Other databases may not
+     * support derived column lists at all, but they do support common table
+     * expressions. The following statements are equivalent: <code><pre>
+     * -- Using derived column lists to rename columns (e.g. Postgres)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT 1, 2
+     * ) AS t(a, b)
+     *
+     * -- Using UNION ALL to produce column names (e.g. MySQL)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT null a, null b FROM DUAL WHERE 1 = 0
+     *   UNION ALL
+     *   SELECT 1, 2 FROM DUAL
+     * ) t
      * </pre></code>
      *
      * @param alias The alias name
@@ -123,7 +140,7 @@ public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
      *            names.
      * @return The table alias
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support
     Table<R> as(String alias, String... fieldAliases);
 
     /**

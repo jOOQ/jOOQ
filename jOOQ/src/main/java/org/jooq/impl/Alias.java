@@ -40,12 +40,15 @@ import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.Factory.field;
 
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
@@ -90,35 +93,53 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     public final void toSQL(RenderContext context) {
         if (context.declareFields() || context.declareTables()) {
             SQLDialect dialect = context.getDialect();
-            boolean simulateDerivedColumnList = asList(ORACLE).contains(dialect);
-
-            // [#1801] Some databases don't support "derived column names" at
-            // all. They can be simulated using common table expressions
-            if (fieldAliases != null && simulateDerivedColumnList) {
-                context.sql("(").formatIndentStart().formatNewLine()
-                       .keyword("with").sql(" v");
-                toSQLDerivedColumnList(context);
-                context.sql(" ").keyword("as").sql(" (").formatIndentStart().formatNewLine()
-                       .keyword("select * from").sql(" (")
-                       .sql(wrapped)
-                       .sql(")").formatIndentEnd().formatNewLine()
-                       .sql(")").formatSeparator()
-                       .keyword("select * from")
-                       .sql(" v").formatIndentEnd().formatNewLine()
-                       .sql(")");
-            }
+            boolean simulateDerivedColumnList = false;
 
             // [#1801] Some databases don't allow "derived column names" in
             // "simple class specifications". Hence, wrap the table reference in
             // a subselect
-
-            // Feature requests placed here:
-            // http://jira.cubrid.org/browse/ENGINE-96
-            // http://tracker.firebirdsql.org/browse/CORE-4025
-            else if (fieldAliases != null && asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(dialect) && wrapped instanceof TableImpl) {
+            if (fieldAliases != null && asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(dialect) && wrapped instanceof TableImpl) {
                 context.sql("(").formatIndentStart().formatNewLine()
                        .keyword("select * from")
                        .sql(wrapped)
+                       .formatIndentEnd().formatNewLine()
+                       .sql(")");
+            }
+
+            // [#1801] Some databases do not support "derived column names".
+            // They can be simulated by concatenating a dummy SELECT with no
+            // results using UNION ALL
+            else if (fieldAliases != null && asList(H2, MYSQL, ORACLE, SQLITE).contains(dialect)) {
+                simulateDerivedColumnList = true;
+
+                FieldList fields = new SelectFieldList();
+                for (String fieldAlias : fieldAliases) {
+                    fields.add(field("null").as(fieldAlias));
+                }
+
+                context.sql("(")
+                       .formatIndentStart().formatNewLine()
+                       .keyword("select ")
+                       .declareFields(true)
+                       .sql(fields)
+                       .declareFields(false)
+                       .formatSeparator();
+
+                if (!"".equals(new DefaultRenderContext(context).render(new Dual()))) {
+                context.keyword("from ")
+                       .sql(new Dual())
+                       .formatSeparator();
+                }
+
+                context.keyword("where ")
+                       .sql("1 = 0")
+                       .formatSeparator()
+                       .keyword("union all")
+                       .formatSeparator()
+                       .keyword("select * from ")
+                       .sql("(")
+                       .sql(wrapped)
+                       .sql(")")
                        .formatIndentEnd().formatNewLine()
                        .sql(")");
             }

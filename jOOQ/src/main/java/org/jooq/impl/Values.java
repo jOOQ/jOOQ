@@ -88,9 +88,16 @@ class Values<R extends Record> extends AbstractTable<R> {
             // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor
             case FIREBIRD:
+            case MYSQL:
             case ORACLE:
-            case SYBASE: {
+            case SQLITE:
+            case SYBASE:
+
+            // [#1801] H2 knows a native VALUES(..) constructor, but doesn't
+            // have any means to rename it using derived column lists
+            case H2: {
                 Select<Record> selects = null;
+                boolean subquery = context.subquery();
 
                 for (Row row : rows) {
                     Select<Record> select = create().select(row.getFields());
@@ -105,7 +112,9 @@ class Values<R extends Record> extends AbstractTable<R> {
 
                 context.formatIndentStart()
                        .formatNewLine()
+                       .subquery(true)
                        .sql(selects)
+                       .subquery(subquery)
                        .formatIndentEnd()
                        .formatNewLine();
                 break;
@@ -114,10 +123,14 @@ class Values<R extends Record> extends AbstractTable<R> {
             // [#915] Native support of VALUES(..)
             case CUBRID:
             case DERBY:
-            case H2:
             case HSQLDB:
             case POSTGRES:
             case SQLSERVER:
+
+            // TODO to be verified
+            case ASE:
+            case DB2:
+            case INGRES:
             default: {
                 context.keyword("values")
                        .formatIndentLockStart();
@@ -132,7 +145,7 @@ class Values<R extends Record> extends AbstractTable<R> {
                     firstRow = false;
                 }
 
-                context.formatIndentEnd();
+                context.formatIndentLockEnd();
                 break;
             }
         }

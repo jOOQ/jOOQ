@@ -35,14 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 
 /**
  * An object that can behave like a table (a table-like object)
@@ -58,6 +50,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      * This method is useful for things like
      * <code>SELECT * FROM (SELECT * FROM x WHERE x.a = '1') WHERE ... </code>
      */
+    @Support
     Table<R> asTable();
 
     /**
@@ -65,6 +58,7 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Table#as(String)
      */
+    @Support
     Table<R> asTable(String alias);
 
     /**
@@ -72,6 +66,6 @@ public interface TableLike<R extends Record> extends QueryPart {
      *
      * @see Table#as(String, String...)
      */
-    @Support({ CUBRID, DERBY, FIREBIRD, HSQLDB, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support
     Table<R> asTable(String alias, String... fieldAliases);
 }

@@ -507,12 +507,26 @@ public class SQLiteTest extends jOOQAbstractTest<
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
-        return Keys.FK_T_BOOK_T_AUTHOR_1;
+
+        // SQLite seems to be inconsistent in the way they order foreign keys
+        // returned from pragma commands
+        if (Keys.FK_T_BOOK_T_AUTHOR_1.getFields().contains(TBook_AUTHOR_ID())) {
+            return Keys.FK_T_BOOK_T_AUTHOR_1;
+        }
+
+        return Keys.FK_T_BOOK_T_AUTHOR_2;
     }
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
-        return Keys.FK_T_BOOK_T_AUTHOR_2;
+
+        // SQLite seems to be inconsistent in the way they order foreign keys
+        // returned from pragma commands
+        if (Keys.FK_T_BOOK_T_AUTHOR_1.getFields().contains(TBook_AUTHOR_ID())) {
+            return Keys.FK_T_BOOK_T_AUTHOR_2;
+        }
+
+        return Keys.FK_T_BOOK_T_AUTHOR_1;
     }
 
     @Override

@@ -755,7 +755,7 @@ END p_create_author_by_name;
 CREATE OR REPLACE PROCEDURE p_create_author
 IS
 BEGIN
-	{jdbc.Schema}.p_create_author_by_name('William', 'Shakespeare');
+	p_create_author_by_name('William', 'Shakespeare');
 END p_create_author;
 /
 

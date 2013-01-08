@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.fieldByName;
 
 import java.sql.DatabaseMetaData;
@@ -183,26 +184,6 @@ class MetaImpl implements Meta {
             }
 
             try {
-                columnCache = executor
-                    .fetch(
-                        meta().getColumns(null, getName(), "%", "%"),
-
-                        // Work around a bug in the SQL Server JDBC driver by
-                        // coercing data types to the expected types
-                        // The bug was reported here:
-                        // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
-                        String.class, // TABLE_CAT
-                        String.class, // TABLE_SCHEM
-                        String.class, // TABLE_NAME
-                        String.class, // COLUMN_NAME
-                        int.class,    // DATA_TYPE
-                        String.class, // TYPE_NAME
-                        int.class,    // COLUMN_SIZE
-                        String.class, // BUFFER_LENGTH
-                        int.class     // DECIMAL_DIGITS
-                    )
-                    .intoGroups(fieldByName(String.class, "TABLE_NAME"));
-
                 List<Table<?>> result = new ArrayList<Table<?>>();
                 Result<Record> tables = executor.fetch(meta().getTables(null, getName(), "%", null));
 
@@ -211,7 +192,7 @@ class MetaImpl implements Meta {
 //                  String schema = table.getValue(1, String.class);
                     String name = table.getValue(2, String.class);
 
-                    result.add(new MetaTable(name, this, columnCache.get(name)));
+                    result.add(new MetaTable(name, this, getColumns(name)));
 
 //                  TODO: Find a more efficient way to do this
 //                  Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
@@ -230,6 +211,42 @@ class MetaImpl implements Meta {
             catch (SQLException e) {
                 throw new DataAccessException("Error while accessing DatabaseMetaData", e);
             }
+        }
+
+        private final Result<Record> getColumns(String tableName) throws SQLException {
+
+            // SQLite JDBC's DatabaseMetaData.getColumns() can only return a single
+            // table's columns
+            if (columnCache == null && executor.getDialect() != SQLITE) {
+                columnCache = getColumns0("%").intoGroups(fieldByName(String.class, "TABLE_NAME"));
+            }
+
+            if (columnCache != null) {
+                return columnCache.get(tableName);
+            }
+            else {
+                return getColumns0(tableName);
+            }
+        }
+
+        private final Result<Record> getColumns0(String tableName) throws SQLException {
+            return executor.fetch(
+                meta().getColumns(null, null, tableName, "%"),
+
+                // Work around a bug in the SQL Server JDBC driver by
+                // coercing data types to the expected types
+                // The bug was reported here:
+                // https://connect.microsoft.com/SQLServer/feedback/details/775425/jdbc-4-0-databasemetadata-getcolumns-returns-a-resultset-whose-resultsetmetadata-is-inconsistent
+                String.class, // TABLE_CAT
+                String.class, // TABLE_SCHEM
+                String.class, // TABLE_NAME
+                String.class, // COLUMN_NAME
+                int.class,    // DATA_TYPE
+                String.class, // TYPE_NAME
+                int.class,    // COLUMN_SIZE
+                String.class, // BUFFER_LENGTH
+                int.class     // DECIMAL_DIGITS
+            );
         }
     }
 

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 134630571;
+	private static final long serialVersionUID = -732246195;
 
 	/**
 	 * Setter for <code>t_book_to_book_store.book_store_name</code>. 
@@ -61,8 +61,8 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.Record1<java.lang.String> key() {
-		return (org.jooq.Record1) super.key();
+	public org.jooq.Record2<java.lang.String, java.lang.Integer> key() {
+		return (org.jooq.Record2) super.key();
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1727862334;
+	private static final long serialVersionUID = 1211049386;
 
 	/**
 	 * The singleton instance of <code>t_book</code>
@@ -81,7 +81,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK_ID;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK);
 	}
 
 	/**

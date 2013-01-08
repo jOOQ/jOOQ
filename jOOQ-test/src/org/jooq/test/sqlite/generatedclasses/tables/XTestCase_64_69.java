@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 922452441;
+	private static final long serialVersionUID = 1078251343;
 
 	/**
 	 * The singleton instance of <code>x_test_case_64_69</code>
@@ -46,7 +46,7 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.PK_X_TEST_CASE_64_69_ID;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_X_TEST_CASE_64_69;
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.t
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_X_TEST_CASE_64_69_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_X_TEST_CASE_64_69);
 	}
 
 	/**

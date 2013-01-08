@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -2092951917;
+	private static final long serialVersionUID = 991076773;
 
 	/**
 	 * The singleton instance of <code>t_language</code>
@@ -56,7 +56,7 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sq
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_LANGUAGE_ID;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_LANGUAGE;
 	}
 
 	/**
@@ -64,6 +64,6 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sq
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_LANGUAGE_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_LANGUAGE);
 	}
 }

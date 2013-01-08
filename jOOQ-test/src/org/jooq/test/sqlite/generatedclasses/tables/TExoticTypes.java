@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TExoticTypes extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 1788362863;
+	private static final long serialVersionUID = 1699895153;
 
 	/**
 	 * The singleton instance of <code>t_exotic_types</code>
@@ -46,7 +46,7 @@ public class TExoticTypes extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TExoticTypesRecord> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_EXOTIC_TYPES_ID;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_EXOTIC_TYPES;
 	}
 
 	/**
@@ -54,6 +54,6 @@ public class TExoticTypes extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TExoticTypesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TExoticTypesRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_EXOTIC_TYPES_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TExoticTypesRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_EXOTIC_TYPES);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -320664783;
+	private static final long serialVersionUID = 1321864932;
 
 	/**
 	 * The singleton instance of <code>x_unused</code>
@@ -106,7 +106,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.PK_X_UNUSED_ID;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_X_UNUSED;
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_X_UNUSED_ID, org.jooq.test.sqlite.generatedclasses.Keys.PK_X_UNUSED_NAME);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_X_UNUSED);
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1728221493;
+	private static final long serialVersionUID = 456854435;
 
 	/**
 	 * The singleton instance of <code>t_author</code>
@@ -66,7 +66,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_AUTHOR_ID;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_AUTHOR;
 	}
 
 	/**
@@ -74,6 +74,6 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_AUTHOR_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_AUTHOR);
 	}
 }

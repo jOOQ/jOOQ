@@ -221,7 +221,7 @@ implements
             // Bind variables are not allowed inside of PIVOT clause
             boolean inline = context.inline();
             boolean declareFields = context.declareFields();
-            boolean declareTables = context.declareFields();
+            boolean declareTables = context.declareTables();
 
             context.declareTables(true)
                    .sql(table)

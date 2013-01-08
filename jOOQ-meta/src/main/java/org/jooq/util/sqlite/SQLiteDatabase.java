@@ -99,7 +99,7 @@ public class SQLiteDatabase extends AbstractDatabase {
                     String columnName = record.getValue("name", String.class);
 
                     // Generate a primary key name
-                    String key = "pk_" + tableName + "_" + columnName;
+                    String key = "pk_" + tableName;
                     TableDefinition table = getTable(getSchemata().get(0), tableName);
 
                     if (table != null) {
@@ -154,8 +154,7 @@ public class SQLiteDatabase extends AbstractDatabase {
 
                 if (referencedTable != null) {
                     String uniqueKey =
-                        "pk_" + referencedTable.getName() +
-                        "_" + referencedTable.getColumn(record.getValue("to", String.class), true).getName();
+                        "pk_" + referencedTable.getName();
 
                     if (referencingTable != null) {
                         ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);

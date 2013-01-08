@@ -48,12 +48,18 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.Utils.list;
 
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
+import org.jooq.Table;
 
 /**
  * @author Lukas Eder
@@ -99,10 +105,13 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // "simple class specifications". Hence, wrap the table reference in
             // a subselect
             if (fieldAliases != null && asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(dialect) && wrapped instanceof TableImpl) {
+
+                @SuppressWarnings("unchecked")
+                Select<Record> select =
+                    select(list(field("*"))).from(((Table<?>) wrapped).as(alias));
+
                 context.sql("(").formatIndentStart().formatNewLine()
-                       .keyword("select * from")
-                       .sql(wrapped)
-                       .formatIndentEnd().formatNewLine()
+                       .sql(select).formatIndentEnd().formatNewLine()
                        .sql(")");
             }
 
@@ -117,50 +126,22 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     fields.add(field("null").as(fieldAlias));
                 }
 
-                context.sql("(")
-                       .formatIndentStart().formatNewLine()
-                       .keyword("select ")
-                       .declareFields(true)
-                       .sql(fields)
-                       .declareFields(false)
-                       .formatSeparator();
+                Select<Record> select =
+                    select(fields).where(falseCondition()).unionAll(
+                    select(field("*")).from(((Table<?>) wrapped).as(alias)));
 
-                if (!"".equals(new DefaultRenderContext(context).render(new Dual()))) {
-                context.keyword("from ")
-                       .sql(new Dual())
-                       .formatSeparator();
-                }
-
-                context.keyword("where ")
-                       .sql("1 = 0")
-                       .formatSeparator()
-                       .keyword("union all")
-                       .formatSeparator()
-                       .keyword("select * from ")
-                       .sql("(")
-                       .sql(wrapped)
-                       .sql(")")
-                       .formatIndentEnd().formatNewLine()
+                context.sql("(").formatIndentStart().formatNewLine()
+                       .sql(select).formatIndentEnd().formatNewLine()
                        .sql(")");
             }
 
             // The default behaviour
             else {
-                if (wrapInParentheses) {
-                    context.sql("(");
-                }
-
-                context.sql(wrapped);
-
-                if (wrapInParentheses) {
-                    context.sql(")");
-                }
+                toSQLWrapped(context);
             }
 
             // [#291] some aliases cause trouble, if they are not explicitly marked using "as"
-            if (asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(dialect)) {
-                context.keyword(" as");
-            }
+            toSQLAs(context);
 
             context.sql(" ");
             context.literal(alias);
@@ -200,6 +181,18 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         else {
             context.literal(alias);
         }
+    }
+
+    private void toSQLAs(RenderContext context) {
+        if (asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(context.getDialect())) {
+            context.keyword(" as");
+        }
+    }
+
+    private void toSQLWrapped(RenderContext context) {
+        context.sql(wrapInParentheses ? "(" : "")
+               .sql(wrapped)
+               .sql(wrapInParentheses ? ")" : "");
     }
 
     private void toSQLDerivedColumnList(RenderContext context) {

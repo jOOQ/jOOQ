@@ -35,28 +35,19 @@
  */
 package org.jooq.test.data;
 
-import java.sql.Date;
-
-import org.jooq.DataType;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DefaultDataType;
+import org.jooq.impl.TableRecordImpl;
 
 /**
  * @author Lukas Eder
  */
-public final class TestDataType<T> extends DefaultDataType<T> {
+public class Table4Record extends TableRecordImpl<Table4Record> {
 
     /**
      * Generated UID
      */
-    private static final long              serialVersionUID = 7621282509163949636L;
+    private static final long serialVersionUID = 7621282509163949636L;
 
-    public static final DataType<Integer>  INTEGER_TYPE     = new TestDataType<Integer>(Integer.class);
-    public static final DataType<String>   STRING_TYPE      = new TestDataType<String>(String.class);
-    public static final DataType<Date>     DATE_TYPE        = new TestDataType<Date>(Date.class);
-    public static final DataType<Object[]> ARRAY_TYPE       = new TestDataType<Object[]>(Object[].class);
-
-    protected TestDataType(Class<T> type) {
-        super(SQLDialect.ORACLE, type, type.getSimpleName());
+    public Table4Record() {
+        super(Table4.TABLE4);
     }
 }

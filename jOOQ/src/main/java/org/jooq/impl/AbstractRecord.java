@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.Utils.getAnnotatedGetter;
 import static org.jooq.impl.Utils.getAnnotatedMembers;
 import static org.jooq.impl.Utils.getAnnotatedSetters;
@@ -148,6 +149,21 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public final int getIndex(String fieldName) {
         return fields.getIndex(fieldName);
+    }
+
+    final Class<?>[] getTypes() {
+        return getTypes(this);
+    }
+
+    static final Class<?>[] getTypes(Record record) {
+        int size = record.size();
+        Class<?>[] result = new Class[size];
+
+        for (int i = 0; i < size; i++) {
+            result[i] = record.getField(i).getType();
+        }
+
+        return result;
     }
 
     // ------------------------------------------------------------------------
@@ -922,7 +938,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     // ------------------------------------------------------------------------
-    // XXX: Object API
+    // XXX: Object and Comparable API
     // ------------------------------------------------------------------------
 
     @Override
@@ -930,5 +946,117 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields);
         result.add(this);
         return result.toString();
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public int compareTo(Record that) {
+        // Note: keep this implementation in-sync with AbstractStore.equals()!
+
+        if (that == null) {
+            throw new NullPointerException();
+        }
+        if (size() != that.size()) {
+            throw new ClassCastException(String.format("Trying to compare incomparable records (wrong degree):\n%s\n%s", this, that));
+        }
+
+        Class<?>[] thisTypes = getTypes();
+        Class<?>[] thatTypes = getTypes(that);
+
+        if (!asList(thisTypes).equals(asList(thatTypes))) {
+            throw new ClassCastException(String.format("Trying to compare incomparable records (type mismatch):\n%s\n%s", this, that));
+        }
+
+        for (int i = 0; i < size(); i++) {
+            final Object thisValue = getValue(i);
+            final Object thatValue = that.getValue(i);
+
+            // [#1850] Only return -1/+1 early. In all other cases,
+            // continue checking the remaining fields
+            if (thisValue == null && thatValue == null) {
+                continue;
+            }
+
+            // Order column values in a SQL NULLS LAST manner
+            else if (thisValue == null) {
+                return 1;
+            }
+
+            else if (thatValue == null) {
+                return -1;
+            }
+
+            // [#985] Compare arrays too.
+            else if (thisValue.getClass().isArray() && thatValue.getClass().isArray()) {
+
+                // Might be byte[]
+                if (thisValue.getClass() == byte[].class) {
+                    int compare = compare((byte[]) thisValue, (byte[]) thatValue);
+
+                    if (compare != 0) {
+                        return compare;
+                    }
+                }
+
+                // Other primitive types are not expected
+                else if (!thisValue.getClass().getComponentType().isPrimitive()) {
+                    int compare = compare((Object[]) thisValue, (Object[]) thatValue);
+
+                    if (compare != 0) {
+                        return compare;
+                    }
+                }
+
+                else {
+                    throw new ClassCastException(String.format("Unsupported data type in natural ordering: %s", thisValue.getClass()));
+                }
+            }
+            else {
+                int compare = ((Comparable) thisValue).compareTo(thatValue);
+
+                if (compare != 0) {
+                    return compare;
+                }
+            }
+        }
+
+        // If we got through the above loop, the two records are equal
+        return 0;
+    }
+
+    /**
+     * Compare two byte arrays
+     */
+    final int compare(byte[] array1, byte[] array2) {
+        int length = Math.min(array1.length, array2.length);
+
+        for (int i = 0; i < length; i++) {
+            int v1 = (array1[i] & 0xff);
+            int v2 = (array2[i] & 0xff);
+
+            if (v1 != v2) {
+                return v1 < v2 ? -1 : 1;
+            }
+        }
+
+        return array1.length - array2.length;
+    }
+
+    /**
+     * Compare two arrays
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    final int compare(Object[] array1, Object[] array2) {
+        int length = Math.min(array1.length, array2.length);
+
+        for (int i = 0; i < length; i++) {
+            int compare = ((Comparable) array1[i]).compareTo(array2[i]);
+
+            if (compare != 0) {
+                return compare;
+            }
+        }
+
+        return array1.length - array2.length;
     }
 }

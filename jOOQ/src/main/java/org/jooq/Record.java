@@ -90,11 +90,17 @@ import org.jooq.tools.reflect.Reflect;
  * <p>
  * Note that generated <code>TableRecords</code> and <code>UDTRecords</code>
  * also implement a <code>Record[N]</code> interface, if <code>N &lt;= 22</code>
+ * <p>
+ * <h3>Record implements Comparable</h3>
+ * <p>
+ * jOOQ records have a natural ordering implemented in the same way as this is
+ * defined in the SQL standard. For more details, see the
+ * {@link #compareTo(Record)} method
  *
  * @author Lukas Eder
  * @see Result
  */
-public interface Record extends FieldProvider, Attachable {
+public interface Record extends FieldProvider, Attachable, Comparable<Record> {
 
     /**
      * Get a value from this Record, providing a field.
@@ -851,4 +857,81 @@ public interface Record extends FieldProvider, Attachable {
      */
     void fromArray(Object... array);
 
+    // -------------------------------------------------------------------------
+    // Inherited methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * Compares this <code>Record</code> with another <code>Record</code>
+     * according to their natural ordering.
+     * <p>
+     * jOOQ Records implement {@link Comparable} to allow for naturally ordering
+     * Records in a "SQL way", i.e. according to the following rules:
+     * <p>
+     * <h3>Records being compared must have the same ROW type</h3>
+     * <p>
+     * Two Records are comparable if and only if they have the same
+     * <code>ROW</code> type, i.e. if their {@link Record#getFields()
+     * getFields()} methods return fields of the same type and degree.
+     * <p>
+     * <h3>Comparison rules</h3>
+     * <p>
+     * Assume the following notations:
+     * <ul>
+     * <li><code>X[i]</code> means <code>X.getValue(i)</code></li>
+     * <li><code>X = Y</code> means <code>X.compareTo(Y) == 0</code></li>
+     * <li><code>X &lt; Y</code> means <code>X.compareTo(Y) &lt; 0</code></li>
+     * <li><code>X[i] = Y[i]</code> means
+     * <code>(X[i] == null && Y[i] == null) || X[i].compareTo(Y[i]) &lt; 0</code>
+     * </li>
+     * <li><code>X[i] &lt; Y[i]</code> means
+     * <code>Y[i] == null || X[i].compareTo(Y[i]) &lt; 0</code>. This
+     * corresponds to the SQL <code>NULLS LAST</code> clause.</li>
+     * </ul>
+     * Then, for two comparable Records <code>r1</code> and <code>r2</code>,
+     * <code>x = r1.compareTo(r2)</code> yields:
+     * <ul>
+     * <li><strong><code>x = -1</code></strong>: if <code><pre>
+     *    (r1[0] &lt; r2[0])
+     * OR (r1[0] = r2[0] AND r1[1] &lt; r2[1])
+     * OR  ...
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] &lt; r2[N])</pre></code>
+     * </li>
+     * <li><strong><code>x = 0</code></strong>: if <code><pre>
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] = r2[N])</pre></code>
+     * </li>
+     * <li><strong><code>x = 1</code></strong>: if <code><pre>
+     *    (r1[0] > r2[0])
+     * OR (r1[0] = r2[0] AND r1[1] > r2[1])
+     * OR  ...
+     * OR (r1[0] = r2[0] AND ... AND r1[N-1] = r2[N-1] AND r1[N] > r2[N])</pre></code>
+     * </li>
+     * </ul>
+     * <p>
+     * Note, that the above rules correspond to the SQL ordering behaviour as
+     * illustrated in the following examples: <code><pre>
+     * -- A SQL ORDER BY clause, ordering all records by columns in their order
+     * SELECT a, b, c
+     * FROM my_table
+     * ORDER BY 1, 2, 3
+     *
+     * -- A row value expression comparison predicate
+     * SELECT *
+     * FROM my_table
+     * WHERE (a, b, c) &lt; (1, 2, 3)
+     * </pre></code>
+     * <p>
+     * See {@link Row1#lessThan(Row1)}, {@link Row2#lessThan(Row2)}, ...,
+     * {@link Row22#lessThan(Row22)} for more details about row value expression
+     * comparison predicates
+     * <p>
+     * Alternative sorting behaviour can be achieved through
+     * {@link Result#sortAsc(java.util.Comparator)} and similar methods.
+     *
+     * @throws NullPointerException If the argument record is <code>null</code>
+     * @throws ClassCastException If the argument record is not comparable with
+     *             this record according to the above rules.
+     */
+    @Override
+    int compareTo(Record record);
 }

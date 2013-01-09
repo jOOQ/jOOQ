@@ -35,28 +35,32 @@
  */
 package org.jooq.test.data;
 
-import java.sql.Date;
-
-import org.jooq.DataType;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DefaultDataType;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.impl.TableImpl;
 
 /**
  * @author Lukas Eder
  */
-public final class TestDataType<T> extends DefaultDataType<T> {
+public class Table4 extends TableImpl<Table4Record> {
 
     /**
      * Generated UID
      */
-    private static final long              serialVersionUID = 7621282509163949636L;
+    private static final long serialVersionUID = 7621282509163949636L;
 
-    public static final DataType<Integer>  INTEGER_TYPE     = new TestDataType<Integer>(Integer.class);
-    public static final DataType<String>   STRING_TYPE      = new TestDataType<String>(String.class);
-    public static final DataType<Date>     DATE_TYPE        = new TestDataType<Date>(Date.class);
-    public static final DataType<Object[]> ARRAY_TYPE       = new TestDataType<Object[]>(Object[].class);
+    public static final Table<Table4Record>                TABLE4      = new Table4();
 
-    protected TestDataType(Class<T> type) {
-        super(SQLDialect.ORACLE, type, type.getSimpleName());
+    public static final TableField<Table4Record, Integer>  FIELD_ID4   = createField("ID4", TestDataType.INTEGER_TYPE, TABLE4);
+    public static final TableField<Table4Record, String>   FIELD_NAME4 = createField("NAME4", TestDataType.STRING_TYPE, TABLE4);
+    public static final TableField<Table4Record, Object[]> FIELD_ARRAY4 = createField("ARRAY4", TestDataType.ARRAY_TYPE, TABLE4);
+
+    public Table4() {
+        super("TABLE4");
+    }
+
+    @Override
+    public Class<Table4Record> getRecordType() {
+        return Table4Record.class;
     }
 }

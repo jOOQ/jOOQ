@@ -138,6 +138,8 @@ abstract class AbstractStore implements AttachableInternal {
 
     @Override
     public boolean equals(Object obj) {
+        // Note: keep this implementation in-sync with AbstractRecord.compareTo()!
+
         if (obj instanceof AbstractStore) {
             final AbstractStore that = (AbstractStore) obj;
 
@@ -183,6 +185,7 @@ abstract class AbstractStore implements AttachableInternal {
                     }
                 }
 
+                // If we got through the above loop, the two records are equal
                 return true;
             }
         }

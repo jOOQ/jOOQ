@@ -39,7 +39,9 @@ package org.jooq;
 import java.beans.ConstructorProperties;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Proxy;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLData;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,11 +55,44 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
 
 /**
- * A wrapper for database result records returned by
- * <code>{@link SelectQuery}</code>
+ * A database result record
+ * <p>
+ * A record essentially combines a list of columns ({@link Field}) with a
+ * corresponding list of values, each value being of the respective field's
+ * type.
+ * <p>
+ * While records can be seen as generic column / value mappings, their concrete
+ * implementations often specialise the above description in any of the
+ * following ways:
+ * <p>
+ * <h3>Table records</h3>
+ * <p>
+ * Records originating from a concrete database table (or view) are modelled by
+ * jOOQ as {@link TableRecord} or {@link UpdatableRecord}, if they contain a
+ * primary key. If you're using jOOQ's code generator, you can generate even
+ * more concrete types of table records, i.e. one table record per table.
+ * <p>
+ * <h3>UDT records</h3>
+ * <p>
+ * {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} formally support
+ * user defined types (UDT), which are modelled by jOOQ as {@link UDTRecord}. In
+ * addition to being regular records (column / value mappings), they also
+ * implement the JDBC {@link SQLData} API in order to be streamed to a JDBC
+ * {@link PreparedStatement} or from a JDBC {@link ResultSet}
+ * <p>
+ * <h3>Records of well-defined degree</h3>
+ * <p>
+ * When projecting custom record types in SQL, new ad-hoc types of a certain
+ * degree are formed on the fly. Records with degree &lt= 22 are reflected by
+ * jOOQ through the {@link Record1}, {@link Record2}, ... {@link Record22}
+ * classes, which cover the respective row value expressions {@link Row1},
+ * {@link Row2}, ... {@link Row22}
+ * <p>
+ * Note that generated <code>TableRecords</code> and <code>UDTRecords</code>
+ * also implement a <code>Record[N]</code> interface, if <code>N &lt;= 22</code>
  *
  * @author Lukas Eder
- * @see SelectQuery#getResult()
+ * @see Result
  */
 public interface Record extends FieldProvider, Attachable {
 

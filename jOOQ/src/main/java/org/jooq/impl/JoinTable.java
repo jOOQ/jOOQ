@@ -214,9 +214,9 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                 for (Field<?> field : using) {
                     context.formatSeparator()
                            .keyword(glue)
-                           .sql(lhs.getField(field))
+                           .sql(lhs.field(field))
                            .sql(" = ")
-                           .sql(rhs.getField(field));
+                           .sql(rhs.field(field));
 
                     glue = "and ";
                 }
@@ -238,8 +238,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                  simulateNaturalRightOuterJoin(context)) {
 
             String glue = "on ";
-            for (Field<?> field : lhs.getFields()) {
-                Field<?> other = rhs.getField(field);
+            for (Field<?> field : lhs.fields()) {
+                Field<?> other = rhs.field(field);
 
                 if (other != null) {
                     context.formatSeparator()
@@ -292,8 +292,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     protected final FieldList getFieldList() {
         FieldList result = new FieldList();
 
-        result.addAll(lhs.asTable().getFields());
-        result.addAll(rhs.asTable().getFields());
+        result.addAll(lhs.asTable().fields());
+        result.addAll(rhs.asTable().fields());
 
         return result;
     }

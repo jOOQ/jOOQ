@@ -53,11 +53,13 @@ public interface Record6<T1, T2, T3, T4, T5, T6> extends Record {
     /**
      * Get this record's fields as a {@link Row6}
      */
+    @Override
     Row6<T1, T2, T3, T4, T5, T6> fieldsRow();
 
     /**
      * Get this record's values as a {@link Row6}
      */
+    @Override
     Row6<T1, T2, T3, T4, T5, T6> valuesRow();
 
     // ------------------------------------------------------------------------

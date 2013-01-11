@@ -70,7 +70,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.jooq.Cursor;
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -79,6 +78,7 @@ import org.jooq.Record6;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.TableRecord;
@@ -179,7 +179,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, list.size());
 
         for (int i = 0; i < books.size(); i++) {
-            for (Field<?> field : books.getFields()) {
+            for (Field<?> field : books.fields()) {
                 assertEquals(books.getValue(i, field), list.get(i).get(field.getName()));
             }
         }
@@ -197,7 +197,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(book, book2);
         assertEquals(book, book3);
 
-        for (Field<?> field : books.getFields()) {
+        for (Field<?> field : books.fields()) {
             assertEquals(book.getValue(field), map4.get(field.getName()));
         }
 
@@ -321,7 +321,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // --------
         B book = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOne();
         Object[] bookArray = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOneArray();
-        for (int i = 0; i < TBook().getFields().size(); i++) {
+        for (int i = 0; i < TBook().fieldsRow().getDegree(); i++) {
             assertEquals(book.getValue(i), bookArray[i]);
         }
 
@@ -341,7 +341,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(bookJ, book2);
             assertEquals(bookJ, book3);
 
-            for (int i = 0; i < TBook().getFields().size(); i++) {
+            for (int i = 0; i < TBook().fieldsRow().getDegree(); i++) {
                 assertEquals(books.getValue(j, i), booksArray[j][i]);
                 assertEquals(books.getValue(j, i), books.intoArray()[j][i]);
                 assertEquals(books.get(j).getValue(i), books.get(j).intoArray()[i]);
@@ -370,7 +370,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetch() throws Exception {
         SelectQuery<?> q = create().selectQuery();
         q.addFrom(TAuthor());
-        q.addSelect(TAuthor().getFields());
+        q.addSelect(TAuthor().fields());
         q.addOrderBy(TAuthor_LAST_NAME());
 
         Result<?> result = q.fetch();
@@ -1120,8 +1120,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_TITLES, result1.getValues(TBook_TITLE()));
         assertEquals(BOOK_AUTHOR_IDS, result1.getValues(TBook_AUTHOR_ID()));
         assertEquals(BOOK_NULLS, result1.getValues(TBook_PUBLISHED_IN()));
-        assertNull(result1.getField(TAuthor_FIRST_NAME()));
-        assertNull(result1.getField(TAuthor_LAST_NAME()));
+        assertNull(result1.field(TAuthor_FIRST_NAME()));
+        assertNull(result1.field(TAuthor_LAST_NAME()));
 
         // Ensure that books can be updated using store()
         result1.get(0).setValue(TBook_TITLE(), "Changed");
@@ -1430,10 +1430,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             Result<Record> r1 = create().fetch(rs1, String.class, Long.class);
 
             assertEquals(2, r1.size());
-            assertEquals(String.class, r1.getField(0).getType());
-            assertEquals(Long.class, r1.getField(1).getType());
-            assertEquals("id", r1.getField(0).getName().toLowerCase());
-            assertEquals("year_of_birth", r1.getField(1).getName().toLowerCase());
+            assertEquals(String.class, r1.field(0).getType());
+            assertEquals(Long.class, r1.field(1).getType());
+            assertEquals("id", r1.field(0).getName().toLowerCase());
+            assertEquals("year_of_birth", r1.field(1).getName().toLowerCase());
             assertEquals(asList("1", "2"), r1.getValues(0));
             assertEquals(asList(1903L, 1947L), r1.getValues(1));
 
@@ -1442,10 +1442,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             Result<Record> r2 = create().fetch(rs2, SQLDataType.VARCHAR, SQLDataType.BIGINT);
 
             assertEquals(2, r2.size());
-            assertEquals(String.class, r2.getField(0).getType());
-            assertEquals(Long.class, r2.getField(1).getType());
-            assertEquals("id", r2.getField(0).getName().toLowerCase());
-            assertEquals("year_of_birth", r2.getField(1).getName().toLowerCase());
+            assertEquals(String.class, r2.field(0).getType());
+            assertEquals(Long.class, r2.field(1).getType());
+            assertEquals("id", r2.field(0).getName().toLowerCase());
+            assertEquals("year_of_birth", r2.field(1).getName().toLowerCase());
             assertEquals(asList("1", "2"), r2.getValues(0));
             assertEquals(asList(1903L, 1947L), r2.getValues(1));
 
@@ -1454,10 +1454,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             Result<Record> r3 = create().fetch(rs3, field("x", String.class), field("y", Long.class));
 
             assertEquals(2, r3.size());
-            assertEquals(String.class, r3.getField(0).getType());
-            assertEquals(Long.class, r3.getField(1).getType());
-            assertEquals("x", r3.getField(0).getName().toLowerCase());
-            assertEquals("y", r3.getField(1).getName().toLowerCase());
+            assertEquals(String.class, r3.field(0).getType());
+            assertEquals(Long.class, r3.field(1).getType());
+            assertEquals("x", r3.field(0).getName().toLowerCase());
+            assertEquals("y", r3.field(1).getName().toLowerCase());
             assertEquals(asList("1", "2"), r3.getValues(0));
             assertEquals(asList(1903L, 1947L), r3.getValues(1));
         }
@@ -1634,7 +1634,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertFalse(rs1.relative(1));
         check5(rs1);
 
-        checkMetaData(result, rs1);
+        checkMetaData(result.fieldsRow(), rs1);
 
         // [#1923] Record.intoResultSet() is similar
         // -----------------------------------------
@@ -1682,13 +1682,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertFalse(rs2.relative(1));
         check5(rs2);
 
-        checkMetaData(book, rs2);
+        checkMetaData(book.fieldsRow(), rs2);
     }
 
-    private void checkMetaData(FieldProvider result, ResultSet rs) throws SQLException {
+    private void checkMetaData(Row row, ResultSet rs) throws SQLException {
         // Check the meta data
         ResultSetMetaData meta = rs.getMetaData();
-        assertEquals(result.getFields().size(), meta.getColumnCount());
+        assertEquals(row.getDegree(), meta.getColumnCount());
         assertEquals(Integer.class.getName(), meta.getColumnClassName(1));
         assertEquals(Types.INTEGER, meta.getColumnType(1));
         assertEquals("integer", meta.getColumnTypeName(1));

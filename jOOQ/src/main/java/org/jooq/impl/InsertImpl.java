@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -72,17 +71,19 @@ class InsertImpl<R extends Record>
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = 4222898879771679107L;
+    private static final long serialVersionUID = 4222898879771679107L;
 
-    private final List<Field<?>> fields;
-    private final Table<R>       into;
-    private boolean              onDuplicateKeyUpdate;
+    private final Field<?>[]  fields;
+    private final Table<R>    into;
+    private boolean           onDuplicateKeyUpdate;
 
     InsertImpl(Configuration configuration, Table<R> into, Collection<? extends Field<?>> fields) {
         super(new InsertQueryImpl<R>(configuration, into));
 
         this.into = into;
-        this.fields = new ArrayList<Field<?>>(fields);
+        this.fields = (fields == null || fields.size() == 0)
+            ? into.fields()
+            : fields.toArray(new Field[fields.size()]);
     }
 
     // -------------------------------------------------------------------------
@@ -97,13 +98,13 @@ class InsertImpl<R extends Record>
 
     @Override
     public final InsertImpl<R> values(Object... values) {
-        if (getFields().size() != values.length) {
+        if (fields.length != values.length) {
             throw new IllegalArgumentException("The number of values must match the number of fields");
         }
 
         getDelegate().newRecord();
-        for (int i = 0; i < getFields().size(); i++) {
-            addValue(getDelegate(), getFields().get(i), values[i]);
+        for (int i = 0; i < fields.length; i++) {
+            addValue(getDelegate(), fields[i], values[i]);
         }
 
         return this;
@@ -133,28 +134,17 @@ class InsertImpl<R extends Record>
     @Override
     public final InsertImpl<R> values(Field<?>... values) {
         List<Field<?>> values1 = Arrays.asList(values);
-        if (getFields().size() != values1.size()) {
+        if (fields.length != values1.size()) {
             throw new IllegalArgumentException("The number of values must match the number of fields");
         }
 
         getDelegate().newRecord();
-        for (int i = 0; i < getFields().size(); i++) {
+        for (int i = 0; i < fields.length; i++) {
             // javac has trouble when inferring Object for T. Use Void instead
-            getDelegate().addValue((Field<Void>) getFields().get(i), (Field<Void>) values1.get(i));
+            getDelegate().addValue((Field<Void>) fields[i], (Field<Void>) values1.get(i));
         }
 
         return this;
-    }
-
-    private final List<Field<?>> getFields() {
-
-        // [#885] If this insert is called with an implicit field name set, take
-        // the fields from the underlying table.
-        if (fields.size() == 0) {
-            fields.addAll(into.getFields());
-        }
-
-        return fields;
     }
 
     @Override

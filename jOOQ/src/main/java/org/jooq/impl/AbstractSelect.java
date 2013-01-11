@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.fieldArray;
+
 import java.sql.ResultSetMetaData;
 import java.util.List;
 
@@ -43,6 +45,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
 
@@ -95,33 +98,28 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
     }
 
     @Override
-    public final <T> Field<T> getField(Field<T> field) {
-        return asTable().getField(field);
+    public final Row fieldsRow() {
+        return asTable().fieldsRow();
     }
 
     @Override
-    public final Field<?> getField(String name) {
-        return asTable().getField(name);
+    public final <T> Field<T> field(Field<T> field) {
+        return asTable().field(field);
     }
 
     @Override
-    public final Field<?> getField(int index) {
-        return asTable().getField(index);
+    public final Field<?> field(String string) {
+        return asTable().field(string);
     }
 
     @Override
-    public final List<Field<?>> getFields() {
-        return asTable().getFields();
+    public final Field<?> field(int index) {
+        return asTable().field(index);
     }
 
     @Override
-    public final int getIndex(Field<?> field) {
-        return asTable().getIndex(field);
-    }
-
-    @Override
-    public int getIndex(String fieldName) {
-        return asTable().getIndex(fieldName);
+    public final Field<?>[] fields() {
+        return asTable().fields();
     }
 
     @Override
@@ -142,20 +140,20 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
     }
 
     @Override
-    protected final List<Field<?>> getFields(ResultSetMetaData meta) {
+    protected final Field<?>[] getFields(ResultSetMetaData meta) {
 
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()
         // method was called to get here
-    	List<Field<?>> select = getSelect();
+    	List<Field<?>> fields = getSelect();
 
     	// If no projection was specified explicitly, create fields from result
     	// set meta data instead. This is typically the case for SELECT * ...
-    	if (select.isEmpty()) {
+    	if (fields.isEmpty()) {
             Configuration configuration = getConfiguration();
             return new MetaDataFieldProvider(configuration, meta).getFields();
         }
 
-        return select;
+        return fieldArray(fields);
     }
 
     @Override

@@ -131,8 +131,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select()
                 .from(b)
                 .join(a)
-                .on(b.getField(TBook_AUTHOR_ID()).eq(a.getField(TAuthor_ID())))
-                .orderBy(b.getField(TBook_ID()))
+                .on(b.field(TBook_AUTHOR_ID()).eq(a.field(TAuthor_ID())))
+                .orderBy(b.field(TBook_ID()))
                 .fetch();
 
         assertEquals(4, result.size());
@@ -176,11 +176,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(6, result1.size());
-        assertEquals(TBookToBookStore_BOOK_ID().getName(), result1.getField(0).getName());
-        assertEquals(TBookToBookStore_STOCK().getName(), result1.getField(1).getName());
-        assertTrue(result1.getField(2).getName().contains("Orell Füssli"));
-        assertTrue(result1.getField(3).getName().contains("Ex Libris"));
-        assertTrue(result1.getField(4).getName().contains("Buchhandlung im Volkshaus"));
+        assertEquals(TBookToBookStore_BOOK_ID().getName(), result1.field(0).getName());
+        assertEquals(TBookToBookStore_STOCK().getName(), result1.field(1).getName());
+        assertTrue(result1.field(2).getName().contains("Orell Füssli"));
+        assertTrue(result1.field(3).getName().contains("Ex Libris"));
+        assertTrue(result1.field(4).getName().contains("Buchhandlung im Volkshaus"));
         assertEquals(
             asList(1, 1, 0, 1, 0),
             asList(result1.get(0).into(Integer[].class)));
@@ -218,19 +218,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(3, result2.size());
-        assertEquals(TBookToBookStore_BOOK_ID().getName(), result2.getField(0).getName());
-        assertEquals("BS1_AVG", result2.getField(1).getName());
-        assertEquals("BS1_MAX", result2.getField(2).getName());
-        assertEquals("BS1_SUM", result2.getField(3).getName());
-        assertEquals("BS1_CNT", result2.getField(4).getName());
-        assertEquals("BS2_AVG", result2.getField(5).getName());
-        assertEquals("BS2_MAX", result2.getField(6).getName());
-        assertEquals("BS2_SUM", result2.getField(7).getName());
-        assertEquals("BS2_CNT", result2.getField(8).getName());
-        assertEquals("BS3_AVG", result2.getField(9).getName());
-        assertEquals("BS3_MAX", result2.getField(10).getName());
-        assertEquals("BS3_SUM", result2.getField(11).getName());
-        assertEquals("BS3_CNT", result2.getField(12).getName());
+        assertEquals(TBookToBookStore_BOOK_ID().getName(), result2.field(0).getName());
+        assertEquals("BS1_AVG", result2.field(1).getName());
+        assertEquals("BS1_MAX", result2.field(2).getName());
+        assertEquals("BS1_SUM", result2.field(3).getName());
+        assertEquals("BS1_CNT", result2.field(4).getName());
+        assertEquals("BS2_AVG", result2.field(5).getName());
+        assertEquals("BS2_MAX", result2.field(6).getName());
+        assertEquals("BS2_SUM", result2.field(7).getName());
+        assertEquals("BS2_CNT", result2.field(8).getName());
+        assertEquals("BS3_AVG", result2.field(9).getName());
+        assertEquals("BS3_MAX", result2.field(10).getName());
+        assertEquals("BS3_SUM", result2.field(11).getName());
+        assertEquals("BS3_CNT", result2.field(12).getName());
         assertEquals(
             asList(1,
                    10, 10, 10, 1,
@@ -263,7 +263,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(2, result3.size());
-        assertEquals(5, result3.getFields().size());
+        assertEquals(5, result3.fieldsRow().getDegree());
         assertEquals(AUTHOR_IDS, result3.getValues(0));
         assertEquals(
             asList(1, 2, 0, 0, 0),
@@ -306,7 +306,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(3, r1.size());
-        assertEquals(7, r1.getFields().size());
+        assertEquals(7, r1.fieldsRow().getDegree());
         assertEquals(asList(1, 2, 3), r1.getValues("book_id", Integer.class));
         assertEquals(asList(10, 10, 10), r1.getValues("of_max", Integer.class));
         assertEquals(asList(1, 1, 1), r1.getValues("of_cnt", Integer.class));
@@ -325,7 +325,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(1, r2.size());
-        assertEquals(5, r2.getFields().size());
+        assertEquals(5, r2.fieldsRow().getDegree());
         assertEquals(1, (int) r2.get(0).getValue("a", Integer.class));
         assertEquals(2, (int) r2.get(0).getValue("b", Integer.class));
         assertEquals(3, (int) r2.get(0).getValue("c", Integer.class));
@@ -360,7 +360,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select()
                 .from(TBookToBookStore()
                 .divideBy(notAllBookStores)
-                .on(TBookToBookStore_BOOK_STORE_NAME().equal(notAllBookStores.getField(TBookStore_NAME())))
+                .on(TBookToBookStore_BOOK_STORE_NAME().equal(notAllBookStores.field(TBookStore_NAME())))
                 .returning(TBookToBookStore_BOOK_ID(), field("'abc'").as("abc")))
                 .orderBy(1)
                 .fetch();

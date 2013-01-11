@@ -67,7 +67,7 @@ public class JDBCTableDefinition extends AbstractTableDefinition {
 		List<ColumnDefinition> result = new ArrayList<ColumnDefinition>();
 
 		int ordinal = 0;
-        for (Field<?> field : table.getFields()) {
+        for (Field<?> field : table.fields()) {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 getDatabase(),
                 getSchema(),

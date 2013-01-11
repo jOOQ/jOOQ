@@ -169,7 +169,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                             ArrayTable table = (ArrayTable) o;
 
                             context.sql("(");
-                            Utils.fieldNames(context, table.getFields());
+                            Utils.fieldNames(context, table.fields());
                             context.sql(")");
                         }
 

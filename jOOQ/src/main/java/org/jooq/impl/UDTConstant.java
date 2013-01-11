@@ -92,7 +92,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
                 context.sql("()");
 
                 String separator = "..";
-                for (Field<?> field : record.getFields()) {
+                for (Field<?> field : record.fields()) {
                     context.sql(separator);
                     context.sql(field.getName());
                     context.sql("(");
@@ -115,7 +115,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
         context.sql("(");
 
         String separator = "";
-        for (Field<?> field : record.getFields()) {
+        for (Field<?> field : record.fields()) {
             context.sql(separator);
             context.sql(val(record.getValue(field), field));
             separator = ", ";
@@ -164,7 +164,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {
-                for (Field<?> field : record.getFields()) {
+                for (Field<?> field : record.fields()) {
                     context.bind(val(record.getValue(field)));
                 }
 

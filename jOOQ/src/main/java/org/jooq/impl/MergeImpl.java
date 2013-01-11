@@ -67,6 +67,7 @@ import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
@@ -141,8 +142,7 @@ implements
 
     FieldList getH2Fields() {
         if (h2Fields == null) {
-            h2Fields = new FieldList();
-            h2Fields.addAll(table.getFields());
+            h2Fields = new FieldList(table.fields());
         }
 
         return h2Fields;
@@ -429,9 +429,10 @@ implements
                 Table<?> src;
                 if (h2Select != null) {
                     FieldList v = new FieldList();
+                    Row row = h2Select.fieldsRow();
 
-                    for (int i = 0; i < h2Select.getFields().size(); i++) {
-                        v.add(h2Select.getField(i).as("s" + (i + 1)));
+                    for (int i = 0; i < row.getDegree(); i++) {
+                        v.add(row.field(i).as("s" + (i + 1)));
                     }
 
                     // [#579] TODO: Currently, this syntax may require aliasing
@@ -460,7 +461,7 @@ implements
                         for (int i = 0; i < key.getFields().size(); i++) {
 
                             @SuppressWarnings({ "unchecked", "rawtypes" })
-                            Condition rhs = key.getFields().get(i).equal((Field) src.getField(i));
+                            Condition rhs = key.getFields().get(i).equal((Field) src.field(i));
 
                             if (condition == null) {
                                 condition = rhs;
@@ -486,7 +487,7 @@ implements
                         onFields.addAll(getH2Keys());
 
                         @SuppressWarnings({ "unchecked", "rawtypes" })
-                        Condition rhs = getH2Keys().get(i).equal((Field) src.getField(matchIndex));
+                        Condition rhs = getH2Keys().get(i).equal((Field) src.field(matchIndex));
 
                         if (condition == null) {
                             condition = rhs;
@@ -502,14 +503,14 @@ implements
                 Map<Field<?>, Field<?>> update = new LinkedHashMap<Field<?>, Field<?>>();
                 Map<Field<?>, Field<?>> insert = new LinkedHashMap<Field<?>, Field<?>>();
 
-                for (int i = 0; i < src.getFields().size(); i++) {
+                for (int i = 0; i < src.fieldsRow().getDegree(); i++) {
 
                     // Oracle does not allow to update fields from the ON clause
                     if (!onFields.contains(getH2Fields().get(i))) {
-                        update.put(getH2Fields().get(i), src.getField(i));
+                        update.put(getH2Fields().get(i), src.field(i));
                     }
 
-                    insert.put(getH2Fields().get(i), src.getField(i));
+                    insert.put(getH2Fields().get(i), src.field(i));
                 }
 
                 return create(config).mergeInto(table)
@@ -591,7 +592,7 @@ implements
                            .sql("(");
 
                     String separator = "";
-                    for (Field<?> field : ((Select<?>) using).getFields()) {
+                    for (Field<?> field : ((Select<?>) using).fields()) {
 
                         // Some fields are unnamed
                         // [#579] Correct this

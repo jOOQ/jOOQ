@@ -374,7 +374,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             checkResultSet(ctx, true);
 
             assertNotNull(ctx.record());
-            assertEquals(2, ctx.record().getFields().size());
+            assertEquals(2, ctx.record().fieldsRow().getDegree());
 
             assertNull(ctx.record().getValue(0));
             assertNull(ctx.record().getValue(1));
@@ -389,7 +389,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             checkResultSet(ctx, true);
 
             assertNotNull(ctx.record());
-            assertEquals(2, ctx.record().getFields().size());
+            assertEquals(2, ctx.record().fieldsRow().getDegree());
 
             assertEquals(ids.remove(), ctx.record().getValue(0));
             assertEquals("Hello", ctx.record().getValue(1));
@@ -403,7 +403,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             checkStatement(ctx, true);
             checkResultSet(ctx, true);
             assertNotNull(ctx.record());
-            assertEquals(2, ctx.record().getFields().size());
+            assertEquals(2, ctx.record().fieldsRow().getDegree());
 
             assertNotNull(ctx.result());
             assertEquals(2, ctx.result().size());
@@ -417,7 +417,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             checkStatement(ctx, true);
             checkResultSet(ctx, true);
             assertNotNull(ctx.record());
-            assertEquals(2, ctx.record().getFields().size());
+            assertEquals(2, ctx.record().fieldsRow().getDegree());
 
             assertNotNull(ctx.result());
             assertEquals(2, ctx.result().size());
@@ -431,7 +431,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             checkStatement(ctx, true);
             checkResultSet(ctx, true);
             assertNotNull(ctx.record());
-            assertEquals(2, ctx.record().getFields().size());
+            assertEquals(2, ctx.record().fieldsRow().getDegree());
 
             assertNotNull(ctx.result());
             assertEquals(2, ctx.result().size());

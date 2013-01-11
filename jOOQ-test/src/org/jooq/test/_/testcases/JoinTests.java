@@ -140,9 +140,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Table<A> a = TAuthor().as("a");
         Table<B> b = TBook().as("b");
 
-        Field<Integer> a_authorID = a.getField(TAuthor_ID());
-        Field<Integer> b_authorID = b.getField(TBook_AUTHOR_ID());
-        Field<String> b_title = b.getField(TBook_TITLE());
+        Field<Integer> a_authorID = a.field(TAuthor_ID());
+        Field<Integer> b_authorID = b.field(TBook_AUTHOR_ID());
+        Field<String> b_title = b.field(TBook_TITLE());
 
         SelectQuery<?> q2 = create().selectQuery();
         q2.addFrom(a);
@@ -197,7 +197,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result = create().select()
                 .from(author)
                 .join(TBook())
-                .on(author.getField(TAuthor_ID()).equal(TBook_AUTHOR_ID()))
+                .on(author.field(TAuthor_ID()).equal(TBook_AUTHOR_ID()))
                 .and(TBook_LANGUAGE_ID().in(select(field("id", Integer.class))
                                            .from("t_language")
                                            .where("upper(cd) in (?, ?)", "DE", "EN")))
@@ -213,13 +213,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result = create().select()
                 .from(TAuthor())
                 .join(book)
-                .on(TAuthor_ID().equal(book.getField(TBook_AUTHOR_ID())))
-                .and(book.getField(TBook_LANGUAGE_ID()).in(
+                .on(TAuthor_ID().equal(book.field(TBook_AUTHOR_ID())))
+                .and(book.field(TBook_LANGUAGE_ID()).in(
                     select(field("id", Integer.class))
                     .from("t_language")
                     .where("upper(cd) in (?, ?)", "DE", "EN")))
                 .orExists(selectOne().where(falseCondition()))
-                .orderBy(book.getField(TBook_ID())).fetch();
+                .orderBy(book.field(TBook_ID())).fetch();
 
             assertEquals(3, result.size());
             assertEquals("1984", result.getValue(0, TBook_TITLE()));
@@ -275,7 +275,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select()
                 .from(TAuthor().as("x"))
                 .crossJoin(TAuthor())
-                .orderBy(1, 1 + TAuthor().getFields().size())
+                .orderBy(1, 1 + TAuthor().fieldsRow().getDegree())
                 .fetch();
 
         assertEquals(4, result.size());
@@ -284,7 +284,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result.getValues(0, Integer.class));
         assertEquals(
            asList(1, 2, 1, 2),
-           result.getValues(0 + TAuthor().getFields().size(), Integer.class));
+           result.getValues(0 + TAuthor().fieldsRow().getDegree(), Integer.class));
 
         // [#1844] Cross joins can be achieved by omitting the ON clause, too
         assertEquals(8, (int)
@@ -626,11 +626,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 Result<Record> result3 =
                 create().select()
                         .from(z)
-                        .fullOuterJoin(o).on(z.getField("z").cast(Integer.class).equal(o.getField("o").cast(Integer.class)))
+                        .fullOuterJoin(o).on(z.field("z").cast(Integer.class).equal(o.field("o").cast(Integer.class)))
                         .fetch();
 
-                assertEquals("z", result3.getField(0).getName());
-                assertEquals("o", result3.getField(1).getName());
+                assertEquals("z", result3.field(0).getName());
+                assertEquals("o", result3.field(1).getName());
 
                 // Interestingly, ordering doesn't work with Oracle, in this
                 // example... Seems to be an Oracle bug??

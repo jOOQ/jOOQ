@@ -112,15 +112,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(1, i);
         assertEquals(1, result.size());
-        assertEquals(3, result.getFields().size());
-        assertTrue(result.getFields().contains(f1));
-        assertTrue(result.getFields().contains(f2));
-        assertTrue(result.getFields().contains(f3));
+        assertEquals(3, result.fieldsRow().getDegree());
+        assertTrue(asList(result.fields()).contains(f1));
+        assertTrue(asList(result.fields()).contains(f2));
+        assertTrue(asList(result.fields()).contains(f3));
 
-        assertEquals(3, result.get(0).getFields().size());
-        assertTrue(result.get(0).getFields().contains(f1));
-        assertTrue(result.get(0).getFields().contains(f2));
-        assertTrue(result.get(0).getFields().contains(f3));
+        assertEquals(3, result.get(0).fieldsRow().getDegree());
+        assertTrue(asList(result.get(0).fields()).contains(f1));
+        assertTrue(asList(result.get(0).fields()).contains(f2));
+        assertTrue(asList(result.get(0).fields()).contains(f3));
 
         assertEquals(Integer.valueOf(1), result.get(0).getValue(f1));
         assertEquals(2d, result.get(0).getValue(f2));
@@ -131,7 +131,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testSelectQuery() throws Exception {
         SelectQuery<?> q = create().selectQuery();
         q.addFrom(TAuthor());
-        q.addSelect(TAuthor().getFields());
+        q.addSelect(TAuthor().fields());
         q.addOrderBy(TAuthor_LAST_NAME());
 
         int rows = q.execute();
@@ -227,15 +227,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .from(TBook())
             .groupBy(TBook_AUTHOR_ID()).asTable("nested");
 
-        Result<Record> records = create().select(nested.getFields())
+        Result<Record> records = create().select(nested.fields())
             .from(nested)
-            .orderBy(nested.getField("books"), nested.getField(TBook_AUTHOR_ID())).fetch();
+            .orderBy(nested.field("books"), nested.field(TBook_AUTHOR_ID())).fetch();
 
         assertEquals(2, records.size());
-        assertEquals(Integer.valueOf(1), records.getValue(0, nested.getField(TBook_AUTHOR_ID())));
-        assertEquals(Integer.valueOf(2), records.getValue(0, nested.getField("books")));
-        assertEquals(Integer.valueOf(2), records.getValue(1, nested.getField(TBook_AUTHOR_ID())));
-        assertEquals(Integer.valueOf(2), records.getValue(1, nested.getField("books")));
+        assertEquals(Integer.valueOf(1), records.getValue(0, nested.field(TBook_AUTHOR_ID())));
+        assertEquals(Integer.valueOf(2), records.getValue(0, nested.field("books")));
+        assertEquals(Integer.valueOf(2), records.getValue(1, nested.field(TBook_AUTHOR_ID())));
+        assertEquals(Integer.valueOf(2), records.getValue(1, nested.field("books")));
     }
 
     @Test
@@ -321,10 +321,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, rows);
 
         // Use union all because of clob's
-        rows = create().selectDistinct(union.getField(TBook_AUTHOR_ID()), TAuthor_FIRST_NAME())
+        rows = create().selectDistinct(union.field(TBook_AUTHOR_ID()), TAuthor_FIRST_NAME())
             .from(union)
             .join(TAuthor())
-            .on(union.getField(TBook_AUTHOR_ID()).equal(TAuthor_ID()))
+            .on(union.field(TBook_AUTHOR_ID()).equal(TAuthor_ID()))
             .orderBy(TAuthor_FIRST_NAME())
             .execute();
 

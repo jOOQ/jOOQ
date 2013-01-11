@@ -100,7 +100,45 @@ import org.jooq.tools.reflect.Reflect;
  * @author Lukas Eder
  * @see Result
  */
-public interface Record extends FieldProvider, Attachable, Comparable<Record> {
+public interface Record extends Attachable, Comparable<Record> {
+
+    /**
+     * Get this record's fields as a {@link Row}
+     */
+    Row fieldsRow();
+
+    /**
+     * Get a specific field from this Record.
+     *
+     * @see Row#field(Field)
+     */
+    <T> Field<T> field(Field<T> field);
+
+    /**
+     * Get a specific field from this Record.
+     *
+     * @see Row#field(String)
+     */
+    Field<?> field(String name);
+
+    /**
+     * Get a specific field from this Record.
+     *
+     * @see Row#field(int)
+     */
+    Field<?> field(int index);
+
+    /**
+     * Get all fields from this Record.
+     *
+     * @see Row#fields()
+     */
+    Field<?>[] fields();
+
+    /**
+     * Get this record's values as a {@link Row}
+     */
+    Row valuesRow();
 
     /**
      * Get a value from this Record, providing a field.
@@ -109,7 +147,7 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
      * @param field The field
      * @return The value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> T getValue(Field<T> field) throws IllegalArgumentException;
 
@@ -122,7 +160,7 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
      * @return The value of a field contained in this record, or defaultValue,
      *         if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> T getValue(Field<T> field, T defaultValue) throws IllegalArgumentException;
 
@@ -134,7 +172,7 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
      * @param type The conversion type
      * @return The value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      * @throws DataTypeException wrapping any data type conversion exception
@@ -153,7 +191,7 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
      * @return The value of a field contained in this record, or defaultValue,
      *         if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      * @see Convert#convert(Object, Class)
@@ -170,7 +208,7 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
      * @param converter The data type converter
      * @return The value of a field contained in this record
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      * @see Convert#convert(Object, Converter)
@@ -189,7 +227,7 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
      * @return The value of a field contained in this record, or defaultValue,
      *         if <code>null</code>
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      * @see Convert#convert(Object, Converter)
@@ -837,7 +875,7 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
      * <p>
      * The argument map is expected to hold field-name / value pairs where
      * field-names correspond to actual field names as provided by
-     * {@link #getField(String)}. Missing fields will be left untouched. Excess
+     * {@link #field(String)}. Missing fields will be left untouched. Excess
      * fields will be ignored.
      * <p>
      * This is the inverse operation to {@link #intoMap()}
@@ -923,8 +961,8 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
      * <h3>Records being compared must have the same ROW type</h3>
      * <p>
      * Two Records are comparable if and only if they have the same
-     * <code>ROW</code> type, i.e. if their {@link Record#getFields()
-     * getFields()} methods return fields of the same type and degree.
+     * <code>ROW</code> type, i.e. if their {@link Record#fieldsRow() fieldsRow()}
+     * methods return fields of the same type and degree.
      * <p>
      * <h3>Comparison rules</h3>
      * <p>

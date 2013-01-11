@@ -41,17 +41,17 @@ import org.jooq.Constants
  * @author Lukas Eder
  */
 class Rows extends Generators {
-    
+
     def static void main(String[] args) {
         val rows = new Rows();
         rows.generateRowClasses();
         rows.generateRowImpl();
     }
-    
+
     def generateRowClasses() {
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
             val out = new StringBuilder();
-            
+
             out.append('''
             «classHeader»
             package org.jooq;
@@ -61,11 +61,11 @@ class Rows extends Generators {
             import static org.jooq.SQLDialect.MYSQL;
             import static org.jooq.SQLDialect.ORACLE;
             import static org.jooq.SQLDialect.POSTGRES;
-            
+
             import java.util.Collection;
-            
+
             import javax.annotation.Generated;
-            
+
             /**
              * A model type for a row value expression with degree <code>«degree»</code>
              * <p>
@@ -104,7 +104,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition equal(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for equality
                  *
@@ -112,7 +112,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition equal(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
@@ -121,7 +121,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition equal(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
@@ -130,7 +130,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition equal(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for equality
                  *
@@ -138,7 +138,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition equal(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
@@ -147,7 +147,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition eq(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for equality
                  *
@@ -155,7 +155,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition eq(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
@@ -164,7 +164,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition eq(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality
@@ -173,7 +173,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition eq(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for equality
                  *
@@ -181,7 +181,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition eq(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
@@ -193,7 +193,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition notEqual(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for non-equality
                  *
@@ -201,7 +201,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition notEqual(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
@@ -210,7 +210,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition notEqual(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
@@ -219,7 +219,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition notEqual(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for non-equality
                  *
@@ -227,7 +227,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition notEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
@@ -236,7 +236,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ne(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for non-equality
                  *
@@ -244,7 +244,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ne(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality
@@ -253,7 +253,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ne(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  *
@@ -261,7 +261,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ne(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for non-equality
                  *
@@ -269,11 +269,11 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition ne(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 // ------------------------------------------------------------------------
                 // Ordering comparison predicates
                 // ------------------------------------------------------------------------
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -285,7 +285,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lessThan(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for order
                  *
@@ -293,7 +293,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lessThan(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -302,7 +302,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lessThan(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -311,7 +311,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lessThan(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for order
                  *
@@ -319,7 +319,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition lessThan(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -328,7 +328,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lt(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for order
                  *
@@ -336,7 +336,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lt(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -345,7 +345,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lt(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -354,7 +354,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lt(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for order
                  *
@@ -362,7 +362,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition lt(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -374,7 +374,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lessOrEqual(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for order
                  *
@@ -382,7 +382,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lessOrEqual(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -391,7 +391,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lessOrEqual(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -400,7 +400,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition lessOrEqual(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for order
                  *
@@ -408,7 +408,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition lessOrEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -417,7 +417,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition le(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for order
                  *
@@ -425,7 +425,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition le(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -434,7 +434,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition le(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -443,7 +443,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition le(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for order
                  *
@@ -451,7 +451,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition le(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -463,7 +463,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition greaterThan(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for order
                  *
@@ -471,7 +471,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition greaterThan(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -480,7 +480,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition greaterThan(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -489,7 +489,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition greaterThan(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for order
                  *
@@ -497,7 +497,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition greaterThan(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -506,7 +506,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition gt(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for order
                  *
@@ -514,7 +514,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition gt(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -523,7 +523,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition gt(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -532,7 +532,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition gt(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for order
                  *
@@ -540,7 +540,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition gt(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -552,7 +552,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition greaterOrEqual(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for order
                  *
@@ -560,7 +560,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition greaterOrEqual(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -569,7 +569,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition greaterOrEqual(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -578,7 +578,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition greaterOrEqual(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for order
                  *
@@ -586,7 +586,7 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition greaterOrEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -595,7 +595,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ge(Row«degree»<«TN(degree)»> row);
-            
+
                 /**
                  * Compare this row value expression with a record for order
                  *
@@ -603,7 +603,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ge(Record«degree»<«TN(degree)»> record);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -612,7 +612,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ge(«TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with another row value expression for
                  * order
@@ -621,7 +621,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition ge(«Field_TN_tn(degree)»);
-            
+
                 /**
                  * Compare this row value expression with a subselect for order
                  *
@@ -629,11 +629,11 @@ class Rows extends Generators {
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
                 Condition ge(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 // ------------------------------------------------------------------------
                 // [NOT] BETWEEN predicates
                 // ------------------------------------------------------------------------
-            
+
                 /**
                  * Check if this row value expression is within a range of two other row
                  * value expressions
@@ -642,7 +642,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> between(«TN_XXXn(degree, "minValue")»);
-            
+
                 /**
                  * Check if this row value expression is within a range of two other row
                  * value expressions
@@ -651,7 +651,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> between(«Field_TN_XXXn(degree, "minValue")»);
-            
+
                 /**
                  * Check if this row value expression is within a range of two other row
                  * value expressions
@@ -660,7 +660,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> between(Row«degree»<«TN(degree)»> minValue);
-            
+
                 /**
                  * Check if this row value expression is within a range of two records
                  *
@@ -668,7 +668,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> between(Record«degree»<«TN(degree)»> minValue);
-            
+
                 /**
                  * Check if this row value expression is within a range of two other row
                  * value expressions
@@ -683,7 +683,7 @@ class Rows extends Generators {
                 @Support
                 Condition between(Row«degree»<«TN(degree)»> minValue,
                                   Row«degree»<«TN(degree)»> maxValue);
-            
+
                 /**
                  * Check if this row value expression is within a range of two records
                  * <p>
@@ -694,7 +694,7 @@ class Rows extends Generators {
                 @Support
                 Condition between(Record«degree»<«TN(degree)»> minValue,
                                   Record«degree»<«TN(degree)»> maxValue);
-            
+
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * other row value expressions
@@ -703,7 +703,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(«TN_XXXn(degree, "minValue")»);
-            
+
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * other row value expressions
@@ -712,7 +712,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(«Field_TN_XXXn(degree, "minValue")»);
-            
+
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * other row value expressions
@@ -721,7 +721,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(Row«degree»<«TN(degree)»> minValue);
-            
+
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * records
@@ -730,7 +730,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(Record«degree»<«TN(degree)»> minValue);
-            
+
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * other row value expressions
@@ -745,7 +745,7 @@ class Rows extends Generators {
                 @Support
                 Condition betweenSymmetric(Row«degree»<«TN(degree)»> minValue,
                                            Row«degree»<«TN(degree)»> maxValue);
-            
+
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * records
@@ -766,7 +766,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> notBetween(«TN_XXXn(degree, "minValue")»);
-            
+
                 /**
                  * Check if this row value expression is not within a range of two other
                  * row value expressions
@@ -775,7 +775,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> notBetween(«Field_TN_XXXn(degree, "minValue")»);
-            
+
                 /**
                  * Check if this row value expression is not within a range of two other
                  * row value expressions
@@ -784,7 +784,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> notBetween(Row«degree»<«TN(degree)»> minValue);
-            
+
                 /**
                  * Check if this row value expression is within a range of two records
                  *
@@ -792,7 +792,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> notBetween(Record«degree»<«TN(degree)»> minValue);
-            
+
                 /**
                  * Check if this row value expression is not within a range of two other
                  * row value expressions
@@ -807,7 +807,7 @@ class Rows extends Generators {
                 @Support
                 Condition notBetween(Row«degree»<«TN(degree)»> minValue,
                                      Row«degree»<«TN(degree)»> maxValue);
-            
+
                 /**
                  * Check if this row value expression is within a range of two records
                  * <p>
@@ -827,7 +827,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(«TN_XXXn(degree, "minValue")»);
-            
+
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * other row value expressions
@@ -836,7 +836,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(«Field_TN_XXXn(degree, "minValue")»);
-            
+
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * other row value expressions
@@ -845,7 +845,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(Row«degree»<«TN(degree)»> minValue);
-            
+
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * records
@@ -854,7 +854,7 @@ class Rows extends Generators {
                  */
                 @Support
                 BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(Record«degree»<«TN(degree)»> minValue);
-            
+
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * other row value expressions
@@ -869,7 +869,7 @@ class Rows extends Generators {
                 @Support
                 Condition notBetweenSymmetric(Row«degree»<«TN(degree)»> minValue,
                                               Row«degree»<«TN(degree)»> maxValue);
-            
+
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * records
@@ -881,18 +881,18 @@ class Rows extends Generators {
                 @Support
                 Condition notBetweenSymmetric(Record«degree»<«TN(degree)»> minValue,
                                               Record«degree»<«TN(degree)»> maxValue);
-            
+
                 // ------------------------------------------------------------------------
                 // [NOT] DISTINCT predicates
                 // ------------------------------------------------------------------------
-            
+
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
 «««                 * distinctness
 «««                 */
 «««                @Support
 «««                Condition isDistinctFrom(Row«degree»<«TN(degree)»> row);
-«««            
+«««
 «««                /**
 «««                 * Compare this row value expression with a record for distinctness
 «««                 *
@@ -900,7 +900,7 @@ class Rows extends Generators {
 «««                 */
 «««                @Support
 «««                Condition isDistinctFrom(Record«degree»<«TN(degree)»> record);
-«««            
+«««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
 «««                 * distinctness
@@ -909,7 +909,7 @@ class Rows extends Generators {
 «««                 */
 «««                @Support
 «««                Condition isDistinctFrom(«TN_tn(degree)»);
-«««            
+«««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
 «««                 * distinctness
@@ -918,14 +918,14 @@ class Rows extends Generators {
 «««                 */
 «««                @Support
 «««                Condition isDistinctFrom(«Field_TN_tn(degree)»);
-«««            
+«««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
 «««                 * non-distinctness
 «««                 */
 «««                @Support
 «««                Condition isNotDistinctFrom(Row«degree»<«TN(degree)»> row);
-«««            
+«««
 «««                /**
 «««                 * Compare this row value expression with a record for non-distinctness
 «««                 *
@@ -933,7 +933,7 @@ class Rows extends Generators {
 «««                 */
 «««                @Support
 «««                Condition isNotDistinctFrom(Record«degree»<«TN(degree)»> record);
-«««            
+«««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
 «««                 * non-distinctness
@@ -942,7 +942,7 @@ class Rows extends Generators {
 «««                 */
 «««                @Support
 «««                Condition isNotDistinctFrom(«TN_tn(degree)»);
-«««            
+«««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
 «««                 * non-distinctness
@@ -951,11 +951,11 @@ class Rows extends Generators {
 «««                 */
 «««                @Support
 «««                Condition isNotDistinctFrom(«Field_TN_tn(degree)»);
-            
+
                 // ------------------------------------------------------------------------
                 // [NOT] IN predicates
                 // ------------------------------------------------------------------------
-            
+
                 /**
                  * Compare this row value expression with a set of row value expressions for
                  * equality
@@ -967,7 +967,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition in(Collection<? extends Row«degree»<«TN(degree)»>> rows);
-            
+
                 /**
                  * Compare this row value expression with a set of row value expressions for
                  * equality
@@ -976,7 +976,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition in(Row«degree»<«TN(degree)»>... rows);
-            
+
                 /**
                  * Compare this row value expression with a set of records for equality
                  *
@@ -984,7 +984,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition in(Record«degree»<«TN(degree)»>... record);
-            
+
                 /**
                  * Compare this row value expression with a subselect for equality
                  *
@@ -992,7 +992,7 @@ class Rows extends Generators {
                  */
                 @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition in(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 /**
                  * Compare this row value expression with a set of row value expressions for
                  * equality
@@ -1005,7 +1005,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition notIn(Collection<? extends Row«degree»<«TN(degree)»>> rows);
-            
+
                 /**
                  * Compare this row value expression with a set of row value expressions for
                  * equality
@@ -1014,7 +1014,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition notIn(Row«degree»<«TN(degree)»>... rows);
-            
+
                 /**
                  * Compare this row value expression with a set of records for non-equality
                  *
@@ -1022,7 +1022,7 @@ class Rows extends Generators {
                  */
                 @Support
                 Condition notIn(Record«degree»<«TN(degree)»>... record);
-            
+
                 /**
                  * Compare this row value expression with a subselect for non-equality
                  *
@@ -1030,7 +1030,7 @@ class Rows extends Generators {
                  */
                 @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
                 Condition notIn(Select<? extends Record«degree»<«TN(degree)»>> select);
-            
+
                 «IF degree == 2»
                 // ------------------------------------------------------------------------
                 // Row2-specific OVERLAPS predicate
@@ -1105,25 +1105,24 @@ class Rows extends Generators {
                 «ENDIF»
             }
             ''');
-             
+
             write("org.jooq.Row" + degree, out);
         }
     }
-    
+
     def generateRowImpl() {
         val out = new StringBuilder();
-        
+
         out.append('''
         «classHeader»
         package org.jooq.impl;
-        
+
         import static org.jooq.impl.Factory.row;
         import static org.jooq.impl.Factory.vals;
-        
+
         import java.util.Arrays;
         import java.util.Collection;
-        import java.util.List;
-        
+
         import javax.annotation.Generated;
 
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1145,7 +1144,7 @@ class Rows extends Generators {
         «ENDFOR»
         import org.jooq.RowN;
         import org.jooq.Select;
-        
+
         /**
          * @author Lukas Eder
          */
@@ -1153,74 +1152,92 @@ class Rows extends Generators {
         @SuppressWarnings({ "rawtypes", "unchecked" })
         class RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> extends AbstractQueryPart
         implements
-        
+
             // This row implementation implements all row types. Type-safety is
             // being checked through the type-safe API. No need for further checks here
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
             Row«degree»<«TN(degree)»>,
             «ENDFOR»
             RowN {
-        
+
             /**
              * Generated UID
              */
             private static final long serialVersionUID = -929427349071556318L;
-        
+
             private final Field<?>[]  fields;
-        
+
             RowImpl(Field<?>... fields) {
                 super();
-        
+
                 this.fields = fields;
             }
-        
+
             RowImpl(Collection<? extends Field<?>> fields) {
                 this(fields.toArray(new Field[fields.size()]));
             }
-        
+
             // ------------------------------------------------------------------------
             // XXX: QueryPart API
             // ------------------------------------------------------------------------
-        
+
             @Override
             public final void toSQL(RenderContext context) {
                 context.sql("(");
-        
+
                 String separator = "";
                 for (Field<?> field : fields) {
                     context.sql(separator);
                     context.sql(field);
-        
+
                     separator = ", ";
                 }
-        
+
                 context.sql(")");
             }
-        
+
             @Override
             public final void bind(BindContext context) {
                 context.bind(fields);
             }
-        
+
             // ------------------------------------------------------------------------
             // XXX: Row accessor API
             // ------------------------------------------------------------------------
-        
+
             @Override
             public final int getDegree() {
                 return fields.length;
             }
-        
+
             @Override
-            public final Field<?> getField(int index) {
-                return fields[index];
+            public final <T> Field<T> field(Field<T> field) {
+                return new FieldList(fields).field(field);
             }
-        
+
             @Override
-            public final Field<?>[] getFields() {
-                Field<?>[] result = new Field[fields.length];
-                System.arraycopy(fields, 0, result, 0, fields.length);
-                return result;
+            public final Field<?> field(String name) {
+                return new FieldList(fields).field(name);
+            }
+
+            @Override
+            public final Field<?> field(int index) {
+                return new FieldList(fields).field(index);
+            }
+            
+            @Override
+            public final Field<?>[] fields() {
+            	return fields.clone();
+            }
+
+            @Override
+            public final int indexOf(Field<?> field) {
+            	return new FieldList(fields).indexOf(field);
+            }
+
+            @Override
+            public final int indexOf(String fieldName) {
+            	return new FieldList(fields).indexOf(fieldName);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
@@ -1238,7 +1255,7 @@ class Rows extends Generators {
             public final Condition isNull() {
                 return new RowIsNull(this, true);
             }
-            
+
             @Override
             public final Condition isNotNull() {
                 return new RowIsNull(this, false);
@@ -1254,7 +1271,7 @@ class Rows extends Generators {
                 return new RowCondition(this, row, Comparator.EQUALS);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition equal(RowN row) {
                 return new RowCondition(this, row, Comparator.EQUALS);
@@ -1269,8 +1286,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition equal(Record record) {
-                List<Field<?>> f = record.getFields();
-                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.EQUALS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1280,7 +1296,7 @@ class Rows extends Generators {
                 return equal(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition equal(Object... values) {
                 return equal(row(values));
@@ -1292,7 +1308,7 @@ class Rows extends Generators {
                 return equal(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition equal(Field<?>... f) {
                 return equal(row(f));
@@ -1304,7 +1320,7 @@ class Rows extends Generators {
                 return equal(row);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition eq(RowN row) {
                 return equal(row);
@@ -1328,7 +1344,7 @@ class Rows extends Generators {
                 return equal(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition eq(Object... values) {
                 return equal(values);
@@ -1340,7 +1356,7 @@ class Rows extends Generators {
                 return equal(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition eq(Field<?>... values) {
                 return equal(values);
@@ -1352,7 +1368,7 @@ class Rows extends Generators {
                 return new RowCondition(this, row, Comparator.NOT_EQUALS);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition notEqual(RowN row) {
                 return new RowCondition(this, row, Comparator.NOT_EQUALS);
@@ -1367,8 +1383,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition notEqual(Record record) {
-                List<Field<?>> f = record.getFields();
-                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.NOT_EQUALS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1378,7 +1393,7 @@ class Rows extends Generators {
                 return notEqual(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition notEqual(Object... values) {
                 return notEqual(row(values));
@@ -1390,7 +1405,7 @@ class Rows extends Generators {
                 return notEqual(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition notEqual(Field<?>... f) {
                 return notEqual(row(f));
@@ -1426,7 +1441,7 @@ class Rows extends Generators {
                 return notEqual(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition ne(Object... values) {
                 return notEqual(values);
@@ -1438,7 +1453,7 @@ class Rows extends Generators {
                 return notEqual(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition ne(Field<?>... values) {
                 return notEqual(values);
@@ -1454,7 +1469,7 @@ class Rows extends Generators {
                 return new RowCondition(this, row, Comparator.LESS);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lessThan(RowN row) {
                 return new RowCondition(this, row, Comparator.LESS);
@@ -1469,8 +1484,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition lessThan(Record record) {
-                List<Field<?>> f = record.getFields();
-                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.LESS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1480,7 +1494,7 @@ class Rows extends Generators {
                 return lessThan(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lessThan(Object... values) {
                 return lessThan(row(values));
@@ -1492,7 +1506,7 @@ class Rows extends Generators {
                 return lessThan(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lessThan(Field<?>... f) {
                 return lessThan(row(f));
@@ -1504,7 +1518,7 @@ class Rows extends Generators {
                 return lessThan(row);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lt(RowN row) {
                 return lessThan(row);
@@ -1528,7 +1542,7 @@ class Rows extends Generators {
                 return lessThan(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lt(Object... values) {
                 return lessThan(values);
@@ -1540,7 +1554,7 @@ class Rows extends Generators {
                 return lessThan(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lt(Field<?>... values) {
                 return lessThan(values);
@@ -1552,7 +1566,7 @@ class Rows extends Generators {
                 return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lessOrEqual(RowN row) {
                 return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
@@ -1567,8 +1581,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition lessOrEqual(Record record) {
-                List<Field<?>> f = record.getFields();
-                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1578,7 +1591,7 @@ class Rows extends Generators {
                 return lessOrEqual(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lessOrEqual(Object... values) {
                 return lessOrEqual(row(values));
@@ -1590,7 +1603,7 @@ class Rows extends Generators {
                 return lessOrEqual(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition lessOrEqual(Field<?>... f) {
                 return lessOrEqual(row(f));
@@ -1602,7 +1615,7 @@ class Rows extends Generators {
                 return lessOrEqual(row);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition le(RowN row) {
                 return lessOrEqual(row);
@@ -1626,7 +1639,7 @@ class Rows extends Generators {
                 return lessOrEqual(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition le(Object... values) {
                 return lessOrEqual(values);
@@ -1638,7 +1651,7 @@ class Rows extends Generators {
                 return lessOrEqual(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition le(Field<?>... values) {
                 return lessOrEqual(values);
@@ -1650,7 +1663,7 @@ class Rows extends Generators {
                 return new RowCondition(this, row, Comparator.GREATER);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition greaterThan(RowN row) {
                 return new RowCondition(this, row, Comparator.GREATER);
@@ -1665,8 +1678,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition greaterThan(Record record) {
-                List<Field<?>> f = record.getFields();
-                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.GREATER);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1676,7 +1688,7 @@ class Rows extends Generators {
                 return greaterThan(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition greaterThan(Object... values) {
                 return greaterThan(row(values));
@@ -1688,7 +1700,7 @@ class Rows extends Generators {
                 return greaterThan(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition greaterThan(Field<?>... f) {
                 return greaterThan(row(f));
@@ -1700,7 +1712,7 @@ class Rows extends Generators {
                 return greaterThan(row);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition gt(RowN row) {
                 return greaterThan(row);
@@ -1724,7 +1736,7 @@ class Rows extends Generators {
                 return greaterThan(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition gt(Object... values) {
                 return greaterThan(values);
@@ -1736,7 +1748,7 @@ class Rows extends Generators {
                 return greaterThan(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition gt(Field<?>... values) {
                 return greaterThan(values);
@@ -1748,7 +1760,7 @@ class Rows extends Generators {
                 return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition greaterOrEqual(RowN row) {
                 return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
@@ -1763,8 +1775,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition greaterOrEqual(Record record) {
-                List<Field<?>> f = record.getFields();
-                Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1774,7 +1785,7 @@ class Rows extends Generators {
                 return greaterOrEqual(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition greaterOrEqual(Object... values) {
                 return greaterOrEqual(row(values));
@@ -1786,7 +1797,7 @@ class Rows extends Generators {
                 return greaterOrEqual(row(«tn(degree)»));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition greaterOrEqual(Field<?>... f) {
                 return greaterOrEqual(row(f));
@@ -1798,7 +1809,7 @@ class Rows extends Generators {
                 return greaterOrEqual(row);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition ge(RowN row) {
                 return greaterOrEqual(row);
@@ -1822,7 +1833,7 @@ class Rows extends Generators {
                 return greaterOrEqual(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition ge(Object... values) {
                 return greaterOrEqual(values);
@@ -1834,12 +1845,12 @@ class Rows extends Generators {
                 return greaterOrEqual(«tn(degree)»);
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition ge(Field<?>... values) {
                 return greaterOrEqual(values);
             }
-            
+
             // ------------------------------------------------------------------------
             // [NOT] BETWEEN predicates
             // ------------------------------------------------------------------------
@@ -1890,8 +1901,7 @@ class Rows extends Generators {
 
             @Override
             public final BetweenAndStepN «keyword»(Record record) {
-                List<Field<?>> f = record.getFields();
-                RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
                 return «keyword»(row);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1919,11 +1929,11 @@ class Rows extends Generators {
                 return «keyword»(minValue).and(maxValue);
             }
             «ENDFOR»
-        
+
             // ------------------------------------------------------------------------
             // [NOT] DISTINCT predicates
             // ------------------------------------------------------------------------
-        
+
             // ------------------------------------------------------------------------
             // [NOT] IN predicates
             // ------------------------------------------------------------------------
@@ -1934,7 +1944,7 @@ class Rows extends Generators {
                 return in(Arrays.asList(rows));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition in(RowN... rows) {
                 return in(Arrays.asList(rows));
@@ -1958,8 +1968,7 @@ class Rows extends Generators {
                 RowN[] rows = new RowN[records.length];
 
                 for (int i = 0; i < records.length; i++) {
-                    List<Field<?>> f = records[i].getFields();
-                    rows[i] = new RowImpl(vals(records[i].intoArray(), f.toArray(new Field[f.size()])));
+                    rows[i] = new RowImpl(vals(records[i].intoArray(), records[i].fields()));
                 }
 
                 return in(rows);
@@ -1971,7 +1980,7 @@ class Rows extends Generators {
                 return notIn(Arrays.asList(rows));
             }
             «ENDFOR»
-        
+
             @Override
             public final Condition notIn(RowN... rows) {
                 return notIn(Arrays.asList(rows));
@@ -1988,15 +1997,14 @@ class Rows extends Generators {
 
                 return notIn(rows);
             }
-            «ENDFOR»   
+            «ENDFOR»
 
             @Override
             public final Condition notIn(Record... records) {
                 RowN[] rows = new RowN[records.length];
 
                 for (int i = 0; i < records.length; i++) {
-                    List<Field<?>> f = records[i].getFields();
-                    rows[i] = new RowImpl(vals(records[i].intoArray(), f.toArray(new Field[f.size()])));
+                    rows[i] = new RowImpl(vals(records[i].intoArray(), records[i].fields()));
                 }
 
                 return notIn(rows);
@@ -2007,108 +2015,108 @@ class Rows extends Generators {
                 QueryPartList<Row> list = new QueryPartList<Row>(rows);
                 return new RowInCondition(this, list, SubqueryOperator.IN);
             }
-        
+
             @Override
             public final Condition notIn(Collection rows) {
                 QueryPartList<Row> list = new QueryPartList<Row>(rows);
                 return new RowInCondition(this, list, SubqueryOperator.NOT_IN);
             }
-        
+
             // ------------------------------------------------------------------------
             // Predicates involving subqueries
             // ------------------------------------------------------------------------
-            
+
             @Override
             public final Condition equal(Select select) {
                 return new RowSubqueryCondition(this, select, SubqueryOperator.EQUALS);
             }
-        
+
             @Override
             public final Condition eq(Select select) {
                 return equal(select);
             }
-        
+
             @Override
             public final Condition notEqual(Select select) {
                 return new RowSubqueryCondition(this, select, SubqueryOperator.NOT_EQUALS);
             }
-        
+
             @Override
             public final Condition ne(Select select) {
                 return notEqual(select);
             }
-        
+
             @Override
             public final Condition greaterThan(Select select) {
                 return new RowSubqueryCondition(this, select, SubqueryOperator.GREATER);
             }
-        
+
             @Override
             public final Condition gt(Select select) {
                 return greaterThan(select);
             }
-        
+
             @Override
             public final Condition greaterOrEqual(Select select) {
                 return new RowSubqueryCondition(this, select, SubqueryOperator.GREATER_OR_EQUAL);
             }
-        
+
             @Override
             public final Condition ge(Select select) {
                 return greaterOrEqual(select);
             }
-        
+
             @Override
             public final Condition lessThan(Select select) {
                 return new RowSubqueryCondition(this, select, SubqueryOperator.LESS);
             }
-        
+
             @Override
             public final Condition lt(Select select) {
                 return lessThan(select);
             }
-        
+
             @Override
             public final Condition lessOrEqual(Select select) {
                 return new RowSubqueryCondition(this, select, SubqueryOperator.LESS_OR_EQUAL);
             }
-        
+
             @Override
             public final Condition le(Select select) {
                 return lessOrEqual(select);
             }
-        
+
             @Override
             public final Condition in(Select select) {
                 return new RowSubqueryCondition(this, select, SubqueryOperator.IN);
             }
-        
+
             @Override
             public final Condition notIn(Select select) {
                 return new RowSubqueryCondition(this, select, SubqueryOperator.NOT_IN);
             }
-        
+
             // ------------------------------------------------------------------------
             // XXX: Row2 API
             // ------------------------------------------------------------------------
-        
+
             @Override
             public final Condition overlaps(T1 t1, T2 t2) {
                 return overlaps(row(t1, t2));
             }
-        
+
             @Override
             public final Condition overlaps(Field<T1> t1, Field<T2> t2) {
                 return overlaps(row(t1, t2));
             }
-        
+
             @Override
             public final Condition overlaps(Row2<T1, T2> row) {
                 return new RowOverlapsCondition(this, row);
             }
         }
         ''');
-        
+
         write("org.jooq.impl.RowImpl", out);
     }
 }

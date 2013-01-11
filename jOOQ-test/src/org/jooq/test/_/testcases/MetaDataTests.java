@@ -35,6 +35,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
@@ -267,7 +268,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Some numeric data type tests
         // ----------------------------
-        for (Field<?> field : T639().getFields()) {
+        for (Field<?> field : T639().fields()) {
             if ("BYTE".equalsIgnoreCase(field.getName())) {
                 assertEquals(Byte.class, field.getType());
                 assertEquals(SQLDataType.TINYINT, field.getDataType());
@@ -458,8 +459,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     assertEquals(metaTable, generatedTable);
 
                     // Check if fields match, as well
-                    List<Field<?>> metaFields = metaTable.getFields();
-                    assertTrue(metaFields.containsAll(generatedTable.getFields()));
+                    List<Field<?>> metaFields = asList(metaTable.fields());
+                    assertTrue(metaFields.containsAll(asList(generatedTable.fields())));
 
                     // Check if relations are correctly loaded (and typed) as well
                     // [#1977] Fix this, once the "main key" concept has been removed

@@ -35,7 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.vals;
+
 import org.jooq.ForeignKey;
+import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -53,19 +56,38 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      * Generated UID
      */
     private static final long serialVersionUID = 3216746611562261641L;
+    private final Table<R>    table;
 
     public TableRecordImpl(Table<R> table) {
-        super(table);
+        super(table.fields());
+
+        this.table = table;
     }
 
     /*
-     * This method is overridden covariantly by UpdatableRecordImpl
+     * Subclasses may override this method
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Table<R> getTable() {
-        // We can be sure about that cast, as this is the only possibility
-        return (Table<R>) getFieldProvider();
+        return table;
+    }
+
+    /*
+     * Subclasses may override this method
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public Row fieldsRow() {
+        return new RowImpl(fields);
+    }
+
+    /*
+     * Subclasses may override this method
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public Row valuesRow() {
+        return new RowImpl(vals(intoArray(), fields));
     }
 
     @SuppressWarnings("unchecked")

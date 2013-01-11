@@ -40,7 +40,6 @@ import static org.jooq.impl.Factory.vals;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import javax.annotation.Generated;
 
@@ -206,15 +205,33 @@ implements
     }
 
     @Override
-    public final Field<?> getField(int index) {
-        return fields[index];
+    public final <T> Field<T> field(Field<T> field) {
+        return new FieldList(fields).field(field);
     }
 
     @Override
-    public final Field<?>[] getFields() {
-        Field<?>[] result = new Field[fields.length];
-        System.arraycopy(fields, 0, result, 0, fields.length);
-        return result;
+    public final Field<?> field(String name) {
+        return new FieldList(fields).field(name);
+    }
+
+    @Override
+    public final Field<?> field(int index) {
+        return new FieldList(fields).field(index);
+    }
+    
+    @Override
+    public final Field<?>[] fields() {
+    	return fields.clone();
+    }
+
+    @Override
+    public final int indexOf(Field<?> field) {
+    	return new FieldList(fields).indexOf(field);
+    }
+
+    @Override
+    public final int indexOf(String fieldName) {
+    	return new FieldList(fields).indexOf(fieldName);
     }
 
     @Override
@@ -335,7 +352,7 @@ implements
     public final Condition isNull() {
         return new RowIsNull(this, true);
     }
-    
+
     @Override
     public final Condition isNotNull() {
         return new RowIsNull(this, false);
@@ -572,8 +589,7 @@ implements
 
     @Override
     public final Condition equal(Record record) {
-        List<Field<?>> f = record.getFields();
-        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.EQUALS);
     }
 
@@ -1494,8 +1510,7 @@ implements
 
     @Override
     public final Condition notEqual(Record record) {
-        List<Field<?>> f = record.getFields();
-        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.NOT_EQUALS);
     }
 
@@ -2420,8 +2435,7 @@ implements
 
     @Override
     public final Condition lessThan(Record record) {
-        List<Field<?>> f = record.getFields();
-        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.LESS);
     }
 
@@ -3342,8 +3356,7 @@ implements
 
     @Override
     public final Condition lessOrEqual(Record record) {
-        List<Field<?>> f = record.getFields();
-        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
     }
 
@@ -4264,8 +4277,7 @@ implements
 
     @Override
     public final Condition greaterThan(Record record) {
-        List<Field<?>> f = record.getFields();
-        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.GREATER);
     }
 
@@ -5186,8 +5198,7 @@ implements
 
     @Override
     public final Condition greaterOrEqual(Record record) {
-        List<Field<?>> f = record.getFields();
-        Row row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
     }
 
@@ -5880,7 +5891,7 @@ implements
     public final Condition ge(Field<?>... values) {
         return greaterOrEqual(values);
     }
-    
+
     // ------------------------------------------------------------------------
     // [NOT] BETWEEN predicates
     // ------------------------------------------------------------------------
@@ -6342,8 +6353,7 @@ implements
 
     @Override
     public final BetweenAndStepN between(Record record) {
-        List<Field<?>> f = record.getFields();
-        RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
         return between(row);
     }
 
@@ -7034,8 +7044,7 @@ implements
 
     @Override
     public final BetweenAndStepN betweenSymmetric(Record record) {
-        List<Field<?>> f = record.getFields();
-        RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
         return betweenSymmetric(row);
     }
 
@@ -7726,8 +7735,7 @@ implements
 
     @Override
     public final BetweenAndStepN notBetween(Record record) {
-        List<Field<?>> f = record.getFields();
-        RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
         return notBetween(row);
     }
 
@@ -8418,8 +8426,7 @@ implements
 
     @Override
     public final BetweenAndStepN notBetweenSymmetric(Record record) {
-        List<Field<?>> f = record.getFields();
-        RowN row = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+        RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
         return notBetweenSymmetric(row);
     }
 
@@ -9023,8 +9030,7 @@ implements
         RowN[] rows = new RowN[records.length];
 
         for (int i = 0; i < records.length; i++) {
-            List<Field<?>> f = records[i].getFields();
-            rows[i] = new RowImpl(vals(records[i].intoArray(), f.toArray(new Field[f.size()])));
+            rows[i] = new RowImpl(vals(records[i].intoArray(), records[i].fields()));
         }
 
         return in(rows);
@@ -9392,8 +9398,7 @@ implements
         RowN[] rows = new RowN[records.length];
 
         for (int i = 0; i < records.length; i++) {
-            List<Field<?>> f = records[i].getFields();
-            rows[i] = new RowImpl(vals(records[i].intoArray(), f.toArray(new Field[f.size()])));
+            rows[i] = new RowImpl(vals(records[i].intoArray(), records[i].fields()));
         }
 
         return notIn(rows);
@@ -9414,7 +9419,7 @@ implements
     // ------------------------------------------------------------------------
     // Predicates involving subqueries
     // ------------------------------------------------------------------------
-    
+
     @Override
     public final Condition equal(Select select) {
         return new RowSubqueryCondition(this, select, SubqueryOperator.EQUALS);

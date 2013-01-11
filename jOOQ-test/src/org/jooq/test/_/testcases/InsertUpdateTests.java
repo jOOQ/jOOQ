@@ -1086,9 +1086,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Table<A> a1 = TAuthor();
         Table<A> a2 = TAuthor().as("a2");
-        Field<String> f1 = a1.getField(TAuthor_FIRST_NAME());
-        Field<String> f2 = a2.getField(TAuthor_FIRST_NAME());
-        Field<String> f3 = a2.getField(TAuthor_LAST_NAME());
+        Field<String> f1 = a1.field(TAuthor_FIRST_NAME());
+        Field<String> f2 = a2.field(TAuthor_FIRST_NAME());
+        Field<String> f3 = a2.field(TAuthor_LAST_NAME());
 
         UpdateQuery<A> u = create().updateQuery(a1);
         u.addValue(f1, create().select(max(f3)).from(a2).where(f1.equal(f2)).<String> asField());

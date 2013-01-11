@@ -121,10 +121,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .orderBy(TBook_ID().asc());
 
         List<Integer> result =
-        create().select(nested.getField(TBook_ID()))
+        create().select(nested.field(TBook_ID()))
                 .from(nested)
-                .orderBy(nested.getField(TBook_ID()).desc())
-                .fetch(nested.getField(TBook_ID()));
+                .orderBy(nested.field(TBook_ID()).desc())
+                .fetch(nested.field(TBook_ID()));
 
         assertEquals(Arrays.asList(4, 3, 2, 1), result);
     }
@@ -464,7 +464,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .limit(2))
             .as("nested");
 
-        Field<Integer> nestedID = nested.getField(TBook_AUTHOR_ID());
+        Field<Integer> nestedID = nested.field(TBook_AUTHOR_ID());
         Record record = create().select(nestedID, count())
             .from(nested)
             .groupBy(nestedID)

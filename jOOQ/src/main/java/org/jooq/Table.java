@@ -62,7 +62,7 @@ import org.jooq.impl.Factory;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
-public interface Table<R extends Record> extends FieldProvider, TableLike<R> {
+public interface Table<R extends Record> extends TableLike<R> {
 
     /**
      * Get the table schema

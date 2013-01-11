@@ -37,9 +37,11 @@ package org.jooq.impl;
 
 import org.jooq.BindContext;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTField;
@@ -75,6 +77,32 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryP
     @Override
     public final String getName() {
         return name;
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
+    public final Row fieldsRow() {
+        return new RowImpl(fields);
+    }
+
+    @Override
+    public final <T> Field<T> field(Field<T> field) {
+        return fieldsRow().field(field);
+    }
+
+    @Override
+    public final Field<?> field(String string) {
+        return fieldsRow().field(string);
+    }
+
+    @Override
+    public final Field<?> field(int index) {
+        return fieldsRow().field(index);
+    }
+
+    @Override
+    public final Field<?>[] fields() {
+        return fieldsRow().fields();
     }
 
     @Override

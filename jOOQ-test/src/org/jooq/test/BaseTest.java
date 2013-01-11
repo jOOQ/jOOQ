@@ -795,14 +795,14 @@ public abstract class BaseTest<
     }
 
     protected final Field<?> getField(Table<?> table, String name) {
-        Field<?> result = table.getField(name);
+        Field<?> result = table.field(name);
 
         if (result == null) {
-            result = table.getField(name.toUpperCase());
+            result = table.field(name.toUpperCase());
         }
 
         if (result == null) {
-            result = table.getField(name.toLowerCase());
+            result = table.field(name.toLowerCase());
         }
 
         return result;

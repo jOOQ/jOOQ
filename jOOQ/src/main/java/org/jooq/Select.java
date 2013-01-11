@@ -43,7 +43,7 @@ import java.util.List;
  * @param <R> The record type being returned by this query
  * @author Lukas Eder
  */
-public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike, FieldProvider {
+public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, FieldLike {
 
     /**
      * Combine with other selects

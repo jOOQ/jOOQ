@@ -56,7 +56,40 @@ import org.w3c.dom.Document;
  * @author Lukas Eder
  * @see SelectQuery#getResult()
  */
-public interface Result<R extends Record> extends FieldProvider, List<R>, Attachable {
+public interface Result<R extends Record> extends List<R>, Attachable {
+
+    /**
+     * Get this result's fields as a {@link Row}
+     */
+    Row fieldsRow();
+
+    /**
+     * Get a specific field from this Result.
+     *
+     * @see Row#field(Field)
+     */
+    <T> Field<T> field(Field<T> field);
+
+    /**
+     * Get a specific field from this Result.
+     *
+     * @see Row#field(String)
+     */
+    Field<?> field(String name);
+
+    /**
+     * Get a specific field from this Result.
+     *
+     * @see Row#field(int)
+     */
+    Field<?> field(int index);
+
+    /**
+     * Get all fields from this Result.
+     *
+     * @see Row#fields()
+     */
+    Field<?>[] fields();
 
     /**
      * Convenience method to fetch a value at a given position in the result.
@@ -68,7 +101,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @throws IndexOutOfBoundsException if the index is out of range (
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> T getValue(int index, Field<T> field) throws IndexOutOfBoundsException, IllegalArgumentException;
 
@@ -83,7 +116,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @throws IndexOutOfBoundsException if the index is out of range (
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> T getValue(int index, Field<T> field, T defaultValue) throws IndexOutOfBoundsException,
         IllegalArgumentException;
@@ -97,7 +130,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @throws IndexOutOfBoundsException if the index is out of range (
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     Object getValue(int index, int fieldIndex) throws IndexOutOfBoundsException, IllegalArgumentException;
 
@@ -111,7 +144,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @throws IndexOutOfBoundsException if the index is out of range (
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     Object getValue(int index, int fieldIndex, Object defaultValue) throws IndexOutOfBoundsException,
         IllegalArgumentException;
@@ -125,7 +158,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @throws IndexOutOfBoundsException if the index is out of range (
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     Object getValue(int index, String fieldName) throws IndexOutOfBoundsException, IllegalArgumentException;
 
@@ -139,7 +172,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @throws IndexOutOfBoundsException if the index is out of range (
      *             <tt>index &lt; 0 || index &gt;= size()</tt>)
      * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     Object getValue(int index, String fieldName, Object defaultValue) throws IndexOutOfBoundsException,
         IllegalArgumentException;
@@ -152,7 +185,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param field The values' field
      * @return The values
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> List<T> getValues(Field<T> field) throws IllegalArgumentException;
 
@@ -166,7 +199,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @see Record#getValue(Field, Class)
      * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> List<T> getValues(Field<?> field, Class<? extends T> type) throws IllegalArgumentException;
 
@@ -180,7 +213,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @see Record#getValue(Field, Converter)
      * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T, U> List<U> getValues(Field<T> field, Converter<? super T, U> converter) throws IllegalArgumentException;
 
@@ -191,7 +224,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param fieldIndex The values' field index
      * @return The values
      * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     List<?> getValues(int fieldIndex) throws IllegalArgumentException;
 
@@ -205,7 +238,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @see Record#getValue(int, Class)
      * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -221,7 +254,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @see Record#getValue(int, Converter)
      * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -234,7 +267,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param fieldName The values' field name
      * @return The values
      * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     List<?> getValues(String fieldName) throws IllegalArgumentException;
 
@@ -248,7 +281,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @see Record#getValue(String, Class)
      * @see Convert#convert(Object, Class)
      * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -264,7 +297,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @see Record#getValue(String, Converter)
      * @see Convert#convert(Object, Converter)
      * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -417,7 +450,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *            unique in the result set.
      * @return A Map containing the results
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
@@ -438,7 +471,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param value The value field
      * @return A Map containing the results
      * @throws IllegalArgumentException If any of the argument fields is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws InvalidResultException if the key field returned two or more
      *             equal values from the result set.
      */
@@ -457,7 +490,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *            the resulting map will contain at most one entry.
      * @return A Map containing the results.
      * @throws IllegalArgumentException If any of the argument fields is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      */
@@ -475,7 +508,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *            result set.
      * @return A Map containing the result.
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws InvalidResultException if the key is non-unique in the result
      *             set.
      * @throws MappingException wrapping any reflection or data type conversion
@@ -497,7 +530,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *            the resulting map will contain at most one entry.
      * @return A Map containing the results.
      * @throws IllegalArgumentException If any of the argument fields is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws InvalidResultException if the keys are non-unique in the result
      *             set.
      * @throws MappingException wrapping any reflection or data type conversion
@@ -517,7 +550,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param key The key field.
      * @return A Map containing the results
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <K> Map<K, Result<R>> intoGroups(Field<K> key) throws IllegalArgumentException;
 
@@ -534,7 +567,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param value The value field
      * @return A Map containing the results
      * @throws IllegalArgumentException If any of the argument fields is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     <K, V> Map<K, List<V>> intoGroups(Field<K> key, Field<V> value) throws IllegalArgumentException;
 
@@ -548,7 +581,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *            resulting map will contain at most one entry.
      * @return A Map containing grouped results
      * @throws IllegalArgumentException If any of the argument fields is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     Map<Record, Result<R>> intoGroups(Field<?>[] keys) throws IllegalArgumentException;
 
@@ -562,7 +595,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param key The key field.
      * @param type The entity type.
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
@@ -580,7 +613,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *            resulting map will contain at most one entry.
      * @return A Map containing grouped results
      * @throws IllegalArgumentException If the any of the argument fields is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      */
@@ -618,7 +651,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         knowledge about <code>fieldIndex</code>'s actual type.
      * @see #getValues(int)
      * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     Object[] intoArray(int fieldIndex) throws IllegalArgumentException;
 
@@ -631,7 +664,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The resulting values.
      * @see #getValues(int, Class)
      * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -646,7 +679,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The resulting values.
      * @see #getValues(int, Converter)
      * @throws IllegalArgumentException If the argument fieldIndex is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -663,7 +696,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      *         knowledge about <code>fieldName</code>'s actual type.
      * @see #getValues(String)
      * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      */
     Object[] intoArray(String fieldName) throws IllegalArgumentException;
 
@@ -676,7 +709,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The resulting values.
      * @see #getValues(String, Class)
      * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -691,7 +724,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The resulting values.
      * @see #getValues(String, Converter)
      * @throws IllegalArgumentException If the argument fieldName is not
-     *             contained in {@link #getFields()}
+     *             contained in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -706,7 +739,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The resulting values.
      * @see #getValues(Field)
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> T[] intoArray(Field<T> field) throws IllegalArgumentException;
 
@@ -719,7 +752,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The resulting values.
      * @see #getValues(Field, Class)
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -734,7 +767,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @return The resulting values.
      * @see #getValues(Field, Converter)
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      * @throws DataTypeException wrapping any data type conversion exception
      *             that might have occurred
      */
@@ -800,8 +833,8 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * or {@link ResultSet#previous()}, etc.</li>
      * </ul>
      * <p>
-     * You may use {@link Executor#fetch(ResultSet)} to unwind this
-     * wrapper again.
+     * You may use {@link Executor#fetch(ResultSet)} to unwind this wrapper
+     * again.
      *
      * @return A wrapper JDBC <code>ResultSet</code>
      */
@@ -823,7 +856,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param field The sort field
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T extends Comparable<? super T>> Result<R> sortAsc(Field<T> field) throws IllegalArgumentException;
 
@@ -835,7 +868,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param field The sort field
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T extends Comparable<? super T>> Result<R> sortDesc(Field<T> field) throws IllegalArgumentException;
 
@@ -847,7 +880,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param fieldIndex The sort field index
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     Result<R> sortAsc(int fieldIndex) throws IllegalArgumentException;
 
@@ -859,7 +892,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param fieldIndex The sort field index
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     Result<R> sortDesc(int fieldIndex) throws IllegalArgumentException;
 
@@ -871,7 +904,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param fieldName The sort field name
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     Result<R> sortAsc(String fieldName) throws IllegalArgumentException;
 
@@ -883,7 +916,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param fieldName The sort field name
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     Result<R> sortDesc(String fieldName) throws IllegalArgumentException;
 
@@ -897,7 +930,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> Result<R> sortAsc(Field<T> field, java.util.Comparator<? super T> comparator) throws IllegalArgumentException;
 
@@ -912,7 +945,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     <T> Result<R> sortDesc(Field<T> field, java.util.Comparator<? super T> comparator) throws IllegalArgumentException;
 
@@ -926,7 +959,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     Result<R> sortAsc(int fieldIndex, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
@@ -941,7 +974,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     Result<R> sortDesc(int fieldIndex, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
@@ -955,7 +988,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     Result<R> sortAsc(String fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 
@@ -970,7 +1003,7 @@ public interface Result<R extends Record> extends FieldProvider, List<R>, Attach
      * @param comparator The comparator used to sort this result.
      * @return The result itself
      * @throws IllegalArgumentException If the argument field is not contained
-     *             in {@link #getFields()}
+     *             in {@link #fieldsRow()}
      */
     Result<R> sortDesc(String fieldName, java.util.Comparator<?> comparator) throws IllegalArgumentException;
 

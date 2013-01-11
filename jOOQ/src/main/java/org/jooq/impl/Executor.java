@@ -88,7 +88,6 @@ import org.jooq.DeleteWhereStep;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 import org.jooq.InsertQuery;
 import org.jooq.InsertSetStep;
 import org.jooq.InsertValuesStep;
@@ -1345,8 +1344,7 @@ public class Executor implements Configuration {
     @Support
     public final Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException {
         try {
-            FieldProvider fields = new MetaDataFieldProvider(this, rs.getMetaData());
-            return fetchLazy(rs, fields);
+            return fetchLazy(rs, new MetaDataFieldProvider(this, rs.getMetaData()).getFields());
         }
         catch (SQLException e) {
             throw new DataAccessException("Error while accessing ResultSet meta data", e);
@@ -1369,7 +1367,11 @@ public class Executor implements Configuration {
      */
     @Support
     public final Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) throws DataAccessException {
-        return fetchLazy(rs, new FieldList(fields));
+        ExecuteContext ctx = new DefaultExecuteContext(this);
+        ExecuteListener listener = new ExecuteListeners(ctx);
+
+        ctx.resultSet(rs);
+        return new CursorImpl<Record>(ctx, listener, fields, false);
     }
 
     /**
@@ -1421,17 +1423,6 @@ public class Executor implements Configuration {
     @Support
     public final Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException {
         return fetchLazy(rs, Utils.getDataTypes(types));
-    }
-
-    /**
-     * Do the actual work
-     */
-    private final Cursor<Record> fetchLazy(ResultSet rs, FieldProvider fields) throws DataAccessException {
-        ExecuteContext ctx = new DefaultExecuteContext(this);
-        ExecuteListener listener = new ExecuteListeners(ctx);
-
-        ctx.resultSet(rs);
-        return new CursorImpl<Record>(ctx, listener, fields, false);
     }
 
     /**

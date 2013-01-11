@@ -44,7 +44,6 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,6 +61,7 @@ import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
@@ -164,7 +164,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFormatHTML() throws Exception {
-        List<Field<?>> fields = TBook().getFields();
+        Row row = TBook().fieldsRow();
         Result<B> books = create().selectFrom(TBook()).fetch();
         String html = books.formatHTML();
         InputStream is = new ByteArrayInputStream(html.getBytes());
@@ -180,21 +180,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1", xp.evaluate("count(/table/thead)", doc));
         assertEquals("1", xp.evaluate("count(/table/thead/tr)", doc));
         assertEquals("0", xp.evaluate("count(/table/thead/tr/td)", doc));
-        assertEquals("" + fields.size(),
+        assertEquals("" + row.getDegree(),
                           xp.evaluate("count(/table/thead/tr/th)", doc));
 
-        for (int i = 0; i < fields.size(); i++) {
-            assertEquals(fields.get(i).getName(),
+        for (int i = 0; i < row.getDegree(); i++) {
+            assertEquals(row.field(i).getName(),
                           xp.evaluate("/table/thead/tr/th[" + (i + 1) + "]/text()", doc));
         }
 
         assertEquals("1", xp.evaluate("count(/table/tbody)", doc));
         assertEquals("4", xp.evaluate("count(/table/tbody/tr)", doc));
-        assertEquals("" + 4 * fields.size(),
+        assertEquals("" + 4 * row.getDegree(),
                           xp.evaluate("count(/table/tbody/tr/td)", doc));
 
         for (int j = 0; j < books.size(); j++) {
-            for (int i = 0; i < fields.size(); i++) {
+            for (int i = 0; i < row.getDegree(); i++) {
                 assertEquals(books.get(j).getValue(i, String.class, "{null}"),
                           xp.evaluate("/table/tbody/tr[" + (j + 1) + "]/td[" + (i + 1) + "]/text()", doc));
             }
@@ -210,12 +210,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             "1,2,a,b,c");
 
         // Check meta data
-        assertEquals(4, result1.getFields().size());
+        assertEquals(4, result1.fieldsRow().getDegree());
         assertEquals(3, result1.size());
-        assertEquals("A", result1.getField(0).getName());
-        assertEquals("B", result1.getField(1).getName());
-        assertEquals("C", result1.getField(2).getName());
-        assertEquals("\"D", result1.getField(3).getName());
+        assertEquals("A", result1.field(0).getName());
+        assertEquals("B", result1.field(1).getName());
+        assertEquals("C", result1.field(2).getName());
+        assertEquals("\"D", result1.field(3).getName());
 
         // Check column correctness
         assertEquals(asList("1", "1", "1"), result1.getValues(0));
@@ -271,7 +271,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         b3.setValue(TBook_TITLE(), "Hello\\,\\World");
         create().batchStore(b1, b2).execute();
 
-        List<Field<?>> fields = TBook().getFields();
+        Row row = TBook().fieldsRow();
         Result<B> books = create().selectFrom(TBook()).fetch();
         String csv = books.formatCSV();
 
@@ -279,17 +279,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         String[] fieldNames = lines[0].split(",");
 
         assertEquals(books.size() + 1, lines.length);
-        assertEquals(fields.size(), fieldNames.length);
+        assertEquals(row.getDegree(), fieldNames.length);
 
-        for (int i = 0; i < fields.size(); i++) {
-            assertEquals(fields.get(i).getName(), fieldNames[i]);
+        for (int i = 0; i < row.getDegree(); i++) {
+            assertEquals(row.field(i).getName(), fieldNames[i]);
         }
 
         // Check every CSV line
         for (int j = 1; j < lines.length; j++) {
 
             // Check every value in the record
-            for (int i = 0; i < fields.size(); i++) {
+            for (int i = 0; i < row.getDegree(); i++) {
                 String value = books.get(j - 1).getValue(i, String.class);
 
                 if (value == null || "".equals(value)) {
@@ -301,7 +301,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Generate a regular expression matching dummy values for
                 // fields != i and an actual value expression for field == i
-                for (int x = 0; x < fields.size(); x++) {
+                for (int x = 0; x < row.getDegree(); x++) {
                     if (x > 0) {
                         regex1 += ",";
                         regex2 += ",";
@@ -329,7 +329,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFormatJSON() throws Exception {
-        List<Field<?>> fields = TBook().getFields();
+        Row row = TBook().fieldsRow();
         Result<B> books = create().selectFrom(TBook()).fetch();
         String json = books.formatJSON();
 
@@ -341,7 +341,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Field names
         String token2 = "";
         String separator = "";
-        for (Field<?> field : fields) {
+        for (Field<?> field : row.fields()) {
             token2 += separator + "{\"name\":\"" + field.getName() + "\"" + ",\"type\":\""
                 + field.getDataType().getTypeName().toUpperCase() + "\"}";
             separator = ",";
@@ -365,7 +365,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
 
             separator = "";
-            for (Field<?> field : fields) {
+            for (Field<?> field : row.fields()) {
                 Object value = record.getValue(field);
 
                 if (value == null) {
@@ -411,27 +411,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         XPathFactory xpfactory = XPathFactory.newInstance();
         XPath xp = xpfactory.newXPath();
 
-        List<Field<?>> fields = TBook().getFields();
+        Row row = TBook().fieldsRow();
         assertEquals("1", xp.evaluate("count(/result)", doc));
         assertEquals("1", xp.evaluate("count(/result/fields)", doc));
-        assertEquals("" + fields.size(),
+        assertEquals("" + row.getDegree(),
                           xp.evaluate("count(/result/fields/field)", doc));
 
-        for (int i = 0; i < fields.size(); i++) {
-            assertEquals(fields.get(i).getName(),
+        for (int i = 0; i < row.getDegree(); i++) {
+            assertEquals(row.field(i).getName(),
                           xp.evaluate("/result/fields/field[" + (i + 1) + "]/@name", doc));
-            assertEquals(fields.get(i).getDataType().getTypeName().toUpperCase(),
+            assertEquals(row.field(i).getDataType().getTypeName().toUpperCase(),
                 xp.evaluate("/result/fields/field[" + (i + 1) + "]/@type", doc));
         }
 
         assertEquals("1", xp.evaluate("count(/result/records)", doc));
         assertEquals("4", xp.evaluate("count(/result/records/record)", doc));
-        assertEquals("" + 4 * fields.size(),
+        assertEquals("" + 4 * row.getDegree(),
                           xp.evaluate("count(/result/records/record/value)", doc));
 
         for (int j = 0; j < books.size(); j++) {
-            for (int i = 0; i < fields.size(); i++) {
-                assertEquals(fields.get(i).getName(),
+            for (int i = 0; i < row.getDegree(); i++) {
+                assertEquals(row.field(i).getName(),
                           xp.evaluate("/result/records/record[" + (j + 1) + "]/value[" + (i + 1) + "]/@field", doc));
                 assertEquals(books.get(j).getValue(i, String.class, ""),
                           xp.evaluate("/result/records/record[" + (j + 1) + "]/value[" + (i + 1) + "]/text()", doc));

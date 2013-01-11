@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.list;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -173,9 +175,17 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
         return wrappedList.addAll(removeNulls(c));
     }
 
+    final boolean addAll(T... c) {
+        return addAll(list(c));
+    }
+
     @Override
     public final boolean addAll(int index, Collection<? extends T> c) {
         return wrappedList.addAll(index, removeNulls(c));
+    }
+
+    final boolean addAll(int index, T... c) {
+        return addAll(index, list(c));
     }
 
     private final List<T> removeNulls(Collection<? extends T> c) {

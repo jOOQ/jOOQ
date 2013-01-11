@@ -123,13 +123,13 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
     }
 
     private final void checkField(String columnLabel) throws SQLException {
-        if (result.getField(columnLabel) == null) {
+        if (result.field(columnLabel) == null) {
             throw new SQLException("Unknown column label : " + columnLabel);
         }
     }
 
     private final void checkField(int columnIndex) throws SQLException {
-        if (result.getField(columnIndex - 1) == null) {
+        if (result.field(columnIndex - 1) == null) {
             throw new SQLException("Unknown column index : " + columnIndex);
         }
     }
@@ -282,12 +282,12 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
     public final int findColumn(String columnLabel) throws SQLException {
         checkNotClosed();
 
-        Field<?> field = result.getField(columnLabel);
+        Field<?> field = result.field(columnLabel);
         if (field == null) {
             throw new SQLException("No such column : " + columnLabel);
         }
 
-        return result.getFields().indexOf(field) + 1;
+        return result.fieldsRow().indexOf(field) + 1;
     }
 
     @Override
@@ -1157,7 +1157,7 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
         public final int getColumnCount() throws SQLException {
             checkNotClosed();
 
-            return result.getFields().size();
+            return result.fieldsRow().getDegree();
         }
 
         @Override
@@ -1200,7 +1200,7 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
         public final boolean isSigned(int column) throws SQLException {
             checkNotClosed();
 
-            Field<?> field = result.getField(column - 1);
+            Field<?> field = result.field(column - 1);
             Class<?> type = field.getType();
 
             return Number.class.isAssignableFrom(type) && !UNumber.class.isAssignableFrom(type);
@@ -1220,14 +1220,14 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
         public final String getColumnName(int column) throws SQLException {
             checkNotClosed();
 
-            return result.getField(column - 1).getName();
+            return result.field(column - 1).getName();
         }
 
         @Override
         public final String getSchemaName(int column) throws SQLException {
             checkNotClosed();
 
-            Field<?> field = result.getField(column - 1);
+            Field<?> field = result.field(column - 1);
             if (field instanceof TableField) {
                 Table<?> table = ((TableField<?, ?>) field).getTable();
 
@@ -1276,7 +1276,7 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
         public final String getTableName(int column) throws SQLException {
             checkNotClosed();
 
-            Field<?> field = result.getField(column - 1);
+            Field<?> field = result.field(column - 1);
             if (field instanceof TableField) {
                 Table<?> table = ((TableField<?, ?>) field).getTable();
 
@@ -1301,14 +1301,14 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
         public final int getColumnType(int column) throws SQLException {
             checkNotClosed();
 
-            return result.getField(column - 1).getDataType().getSQLType();
+            return result.field(column - 1).getDataType().getSQLType();
         }
 
         @Override
         public final String getColumnTypeName(int column) throws SQLException {
             checkNotClosed();
 
-            return result.getField(column - 1).getDataType().getTypeName();
+            return result.field(column - 1).getDataType().getTypeName();
         }
 
         @Override
@@ -1336,7 +1336,7 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
         public final String getColumnClassName(int column) throws SQLException {
             checkNotClosed();
 
-            return result.getField(column - 1).getType().getName();
+            return result.field(column - 1).getType().getName();
         }
     }
 

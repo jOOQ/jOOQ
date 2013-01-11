@@ -106,8 +106,8 @@ class RowCondition extends AbstractCondition {
             asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect)) {
             List<Condition> conditions = new ArrayList<Condition>();
 
-            Field<?>[] leftFields = left.getFields();
-            Field<?>[] rightFields = right.getFields();
+            Field<?>[] leftFields = left.fields();
+            Field<?>[] rightFields = right.fields();
 
             for (int i = 0; i < leftFields.length; i++) {
                 conditions.add(leftFields[i].equal((Field) rightFields[i]));
@@ -144,8 +144,8 @@ class RowCondition extends AbstractCondition {
             // (A > X) OR (A = X AND B > Y) OR (A = X AND B = Y AND C > Z)
             List<Condition> outer = new ArrayList<Condition>();
 
-            Field<?>[] leftFields = left.getFields();
-            Field<?>[] rightFields = right.getFields();
+            Field<?>[] leftFields = left.fields();
+            Field<?>[] rightFields = right.fields();
 
             for (int i = 0; i < leftFields.length; i++) {
                 List<Condition> inner = new ArrayList<Condition>();

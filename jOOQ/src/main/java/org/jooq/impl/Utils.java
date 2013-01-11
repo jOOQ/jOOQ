@@ -89,12 +89,12 @@ import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -200,8 +200,8 @@ final class Utils {
     /**
      * Create a new record
      */
-    static final <R extends Record> R newRecord(Class<R> type, FieldProvider provider) {
-        return newRecord(type, provider, null);
+    static final <R extends Record> R newRecord(Class<R> type, Field<?>[] fields) {
+        return newRecord(type, fields, null);
     }
 
     /**
@@ -215,7 +215,7 @@ final class Utils {
      * Create a new record
      */
     static final <R extends Record> R newRecord(Table<R> type, Configuration configuration) {
-        return newRecord(type.getRecordType(), type, configuration);
+        return newRecord(type.getRecordType(), type.fields(), configuration);
     }
 
     /**
@@ -229,20 +229,27 @@ final class Utils {
      * Create a new UDT record
      */
     static final <R extends UDTRecord<R>> R newRecord(UDT<R> type, Configuration configuration) {
-        return newRecord(type.getRecordType(), type, configuration);
+        return newRecord(type.getRecordType(), type.fields(), configuration);
+    }
+
+    /**
+     * Create a new record
+     */
+    static final <R extends Record> R newRecord(Class<R> type, Collection<? extends Field<?>> fields, Configuration configuration) {
+        return newRecord(type, fieldArray(fields), configuration);
     }
 
     /**
      * Create a new record
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final <R extends Record> R newRecord(Class<R> type, FieldProvider provider, Configuration configuration) {
+    static final <R extends Record> R newRecord(Class<R> type, Field<?>[] fields, Configuration configuration) {
         try {
             R result;
 
             // An ad-hoc type resulting from a JOIN or arbitrary SELECT
             if (type == RecordImpl.class || type == Record.class) {
-                result = (R) new RecordImpl(provider);
+                result = (R) new RecordImpl(fields);
             }
 
             // Any generated record
@@ -274,6 +281,10 @@ final class Utils {
         }
 
         return true;
+    }
+
+    static final Field<?>[] fieldArray(Collection<? extends Field<?>> fields) {
+        return fields == null ? null : fields.toArray(new Field[fields.size()]);
     }
 
     // ------------------------------------------------------------------------
@@ -627,6 +638,14 @@ final class Utils {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
+    static final void fieldNames(RenderContext context, Field<?>... fields) {
+        fieldNames(context, list(fields));
+    }
+
+    /**
+     * Render a list of names of the <code>NamedQueryParts</code> contained in
+     * this list.
+     */
     static final void fieldNames(RenderContext context, Collection<? extends Field<?>> list) {
         String separator = "";
 
@@ -635,6 +654,14 @@ final class Utils {
 
             separator = ", ";
         }
+    }
+
+    /**
+     * Render a list of names of the <code>NamedQueryParts</code> contained in
+     * this list.
+     */
+    static final void tableNames(RenderContext context, Table<?>... list) {
+        tableNames(context, list(list));
     }
 
     /**
@@ -2029,9 +2056,9 @@ final class Utils {
         UDTRecord<?> record = (UDTRecord<?>) Utils.newRecord((Class) type);
         List<String> values = PostgresUtils.toPGObject(object.toString());
 
-        List<Field<?>> fields = record.getFields();
-        for (int i = 0; i < fields.size(); i++) {
-            pgSetValue(record, fields.get(i), values.get(i));
+        Row row = record.fieldsRow();
+        for (int i = 0; i < row.getDegree(); i++) {
+            pgSetValue(record, row.field(i), values.get(i));
         }
 
         return record;

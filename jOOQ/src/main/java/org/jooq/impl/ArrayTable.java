@@ -108,7 +108,7 @@ class ArrayTable extends AbstractTable<Record> {
         if (UDTRecord.class.isAssignableFrom(arrayType)) {
             try {
                 UDTRecord<?> record = (UDTRecord<?>) arrayType.newInstance();
-                for (Field<?> f : record.getFields()) {
+                for (Field<?> f : record.fields()) {
                     this.field.add(fieldByName(f.getDataType(), alias, f.getName()));
                 }
             }
@@ -123,6 +123,7 @@ class ArrayTable extends AbstractTable<Record> {
         }
     }
 
+    @SuppressWarnings("unused")
     ArrayTable(Field<?> array, String alias, String[] fieldAliases) {
         super(alias);
 

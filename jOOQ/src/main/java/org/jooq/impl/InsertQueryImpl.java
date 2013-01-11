@@ -38,6 +38,7 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.util.sqlite.SQLiteFactory.rowid;
 
 import java.sql.Connection;
@@ -94,7 +95,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void setRecord(R record) {
-        for (Field<?> field : record.getFields()) {
+        for (Field<?> field : record.fields()) {
             addValue(record, field);
         }
     }
@@ -207,7 +208,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // CUBRID can simulate this using ON DUPLICATE KEY UPDATE
                 case CUBRID: {
                     FieldMapForUpdate update = new FieldMapForUpdate();
-                    Field<?> field = getInto().getField(0);
+                    Field<?> field = getInto().field(0);
                     update.put(field, field);
 
                     toSQLInsert(context);
@@ -579,7 +580,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             ExecuteListener listener2 = new ExecuteListeners(ctx2);
 
             ctx2.resultSet(rs);
-            returned = new CursorImpl<R>(ctx2, listener2, returning, false).fetch().into(getInto());
+            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), false).fetch().into(getInto());
             return result;
         }
     }
@@ -626,7 +627,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void setReturning() {
-        setReturning(getInto().getFields());
+        setReturning(getInto().fields());
     }
 
     @Override

@@ -51,6 +51,7 @@ import org.jooq.JoinType;
 import org.jooq.PivotForStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -86,6 +87,32 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     // ------------------------------------------------------------------------
     // XXX: TableLike API
     // ------------------------------------------------------------------------
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final Row fieldsRow() {
+        return new RowImpl(getFieldList());
+    }
+
+    @Override
+    public final <T> Field<T> field(Field<T> field) {
+        return fieldsRow().field(field);
+    }
+
+    @Override
+    public final Field<?> field(String string) {
+        return fieldsRow().field(string);
+    }
+
+    @Override
+    public final Field<?> field(int index) {
+        return fieldsRow().field(index);
+    }
+
+    @Override
+    public final Field<?>[] fields() {
+        return fieldsRow().fields();
+    }
 
     @Override
     public final Table<R> asTable() {

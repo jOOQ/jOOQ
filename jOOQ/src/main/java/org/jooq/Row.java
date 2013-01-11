@@ -35,7 +35,6 @@
  */
 package org.jooq;
 
-
 /**
  * A model type for a row value expression.
  * <p>
@@ -53,14 +52,57 @@ public interface Row extends QueryPart {
     int getDegree();
 
     /**
-     * Get a field at a given index
+     * Get a specific field from this row.
+     * <p>
+     * Usually, this will return the field itself. However, if this is a row
+     * from an aliased table, the field will be aliased accordingly.
+     *
+     * @param <T> The generic field type
+     * @param field The field to fetch
+     * @return The field itself or an aliased field
      */
-    Field<?> getField(int index);
+    <T> Field<T> field(Field<T> field);
 
     /**
-     * Get all fields of this row value expression
+     * Get a specific field from this row.
+     *
+     * @param name The field to fetch
+     * @return The field with the given name
      */
-    Field<?>[] getFields();
+    Field<?> field(String name);
+
+    /**
+     * Get a specific field from this row.
+     *
+     * @param index The field's index of the field to fetch
+     * @return The field with the given name
+     */
+    Field<?> field(int index);
+
+    /**
+     * Get all fields from this row.
+     *
+     * @return All available fields
+     */
+    Field<?>[] fields();
+
+    /**
+     * Get a field's index from this row.
+     *
+     * @param field The field to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this <code>Row</code>
+     */
+    int indexOf(Field<?> field);
+
+    /**
+     * Get a field's index from this row.
+     *
+     * @param fieldName The field name to look for
+     * @return The field's index or <code>-1</code> if the field is not
+     *         contained in this <code>Row</code>
+     */
+    int indexOf(String fieldName);
 
     // ------------------------------------------------------------------------
     // [NOT] NULL predicates
@@ -69,10 +111,9 @@ public interface Row extends QueryPart {
     /**
      * Check if this row value expression contains only <code>NULL</code> values
      * <p>
-     * Row NULL predicates can be simulated in those databases that do not support
-     * such predicates natively:
-     * <code>(A, B) IS NULL</code> is equivalent to
-     * <code>A IS NULL AND B IS NULL</code>
+     * Row NULL predicates can be simulated in those databases that do not
+     * support such predicates natively: <code>(A, B) IS NULL</code> is
+     * equivalent to <code>A IS NULL AND B IS NULL</code>
      */
     @Support
     Condition isNull();
@@ -80,10 +121,9 @@ public interface Row extends QueryPart {
     /**
      * Check if this row value expression contains no <code>NULL</code> values
      * <p>
-     * Row NOT NULL predicates can be simulated in those databases that do not support
-     * such predicates natively:
-     * <code>(A, B) IS NOT NULL</code> is equivalent to
-     * <code>A IS NOT NULL AND B IS NOT NULL</code>
+     * Row NOT NULL predicates can be simulated in those databases that do not
+     * support such predicates natively: <code>(A, B) IS NOT NULL</code> is
+     * equivalent to <code>A IS NOT NULL AND B IS NOT NULL</code>
      * <p>
      * Note that the two following predicates are NOT equivalent:
      * <ul>

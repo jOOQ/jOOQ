@@ -40,12 +40,10 @@ import static org.jooq.impl.Factory.field;
 import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 
@@ -63,7 +61,7 @@ import org.jooq.tools.JooqLogger;
  *
  * @author Lukas Eder
  */
-class MetaDataFieldProvider implements FieldProvider, Serializable {
+class MetaDataFieldProvider implements Serializable {
 
     /**
      * Generated UID
@@ -135,34 +133,8 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
         meta = null;
     }
 
-    @Override
-    public final <T> Field<T> getField(Field<T> field) {
-        return fields.getField(field);
-    }
-
-    @Override
-    public final Field<?> getField(String name) {
-        return fields.getField(name);
-    }
-
-    @Override
-    public final Field<?> getField(int index) {
-        return fields.getField(index);
-    }
-
-    @Override
-    public final List<Field<?>> getFields() {
-        return fields.getFields();
-    }
-
-    @Override
-    public final int getIndex(Field<?> field) throws IllegalArgumentException {
-        return fields.getIndex(field);
-    }
-
-    @Override
-    public final int getIndex(String fieldName) throws IllegalArgumentException {
-        return fields.getIndex(fieldName);
+    final Field<?>[] getFields() {
+        return fields.fields();
     }
 
     // -------------------------------------------------------------------------

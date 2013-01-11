@@ -951,15 +951,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(reference, result);
 
         result = create().select(
-            sub.getField("y"),
-            sub.getField("m"),
-            sub.getField("d")).from(sub).fetchOne();
+            sub.field("y"),
+            sub.field("m"),
+            sub.field("d")).from(sub).fetchOne();
         assertEquals(reference, result);
 
         result = create().select(
-            subTable.getField("y"),
-            subTable.getField("m"),
-            subTable.getField("d")).from(subTable).fetchOne();
+            subTable.field("y"),
+            subTable.field("m"),
+            subTable.field("d")).from(subTable).fetchOne();
         assertEquals(reference, result);
     }
 

@@ -35,11 +35,13 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.vals;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.annotation.Generated;
 
@@ -9507,5 +9509,13 @@ implements
     @Override
     public final Condition overlaps(Row2<T1, T2> row) {
         return new RowOverlapsCondition(this, row);
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Other
+    // ------------------------------------------------------------------------
+    @Override
+    public final Iterator<Field<?>> iterator() {
+    	return asList(fields).iterator();
     }
 }

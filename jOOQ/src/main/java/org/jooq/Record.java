@@ -862,6 +862,58 @@ public interface Record extends FieldProvider, Attachable, Comparable<Record> {
     // -------------------------------------------------------------------------
 
     /**
+     * Get a hash code of this <code>Record</code>, based on the underlying row
+     * value expression
+     * <p>
+     * In order to fulfill the general contract of {@link Object#hashCode()} and
+     * {@link Object#equals(Object)}, a <code>Record</code>'s hash code value
+     * depends on all hash code values of this <code>Record</code>'s underlying
+     * column values.
+     *
+     * @return A hash code value for this record
+     * @see #equals(Object)
+     */
+    @Override
+    int hashCode();
+
+    /**
+     * Compare this <code>Record</code> with another <code>Record</code> for
+     * equality.
+     * <p>
+     * Two records are considered equal if
+     * <ul>
+     * <li>They have the same degree</li>
+     * <li>For every <code>i BETWEEN 0 AND degree, r1[i] = r2[i]</code></li>
+     * </ul>
+     * <p>
+     * Note, that the above rules correspond to the SQL comparison predicate
+     * behaviour as illustrated in the following example: <code><pre>
+     * -- A row value expression comparison predicate
+     * SELECT *
+     * FROM my_table
+     * WHERE (1, 'A') = (1, 'A')
+     * </pre></code>
+     * <p>
+     * Unlike SQL, jOOQ allows to compare also incompatible records, e.g.
+     * records
+     * <ul>
+     * <li>... whose degrees are not equal (results in <code>false</code>)</li>
+     * <li>... whose column types are not equal (results in <code>false</code>)</li>
+     * <li>... whose record types are not equal (irrelevant for the result)</li>
+     * </ul>
+     * <p>
+     * It can be said that for all R1, R2, if <code>R1.equal(R2)</code>, then
+     * <code>R1.compareTo(R2) == 0</code>
+     *
+     * @param other The other record
+     * @return Whether the two records are equal
+     * @see #compareTo(Record)
+     * @see #hashCode()
+     */
+    @Override
+    boolean equals(Object other);
+
+    /**
      * Compares this <code>Record</code> with another <code>Record</code>
      * according to their natural ordering.
      * <p>

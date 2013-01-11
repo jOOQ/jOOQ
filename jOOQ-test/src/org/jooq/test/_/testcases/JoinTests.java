@@ -275,7 +275,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select()
                 .from(TAuthor().as("x"))
                 .crossJoin(TAuthor())
-                .orderBy(1, 1 + TAuthor().fieldsRow().getDegree())
+                .orderBy(1, 1 + TAuthor().fieldsRow().size())
                 .fetch();
 
         assertEquals(4, result.size());
@@ -284,7 +284,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result.getValues(0, Integer.class));
         assertEquals(
            asList(1, 2, 1, 2),
-           result.getValues(0 + TAuthor().fieldsRow().getDegree(), Integer.class));
+           result.getValues(0 + TAuthor().fieldsRow().size(), Integer.class));
 
         // [#1844] Cross joins can be achieved by omitting the ON clause, too
         assertEquals(8, (int)

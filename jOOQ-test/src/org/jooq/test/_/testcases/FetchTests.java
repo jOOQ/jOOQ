@@ -321,7 +321,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // --------
         B book = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOne();
         Object[] bookArray = create().selectFrom(TBook()).where(TBook_ID().equal(1)).fetchOneArray();
-        for (int i = 0; i < TBook().fieldsRow().getDegree(); i++) {
+        for (int i = 0; i < TBook().fieldsRow().size(); i++) {
             assertEquals(book.getValue(i), bookArray[i]);
         }
 
@@ -341,7 +341,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(bookJ, book2);
             assertEquals(bookJ, book3);
 
-            for (int i = 0; i < TBook().fieldsRow().getDegree(); i++) {
+            for (int i = 0; i < TBook().fieldsRow().size(); i++) {
                 assertEquals(books.getValue(j, i), booksArray[j][i]);
                 assertEquals(books.getValue(j, i), books.intoArray()[j][i]);
                 assertEquals(books.get(j).getValue(i), books.get(j).intoArray()[i]);
@@ -1688,7 +1688,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     private void checkMetaData(Row row, ResultSet rs) throws SQLException {
         // Check the meta data
         ResultSetMetaData meta = rs.getMetaData();
-        assertEquals(row.getDegree(), meta.getColumnCount());
+        assertEquals(row.size(), meta.getColumnCount());
         assertEquals(Integer.class.getName(), meta.getColumnClassName(1));
         assertEquals(Types.INTEGER, meta.getColumnType(1));
         assertEquals("integer", meta.getColumnTypeName(1));

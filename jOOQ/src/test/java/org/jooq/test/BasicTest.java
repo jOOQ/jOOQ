@@ -535,15 +535,15 @@ public class BasicTest extends AbstractTest {
         RowN t23 = row(1, "2", 3, "4", 5, "6", 7, "8", 9, "10", 11, "12", 13, "14", 15, "16", 17, "18", 19, "20", 21, "22", 23);
 
         // General info
-        assertEquals(1, t1.getDegree());
-        assertEquals(2, t2.getDegree());
-        assertEquals(3, t3.getDegree());
-        assertEquals(4, t4.getDegree());
-        assertEquals(5, t5.getDegree());
-        assertEquals(6, t6.getDegree());
-        assertEquals(7, t7.getDegree());
-        assertEquals(8, t8.getDegree());
-        assertEquals(23, t23.getDegree());
+        assertEquals(1, t1.size());
+        assertEquals(2, t2.size());
+        assertEquals(3, t3.size());
+        assertEquals(4, t4.size());
+        assertEquals(5, t5.size());
+        assertEquals(6, t6.size());
+        assertEquals(7, t7.size());
+        assertEquals(8, t8.size());
+        assertEquals(23, t23.size());
 
         // Accessors
         assertEquals(val(1), t1.field1());

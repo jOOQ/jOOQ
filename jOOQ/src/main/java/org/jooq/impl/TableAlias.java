@@ -82,7 +82,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
      */
     private final void registerFields(String[] fieldAliases) {
         Row row = this.alias.wrapped().fieldsRow();
-        int size = row.getDegree();
+        int size = row.size();
 
         for (int i = 0; i < size; i++) {
             Field<?> field = row.field(i);

@@ -431,7 +431,7 @@ implements
                     FieldList v = new FieldList();
                     Row row = h2Select.fieldsRow();
 
-                    for (int i = 0; i < row.getDegree(); i++) {
+                    for (int i = 0; i < row.size(); i++) {
                         v.add(row.field(i).as("s" + (i + 1)));
                     }
 
@@ -503,7 +503,7 @@ implements
                 Map<Field<?>, Field<?>> update = new LinkedHashMap<Field<?>, Field<?>>();
                 Map<Field<?>, Field<?>> insert = new LinkedHashMap<Field<?>, Field<?>>();
 
-                for (int i = 0; i < src.fieldsRow().getDegree(); i++) {
+                for (int i = 0; i < src.fieldsRow().size(); i++) {
 
                     // Oracle does not allow to update fields from the ON clause
                     if (!onFields.contains(getH2Fields().get(i))) {

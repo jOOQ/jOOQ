@@ -1134,6 +1134,7 @@ class Rows extends Generators {
         import org.jooq.BindContext;
         import org.jooq.Comparator;
         import org.jooq.Condition;
+        import org.jooq.DataType;
         import org.jooq.Field;
         import org.jooq.Record;
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1229,17 +1230,39 @@ class Rows extends Generators {
             
             @Override
             public final Field<?>[] fields() {
-            	return fields.clone();
+                return fields.clone();
             }
 
             @Override
             public final int indexOf(Field<?> field) {
-            	return new FieldList(fields).indexOf(field);
+                return new FieldList(fields).indexOf(field);
             }
 
             @Override
             public final int indexOf(String fieldName) {
-            	return new FieldList(fields).indexOf(fieldName);
+                return new FieldList(fields).indexOf(fieldName);
+            }
+
+            @Override
+            public final Class<?>[] types() {
+                Class<?>[] result = new Class[fields.length];
+        
+                for (int i = 0; i < fields.length; i++) {
+                    result[i] = fields[i].getType();
+                }
+        
+                return result;
+            }
+
+            @Override
+            public final DataType<?>[] dataTypes() {
+            	DataType<?>[] result = new DataType[fields.length];
+            	
+            	for (int i = 0; i < fields.length; i++) {
+            		result[i] = fields[i].getDataType();
+            	}
+            	
+            	return result;
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
@@ -2122,7 +2145,7 @@ class Rows extends Generators {
             // ------------------------------------------------------------------------
             @Override
             public final Iterator<Field<?>> iterator() {
-            	return asList(fields).iterator();
+                return asList(fields).iterator();
             }
         }
         ''');

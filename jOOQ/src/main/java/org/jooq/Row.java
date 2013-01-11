@@ -104,6 +104,22 @@ public interface Row extends QueryPart, Iterable<Field<?>> {
      */
     int indexOf(String fieldName);
 
+    /**
+     * Get an array of types for this row.
+     * <p>
+     * Entries in the resulting array correspond to {@link Field#getType()} for
+     * the corresponding <code>Field</code> in {@link #fields()}
+     */
+    Class<?>[] types();
+
+    /**
+     * Get an array of data types for this row.
+     * <p>
+     * Entries in the resulting array correspond to {@link Field#getDataType()}
+     * for the corresponding <code>Field</code> in {@link #fields()}
+     */
+    DataType<?>[] dataTypes();
+
     // ------------------------------------------------------------------------
     // [NOT] NULL predicates
     // ------------------------------------------------------------------------

@@ -112,12 +112,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(1, i);
         assertEquals(1, result.size());
-        assertEquals(3, result.fieldsRow().getDegree());
+        assertEquals(3, result.fieldsRow().size());
         assertTrue(asList(result.fields()).contains(f1));
         assertTrue(asList(result.fields()).contains(f2));
         assertTrue(asList(result.fields()).contains(f3));
 
-        assertEquals(3, result.get(0).fieldsRow().getDegree());
+        assertEquals(3, result.get(0).fieldsRow().size());
         assertTrue(asList(result.get(0).fields()).contains(f1));
         assertTrue(asList(result.get(0).fields()).contains(f2));
         assertTrue(asList(result.get(0).fields()).contains(f3));

@@ -263,7 +263,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(2, result3.size());
-        assertEquals(5, result3.fieldsRow().getDegree());
+        assertEquals(5, result3.fieldsRow().size());
         assertEquals(AUTHOR_IDS, result3.getValues(0));
         assertEquals(
             asList(1, 2, 0, 0, 0),
@@ -306,7 +306,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(3, r1.size());
-        assertEquals(7, r1.fieldsRow().getDegree());
+        assertEquals(7, r1.fieldsRow().size());
         assertEquals(asList(1, 2, 3), r1.getValues("book_id", Integer.class));
         assertEquals(asList(10, 10, 10), r1.getValues("of_max", Integer.class));
         assertEquals(asList(1, 1, 1), r1.getValues("of_cnt", Integer.class));
@@ -325,7 +325,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch();
 
         assertEquals(1, r2.size());
-        assertEquals(5, r2.fieldsRow().getDegree());
+        assertEquals(5, r2.fieldsRow().size());
         assertEquals(1, (int) r2.get(0).getValue("a", Integer.class));
         assertEquals(2, (int) r2.get(0).getValue("b", Integer.class));
         assertEquals(3, (int) r2.get(0).getValue("c", Integer.class));

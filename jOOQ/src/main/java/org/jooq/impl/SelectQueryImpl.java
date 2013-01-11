@@ -758,7 +758,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     private final boolean knownTable(Table<?> table) {
-        return table.fieldsRow().getDegree() > 0;
+        return table.fieldsRow().size() > 0;
     }
 
     @SuppressWarnings("unchecked")

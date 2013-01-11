@@ -1206,7 +1206,7 @@ class Rows extends Generators {
             // ------------------------------------------------------------------------
 
             @Override
-            public final int getDegree() {
+            public final int size() {
                 return fields.length;
             }
 

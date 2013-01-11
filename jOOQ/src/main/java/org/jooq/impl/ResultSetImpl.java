@@ -1157,7 +1157,7 @@ class ResultSetImpl extends JDBC41ResultSet implements ResultSet, Serializable {
         public final int getColumnCount() throws SQLException {
             checkNotClosed();
 
-            return result.fieldsRow().getDegree();
+            return result.fieldsRow().size();
         }
 
         @Override

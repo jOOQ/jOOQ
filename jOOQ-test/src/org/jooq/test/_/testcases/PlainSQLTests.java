@@ -432,7 +432,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Result<Record> fetch1 = q.fetch();
         assertEquals(1, fetch1.size());
-        assertEquals(1, fetch1.fieldsRow().getDegree());
+        assertEquals(1, fetch1.fieldsRow().size());
         assertEquals("p", fetch1.field(0).getName());
         assertEquals("p", fetch1.field("p").getName());
         assertEquals("10", fetch1.getValue(0, 0));
@@ -448,7 +448,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(10L, (long) fetch3.get(0));
 
         Record fetch4 = q.fetchAny();
-        assertEquals(1, fetch4.fieldsRow().getDegree());
+        assertEquals(1, fetch4.fieldsRow().size());
         assertEquals("p", fetch4.field(0).getName());
         assertEquals("p", fetch4.field("p").getName());
         assertEquals("10", fetch4.getValue(0));
@@ -478,7 +478,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         q.fetchInto(new RecordHandler<Record>() {
             @Override
             public void next(Record record) {
-                assertEquals(1, record.fieldsRow().getDegree());
+                assertEquals(1, record.fieldsRow().size());
                 assertEquals("10", record.getValue(0));
                 count[0] += 1;
             }
@@ -495,7 +495,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Cursor<Record> fetch10 = q.fetchLazy();
         assertFalse(fetch10.isClosed());
         assertTrue(fetch10.hasNext());
-        assertEquals(1, fetch10.fieldsRow().getDegree());
+        assertEquals(1, fetch10.fieldsRow().size());
         assertEquals("p", fetch10.field(0).getName());
         assertEquals("10", fetch10.fetchOne().getValue(0));
         assertFalse(fetch10.isClosed());

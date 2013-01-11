@@ -2057,7 +2057,7 @@ final class Utils {
         List<String> values = PostgresUtils.toPGObject(object.toString());
 
         Row row = record.fieldsRow();
-        for (int i = 0; i < row.getDegree(); i++) {
+        for (int i = 0; i < row.size(); i++) {
             pgSetValue(record, row.field(i), values.get(i));
         }
 

@@ -49,7 +49,7 @@ public interface Row extends QueryPart {
     /**
      * Get the degree of this row value expression
      */
-    int getDegree();
+    int size();
 
     /**
      * Get a specific field from this row.

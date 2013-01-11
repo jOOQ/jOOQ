@@ -180,21 +180,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1", xp.evaluate("count(/table/thead)", doc));
         assertEquals("1", xp.evaluate("count(/table/thead/tr)", doc));
         assertEquals("0", xp.evaluate("count(/table/thead/tr/td)", doc));
-        assertEquals("" + row.getDegree(),
+        assertEquals("" + row.size(),
                           xp.evaluate("count(/table/thead/tr/th)", doc));
 
-        for (int i = 0; i < row.getDegree(); i++) {
+        for (int i = 0; i < row.size(); i++) {
             assertEquals(row.field(i).getName(),
                           xp.evaluate("/table/thead/tr/th[" + (i + 1) + "]/text()", doc));
         }
 
         assertEquals("1", xp.evaluate("count(/table/tbody)", doc));
         assertEquals("4", xp.evaluate("count(/table/tbody/tr)", doc));
-        assertEquals("" + 4 * row.getDegree(),
+        assertEquals("" + 4 * row.size(),
                           xp.evaluate("count(/table/tbody/tr/td)", doc));
 
         for (int j = 0; j < books.size(); j++) {
-            for (int i = 0; i < row.getDegree(); i++) {
+            for (int i = 0; i < row.size(); i++) {
                 assertEquals(books.get(j).getValue(i, String.class, "{null}"),
                           xp.evaluate("/table/tbody/tr[" + (j + 1) + "]/td[" + (i + 1) + "]/text()", doc));
             }
@@ -210,7 +210,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             "1,2,a,b,c");
 
         // Check meta data
-        assertEquals(4, result1.fieldsRow().getDegree());
+        assertEquals(4, result1.fieldsRow().size());
         assertEquals(3, result1.size());
         assertEquals("A", result1.field(0).getName());
         assertEquals("B", result1.field(1).getName());
@@ -279,9 +279,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         String[] fieldNames = lines[0].split(",");
 
         assertEquals(books.size() + 1, lines.length);
-        assertEquals(row.getDegree(), fieldNames.length);
+        assertEquals(row.size(), fieldNames.length);
 
-        for (int i = 0; i < row.getDegree(); i++) {
+        for (int i = 0; i < row.size(); i++) {
             assertEquals(row.field(i).getName(), fieldNames[i]);
         }
 
@@ -289,7 +289,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         for (int j = 1; j < lines.length; j++) {
 
             // Check every value in the record
-            for (int i = 0; i < row.getDegree(); i++) {
+            for (int i = 0; i < row.size(); i++) {
                 String value = books.get(j - 1).getValue(i, String.class);
 
                 if (value == null || "".equals(value)) {
@@ -301,7 +301,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Generate a regular expression matching dummy values for
                 // fields != i and an actual value expression for field == i
-                for (int x = 0; x < row.getDegree(); x++) {
+                for (int x = 0; x < row.size(); x++) {
                     if (x > 0) {
                         regex1 += ",";
                         regex2 += ",";
@@ -414,10 +414,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Row row = TBook().fieldsRow();
         assertEquals("1", xp.evaluate("count(/result)", doc));
         assertEquals("1", xp.evaluate("count(/result/fields)", doc));
-        assertEquals("" + row.getDegree(),
+        assertEquals("" + row.size(),
                           xp.evaluate("count(/result/fields/field)", doc));
 
-        for (int i = 0; i < row.getDegree(); i++) {
+        for (int i = 0; i < row.size(); i++) {
             assertEquals(row.field(i).getName(),
                           xp.evaluate("/result/fields/field[" + (i + 1) + "]/@name", doc));
             assertEquals(row.field(i).getDataType().getTypeName().toUpperCase(),
@@ -426,11 +426,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals("1", xp.evaluate("count(/result/records)", doc));
         assertEquals("4", xp.evaluate("count(/result/records/record)", doc));
-        assertEquals("" + 4 * row.getDegree(),
+        assertEquals("" + 4 * row.size(),
                           xp.evaluate("count(/result/records/record/value)", doc));
 
         for (int j = 0; j < books.size(); j++) {
-            for (int i = 0; i < row.getDegree(); i++) {
+            for (int i = 0; i < row.size(); i++) {
                 assertEquals(row.field(i).getName(),
                           xp.evaluate("/result/records/record[" + (j + 1) + "]/value[" + (i + 1) + "]/@field", doc));
                 assertEquals(books.get(j).getValue(i, String.class, ""),

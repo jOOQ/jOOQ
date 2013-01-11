@@ -84,11 +84,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public Record key() {
-        RecordImpl result = new RecordImpl(new FieldList(getMainKey().getFields()));
+        RecordImpl result = new RecordImpl(getMainKey().getFields());
 
-        for (Field<?> field : result.getFields()) {
+        for (Field<?> field : result.fields) {
             result.setValue(field, getValue0(field));
         }
 
@@ -225,7 +225,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
      * Set all changed values of this record to a store query
      */
     private final void addChangedValues(StoreQuery<R> query) {
-        for (Field<?> field : getFields()) {
+        for (Field<?> field : fields) {
             if (getValue0(field).isChanged()) {
                 addValue(query, field);
             }
@@ -329,20 +329,20 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final void refresh() {
-        refresh(getFields().toArray(new Field[0]));
+        refresh(fields);
     }
 
     @Override
-    public final void refresh(Field<?>... fields) {
+    public final void refresh(Field<?>... f) {
         SelectQuery<?> select = create().selectQuery();
-        select.addSelect(fields);
+        select.addSelect(f);
         select.addFrom(getTable());
         Utils.addConditions(select, this, getMainKey().getFieldsArray());
 
         if (select.execute() == 1) {
             AbstractRecord record = (AbstractRecord) select.getResult().get(0);
 
-            for (Field<?> field : fields) {
+            for (Field<?> field : f) {
                 setValue(field, record.getValue0(field));
             }
         }
@@ -369,7 +369,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // Copy all fields. This marks them all as isChanged, which is important
         List<TableField<R, ?>> key = getMainKey().getFields();
-        for (Field<?> field : getFields()) {
+        for (Field<?> field : fields) {
 
             // Don't copy key values
             if (!key.contains(field)) {
@@ -433,7 +433,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             throw new DataChangedException("Database record no longer exists");
         }
 
-        for (Field<?> field : getFields()) {
+        for (Field<?> field : fields) {
             Value<?> thisValue = getValue0(field);
             Value<?> thatValue = ((AbstractRecord) record).getValue0(field);
 

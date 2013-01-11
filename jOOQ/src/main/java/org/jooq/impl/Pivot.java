@@ -163,10 +163,10 @@ implements
             }
 
             // This loop finds all fields qualify for GROUP BY clauses
-            for (Field<?> field : table.getFields()) {
+            for (Field<?> field : table.fields()) {
                 if (!aggregatedFields.contains(field)) {
                     if (!on.equals(field)) {
-                        aliasedGroupingFields.add(pivot.getField(field));
+                        aliasedGroupingFields.add(pivot.field(field));
                         groupingFields.add(field);
                     }
                 }
@@ -198,7 +198,7 @@ implements
             create(context).select(aliasedGroupingFields)
                            .select(aggregationSelects)
                            .from(pivot)
-                           .where(pivot.getField(on).in(in.toArray(new Field[0])))
+                           .where(pivot.field(on).in(in.toArray(new Field[0])))
                            .groupBy(aliasedGroupingFields)
                            .asTable();
             return select;
@@ -297,7 +297,7 @@ implements
      * Extracted method for type-safety
      */
     private <Z> Condition condition(Table<?> pivot, Field<Z> field) {
-        return field.equal(pivot.getField(field));
+        return field.equal(pivot.field(field));
     }
 
     @Override

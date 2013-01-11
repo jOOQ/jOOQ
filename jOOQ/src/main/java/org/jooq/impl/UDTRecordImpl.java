@@ -35,12 +35,15 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Factory.vals;
+
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -58,16 +61,35 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
      * Generated UID
      */
     private static final long serialVersionUID = 5671315498175872799L;
+    private final UDT<R>      udt;
 
     public UDTRecordImpl(UDT<R> udt) {
-        super(udt);
+        super(udt.fields());
+
+        this.udt = udt;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final UDT<R> getUDT() {
-        // We can be sure about that cast, as this is the only possibility
-        return (UDT<R>) getFieldProvider();
+        return udt;
+    }
+
+    /*
+     * Subclasses may override this method
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public Row fieldsRow() {
+        return new RowImpl(fields);
+    }
+
+    /*
+     * Subclasses may override this method
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public Row valuesRow() {
+        return new RowImpl(vals(intoArray(), fields));
     }
 
     @Override
@@ -92,7 +114,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
     @Override
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
-        for (Field<?> field : getUDT().getFields()) {
+        for (Field<?> field : getUDT().fields()) {
             setValue(DefaultExecuteContext.registeredConfiguration(), stream, field);
         }
     }
@@ -103,7 +125,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
     @Override
     public final void writeSQL(SQLOutput stream) throws SQLException {
-        for (Field<?> field : getUDT().getFields()) {
+        for (Field<?> field : getUDT().fields()) {
             setValue(stream, field);
         }
     }

@@ -729,7 +729,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             // physical table. Otherwise, the fields are selected explicitly
             if (knownTableSource()) {
                 for (TableLike<?> table : getFrom()) {
-                    for (Field<?> field : table.asTable().getFields()) {
+                    for (Field<?> field : table.asTable().fields()) {
                         result.add(field);
                     }
                 }
@@ -758,7 +758,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     private final boolean knownTable(Table<?> table) {
-        return table.getFields().size() > 0;
+        return table.fieldsRow().getDegree() > 0;
     }
 
     @SuppressWarnings("unchecked")

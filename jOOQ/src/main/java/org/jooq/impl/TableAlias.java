@@ -43,6 +43,7 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Row;
 import org.jooq.Table;
 
 /**
@@ -80,11 +81,11 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
      * Register fields for this table alias
      */
     private final void registerFields(String[] fieldAliases) {
-        List<Field<?>> fields = this.alias.wrapped().getFields();
-        int size = fields.size();
+        Row row = this.alias.wrapped().fieldsRow();
+        int size = row.getDegree();
 
         for (int i = 0; i < size; i++) {
-            Field<?> field = fields.get(i);
+            Field<?> field = row.field(i);
             String name = field.getName();
 
             if (fieldAliases != null && fieldAliases.length > i) {

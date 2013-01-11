@@ -63,11 +63,11 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
+import org.jooq.Row;
 import org.jooq.Table;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
 import org.jooq.tools.jdbc.JDBCUtils;
@@ -79,7 +79,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     private final ExecuteContext      ctx;
     private final ExecuteListener     listener;
-    private final FieldProvider       fields;
+    private final Field<?>[]          fields;
     private final Class<? extends R>  type;
     private boolean                   isClosed;
 
@@ -87,11 +87,11 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient Iterator<R>     iterator;
 
     @SuppressWarnings("unchecked")
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, boolean keepStatement) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, boolean keepStatement) {
         this(ctx, listener, fields, (Class<? extends R>) RecordImpl.class, keepStatement);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, FieldProvider fields, Class<? extends R> type, boolean keepStatement) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, Class<? extends R> type, boolean keepStatement) {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.fields = fields;
@@ -99,34 +99,30 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         this.rs = new CursorResultSet(keepStatement);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
-    public final List<Field<?>> getFields() {
-        return fields.getFields();
+    public final Row fieldsRow() {
+        return new RowImpl(fields);
     }
 
     @Override
-    public final <T> Field<T> getField(Field<T> field) {
-        return fields.getField(field);
+    public final <T> Field<T> field(Field<T> field) {
+        return fieldsRow().field(field);
     }
 
     @Override
-    public final Field<?> getField(String name) {
-        return fields.getField(name);
+    public final Field<?> field(String name) {
+        return fieldsRow().field(name);
     }
 
     @Override
-    public final Field<?> getField(int index) {
-        return fields.getField(index);
+    public final Field<?> field(int index) {
+        return index >= 0 && index < fields.length ? fields[index] : null;
     }
 
     @Override
-    public final int getIndex(Field<?> field) {
-        return fields.getIndex(field);
-    }
-
-    @Override
-    public final int getIndex(String fieldName) {
-        return fields.getIndex(fieldName);
+    public final Field<?>[] fields() {
+        return fields.clone();
     }
 
     @Override
@@ -1271,11 +1267,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                     ctx.record(record);
                     listener.recordStart(ctx);
 
-                    final List<Field<?>> fieldList = fields.getFields();
-                    final int size = fieldList.size();
-
-                    for (int i = 0; i < size; i++) {
-                        setValue((AbstractRecord) record, fieldList.get(i), i);
+                    for (int i = 0; i < fields.length; i++) {
+                        setValue((AbstractRecord) record, fields[i], i);
                     }
 
                     ctx.record(record);

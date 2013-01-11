@@ -692,19 +692,19 @@ public abstract class jOOQAbstractTest<
 
     protected abstract UpdatableTable<BS> TBookSale();
     protected final TableField<BS, Integer> TBookSale_ID() {
-        return (TableField<BS, Integer>) TBookSale().getField("ID");
+        return (TableField<BS, Integer>) TBookSale().field("ID");
     }
     protected final TableField<BS, Integer> TBookSale_BOOK_ID() {
-        return (TableField<BS, Integer>) TBookSale().getField("BOOK_ID");
+        return (TableField<BS, Integer>) TBookSale().field("BOOK_ID");
     }
     protected final TableField<BS, String> TBookSale_BOOK_STORE_NAME() {
-        return (TableField<BS, String>) TBookSale().getField("BOOK_STORE_NAME");
+        return (TableField<BS, String>) TBookSale().field("BOOK_STORE_NAME");
     }
     protected final TableField<BS, Date> TBookSale_SOLD_AT() {
-        return (TableField<BS, Date>) TBookSale().getField("SOLD_AT");
+        return (TableField<BS, Date>) TBookSale().field("SOLD_AT");
     }
     protected final TableField<BS, BigDecimal> TBookSale_SOLD_FOR() {
-        return (TableField<BS, BigDecimal>) TBookSale().getField("SOLD_FOR");
+        return (TableField<BS, BigDecimal>) TBookSale().field("SOLD_FOR");
     }
 
     protected abstract UpdatableTable<BOOL> TBooleans();

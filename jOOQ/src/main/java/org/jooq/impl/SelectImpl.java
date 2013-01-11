@@ -64,6 +64,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.SelectConditionStep;
 import org.jooq.SelectConnectByConditionStep;
@@ -1233,33 +1234,28 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final <T> Field<T> getField(Field<T> field) {
-        return getDelegate().asTable().getField(field);
+    public final Row fieldsRow() {
+        return getDelegate().fieldsRow();
     }
 
     @Override
-    public final Field<?> getField(String name) {
-        return getDelegate().asTable().getField(name);
+    public final <T> Field<T> field(Field<T> field) {
+        return getDelegate().field(field);
     }
 
     @Override
-    public final Field<?> getField(int index) {
-        return getDelegate().asTable().getField(index);
+    public final Field<?> field(String string) {
+        return getDelegate().field(string);
     }
 
     @Override
-    public final List<Field<?>> getFields() {
-        return getDelegate().asTable().getFields();
+    public final Field<?> field(int index) {
+        return getDelegate().field(index);
     }
 
     @Override
-    public final int getIndex(Field<?> field) {
-        return getDelegate().asTable().getIndex(field);
-    }
-
-    @Override
-    public final int getIndex(String fieldName) {
-        return getDelegate().asTable().getIndex(fieldName);
+    public final Field<?>[] fields() {
+        return getDelegate().fields();
     }
 
     /**

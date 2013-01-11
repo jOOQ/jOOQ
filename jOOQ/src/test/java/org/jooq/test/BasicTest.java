@@ -690,21 +690,21 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"t1\"",            r_decF().render(TABLE1.as("t1")));
         assertEquals("\"t1\"",            r_ref().render(TABLE1.as("t1")));
 
-        assertEquals("\"TABLE1\".\"ID1\"", r_decF().render(TABLE1.getField(FIELD_ID1)));
-        assertEquals("\"TABLE1\".\"ID1\"", r_decT().render(TABLE1.getField(FIELD_ID1)));
-        assertEquals("\"TABLE1\".\"ID1\"", r_ref().render(TABLE1.getField(FIELD_ID1)));
+        assertEquals("\"TABLE1\".\"ID1\"", r_decF().render(TABLE1.field(FIELD_ID1)));
+        assertEquals("\"TABLE1\".\"ID1\"", r_decT().render(TABLE1.field(FIELD_ID1)));
+        assertEquals("\"TABLE1\".\"ID1\"", r_ref().render(TABLE1.field(FIELD_ID1)));
 
-        assertEquals("\"TABLE1\".\"ID1\" \"f1\"", r_decF().render(TABLE1.getField(FIELD_ID1).as("f1")));
-        assertEquals("\"f1\"",                    r_decT().render(TABLE1.getField(FIELD_ID1).as("f1")));
-        assertEquals("\"f1\"",                    r_ref().render(TABLE1.getField(FIELD_ID1).as("f1")));
+        assertEquals("\"TABLE1\".\"ID1\" \"f1\"", r_decF().render(TABLE1.field(FIELD_ID1).as("f1")));
+        assertEquals("\"f1\"",                    r_decT().render(TABLE1.field(FIELD_ID1).as("f1")));
+        assertEquals("\"f1\"",                    r_ref().render(TABLE1.field(FIELD_ID1).as("f1")));
 
-        assertEquals("\"t1\".\"ID1\"", r_decF().render(TABLE1.as("t1").getField(FIELD_ID1)));
-        assertEquals("\"t1\".\"ID1\"", r_decT().render(TABLE1.as("t1").getField(FIELD_ID1)));
-        assertEquals("\"t1\".\"ID1\"", r_ref().render(TABLE1.as("t1").getField(FIELD_ID1)));
+        assertEquals("\"t1\".\"ID1\"", r_decF().render(TABLE1.as("t1").field(FIELD_ID1)));
+        assertEquals("\"t1\".\"ID1\"", r_decT().render(TABLE1.as("t1").field(FIELD_ID1)));
+        assertEquals("\"t1\".\"ID1\"", r_ref().render(TABLE1.as("t1").field(FIELD_ID1)));
 
-        assertEquals("\"t1\".\"ID1\" \"f1\"", r_decF().render(TABLE1.as("t1").getField(FIELD_ID1).as("f1")));
-        assertEquals("\"f1\"",                r_decT().render(TABLE1.as("t1").getField(FIELD_ID1).as("f1")));
-        assertEquals("\"f1\"",                r_ref().render(TABLE1.as("t1").getField(FIELD_ID1).as("f1")));
+        assertEquals("\"t1\".\"ID1\" \"f1\"", r_decF().render(TABLE1.as("t1").field(FIELD_ID1).as("f1")));
+        assertEquals("\"f1\"",                r_decT().render(TABLE1.as("t1").field(FIELD_ID1).as("f1")));
+        assertEquals("\"f1\"",                r_ref().render(TABLE1.as("t1").field(FIELD_ID1).as("f1")));
 
         context.checking(new Expectations() {{
             oneOf(statement).setInt(1, 2);
@@ -2010,13 +2010,13 @@ public class BasicTest extends AbstractTest {
 
         SelectQuery<?> q = create.selectQuery();
         q.addFrom(t1);
-        q.addJoin(t2, t1.getField(FIELD_ID1).equal(t2.getField(FIELD_ID1)));
+        q.addJoin(t2, t1.field(FIELD_ID1).equal(t2.field(FIELD_ID1)));
 
         assertEquals("select \"t1\".\"ID1\", \"t1\".\"NAME1\", \"t1\".\"DATE1\", \"t2\".\"ID1\", \"t2\".\"NAME1\", \"t2\".\"DATE1\" from \"TABLE1\" \"t1\" join \"TABLE1\" \"t2\" on \"t1\".\"ID1\" = \"t2\".\"ID1\"", r_refI().render(q));
         assertEquals("select \"t1\".\"ID1\", \"t1\".\"NAME1\", \"t1\".\"DATE1\", \"t2\".\"ID1\", \"t2\".\"NAME1\", \"t2\".\"DATE1\" from \"TABLE1\" \"t1\" join \"TABLE1\" \"t2\" on \"t1\".\"ID1\" = \"t2\".\"ID1\"", r_ref().render(q));
         assertEquals(q, create.select().from(t1)
-                                .join(t2).on(t1.getField(FIELD_ID1).equal(
-                                             t2.getField(FIELD_ID1))));
+                                .join(t2).on(t1.field(FIELD_ID1).equal(
+                                             t2.field(FIELD_ID1))));
 
         int i = b_ref().bind(q).peekIndex();
         assertEquals(1, i);
@@ -2165,7 +2165,7 @@ public class BasicTest extends AbstractTest {
         assertEquals(combine, createCombinedSelect());
 
         combine = create
-            .select(createCombinedSelectQuery().getField(FIELD_ID1))
+            .select(createCombinedSelectQuery().field(FIELD_ID1))
             .from(createCombinedSelectQuery())
             .orderBy(FIELD_ID1);
 

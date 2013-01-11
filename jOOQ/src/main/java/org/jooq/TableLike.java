@@ -35,7 +35,6 @@
  */
 package org.jooq;
 
-
 /**
  * An object that can behave like a table (a table-like object)
  *
@@ -43,6 +42,39 @@ package org.jooq;
  * @author Lukas Eder
  */
 public interface TableLike<R extends Record> extends QueryPart {
+
+    /**
+     * Get this table's fields as a {@link Row}
+     */
+    Row fieldsRow();
+
+    /**
+     * Get a specific field from this Record.
+     *
+     * @see Row#field(Field)
+     */
+    <T> Field<T> field(Field<T> field);
+
+    /**
+     * Get a specific field from this Record.
+     *
+     * @see Row#field(String)
+     */
+    Field<?> field(String name);
+
+    /**
+     * Get a specific field from this Record.
+     *
+     * @see Row#field(int)
+     */
+    Field<?> field(int index);
+
+    /**
+     * Get all fields from this Record.
+     *
+     * @see Row#fields()
+     */
+    Field<?>[] fields();
 
     /**
      * The underlying table representation of this object

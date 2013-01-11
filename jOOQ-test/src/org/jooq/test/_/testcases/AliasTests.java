@@ -91,7 +91,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testAliasingSimple() throws Exception {
         Table<B> b = TBook().as("b");
-        Field<Integer> b_ID = b.getField(TBook_ID());
+        Field<Integer> b_ID = b.field(TBook_ID());
 
         List<Integer> ids = create().select(b_ID).from(b).orderBy(b_ID).fetch(b_ID);
         assertEquals(4, ids.size());
@@ -106,18 +106,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testAliasingTablesAndFields() throws Exception {
         Table<B2S> b2s = TBookToBookStore().as("b2s", "b2s_1", "b2s_2", "b2s_3");
-        Field<String> b2s1 = (Field<String>) b2s.getField(0);
-        Field<Integer> b2s2 = (Field<Integer>) b2s.getField(1);
-        Field<Integer> b2s3 = (Field<Integer>) b2s.getField(2);
+        Field<String> b2s1 = (Field<String>) b2s.field(0);
+        Field<Integer> b2s2 = (Field<Integer>) b2s.field(1);
+        Field<Integer> b2s3 = (Field<Integer>) b2s.field(2);
 
         assertEquals("b2s", b2s.getName());
         assertEquals("b2s_1", b2s1.getName());
         assertEquals("b2s_2", b2s2.getName());
         assertEquals("b2s_3", b2s3.getName());
 
-        assertEquals("b2s_1", b2s.getField("b2s_1").getName());
-        assertEquals("b2s_2", b2s.getField("b2s_2").getName());
-        assertEquals("b2s_3", b2s.getField("b2s_3").getName());
+        assertEquals("b2s_1", b2s.field("b2s_1").getName());
+        assertEquals("b2s_2", b2s.field("b2s_2").getName());
+        assertEquals("b2s_3", b2s.field("b2s_3").getName());
 
         // TODO: What happens with typed records?
         // B2S record1 = create().selectFrom(b2s).where(b2s3.eq(2)).fetchOne();
@@ -139,11 +139,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testAliasingSelectAndFields() throws Exception {
         Record r1 = create().select().from(table(selectOne()).as("t", "v")).fetchOne();
-        assertEquals("v", r1.getField(0).getName());
-        assertEquals("v", r1.getField("v").getName());
+        assertEquals("v", r1.field(0).getName());
+        assertEquals("v", r1.field("v").getName());
         assertEquals(1, r1.getValue(0));
         assertEquals(1, r1.getValue("v"));
-        assertEquals(1, r1.getValue(r1.getField(0)));
+        assertEquals(1, r1.getValue(r1.field(0)));
 
         Record r2 = create()
             .select()
@@ -152,14 +152,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .leftOuterJoin(table(selectOne()).as("t3", "v3"))
             .on("1 = 0")
             .fetchOne();
-        assertEquals("v1", r2.getField(0).getName());
-        assertEquals("v2a", r2.getField(1).getName());
-        assertEquals("v2b", r2.getField(2).getName());
-        assertEquals("v3", r2.getField(3).getName());
-        assertEquals("v1", r2.getField("v1").getName());
-        assertEquals("v2a", r2.getField("v2a").getName());
-        assertEquals("v2b", r2.getField("v2b").getName());
-        assertEquals("v3", r2.getField("v3").getName());
+        assertEquals("v1", r2.field(0).getName());
+        assertEquals("v2a", r2.field(1).getName());
+        assertEquals("v2b", r2.field(2).getName());
+        assertEquals("v3", r2.field(3).getName());
+        assertEquals("v1", r2.field("v1").getName());
+        assertEquals("v2a", r2.field("v2a").getName());
+        assertEquals("v2b", r2.field("v2b").getName());
+        assertEquals("v3", r2.field("v3").getName());
 
         assertEquals(1, r2.getValue(0));
         assertEquals(1, r2.getValue("v1"));
@@ -179,10 +179,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .crossJoin(table(selectZero())).as("t", "a", "b"))
             .fetchOne();
 
-        assertEquals("a", r1.getField(0).getName());
-        assertEquals("b", r1.getField(1).getName());
-        assertEquals("a", r1.getField("a").getName());
-        assertEquals("b", r1.getField("b").getName());
+        assertEquals("a", r1.field(0).getName());
+        assertEquals("b", r1.field(1).getName());
+        assertEquals("a", r1.field("a").getName());
+        assertEquals("b", r1.field("b").getName());
         assertEquals(1, r1.getValue(0));
         assertEquals(0, r1.getValue(1));
         assertEquals(1, r1.getValue("a"));

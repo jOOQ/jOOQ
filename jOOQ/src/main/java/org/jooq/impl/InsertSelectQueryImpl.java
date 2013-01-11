@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -54,17 +52,17 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID = -1540775270159018516L;
+    private static final long serialVersionUID = -1540775270159018516L;
 
-    private final Table<?>       into;
-    private final List<Field<?>> fields;
-    private final Select<?>      select;
+    private final Table<?>    into;
+    private final Field<?>[]  fields;
+    private final Select<?>   select;
 
-    InsertSelectQueryImpl(Configuration configuration, Table<?> into, List<Field<?>> fields, Select<?> select) {
+    InsertSelectQueryImpl(Configuration configuration, Table<?> into, Field<?>[] fields, Select<?> select) {
         super(configuration);
 
         this.into = into;
-        this.fields = (fields == null || fields.isEmpty()) ? into.getFields() : fields;
+        this.fields = (fields == null || fields.length == 0) ? into.fields() : fields;
         this.select = select;
     }
 

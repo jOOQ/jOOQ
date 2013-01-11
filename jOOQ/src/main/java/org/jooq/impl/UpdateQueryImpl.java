@@ -129,7 +129,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void setRecord(R record) {
-        for (Field<?> field : record.getFields()) {
+        for (Field<?> field : record.fields()) {
             if (((AbstractRecord) record).getValue0(field).isChanged()) {
                 addValue(record, field);
             }
@@ -472,7 +472,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 Select<?> select = multiSelect;
 
                 if (multiValue != null) {
-                    select = select(multiValue.getFields());
+                    select = select(multiValue.fields());
                 }
 
                 context.sql("(")

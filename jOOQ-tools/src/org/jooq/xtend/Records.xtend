@@ -44,11 +44,11 @@ class Records extends Generators {
     
     def static void main(String[] args) {
         val records = new Records();
-        records.generateRecordClasses();
+        records.generateRecords();
         records.generateRecordImpl();
     }
     
-    def generateRecordClasses() {
+    def generateRecords() {
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
             val out = new StringBuilder();
             
@@ -74,11 +74,13 @@ class Records extends Generators {
                 /**
                  * Get this record's fields as a {@link Row«degree»}
                  */
+                @Override
                 Row«degree»<«TN(degree)»> fieldsRow();
             
                 /**
                  * Get this record's values as a {@link Row«degree»}
                  */
+                @Override
                 Row«degree»<«TN(degree)»> valuesRow();
             
                 // ------------------------------------------------------------------------
@@ -119,12 +121,11 @@ class Records extends Generators {
         
         import static org.jooq.impl.Factory.vals;
         
-        import java.util.List;
+        import java.util.Collection;
         
         import javax.annotation.Generated;
         
         import org.jooq.Field;
-        import org.jooq.FieldProvider;
         import org.jooq.Record;
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         import org.jooq.Record«degree»;
@@ -158,29 +159,35 @@ class Records extends Generators {
             /**
              * Create a new general purpos record
              */
-            public RecordImpl(FieldProvider fields) {
+            public RecordImpl(Field<?>... fields) {
                 super(fields);
             }
         
+            /**
+             * Create a new general purpos record
+             */
+            public RecordImpl(Collection<? extends Field<?>> fields) {
+                super(fields);
+            }
+                
             // ------------------------------------------------------------------------
             // XXX: Type-safe Record APIs
             // ------------------------------------------------------------------------
         
             @Override
             public RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> fieldsRow() {
-                return new RowImpl(getFields());
+                return new RowImpl(fields);
             }
         
             @Override
             public final RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> valuesRow() {
-                List<Field<?>> fields = getFields();
-                return new RowImpl(vals(intoArray(), fields.toArray(new Field[fields.size()])));
+                return new RowImpl(vals(intoArray(), fields));
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Field<T«degree»> field«degree»() {
-                return (Field<T«degree»>) getField(«degree - 1»);
+                return (Field<T«degree»>) fields[«degree - 1»];
             }
             «ENDFOR»
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»

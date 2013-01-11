@@ -122,8 +122,6 @@ class BetweenAndSteps extends Generators {
         import static org.jooq.SQLDialect.SQLSERVER;
         import static org.jooq.SQLDialect.SYBASE;
 
-        import java.util.List;
-        
         import javax.annotation.Generated;
         
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -227,8 +225,7 @@ class BetweenAndSteps extends Generators {
 
             @Override
             public final Condition and(Record record) {
-                List<Field<?>> f = record.getFields();
-                RowN r = new RowImpl(vals(record.intoArray(), f.toArray(new Field[f.size()])));
+                RowN r = new RowImpl(vals(record.intoArray(), record.fields()));
                 return and(r);
             }
             

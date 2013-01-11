@@ -94,7 +94,7 @@ implements
         Table<?> outer = dividend.as("dividend");
 
         for (Field<?> field : returning) {
-            Field<?> outerField = outer.getField(field);
+            Field<?> outerField = outer.field(field);
 
             // Fields from the RETURNING clause are added AS-IS to the SELECT
             // statement, if they're not contained in the dividend table
@@ -131,8 +131,8 @@ implements
      */
     @SuppressWarnings("deprecation")
     private final <T> void selfJoin(org.jooq.ConditionProvider selfJoin, Table<?> outer, Table<?> inner, Field<T> field) {
-        Field<T> outerField = outer.getField(field);
-        Field<T> innerField = inner.getField(field);
+        Field<T> outerField = outer.field(field);
+        Field<T> innerField = inner.field(field);
 
         if (outerField == null || innerField == null) {
             return;

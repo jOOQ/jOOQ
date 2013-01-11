@@ -61,7 +61,6 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
@@ -103,7 +102,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     /**
      * Get a list of fields provided a result set.
      */
-    protected abstract List<Field<?>> getFields(ResultSetMetaData rs) throws SQLException;
+    protected abstract Field<?>[] getFields(ResultSetMetaData rs) throws SQLException;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -202,7 +201,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             // Fetch a single result set
             if (!many) {
                 if (ctx.resultSet() != null) {
-                    FieldList fields = new FieldList(getFields(ctx.resultSet().getMetaData()));
+                    Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
                     cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType(), keepStatement());
 
                     if (!lazy) {
@@ -223,7 +222,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 while (ctx.resultSet() != null) {
                     anyResults = true;
 
-                    FieldProvider fields = new MetaDataFieldProvider(ctx, ctx.resultSet().getMetaData());
+                    Field<?>[] fields = new MetaDataFieldProvider(ctx, ctx.resultSet().getMetaData()).getFields();
                     Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, true);
                     results.add(c.fetch());
 

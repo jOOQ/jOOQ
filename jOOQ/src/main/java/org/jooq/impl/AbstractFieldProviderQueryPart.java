@@ -39,13 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 import org.jooq.Record;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractQueryPart implements FieldProvider {
+abstract class AbstractFieldProviderQueryPart<R extends Record> extends AbstractQueryPart {
 
     /**
      * Generated UID
@@ -56,34 +55,28 @@ abstract class AbstractFieldProviderQueryPart<R extends Record> extends Abstract
         super();
     }
 
-    @Override
     public final List<Field<?>> getFields() {
         return new ArrayList<Field<?>>(getFieldList());
     }
 
-    @Override
     public final <T> Field<T> getField(Field<T> field) {
-        return getFieldList().getField(field);
+        return getFieldList().field(field);
     }
 
-    @Override
     public final Field<?> getField(String name) {
-        return getFieldList().getField(name);
+        return getFieldList().field(name);
     }
 
-    @Override
     public final Field<?> getField(int index) {
-        return getFieldList().getField(index);
+        return getFieldList().field(index);
     }
 
-    @Override
     public final int getIndex(Field<?> field) {
-        return getFieldList().getIndex(field);
+        return getFieldList().indexOf(field);
     }
 
-    @Override
     public final int getIndex(String fieldName) {
-        return getFieldList().getIndex(fieldName);
+        return getFieldList().indexOf(fieldName);
     }
 
     /**

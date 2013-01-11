@@ -86,14 +86,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(1, r21.size());
         assertEquals(2, r21.get(0).size());
-        assertEquals("c1", r21.getField(0).getName());
-        assertEquals("c2", r21.getField(1).getName());
-        assertEquals(Integer.class, r21.getField(0).getType());
-        assertEquals(String.class, r21.getField(1).getType());
-        assertEquals("c1", r21.get(0).getField(0).getName());
-        assertEquals("c2", r21.get(0).getField(1).getName());
-        assertEquals(Integer.class, r21.get(0).getField(0).getType());
-        assertEquals(String.class, r21.get(0).getField(1).getType());
+        assertEquals("c1", r21.field(0).getName());
+        assertEquals("c2", r21.field(1).getName());
+        assertEquals(Integer.class, r21.field(0).getType());
+        assertEquals(String.class, r21.field(1).getType());
+        assertEquals("c1", r21.get(0).field(0).getName());
+        assertEquals("c2", r21.get(0).field(1).getName());
+        assertEquals(Integer.class, r21.get(0).field(0).getType());
+        assertEquals(String.class, r21.get(0).field(1).getType());
         assertEquals(1, r21.getValue(0, 0));
         assertEquals("a", r21.getValue(0, 1));
 

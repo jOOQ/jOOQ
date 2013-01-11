@@ -87,7 +87,7 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     }
 
     @Override
-    protected final List<Field<?>> getFields(ResultSetMetaData meta) {
+    protected final Field<?>[] getFields(ResultSetMetaData meta) {
         Configuration configuration = getConfiguration();
         return new MetaDataFieldProvider(configuration, meta).getFields();
     }

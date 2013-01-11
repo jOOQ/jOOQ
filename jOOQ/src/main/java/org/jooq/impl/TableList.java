@@ -75,7 +75,7 @@ class TableList extends QueryPartList<Table<?>> {
         String separator = "";
 
         for (Table<?> table : this) {
-            for (Field<?> field : table.getFields()) {
+            for (Field<?> field : table.fieldsRow().fields()) {
                 context.sql(separator);
                 context.literal(field.getName());
 

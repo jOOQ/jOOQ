@@ -52,7 +52,7 @@ class RenamedTable extends TableImpl<Record> {
     RenamedTable(Table<?> delegate, String rename) {
         super(rename, delegate.getSchema());
 
-        for (Field<?> field : delegate.getFields()) {
+        for (Field<?> field : delegate.fields()) {
             createField(field.getName(), field.getDataType(), this);
         }
     }

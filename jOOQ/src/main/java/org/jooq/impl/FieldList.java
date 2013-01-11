@@ -37,15 +37,13 @@
 package org.jooq.impl;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.jooq.Field;
-import org.jooq.FieldProvider;
 
 /**
  * @author Lukas Eder
  */
-class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
+class FieldList extends QueryPartList<Field<?>> {
 
     private static final long                serialVersionUID = -6911012275707591576L;
 
@@ -62,8 +60,7 @@ class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
-    public final <T> Field<T> getField(Field<T> field) {
+    final <T> Field<T> field(Field<T> field) {
         if (field == null) {
             return null;
         }
@@ -86,8 +83,7 @@ class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
         return null;
     }
 
-    @Override
-    public final Field<?> getField(String name) {
+    final Field<?> field(String name) {
         if (name == null) {
             return null;
         }
@@ -101,8 +97,7 @@ class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
         return null;
     }
 
-    @Override
-    public final Field<?> getField(int index) {
+    final Field<?> field(int index) {
         if (index >= 0 && index < size()) {
             return get(index);
         }
@@ -110,16 +105,14 @@ class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
         return null;
     }
 
-    @Override
-    public final List<Field<?>> getFields() {
-        return this;
+    final Field<?>[] fields() {
+        return toArray(new Field[size()]);
     }
 
-    @Override
-    public final int getIndex(Field<?> field) {
+    final int indexOf(Field<?> field) {
 
         // Get an exact match, or a field with a similar name
-        Field<?> compareWith = getField(field);
+        Field<?> compareWith = field(field);
 
         if (compareWith != null) {
             int size = size();
@@ -130,11 +123,10 @@ class FieldList extends QueryPartList<Field<?>> implements FieldProvider {
             }
         }
 
-        throw new IllegalArgumentException("Field " + field + " is not contained in list");
+        return -1;
     }
 
-    @Override
-    public final int getIndex(String fieldName) {
-        return getIndex(getField(fieldName));
+    final int indexOf(String fieldName) {
+        return indexOf(field(fieldName));
     }
 }

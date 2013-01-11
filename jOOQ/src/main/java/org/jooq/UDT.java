@@ -36,13 +36,47 @@
 package org.jooq;
 
 
+
 /**
  * UDT definition
  *
  * @param <R> The record type
  * @author Lukas Eder
  */
-public interface UDT<R extends UDTRecord<R>> extends FieldProvider, QueryPart {
+public interface UDT<R extends UDTRecord<R>> extends QueryPart {
+
+    /**
+     * Get this UDT's fields as a {@link Row}
+     */
+    Row fieldsRow();
+
+    /**
+     * Get a specific field from this UDT.
+     *
+     * @see Row#field(Field)
+     */
+    <T> Field<T> field(Field<T> field);
+
+    /**
+     * Get a specific field from this UDT.
+     *
+     * @see Row#field(String)
+     */
+    Field<?> field(String name);
+
+    /**
+     * Get a specific field from this UDT.
+     *
+     * @see Row#field(int)
+     */
+    Field<?> field(int index);
+
+    /**
+     * Get all fields from this UDT.
+     *
+     * @see Row#fields()
+     */
+    Field<?>[] fields();
 
     /**
      * Get the UDT schema

@@ -59,7 +59,40 @@ import org.jooq.exception.MappingException;
  * @param <R> The cursor's record type
  * @author Lukas Eder
  */
-public interface Cursor<R extends Record> extends FieldProvider, Iterable<R> {
+public interface Cursor<R extends Record> extends Iterable<R> {
+
+    /**
+     * Get this cursor's fields as a {@link Row}
+     */
+    Row fieldsRow();
+
+    /**
+     * Get a specific field from this Cursor.
+     *
+     * @see Row#field(Field)
+     */
+    <T> Field<T> field(Field<T> field);
+
+    /**
+     * Get a specific field from this Cursor.
+     *
+     * @see Row#field(String)
+     */
+    Field<?> field(String name);
+
+    /**
+     * Get a specific field from this Cursor.
+     *
+     * @see Row#field(int)
+     */
+    Field<?> field(int index);
+
+    /**
+     * Get all fields from this Cursor.
+     *
+     * @see Row#fields()
+     */
+    Field<?>[] fields();
 
     /**
      * Check whether this cursor has a next record

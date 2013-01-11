@@ -95,7 +95,7 @@ class RowIsNull extends AbstractCondition {
         if (asList(CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.getDialect())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
-            for (Field<?> field : row.getFields()) {
+            for (Field<?> field : row.fields()) {
                 conditions.add(isNull ? field.isNull() : field.isNotNull());
             }
 

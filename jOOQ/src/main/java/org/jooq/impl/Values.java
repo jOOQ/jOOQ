@@ -100,7 +100,7 @@ class Values<R extends Record> extends AbstractTable<R> {
                 boolean subquery = context.subquery();
 
                 for (Row row : rows) {
-                    Select<Record> select = create().select(row.getFields());
+                    Select<Record> select = create().select(row.fields());
 
                     if (selects == null) {
                         selects = select;
@@ -158,6 +158,6 @@ class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     protected final FieldList getFieldList() {
-        return new FieldList(rows[0].getFields());
+        return new FieldList(rows[0].fields());
     }
 }

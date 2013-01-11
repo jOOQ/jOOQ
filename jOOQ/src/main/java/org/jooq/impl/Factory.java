@@ -2549,7 +2549,7 @@ public class Factory {
      * <p>
      * The provided SQL must evaluate as a table whose type can be dynamically
      * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#getFields()} will
+     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
      * list the actual fields returned from your result set.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -2583,7 +2583,7 @@ public class Factory {
      * <p>
      * The provided SQL must evaluate as a table whose type can be dynamically
      * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#getFields()} will
+     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
      * list the actual fields returned from your result set.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -2615,7 +2615,7 @@ public class Factory {
      * <p>
      * The provided SQL must evaluate as a table whose type can be dynamically
      * discovered using JDBC's {@link ResultSetMetaData} methods. That way, you
-     * can be sure that calling methods, such as {@link Table#getFields()} will
+     * can be sure that calling methods, such as {@link Table#fieldsRow()} will
      * list the actual fields returned from your result set.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must

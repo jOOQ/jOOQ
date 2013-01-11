@@ -950,7 +950,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result = create().select().from(table(array)).fetch();
 
             assertEquals(0, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
             // [#523] TODO use ArrayRecord meta data instead
 //            assertEquals(array.getDataType(), result.getField(0).getDataType());
 
@@ -960,7 +960,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result = create().select().from(table(array)).fetch();
 
             assertEquals(1, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
 //            assertEquals(array.getDataType(), result.getField(0).getDataType());
             assertEquals(null, result.getValue(0, 0));
 
@@ -970,7 +970,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result = create().select().from(table(array)).fetch();
 
             assertEquals(2, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
 //            assertEquals(array.getDataType(), result.getField(0).getDataType());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
@@ -981,7 +981,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result = create().select().from(table(array)).fetch();
 
             assertEquals(3, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
 //            assertEquals(array.getDataType(), result.getField(0).getDataType());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
@@ -995,7 +995,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .select(TBook_ID(), TBook_TITLE())
                 .from(TBook())
                 .join(table)
-                .on(table.getField(0).cast(Integer.class).equal(TBook_ID()))
+                .on(table.field(0).cast(Integer.class).equal(TBook_ID()))
                 .orderBy(TBook_ID())
                 .fetch();
 
@@ -1011,7 +1011,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .select(TBook_ID(), TBook_TITLE())
                 .from(TBook())
                 .join(table.as("t"))
-                .on(table.as("t").getField(0).cast(Integer.class).equal(TBook_ID()))
+                .on(table.as("t").field(0).cast(Integer.class).equal(TBook_ID()))
                 .orderBy(TBook_ID())
                 .fetch();
 
@@ -1025,24 +1025,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // --------------------------
             result = create().select().from(table(FArrays1Field_R(null))).fetch();
             assertEquals(0, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
 
             array = newNUMBER_R();
             result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
             assertEquals(0, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
 
             array.set(null, 1);
             result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
             assertEquals(2, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
 
             array.set(null, 1, null, 2);
             result = create().select().from(table(FArrays1Field_R(val(array)))).fetch();
             assertEquals(4, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
             assertEquals(null, result.getValue(2, 0));
@@ -1071,7 +1071,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 default:
                     table = table(TArrays_STRING()).as("t");
                     result = create()
-                        .select(TArrays_ID(), table.getField(0))
+                        .select(TArrays_ID(), table.field(0))
                         .from(TArrays(), table)
                         .orderBy(TArrays_ID())
                         .fetch();
@@ -1091,24 +1091,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // --------------------------
             result = create().select().from(table(FArrays1Field(null))).fetch();
             assertEquals(0, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
 
             array = new Integer[0];
             result = create().select().from(table(FArrays1Field(val(array)))).fetch();
             assertEquals(0, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
 
             array = new Integer[] { null, 1 };
             result = create().select().from(table(FArrays1Field(val(array)))).fetch();
             assertEquals(2, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
 
             array = new Integer[] { null, 1, null, 2 };
             result = create().select().from(table(FArrays1Field(val(array)))).fetch();
             assertEquals(4, result.size());
-            assertEquals(1, result.getFields().size());
+            assertEquals(1, result.fieldsRow().getDegree());
             assertEquals(null, result.getValue(0, 0));
             assertEquals("1", "" + result.getValue(1, 0));
             assertEquals(null, result.getValue(2, 0));
@@ -1129,7 +1129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         result = create().select().from(table(new Integer[0])).fetch();
 
         assertEquals(0, result.size());
-        assertEquals(1, result.getFields().size());
+        assertEquals(1, result.fieldsRow().getDegree());
 
         // An array containing null
         // ------------------------
@@ -1137,7 +1137,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         result = create().select().from(table(array)).fetch();
 
         assertEquals(1, result.size());
-        assertEquals(1, result.getFields().size());
+        assertEquals(1, result.fieldsRow().getDegree());
         assertEquals(null, result.getValue(0, 0));
 
         // An array containing two values (some DB's can't guarantee ordering)
@@ -1146,7 +1146,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         result = create().select().from(table(array)).fetch();
 
         assertEquals(2, result.size());
-        assertEquals(1, result.getFields().size());
+        assertEquals(1, result.fieldsRow().getDegree());
         assertTrue(asList(array).containsAll(result.getValues(0)));
 
         // An array containing three values (some DB's can't guarantee ordering)
@@ -1155,7 +1155,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         result = create().select().from(table(array)).fetch();
 
         assertEquals(3, result.size());
-        assertEquals(1, result.getFields().size());
+        assertEquals(1, result.fieldsRow().getDegree());
         assertTrue(asList(array).containsAll(result.getValues(0)));
 
         // Joining an unnested array table
@@ -1166,7 +1166,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .select(TBook_ID(), TBook_TITLE())
             .from(TBook())
             .join(table)
-            .on(table.getField(0).cast(Integer.class).equal(TBook_ID()))
+            .on(table.field(0).cast(Integer.class).equal(TBook_ID()))
             .orderBy(TBook_ID().asc())
             .fetch();
 
@@ -1182,7 +1182,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .select(TBook_ID(), TBook_TITLE())
             .from(TBook())
             .join(table.as("t"))
-            .on(table.as("t").getField(0).cast(Integer.class).equal(TBook_ID()))
+            .on(table.as("t").field(0).cast(Integer.class).equal(TBook_ID()))
             .orderBy(TBook_ID().asc())
             .fetch();
 

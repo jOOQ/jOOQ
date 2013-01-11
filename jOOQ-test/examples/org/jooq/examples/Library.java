@@ -37,7 +37,7 @@ package org.jooq.examples;
 
 import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectDistinct;
-import static org.jooq.test.mysql.generatedclasses.Keys.*;
+import static org.jooq.test.mysql.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_LANGUAGE;
 import static org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK;
@@ -198,13 +198,13 @@ public class Library {
             create().select(TBook.TITLE, TBook.AUTHOR_ID).from(T_BOOK).where(TBook.AUTHOR_ID.equal(1)));
 
         System.out.println(
-          create().select(union.getField(TBook.TITLE))
+          create().select(union.field(TBook.TITLE))
                 .from(union)
-                .orderBy(union.getField(TBook.AUTHOR_ID).desc()));
+                .orderBy(union.field(TBook.AUTHOR_ID).desc()));
         System.out.println(
-            create().select(union.getField(TBook.TITLE),union.getField(TBook.AUTHOR_ID))
+            create().select(union.field(TBook.TITLE),union.fieldsRow().field(TBook.AUTHOR_ID))
             .from(union)
-            .orderBy(union.getField(TBook.AUTHOR_ID).desc()).fetch());
+            .orderBy(union.field(TBook.AUTHOR_ID).desc()).fetch());
 
     }
 }

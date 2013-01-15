@@ -168,6 +168,27 @@ object Conversions {
     def >>(value : Field[T])          : Field[T]
   }
 
+  /**
+   * A Scala-esque trait representation of {@link org.jooq.Param}, implementing
+   * the param-specific extendsion to {@link org.jooq.Field}. This can be
+   * mixed-in with the other base implmentations for parameters.
+   */
+  trait AnyParamBase[T] extends Param[T] {
+    val underlying: Param[T]
+    
+    override def getParamName = underlying.getParamName()
+    
+    override def getValue = underlying.getValue()
+    
+    override def setValue(value: T) = underlying.setValue(value)
+    
+    override def setConverted(value: Any) = underlying.setConverted(value)
+   
+    override def setInline(inline: Boolean) = underlying.setInline(inline)
+    
+    override def isInline = underlying.isInline()      
+  }
+
   // ------------------------------------------------------------------------
   // Trait implementations
   // ------------------------------------------------------------------------
@@ -270,7 +291,7 @@ object Conversions {
     def >>(value : T)                 = shr(underlying, value)
     def >>(value : Field[T])          = shr(underlying, value)
   }
-
+  
   // ------------------------------------------------------------------------
   // Implicit conversions
   // ------------------------------------------------------------------------
@@ -288,7 +309,38 @@ object Conversions {
    */
   case class NumberFieldWrapper[T <: Number](override val underlying: Field[T])
         extends NumberFieldBase[T] (underlying) {}
-
+     
+  /**
+   * A Scala-esque representation of {@link org.jooq.Param}, implementing
+   * overloaded operators for common jOOQ operations to arbitrary fields
+   */
+  case class AnyParamWrapper[T](override val underlying: Param[T])
+        extends AnyFieldBase[T](underlying) with AnyParamBase[T] {}
+    
+  /**
+   * A Scala-esque representation of {@link org.jooq.Param}, implementing
+   * overloaded operators for common jOOQ operations to numeric fields
+   */
+  case class NumberParamWrapper[T <: Number](override val underlying: Param[T])
+        extends NumberFieldBase[T](underlying) with AnyParamBase[T] {}
+  
+  /**
+   * Enrich numeric {@link org.jooq.Param} with the {@link SNumberField} trait
+   */
+  implicit def asSNumberParam[T <: Number](p: Param[T]): SNumberField[T] = p match {
+    case AnyParamWrapper(p) => p
+    case NumberParamWrapper(p) => p
+    case _ => new NumberParamWrapper(p)
+  }
+  
+  /**
+   * Enrich any {@link org.jooq.Param} with the {@link SAnyField} trait
+   */
+  implicit def asSAnyParam[T](p: Param[T]): SAnyField[T] = p match {
+    case AnyParamWrapper(p) => p
+    case _ => new AnyParamWrapper(p)
+  }
+  
   /**
    * Enrich numeric {@link org.jooq.Field} with the {@link SNumberField} trait
    */
@@ -304,7 +356,7 @@ object Conversions {
   implicit def asSAnyField[T](f : Field[T]): SAnyField[T] = f match {
     case AnyFieldWrapper(f) => f
     case _ => new AnyFieldWrapper(f)
-  }
+  }  
 
   // --------------------------------------------------------------------------
   // Conversions from jOOQ Record[N] types to Scala Tuple[N] types

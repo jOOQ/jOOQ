@@ -66,7 +66,7 @@ class CombinedCondition extends AbstractCondition {
         }
         for (Condition condition : conditions) {
             if (condition == null) {
-                throw new IllegalArgumentException("The argument 'conditions' must contain null");
+                throw new IllegalArgumentException("The argument 'conditions' must not contain null");
             }
         }
 

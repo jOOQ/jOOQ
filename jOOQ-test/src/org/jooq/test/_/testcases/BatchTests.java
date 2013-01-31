@@ -35,7 +35,9 @@
  */
 package org.jooq.test._.testcases;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -43,12 +45,14 @@ import java.util.Arrays;
 
 import org.jooq.Batch;
 import org.jooq.ExecuteContext;
+import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.TableRecord;
+import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
@@ -196,6 +200,55 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .from(TBook())
             .where(TBook_ID().equal(80))
             .fetchOne(0));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testBatchStoreWithUDTs() throws Exception {
+        if (cUAddressType() == null) {
+            log.info("SKIPPING", "Skipping batch store with UDT tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        // [#2139] Check for correct binding of UDT values in batch operations
+        UDTRecord<?> addr1 = cUAddressType().newInstance();
+        UDTRecord<?> addr2 = cUAddressType().newInstance();
+
+        on(addr1).call("setCity", "City X");
+        on(addr2).call("setCity", "City Y");
+
+        A a1 = create().newRecord(TAuthor());
+        A a2 = create().newRecord(TAuthor());
+
+        a1.setValue(TAuthor_ID(), 3);
+        a2.setValue(TAuthor_ID(), 4);
+
+        a1.setValue(TAuthor_LAST_NAME(), "X");
+        a2.setValue(TAuthor_LAST_NAME(), "Y");
+
+        a1.setValue((Field<UDTRecord<?>>) TAuthor_ADDRESS(), addr1);
+        a2.setValue((Field<UDTRecord<?>>) TAuthor_ADDRESS(), addr2);
+
+        Batch batch = create().batchStore(a1, a2);
+        assertEquals(2, batch.size());
+
+        int[] result = batch.execute();
+        assertEquals(2, result.length);
+
+        Result<A> authors = create()
+            .selectFrom(TAuthor())
+            .where(TAuthor_ID().in(3, 4))
+            .orderBy(TAuthor_ID())
+            .fetch();
+
+        assertEquals(2, authors.size());
+        assertEquals(asList(3, 4), authors.getValues(TAuthor_ID()));
+        assertEquals(asList("X", "Y"), authors.getValues(TAuthor_LAST_NAME()));
+        assertEquals(asList(addr1, addr2), authors.getValues(TAuthor_ADDRESS()));
+        assertEquals("City X", on(authors.get(0).getValue(TAuthor_ADDRESS())).call("getCity").get());
+        assertEquals("City Y", on(authors.get(1).getValue(TAuthor_ADDRESS())).call("getCity").get());
     }
 
     @Test

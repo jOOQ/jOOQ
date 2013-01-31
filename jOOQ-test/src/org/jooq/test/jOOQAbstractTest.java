@@ -1845,6 +1845,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBatchStoreWithUDTs() throws Exception {
+        new BatchTests(this).testBatchStoreWithUDTs();
+    }
+
+    @Test
     public void testBatchDelete() throws Exception {
         new BatchTests(this).testBatchDelete();
     }

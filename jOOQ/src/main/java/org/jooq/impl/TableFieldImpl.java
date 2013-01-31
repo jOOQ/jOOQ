@@ -82,4 +82,21 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     @Override
     public final void bind(BindContext context) {}
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+
+        // [#2144] TableFieldImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof TableField) {
+            TableField<?, ?> other = (TableField<?, ?>) that;
+            return getTable().equals(other.getTable()) && getName().equals(other.getName());
+        }
+
+        return super.equals(that);
+    }
 }

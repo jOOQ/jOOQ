@@ -259,9 +259,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return (Value<T>) v[index];
     }
 
-    @SuppressWarnings("unchecked")
     final <T> Value<T> getValue0(Field<T> field) {
-        return (Value<T>) getValues()[fieldsRow().indexOf(field)];
+        return getValue0(fieldsRow().indexOf(field));
     }
 
     final Value<?>[] getValues() {

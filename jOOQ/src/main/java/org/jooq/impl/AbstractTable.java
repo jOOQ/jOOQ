@@ -416,6 +416,22 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     // ------------------------------------------------------------------------
 
     @Override
+    public boolean equals(Object that) {
+
+        // [#2144] Non-equality can be decided early, without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof AbstractTable) {
+            if (name.equals(((AbstractTable<?>) that).name)) {
+                return super.equals(that);
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    @Override
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation

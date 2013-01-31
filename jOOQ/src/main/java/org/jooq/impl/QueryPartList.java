@@ -178,17 +178,25 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
         return wrappedList.addAll(index, removeNulls(c));
     }
 
-    private final List<T> removeNulls(Collection<? extends T> c) {
-        List<T> list = new ArrayList<T>(c);
-        Iterator<T> it = list.iterator();
+    private final Collection<? extends T> removeNulls(Collection<? extends T> c) {
 
-        while (it.hasNext()) {
-            if (it.next() == null) {
-                it.remove();
+        // [#2145] Collections that contain nulls are quite rare, so it is wise
+        // to add a relatively cheap defender check to avoid unnecessary loops
+        if (c.contains(null)) {
+            List<T> list = new ArrayList<T>(c);
+            Iterator<T> it = list.iterator();
+
+            while (it.hasNext()) {
+                if (it.next() == null) {
+                    it.remove();
+                }
             }
-        }
 
-        return list;
+            return list;
+        }
+        else {
+            return c;
+        }
     }
 
     @Override

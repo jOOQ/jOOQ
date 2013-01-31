@@ -90,7 +90,7 @@
             <generatedAnnotation>false</generatedAnnotation>
             <records>true</records>
             <immutablePojos>true</immutablePojos>
-            <jpaAnnotations>true</jpaAnnotations>
+            <jpaAnnotations>false</jpaAnnotations>
         </generate>
         <target>
             <packageName>org.jooq.test.postgres.generatedclasses</packageName>

@@ -1096,6 +1096,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testFetchIntoTableRecordsWithUDTs() throws Exception {
+        if (cUAddressType() == null) {
+            log.info("SKIPPING", "Skipping batch store with UDT tests");
+            return;
+        }
+
+        // [#2137] Fetch a record containing a UDT into its TableRecord type
+        List<A> authors =
+        create().selectFrom(TAuthor())
+                .orderBy(TAuthor_ID())
+                .fetch()
+                .into(TAuthor().getRecordType());
+
+        assertEquals(2, authors.size());
+        assertNotNull(authors.get(0).getValue(TAuthor_ADDRESS()));
+        assertNotNull(authors.get(1).getValue(TAuthor_ADDRESS()));
+
+        assertEquals("Hampstead", on(authors.get(0).getValue(TAuthor_ADDRESS())).call("getCity").get());
+        assertEquals("Rio de Janeiro", on(authors.get(1).getValue(TAuthor_ADDRESS())).call("getCity").get());
+    }
+
+    @Test
     public void testFetchIntoTable() throws Exception {
         jOOQAbstractTest.reset = false;
 

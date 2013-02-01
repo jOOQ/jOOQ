@@ -94,6 +94,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         for (int i = 0; i < REPETITIONS_FIELD_ACCESS; i++) {
             book.setValue(TBook_ID(), i);
             book.setValue(TBook_AUTHOR_ID(), book.getValue(TBook_ID()));
+
+            book.setValue(TBook_PUBLISHED_IN(), i);
+            book.setValue(TBook_PUBLISHED_IN(), book.getValue(TBook_PUBLISHED_IN()));
         }
     }
 

@@ -54,7 +54,6 @@ import org.jooq.StoreQuery;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
-import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.DataChangedException;
@@ -74,13 +73,6 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
      * Generated UID
      */
     private static final long serialVersionUID      = 3216746611562261641L;
-
-    /**
-     * [#1537] This constant is used internally by jOOQ to omit the RETURNING
-     * clause in {@link Factory#batchStore(UpdatableRecord...)} calls for
-     * {@link SQLDialect#POSTGRES}
-     */
-    static final String       OMIT_RETURNING_CLAUSE = "JOOQ.OMIT_RETURNING_CLAUSE";
 
     public TableRecordImpl(Table<R> table) {
         super(table);
@@ -181,7 +173,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         // [#1002] Consider also identity columns of non-updatable records
         // [#1537] Avoid refreshing identity columns on batch inserts
         Collection<Field<?>> key = null;
-        if (!TRUE.equals(create.getData(OMIT_RETURNING_CLAUSE))) {
+        if (!TRUE.equals(create.getData(Utils.DATA_OMIT_RETURNING_CLAUSE))) {
             key = getReturning();
             insert.setReturning(key);
         }

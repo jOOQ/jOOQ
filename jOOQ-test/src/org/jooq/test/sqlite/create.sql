@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS t_book/
 DROP TABLE IF EXISTS t_book_details/
 DROP TABLE IF EXISTS t_author/
 DROP TABLE IF EXISTS t_language/
+DROP TABLE IF EXISTS x_test_case_2025/
 DROP TABLE IF EXISTS x_test_case_71/
 DROP TABLE IF EXISTS x_test_case_64_69/
 DROP TABLE IF EXISTS x_test_case_85/

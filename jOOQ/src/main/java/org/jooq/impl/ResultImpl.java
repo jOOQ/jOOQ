@@ -983,11 +983,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final <T> List<T> into(Class<? extends T> type) {
-        List<T> list = new ArrayList<T>(size());
+    public final <E> List<E> into(Class<? extends E> type) {
+        List<E> list = new ArrayList<E>(size());
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
 
         for (R record : this) {
-            list.add(record.into(type));
+            list.add(mapper.map(record));
         }
 
         return list;

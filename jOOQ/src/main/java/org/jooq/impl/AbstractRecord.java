@@ -39,24 +39,14 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.impl.Utils.getAnnotatedGetter;
 import static org.jooq.impl.Utils.getAnnotatedMembers;
-import static org.jooq.impl.Utils.getAnnotatedSetters;
 import static org.jooq.impl.Utils.getMatchingGetter;
 import static org.jooq.impl.Utils.getMatchingMembers;
-import static org.jooq.impl.Utils.getMatchingSetters;
-import static org.jooq.impl.Utils.getPropertyName;
 import static org.jooq.impl.Utils.hasColumnAnnotations;
-import static org.jooq.tools.reflect.Reflect.accessible;
 
-import java.beans.ConstructorProperties;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +62,6 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
-import org.jooq.tools.reflect.Reflect;
 
 /**
  * A general base class for all {@link Record} types
@@ -453,24 +442,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <E> E into(Class<? extends E> type) {
-        try {
-            if (type.isArray()) {
-                return intoArray(type);
-            }
-            else {
-                return intoPOJO(type);
-            }
-        }
-
-        // Pass MappingExceptions on to client code
-        catch (MappingException e) {
-            throw e;
-        }
-
-        // All other reflection exceptions are intercepted
-        catch (Exception e) {
-            throw new MappingException("An error ocurred when mapping record to " + type, e);
-        }
+        return new ReflectionMapper<Record, E>(fields.fields(), type).map(this);
     }
 
     @Override
@@ -482,12 +454,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         Class<E> type = (Class<E>) object.getClass();
 
         try {
-            if (type.isArray()) {
-                return (E) intoArray((Object[]) object, type.getComponentType());
-            }
-            else {
-                return intoMutablePOJO(type, object);
-            }
+            return new ReflectionMapper<Record, E>(fields.fields(), type, object).map(this);
         }
 
         // Pass MappingExceptions on to client code
@@ -499,190 +466,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         catch (Exception e) {
             throw new MappingException("An error ocurred when mapping record to " + type, e);
         }
-    }
-
-    /**
-     * Convert this record into an array of a given type.
-     * <p>
-     * The supplied type is usually <code>Object[]</code>, but in some cases, it
-     * may make sense to supply <code>String[]</code>, <code>Integer[]</code>
-     * etc.
-     */
-    private final <E> E intoArray(Class<? extends E> type) {
-        int size = size();
-        Class<?> componentType = type.getComponentType();
-        Object[] result = (Object[]) Array.newInstance(componentType, size);
-
-        return (E) intoArray(result, componentType);
-    }
-
-    /**
-     * Convert this record into an array of a given component type.
-     */
-    private final Object[] intoArray(Object[] result, Class<?> componentType) {
-        int size = size();
-
-        // Just as in Collection.toArray(Object[]), return a new array in case
-        // sizes don't match
-        if (size > result.length) {
-            result = (Object[]) Array.newInstance(componentType, size);
-        }
-
-        for (int i = 0; i < size; i++) {
-            result[i] = Convert.convert(getValue(i), componentType);
-        }
-
-        return result;
-    }
-
-    /**
-     * Convert this record into a POJO
-     */
-    private final <E> E intoPOJO(Class<? extends E> type) throws Exception {
-
-        // If a default, no argument constructor is present, use that one.
-        try {
-            E result;
-
-            // [#1470] Return a proxy if the supplied type is an interface
-            if (Modifier.isAbstract(type.getModifiers())) {
-                result = Reflect.on(HashMap.class).create().as(type);
-            }
-
-            // [#1340] Allow for using non-public default constructors
-            else {
-                result = accessible(type.getDeclaredConstructor()).newInstance();
-            }
-
-            return intoMutablePOJO(type, result);
-        }
-
-        // [#1336] If no default constructor is present, check if there is a
-        // "matching" constructor with the same number of fields as this record
-        catch (NoSuchMethodException e) {
-            return intoImmutablePOJO(type);
-        }
-    }
-
-    /**
-     * Convert this record into an "immutable" POJO (final fields, "matching"
-     * constructor).
-     */
-    private final <E> E intoImmutablePOJO(Class<? extends E> type) throws Exception {
-        Constructor<E>[] constructors = (Constructor<E>[]) type.getDeclaredConstructors();
-
-        // [#1837] If any java.beans.ConstructorProperties annotations are
-        // present use those rather than matching constructors by the number of
-        // arguments
-        for (Constructor<E> constructor : constructors) {
-            ConstructorProperties properties = constructor.getAnnotation(ConstructorProperties.class);
-
-            if (properties != null) {
-                return intoImmutablePOJO(type, constructor, properties);
-            }
-        }
-
-        // Without ConstructorProperties, match constructors by matching
-        // argument length
-        for (Constructor<E> constructor : constructors) {
-            Class<?>[] parameterTypes = constructor.getParameterTypes();
-
-            // Match the first constructor by parameter length
-            if (parameterTypes.length == size()) {
-                Object[] converted = Convert.convert(intoArray(), parameterTypes);
-                return accessible(constructor).newInstance(converted);
-            }
-        }
-
-        throw new MappingException("No matching constructor found on type " + type + " for record " + this);
-    }
-
-    /**
-     * Create an immutable POJO given a constructor and its associated JavaBeans
-     * {@link ConstructorProperties}
-     */
-    private final <E> E intoImmutablePOJO(Class<? extends E> type, Constructor<E> constructor, ConstructorProperties properties) throws Exception {
-        boolean useAnnotations = hasColumnAnnotations(type);
-        List<String> propertyNames = Arrays.asList(properties.value());
-
-        Class<?>[] parameterTypes = constructor.getParameterTypes();
-        Object[] parameterValues = new Object[parameterTypes.length];
-
-        for (Field<?> field : fields) {
-            List<java.lang.reflect.Field> members;
-            Method method;
-
-            // Annotations are available and present
-            if (useAnnotations) {
-                members = getAnnotatedMembers(type, field.getName());
-                method = getAnnotatedGetter(type, field.getName());
-            }
-
-            // No annotations are present
-            else {
-                members = getMatchingMembers(type, field.getName());
-                method = getMatchingGetter(type, field.getName());
-            }
-
-            for (java.lang.reflect.Field member : members) {
-                int index = propertyNames.indexOf(member.getName());
-
-                if (index >= 0) {
-                    parameterValues[index] = getValue(field);
-                }
-            }
-
-            if (method != null) {
-                String name = getPropertyName(method.getName());
-                int index = propertyNames.indexOf(name);
-
-                if (index >= 0) {
-                    parameterValues[index] = getValue(field);
-                }
-            }
-        }
-
-        Object[] converted = Convert.convert(parameterValues, parameterTypes);
-        return accessible(constructor).newInstance(converted);
-    }
-
-    /**
-     * Convert this record into a "mutable" POJO (non-final fields or setters
-     * available)
-     */
-    private final <E> E intoMutablePOJO(Class<? extends E> type, E result) throws Exception {
-        boolean useAnnotations = hasColumnAnnotations(type);
-
-        for (Field<?> field : fields) {
-            List<java.lang.reflect.Field> members;
-            List<java.lang.reflect.Method> methods;
-
-            // Annotations are available and present
-            if (useAnnotations) {
-                members = getAnnotatedMembers(type, field.getName());
-                methods = getAnnotatedSetters(type, field.getName());
-            }
-
-            // No annotations are present
-            else {
-                members = getMatchingMembers(type, field.getName());
-                methods = getMatchingSetters(type, field.getName());
-            }
-
-            for (java.lang.reflect.Field member : members) {
-
-                // [#935] Avoid setting final fields
-                if ((member.getModifiers() & Modifier.FINAL) == 0) {
-                    into(result, member, field);
-                }
-            }
-
-            for (java.lang.reflect.Method method : methods) {
-                method.invoke(result, getValue(field, method.getParameterTypes()[0]));
-            }
-        }
-
-        return result;
     }
 
     @Override
@@ -826,40 +609,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             if (sourceField != null) {
                 Utils.setValue(this, field, source, sourceField);
             }
-        }
-    }
-
-    private final void into(Object result, java.lang.reflect.Field member, Field<?> field) throws IllegalAccessException {
-        Class<?> mType = member.getType();
-
-        if (mType.isPrimitive()) {
-            if (mType == byte.class) {
-                member.setByte(result, getValue(field, byte.class));
-            }
-            else if (mType == short.class) {
-                member.setShort(result, getValue(field, short.class));
-            }
-            else if (mType == int.class) {
-                member.setInt(result, getValue(field, int.class));
-            }
-            else if (mType == long.class) {
-                member.setLong(result, getValue(field, long.class));
-            }
-            else if (mType == float.class) {
-                member.setFloat(result, getValue(field, float.class));
-            }
-            else if (mType == double.class) {
-                member.setDouble(result, getValue(field, double.class));
-            }
-            else if (mType == boolean.class) {
-                member.setBoolean(result, getValue(field, boolean.class));
-            }
-            else if (mType == char.class) {
-                member.setChar(result, getValue(field, char.class));
-            }
-        }
-        else {
-            member.set(result, getValue(field, mType));
         }
     }
 

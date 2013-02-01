@@ -45,6 +45,7 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
@@ -77,12 +78,22 @@ public class BenchmarkTests<
     T785 extends TableRecord<T785>>
 extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> {
 
+    private static final int    REPETITIONS_RECORD_INTO  = 2000;
     private static final int    REPETITIONS_FIELD_ACCESS = 1000000;
     private static final int    REPETITIONS_SELECT       = 100;
     private static final String RANDOM                   = "" + new Random().nextLong();
 
     public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testBenchmarkRecordInto() throws Exception {
+        Result<B> books = create().fetch(TBook());
+
+        for (int i = 0; i < REPETITIONS_RECORD_INTO; i++) {
+            books.into(TBook().getRecordType());
+        }
     }
 
     @Test

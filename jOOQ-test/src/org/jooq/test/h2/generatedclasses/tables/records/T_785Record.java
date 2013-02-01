@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = 139356493;
+	private static final long serialVersionUID = -1849786739;
 
 	/**
 	 * Setter for <code>PUBLIC.T_785.ID</code>. 
@@ -68,7 +68,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.String, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.String, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

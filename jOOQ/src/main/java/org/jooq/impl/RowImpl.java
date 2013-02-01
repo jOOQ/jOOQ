@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.vals;
 
@@ -73,6 +72,7 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -162,16 +162,18 @@ implements
      */
     private static final long serialVersionUID = -929427349071556318L;
 
-    final Field<?>[]          fields;
+    final FieldList           fields;
 
     RowImpl(Field<?>... fields) {
         super();
 
-        this.fields = fields;
+        this.fields = new FieldList(fields);
     }
 
     RowImpl(Collection<? extends Field<?>> fields) {
-        this(fields.toArray(new Field[fields.size()]));
+        super();
+
+        this.fields = new FieldList(fields);
     }
 
     // ------------------------------------------------------------------------
@@ -195,7 +197,7 @@ implements
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(fields);
+        context.bind((QueryPart) fields);
     }
 
     // ------------------------------------------------------------------------
@@ -204,45 +206,46 @@ implements
 
     @Override
     public final int size() {
-        return fields.length;
+        return fields.size();
     }
 
     @Override
     public final <T> Field<T> field(Field<T> field) {
-        return new FieldList(fields).field(field);
+        return fields.field(field);
     }
 
     @Override
     public final Field<?> field(String name) {
-        return new FieldList(fields).field(name);
+        return fields.field(name);
     }
 
     @Override
     public final Field<?> field(int index) {
-        return new FieldList(fields).field(index);
+        return fields.field(index);
     }
-    
+
     @Override
     public final Field<?>[] fields() {
-        return fields.clone();
+        return fields.fields();
     }
 
     @Override
     public final int indexOf(Field<?> field) {
-        return new FieldList(fields).indexOf(field);
+        return fields.indexOf(field);
     }
 
     @Override
     public final int indexOf(String fieldName) {
-        return new FieldList(fields).indexOf(fieldName);
+        return fields.indexOf(fieldName);
     }
 
     @Override
     public final Class<?>[] types() {
-        Class<?>[] result = new Class[fields.length];
+        int size = fields.size();
+        Class<?>[] result = new Class[size];
 
-        for (int i = 0; i < fields.length; i++) {
-            result[i] = fields[i].getType();
+        for (int i = 0; i < size; i++) {
+            result[i] = fields.field(i).getType();
         }
 
         return result;
@@ -250,123 +253,124 @@ implements
 
     @Override
     public final DataType<?>[] dataTypes() {
-    	DataType<?>[] result = new DataType[fields.length];
-    	
-    	for (int i = 0; i < fields.length; i++) {
-    		result[i] = fields[i].getDataType();
-    	}
-    	
-    	return result;
+        int size = fields.size();
+        DataType<?>[] result = new DataType[size];
+        
+        for (int i = 0; i < size; i++) {
+            result[i] = fields.field(i).getDataType();
+        }
+        
+        return result;
     }
 
     @Override
     public final Field<T1> field1() {
-        return (Field<T1>) fields[0];
+        return (Field<T1>) fields.field(0);
     }
 
     @Override
     public final Field<T2> field2() {
-        return (Field<T2>) fields[1];
+        return (Field<T2>) fields.field(1);
     }
 
     @Override
     public final Field<T3> field3() {
-        return (Field<T3>) fields[2];
+        return (Field<T3>) fields.field(2);
     }
 
     @Override
     public final Field<T4> field4() {
-        return (Field<T4>) fields[3];
+        return (Field<T4>) fields.field(3);
     }
 
     @Override
     public final Field<T5> field5() {
-        return (Field<T5>) fields[4];
+        return (Field<T5>) fields.field(4);
     }
 
     @Override
     public final Field<T6> field6() {
-        return (Field<T6>) fields[5];
+        return (Field<T6>) fields.field(5);
     }
 
     @Override
     public final Field<T7> field7() {
-        return (Field<T7>) fields[6];
+        return (Field<T7>) fields.field(6);
     }
 
     @Override
     public final Field<T8> field8() {
-        return (Field<T8>) fields[7];
+        return (Field<T8>) fields.field(7);
     }
 
     @Override
     public final Field<T9> field9() {
-        return (Field<T9>) fields[8];
+        return (Field<T9>) fields.field(8);
     }
 
     @Override
     public final Field<T10> field10() {
-        return (Field<T10>) fields[9];
+        return (Field<T10>) fields.field(9);
     }
 
     @Override
     public final Field<T11> field11() {
-        return (Field<T11>) fields[10];
+        return (Field<T11>) fields.field(10);
     }
 
     @Override
     public final Field<T12> field12() {
-        return (Field<T12>) fields[11];
+        return (Field<T12>) fields.field(11);
     }
 
     @Override
     public final Field<T13> field13() {
-        return (Field<T13>) fields[12];
+        return (Field<T13>) fields.field(12);
     }
 
     @Override
     public final Field<T14> field14() {
-        return (Field<T14>) fields[13];
+        return (Field<T14>) fields.field(13);
     }
 
     @Override
     public final Field<T15> field15() {
-        return (Field<T15>) fields[14];
+        return (Field<T15>) fields.field(14);
     }
 
     @Override
     public final Field<T16> field16() {
-        return (Field<T16>) fields[15];
+        return (Field<T16>) fields.field(15);
     }
 
     @Override
     public final Field<T17> field17() {
-        return (Field<T17>) fields[16];
+        return (Field<T17>) fields.field(16);
     }
 
     @Override
     public final Field<T18> field18() {
-        return (Field<T18>) fields[17];
+        return (Field<T18>) fields.field(17);
     }
 
     @Override
     public final Field<T19> field19() {
-        return (Field<T19>) fields[18];
+        return (Field<T19>) fields.field(18);
     }
 
     @Override
     public final Field<T20> field20() {
-        return (Field<T20>) fields[19];
+        return (Field<T20>) fields.field(19);
     }
 
     @Override
     public final Field<T21> field21() {
-        return (Field<T21>) fields[20];
+        return (Field<T21>) fields.field(20);
     }
 
     @Override
     public final Field<T22> field22() {
-        return (Field<T22>) fields[21];
+        return (Field<T22>) fields.field(21);
     }
 
     // ------------------------------------------------------------------------
@@ -9537,8 +9541,9 @@ implements
     // ------------------------------------------------------------------------
     // XXX: Other
     // ------------------------------------------------------------------------
+
     @Override
     public final Iterator<Field<?>> iterator() {
-        return asList(fields).iterator();
+        return fields.iterator();
     }
 }

@@ -88,7 +88,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Row valuesRow() {
-        return new RowImpl(vals(intoArray(), fields.fields));
+        return new RowImpl(vals(intoArray(), fields.fields.fields()));
     }
 
     @Override

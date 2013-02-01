@@ -1117,7 +1117,6 @@ class Rows extends Generators {
         «classHeader»
         package org.jooq.impl;
 
-        import static java.util.Arrays.asList;
         import static org.jooq.impl.Factory.row;
         import static org.jooq.impl.Factory.vals;
 
@@ -1136,6 +1135,7 @@ class Rows extends Generators {
         import org.jooq.Condition;
         import org.jooq.DataType;
         import org.jooq.Field;
+        import org.jooq.QueryPart;
         import org.jooq.Record;
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         import org.jooq.Record«degree»;
@@ -1168,16 +1168,18 @@ class Rows extends Generators {
              */
             private static final long serialVersionUID = -929427349071556318L;
 
-            final Field<?>[]          fields;
+            final FieldList           fields;
 
             RowImpl(Field<?>... fields) {
                 super();
 
-                this.fields = fields;
+                this.fields = new FieldList(fields);
             }
 
             RowImpl(Collection<? extends Field<?>> fields) {
-                this(fields.toArray(new Field[fields.size()]));
+                super();
+
+                this.fields = new FieldList(fields);
             }
 
             // ------------------------------------------------------------------------
@@ -1201,7 +1203,7 @@ class Rows extends Generators {
 
             @Override
             public final void bind(BindContext context) {
-                context.bind(fields);
+                context.bind((QueryPart) fields);
             }
 
             // ------------------------------------------------------------------------
@@ -1210,45 +1212,46 @@ class Rows extends Generators {
 
             @Override
             public final int size() {
-                return fields.length;
+                return fields.size();
             }
 
             @Override
             public final <T> Field<T> field(Field<T> field) {
-                return new FieldList(fields).field(field);
+                return fields.field(field);
             }
 
             @Override
             public final Field<?> field(String name) {
-                return new FieldList(fields).field(name);
+                return fields.field(name);
             }
 
             @Override
             public final Field<?> field(int index) {
-                return new FieldList(fields).field(index);
+                return fields.field(index);
             }
-            
+
             @Override
             public final Field<?>[] fields() {
-                return fields.clone();
+                return fields.fields();
             }
 
             @Override
             public final int indexOf(Field<?> field) {
-                return new FieldList(fields).indexOf(field);
+                return fields.indexOf(field);
             }
 
             @Override
             public final int indexOf(String fieldName) {
-                return new FieldList(fields).indexOf(fieldName);
+                return fields.indexOf(fieldName);
             }
 
             @Override
             public final Class<?>[] types() {
-                Class<?>[] result = new Class[fields.length];
+                int size = fields.size();
+                Class<?>[] result = new Class[size];
         
-                for (int i = 0; i < fields.length; i++) {
-                    result[i] = fields[i].getType();
+                for (int i = 0; i < size; i++) {
+                    result[i] = fields.field(i).getType();
                 }
         
                 return result;
@@ -1256,19 +1259,20 @@ class Rows extends Generators {
 
             @Override
             public final DataType<?>[] dataTypes() {
-            	DataType<?>[] result = new DataType[fields.length];
-            	
-            	for (int i = 0; i < fields.length; i++) {
-            		result[i] = fields[i].getDataType();
-            	}
-            	
-            	return result;
+                int size = fields.size();
+                DataType<?>[] result = new DataType[size];
+                
+                for (int i = 0; i < size; i++) {
+                    result[i] = fields.field(i).getDataType();
+                }
+                
+                return result;
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Field<T«degree»> field«degree»() {
-                return (Field<T«degree»>) fields[«degree - 1»];
+                return (Field<T«degree»>) fields.field(«degree - 1»);
             }
             «ENDFOR»
 
@@ -2143,9 +2147,10 @@ class Rows extends Generators {
             // ------------------------------------------------------------------------
             // XXX: Other
             // ------------------------------------------------------------------------
+
             @Override
             public final Iterator<Field<?>> iterator() {
-                return asList(fields).iterator();
+                return fields.iterator();
             }
         }
         ''');

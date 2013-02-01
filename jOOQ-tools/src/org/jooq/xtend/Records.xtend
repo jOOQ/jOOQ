@@ -181,7 +181,7 @@ class Records extends Generators {
         
             @Override
             public final RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> valuesRow() {
-                return new RowImpl(vals(intoArray(), fields.fields));
+                return new RowImpl(vals(intoArray(), fields.fields()));
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 

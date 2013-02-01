@@ -329,7 +329,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final void refresh() {
-        refresh(fields);
+        refresh(fields.fields);
     }
 
     @Override

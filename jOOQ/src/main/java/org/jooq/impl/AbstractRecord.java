@@ -79,6 +79,7 @@ import org.jooq.tools.reflect.Reflect;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings({ "rawtypes", "unchecked" })
 abstract class AbstractRecord extends AbstractStore implements Record {
 
     /**
@@ -86,15 +87,15 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     private static final long serialVersionUID = -6052512608911220404L;
 
-    final Field<?>[]          fields;
+    final RowImpl             fields;
     Value<?>[]                values;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
-        this.fields = fields.toArray(new Field[fields.size()]);
+        this.fields = new RowImpl(fields);
     }
 
     AbstractRecord(Field<?>... fields) {
-        this.fields = fields;
+        this.fields = new RowImpl(fields);
     }
 
     // ------------------------------------------------------------------------
@@ -133,12 +134,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final Field<?> field(int index) {
-        return index >= 0 && index < fields.length ? fields[index] : null;
+        return index >= 0 && index < fields.size() ? fields.field(index) : null;
     }
 
     @Override
     public final Field<?>[] fields() {
-        return fields.clone();
+        return fields.fields();
     }
 
     // ------------------------------------------------------------------------
@@ -147,7 +148,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final int size() {
-        return fields.length;
+        return fields.size();
     }
 
     @Override
@@ -220,7 +221,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return getValue(field(fieldName));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final Object getValue(String fieldName, Object defaultValue) {
         return getValue((Field<Object>) field(fieldName), defaultValue);
@@ -248,7 +248,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return result == null ? defaultValue : result;
     }
 
-    @SuppressWarnings("unchecked")
     final <T> Value<T> getValue0(int index) {
         Value<?>[] v = getValues();
 
@@ -265,7 +264,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     final Value<?>[] getValues() {
         if (values == null) {
-            values = new Value<?>[fields.length];
+            values = new Value<?>[fields.size()];
 
             for (int i = 0; i < values.length; i++) {
                 values[i] = new Value<Object>(null);
@@ -336,7 +335,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        AbstractRecord result = Utils.newRecord(getClass(), fields, getConfiguration());
+        AbstractRecord result = Utils.newRecord(getClass(), fields.fields, getConfiguration());
         Value<?>[] v = getValues();
 
         for (int i = 0; i < v.length; i++) {
@@ -346,7 +345,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return result;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <T> T original(Field<T> field) {
         return (T) original(fieldsRow().indexOf(field));
@@ -441,8 +439,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     public final Map<String, Object> intoMap() {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
 
-        for (int i = 0; i < fields.length; i++) {
-            Field<?> field = fields[i];
+        int size = fields.size();
+        for (int i = 0; i < size; i++) {
+            Field<?> field = fields.field(i);
 
             if (map.put(field.getName(), getValue(i)) != null) {
                 throw new InvalidResultException("Field " + field.getName() + " is not unique in Record : " + this);
@@ -474,7 +473,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final <E> E into(E object) {
         if (object == null) {
@@ -510,7 +508,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      * may make sense to supply <code>String[]</code>, <code>Integer[]</code>
      * etc.
      */
-    @SuppressWarnings("unchecked")
     private final <E> E intoArray(Class<? extends E> type) {
         int size = size();
         Class<?> componentType = type.getComponentType();
@@ -571,7 +568,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      * Convert this record into an "immutable" POJO (final fields, "matching"
      * constructor).
      */
-    @SuppressWarnings("unchecked")
     private final <E> E intoImmutablePOJO(Class<? extends E> type) throws Exception {
         Constructor<E>[] constructors = (Constructor<E>[]) type.getDeclaredConstructors();
 
@@ -732,7 +728,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final ResultSet intoResultSet() {
-        ResultImpl<Record> result = new ResultImpl<Record>(getConfiguration(), fields);
+        ResultImpl<Record> result = new ResultImpl<Record>(getConfiguration(), fields.fields);
         result.add(this);
         return result.intoResultSet();
     }
@@ -742,7 +738,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return mapper.map(this);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final void from(Object source) {
         if (source == null) return;
@@ -800,8 +795,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void fromMap(Map<String, ?> map) {
-        for (int i = 0; i < fields.length; i++) {
-            Field<?> field = fields[i];
+        int size = fields.size();
+        for (int i = 0; i < size; i++) {
+            Field<?> field = fields.field(i);
             String name = field.getName();
 
             // Set only those values contained in the map
@@ -813,8 +809,9 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final void fromArray(Object... array) {
-        for (int i = 0; i < fields.length && i < array.length; i++) {
-            Utils.setValue(this, fields[i], array[i]);
+        int size = fields.size();
+        for (int i = 0; i < size && i < array.length; i++) {
+            Utils.setValue(this, fields.field(i), array[i]);
         }
     }
 
@@ -908,12 +905,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public String toString() {
-        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields);
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields.fields);
         result.add(this);
         return result.toString();
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public int compareTo(Record that) {
         // Note: keep this implementation in-sync with AbstractStore.equals()!
@@ -1010,7 +1006,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     /**
      * Compare two arrays
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     final int compare(Object[] array1, Object[] array2) {
         int length = Math.min(array1.length, array2.length);
 

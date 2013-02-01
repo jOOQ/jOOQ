@@ -37,8 +37,6 @@
 package org.jooq.util;
 
 
-import static org.jooq.util.GenerationUtil.range;
-
 import java.io.File;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
@@ -70,7 +68,6 @@ import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.Executor;
-import org.jooq.impl.Factory;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
@@ -544,13 +541,13 @@ public class JavaGenerator extends AbstractGenerator {
             // fieldsRow()
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s%s<%s> fieldsRow() {", Row.class, degree, rowType);
-            out.tab(2).println("return %s.row([[field%s()]]);", Factory.class, range(1, degree));
+            out.tab(2).println("return (%s%s) super.fieldsRow();", Row.class, degree);
             out.tab(1).println("}");
 
             // valuesRow()
             out.tab(1).overrideInherit();
             out.tab(1).println("public %s%s<%s> valuesRow() {", Row.class, degree, rowType);
-            out.tab(2).println("return %s.row([[value%s()]]);", Factory.class, range(1, degree));
+            out.tab(2).println("return (%s%s) super.valuesRow();", Row.class, degree);
             out.tab(1).println("}");
 
             // field[N]()

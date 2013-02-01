@@ -75,10 +75,9 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     /*
      * Subclasses may override this method
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Row fieldsRow() {
-        return new RowImpl(fields);
+        return fields;
     }
 
     /*
@@ -87,7 +86,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Row valuesRow() {
-        return new RowImpl(vals(intoArray(), fields));
+        return new RowImpl(vals(intoArray(), fields.fields));
     }
 
     @SuppressWarnings("unchecked")

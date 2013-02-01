@@ -1168,7 +1168,7 @@ class Rows extends Generators {
              */
             private static final long serialVersionUID = -929427349071556318L;
 
-            private final Field<?>[]  fields;
+            final Field<?>[]          fields;
 
             RowImpl(Field<?>... fields) {
                 super();

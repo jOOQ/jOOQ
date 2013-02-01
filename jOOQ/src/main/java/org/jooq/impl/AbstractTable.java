@@ -59,6 +59,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
@@ -421,7 +422,7 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
         // [#2144] Non-equality can be decided early, without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof AbstractTable) {
-            if (name.equals(((AbstractTable<?>) that).name)) {
+            if (StringUtils.equals(name, (((AbstractTable<?>) that).name))) {
                 return super.equals(that);
             }
 

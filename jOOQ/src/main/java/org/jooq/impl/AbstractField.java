@@ -75,6 +75,7 @@ import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
 
 /**
  * @author Lukas Eder
@@ -1610,7 +1611,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
         // [#2144] Non-equality can be decided early, without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof AbstractField) {
-            if (name.equals(((AbstractField<?>) that).name)) {
+            if (StringUtils.equals(name, (((AbstractField<?>) that).name))) {
                 return super.equals(that);
             }
 

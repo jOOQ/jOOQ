@@ -45,6 +45,7 @@ import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.UDT;
+import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for database schemata
@@ -150,7 +151,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
         // [#2144] SchemaImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof SchemaImpl) {
-            return getName().equals(((SchemaImpl) that).getName());
+            return StringUtils.equals(getName(), (((SchemaImpl) that).getName()));
         }
 
         return super.equals(that);

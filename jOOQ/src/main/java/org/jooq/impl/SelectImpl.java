@@ -1184,7 +1184,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
+    public final <H extends RecordHandler<? super R>> H fetchInto(H handler) {
         return getDelegate().fetchInto(handler);
     }
 

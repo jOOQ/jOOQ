@@ -179,13 +179,13 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H fetchOneInto(H handler) {
+    public final <H extends RecordHandler<? super R>> H fetchOneInto(H handler) {
         handler.next(fetchOne());
         return handler;
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
+    public final <H extends RecordHandler<? super R>> H fetchInto(H handler) {
         while (hasNext()) {
             fetchOneInto(handler);
         }

@@ -1006,7 +1006,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H into(H handler) {
+    public final <H extends RecordHandler<? super R>> H into(H handler) {
         for (R record : this) {
             handler.next(record);
         }

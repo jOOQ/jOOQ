@@ -66,18 +66,18 @@ public interface Row extends QueryPart, Iterable<Field<?>> {
     /**
      * Get a specific field from this row.
      *
-     * @param name The field to fetch
+     * @param fieldName The field to fetch
      * @return The field with the given name
      */
-    Field<?> field(String name);
+    Field<?> field(String fieldName);
 
     /**
      * Get a specific field from this row.
      *
-     * @param index The field's index of the field to fetch
+     * @param fieldIndex The field's index of the field to fetch
      * @return The field with the given name
      */
-    Field<?> field(int index);
+    Field<?> field(int fieldIndex);
 
     /**
      * Get all fields from this row.
@@ -113,12 +113,44 @@ public interface Row extends QueryPart, Iterable<Field<?>> {
     Class<?>[] types();
 
     /**
+     * Get the type for a given field index
+     *
+     * @param fieldIndex The field's index of the field's type to fetch
+     * @return The field's type
+     */
+    Class<?> type(int fieldIndex);
+
+    /**
+     * Get the type for a given field name
+     *
+     * @param fieldName The field's name of the field's type to fetch
+     * @return The field's type
+     */
+    Class<?> type(String fieldName);
+
+    /**
      * Get an array of data types for this row.
      * <p>
      * Entries in the resulting array correspond to {@link Field#getDataType()}
      * for the corresponding <code>Field</code> in {@link #fields()}
      */
     DataType<?>[] dataTypes();
+
+    /**
+     * Get the data type for a given field index
+     *
+     * @param fieldIndex The field's index of the field's data type to fetch
+     * @return The field's data type
+     */
+    DataType<?> dataType(int fieldIndex);
+
+    /**
+     * Get the data type for a given field name
+     *
+     * @param fieldName The field's name of the field's data type to fetch
+     * @return The field's data type
+     */
+    DataType<?> dataType(String fieldName);
 
     // ------------------------------------------------------------------------
     // [NOT] NULL predicates

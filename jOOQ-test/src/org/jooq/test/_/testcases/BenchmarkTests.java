@@ -41,6 +41,7 @@ import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.Random;
 
+import org.jooq.ExecuteListener;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -119,7 +120,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Executor create = create();
         create.getSettings().setExecuteLogging(false);
-        create.getSettings().setExecuteListeners(Collections.<String>emptyList());
+        create.setExecuteListeners(Collections.<ExecuteListener>emptyList());
 
         // Dry-run to avoid side-effects
         testBenchmarkFullExecution(create, 1);

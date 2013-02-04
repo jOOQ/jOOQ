@@ -47,7 +47,7 @@ public class TestStatisticsListener extends DefaultExecuteListener {
     public static Map<ExecuteType, Integer> STATISTICS = new HashMap<ExecuteType, Integer>();
 
     @Override
-    public void start(ExecuteContext ctx) {
+    public synchronized void start(ExecuteContext ctx) {
         Integer count = STATISTICS.get(ctx.type());
 
         if (count == null) {

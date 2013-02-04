@@ -35,9 +35,6 @@
       <!-- When set to true, this will add jOOQ's default logging ExecuteListeners -->
       <element name="executeLogging" type="boolean" minOccurs="0" maxOccurs="1" default="true"/>
 
-      <!-- The event listeners to be notified upon execution events -->
-      <element name="executeListeners" type="jooq-runtime:ExecuteListeners" minOccurs="0" maxOccurs="1"/>
-
       <!-- Whether store() and delete() methods should be executed with optimistic locking -->
       <element name="executeWithOptimisticLocking" type="boolean" minOccurs="0" maxOccurs="1" default="false"/>
       
@@ -150,12 +147,4 @@
       <enumeration value="UPPER"/>
     </restriction>
   </simpleType>
-
-  <complexType name="ExecuteListeners">
-    <sequence>
-
-      <!-- An event listener implementing org.jooq.ExecuteListener -->
-      <element name="executeListener" type="string" minOccurs="0" maxOccurs="unbounded"/>
-    </sequence>
-  </complexType>
 </schema>

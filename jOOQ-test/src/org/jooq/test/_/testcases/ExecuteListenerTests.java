@@ -63,7 +63,6 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.Executor;
@@ -100,8 +99,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerCustomException() throws Exception {
-        Executor create = create(new Settings()
-            .withExecuteListeners(CustomExceptionListener.class.getName()));
+        Executor create = create();
+        create.getExecuteListeners().add(new CustomExceptionListener());
 
         try {
             create.fetch("invalid sql");
@@ -120,8 +119,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
-        Executor create = create(new Settings()
-            .withExecuteListeners(ResultQueryListener.class.getName()));
+        Executor create = create();
+        create.getExecuteListeners().add(new ResultQueryListener());
 
         create.setData("Foo", "Bar");
         create.setData("Bar", "Baz");
@@ -459,8 +458,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        Executor create = create(new Settings()
-            .withExecuteListeners(BatchSingleListener.class.getName()));
+        Executor create = create();
+        create.getExecuteListeners().add(new BatchSingleListener());
 
         create.setData("Foo", "Bar");
         create.setData("Bar", "Baz");
@@ -668,8 +667,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testExecuteListenerOnBatchMultiple() {
         jOOQAbstractTest.reset = false;
 
-        Executor create = create(new Settings()
-            .withExecuteListeners(BatchMultipleListener.class.getName()));
+        Executor create = create();
+        create.getExecuteListeners().add(new BatchMultipleListener());
 
         create.setData("Foo", "Bar");
         create.setData("Bar", "Baz");
@@ -889,7 +888,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerFetchLazyTest() throws Exception {
-        Executor create = create(new Settings().withExecuteListeners(FetchLazyListener.class.getName()));
+        Executor create = create();
+        create.getExecuteListeners().add(new FetchLazyListener());
         FetchLazyListener.reset();
 
         create.selectFrom(TAuthor()).fetch();

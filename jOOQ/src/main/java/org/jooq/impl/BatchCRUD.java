@@ -38,7 +38,6 @@ package org.jooq.impl;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,8 +50,6 @@ import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.Query;
 import org.jooq.UpdatableRecord;
-import org.jooq.conf.Settings;
-import org.jooq.conf.SettingsTools;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -96,18 +93,18 @@ class BatchCRUD implements Batch {
     private final int[] executePrepared() {
         Map<String, List<Query>> queries = new LinkedHashMap<String, List<Query>>();
 
-        Settings work = create.getSettings();
-        Settings orig = SettingsTools.clone(work);
+        Boolean executeLogging = create.getSettings().isExecuteLogging();
+        QueryCollector collector = new QueryCollector();
 
         try {
             // [#1537] Communicate with UpdatableRecordImpl
             create.setData(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
 
             // Add the QueryCollector to intercept query execution after rendering
-            work.setExecuteListeners(Arrays.asList(QueryCollector.class.getName()));
+            create.getExecuteListeners().add(collector);
 
             // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
-            work.setExecuteLogging(false);
+            create.getSettings().setExecuteLogging(false);
 
             for (int i = 0; i < records.length; i++) {
                 Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
@@ -142,8 +139,8 @@ class BatchCRUD implements Batch {
         finally {
             create.getData().remove(Utils.DATA_OMIT_RETURNING_CLAUSE);
 
-            work.setExecuteListeners(orig.getExecuteListeners());
-            work.setExecuteLogging(orig.isExecuteLogging());
+            create.getExecuteListeners().remove(collector);
+            create.getSettings().setExecuteLogging(executeLogging);
         }
 
         // Execute one batch statement for each identical SQL statement. Every
@@ -174,12 +171,10 @@ class BatchCRUD implements Batch {
 
     private final int[] executeStatic() {
         List<Query> queries = new ArrayList<Query>();
-
-        Settings work = create.getSettings();
-        Settings orig = SettingsTools.clone(work);
+        QueryCollector collector = new QueryCollector();
 
         try {
-            work.setExecuteListeners(Arrays.asList(QueryCollector.class.getName()));
+            create.getExecuteListeners().add(collector);
 
             for (int i = 0; i < records.length; i++) {
                 Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
@@ -203,7 +198,7 @@ class BatchCRUD implements Batch {
 
         // Restore the original factory
         finally {
-            work.setExecuteListeners(orig.getExecuteListeners());
+            create.getExecuteListeners().remove(collector);
         }
 
         // Resulting statements can be batch executed in their requested order

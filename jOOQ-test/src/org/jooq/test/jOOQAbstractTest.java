@@ -774,12 +774,12 @@ public abstract class jOOQAbstractTest<
         Settings settings = SettingsTools.defaultSettings()
             .withRenderSchema(renderSchema)
             .withRenderMapping(new RenderMapping()
-                .withDefaultSchema(defaultSchema))
-            .withExecuteListeners(
-                TestStatisticsListener.class.getName(),
-                PrettyPrinter.class.getName());
+                .withDefaultSchema(defaultSchema));
 
-        return create(settings);
+        Executor create = create(settings);
+        create.getExecuteListeners().add(new TestStatisticsListener());
+        create.getExecuteListeners().add(new PrettyPrinter());
+        return create;
     }
 
     protected final SQLDialect getDialect() {

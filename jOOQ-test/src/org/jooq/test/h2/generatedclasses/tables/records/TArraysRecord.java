@@ -9,14 +9,14 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Object[], java.lang.Object[], java.lang.Object[]>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = -199641636;
+	private static final long serialVersionUID = 1759599646;
 
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TArrays.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.ID);
+		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.ID);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public void setStringArray(java.lang.Object[] value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TArrays.STRING_ARRAY, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Object[] getStringArray() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.STRING_ARRAY);
+		return (java.lang.Object[]) getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.STRING_ARRAY);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public void setNumberArray(java.lang.Object[] value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TArrays.NUMBER_ARRAY, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Object[] getNumberArray() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.NUMBER_ARRAY);
+		return (java.lang.Object[]) getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.NUMBER_ARRAY);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public void setDateArray(java.lang.Object[] value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TArrays.DATE_ARRAY, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Object[] getDateArray() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.DATE_ARRAY);
+		return (java.lang.Object[]) getValue(org.jooq.test.h2.generatedclasses.tables.TArrays.DATE_ARRAY);
 	}
 
 	// -------------------------------------------------------------------------

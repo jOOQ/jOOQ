@@ -4200,6 +4200,36 @@ public class Executor implements Configuration {
     }
 
     /**
+     * Execute and return all records lazily for
+     * <code><pre>SELECT * FROM [table]</pre></code>
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    public final <R extends Record> Cursor<R> fetchLazy(Table<R> table) throws DataAccessException {
+        return fetchLazy(table, trueCondition());
+    }
+
+    /**
+     * Execute and return all records lazily for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>
+     * <p>
+     * The result and its contained records are attached to this
+     * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
+     * to override this behaviour.
+     *
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    public final <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException {
+        return selectFrom(table).where(condition).fetchLazy();
+    }
+
+    /**
      * Insert one record
      * <p>
      * This executes something like the following statement:

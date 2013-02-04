@@ -253,6 +253,11 @@ class BatchCRUD implements Batch {
      */
     private static class QueryCollector extends DefaultExecuteListener {
 
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
+
         @Override
         public void renderEnd(ExecuteContext ctx) {
             throw new QueryCollectorException(ctx.sql(), ctx.query());

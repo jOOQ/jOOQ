@@ -139,6 +139,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public static class KeepStatementListener extends DefaultExecuteListener {
 
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
+
         static void reset() {
             statements.clear();
             closed = 0;

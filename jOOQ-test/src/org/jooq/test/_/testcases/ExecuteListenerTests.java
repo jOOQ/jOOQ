@@ -111,6 +111,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public static class CustomExceptionListener extends DefaultExecuteListener {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
+
         @Override
         public void exception(ExecuteContext ctx) {
             ctx.exception(new E("ERROR"));
@@ -155,6 +161,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public static class ResultQueryListener extends DefaultExecuteListener {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
 
         // A counter that is incremented in callback methods
         private static int           callbackCount = 0;
@@ -489,6 +500,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public static class BatchSingleListener extends DefaultExecuteListener {
 
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
+
         // A counter that is incremented in callback methods
         private static int           callbackCount = 0;
 
@@ -710,6 +726,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public static class BatchMultipleListener extends DefaultExecuteListener {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
 
         // A counter that is incremented in callback methods
         private static int           callbackCount = 0;
@@ -991,6 +1012,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     public static class FetchLazyListener implements ExecuteListener {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
 
         static int countStart;
         static int countRenderStart;

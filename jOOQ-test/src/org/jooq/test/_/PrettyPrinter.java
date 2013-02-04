@@ -50,6 +50,11 @@ import org.jooq.tools.StringUtils;
  */
 public class PrettyPrinter extends DefaultExecuteListener {
 
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 7399239846062763212L;
+
     private static final AtomicInteger count = new AtomicInteger();
 
     /**

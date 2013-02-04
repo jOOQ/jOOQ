@@ -49,6 +49,11 @@ import org.jooq.conf.Settings;
  */
 class ExecuteListeners implements ExecuteListener {
 
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 7399239846062763212L;
+
     private final List<ExecuteListener> listeners;
 
     // In some setups, these two events may get mixed up chronologically by the

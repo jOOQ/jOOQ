@@ -84,6 +84,7 @@ import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Converter;
+import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
@@ -448,6 +449,25 @@ final class Utils {
         }
 
         return null;
+    }
+
+    /**
+     * Get the only element from a cursor or <code>null</code>, or throw an
+     * exception
+     *
+     * @param cursor The cursor
+     * @return The only element from the cursor or <code>null</code>
+     * @throws InvalidResultException Thrown if the cursor returns more than one
+     *             element
+     */
+    static <R extends Record> R fetchOne(Cursor<R> cursor) throws InvalidResultException {
+        R record = cursor.fetchOne();
+
+        if (cursor.hasNext()) {
+            throw new InvalidResultException("Cursor returned more than one result");
+        }
+
+        return record;
     }
 
     /**

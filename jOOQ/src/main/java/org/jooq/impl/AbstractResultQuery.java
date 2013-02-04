@@ -70,7 +70,6 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.exception.DataTypeException;
-import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
@@ -409,16 +408,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final R fetchOne() {
-        Result<R> r = fetch();
-
-        if (r.size() == 1) {
-            return r.get(0);
-        }
-        else if (r.size() > 1) {
-            throw new InvalidResultException("Query returned more than one result");
-        }
-
-        return null;
+        return Utils.fetchOne(fetchLazy());
     }
 
     @Override

@@ -499,7 +499,9 @@ public class JavaGenerator extends AbstractGenerator {
         out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, baseClass, recordType, interfaces);
         out.printSerial();
 
-        for (ColumnDefinition column : table.getColumns()) {
+        for (int i = 0; i < degree; i++) {
+            ColumnDefinition column = table.getColumn(i);
+
             final String comment = StringUtils.defaultString(column.getComment());
             final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
             final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
@@ -510,14 +512,14 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).javadoc("Setter for <code>%s</code>. %s", name, comment);
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public void %s(%s value) {", setter, type);
-            out.tab(2).println("setValue(%s, value);", id);
+            out.tab(2).println("setValue(%s, value);", i);
             out.tab(1).println("}");
 
             out.tab(1).javadoc("Getter for <code>%s</code>. %s", name, comment);
             printColumnJPAAnnotation(out, column);
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", type, getter);
-            out.tab(2).println("return getValue(%s);", id);
+            out.tab(2).println("return (%s) getValue(%s);", type, id);
             out.tab(1).println("}");
         }
 

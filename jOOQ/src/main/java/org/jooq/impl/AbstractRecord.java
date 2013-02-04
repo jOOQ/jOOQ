@@ -304,6 +304,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     /**
+     * Subclasses may type-unsafely set a value to a record index. This method
+     * takes care of converting the value to the appropriate type.
+     */
+    protected final void setValue(int index, Object value) {
+        getValue0(index).setValue(Convert.convert(value, fields.type(index)));
+    }
+
+    /**
      * Subclasses may override this
      */
     UniqueKey<?> getMainKey() {

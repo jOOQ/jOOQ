@@ -1316,7 +1316,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Record fetchOne(ResultSet rs) throws DataAccessException, InvalidResultException {
-        return Utils.filterOne(fetchLazy(rs).fetch());
+        return Utils.fetchOne(fetchLazy(rs));
     }
 
     /**
@@ -1335,7 +1335,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Record fetchOne(ResultSet rs, Field<?>... fields) throws DataAccessException, InvalidResultException {
-        return Utils.filterOne(fetchLazy(rs, fields).fetch());
+        return Utils.fetchOne(fetchLazy(rs, fields));
     }
 
     /**
@@ -1354,7 +1354,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Record fetchOne(ResultSet rs, DataType<?>... types) throws DataAccessException, InvalidResultException {
-        return Utils.filterOne(fetchLazy(rs, types).fetch());
+        return Utils.fetchOne(fetchLazy(rs, types));
     }
 
     /**
@@ -1373,7 +1373,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, InvalidResultException {
-        return Utils.filterOne(fetchLazy(rs, types).fetch());
+        return Utils.fetchOne(fetchLazy(rs, types));
     }
 
     /**
@@ -4163,7 +4163,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, InvalidResultException {
-        return Utils.filterOne(fetch(table));
+        return Utils.fetchOne(fetchLazy(table));
     }
 
     /**
@@ -4180,7 +4180,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, InvalidResultException {
-        return Utils.filterOne(fetch(table, condition));
+        return Utils.fetchOne(fetchLazy(table, condition));
     }
 
     /**

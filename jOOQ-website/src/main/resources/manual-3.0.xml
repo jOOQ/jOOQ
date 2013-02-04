@@ -9192,6 +9192,7 @@ for (Record record : create().select(
 							<ul>
 								<li>Connection-related utility methods (commit, rollback, etc) moved to DefaultConnectionProvider</li>
 							</ul>
+							<h3>ExecuteListeners are configured as instances in Configuration, no longer in Settings</h3>
 							
 							<h3>The data type API has been changed heavily</h3>
 							<ul>

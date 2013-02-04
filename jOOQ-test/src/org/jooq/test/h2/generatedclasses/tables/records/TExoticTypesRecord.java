@@ -9,14 +9,14 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = -578520785;
+	private static final long serialVersionUID = 1906365084;
 
 	/**
 	 * Setter for <code>PUBLIC.T_EXOTIC_TYPES.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.ID);
+		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.ID);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public void setUu(java.util.UUID value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.UU, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public java.util.UUID getUu() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.UU);
+		return (java.util.UUID) getValue(org.jooq.test.h2.generatedclasses.tables.TExoticTypes.UU);
 	}
 
 	// -------------------------------------------------------------------------

@@ -9,14 +9,14 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = 1897429337;
+	private static final long serialVersionUID = -975120140;
 
 	/**
 	 * Setter for <code>PUBLIC.T_725_LOB_TEST.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.ID);
+		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.ID);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public void setLob(byte[] value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.LOB, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public byte[] getLob() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.LOB);
+		return (byte[]) getValue(org.jooq.test.h2.generatedclasses.tables.T_725LobTest.LOB);
 	}
 
 	// -------------------------------------------------------------------------

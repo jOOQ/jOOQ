@@ -9,14 +9,14 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = -1964426963;
+	private static final long serialVersionUID = -1240339971;
 
 	/**
 	 * Setter for <code>PUBLIC.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID);
+		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.ID);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	@Override
 	public void setUnusedId(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	@Override
 	public java.lang.Integer getUnusedId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
+		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
 	}
 
 	// -------------------------------------------------------------------------

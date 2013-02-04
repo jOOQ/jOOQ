@@ -9,14 +9,14 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = -1849786739;
+	private static final long serialVersionUID = 121743650;
 
 	/**
 	 * Setter for <code>PUBLIC.T_785.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.T_785.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.T_785.ID);
+		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.T_785.ID);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.T_785.NAME, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.T_785.NAME);
+		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.T_785.NAME);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public void setValue(java.lang.String value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.T_785.VALUE, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.String getValue() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.T_785.VALUE);
+		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.T_785.VALUE);
 	}
 
 	// -------------------------------------------------------------------------

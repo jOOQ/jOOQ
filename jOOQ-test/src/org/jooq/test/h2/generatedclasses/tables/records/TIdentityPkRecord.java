@@ -9,14 +9,14 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentityPk {
 
-	private static final long serialVersionUID = -815936140;
+	private static final long serialVersionUID = -760058481;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY_PK.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID);
+		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.ID);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public void setVal(java.lang.Integer value) {
-		setValue(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.VAL, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public java.lang.Integer getVal() {
-		return getValue(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.VAL);
+		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TIdentityPk.VAL);
 	}
 
 	// -------------------------------------------------------------------------

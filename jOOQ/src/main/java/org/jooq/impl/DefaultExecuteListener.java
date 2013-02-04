@@ -48,6 +48,11 @@ import org.jooq.ExecuteListener;
  */
 public class DefaultExecuteListener implements ExecuteListener {
 
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 7399239846062763212L;
+
     @Override
     public void start(ExecuteContext ctx) {}
 

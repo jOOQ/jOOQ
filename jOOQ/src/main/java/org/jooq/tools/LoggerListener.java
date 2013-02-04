@@ -48,6 +48,11 @@ import org.jooq.impl.DefaultExecuteListener;
  */
 public class LoggerListener extends DefaultExecuteListener {
 
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 7399239846062763212L;
+
     private static final JooqLogger log   = JooqLogger.getLogger(LoggerListener.class);
 
     @Override

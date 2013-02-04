@@ -44,6 +44,11 @@ import org.jooq.impl.DefaultExecuteListener;
 
 public class TestStatisticsListener extends DefaultExecuteListener {
 
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 7399239846062763212L;
+
     public static Map<ExecuteType, Integer> STATISTICS = new HashMap<ExecuteType, Integer>();
 
     @Override

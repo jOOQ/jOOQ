@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -258,7 +259,7 @@ import org.jooq.tools.StopWatchListener;
  *
  * @author Lukas Eder
  */
-public interface ExecuteListener extends EventListener {
+public interface ExecuteListener extends EventListener, Serializable {
 
     /**
      * Called to initialise an <code>ExecuteListener</code>

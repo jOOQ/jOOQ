@@ -89,6 +89,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public static class ConnectionProviderListener extends DefaultExecuteListener {
 
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
+
         static Connection c;
 
         @Override

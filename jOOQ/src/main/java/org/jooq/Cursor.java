@@ -166,7 +166,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
      */
-    <H extends RecordHandler<R>> H fetchOneInto(H handler) throws DataAccessException;
+    <H extends RecordHandler<? super R>> H fetchOneInto(H handler) throws DataAccessException;
 
     /**
      * Fetch results into a custom handler callback
@@ -179,7 +179,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
      */
-    <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
+    <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
      * Fetch the next record into a custom mapper callback

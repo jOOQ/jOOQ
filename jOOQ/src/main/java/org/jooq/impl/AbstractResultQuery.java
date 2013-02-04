@@ -576,7 +576,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final <H extends RecordHandler<R>> H fetchInto(H handler) {
+    public final <H extends RecordHandler<? super R>> H fetchInto(H handler) {
         return fetch().into(handler);
     }
 

@@ -810,7 +810,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
      */
-    <H extends RecordHandler<R>> H into(H handler);
+    <H extends RecordHandler<? super R>> H into(H handler);
 
     /**
      * Generate an in-memory JDBC {@link ResultSet} containing the data of this

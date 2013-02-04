@@ -884,7 +884,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @return Convenience result, returning the parameter handler itself
      * @throws DataAccessException if something went wrong executing the query
      */
-    <H extends RecordHandler<R>> H fetchInto(H handler) throws DataAccessException;
+    <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
      * Fetch results into a custom mapper callback

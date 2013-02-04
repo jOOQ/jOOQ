@@ -281,12 +281,12 @@ class ReflectionMapper<R extends Record, E> implements RecordMapper<R, E> {
 
                         // [#935] Avoid setting final fields
                         if ((member.getModifiers() & Modifier.FINAL) == 0) {
-                            map(record, result, member, field);
+                            map(record, result, member, i);
                         }
                     }
 
                     for (java.lang.reflect.Method method : methods[i]) {
-                        method.invoke(result, record.getValue(field, method.getParameterTypes()[0]));
+                        method.invoke(result, record.getValue(i, method.getParameterTypes()[0]));
                     }
                 }
 
@@ -297,37 +297,37 @@ class ReflectionMapper<R extends Record, E> implements RecordMapper<R, E> {
             }
         }
 
-        private final void map(Record record, Object result, java.lang.reflect.Field member, Field<?> field) throws IllegalAccessException {
+        private final void map(Record record, Object result, java.lang.reflect.Field member, int index) throws IllegalAccessException {
             Class<?> mType = member.getType();
 
             if (mType.isPrimitive()) {
                 if (mType == byte.class) {
-                    member.setByte(result, record.getValue(field, byte.class));
+                    member.setByte(result, record.getValue(index, byte.class));
                 }
                 else if (mType == short.class) {
-                    member.setShort(result, record.getValue(field, short.class));
+                    member.setShort(result, record.getValue(index, short.class));
                 }
                 else if (mType == int.class) {
-                    member.setInt(result, record.getValue(field, int.class));
+                    member.setInt(result, record.getValue(index, int.class));
                 }
                 else if (mType == long.class) {
-                    member.setLong(result, record.getValue(field, long.class));
+                    member.setLong(result, record.getValue(index, long.class));
                 }
                 else if (mType == float.class) {
-                    member.setFloat(result, record.getValue(field, float.class));
+                    member.setFloat(result, record.getValue(index, float.class));
                 }
                 else if (mType == double.class) {
-                    member.setDouble(result, record.getValue(field, double.class));
+                    member.setDouble(result, record.getValue(index, double.class));
                 }
                 else if (mType == boolean.class) {
-                    member.setBoolean(result, record.getValue(field, boolean.class));
+                    member.setBoolean(result, record.getValue(index, boolean.class));
                 }
                 else if (mType == char.class) {
-                    member.setChar(result, record.getValue(field, char.class));
+                    member.setChar(result, record.getValue(index, char.class));
                 }
             }
             else {
-                member.set(result, record.getValue(field, mType));
+                member.set(result, record.getValue(index, mType));
             }
         }
     }
@@ -402,13 +402,11 @@ class ReflectionMapper<R extends Record, E> implements RecordMapper<R, E> {
         public final E map(R record) {
             try {
                 for (int i = 0; i < fields.length; i++) {
-                    Field<?> field = fields[i];
-
                     for (java.lang.reflect.Field member : members[i]) {
                         int index = propertyNames.indexOf(member.getName());
 
                         if (index >= 0) {
-                            parameterValues[index] = record.getValue(field);
+                            parameterValues[index] = record.getValue(i);
                         }
                     }
 
@@ -417,7 +415,7 @@ class ReflectionMapper<R extends Record, E> implements RecordMapper<R, E> {
                         int index = propertyNames.indexOf(name);
 
                         if (index >= 0) {
-                            parameterValues[index] = record.getValue(field);
+                            parameterValues[index] = record.getValue(i);
                         }
                     }
                 }

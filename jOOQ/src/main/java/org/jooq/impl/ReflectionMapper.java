@@ -275,8 +275,6 @@ class ReflectionMapper<R extends Record, E> implements RecordMapper<R, E> {
                 E result = instance != null ? instance : constructor.newInstance();
 
                 for (int i = 0; i < fields.length; i++) {
-                    Field<?> field = fields[i];
-
                     for (java.lang.reflect.Field member : members[i]) {
 
                         // [#935] Avoid setting final fields

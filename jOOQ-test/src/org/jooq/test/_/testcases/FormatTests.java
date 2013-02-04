@@ -121,7 +121,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .values(13, new BigDecimal("0.123456789"))
                 .execute();
 
-        Result<Record> result = create()
+        Result<Record2<Integer, BigDecimal>> result = create()
             .select(T639_ID(), T639_BIG_DECIMAL())
             .from(T639())
             .orderBy(T639_ID())

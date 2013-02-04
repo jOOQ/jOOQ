@@ -134,6 +134,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -306,7 +307,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1", create().select(decode(sNull, val("2"), val("2"), sNull, val("1"), val("3"))).fetchOne(0));
 
         Field<Integer> lang = TBook_LANGUAGE_ID().cast(Integer.class);
-        Result<Record> result = create().select(
+        Result<Record4<String, String, String, String>> result = create().select(
                 decode(lang, 1, "EN"),
                 decode(lang, 1, "EN", "Other"),
                 decode(lang, 1, "EN", 2, "DE"),
@@ -732,7 +733,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Greatest and least with tables. If they're simulated using subqueries
         // there is a risk of breaking this functionality due to limited support
         // for subqueries and derived tables...
-        Result<Record> result = create()
+        Result<Record3<Integer, Integer, Integer>> result = create()
             .select(TBook_ID(),
                     greatest(TBook_ID(),
                         TBook_AUTHOR_ID(),

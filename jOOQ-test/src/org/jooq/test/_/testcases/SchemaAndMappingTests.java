@@ -137,7 +137,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 new MappedTable().withInput(TAuthor().getName()).withOutput(VAuthor().getName()),
                 new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName()))));
 
-        Select<Record> q =
+        Select<Record1<String>> q =
         create(settings).select(TBook_TITLE())
                         .from(TAuthor())
                         .join(TBook())
@@ -151,7 +151,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertFalse(create(settings).render(q).contains(TBook().getName()));
 
         // Assure that results are correct
-        Result<Record> result = q.fetch();
+        Result<Record1<String>> result = q.fetch();
         assertEquals("1984", result.getValue(0, TBook_TITLE()));
         assertEquals("Animal Farm", result.getValue(1, TBook_TITLE()));
         assertEquals("O Alquimista", result.getValue(2, TBook_TITLE()));
@@ -178,14 +178,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 new MappedTable().withInput(TAuthor().getName()).withOutput(TAuthor().getName()),
                 new MappedTable().withInput(TBook().getName()).withOutput(TBook().getName()))));
 
-        Select<Record> query =
+        Select<Record1<String>> query =
         create(settings).select(TBook_TITLE())
                        .from(TAuthor())
                        .join(TBook())
                        .on(TAuthor_ID().equal(TBook_AUTHOR_ID()))
                        .orderBy(TBook_ID().asc());
 
-        Result<Record> result = query.fetch();
+        Result<Record1<String>> result = query.fetch();
 
         assertEquals("1984", result.getValue(0, TBook_TITLE()));
         assertEquals("Animal Farm", result.getValue(1, TBook_TITLE()));
@@ -233,7 +233,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .withInput(TAuthor().getSchema().getName())
             .withOutput(TAuthor().getSchema().getName() + "2")));
 
-        Select<Record> q =
+        Select<Record1<String>> q1 =
         create(settings).select(TBook_TITLE())
                        .from(TAuthor())
                        .join(TBook())
@@ -241,32 +241,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                        .orderBy(TBook_ID().asc());
 
         // Assure that schema is replaced
-        assertTrue(create(settings).render(q).contains(TAuthor().getSchema().getName() + "2"));
-        assertTrue(q.getSQL().contains(TAuthor().getSchema().getName() + "2"));
-        assertEquals(create(settings).render(q), q.getSQL());
+        assertTrue(create(settings).render(q1).contains(TAuthor().getSchema().getName() + "2"));
+        assertTrue(q1.getSQL().contains(TAuthor().getSchema().getName() + "2"));
+        assertEquals(create(settings).render(q1), q1.getSQL());
 
         // Assure that results are correct
-        result = q.fetch();
-        assertEquals("1984", result.getValue(0, TBook_TITLE()));
-        assertEquals("Animal Farm", result.getValue(1, TBook_TITLE()));
-        assertEquals("O Alquimista", result.getValue(2, TBook_TITLE()));
-        assertEquals("Brida", result.getValue(3, TBook_TITLE()));
+        Result<Record1<String>> result1 = q1.fetch();
+        assertEquals("1984", result1.getValue(0, TBook_TITLE()));
+        assertEquals("Animal Farm", result1.getValue(1, TBook_TITLE()));
+        assertEquals("O Alquimista", result1.getValue(2, TBook_TITLE()));
+        assertEquals("Brida", result1.getValue(3, TBook_TITLE()));
 
         // [#995] Schema mapping in stored functions
         // -----------------------------------------
         Field<Integer> f1 = FOneField().cast(Integer.class);
         Field<Integer> f2 = FNumberField(42).cast(Integer.class);
 
-        q =
+        Select<Record2<Integer, Integer>> q2 =
         create(settings).select(f1, f2);
 
         // Assure that schema is replaced
-        assertTrue(create(settings).render(q).contains(TAuthor().getSchema().getName() + "2"));
-        assertTrue(q.getSQL().contains(TAuthor().getSchema().getName() + "2"));
-        assertEquals(create(settings).render(q), q.getSQL());
+        assertTrue(create(settings).render(q2).contains(TAuthor().getSchema().getName() + "2"));
+        assertTrue(q2.getSQL().contains(TAuthor().getSchema().getName() + "2"));
+        assertEquals(create(settings).render(q2), q2.getSQL());
 
         // Assure that results are correct
-        Record record = q.fetchOne();
+        Record record = q2.fetchOne();
         assertEquals(1, (int) record.getValue(f1));
         assertEquals(42, (int) record.getValue(f2));
 
@@ -281,7 +281,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 new MappedTable().withInput(TAuthor().getName()).withOutput(VAuthor().getName()),
                 new MappedTable().withInput(TBook().getName()).withOutput(VBook().getName()))));
 
-        q =
+        Select<Record1<String>> q3 =
         create(settings).select(TBook_TITLE())
                        .from(TAuthor())
                        .join(TBook())
@@ -289,18 +289,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                        .orderBy(TBook_ID().asc());
 
         // Assure T_* is replaced by V_*
-        assertTrue(create(settings).render(q).contains(VAuthor().getName()));
-        assertTrue(create(settings).render(q).contains(VBook().getName()));
-        assertTrue(create(settings).render(q).contains("test2"));
-        assertFalse(create(settings).render(q).contains(TAuthor().getName()));
-        assertFalse(create(settings).render(q).contains(TBook().getName()));
+        assertTrue(create(settings).render(q3).contains(VAuthor().getName()));
+        assertTrue(create(settings).render(q3).contains(VBook().getName()));
+        assertTrue(create(settings).render(q3).contains("test2"));
+        assertFalse(create(settings).render(q3).contains(TAuthor().getName()));
+        assertFalse(create(settings).render(q3).contains(TBook().getName()));
 
         // Assure that results are correct
-        result = q.fetch();
-        assertEquals("1984", result.getValue(0, TBook_TITLE()));
-        assertEquals("Animal Farm", result.getValue(1, TBook_TITLE()));
-        assertEquals("O Alquimista", result.getValue(2, TBook_TITLE()));
-        assertEquals("Brida", result.getValue(3, TBook_TITLE()));
+        Result<Record1<String>> result3 = q3.fetch();
+        assertEquals("1984", result3.getValue(0, TBook_TITLE()));
+        assertEquals("Animal Farm", result3.getValue(1, TBook_TITLE()));
+        assertEquals("O Alquimista", result3.getValue(2, TBook_TITLE()));
+        assertEquals("Brida", result3.getValue(3, TBook_TITLE()));
     }
 
     @Test
@@ -342,7 +342,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Test joining tables across schemas
         // ----------------------------------
-        Result<Record> result1 =
+        Result<Record3<String, String, BigDecimal>> result1 =
         create().select(
                     TBook_TITLE(),
                     TBookSale_BOOK_STORE_NAME(),
@@ -366,7 +366,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Test joining "onKey"
         // --------------------
-        Result<Record> result2 =
+        Result<Record3<String, String, BigDecimal>> result2 =
         create().select(
                     TBook_TITLE(),
                     TBookSale_BOOK_STORE_NAME(),

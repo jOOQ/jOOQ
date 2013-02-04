@@ -169,7 +169,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testAccessInternalRepresentation() throws Exception {
-        SelectQuery<Record> query =
+        SelectQuery<Record1<Integer>> query =
         create().select(TBook_ID())
                 .from(TBook())
                 .where(TBook_ID().in(1, 2, 3))
@@ -180,7 +180,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         query.addOrderBy(TBook_ID());
         query.execute();
 
-        Result<Record> result = query.getResult();
+        Result<Record1<Integer>> result = query.getResult();
 
         assertEquals(3, result.size());
         assertEquals(Arrays.asList(1, 2, 3), result.getValues(TBook_ID()));

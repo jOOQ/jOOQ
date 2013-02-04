@@ -302,7 +302,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testNaturalJoin() throws Exception {
-        Result<Record> result =
+        Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TBook())
                 .naturalJoin(TAuthor())
@@ -343,7 +343,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testJoinUsing() throws Exception {
-        Result<Record> result =
+        Result<Record2<String, String>> result =
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TAuthor())
                 .join(TBook())
@@ -414,7 +414,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Test the Table API
         // ------------------
-        Result<Record> result1 =
+        Result<Record2<Integer, String>> result1 =
         create().select(TAuthor_ID(), TBook_TITLE())
                 .from(TAuthor().join(TBook()).onKey(TBook_AUTHOR_ID()))
                 .orderBy(TBook_ID())
@@ -424,7 +424,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_AUTHOR_IDS, result1.getValues(0));
         assertEquals(BOOK_TITLES, result1.getValues(1));
 
-        Result<Record> result2 =
+        Result<Record2<Integer, String>> result2 =
         create().select(TAuthor_ID(), TBook_TITLE())
                 .from(TAuthor()
                     .join(TBook())
@@ -439,7 +439,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Test the Select API
         // -------------------
-        Result<Record> result3 =
+        Result<Record2<Integer, String>> result3 =
         create().select(TAuthor_ID(), TBook_TITLE())
                 .from(TAuthor())
                 .join(TBook()).onKey(TBook_AUTHOR_ID())
@@ -452,7 +452,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Test using unambiguous keys
         // ---------------------------
-        Result<Record> result4 =
+        Result<Record2<Integer, String>> result4 =
         create().select(TBook_ID(), TBookStore_NAME())
                 .from(TBook())
                 .join(TBookToBookStore()).onKey()
@@ -468,7 +468,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#671] Test inverse join relationship
         // -------------------------------------
-        Result<Record> result5 =
+        Result<Record2<Integer, String>> result5 =
         create().select(TBook_ID(), TBookStore_NAME())
                 .from(TBook())
                 .join(TBookToBookStore()
@@ -492,7 +492,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Testing joining of nested joins
         // -------------------------------
-        Result<Record> result1 = create()
+        Result<Record3<Integer, Integer, String>> result1 = create()
             .select(
                 TAuthor_ID(),
                 TBook_ID(),
@@ -515,7 +515,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             "Buchhandlung im Volkshaus", "Ex Libris", "Orell Füssli"), result1.getValues(2));
 
         // Testing joining of cross products
-        Result<Record> result2 = create()
+        Result<Record3<Integer, Integer, String>> result2 = create()
             .select(
                 TAuthor_ID(),
                 TBook_ID(),
@@ -544,7 +544,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testOuterJoin() throws Exception {
         // Test LEFT OUTER JOIN
         // --------------------
-        Result<Record> result1 =
+        Result<Record3<Integer, Integer, String>> result1 =
         create().select(
                     TAuthor_ID(),
                     TBook_ID(),
@@ -577,7 +577,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
 
             default: {
-                Result<Record> result2 =
+                Result<Record3<Integer, Integer, String>> result2 =
                     create().select(
                                 TAuthor_ID(),
                                 TBook_ID(),

@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
@@ -111,7 +112,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) {
+    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
         return create()
             .select(
                 KEY_COLUMN_USAGE.TABLE_SCHEMA,
@@ -134,7 +135,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        Result<Record> result = create()
+        Result<?> result = create()
             .select(
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,

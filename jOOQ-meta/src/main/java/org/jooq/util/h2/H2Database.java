@@ -48,6 +48,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.Record4;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
 import org.jooq.util.AbstractDatabase;
@@ -121,7 +123,7 @@ public class H2Database extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) {
+    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
         return create().select(
                     Constraints.TABLE_SCHEMA,
                     Constraints.TABLE_NAME,

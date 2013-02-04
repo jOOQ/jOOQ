@@ -52,6 +52,8 @@ import java.util.regex.Pattern;
 
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record5;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
 import org.jooq.util.AbstractDatabase;
@@ -117,7 +119,7 @@ public class DerbyDatabase extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) {
+    private Result<Record5<String, String, String, String, String>> fetchKeys(String constraintType) {
         return create().select(
                     Sysschemas.SCHEMANAME,
     	            Systables.TABLENAME,

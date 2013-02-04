@@ -114,7 +114,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testQualifiedSQL() throws Exception {
-        Result<Record> result =
+        Result<Record2<Integer, String>> result =
         create().select(
                     fieldByName(Integer.class, TBook_ID().getName()),
                     fieldByName(String.class, TBook_TITLE().getName()))
@@ -150,29 +150,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_TITLES, result.getValues(TBook_TITLE()));
 
         // [#271] Aliased plain SQL table
-        result = create().select(ID).from("(select * from t_book) b").orderBy(ID).fetch();
-        assertEquals(4, result.size());
-        assertEquals(BOOK_IDS, result.getValues(ID));
+        Result<Record1<Integer>> result2 = create().select(ID).from("(select * from t_book) b").orderBy(ID).fetch();
+        assertEquals(4, result2.size());
+        assertEquals(BOOK_IDS, result2.getValues(ID));
 
         // [#271] Aliased plain SQL table
-        result = create().select().from("(select * from t_book) b").orderBy(ID).fetch();
-        assertEquals(4, result.size());
+        Result<Record> result3 = create().select().from("(select * from t_book) b").orderBy(ID).fetch();
+        assertEquals(4, result3.size());
         assertEquals(
             Arrays.asList(1, 2, 3, 4),
-            result.getValues(ID));
+            result3.getValues(ID));
 
         // [#836] Aliased plain SQL table
-        result = create().select().from(table("t_book").as("b")).orderBy(ID).fetch();
-        assertEquals(4, result.size());
-        assertEquals(BOOK_IDS, result.getValues(ID));
+        Result<Record> result4 = create().select().from(table("t_book").as("b")).orderBy(ID).fetch();
+        assertEquals(4, result4.size());
+        assertEquals(BOOK_IDS, result4.getValues(ID));
 
         // [#271] Check for aliased nested selects. The DescribeQuery does not seem to work
         // [#836] Aliased plain SQL nested select
-        result = create().select().from(table("(select * from t_book)").as("b")).orderBy(ID).fetch();
-        assertEquals(4, result.size());
+        Result<Record> result5 = create().select().from(table("(select * from t_book)").as("b")).orderBy(ID).fetch();
+        assertEquals(4, result5.size());
         assertEquals(
             Arrays.asList(1, 2, 3, 4),
-            result.getValues(ID));
+            result5.getValues(ID));
 
 
         // Field, Table and Condition
@@ -181,7 +181,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<?> COUNT1 = field("count(*) x");
         Field<?> COUNT2 = field("count(*) y", Integer.class);
 
-        result = create()
+        Result<?> result6 = create()
             .select(LAST_NAME, COUNT1, COUNT2)
             .from("t_author a")
             .join("t_book b").on("a.id = b.author_id")
@@ -189,27 +189,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .groupBy(LAST_NAME)
             .orderBy(LAST_NAME).fetch();
 
-        assertEquals(2, result.size());
-        assertEquals("Coelho", result.getValue(0, LAST_NAME));
-        assertEquals("Orwell", result.getValue(1, LAST_NAME));
-        assertEquals("1", result.get(0).getValue(COUNT1, String.class));
-        assertEquals("2", result.get(1).getValue(COUNT1, String.class));
-        assertEquals(Integer.valueOf(1), result.getValue(0, COUNT2));
-        assertEquals(Integer.valueOf(2), result.getValue(1, COUNT2));
+        assertEquals(2, result6.size());
+        assertEquals("Coelho", result6.getValue(0, LAST_NAME));
+        assertEquals("Orwell", result6.getValue(1, LAST_NAME));
+        assertEquals("1", result6.get(0).getValue(COUNT1, String.class));
+        assertEquals("2", result6.get(1).getValue(COUNT1, String.class));
+        assertEquals(Integer.valueOf(1), result6.getValue(0, COUNT2));
+        assertEquals(Integer.valueOf(2), result6.getValue(1, COUNT2));
 
         // Field, Table and Condition
         // --------------------------
-        result = create().select(LAST_NAME, COUNT1, COUNT2)
+        Result<?> result7 = create().select(LAST_NAME, COUNT1, COUNT2)
             .from("t_author a")
             .join("t_book b").on("a.id = b.author_id")
             .where("b.title != 'Brida'")
             .groupBy(LAST_NAME)
             .having("{count}(*) = ?", 1).fetch();
 
-        assertEquals(1, result.size());
-        assertEquals("Coelho", result.getValue(0, LAST_NAME));
-        assertEquals("1", result.get(0).getValue(COUNT1, String.class));
-        assertEquals(Integer.valueOf(1), result.getValue(0, COUNT2));
+        assertEquals(1, result7.size());
+        assertEquals("Coelho", result7.getValue(0, LAST_NAME));
+        assertEquals("1", result7.get(0).getValue(COUNT1, String.class));
+        assertEquals(Integer.valueOf(1), result7.getValue(0, COUNT2));
 
         // Query
         // -----
@@ -351,7 +351,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .values(11, "Friedrich", "Glauser")
                 .execute());
 
-        Result<Record> authors1 = create()
+        Result<Record3<Integer, String, String>> authors1 = create()
                 .select(id, firstName, lastName)
                 .from(table)
                 .where(id.in(10, 11))
@@ -373,7 +373,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .where(id.in(10, 11))
                 .execute());
 
-        Result<Record> authors2 =
+        Result<Record3<Integer, String, String>> authors2 =
         create().select(id, firstName, lastName)
                 .from(table)
                 .where(id.in(10, 11))
@@ -579,7 +579,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create.setData("Foo-Field", "Bar");
         create.setData("Foo-Condition", "Bar");
 
-        Result<Record> result = create
+        Result<Record2<Integer, Integer>> result = create
             .select(TBook_ID(), IDx2)
             .from(TBook())
             .where(c)

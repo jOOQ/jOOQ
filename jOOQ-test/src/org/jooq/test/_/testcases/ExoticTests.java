@@ -69,6 +69,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.Table;
@@ -428,7 +429,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .startWith("? = ?", 1, 1)
                     .fetch(rownum()));
 
-        Result<Record> result =
+        Result<Record3<Integer, Boolean, Boolean>> result =
         create().select(rownum(), connectByIsCycle(), connectByIsLeaf())
                 .connectByNoCycle(level().lessThan(4))
                 .fetch();
@@ -465,7 +466,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        Result<Record> paths =
+        Result<Record4<String, Boolean, Boolean, String>> paths =
         create().select(
                     lower(connectByRoot(TDirectory_NAME())),
                     connectByIsLeaf(),

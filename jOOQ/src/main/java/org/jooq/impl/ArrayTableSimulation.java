@@ -139,7 +139,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
 
                 // [#1081] Be sure to get the correct cast type also for null
                 Field<?> val = Factory.val(element, field.get(0).getDataType());
-                Select<Record> subselect = create(configuration).select(val.as("COLUMN_VALUE"));
+                Select<Record> subselect = create(configuration).select(val.as("COLUMN_VALUE")).select();
 
                 if (select == null) {
                     select = subselect;
@@ -151,7 +151,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
 
             // Empty arrays should result in empty tables
             if (select == null) {
-                select = create(configuration).select(one().as("COLUMN_VALUE")).where(falseCondition());
+                select = create(configuration).select(one().as("COLUMN_VALUE")).select().where(falseCondition());
             }
 
             table = select.asTable(alias);

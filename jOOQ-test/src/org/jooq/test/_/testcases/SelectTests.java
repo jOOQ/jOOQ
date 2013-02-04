@@ -56,6 +56,7 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
@@ -145,7 +146,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testDistinctQuery() throws Exception {
-        Result<Record> result = create()
+        Result<Record1<Integer>> result = create()
             .selectDistinct(TBook_AUTHOR_ID())
             .from(TBook())
             .orderBy(TBook_AUTHOR_ID())
@@ -223,7 +224,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testSelectFromSelect() throws Exception {
-        Table<Record> nested = create().select(TBook_AUTHOR_ID(), count().as("books"))
+        Table<Record2<Integer, Integer>> nested = create().select(TBook_AUTHOR_ID(), count().as("books"))
             .from(TBook())
             .groupBy(TBook_AUTHOR_ID()).asTable("nested");
 
@@ -244,7 +245,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TBook())
                 .where(TBook_AUTHOR_ID().equal(TAuthor_ID())).asField("books");
 
-        Result<Record> records = create().select(TAuthor_ID(), books)
+        Result<Record2<Integer, Object>> records = create().select(TAuthor_ID(), books)
                           .from(TAuthor())
                           .orderBy(books, TAuthor_ID()).fetch();
 
@@ -261,7 +262,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Test whether unaliased literals in subquery projections are correctly
         // handled
-        Result<Record> result =
+        Result<Record> result1 =
         create().select()
                 .from(
                     selectOne(),
@@ -274,17 +275,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     select(trim(" test ")))
                 .fetch();
 
-        assertEquals(1, result.size());
-        assertEquals(Integer.valueOf(1), result.getValue(0, 0));
-        assertEquals(Integer.valueOf(2), result.getValue(0, 1));
-        assertEquals(Integer.valueOf(2), result.getValue(0, val(2)));
-        assertEquals(Integer.valueOf(2), result.getValue(0, 3));
-        assertEquals(Integer.valueOf(7), result.getValue(0, val(3).add(4)));
-        assertEquals(Integer.valueOf(7), result.getValue(0, 5));
-        assertEquals("test", result.getValue(0, trim(" test ")));
-        assertEquals("test", result.getValue(0, 7));
+        assertEquals(1, result1.size());
+        assertEquals(Integer.valueOf(1), result1.getValue(0, 0));
+        assertEquals(Integer.valueOf(2), result1.getValue(0, 1));
+        assertEquals(Integer.valueOf(2), result1.getValue(0, val(2)));
+        assertEquals(Integer.valueOf(2), result1.getValue(0, 3));
+        assertEquals(Integer.valueOf(7), result1.getValue(0, val(3).add(4)));
+        assertEquals(Integer.valueOf(7), result1.getValue(0, 5));
+        assertEquals("test", result1.getValue(0, trim(" test ")));
+        assertEquals("test", result1.getValue(0, 7));
 
-        result =
+        Result<Record8<Object, Object, Object, Object, Object, Object, Object, Object>> result2 =
         create().select(
                     create().selectOne().asField(),
                     create().select(val(2)).asField(),
@@ -296,15 +297,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     create().select(trim(" test ")).asField())
                 .fetch();
 
-        assertEquals(1, result.size());
-        assertEquals(1, result.getValue(0, 0));
-        assertEquals(2, result.getValue(0, 1));
-        assertEquals(2, result.getValue(0, 2));
-        assertEquals(2, result.getValue(0, 3));
-        assertEquals(7, result.getValue(0, 4));
-        assertEquals(7, result.getValue(0, 5));
-        assertEquals("test", result.getValue(0, 6));
-        assertEquals("test", result.getValue(0, 7));
+        assertEquals(1, result2.size());
+        assertEquals(1, result2.getValue(0, 0));
+        assertEquals(2, result2.getValue(0, 1));
+        assertEquals(2, result2.getValue(0, 2));
+        assertEquals(2, result2.getValue(0, 3));
+        assertEquals(7, result2.getValue(0, 4));
+        assertEquals(7, result2.getValue(0, 5));
+        assertEquals("test", result2.getValue(0, 6));
+        assertEquals("test", result2.getValue(0, 7));
     }
 
     @Test
@@ -333,10 +334,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testComplexUnions() throws Exception {
-        Select<Record> s1 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(1));
-        Select<Record> s2 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(2));
-        Select<Record> s3 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(3));
-        Select<Record> s4 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(4));
+        Select<Record1<String>> s1 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(1));
+        Select<Record1<String>> s2 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(2));
+        Select<Record1<String>> s3 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(3));
+        Select<Record1<String>> s4 = create().select(TBook_TITLE()).from(TBook()).where(TBook_ID().equal(4));
 
         Result<Record> result = create().select().from(s1.union(s2).union(s3).union(s4)).fetch();
         assertEquals(4, result.size());
@@ -344,13 +345,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         result = create().select().from(s1.union(s2).union(s3.union(s4))).fetch();
         assertEquals(4, result.size());
 
-        assertEquals(4, create().select().from(s1.union(
-                            create().select().from(s2.unionAll(
-                                create().select().from(s3.union(s4))))))
+        assertEquals(4, create().selectFrom(s1.union(
+                            create().selectFrom(s2.unionAll(
+                                create().selectFrom(s3.union(s4).asTable())
+                            ).asTable())
+                        ).asTable())
                                     .fetch().size());
 
         // [#289] Handle bad syntax scenario provided by user Gunther
-        Select<Record> q = create().select(val(2008).as("y"));
+        Select<Record1<Integer>> q = create().select(val(2008).as("y"));
         for (int year = 2009; year <= 2011; year++) {
             q = q.union(create().select(val(year).as("y")));
         }
@@ -453,12 +456,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
 
             default: {
-                Result<Record> result3 = create().select(TAuthor_ID())
-                                                 .from(TAuthor())
-                                                 .limit(5)
-                                                 .offset(0)
-                                                 .forUpdate()
-                                                 .fetch();
+                Result<Record1<Integer>> result3 = create()
+                    .select(TAuthor_ID())
+                    .from(TAuthor())
+                    .limit(5)
+                    .offset(0)
+                    .forUpdate()
+                    .fetch();
                 assertEquals(2, result3.size());
                 Result<A> result4 = create().selectFrom(TAuthor())
                                             .limit(5)
@@ -485,25 +489,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case POSTGRES:
             case ORACLE:
             default: {
-                Result<Record> r1a = create().select(TAuthor_ID())
-                        .from(TAuthor())
-                        .forUpdate()
-                        .noWait()
-                        .fetch();
+                Result<Record1<Integer>> r1a = create()
+                    .select(TAuthor_ID())
+                    .from(TAuthor())
+                    .forUpdate()
+                    .noWait()
+                    .fetch();
                 assertEquals(2, r1a.size());
 
                 if (getDialect() == ORACLE) {
-                    Result<Record> r2a = create().select(TAuthor_ID())
-                            .from(TAuthor())
-                            .forUpdate()
-                            .wait(2)
-                            .fetch();
+                    Result<Record1<Integer>> r2a = create()
+                        .select(TAuthor_ID())
+                        .from(TAuthor())
+                        .forUpdate()
+                        .wait(2)
+                        .fetch();
                     assertEquals(2, r2a.size());
-                    Result<Record> r3a = create().select(TAuthor_ID())
-                            .from(TAuthor())
-                            .forUpdate()
-                            .skipLocked()
-                            .fetch();
+                    Result<Record1<Integer>> r3a = create()
+                        .select(TAuthor_ID())
+                        .from(TAuthor())
+                        .forUpdate()
+                        .skipLocked()
+                        .fetch();
                     assertEquals(2, r3a.size());
 
                     Result<A> r2b = create().selectFrom(TAuthor())
@@ -536,7 +543,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Most dialects support the OF clause
             default: {
-                Result<Record> result =
+                Result<Record1<Integer>> result =
                 create().select(TAuthor_ID())
                         .from(TAuthor())
                         .forUpdate()
@@ -571,11 +578,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // Postgres only supports the OF clause with tables as parameters
             case POSTGRES:
             default: {
-                Result<Record> result = create().select(TAuthor_ID())
-                        .from(TAuthor())
-                        .forUpdate()
-                        .of(TAuthor())
-                        .fetch();
+                Result<Record1<Integer>> result = create()
+                    .select(TAuthor_ID())
+                    .from(TAuthor())
+                    .forUpdate()
+                    .of(TAuthor())
+                    .fetch();
                 assertEquals(2, result.size());
 
                 Result<A> result2 = create().selectFrom(TAuthor())
@@ -592,10 +600,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         switch (getDialect()) {
             case MYSQL:
             case POSTGRES: {
-                Result<Record> result = create().select(TAuthor_ID())
-                                 .from(TAuthor())
-                                 .forShare()
-                                 .fetch();
+                Result<Record1<Integer>> result = create()
+                    .select(TAuthor_ID())
+                    .from(TAuthor())
+                    .forShare()
+                    .fetch();
                 assertEquals(2, result.size());
 
                 Result<A> result2 = create().selectFrom(TAuthor())

@@ -340,7 +340,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             new StringBuilder("prefix_Brida"));
 
         // Check various Result, Record methods
-        Result<Record> result =
+        Result<Record1<String>> result =
         create().select(TBook_TITLE())
                 .from(TBook())
                 .orderBy(TBook_ID())
@@ -1320,7 +1320,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .values(6, new BigDecimal("0.00001"))
                     .execute();
 
-            Result<Record> result =
+            Result<Record2<Integer, BigDecimal>> result =
             create().select(T639_ID(), T639_BIG_DECIMAL())
                     .from(T639())
                     .where(T639_ID().between(2, 6))

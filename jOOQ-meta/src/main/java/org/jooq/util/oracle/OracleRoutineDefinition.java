@@ -84,7 +84,7 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
 	        ? ALL_ARGUMENTS.DEFAULTED
             : inline("N");
 
-        Result<Record> result = create().select(
+        Result<?> result = create().select(
 	            ALL_ARGUMENTS.IN_OUT,
 	            ALL_ARGUMENTS.ARGUMENT_NAME,
 	            ALL_ARGUMENTS.DATA_TYPE,

@@ -64,6 +64,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.Select;
@@ -453,7 +454,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         date.setValue(TDates_TS(), ts1);
         assertEquals(1, date.store());
 
-        Result<Record> dates =
+        Result<Record4<Integer, Date, Time, Timestamp>> dates =
         create.select(TDates_ID(), TDates_D(), TDates_T(), TDates_TS())
               .from(TDates())
               .orderBy(TDates_ID())

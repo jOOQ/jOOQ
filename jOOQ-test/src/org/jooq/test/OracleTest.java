@@ -94,6 +94,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
+import org.jooq.Record2;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -1221,7 +1222,7 @@ public class OracleTest extends jOOQAbstractTest<
     public void testOraclePartitionedOuterJoin() {
 
         // Maybe, find a more sensible query for the test case...?
-        Result<Record> result1 =
+        Result<Record2<String, String>> result1 =
         create().select(
                     TAuthor_FIRST_NAME(),
                     TBook_TITLE())
@@ -1239,7 +1240,7 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(Collections.nCopies(4, "George"), result1.getValues(TAuthor_FIRST_NAME()).subList(0, 4));
         assertEquals(Collections.nCopies(4, "Paulo"), result1.getValues(TAuthor_FIRST_NAME()).subList(4, 8));
 
-        Result<Record> result2 =
+        Result<Record2<String, String>> result2 =
         create().select(
                     TAuthor_FIRST_NAME(),
                     TBook_TITLE())
@@ -1259,7 +1260,7 @@ public class OracleTest extends jOOQAbstractTest<
     public void testOracleText() throws Exception {
 
         // [#816] CONTAINS() tests
-        Result<Record> result1 =
+        Result<Record2<String, BigDecimal>> result1 =
         create().select(TBook_TITLE(), score(2))
                 .from(TBook())
                 .where(contains(TBook_TITLE(), "Alq%").greaterThan(BigDecimal.ZERO))

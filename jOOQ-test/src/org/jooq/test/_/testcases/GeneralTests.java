@@ -232,7 +232,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1191] Check execution capabilities with new features in ExecuteListener
         ConnectionProviderListener.c = create().getConnectionProvider().acquire();
         try {
-            q = create(new Settings().withExecuteListeners(ConnectionProviderListener.class.getName()))
+            Executor create = create();
+            create.getExecuteListeners().add(new ConnectionProviderListener());
+            q = create
                     .selectFrom(TAuthor())
                     .orderBy(TAuthor_LAST_NAME());
             q = runSerialisation(q);

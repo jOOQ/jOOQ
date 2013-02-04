@@ -77,10 +77,5 @@ public class SettingsTest {
         Settings settings2 = SettingsTools.clone(settings1);
 
         assertEquals(settings1.isAttachRecords(), settings2.isAttachRecords());
-        assertEquals(settings1.getExecuteListeners(), settings2.getExecuteListeners());
-
-        // Check if clone makes a deep-copy
-        settings1.getExecuteListeners().add("asdf");
-        assertEquals(settings1.getExecuteListeners().size(), settings2.getExecuteListeners().size() + 1);
     }
 }

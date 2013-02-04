@@ -383,6 +383,16 @@ public class Executor implements Configuration {
         return configuration.getConnectionProvider();
     }
 
+    @Override
+    public final List<ExecuteListener> getExecuteListeners() {
+        return configuration.getExecuteListeners();
+    }
+
+    @Override
+    public final void setExecuteListeners(List<ExecuteListener> listeners) {
+        configuration.setExecuteListeners(listeners);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Convenience methods accessing the underlying Connection
     // -------------------------------------------------------------------------

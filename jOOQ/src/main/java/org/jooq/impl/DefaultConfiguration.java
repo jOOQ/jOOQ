@@ -38,13 +38,16 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.SQL99;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.bind.JAXB;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.ExecuteListener;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -67,6 +70,7 @@ class DefaultConfiguration implements Configuration {
     private final org.jooq.SchemaMapping mapping;
     private final Settings               settings;
     private final Map<String, Object>    data;
+    private List<ExecuteListener>        listeners;
 
     @SuppressWarnings("deprecation")
     DefaultConfiguration() {
@@ -80,6 +84,7 @@ class DefaultConfiguration implements Configuration {
         this.settings = settings != null ? settings : SettingsTools.defaultSettings();
         this.mapping = new org.jooq.SchemaMapping(this.settings);
         this.data = data != null ? data : new HashMap<String, Object>();
+        this.listeners = new ArrayList<ExecuteListener>();
     }
 
     /**
@@ -137,6 +142,22 @@ class DefaultConfiguration implements Configuration {
     @Override
     public final Object setData(String key, Object value) {
         return data.put(key, value);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final List<ExecuteListener> getExecuteListeners() {
+        return listeners;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final void setExecuteListeners(List<ExecuteListener> listeners) {
+        this.listeners = listeners != null ? listeners : new ArrayList<ExecuteListener>();
     }
 
     @Override

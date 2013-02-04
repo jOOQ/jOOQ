@@ -834,25 +834,11 @@ final class Utils {
             result.add(new LoggerListener());
         }
 
-        for (String listener : configuration.getSettings().getExecuteListeners()) {
-            result.add(getListener(listener));
+        for (ExecuteListener listener : configuration.getExecuteListeners()) {
+            result.add(listener);
         }
 
         return result;
-    }
-
-    private static final ExecuteListener getListener(String name) {
-        try {
-
-            // [#1572] Loading classes like this is needed for class loading to
-            // work with OSGi. [#1578] The current implementation of loading
-            // ExecuteListeners will be reworked in jOOQ 3.0, though
-            Class<?> type = Thread.currentThread().getContextClassLoader().loadClass(name);
-            return (ExecuteListener) Reflect.accessible(type.getDeclaredConstructor()).newInstance();
-        }
-        catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     /**

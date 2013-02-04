@@ -54,10 +54,10 @@ import org.jooq.tools.StopWatchListener;
  * <p>
  * <code>ExecuteListener</code> is a base type for loggers, debuggers,
  * profilers, data collectors that can be hooked into a jOOQ {@link Executor}
- * using the {@link Settings#getExecuteListeners()} property, passing
+ * using the {@link Configuration#getExecuteListeners()} property, passing
  * <code>Settings</code> to
  * {@link Executor#Executor(java.sql.Connection, SQLDialect, Settings)}. jOOQ
- * will use those settings at the beginning of a query execution event to
+ * will use that configuration at the beginning of a query execution event to
  * instanciate all the provided listeners. In other words, listeners have the
  * same lifetime as a single query execution, and can thus be used to store
  * state between the moment when a query execution starts, and the moment when a

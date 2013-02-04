@@ -35,10 +35,12 @@
  */
 package org.jooq.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.ExecuteListener;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 
@@ -96,4 +98,16 @@ abstract class AbstractConfiguration implements Configuration {
     public final Object setData(String key, Object value) {
         return configuration.setData(key, value);
     }
+
+    @Override
+    public final List<ExecuteListener> getExecuteListeners() {
+        return configuration.getExecuteListeners();
+    }
+
+    @Override
+    public final void setExecuteListeners(List<ExecuteListener> listeners) {
+        configuration.setExecuteListeners(listeners);
+    }
+
+
 }

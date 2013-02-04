@@ -36,6 +36,7 @@
 package org.jooq;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import org.jooq.conf.Settings;
@@ -137,5 +138,9 @@ public interface Configuration extends Serializable {
      * @see ExecuteListener
      */
     Object setData(String key, Object value);
+
+    List<ExecuteListener> getExecuteListeners();
+
+    void setExecuteListeners(List<ExecuteListener> listeners);
 
 }

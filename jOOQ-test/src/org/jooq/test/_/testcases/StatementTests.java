@@ -60,9 +60,9 @@ import org.jooq.ResultQuery;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.reflect.Reflect;
@@ -97,11 +97,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepStatement() throws Exception {
-        Settings settings = new Settings().withExecuteListeners(KeepStatementListener.class.getName());
+        Executor create = create();
+        create.getExecuteListeners().add(new KeepStatementListener());
 
         // [#385] By default, new statements are created for every execution
         KeepStatementListener.reset();
-        ResultQuery<Record1<Integer>> query = create(settings).select(val(1));
+        ResultQuery<Record1<Integer>> query = create.select(val(1));
         assertEquals(1, query.fetchOne(0));
         assertEquals(2, query.bind(1, 2).fetchOne(0));
 

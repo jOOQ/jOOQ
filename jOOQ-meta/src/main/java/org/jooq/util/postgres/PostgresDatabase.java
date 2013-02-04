@@ -60,6 +60,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
@@ -120,7 +122,7 @@ public class PostgresDatabase extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) {
+    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
         return create()
             .select(
                 KEY_COLUMN_USAGE.CONSTRAINT_NAME,
@@ -143,7 +145,7 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        Result<Record> result = create()
+        Result<?> result = create()
             .select(
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_NAME,
                 REFERENTIAL_CONSTRAINTS.UNIQUE_CONSTRAINT_SCHEMA,
@@ -263,7 +265,7 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
-        Result<Record> records = create()
+        Result<Record3<String, String, String>> records = create()
             .select(
                 PG_NAMESPACE.NSPNAME,
                 PG_TYPE.TYPNAME,

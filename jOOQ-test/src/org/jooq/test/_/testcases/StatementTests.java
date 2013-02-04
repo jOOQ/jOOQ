@@ -52,7 +52,6 @@ import java.util.List;
 
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
-import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -102,7 +101,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#385] By default, new statements are created for every execution
         KeepStatementListener.reset();
-        ResultQuery<Record> query = create(settings).select(val(1));
+        ResultQuery<Record1<Integer>> query = create(settings).select(val(1));
         assertEquals(1, query.fetchOne(0));
         assertEquals(2, query.bind(1, 2).fetchOne(0));
 
@@ -120,7 +119,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1886] TODO: Fix this for StatementType.STATIC_STATEMENT
         assertEquals(3, query.bind(1, 3).fetchOne(0));
 
-        Cursor<Record> cursor = query.fetchLazy();
+        Cursor<Record1<Integer>> cursor = query.fetchLazy();
         assertEquals(3, cursor.fetchOne().getValue(0));
         assertEquals(3, query.fetchOne(0));
 

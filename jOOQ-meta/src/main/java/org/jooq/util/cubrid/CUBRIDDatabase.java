@@ -52,6 +52,7 @@ import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Record;
+import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
@@ -103,7 +104,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
         }
     }
 
-    private Result<Record> fetchKeys(Condition condition) {
+    private Result<Record3<String, String, String>> fetchKeys(Condition condition) {
         return
         create().select(
                     concat(DB_CLASS.CLASS_NAME, val("__"), DB_INDEX.INDEX_NAME).as("constraint_name"),

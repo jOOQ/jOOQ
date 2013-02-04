@@ -48,6 +48,8 @@ import java.util.List;
 
 import org.jooq.Field;
 import org.jooq.Record;
+import org.jooq.Record10;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
 import org.jooq.tools.JooqLogger;
@@ -142,7 +144,7 @@ public class ASEDatabase extends AbstractDatabase {
      * >http://www.dbforums.com/sybase/1625012-sysindexes-question-testing-
      * unique-clustered-indexes.html</a>
      */
-    private List<Record> fetchKeys(int incl, int excl) {
+    private Result<Record10<String, String, String, String, String, String, String, String, String, String>> fetchKeys(int incl, int excl) {
         Field<String> table = field("object_name(id)", String.class);
         Field<String> key = field("name", String.class);
 

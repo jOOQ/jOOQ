@@ -53,10 +53,10 @@ import java.sql.Date;
 import java.util.Arrays;
 
 import org.jooq.Field;
-import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.TableRecord;
@@ -115,7 +115,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Test a simple group by query
         Field<Integer> count = count().as("c");
-        Result<Record> result = create()
+        Result<Record2<Integer, Integer>> result = create()
             .select(TBook_AUTHOR_ID(), count)
             .from(TBook())
             .groupBy(TBook_AUTHOR_ID()).fetch();
@@ -125,7 +125,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, (int) result.get(1).getValue(count));
 
         // Test a group by query with a single HAVING clause
-        result = create()
+        Result<Record2<String, Integer>> result2 = create()
             .select(TAuthor_LAST_NAME(), count)
             .from(TBook())
             .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
@@ -134,12 +134,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .having(count().equal(2))
             .fetch();
 
-        assertEquals(1, result.size());
-        assertEquals(2, (int) result.getValue(0, count));
-        assertEquals("Coelho", result.getValue(0, TAuthor_LAST_NAME()));
+        assertEquals(1, result2.size());
+        assertEquals(2, (int) result2.getValue(0, count));
+        assertEquals("Coelho", result2.getValue(0, TAuthor_LAST_NAME()));
 
         // Test a group by query with a combined HAVING clause
-        result = create()
+        Result<Record2<String, Integer>> result3 = create()
             .select(TAuthor_LAST_NAME(), count)
             .from(TBook())
             .join(TAuthor()).on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
@@ -150,12 +150,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .andExists(selectOne())
             .fetch();
 
-        assertEquals(1, result.size());
-        assertEquals(2, (int) result.getValue(0, count));
-        assertEquals("Coelho", result.getValue(0, TAuthor_LAST_NAME()));
+        assertEquals(1, result3.size());
+        assertEquals(2, (int) result3.getValue(0, count));
+        assertEquals("Coelho", result3.getValue(0, TAuthor_LAST_NAME()));
 
         // Test a group by query with a plain SQL having clause
-        result = create()
+        Result<Record2<String, Integer>> result4 = create()
             .select(VLibrary_AUTHOR(), count)
             .from(VLibrary())
             .where(VLibrary_TITLE().notEqual("1984"))
@@ -167,13 +167,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .having("v_library.author like ?", "Paulo%")
             .fetch();
 
-        assertEquals(1, result.size());
-        assertEquals(2, (int) result.getValue(0, count));
+        assertEquals(1, result4.size());
+        assertEquals(2, (int) result4.getValue(0, count));
 
         // SQLite loses type information when views select functions.
         // In this case: concatenation. So as a workaround, SQLlite only selects
         // FIRST_NAME in the view
-        assertEquals("Paulo", result.getValue(0, VLibrary_AUTHOR()).substring(0, 5));
+        assertEquals("Paulo", result4.getValue(0, VLibrary_AUTHOR()).substring(0, 5));
     }
 
     @Test
@@ -191,11 +191,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        Result<Record> result;
-
         // Simple ROLLUP clause
         // --------------------
-        result = create().select(
+        Result<Record2<Integer, Integer>> result = create()
+                .select(
                     TBook_ID(),
                     TBook_AUTHOR_ID())
                 .from(TBook())
@@ -224,7 +223,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         if (asList(DB2, SYBASE).contains(getDialect()))
             groupingId = one();
 
-        result = create().select(
+        Result<Record4<Integer, Integer, Integer, Integer>> result2 = create()
+                .select(
                     TBook_ID(),
                     TBook_AUTHOR_ID(),
                     grouping(TBook_ID()),
@@ -237,17 +237,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     TBook_ID().asc().nullsFirst(),
                     TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
 
-        assertEquals(9, result.size());
-        assertEquals(Arrays.asList(null, 1, 1, 2, 2, 3, 3, 4, 4), result.getValues(0));
-        assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result.getValues(1));
-        assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result.getValues(2));
+        assertEquals(9, result2.size());
+        assertEquals(Arrays.asList(null, 1, 1, 2, 2, 3, 3, 4, 4), result2.getValues(0));
+        assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result2.getValues(1));
+        assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result2.getValues(2));
 
         if (!asList(DB2, SYBASE).contains(getDialect()))
-            assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result.getValues(3));
+            assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result2.getValues(3));
 
         // CUBE clause
         // -----------
-        result = create().select(
+        Result<Record4<Integer, Integer, Integer, Integer>> result3 = create().select(
                     TBook_ID(),
                     TBook_AUTHOR_ID(),
                     grouping(TBook_ID()),
@@ -260,17 +260,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     TBook_ID().asc().nullsFirst(),
                     TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
 
-        assertEquals(11, result.size());
-        assertEquals(Arrays.asList(null, null, null, 1, 1, 2, 2, 3, 3, 4, 4), result.getValues(0));
-        assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result.getValues(1));
-        assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result.getValues(2));
+        assertEquals(11, result3.size());
+        assertEquals(Arrays.asList(null, null, null, 1, 1, 2, 2, 3, 3, 4, 4), result3.getValues(0));
+        assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result3.getValues(1));
+        assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result3.getValues(2));
 
         if (!asList(DB2, SYBASE).contains(getDialect()))
-            assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result.getValues(3));
+            assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result3.getValues(3));
 
         // GROUPING SETS clause
         // --------------------
-        result = create().select(
+        Result<Record4<Integer, Integer, Integer, Integer>> result4 = create().select(
                     TBook_ID(),
                     TBook_AUTHOR_ID(),
                     grouping(TBook_ID()),
@@ -285,13 +285,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     TBook_ID().asc().nullsFirst(),
                     TBook_AUTHOR_ID().asc().nullsFirst()).fetch();
 
-        assertEquals(9, result.size());
-        assertEquals(Arrays.asList(null, null, null, null, null, 1, 2, 3, 4), result.getValues(0));
-        assertEquals(Arrays.asList(null, null, 1, 2, 2, 1, 1, 2, 2), result.getValues(1));
-        assertEquals(Arrays.asList(1, 1, 1, 1, 1, 0, 0, 0, 0), result.getValues(2));
+        assertEquals(9, result4.size());
+        assertEquals(Arrays.asList(null, null, null, null, null, 1, 2, 3, 4), result4.getValues(0));
+        assertEquals(Arrays.asList(null, null, 1, 2, 2, 1, 1, 2, 2), result4.getValues(1));
+        assertEquals(Arrays.asList(1, 1, 1, 1, 1, 0, 0, 0, 0), result4.getValues(2));
 
         if (!asList(DB2, SYBASE).contains(getDialect()))
-            assertEquals(Arrays.asList(3, 3, 2, 2, 2, 0, 0, 0, 0), result.getValues(3));
+            assertEquals(Arrays.asList(3, 3, 2, 2, 2, 0, 0, 0, 0), result4.getValues(3));
     }
 
     @Test

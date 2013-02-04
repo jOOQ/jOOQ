@@ -98,7 +98,9 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record5;
 import org.jooq.Record6;
+import org.jooq.Record9;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
@@ -168,7 +170,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
         }
 
-        Result<Record> result = create()
+        Result<Record9<Integer, Integer, Integer, Integer, BigDecimal, BigDecimal, Integer, Integer, BigDecimal>> result1 = create()
             .select(
                 TBook_AUTHOR_ID(),
                 count(),
@@ -184,26 +186,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .orderBy(TBook_AUTHOR_ID())
             .fetch();
 
-        assertEquals(2, (int) result.get(0).getValue(1, Integer.class));
-        assertEquals(2, (int) result.get(0).getValue(2, Integer.class));
-        assertEquals(1, (int) result.get(0).getValue(3, Integer.class));
-        assertEquals(3d, result.get(0).getValue(4, Double.class));
-        assertEquals(1, (int) result.get(0).getValue(6, Integer.class));
-        assertEquals(2, (int) result.get(0).getValue(7, Integer.class));
+        assertEquals(2, (int) result1.get(0).value2());
+        assertEquals(2, (int) result1.get(0).value3());
+        assertEquals(1, (int) result1.get(0).value4());
+        assertEquals(3d, result1.get(0).getValue(4, Double.class));
+        assertEquals(1, (int) result1.get(0).value7());
+        assertEquals(2, (int) result1.get(0).value8());
 
-        assertEquals(2, (int) result.get(1).getValue(1, Integer.class));
-        assertEquals(2, (int) result.get(1).getValue(2, Integer.class));
-        assertEquals(1, (int) result.get(1).getValue(3, Integer.class));
-        assertEquals(7d, result.get(1).getValue(4, Double.class));
-        assertEquals(3, (int) result.get(1).getValue(6, Integer.class));
-        assertEquals(4, (int) result.get(1).getValue(7, Integer.class));
+        assertEquals(2, (int) result1.get(1).value2());
+        assertEquals(2, (int) result1.get(1).value3());
+        assertEquals(1, (int) result1.get(1).value4());
+        assertEquals(7d, result1.get(1).getValue(4, Double.class));
+        assertEquals(3, (int) result1.get(1).value7());
+        assertEquals(4, (int) result1.get(1).value8());
 
         // TODO [#868] Derby, HSQLDB, and SQL Server perform rounding/truncation
         // This may need to be corrected by jOOQ
-        assertTrue(asList(1.0, 1.5, 2.0).contains(result.get(0).getValue(5, Double.class)));
-        assertTrue(asList(1.0, 1.5, 2.0).contains(result.get(0).getValue(8, Double.class)));
-        assertTrue(asList(3.0, 3.5, 4.0).contains(result.get(1).getValue(5, Double.class)));
-        assertTrue(asList(3.0, 3.5, 4.0).contains(result.get(1).getValue(8, Double.class)));
+        assertTrue(asList(1.0, 1.5, 2.0).contains(result1.get(0).getValue(5, Double.class)));
+        assertTrue(asList(1.0, 1.5, 2.0).contains(result1.get(0).getValue(8, Double.class)));
+        assertTrue(asList(3.0, 3.5, 4.0).contains(result1.get(1).getValue(5, Double.class)));
+        assertTrue(asList(3.0, 3.5, 4.0).contains(result1.get(1).getValue(8, Double.class)));
 
         // [#1042] DISTINCT keyword
         // ------------------------
@@ -233,7 +235,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 break;
 
             default: {
-                result = create()
+                Result<Record5<Integer, BigDecimal, BigDecimal, BigDecimal, BigDecimal>> result2 = create()
                     .select(
                         TBook_AUTHOR_ID(),
                         stddevPop(TBook_ID()),
@@ -245,24 +247,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .orderBy(TBook_AUTHOR_ID())
                     .fetch();
 
-                assertEquals(0.5, result.get(0).getValue(1, Double.class));
-                assertEquals(0.25, result.get(0).getValue(3, Double.class));
-                assertEquals(0.5, result.get(1).getValue(1, Double.class));
-                assertEquals(0.25, result.get(1).getValue(3, Double.class));
+                assertEquals(0.5, result2.get(0).getValue(1, Double.class));
+                assertEquals(0.25, result2.get(0).getValue(3, Double.class));
+                assertEquals(0.5, result2.get(1).getValue(1, Double.class));
+                assertEquals(0.25, result2.get(1).getValue(3, Double.class));
 
                 // DB2 only knows STDDEV_POP / VAR_POP
                 if (getDialect() != SQLDialect.DB2) {
-                    assertEquals("0.707", result.get(0).getValue(2, String.class).substring(0, 5));
-                    assertEquals(0.5, result.get(0).getValue(4, Double.class));
-                    assertEquals("0.707", result.get(1).getValue(2, String.class).substring(0, 5));
-                    assertEquals(0.5, result.get(1).getValue(4, Double.class));
+                    assertEquals("0.707", result2.get(0).getValue(2, String.class).substring(0, 5));
+                    assertEquals(0.5, result2.get(0).getValue(4, Double.class));
+                    assertEquals("0.707", result2.get(1).getValue(2, String.class).substring(0, 5));
+                    assertEquals(0.5, result2.get(1).getValue(4, Double.class));
                 }
             }
         }
 
         // [#873] Duplicate functions
         // --------------------------
-        result =
+        Result<Record3<Integer, Integer, Integer>> result3 =
         create().select(
                     TBook_AUTHOR_ID(),
                     max(TBook_ID()),
@@ -272,10 +274,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .orderBy(TBook_AUTHOR_ID())
                 .fetch();
 
-        assertEquals(2, (int) result.get(0).getValue(1, Integer.class));
-        assertEquals(2, (int) result.get(0).getValue(2, Integer.class));
-        assertEquals(4, (int) result.get(1).getValue(1, Integer.class));
-        assertEquals(4, (int) result.get(1).getValue(2, Integer.class));
+        assertEquals(2, (int) result3.get(0).getValue(1, Integer.class));
+        assertEquals(2, (int) result3.get(0).getValue(2, Integer.class));
+        assertEquals(4, (int) result3.get(1).getValue(1, Integer.class));
+        assertEquals(4, (int) result3.get(1).getValue(2, Integer.class));
     }
 
     @Test
@@ -336,7 +338,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // [#600] As window functions
-        Result<Record> result =
+        Result<Record9<BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal>> result =
         create().select(
                     regrAvgX(TBook_ID(), TBook_AUTHOR_ID()).over(),
                     regrAvgY(TBook_ID(), TBook_AUTHOR_ID()).over(),
@@ -391,7 +393,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         int column = 0;
 
         // ROW_NUMBER()
-        Result<Record> result =
+        Result<?> result =
         create().select(TBook_ID(),
 // [#1535] TODO:        rowNumber().over(),
 

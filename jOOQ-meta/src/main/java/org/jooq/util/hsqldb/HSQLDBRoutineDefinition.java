@@ -83,7 +83,7 @@ public class HSQLDBRoutineDefinition extends AbstractRoutineDefinition {
 
     @Override
     protected void init0() throws SQLException {
-        Result<Record> result = create().select(
+        Result<?> result = create().select(
                 PARAMETERS.PARAMETER_MODE,
                 PARAMETERS.PARAMETER_NAME,
                 nvl(ELEMENT_TYPES.COLLECTION_TYPE_IDENTIFIER, PARAMETERS.DATA_TYPE).as("datatype"),

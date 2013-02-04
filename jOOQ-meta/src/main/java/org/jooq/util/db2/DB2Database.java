@@ -57,6 +57,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.Record4;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.impl.Executor;
@@ -124,7 +126,7 @@ public class DB2Database extends AbstractDatabase {
         }
     }
 
-    private List<Record> fetchKeys(String constraintType) {
+    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
         return create().select(
                 concat(Keycoluse.TABNAME, val("__"), Keycoluse.CONSTNAME).as("constraint_name"),
                 Keycoluse.TABSCHEMA.trim(),

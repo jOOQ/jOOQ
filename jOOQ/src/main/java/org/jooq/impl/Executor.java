@@ -71,6 +71,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Generated;
 import javax.sql.DataSource;
 
 import org.jooq.Attachable;
@@ -99,12 +100,56 @@ import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record10;
+import org.jooq.Record11;
+import org.jooq.Record12;
+import org.jooq.Record13;
+import org.jooq.Record14;
+import org.jooq.Record15;
+import org.jooq.Record16;
+import org.jooq.Record17;
+import org.jooq.Record18;
+import org.jooq.Record19;
+import org.jooq.Record2;
+import org.jooq.Record20;
+import org.jooq.Record21;
+import org.jooq.Record22;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.RecordHandler;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
+import org.jooq.Row10;
+import org.jooq.Row11;
+import org.jooq.Row12;
+import org.jooq.Row13;
+import org.jooq.Row14;
+import org.jooq.Row15;
+import org.jooq.Row16;
+import org.jooq.Row17;
+import org.jooq.Row18;
+import org.jooq.Row19;
+import org.jooq.Row2;
+import org.jooq.Row20;
+import org.jooq.Row21;
+import org.jooq.Row22;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.Select;
 import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
@@ -1541,7 +1586,9 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
-        return new SelectImpl<R>(this).from(table);
+        SelectWhereStep<R> result = Factory.selectFrom(table);
+        result.attach(this);
+        return result;
     }
 
     /**
@@ -1603,6 +1650,732 @@ public class Executor implements Configuration {
 
 // [jooq-tools] START [select]
 
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1) {
+        return (SelectSelectStep) select(new Field[] { field1 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2) {
+        return (SelectSelectStep) select(new Field[] { field1, field2 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, field4)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, field4, field5)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field5, field6)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field6, field7)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field7, field8)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field8, field9)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field9, field10)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field10, field11)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field11, field12)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field12, field13)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field13, field14)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field14, field15)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field15, field16)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field16, field17)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field17, field18)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field18, field19)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field19, field20)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field20, field21)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #select(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.select(field1, field2, field3, .., field21, field22)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
 // [jooq-tools] END [select]
 
     /**
@@ -1663,6 +2436,732 @@ public class Executor implements Configuration {
 
 // [jooq-tools] START [selectDistinct]
 
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, field4)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, field4, field5)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field5, field6)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field6, field7)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field7, field8)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field8, field9)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field9, field10)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field10, field11)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field11, field12)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field12, field13)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field13, field14)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field14, field15)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field15, field16)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field16, field17)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field17, field18)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field18, field19)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field19, field20)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field20, field21)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    /**
+     * Create a new DSL select statement.
+     * <p>
+     * This is the same as {@link #selectDistinct(Field...)}, except that it
+     * declares additional record-level typesafety, which is needed by
+     * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
+     * building methods taking subselect arguments.
+     * <p>
+     * This creates an attached, renderable and executable <code>SELECT</code>
+     * statement from this {@link Executor}. If you don't need to render or
+     * execute this <code>SELECT</code> statement (e.g. because you want to
+     * create a subselect), consider using the static
+     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * <p>
+     * Example: <code><pre>
+     * Executor create = new Executor();
+     *
+     * create.selectDistinct(field1, field2, field3, .., field21, field22)
+     *       .from(table1)
+     *       .join(table2).on(field1.equal(field2))
+     *       .where(field1.greaterThan(100))
+     *       .orderBy(field2);
+     * </pre></code>
+     *
+     * @see Factory#selectDistinct(Field...)
+     * @see #selectDistinct(Field...)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
 // [jooq-tools] END [selectDistinct]
 
     /**
@@ -1688,8 +3187,8 @@ public class Executor implements Configuration {
      * @see Factory#selectZero()
      */
     @Support
-    public final SelectSelectStep<Record> selectZero() {
-        SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectZero();
+    public final SelectSelectStep<Record1<Integer>> selectZero() {
+        SelectSelectStep<Record1<Integer>> result = Factory.selectZero();
         result.attach(this);
         return result;
     }
@@ -1717,8 +3216,8 @@ public class Executor implements Configuration {
      * @see Factory#selectOne()
      */
     @Support
-    public final SelectSelectStep<Record> selectOne() {
-        SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectOne();
+    public final SelectSelectStep<Record1<Integer>> selectOne() {
+        SelectSelectStep<Record1<Integer>> result = Factory.selectOne();
         result.attach(this);
         return result;
     }
@@ -1745,8 +3244,8 @@ public class Executor implements Configuration {
      * @see Factory#selectCount()
      */
     @Support
-    public final SelectSelectStep<Record> selectCount() {
-        SelectSelectStep<Record> result = (SelectSelectStep) Factory.selectCount();
+    public final SelectSelectStep<Record1<Integer>> selectCount() {
+        SelectSelectStep<Record1<Integer>> result = Factory.selectCount();
         result.attach(this);
         return result;
     }

@@ -50,6 +50,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Record;
+import org.jooq.Record4;
+import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
@@ -116,7 +118,7 @@ public class MySQLDatabase extends AbstractDatabase {
         return "KEY_" + tableName + "_" + keyName;
     }
 
-    private List<Record> fetchKeys(String constraintType) {
+    private Result<Record4<String, String, String, String>> fetchKeys(String constraintType) {
         return create().select(
                 KeyColumnUsage.TABLE_SCHEMA,
                 KeyColumnUsage.CONSTRAINT_NAME,
@@ -228,7 +230,7 @@ public class MySQLDatabase extends AbstractDatabase {
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
-        Result<Record> records = create()
+        Result<Record5<String, String, String, String, String>> records = create()
             .select(
                 Columns.TABLE_SCHEMA,
                 Columns.COLUMN_COMMENT,

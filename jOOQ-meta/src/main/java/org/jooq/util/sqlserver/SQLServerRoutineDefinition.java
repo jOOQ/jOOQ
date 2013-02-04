@@ -74,7 +74,7 @@ public class SQLServerRoutineDefinition extends AbstractRoutineDefinition {
 
     @Override
     protected void init0() throws SQLException {
-        Result<Record> result = create().selectDistinct(
+        Result<?> result = create().selectDistinct(
                 PARAMETERS.PARAMETER_MODE,
                 PARAMETERS.PARAMETER_NAME,
                 PARAMETERS.DATA_TYPE,

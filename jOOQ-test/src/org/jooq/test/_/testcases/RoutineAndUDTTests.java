@@ -322,30 +322,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             f1a, f2a, f3a, f4a, f5a, f6a, f7a, f8a, f9a,
             f1b, f2b, f3b, f4b, f5b, f6b, f7b, f8b, f9b, f10);
         q.execute();
-        Result<Record> result = q.getResult();
+        Result<Record> result1 = q.getResult();
 
-        assertEquals(1, result.size());
-        assertEquals("1", result.get(0).getValue(f1a, String.class));
-        assertEquals("0", result.get(0).getValue(f2a, String.class));
-        assertEquals("1", result.get(0).getValue(f3a, String.class));
-        assertEquals("42", result.get(0).getValue(f4a, String.class));
-        assertEquals("1", result.get(0).getValue(f5a, String.class));
-        assertEquals("1204", result.get(0).getValue(f6a, String.class));
-        assertEquals("4301", result.get(0).getValue(f7a, String.class));
-        assertEquals("1101", result.get(0).getValue(f8a, String.class));
-        assertEquals("1204", result.get(0).getValue(f9a, String.class));
+        assertEquals(1, result1.size());
+        assertEquals("1", result1.get(0).getValue(f1a, String.class));
+        assertEquals("0", result1.get(0).getValue(f2a, String.class));
+        assertEquals("1", result1.get(0).getValue(f3a, String.class));
+        assertEquals("42", result1.get(0).getValue(f4a, String.class));
+        assertEquals("1", result1.get(0).getValue(f5a, String.class));
+        assertEquals("1204", result1.get(0).getValue(f6a, String.class));
+        assertEquals("4301", result1.get(0).getValue(f7a, String.class));
+        assertEquals("1101", result1.get(0).getValue(f8a, String.class));
+        assertEquals("1204", result1.get(0).getValue(f9a, String.class));
 
-        assertEquals("1", result.get(0).getValue(f1b, String.class));
-        assertEquals("0", result.get(0).getValue(f2b, String.class));
-        assertEquals("1", result.get(0).getValue(f3b, String.class));
-        assertEquals("42", result.get(0).getValue(f4b, String.class));
-        assertEquals("1", result.get(0).getValue(f5b, String.class));
-        assertEquals("1204", result.get(0).getValue(f6b, String.class));
-        assertEquals("4301", result.get(0).getValue(f7b, String.class));
-        assertEquals("1101", result.get(0).getValue(f8b, String.class));
-        assertEquals("1204", result.get(0).getValue(f9b, String.class));
+        assertEquals("1", result1.get(0).getValue(f1b, String.class));
+        assertEquals("0", result1.get(0).getValue(f2b, String.class));
+        assertEquals("1", result1.get(0).getValue(f3b, String.class));
+        assertEquals("42", result1.get(0).getValue(f4b, String.class));
+        assertEquals("1", result1.get(0).getValue(f5b, String.class));
+        assertEquals("1204", result1.get(0).getValue(f6b, String.class));
+        assertEquals("4301", result1.get(0).getValue(f7b, String.class));
+        assertEquals("1101", result1.get(0).getValue(f8b, String.class));
+        assertEquals("1204", result1.get(0).getValue(f9b, String.class));
 
-        assertEquals("0", result.get(0).getValue(f10, String.class));
+        assertEquals("0", result1.get(0).getValue(f10, String.class));
 
         // ---------------------------------------------------------------------
         // Functions in conditions
@@ -360,7 +360,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // ---------------------------------------------------------------------
         // Functions in SQL
         // ---------------------------------------------------------------------
-        result = create().select(
+        Result<Record3<Integer, Integer, Integer>> result2 = create().select(
                 FNumberField(1).cast(Integer.class),
                 FNumberField(TAuthor_ID()).cast(Integer.class),
                 FNumberField(FNumberField(TAuthor_ID())).cast(Integer.class))
@@ -368,12 +368,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .orderBy(TAuthor_ID())
             .fetch();
 
-        assertEquals(Integer.valueOf(1), result.getValue(0, 0));
-        assertEquals(Integer.valueOf(1), result.getValue(0, 1));
-        assertEquals(Integer.valueOf(1), result.getValue(0, 2));
-        assertEquals(Integer.valueOf(1), result.getValue(1, 0));
-        assertEquals(Integer.valueOf(2), result.getValue(1, 1));
-        assertEquals(Integer.valueOf(2), result.getValue(1, 2));
+        assertEquals(Integer.valueOf(1), result2.getValue(0, 0));
+        assertEquals(Integer.valueOf(1), result2.getValue(0, 1));
+        assertEquals(Integer.valueOf(1), result2.getValue(0, 2));
+        assertEquals(Integer.valueOf(1), result2.getValue(1, 0));
+        assertEquals(Integer.valueOf(2), result2.getValue(1, 1));
+        assertEquals(Integer.valueOf(2), result2.getValue(1, 2));
     }
 
 
@@ -938,7 +938,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testArrayTables() throws Exception {
         if (TArrays_NUMBER_R() != null) {
-            Result<Record> result;
+            Result<?> result;
 
             // [#1184] Test data type
             assertTrue(TArrays_NUMBER_R().getDataType().isArray());
@@ -1049,7 +1049,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals("2", "" + result.getValue(3, 0));
         }
         else if (TArrays_NUMBER() != null) {
-            Result<Record> result;
+            Result<?> result;
             Table<?> table;
             Integer[] array;
 
@@ -1121,7 +1121,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testArrayTableSimulation() throws Exception {
-        Result<Record> result;
+        Result<?> result;
 
         // An empty array
         // --------------

@@ -129,6 +129,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Select;
 import org.jooq.SelectSelectStep;
+import org.jooq.SelectWhereStep;
 import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.UDTRecord;
@@ -241,6 +242,27 @@ public class Factory {
     @Support
     public static SelectSelectStep<Record> select(Field<?>... fields) {
         return new SelectImpl<Record>(new DefaultConfiguration()).select(fields);
+    }
+
+    /**
+     * Create a new DSL select statement
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     */
+    @Support
+    public static <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
+        return new SelectImpl<R>(new DefaultConfiguration()).from(table);
     }
 
 // [jooq-tools] START [select]

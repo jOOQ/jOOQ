@@ -327,7 +327,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // ------------------
 
         // Inline LIMIT .. OFFSET with arbitrary ordering
-        Result<Record> r1 =
+        Result<Record2<Integer, String>> r1 =
         create().select(TBook_ID().as("xx"), TBook_TITLE().as("yy"))
                 .from(TBook())
                 .limit(1, 2)
@@ -336,7 +336,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(2, r1.size());
 
         // Bind values for LIMIT .. OFFSET with arbitrary ordering
-        Result<Record> r2 =
+        Result<Record2<Integer, String>> r2 =
         create().select(TBook_ID().as("xx"), TBook_TITLE().as("yy"))
                 .from(TBook())
                 .limit(param("x", 1), param("y", 2))
@@ -348,7 +348,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // -----------------
 
         // Inline LIMIT .. OFFSET with explicit ordering
-        Result<Record> r3 =
+        Result<Record2<String, Integer>> r3 =
         create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
                 .from(TBook())
                 .orderBy(TBook_ID().as("xx").desc())
@@ -359,7 +359,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(3, 2), r3.getValues("xx"));
 
         // Bind values for LIMIT .. OFFSET with arbitrary ordering
-        Result<Record> r4 =
+        Result<Record2<String, Integer>> r4 =
         create().select(TBook_TITLE().as("yy"), TBook_ID().as("xx"))
                 .from(TBook())
                 .orderBy(TBook_ID().as("xx").desc())
@@ -474,7 +474,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), record.getValue(nestedID));
         assertEquals(Integer.valueOf(2), record.getValue(1));
 
-        Result<Record> result = create().select(nestedID, count())
+        Result<Record2<Integer, Integer>> result = create().select(nestedID, count())
             .from(create().selectFrom(TBook())
                           .orderBy(TBook_ID().desc())
                           .limit(1, 2).asTable("nested"))

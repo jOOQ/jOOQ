@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.test.firebird.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 942475728;
+	private static final long serialVersionUID = -711981017;
 
 	/**
 	 * The table column <code>X_UNUSED.ID</code>
@@ -39,8 +39,8 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	public java.util.List<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85)
-			.where(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID.equal(getValueAsInteger(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME)))
-			.and(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME.equal(getValueAsString(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID)))
+			.where(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID)))
+			.and(org.jooq.test.firebird.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME)))
 			.fetch();
 	}
 
@@ -52,8 +52,8 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	public java.util.List<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID_REF.equal(getValueAsInteger(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME)))
-			.and(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF.equal(getValueAsString(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID)))
+			.where(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID_REF.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID)))
+			.and(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME)))
 			.fetch();
 	}
 
@@ -111,7 +111,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	@Override
@@ -125,7 +125,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	@Override
@@ -139,14 +139,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
 		return create()
 			.selectFrom(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED)
-			.where(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValueAsString(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID_REF)))
-			.and(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValueAsInteger(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF)))
+			.where(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.ID_REF)))
+			.and(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME.equal(getValue(org.jooq.test.firebird.generatedclasses.tables.XUnused.X_UNUSED.NAME_REF)))
 			.fetchOne();
 	}
 
@@ -284,7 +284,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	@Override
@@ -298,7 +298,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	@Override

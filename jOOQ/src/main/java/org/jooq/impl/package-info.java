@@ -1,5 +1,5 @@
 /**
- * The <code>org.jooq.impl</code> package contains jOOQ's implementation classes
+ * The <code>org.jooq.impl</code> package contains jOOQ's implementation classes.
  * <p>
  * This package provides implementations for the jOOQ API from
  * <code>org.jooq</code>, whose interfaces are constructed mostly through the

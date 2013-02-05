@@ -41,6 +41,7 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Parameter;
 import org.jooq.RenderContext;
+import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for stored procedure parameters
@@ -103,6 +104,18 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
 
         // [#1938] This is a much more efficient hashCode() implementation
         // compared to that of standard QueryParts
-        return name.hashCode();
+        return name != null ? name.hashCode() : 0;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+
+        // [#1626] ParameterImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof ParameterImpl) {
+            return StringUtils.equals(name, ((ParameterImpl<?>) that).name);
+        }
+
+        return super.equals(that);
     }
 }

@@ -247,7 +247,11 @@ implements
 
         @Override
         public void bind(BindContext context) throws DataAccessException {
-            context.bind(table);
+            boolean declareTables = context.declareFields();
+
+            context.declareTables(true)
+                   .bind(table)
+                   .declareTables(declareTables);
         }
     }
 

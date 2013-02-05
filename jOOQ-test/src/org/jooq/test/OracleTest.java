@@ -1225,7 +1225,7 @@ public class OracleTest extends jOOQAbstractTest<
         o.setD(now);
         // [#1034] TODO: Check proper use of Timestamp in array records
         DateAsTimestampT_976VarrayTypeRecord t = new DateAsTimestampT_976VarrayTypeRecord(ora());
-//        t.set(now, now);
+        t.set(now, now);
 
         record = ora().newRecord(DATE_AS_TIMESTAMP_T_976);
         record.setId(2);

@@ -173,7 +173,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof TableImpl) {
             TableImpl<?> other = (TableImpl<?>) that;
-            return StringUtils.equals(getSchema(), other.getSchema()) && getName().equals(other.getName());
+            return
+                StringUtils.equals(getSchema(), other.getSchema()) &&
+                StringUtils.equals(getName(), other.getName());
         }
 
         return super.equals(that);

@@ -72,6 +72,7 @@ import org.jooq.SortOrder;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.tools.Convert;
+import org.jooq.tools.StringUtils;
 
 abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> implements Field<T> {
 
@@ -1738,7 +1739,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
         // [#2144] Non-equality can be decided early, without executing the
         // rather expensive implementation of AbstractQueryPart.equals()
         if (that instanceof AbstractField) {
-            if (getName().equals(((AbstractField<?>) that).getName())) {
+            if (StringUtils.equals(getName(), (((AbstractField<?>) that).getName()))) {
                 return super.equals(that);
             }
 

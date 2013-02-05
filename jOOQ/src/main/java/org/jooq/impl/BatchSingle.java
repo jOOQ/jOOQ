@@ -113,12 +113,13 @@ class BatchSingle implements BatchBindStep {
             for (Object[] bindValues : allBindValues) {
                 listener.bindStart(ctx);
 
-                // [#1371] Don't bind variables directly onto statement, bind
-                // them through the Query to preserve type information
+                // [#1371] [#2139] Don't bind variables directly onto statement,
+                // bind them through the collected params list to preserve type
+                // information
                 for (int i = 0; i < params.size(); i++) {
                     params.get(i).setConverted(bindValues[i]);
                 }
-                new DefaultBindContext(create, ctx.statement()).bind(query);
+                new DefaultBindContext(create, ctx.statement()).bind(params);
 
                 listener.bindEnd(ctx);
                 ctx.statement().addBatch();

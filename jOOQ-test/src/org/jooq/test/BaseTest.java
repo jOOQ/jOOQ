@@ -742,6 +742,24 @@ public abstract class BaseTest<
         return record;
     }
 
+    /**
+     * Convenience method to get an author
+     */
+    protected final A getAuthor(int id) {
+        return create().selectFrom(TAuthor())
+                       .where(TAuthor_ID().equal(id))
+                       .fetchOne();
+    }
+
+    /**
+     * Convenience method to get a book
+     */
+    protected final B getBook(int id) {
+        return create().selectFrom(TBook())
+                       .where(TBook_ID().equal(id))
+                       .fetchOne();
+    }
+
     @SuppressWarnings("unchecked")
     protected Sequence<? extends Number> SAuthorID() throws IllegalAccessException, NoSuchFieldException {
         return (Sequence<? extends Number>) cSequences().getField("S_AUTHOR_ID").get(cSequences());

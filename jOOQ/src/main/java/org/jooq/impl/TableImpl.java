@@ -41,6 +41,7 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.tools.StringUtils;
 
 /**
  * A common base type for tables
@@ -159,5 +160,22 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         else {
             return super.declaresTables();
         }
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+
+        // [#2144] TableImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof TableImpl) {
+            TableImpl<?> other = (TableImpl<?>) that;
+            return StringUtils.equals(getSchema(), other.getSchema()) && getName().equals(other.getName());
+        }
+
+        return super.equals(that);
     }
 }

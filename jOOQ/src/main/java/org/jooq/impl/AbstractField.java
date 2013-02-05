@@ -1733,6 +1733,22 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
     // ------------------------------------------------------------------------
 
     @Override
+    public boolean equals(Object that) {
+
+        // [#2144] Non-equality can be decided early, without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof AbstractField) {
+            if (getName().equals(((AbstractField<?>) that).getName())) {
+                return super.equals(that);
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    @Override
     public int hashCode() {
 
         // [#1938] This is a much more efficient hashCode() implementation

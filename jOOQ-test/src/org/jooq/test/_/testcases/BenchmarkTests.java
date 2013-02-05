@@ -72,15 +72,28 @@ public class BenchmarkTests<
     T785 extends TableRecord<T785>>
 extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> {
 
-    private static final int    REPETITIONS = 100;
-    private static final String RANDOM      = "" + new Random().nextLong();
+    private static final int    REPETITIONS_FIELD_ACCESS = 1000000;
+    private static final int    REPETITIONS_SELECT       = 100;
+    private static final String RANDOM                   = "" + new Random().nextLong();
 
     public BenchmarkTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, T725, T639, T785> delegate) {
         super(delegate);
     }
 
     @Test
-    public void testBenchmark() throws Exception {
+    public void testBenchmarkFieldAccess() throws Exception {
+        // This benchmark is inspired by a private contribution by Roberto Giacco
+
+        B book = create().newRecord(TBook());
+
+        for (int i = 0; i < REPETITIONS_FIELD_ACCESS; i++) {
+            book.setValue(TBook_ID(), i);
+            book.setValue(TBook_AUTHOR_ID(), book.getValue(TBook_ID()));
+        }
+    }
+
+    @Test
+    public void testBenchmarkSelect() throws Exception {
         // This benchmark is contributed by "jjYBdx4IL" on GitHub:
         // https://github.com/jOOQ/jOOQ/issues/1625
 
@@ -98,13 +111,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         StopWatch watch = new StopWatch();
         watch.splitInfo("Benchmark start");
 
-        testBenchmarkFullExecution(create, REPETITIONS);
+        testBenchmarkFullExecution(create, REPETITIONS_SELECT);
         watch.splitInfo("Full re-execution");
 
-        testBenchmarkReuseSelect(create, REPETITIONS);
+        testBenchmarkReuseSelect(create, REPETITIONS_SELECT);
         watch.splitInfo("Reuse select");
 
-        testBenchmarkReuseSQLString(create, REPETITIONS);
+        testBenchmarkReuseSQLString(create, REPETITIONS_SELECT);
         watch.splitInfo("Reuse SQL String");
     }
 

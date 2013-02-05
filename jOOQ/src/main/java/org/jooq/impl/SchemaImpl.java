@@ -152,4 +152,20 @@ public class SchemaImpl extends AbstractNamedQueryPart implements Schema {
     public List<Sequence<?>> getSequences() {
         return Collections.emptyList();
     }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public boolean equals(Object that) {
+
+        // [#2144] SchemaImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof SchemaImpl) {
+            return getName().equals(((SchemaImpl) that).getName());
+        }
+
+        return super.equals(that);
+    }
 }

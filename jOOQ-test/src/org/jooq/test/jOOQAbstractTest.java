@@ -1805,8 +1805,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testBenchmark() throws Exception {
-        new BenchmarkTests(this).testBenchmark();
+    public void testBenchmarkFieldAccess() throws Exception {
+        new BenchmarkTests(this).testBenchmarkFieldAccess();
+    }
+
+    @Test
+    public void testBenchmarkSelect() throws Exception {
+        new BenchmarkTests(this).testBenchmarkSelect();
     }
 
     @Test

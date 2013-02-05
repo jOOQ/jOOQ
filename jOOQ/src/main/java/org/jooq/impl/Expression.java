@@ -64,6 +64,7 @@ import static org.jooq.impl.Factory.bitOr;
 import static org.jooq.impl.Factory.bitXor;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
 
@@ -397,14 +398,15 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case SQLITE: {
-                    String prefix = (sign > 0) ? "+" : "-";
+                    boolean ytm = rhs.get(0).getType() == YearToMonth.class;
+                    Field<?> interval = val(ytm ? rhsAsYTM().intValue() : rhsAsDTS().getTotalSeconds());
 
-                    if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{datetime}({0}, '" + prefix + rhsAsYTM().intValue() + " months')", getDataType(), lhs);
+                    if (sign < 0) {
+                        interval = interval.neg();
                     }
-                    else {
-                        return field("{datetime}({0}, '" + prefix + rhsAsDTS().getTotalSeconds() + " seconds')", getDataType(), lhs);
-                    }
+
+                    interval = interval.concat(inline(ytm ? " months" : " seconds"));
+                    return field("{datetime}({0}, {1})", getDataType(), lhs, interval);
                 }
 
                 case ORACLE:
@@ -485,10 +487,10 @@ class Expression<T> extends AbstractFunction<T> {
 
                 case SQLITE:
                     if (operator == ADD) {
-                        return field("{datetime}({0}, '+" + rhsAsNumber() + " day')", getDataType(), lhs);
+                        return field("{datetime}({0}, {1})", getDataType(), lhs, rhsAsNumber().concat(inline(" day")));
                     }
                     else {
-                        return field("{datetime}({0}, '-" + rhsAsNumber() + " day')", getDataType(), lhs);
+                        return field("{datetime}({0}, {1})", getDataType(), lhs, rhsAsNumber().neg().concat(inline(" day")));
                     }
 
                 // These dialects can add / subtract days using +/- operators

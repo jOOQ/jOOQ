@@ -346,8 +346,7 @@ public interface FactoryOperations extends Configuration {
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
-     *       .orderBy(field2)
-     *       .execute();
+     *       .orderBy(field2);
      * </pre></code>
      *
      * @see Factory#zero()
@@ -365,8 +364,7 @@ public interface FactoryOperations extends Configuration {
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
-     *       .orderBy(field2)
-     *       .execute();
+     *       .orderBy(field2);
      * </pre></code>
      *
      * @see Factory#one()
@@ -384,8 +382,7 @@ public interface FactoryOperations extends Configuration {
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
-     *       .orderBy(field2)
-     *       .execute();
+     *       .orderBy(field2);
      * </pre></code>
      */
     @Support

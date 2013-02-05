@@ -36,22 +36,21 @@
 package org.jooq;
 
 import java.util.Collection;
-import java.util.Map;
 
+import javax.annotation.Generated;
+
+import org.jooq.Support;
 import org.jooq.impl.Executor;
 
 /**
- * This type is used for the {@link Insert}'s alternative DSL API.
+ * This type is used for the {@link Insert}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Executor create = new Executor(config);
+ * Executor create = new Executor();
  *
- * create.insertInto(table)
- *       .set(field1, value1)
- *       .set(field2, value2)
- *       .newRecord()
- *       .set(field1, value3)
- *       .set(field2, value4)
+ * create.insertInto(table, field1, field2, field3, .., field11, field12)
+ *       .values(valueA1, valueA2, valueA3, .., valueA11, valueA12)
+ *       .values(valueB1, valueB2, valueB3, .., valueB11, valueB12)
  *       .onDuplicateKeyUpdate()
  *       .set(field1, value1)
  *       .set(field2, value2)
@@ -60,59 +59,36 @@ import org.jooq.impl.Executor;
  *
  * @author Lukas Eder
  */
-public interface InsertSetStep<R extends Record> {
+@Generated("This class was generated using jOOQ-tools")
+public interface InsertValuesStep12<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> extends InsertOnDuplicateStep<R> {
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Add values to the insert statement.
      */
     @Support
-    <T> InsertSetMoreStep<R> set(Field<T> field, T value);
+    InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12);
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Add values to the insert statement.
      */
     @Support
-    <T> InsertSetMoreStep<R> set(Field<T> field, Field<T> value);
+    InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12);
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
-     * <p>
-     * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
-     * types. Values can either be of type <code>&lt;T&gt;</code> or
-     * <code>Field&lt;T&gt;</code>
+     * Add values to the insert statement.
      */
     @Support
-    InsertSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
-
-    /**
-     * Add values to the insert statement with implicit field names
-     */
-    @Support
-    InsertValuesStepN<R> values(Object... values);
-
-    /**
-     * Add values to the insert statement with implicit field names
-     */
-    @Support
-    InsertValuesStepN<R> values(Field<?>... values);
-
-    /**
-     * Add values to the insert statement with implicit field names
-     */
-    @Support
-    InsertValuesStepN<R> values(Collection<?> values);
+    InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> values(Collection<?> values);
 
     /**
      * Use a <code>SELECT</code> statement as the source of values for the
      * <code>INSERT</code> statement
      * <p>
-     * This variant of the <code>INSERT .. SELECT</code> statement does not
-     * allow for specifying a subset of the fields inserted into. It will insert
-     * into all fields of the table specified in the <code>INTO</code> clause.
-     * Use {@link Executor#insertInto(Table, Field...)} or
-     * {@link Executor#insertInto(Table, Collection)} instead, to
-     * define a field set for insertion.
+     * This variant of the <code>INSERT .. SELECT</code> statement expects a
+     * select returning exactly as many fields as specified previously in the
+     * <code>INTO</code> clause:
+     * {@link Executor#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
      */
     @Support
-    Insert<R> select(Select<?> select);
+    Insert<R> select(Select<? extends Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select);
 }

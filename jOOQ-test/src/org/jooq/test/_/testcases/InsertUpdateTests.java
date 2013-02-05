@@ -236,7 +236,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testInsertMultiple() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+        create().insertInto(TAuthor(), Arrays.<Field<?>>asList(TAuthor_ID(), TAuthor_LAST_NAME()))
 
                 // API check. Object...
                 .values(val(37), "Dürrenmatt")
@@ -289,6 +289,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Kästner 2", authors.getValue(2, TAuthor_LAST_NAME()));
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testInsertConvert() throws Exception {
         jOOQAbstractTest.reset = false;
@@ -303,10 +304,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Explicit field list
         assertEquals(1,
         create().insertInto(TAuthor(),
-                    TAuthor_ID(),
+                    (Field<String>) (Field) TAuthor_ID(),
                     TAuthor_LAST_NAME(),
-                    TAuthor_DATE_OF_BIRTH(),
-                    TAuthor_YEAR_OF_BIRTH())
+                    (Field<Long>) (Field) TAuthor_DATE_OF_BIRTH(),
+                    (Field<BigDecimal>) (Field) TAuthor_YEAR_OF_BIRTH())
                 .values(
                     "5",
                     "Smith",
@@ -395,7 +396,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1069] Run checks for INSERT INTO t(a, b) SELECT x, y syntax
         i = create().insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
-                    .select(select(vals(1001, "Hesse")));
+                    .select(select(val(1001), val("Hesse")));
 
         assertEquals(1, i.execute());
         A author2 = create().fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Hesse"));
@@ -436,7 +437,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     TAuthor_LAST_NAME())
                 .values(
                     ID3,
-                    create().select(val("Hornby")).asField())
+                    create().select(val("Hornby")).<String>asField())
                 .execute();
 
         A author = create().fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Hornby"));

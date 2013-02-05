@@ -404,6 +404,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     public void testInlinedBindValuesForNumberTypes() throws Exception {
         jOOQAbstractTest.reset = false;
@@ -420,7 +421,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // [#1557] Check correct inlining of floating point values with
             // exponential notation.
             assertEquals(2,
-            create.insertInto(T639(), T639_ID(), T639_BIG_DECIMAL())
+            create.insertInto(T639(), T639_ID(), (Field<Object>) (Field) T639_BIG_DECIMAL())
                   .values(1, db1)
                   .values(2, f1)
                   .execute());

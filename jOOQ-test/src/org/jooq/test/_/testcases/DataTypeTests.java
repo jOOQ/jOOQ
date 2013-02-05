@@ -1202,7 +1202,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                             TUnsigned_U_SHORT(),
                             TUnsigned_U_INT(),
                             TUnsigned_U_LONG())
-                .values(null, null, null, null)
+                .values((UByte) null, null, null, null)
                 .execute());
 
         assertEquals(1, create().selectCount().from(TUnsigned()).fetchOne(0));

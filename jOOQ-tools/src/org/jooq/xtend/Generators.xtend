@@ -254,7 +254,16 @@ abstract class Generators {
      * <code>field1, field2, .., field[N]</code>
      */
     def fieldn(int degree) {
-        (1..degree).join(", ", [e | "field" + e])
+        XXXn(degree, "field")
+    }
+    
+    /**
+     * A comma-separated list of field references
+     * <p>
+     * <code>field1, field2, .., field[N]</code>
+     */
+    def XXXn(int degree, String XXX) {
+        (1..degree).join(", ", [e | XXX + e])
     }
     
     /**
@@ -265,13 +274,24 @@ abstract class Generators {
      * <code>field1, field2, .., field[N]</code>
      */
     def field1_field2_fieldn(int degree) {
+    	XXX1_XXX2_XXXn(degree, "field")
+    }
+    
+    /**
+     * A comma-separated list of literals
+     * <p>
+     * Unlike {@link #fieldn(int)}, this will return at most 5 fields
+     * <p>
+     * <code>XXX1, XXX2, .., XXX[N]</code>
+     */
+    def XXX1_XXX2_XXXn(int degree, String XXX) {
     	if (degree <= 5) {
     		return fieldn(degree);
     	}
     	else {
-    		return (1..3).join(", ", [e | "field" + e]) +
+    		return (1..3).join(", ", [e | XXX + e]) +
     		                   ", .., " +
-    		       (degree - 1..degree).join(", ", [e | "field" + e])
+    		       (degree - 1..degree).join(", ", [e | XXX + e])
     	}
     }
     

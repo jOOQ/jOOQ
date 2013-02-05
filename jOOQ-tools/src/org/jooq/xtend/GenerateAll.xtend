@@ -6,6 +6,7 @@ class GenerateAll {
     	Conversions::main(args);
     	Executor::main(args);
     	Factory::main(args);
+    	InsertDSL::main(args);
     	Records::main(args);
     	Rows::main(args);
     	Update::main(args);

@@ -146,6 +146,14 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     // ------------------------------------------------------------------------
 
     @Override
+    public int hashCode() {
+
+        // [#1938] This is a much more efficient hashCode() implementation
+        // compared to that of standard QueryParts
+        return getName() != null ? getName().hashCode() : 0;
+    }
+
+    @Override
     public boolean equals(Object that) {
 
         // [#2144] SchemaImpl equality can be decided without executing the

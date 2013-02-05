@@ -42,6 +42,7 @@ import org.jooq.BindContext;
 import org.jooq.Catalog;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
+import org.jooq.tools.StringUtils;
 
 /**
  * A common base class for database catalogs
@@ -96,5 +97,26 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     @Override
     public List<Schema> getSchemas() {
         return Collections.emptyList();
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return getName() != null ? getName().hashCode() : 0;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+
+        // [#1626] CatalogImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof CatalogImpl) {
+            return StringUtils.equals(getName(), (((CatalogImpl) that).getName()));
+        }
+
+        return super.equals(that);
     }
 }

@@ -52,11 +52,13 @@ import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.min;
 import static org.jooq.impl.Factory.not;
+import static org.jooq.impl.Factory.one;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.replace;
 import static org.jooq.impl.Factory.round;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.sum;
 import static org.jooq.impl.Factory.tableByName;
 import static org.jooq.impl.Factory.trueCondition;
@@ -1556,16 +1558,16 @@ public class BasicTest extends AbstractTest {
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") select 1 from dual", r_ref().render(q));
 
         // [#1069] Allow for specifying custom fields
-        q = create.insertInto(TABLE1, FIELD_ID1).select(create.selectQuery());
+        q = create.insertInto(TABLE1, FIELD_ID1).select(selectOne());
 
         assertEquals("insert into \"TABLE1\" (\"ID1\") select 1 from dual", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\") select 1 from dual", r_ref().render(q));
 
         // [#1069] Allow for specifying custom fields
-        q = create.insertInto(TABLE1, FIELD_ID1, FIELD_NAME1).select(create.selectQuery());
+        q = create.insertInto(TABLE1, FIELD_ID1, FIELD_NAME1).select(select(one(), inline("a")));
 
-        assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") select 1 from dual", r_refI().render(q));
-        assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") select 1 from dual", r_ref().render(q));
+        assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") select 1, 'a' from dual", r_refI().render(q));
+        assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\") select 1, 'a' from dual", r_ref().render(q));
 
         q = create.insertInto(TABLE1).select(create.select(val(1), FIELD_NAME1).from(TABLE1).where(FIELD_NAME1.equal("abc")));
 

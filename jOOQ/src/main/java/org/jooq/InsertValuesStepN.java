@@ -36,22 +36,19 @@
 package org.jooq;
 
 import java.util.Collection;
-import java.util.Map;
 
 import org.jooq.impl.Executor;
 
+
 /**
- * This type is used for the {@link Insert}'s alternative DSL API.
+ * This type is used for the {@link Insert}'s DSL API.
  * <p>
  * Example: <code><pre>
  * Executor create = new Executor(config);
  *
- * create.insertInto(table)
- *       .set(field1, value1)
- *       .set(field2, value2)
- *       .newRecord()
- *       .set(field1, value3)
- *       .set(field2, value4)
+ * create.insertInto(table, field1, field2)
+ *       .values(value1, value2)
+ *       .values(value3, value4)
  *       .onDuplicateKeyUpdate()
  *       .set(field1, value1)
  *       .set(field2, value2)
@@ -60,44 +57,22 @@ import org.jooq.impl.Executor;
  *
  * @author Lukas Eder
  */
-public interface InsertSetStep<R extends Record> {
+public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateStep<R> {
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
-     */
-    @Support
-    <T> InsertSetMoreStep<R> set(Field<T> field, T value);
-
-    /**
-     * Set a value for a field in the <code>UPDATE</code> statement
-     */
-    @Support
-    <T> InsertSetMoreStep<R> set(Field<T> field, Field<T> value);
-
-    /**
-     * Set a value for a field in the <code>UPDATE</code> statement
-     * <p>
-     * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
-     * types. Values can either be of type <code>&lt;T&gt;</code> or
-     * <code>Field&lt;T&gt;</code>
-     */
-    @Support
-    InsertSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
-
-    /**
-     * Add values to the insert statement with implicit field names
+     * Add values to the insert statement
      */
     @Support
     InsertValuesStepN<R> values(Object... values);
 
     /**
-     * Add values to the insert statement with implicit field names
+     * Add values to the insert statement
      */
     @Support
     InsertValuesStepN<R> values(Field<?>... values);
 
     /**
-     * Add values to the insert statement with implicit field names
+     * Add values to the insert statement
      */
     @Support
     InsertValuesStepN<R> values(Collection<?> values);
@@ -106,12 +81,11 @@ public interface InsertSetStep<R extends Record> {
      * Use a <code>SELECT</code> statement as the source of values for the
      * <code>INSERT</code> statement
      * <p>
-     * This variant of the <code>INSERT .. SELECT</code> statement does not
-     * allow for specifying a subset of the fields inserted into. It will insert
-     * into all fields of the table specified in the <code>INTO</code> clause.
-     * Use {@link Executor#insertInto(Table, Field...)} or
-     * {@link Executor#insertInto(Table, Collection)} instead, to
-     * define a field set for insertion.
+     * This variant of the <code>INSERT .. SELECT</code> statement expects a
+     * select returning exactly as many fields as specified previously in the
+     * <code>INTO</code> clause:
+     * {@link Executor#insertInto(Table, Field...)} or
+     * {@link Executor#insertInto(Table, Collection)}
      */
     @Support
     Insert<R> select(Select<?> select);

@@ -47,6 +47,7 @@ class Executor extends Generators {
         val factory = new Executor();
         factory.generateSelect();
         factory.generateSelectDistinct();
+        factory.generateInsert();
     }
     
     def generateSelect() {
@@ -90,7 +91,7 @@ class Executor extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
+                public final <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
                     return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
                 }
             ''');
@@ -140,12 +141,43 @@ class Executor extends Generators {
                  */
                 «generatedMethod»
                 @Support
-                public <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
+                public final <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
                     return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
                 }
             ''');
         }
 
         insert("org.jooq.impl.Executor", out, "selectDistinct");
+    }
+
+    def generateInsert() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Create a new DSL insert statement.
+                 * <p>
+                 * Example: <code><pre>
+                 * Executor create = new Executor();
+                 *
+                 * create.insertInto(table, «field1_field2_fieldn(degree)»)
+                 *       .values(«XXX1_XXX2_XXXn(degree, "valueA")»)
+                 *       .values(«XXX1_XXX2_XXXn(degree, "valueB")»)
+                 *       .onDuplicateKeyUpdate()
+                 *       .set(field1, value1)
+                 *       .set(field2, value2)
+                 *       .execute();
+                 * </pre></code>
+                 */
+                @Support
+                public final <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
+                    return new InsertImpl(this, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
+                }
+            ''');
+        }
+
+        insert("org.jooq.impl.Executor", out, "insert");
     }
 }

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1327698614;
+	private static final long serialVersionUID = -416769354;
 
 	/**
 	 * The singleton instance of X_UNUSED
@@ -49,7 +49,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.INTEGER, this);
@@ -100,7 +100,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);

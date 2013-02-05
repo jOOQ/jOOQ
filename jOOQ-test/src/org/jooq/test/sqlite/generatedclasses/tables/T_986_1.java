@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 727149746;
+	private static final long serialVersionUID = 1048904363;
 
 	/**
 	 * The singleton instance of t_986_1
@@ -32,7 +32,7 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_t_986_1_X_UNUSED_1
 	 * FOREIGN KEY (REF)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, T_986_1);
@@ -46,13 +46,13 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_986_1_REF;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_986_1;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_986_1_REF);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_986_1);
 	}
 
 	@Override

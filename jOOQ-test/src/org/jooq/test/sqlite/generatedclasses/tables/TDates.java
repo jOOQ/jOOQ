@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 236412665;
+	private static final long serialVersionUID = -225766787;
 
 	/**
 	 * The singleton instance of t_dates
@@ -68,12 +68,12 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlit
 
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord> getMainKey() {
-		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_DATES_ID;
+		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_DATES;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_DATES_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.sqlite.generatedclasses.Keys.PK_T_DATES);
 	}
 }

@@ -67,6 +67,11 @@ public final class Tables {
 	public static final org.jooq.test.firebird.generatedclasses.tables.TDates T_DATES = org.jooq.test.firebird.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table T_EXOTIC_TYPES
+	 */
+	public static final org.jooq.test.firebird.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.firebird.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table T_TRIGGERS
 	 */
 	public static final org.jooq.test.firebird.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.firebird.generatedclasses.tables.TTriggers.T_TRIGGERS;

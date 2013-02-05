@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1372706267;
+	private static final long serialVersionUID = -651410220;
 
 	/**
 	 * The table column <code>x_test_case_85.id</code>
@@ -35,7 +35,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
@@ -48,11 +48,28 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getXUnusedId() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85.X_UNUSED_ID);
+	}
+
+	/**
+	 * The table column <code>x_test_case_85.x_unused_id</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
+	 * FOREIGN KEY (x_unused_id, x_unused_name)
+	 * REFERENCES x_unused (ID, NAME)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XUnused.X_UNUSED)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85.X_UNUSED_ID)))
+			.and(org.jooq.test.sqlite.generatedclasses.tables.XUnused.NAME.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME)))
+			.fetchOne();
 	}
 
 	/**
@@ -61,7 +78,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setXUnusedName(java.lang.String value) {
@@ -74,7 +91,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_test_case_85_X_UNUSED_1
 	 * FOREIGN KEY (x_unused_id, x_unused_name)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getXUnusedName() {

@@ -53,7 +53,7 @@ public interface IXUnused extends java.io.Serializable {
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value);
@@ -64,7 +64,7 @@ public interface IXUnused extends java.io.Serializable {
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getIdRef();
@@ -155,7 +155,7 @@ public interface IXUnused extends java.io.Serializable {
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value);
@@ -166,7 +166,7 @@ public interface IXUnused extends java.io.Serializable {
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_UNUSED_SELF
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getNameRef();

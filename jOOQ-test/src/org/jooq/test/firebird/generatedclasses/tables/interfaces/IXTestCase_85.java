@@ -29,7 +29,7 @@ public interface IXTestCase_85 extends java.io.Serializable {
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setXUnusedId(java.lang.Integer value);
@@ -40,7 +40,7 @@ public interface IXTestCase_85 extends java.io.Serializable {
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getXUnusedId();
@@ -51,7 +51,7 @@ public interface IXTestCase_85 extends java.io.Serializable {
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setXUnusedName(java.lang.String value);
@@ -62,7 +62,7 @@ public interface IXTestCase_85 extends java.io.Serializable {
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT FK_X_TEST_CASE_85
 	 * FOREIGN KEY (X_UNUSED_ID, X_UNUSED_NAME)
-	 * REFERENCES X_UNUSED (NAME, ID)
+	 * REFERENCES X_UNUSED (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getXUnusedName();

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -342186217;
+	private static final long serialVersionUID = -1331081594;
 
 	/**
 	 * The table column <code>x_unused.ID</code>
@@ -34,10 +34,11 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_1Record> fetchT_986_1List() {
+	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record> fetchXTestCase_85List() {
 		return create()
-			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.T_986_1.T_986_1)
-			.where(org.jooq.test.sqlite.generatedclasses.tables.T_986_1.REF.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID)))
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85.X_UNUSED_ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID)))
+			.and(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_85.X_UNUSED_NAME.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.NAME)))
 			.fetch();
 	}
 
@@ -46,22 +47,11 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * <p>
 	 * This column is part of the table's PRIMARY KEY
 	 */
-	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record> fetchT_986_2List() {
+	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> fetchXUnusedList() {
 		return create()
-			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.T_986_2)
-			.where(org.jooq.test.sqlite.generatedclasses.tables.T_986_2.REF.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID)))
-			.fetch();
-	}
-
-	/**
-	 * The table column <code>x_unused.ID</code>
-	 * <p>
-	 * This column is part of the table's PRIMARY KEY
-	 */
-	public java.util.List<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record> fetchXTestCase_64_69List() {
-		return create()
-			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69)
-			.where(org.jooq.test.sqlite.generatedclasses.tables.XTestCase_64_69.UNUSED_ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID)))
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XUnused.X_UNUSED)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID_REF.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID)))
+			.and(org.jooq.test.sqlite.generatedclasses.tables.XUnused.NAME_REF.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.NAME)))
 			.fetch();
 	}
 
@@ -103,7 +93,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_X_UNUSED_1
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setIdRef(java.lang.Integer value) {
@@ -116,11 +106,28 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_X_UNUSED_1
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.Integer getIdRef() {
 		return getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID_REF);
+	}
+
+	/**
+	 * The table column <code>x_unused.ID_REF</code>
+	 * <p>
+	 * This column is part of a FOREIGN KEY: <code><pre>
+	 * CONSTRAINT fk_x_unused_X_UNUSED_1
+	 * FOREIGN KEY (ID_REF, NAME_REF)
+	 * REFERENCES x_unused (ID, NAME)
+	 * </pre></code>
+	 */
+	public org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord fetchXUnused() {
+		return create()
+			.selectFrom(org.jooq.test.sqlite.generatedclasses.tables.XUnused.X_UNUSED)
+			.where(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.ID_REF)))
+			.and(org.jooq.test.sqlite.generatedclasses.tables.XUnused.NAME.equal(getValue(org.jooq.test.sqlite.generatedclasses.tables.XUnused.NAME_REF)))
+			.fetchOne();
 	}
 
 	/**
@@ -241,7 +248,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_X_UNUSED_1
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public void setNameRef(java.lang.String value) {
@@ -254,7 +261,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * This column is part of a FOREIGN KEY: <code><pre>
 	 * CONSTRAINT fk_x_unused_X_UNUSED_1
 	 * FOREIGN KEY (ID_REF, NAME_REF)
-	 * REFERENCES x_unused (ID)
+	 * REFERENCES x_unused (ID, NAME)
 	 * </pre></code>
 	 */
 	public java.lang.String getNameRef() {

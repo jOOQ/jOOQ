@@ -567,6 +567,16 @@ public interface FactoryOperations extends Configuration {
      *       .where(field1.greaterThan(100))
      *       .execute();
      * </pre></code>
+     * <p>
+     * Note that some databases support table expressions more complex than
+     * simple table references. In CUBRID and MySQL, for instance, you can write
+     * <code><pre>
+     * create.update(t1.join(t2).on(t1.id.eq(t2.id)))
+     *       .set(t1.value, value1)
+     *       .set(t2.value, value2)
+     *       .where(t1.id.eq(10))
+     *       .execute();
+     * </pre></code>
      */
     @Support
     <R extends Record> UpdateSetStep<R> update(Table<R> table);

@@ -929,6 +929,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
     }
 
     @Test
+    public void testUpdateJoin() throws Exception {
+        switch (getDialect()) {
+            case DB2:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case ORACLE:
+            case POSTGRES:
+            case SQLSERVER:
+            case SQLITE:
+                log.info("SKIPPING", "UPDATE T1 JOIN T2 .. integration test. This syntax is not supported by " + getDialect());
+                return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        create().update(TBook().join(TAuthor()).on(TBook_AUTHOR_ID().eq(TAuthor_ID())))
+                .set(TAuthor_LAST_NAME(), "XX")
+                .set(TBook_TITLE(), "YY")
+                .where(TBook_ID().eq(1))
+                .execute();
+
+        A author = getAuthor(1);
+        B book = getBook(1);
+
+        assertEquals("XX", author.getValue(TAuthor_LAST_NAME()));
+        assertEquals("YY", book.getValue(TBook_TITLE()));
+    }
+
+    @Test
     public void testTruncate() throws Exception {
         jOOQAbstractTest.reset = false;
 

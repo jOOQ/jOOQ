@@ -10,6 +10,37 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.6.2 - February 5, 2013
+================================================================================
+
+This is a minor patch release with some useful fixes for the 2.6 branch
+
+Bug fixes
+---------
+#2055 - MySQL's UPDATE [t1] JOIN [t2] syntax can cause syntax errors as column 
+        references are not fully qualified
+#2057 - Cannot properly extract bind values for LIMIT .. OFFSET clause from a 
+        SELECT statement
+#2063 - jOOQ-meta loads Firebird composite unique key columns in wrong order
+#2073 - The code generator's <dateAsTimestamp/> flag doesn't affect Oracle 
+        VARRAY and TABLE types
+#2082 - Oracle PIVOT expression doesn't bind any variables of a derived table 
+        being pivoted
+#2085 - java.lang.NoSuchMethodError: org.apache.log4j.Logger.isTraceEnabled()Z 
+        when logger dependency is missing
+#2098 - NullPointerException when org.jooq.impl.EnumConverter converts null
+#2104 - SQLite code generation treats multi-column primary keys like multiple 
+        single-column unique keys
+#2108 - SQLite returns NULL for val(new Date(0)).add(-1) and some other date 
+        time arithmetic expressions
+#2125 - Regression in batchStore() for Postgres and jOOQ 2.6.1
+#2130 - Misleading Javadoc in Factory.selectCount()
+#2139 - batchStore with composite types incorrectly reuses values from the first 
+        record
+#2146 - Improve AbstractField.equals() and AbstractTable.equals() and similar, 
+        as these two are called very often
+#2149 - Improve QueryPartList.removeNulls() as this is called very often
+
 Version 2.6.1 - December 27, 2012
 ================================================================================
 

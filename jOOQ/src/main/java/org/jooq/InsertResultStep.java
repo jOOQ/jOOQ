@@ -41,7 +41,7 @@ import org.jooq.exception.DataAccessException;
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Factory create = new Factory();
+ * Executor create = new Executor(config);
  *
  * TableRecord<?> record =
  * create.insertInto(table, field1, field2)

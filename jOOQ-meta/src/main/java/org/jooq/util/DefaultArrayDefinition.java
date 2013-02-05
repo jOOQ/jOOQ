@@ -38,24 +38,28 @@ package org.jooq.util;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class DefaultArrayDefinition extends AbstractDefinition implements ArrayDefinition {
 
-    private final DataTypeDefinition type;
+    private final DataTypeDefinition     definedType;
+    private transient DataTypeDefinition type;
 
     public DefaultArrayDefinition(SchemaDefinition schema, String name, DataTypeDefinition type) {
         super(schema.getDatabase(), schema, name, "");
 
-        this.type = type;
+        this.definedType = type;
     }
 
     @Override
     public List<Definition> getDefinitionPath() {
-        return Arrays.<Definition>asList(getSchema(), this);
+        return Arrays.<Definition> asList(getSchema(), this);
     }
 
     @Override
     public DataTypeDefinition getElementType() {
+        if (type == null) {
+            type = AbstractTypedElementDefinition.mapDefinedType(this, this, definedType);
+        }
+
         return type;
     }
 }

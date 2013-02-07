@@ -502,7 +502,7 @@ public final class Convert {
                         return (U) Boolean.FALSE;
                     }
                     else {
-                        return null;
+                        return (U) (toClass == Boolean.class ? null : false);
                     }
                 }
                 else if (toClass == Character.class || toClass == char.class) {

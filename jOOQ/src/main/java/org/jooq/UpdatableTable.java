@@ -47,7 +47,7 @@ import org.jooq.conf.Settings;
  * @see UpdatableRecord
  * @author Lukas Eder
  */
-public interface UpdatableTable<R extends Record> extends Updatable<R>, Table<R> {
+public interface UpdatableTable<R extends Record> extends Table<R> {
 
     /**
      * Retrieve the table's main unique key. If there exists a

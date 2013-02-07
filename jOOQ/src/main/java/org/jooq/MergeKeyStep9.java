@@ -45,21 +45,24 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
+import javax.annotation.Generated;
+
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
  * Example: <code><pre>
  * Factory create = new Factory();
  *
- * create.mergeInto(table, field1, field2)
+ * create.mergeInto(table, field1, field2, field3, .., field8, field9)
  *       .key(id)
- *       .values(value1, value2)
+ *       .values(value1, value2, value3, .., value8, value9)
  *       .execute();
  * </pre></code>
  *
  * @author Lukas Eder
  */
-public interface MergeKeyStep<R extends Record> extends MergeValuesStep<R> {
+@Generated("This class was generated using jOOQ-tools")
+public interface MergeKeyStep9<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> extends MergeValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> {
 
     /**
      * Specify an optional <code>KEY</code> clause.
@@ -68,7 +71,7 @@ public interface MergeKeyStep<R extends Record> extends MergeValuesStep<R> {
      * <code>PRIMARY KEY</code>.
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeValuesStep<R> key(Field<?>... keys);
+    MergeValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> key(Field<?>... keys);
 
     /**
      * Specify an optional <code>KEY</code> clause.
@@ -77,5 +80,5 @@ public interface MergeKeyStep<R extends Record> extends MergeValuesStep<R> {
      * <code>PRIMARY KEY</code>.
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeValuesStep<R> key(Collection<? extends Field<?>> keys);
+    MergeValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> key(Collection<? extends Field<?>> keys);
 }

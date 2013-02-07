@@ -37,47 +37,62 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.util.Collection;
+
+import javax.annotation.Generated;
+
+import org.jooq.impl.Executor;
+
 /**
- * This type is used for the {@link Merge}'s DSL API.
+ * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
  * Example: <code><pre>
  * Factory create = new Factory();
  *
- * create.mergeInto(table)
- *       .using(select)
- *       .on(condition)
- *       .whenMatchedThenUpdate()
- *       .set(field1, value1)
- *       .set(field2, value2)
- *       .whenNotMatchedThenInsert(field1, field2)
- *       .values(value1, value2)
+ * create.mergeInto(table, field1, field2)
+ *       .key(id)
+ *       .values(field1, field2)
  *       .execute();
  * </pre></code>
  *
  * @author Lukas Eder
  */
-public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
+@Generated("This class was generated using jOOQ-tools")
+public interface MergeValuesStep2<R extends Record, T1, T2> {
 
     /**
-     * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
-     * statement
+     * Specify a <code>VALUES</code> clause
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> using(TableLike<?> table);
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    Merge<R> values(T1 value1, T2 value2);
 
     /**
-     * Add a dummy <code>USING</code> clause to the SQL standard
+     * Specify a <code>VALUES</code> clause
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    Merge<R> values(Field<T1> value1, Field<T2> value2);
+
+    /**
+     * Specify a <code>VALUES</code> clause
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    Merge<R> values(Collection<?> values);
+
+    /**
+     * Use a <code>SELECT</code> statement as the source of values for the
      * <code>MERGE</code> statement
      * <p>
-     * This results in <code>USING(SELECT 1 FROM DUAL)</code> for most RDBMS, or
-     * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
-     * Server, where derived tables need to be aliased.
+     * This variant of the <code>MERGE .. SELECT</code> statement expects a
+     * select returning exactly as many fields as specified previously in the
+     * <code>INTO</code> clause:
+     * {@link Executor#mergeInto(Table, Field, Field)}
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> usingDual();
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    Merge<R> select(Select<? extends Record2<T1, T2>> select);
 }

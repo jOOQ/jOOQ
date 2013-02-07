@@ -56,10 +56,54 @@ import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
+import org.jooq.MergeKeyStep1;
+import org.jooq.MergeKeyStep10;
+import org.jooq.MergeKeyStep11;
+import org.jooq.MergeKeyStep12;
+import org.jooq.MergeKeyStep13;
+import org.jooq.MergeKeyStep14;
+import org.jooq.MergeKeyStep15;
+import org.jooq.MergeKeyStep16;
+import org.jooq.MergeKeyStep17;
+import org.jooq.MergeKeyStep18;
+import org.jooq.MergeKeyStep19;
+import org.jooq.MergeKeyStep2;
+import org.jooq.MergeKeyStep20;
+import org.jooq.MergeKeyStep21;
+import org.jooq.MergeKeyStep22;
+import org.jooq.MergeKeyStep3;
+import org.jooq.MergeKeyStep4;
+import org.jooq.MergeKeyStep5;
+import org.jooq.MergeKeyStep6;
+import org.jooq.MergeKeyStep7;
+import org.jooq.MergeKeyStep8;
+import org.jooq.MergeKeyStep9;
 import org.jooq.MergeMatchedDeleteStep;
 import org.jooq.MergeMatchedSetMoreStep;
 import org.jooq.MergeNotMatchedSetMoreStep;
-import org.jooq.MergeNotMatchedValuesStep;
+import org.jooq.MergeNotMatchedValuesStep1;
+import org.jooq.MergeNotMatchedValuesStep10;
+import org.jooq.MergeNotMatchedValuesStep11;
+import org.jooq.MergeNotMatchedValuesStep12;
+import org.jooq.MergeNotMatchedValuesStep13;
+import org.jooq.MergeNotMatchedValuesStep14;
+import org.jooq.MergeNotMatchedValuesStep15;
+import org.jooq.MergeNotMatchedValuesStep16;
+import org.jooq.MergeNotMatchedValuesStep17;
+import org.jooq.MergeNotMatchedValuesStep18;
+import org.jooq.MergeNotMatchedValuesStep19;
+import org.jooq.MergeNotMatchedValuesStep2;
+import org.jooq.MergeNotMatchedValuesStep20;
+import org.jooq.MergeNotMatchedValuesStep21;
+import org.jooq.MergeNotMatchedValuesStep22;
+import org.jooq.MergeNotMatchedValuesStep3;
+import org.jooq.MergeNotMatchedValuesStep4;
+import org.jooq.MergeNotMatchedValuesStep5;
+import org.jooq.MergeNotMatchedValuesStep6;
+import org.jooq.MergeNotMatchedValuesStep7;
+import org.jooq.MergeNotMatchedValuesStep8;
+import org.jooq.MergeNotMatchedValuesStep9;
+import org.jooq.MergeNotMatchedValuesStepN;
 import org.jooq.MergeOnConditionStep;
 import org.jooq.MergeOnStep;
 import org.jooq.MergeUsingStep;
@@ -81,17 +125,72 @@ import org.jooq.tools.StringUtils;
  *
  * @author Lukas Eder
  */
-class MergeImpl<R extends Record> extends AbstractQuery
+@SuppressWarnings({ "unchecked", "rawtypes" })
+class MergeImpl<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> extends AbstractQuery
 implements
 
     // Cascading interface implementations for Merge behaviour
     MergeUsingStep<R>,
+
+// [jooq-tools] START [implementsKeyStep]
+    MergeKeyStep1<R, T1>,
+    MergeKeyStep2<R, T1, T2>,
+    MergeKeyStep3<R, T1, T2, T3>,
+    MergeKeyStep4<R, T1, T2, T3, T4>,
+    MergeKeyStep5<R, T1, T2, T3, T4, T5>,
+    MergeKeyStep6<R, T1, T2, T3, T4, T5, T6>,
+    MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7>,
+    MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8>,
+    MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9>,
+    MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>,
+    MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>,
+    MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>,
+    MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>,
+    MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>,
+    MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>,
+    MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>,
+    MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>,
+    MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>,
+    MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>,
+    MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
+    MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
+    MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
+
+// [jooq-tools] END [implementsKeyStep]
+
     MergeOnStep<R>,
     MergeOnConditionStep<R>,
     MergeMatchedSetMoreStep<R>,
     MergeMatchedDeleteStep<R>,
     MergeNotMatchedSetMoreStep<R>,
-    MergeNotMatchedValuesStep<R> {
+
+// [jooq-tools] START [implementsNotMatchedValuesStep]
+    MergeNotMatchedValuesStep1<R, T1>,
+    MergeNotMatchedValuesStep2<R, T1, T2>,
+    MergeNotMatchedValuesStep3<R, T1, T2, T3>,
+    MergeNotMatchedValuesStep4<R, T1, T2, T3, T4>,
+    MergeNotMatchedValuesStep5<R, T1, T2, T3, T4, T5>,
+    MergeNotMatchedValuesStep6<R, T1, T2, T3, T4, T5, T6>,
+    MergeNotMatchedValuesStep7<R, T1, T2, T3, T4, T5, T6, T7>,
+    MergeNotMatchedValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8>,
+    MergeNotMatchedValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9>,
+    MergeNotMatchedValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>,
+    MergeNotMatchedValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>,
+    MergeNotMatchedValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>,
+    MergeNotMatchedValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>,
+    MergeNotMatchedValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>,
+    MergeNotMatchedValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>,
+    MergeNotMatchedValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>,
+    MergeNotMatchedValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>,
+    MergeNotMatchedValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>,
+    MergeNotMatchedValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>,
+    MergeNotMatchedValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
+    MergeNotMatchedValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
+    MergeNotMatchedValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
+
+// [jooq-tools] END [implementsNotMatchedValuesStep]
+
+    MergeNotMatchedValuesStepN<R> {
 
     /**
      * Generated UID
@@ -165,19 +264,19 @@ implements
     }
 
     @Override
-    public final MergeImpl<R> select(Select<?> select) {
+    public final MergeImpl select(Select select) {
         h2Style = true;
         h2Select = select;
         return this;
     }
 
     @Override
-    public final MergeImpl<R> key(Field<?>... k) {
+    public final MergeImpl key(Field<?>... k) {
         return key(Arrays.asList(k));
     }
 
     @Override
-    public final MergeImpl<R> key(Collection<? extends Field<?>> keys) {
+    public final MergeImpl key(Collection<? extends Field<?>> keys) {
         h2Style = true;
         getH2Keys().addAll(keys);
         return this;
@@ -187,8 +286,232 @@ implements
     // Shared MERGE API
     // -------------------------------------------------------------------------
 
+// [jooq-tools] START [values]
     @Override
-    public final MergeImpl<R> values(Object... values) {
+    public final MergeImpl values(T1 value1) {
+        return values(new Object[] { value1 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2) {
+        return values(new Object[] { value1, value2 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3) {
+        return values(new Object[] { value1, value2, value3 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4) {
+        return values(new Object[] { value1, value2, value3, value4 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5) {
+        return values(new Object[] { value1, value2, value3, value4, value5 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17, T18 value18) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17, T18 value18, T19 value19) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17, T18 value18, T19 value19, T20 value20) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17, T18 value18, T19 value19, T20 value20, T21 value21) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20, value21 });
+    }
+
+    @Override
+    public final MergeImpl values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10, T11 value11, T12 value12, T13 value13, T14 value14, T15 value15, T16 value16, T17 value17, T18 value18, T19 value19, T20 value20, T21 value21, T22 value22) {
+        return values(new Object[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20, value21, value22 });
+    }
+
+
+    @Override
+    public final MergeImpl values(Field<T1> value1) {
+        return values(new Field[] { value1 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2) {
+        return values(new Field[] { value1, value2 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3) {
+        return values(new Field[] { value1, value2, value3 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4) {
+        return values(new Field[] { value1, value2, value3, value4 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5) {
+        return values(new Field[] { value1, value2, value3, value4, value5 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16, Field<T17> value17) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16, Field<T17> value17, Field<T18> value18) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16, Field<T17> value17, Field<T18> value18, Field<T19> value19) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16, Field<T17> value17, Field<T18> value18, Field<T19> value19, Field<T20> value20) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16, Field<T17> value17, Field<T18> value18, Field<T19> value19, Field<T20> value20, Field<T21> value21) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20, value21 });
+    }
+
+    @Override
+    public final MergeImpl values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7, Field<T8> value8, Field<T9> value9, Field<T10> value10, Field<T11> value11, Field<T12> value12, Field<T13> value13, Field<T14> value14, Field<T15> value15, Field<T16> value16, Field<T17> value17, Field<T18> value18, Field<T19> value19, Field<T20> value20, Field<T21> value21, Field<T22> value22) {
+        return values(new Field[] { value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13, value14, value15, value16, value17, value18, value19, value20, value21, value22 });
+    }
+
+// [jooq-tools] END [values]
+
+    @Override
+    public final MergeImpl values(Object... values) {
 
         // [#1541] The VALUES() clause is also supported in the H2-specific
         // syntax, in case of which, the USING() was not added
@@ -205,12 +528,12 @@ implements
     }
 
     @Override
-    public final MergeImpl<R> values(Field<?>... values) {
+    public final MergeImpl values(Field<?>... values) {
         return values((Object[]) values);
     }
 
     @Override
-    public final MergeImpl<R> values(Collection<?> values) {
+    public final MergeImpl values(Collection<?> values) {
         return values(values.toArray());
     }
 
@@ -219,112 +542,112 @@ implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final MergeImpl<R> using(TableLike<?> u) {
+    public final MergeImpl using(TableLike<?> u) {
         this.using = u;
         return this;
     }
 
     @Override
-    public final MergeImpl<R> usingDual() {
+    public final MergeImpl usingDual() {
         this.using = create().selectOne();
         return this;
     }
 
     @Override
-    public final MergeImpl<R> on(Condition... conditions) {
+    public final MergeImpl on(Condition... conditions) {
         on.addConditions(conditions);
         return this;
     }
 
     @Override
-    public final MergeImpl<R> on(String sql) {
+    public final MergeImpl on(String sql) {
         return on(condition(sql));
     }
 
     @Override
-    public final MergeImpl<R> on(String sql, Object... bindings) {
+    public final MergeImpl on(String sql, Object... bindings) {
         return on(condition(sql, bindings));
     }
 
     @Override
-    public final MergeImpl<R> on(String sql, QueryPart... parts) {
+    public final MergeImpl on(String sql, QueryPart... parts) {
         return on(condition(sql, parts));
     }
 
     @Override
-    public final MergeImpl<R> and(Condition condition) {
+    public final MergeImpl and(Condition condition) {
         on.addConditions(condition);
         return this;
     }
 
     @Override
-    public final MergeImpl<R> and(String sql) {
+    public final MergeImpl and(String sql) {
         return and(condition(sql));
     }
 
     @Override
-    public final MergeImpl<R> and(String sql, Object... bindings) {
+    public final MergeImpl and(String sql, Object... bindings) {
         return and(condition(sql, bindings));
     }
 
     @Override
-    public final MergeImpl<R> and(String sql, QueryPart... parts) {
+    public final MergeImpl and(String sql, QueryPart... parts) {
         return and(condition(sql, parts));
     }
 
     @Override
-    public final MergeImpl<R> andNot(Condition condition) {
+    public final MergeImpl andNot(Condition condition) {
         return and(condition.not());
     }
 
     @Override
-    public final MergeImpl<R> andExists(Select<?> select) {
+    public final MergeImpl andExists(Select<?> select) {
         return and(exists(select));
     }
 
     @Override
-    public final MergeImpl<R> andNotExists(Select<?> select) {
+    public final MergeImpl andNotExists(Select<?> select) {
         return and(notExists(select));
     }
 
     @Override
-    public final MergeImpl<R> or(Condition condition) {
+    public final MergeImpl or(Condition condition) {
         on.addConditions(Operator.OR, condition);
         return this;
     }
 
     @Override
-    public final MergeImpl<R> or(String sql) {
+    public final MergeImpl or(String sql) {
         return or(condition(sql));
     }
 
     @Override
-    public final MergeImpl<R> or(String sql, Object... bindings) {
+    public final MergeImpl or(String sql, Object... bindings) {
         return or(condition(sql, bindings));
     }
 
     @Override
-    public final MergeImpl<R> or(String sql, QueryPart... parts) {
+    public final MergeImpl or(String sql, QueryPart... parts) {
         return or(condition(sql, parts));
     }
 
     @Override
-    public final MergeImpl<R> orNot(Condition condition) {
+    public final MergeImpl orNot(Condition condition) {
         return or(condition.not());
     }
 
     @Override
-    public final MergeImpl<R> orExists(Select<?> select) {
+    public final MergeImpl orExists(Select<?> select) {
         return or(exists(select));
     }
 
     @Override
-    public final MergeImpl<R> orNotExists(Select<?> select) {
+    public final MergeImpl orNotExists(Select<?> select) {
         return or(notExists(select));
     }
 
     @Override
-    public final MergeImpl<R> whenMatchedThenUpdate() {
+    public final MergeImpl whenMatchedThenUpdate() {
         matchedClause = true;
         matchedUpdate = new FieldMapForUpdate();
 
@@ -333,12 +656,12 @@ implements
     }
 
     @Override
-    public final <T> MergeImpl<R> set(Field<T> field, T value) {
+    public final <T> MergeImpl set(Field<T> field, T value) {
         return set(field, val(value, field));
     }
 
     @Override
-    public final <T> MergeImpl<R> set(Field<T> field, Field<T> value) {
+    public final <T> MergeImpl set(Field<T> field, Field<T> value) {
         if (matchedClause) {
             matchedUpdate.put(field, nullSafe(value));
         }
@@ -353,7 +676,7 @@ implements
     }
 
     @Override
-    public final MergeImpl<R> set(Map<? extends Field<?>, ?> map) {
+    public final MergeImpl set(Map<? extends Field<?>, ?> map) {
         if (matchedClause) {
             matchedUpdate.set(map);
         }
@@ -368,17 +691,153 @@ implements
     }
 
     @Override
-    public final MergeImpl<R> whenNotMatchedThenInsert() {
+    public final MergeImpl whenNotMatchedThenInsert() {
         return whenNotMatchedThenInsert(Collections.<Field<?>>emptyList());
     }
 
+// [jooq-tools] START [whenNotMatchedThenInsert]
     @Override
-    public final MergeImpl<R> whenNotMatchedThenInsert(Field<?>... fields) {
+    @SuppressWarnings("hiding")
+    public final <T1> MergeImpl whenNotMatchedThenInsert(Field<T1> field1) {
+        return whenNotMatchedThenInsert(new Field[] { field1 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    @Override
+    @SuppressWarnings("hiding")
+    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeImpl whenNotMatchedThenInsert(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return whenNotMatchedThenInsert(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
+
+// [jooq-tools] END [whenNotMatchedThenInsert]
+
+    @Override
+    public final MergeImpl whenNotMatchedThenInsert(Field<?>... fields) {
         return whenNotMatchedThenInsert(Arrays.asList(fields));
     }
 
     @Override
-    public final MergeImpl<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
+    public final MergeImpl whenNotMatchedThenInsert(Collection<? extends Field<?>> fields) {
         notMatchedClause = true;
         notMatchedInsert = new FieldMapForInsert();
         notMatchedInsert.putFields(fields);
@@ -388,7 +847,7 @@ implements
     }
 
     @Override
-    public final MergeImpl<R> where(Condition condition) {
+    public final MergeImpl where(Condition condition) {
         if (matchedClause) {
             matchedWhere = condition;
         }
@@ -403,7 +862,7 @@ implements
     }
 
     @Override
-    public final MergeImpl<R> deleteWhere(Condition condition) {
+    public final MergeImpl deleteWhere(Condition condition) {
         matchedDeleteWhere = condition;
         return this;
     }
@@ -459,8 +918,6 @@ implements
                         onFields.addAll(key.getFields());
 
                         for (int i = 0; i < key.getFields().size(); i++) {
-
-                            @SuppressWarnings({ "unchecked", "rawtypes" })
                             Condition rhs = key.getFields().get(i).equal((Field) src.field(i));
 
                             if (condition == null) {
@@ -485,8 +942,6 @@ implements
                         }
 
                         onFields.addAll(getH2Keys());
-
-                        @SuppressWarnings({ "unchecked", "rawtypes" })
                         Condition rhs = getH2Keys().get(i).equal((Field) src.field(matchIndex));
 
                         if (condition == null) {

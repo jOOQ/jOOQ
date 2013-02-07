@@ -37,46 +37,57 @@ package org.jooq.tools;
 
 import java.util.logging.Level;
 
-
-
-
 /**
- * The jOOQ logger abstraction
+ * The jOOQ logger abstraction.
+ * <p>
+ * This logger provides abstraction over the three logger APIs supported
+ * optionally by jOOQ. These are (in order of preference):
+ * <ul>
+ * <li>slf4j</li>
+ * <li>log4j</li>
+ * <li>jav.util.logging</li>
+ * </ul>
+ * <code>JooqLogger</code> tries to instanciate any of the above loggers,
+ * catching potential {@link NoClassDefFoundError}'s in case any logger API
+ * cannot be found on the classpath.
  *
  * @author Lukas Eder
  */
 public final class JooqLogger {
 
     /**
-     * The SLF4j Logger instance, if available
+     * The SLF4j Logger instance, if available.
      */
     private org.slf4j.Logger         slf4j;
 
     /**
-     * The log4j Logger instance, if available
+     * The log4j Logger instance, if available.
      */
     private org.apache.log4j.Logger  log4j;
 
     /**
-     * The JDK Logger instance, if available
+     * The JDK Logger instance, if available.
      */
     private java.util.logging.Logger util;
 
     /**
-     * Whether calls to {@link #trace(Object)} are possible
+     * Whether calls to {@link #trace(Object)} are possible.
      */
     private boolean                  supportsTrace = true;
 
     /**
-     * Whether calls to {@link #debug(Object)} are possible
+     * Whether calls to {@link #debug(Object)} are possible.
      */
     private boolean                  supportsDebug = true;
 
     /**
-     * Whether calls to {@link #info(Object)} are possible
+     * Whether calls to {@link #info(Object)} are possible.
      */
-    private boolean                  supportsInfo = true;
+    private boolean                  supportsInfo  = true;
 
+    /**
+     * Get a logger wrapper for a class.
+     */
     public static JooqLogger getLogger(Class<?> clazz) {
         JooqLogger result = new JooqLogger();
 
@@ -125,6 +136,9 @@ public final class JooqLogger {
         return result;
     }
 
+    /**
+     * Check if <code>TRACE</code> level logging is enabled.
+     */
     public boolean isTraceEnabled() {
         if (!supportsTrace) {
             return false;
@@ -140,10 +154,21 @@ public final class JooqLogger {
         }
     }
 
+    /**
+     * Log a message in <code>TRACE</code> level.
+     *
+     * @param message The log message
+     */
     public void trace(Object message) {
         trace(message, (Object) null);
     }
 
+    /**
+     * Log a message in <code>TRACE</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     */
     public void trace(Object message, Object details) {
         if (slf4j != null) {
             slf4j.trace(getMessage(message, details));
@@ -156,27 +181,45 @@ public final class JooqLogger {
         }
     }
 
-    public void trace(Object message, Throwable t) {
-        trace(message, null, t);
+    /**
+     * Log a message in <code>TRACE</code> level.
+     *
+     * @param message The log message
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void trace(Object message, Throwable throwable) {
+        trace(message, null, throwable);
     }
 
-    public void trace(Object message, Object details, Throwable t) {
+    /**
+     * Log a message in <code>TRACE</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void trace(Object message, Object details, Throwable throwable) {
         if (slf4j != null) {
-            slf4j.trace(getMessage(message, details), t);
+            slf4j.trace(getMessage(message, details), throwable);
         }
         else if (log4j != null) {
-            log4j.trace(getMessage(message, details), t);
+            log4j.trace(getMessage(message, details), throwable);
         }
         else {
-            util.log(Level.FINER, "" + getMessage(message, details), t);
+            util.log(Level.FINER, "" + getMessage(message, details), throwable);
         }
     }
 
-
+    /**
+     * Check if <code>DEBUG</code> level logging is enabled.
+     */
     public boolean isDebugEnabled() {
         if (!supportsDebug) {
             return false;
-        } else if (slf4j != null) {
+        }
+        else if (slf4j != null) {
             return slf4j.isDebugEnabled();
         }
         else if (log4j != null) {
@@ -187,10 +230,21 @@ public final class JooqLogger {
         }
     }
 
+    /**
+     * Log a message in <code>DEBUG</code> level.
+     *
+     * @param message The log message
+     */
     public void debug(Object message) {
         debug(message, (Object) null);
     }
 
+    /**
+     * Log a message in <code>DEBUG</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     */
     public void debug(Object message, Object details) {
         if (slf4j != null) {
             slf4j.debug(getMessage(message, details));
@@ -203,23 +257,40 @@ public final class JooqLogger {
         }
     }
 
-    public void debug(Object message, Throwable t) {
-        debug(message, null, t);
+    /**
+     * Log a message in <code>DEBUG</code> level.
+     *
+     * @param message The log message
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void debug(Object message, Throwable throwable) {
+        debug(message, null, throwable);
     }
 
-    public void debug(Object message, Object details, Throwable t) {
+    /**
+     * Log a message in <code>DEBUG</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void debug(Object message, Object details, Throwable throwable) {
         if (slf4j != null) {
-            slf4j.debug(getMessage(message, details), t);
+            slf4j.debug(getMessage(message, details), throwable);
         }
         else if (log4j != null) {
-            log4j.debug(getMessage(message, details), t);
+            log4j.debug(getMessage(message, details), throwable);
         }
         else {
-            util.log(Level.FINE, "" + getMessage(message, details), t);
+            util.log(Level.FINE, "" + getMessage(message, details), throwable);
         }
     }
 
-
+    /**
+     * Check if <code>INFO</code> level logging is enabled.
+     */
     public boolean isInfoEnabled() {
         if (!supportsInfo) {
             return false;
@@ -235,10 +306,21 @@ public final class JooqLogger {
         }
     }
 
+    /**
+     * Log a message in <code>INFO</code> level.
+     *
+     * @param message The log message
+     */
     public void info(Object message) {
         info(message, (Object) null);
     }
 
+    /**
+     * Log a message in <code>INFO</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     */
     public void info(Object message, Object details) {
         if (slf4j != null) {
             slf4j.info(getMessage(message, details));
@@ -251,26 +333,52 @@ public final class JooqLogger {
         }
     }
 
-    public void info(Object message, Throwable t) {
-        info(message, null, t);
+    /**
+     * Log a message in <code>INFO</code> level.
+     *
+     * @param message The log message
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void info(Object message, Throwable throwable) {
+        info(message, null, throwable);
     }
 
-    public void info(Object message, Object details, Throwable t) {
+    /**
+     * Log a message in <code>INFO</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void info(Object message, Object details, Throwable throwable) {
         if (slf4j != null) {
-            slf4j.info(getMessage(message, details), t);
+            slf4j.info(getMessage(message, details), throwable);
         }
         else if (log4j != null) {
-            log4j.info(getMessage(message, details), t);
+            log4j.info(getMessage(message, details), throwable);
         }
         else {
-            util.log(Level.INFO, "" + getMessage(message, details), t);
+            util.log(Level.INFO, "" + getMessage(message, details), throwable);
         }
     }
 
+    /**
+     * Log a message in <code>WARN</code> level.
+     *
+     * @param message The log message
+     */
     public void warn(Object message) {
         warn(message, (Object) null);
     }
 
+    /**
+     * Log a message in <code>WARN</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     */
     public void warn(Object message, Object details) {
         if (slf4j != null) {
             slf4j.warn(getMessage(message, details));
@@ -283,27 +391,52 @@ public final class JooqLogger {
         }
     }
 
-    public void warn(Object message, Throwable t) {
-        warn(message, null, t);
+    /**
+     * Log a message in <code>WARN</code> level.
+     *
+     * @param message The log message
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void warn(Object message, Throwable throwable) {
+        warn(message, null, throwable);
     }
 
-    public void warn(Object message, Object details, Throwable t) {
+    /**
+     * Log a message in <code>WARN</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void warn(Object message, Object details, Throwable throwable) {
         if (slf4j != null) {
-            slf4j.warn(getMessage(message, details), t);
+            slf4j.warn(getMessage(message, details), throwable);
         }
         else if (log4j != null) {
-            log4j.warn(getMessage(message, details), t);
+            log4j.warn(getMessage(message, details), throwable);
         }
         else {
-            util.log(Level.WARNING, "" + getMessage(message, details), t);
+            util.log(Level.WARNING, "" + getMessage(message, details), throwable);
         }
     }
 
-
+    /**
+     * Log a message in <code>ERROR</code> level.
+     *
+     * @param message The log message
+     */
     public void error(Object message) {
         error(message, (Object) null);
     }
 
+    /**
+     * Log a message in <code>ERROR</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     */
     public void error(Object message, Object details) {
         if (slf4j != null) {
             slf4j.error(getMessage(message, details));
@@ -316,22 +449,40 @@ public final class JooqLogger {
         }
     }
 
-    public void error(Object message, Throwable t) {
-        error(message, null, t);
+    /**
+     * Log a message in <code>ERROR</code> level.
+     *
+     * @param message The log message
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void error(Object message, Throwable throwable) {
+        error(message, null, throwable);
     }
 
-    public void error(Object message, Object details, Throwable t) {
+    /**
+     * Log a message in <code>ERROR</code> level.
+     *
+     * @param message The log message
+     * @param details The message details (padded to a constant-width message)
+     * @param throwable An exception whose stacktrace is logged along with the
+     *            message
+     */
+    public void error(Object message, Object details, Throwable throwable) {
         if (slf4j != null) {
-            slf4j.error(getMessage(message, details), t);
+            slf4j.error(getMessage(message, details), throwable);
         }
         else if (log4j != null) {
-            log4j.error(getMessage(message, details), t);
+            log4j.error(getMessage(message, details), throwable);
         }
         else {
-            util.log(Level.SEVERE, "" + getMessage(message, details), t);
+            util.log(Level.SEVERE, "" + getMessage(message, details), throwable);
         }
     }
 
+    /**
+     * Get a formatted message.
+     */
     private String getMessage(Object message, Object details) {
         StringBuilder sb = new StringBuilder();
 

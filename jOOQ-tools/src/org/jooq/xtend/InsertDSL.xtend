@@ -146,6 +146,7 @@ class InsertDSL extends Generators {
         «ENDFOR»
         import org.jooq.InsertValuesStepN;
         import org.jooq.Record;
+        import org.jooq.Record1;
         import org.jooq.Result;
         import org.jooq.Select;
         import org.jooq.Table;
@@ -295,6 +296,11 @@ class InsertDSL extends Generators {
                 return this;
             }
         
+            @Override
+            public final <T> InsertImpl set(Field<T> field, Select<? extends Record1<T>> value) {
+                return set(field, value.<T>asField());
+            }
+
             @Override
             public final InsertImpl set(Map<? extends Field<?>, ?> map) {
                 if (onDuplicateKeyUpdate) {

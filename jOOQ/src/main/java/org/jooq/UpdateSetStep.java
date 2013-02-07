@@ -68,6 +68,12 @@ public interface UpdateSetStep<R extends Record> {
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement
+     */
+    @Support
+    <T> UpdateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
+
+    /**
+     * Set a value for a field in the <code>UPDATE</code> statement
      * <p>
      * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
      * types. Values can either be of type <code>&lt;T&gt;</code> or

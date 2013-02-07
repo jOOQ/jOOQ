@@ -63,19 +63,25 @@ import org.jooq.impl.Executor;
 public interface InsertSetStep<R extends Record> {
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Set a value for a field in the <code>INSERT</code> statement
      */
     @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, T value);
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Set a value for a field in the <code>INSERT</code> statement
      */
     @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Set a value for a field in the <code>INSERT</code> statement
+     */
+    @Support
+    <T> InsertSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
+
+    /**
+     * Set a value for a field in the <code>INSERT</code> statement
      * <p>
      * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
      * types. Values can either be of type <code>&lt;T&gt;</code> or

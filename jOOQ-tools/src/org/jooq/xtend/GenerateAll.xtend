@@ -9,6 +9,6 @@ class GenerateAll {
     	InsertDSL::main(args);
     	Records::main(args);
     	Rows::main(args);
-    	Update::main(args);
+    	UpdateDSL::main(args);
     }
 }

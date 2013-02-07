@@ -80,6 +80,13 @@ public interface MergeMatchedSetStep<R extends Record> {
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
+     * Set values for <code>UPDATE</code> in the <code>MERGE</code> statement's
+     * <code>WHEN MATCHED</code> clause
+     */
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
+
+    /**
      * Set multiple values for <code>UPDATE</code> in the <code>MERGE</code>
      * statement's <code>WHEN MATCHED</code> clause.
      * <p>

@@ -104,6 +104,7 @@ public final class Convert {
         Set<String> falseValues = new HashSet<String>();
 
         trueValues.add("1");
+        trueValues.add("1.0");
         trueValues.add("y");
         trueValues.add("Y");
         trueValues.add("yes");
@@ -116,6 +117,7 @@ public final class Convert {
         trueValues.add("ENABLED");
 
         falseValues.add("0");
+        falseValues.add("0.0");
         falseValues.add("n");
         falseValues.add("N");
         falseValues.add("no");

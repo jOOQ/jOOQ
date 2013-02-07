@@ -42,6 +42,8 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.util.Collection;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -61,23 +63,26 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
-public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
+public interface MergeNotMatchedValuesStepN<R extends Record> {
 
     /**
-     * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
-     * statement
+     * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
+     * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> using(TableLike<?> table);
+    MergeNotMatchedWhereStep<R> values(Object... values);
 
     /**
-     * Add a dummy <code>USING</code> clause to the SQL standard
-     * <code>MERGE</code> statement
-     * <p>
-     * This results in <code>USING(SELECT 1 FROM DUAL)</code> for most RDBMS, or
-     * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
-     * Server, where derived tables need to be aliased.
+     * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
+     * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> usingDual();
+    MergeNotMatchedWhereStep<R> values(Field<?>... values);
+
+    /**
+     * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
+     * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
+     */
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

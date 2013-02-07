@@ -42,6 +42,10 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.util.Collection;
+        
+import javax.annotation.Generated;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -61,23 +65,27 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
-public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
+@Generated("This class was generated using jOOQ-tools")
+public interface MergeNotMatchedValuesStep7<R extends Record, T1, T2, T3, T4, T5, T6, T7> {
 
     /**
-     * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
-     * statement
+     * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
+     * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> using(TableLike<?> table);
+    MergeNotMatchedWhereStep<R> values(T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7);
 
     /**
-     * Add a dummy <code>USING</code> clause to the SQL standard
-     * <code>MERGE</code> statement
-     * <p>
-     * This results in <code>USING(SELECT 1 FROM DUAL)</code> for most RDBMS, or
-     * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
-     * Server, where derived tables need to be aliased.
+     * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
+     * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> usingDual();
+    MergeNotMatchedWhereStep<R> values(Field<T1> value1, Field<T2> value2, Field<T3> value3, Field<T4> value4, Field<T5> value5, Field<T6> value6, Field<T7> value7);
+
+    /**
+     * Set <code>VALUES</code> for <code>INSERT</code> in the <code>MERGE</code>
+     * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
+     */
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

@@ -37,47 +37,48 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.util.Collection;
+
+import javax.annotation.Generated;
+
 /**
- * This type is used for the {@link Merge}'s DSL API.
+ * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
  * Example: <code><pre>
  * Factory create = new Factory();
  *
- * create.mergeInto(table)
- *       .using(select)
- *       .on(condition)
- *       .whenMatchedThenUpdate()
- *       .set(field1, value1)
- *       .set(field2, value2)
- *       .whenNotMatchedThenInsert(field1, field2)
- *       .values(value1, value2)
+ * create.mergeInto(table, field1, field2, field3, .., field7, field8)
+ *       .key(id)
+ *       .values(value1, value2, value3, .., value7, value8)
  *       .execute();
  * </pre></code>
  *
  * @author Lukas Eder
  */
-public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
+@Generated("This class was generated using jOOQ-tools")
+public interface MergeKeyStep8<R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> extends MergeValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> {
 
     /**
-     * Add the <code>USING</code> clause to the SQL standard <code>MERGE</code>
-     * statement
-     */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> using(TableLike<?> table);
-
-    /**
-     * Add a dummy <code>USING</code> clause to the SQL standard
-     * <code>MERGE</code> statement
+     * Specify an optional <code>KEY</code> clause.
      * <p>
-     * This results in <code>USING(SELECT 1 FROM DUAL)</code> for most RDBMS, or
-     * in <code>USING(SELECT 1) AS [dummy_table(dummy_field)]</code> in SQL
-     * Server, where derived tables need to be aliased.
+     * Use this optional clause in order to override using the underlying
+     * <code>PRIMARY KEY</code>.
      */
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    MergeOnStep<R> usingDual();
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    MergeValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> key(Field<?>... keys);
+
+    /**
+     * Specify an optional <code>KEY</code> clause.
+     * <p>
+     * Use this optional clause in order to override using the underlying
+     * <code>PRIMARY KEY</code>.
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    MergeValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> key(Collection<? extends Field<?>> keys);
 }

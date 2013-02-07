@@ -115,7 +115,29 @@ import org.jooq.InsertValuesStep8;
 import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
 import org.jooq.LoaderOptionsStep;
-import org.jooq.MergeKeyStep;
+import org.jooq.MergeKeyStep1;
+import org.jooq.MergeKeyStep10;
+import org.jooq.MergeKeyStep11;
+import org.jooq.MergeKeyStep12;
+import org.jooq.MergeKeyStep13;
+import org.jooq.MergeKeyStep14;
+import org.jooq.MergeKeyStep15;
+import org.jooq.MergeKeyStep16;
+import org.jooq.MergeKeyStep17;
+import org.jooq.MergeKeyStep18;
+import org.jooq.MergeKeyStep19;
+import org.jooq.MergeKeyStep2;
+import org.jooq.MergeKeyStep20;
+import org.jooq.MergeKeyStep21;
+import org.jooq.MergeKeyStep22;
+import org.jooq.MergeKeyStep3;
+import org.jooq.MergeKeyStep4;
+import org.jooq.MergeKeyStep5;
+import org.jooq.MergeKeyStep6;
+import org.jooq.MergeKeyStep7;
+import org.jooq.MergeKeyStep8;
+import org.jooq.MergeKeyStep9;
+import org.jooq.MergeKeyStepN;
 import org.jooq.MergeUsingStep;
 import org.jooq.Meta;
 import org.jooq.Param;
@@ -3354,6 +3376,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1 }));
@@ -3374,6 +3397,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2> InsertValuesStep2<R, T1, T2> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2 }));
@@ -3394,6 +3418,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3 }));
@@ -3414,6 +3439,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4 }));
@@ -3434,6 +3460,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5 }));
@@ -3454,6 +3481,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6 }));
@@ -3474,6 +3502,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7 }));
@@ -3494,6 +3523,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 }));
@@ -3514,6 +3544,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 }));
@@ -3534,6 +3565,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 }));
@@ -3554,6 +3586,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 }));
@@ -3574,6 +3607,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 }));
@@ -3594,6 +3628,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 }));
@@ -3614,6 +3649,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 }));
@@ -3634,6 +3670,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 }));
@@ -3654,6 +3691,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 }));
@@ -3674,6 +3712,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 }));
@@ -3694,6 +3733,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 }));
@@ -3714,6 +3754,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 }));
@@ -3734,6 +3775,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 }));
@@ -3754,6 +3796,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 }));
@@ -3774,6 +3817,7 @@ public class Executor implements Configuration {
      *       .execute();
      * </pre></code>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 }));
@@ -3936,7 +3980,35 @@ public class Executor implements Configuration {
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
-        return new MergeImpl<R>(this, table);
+        return new MergeImpl(this, table);
+    }
+
+// [jooq-tools] START [merge]
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
+        return new MergeImpl(this, table, Arrays.asList(field1));
     }
 
     /**
@@ -3959,8 +4031,556 @@ public class Executor implements Configuration {
      * </tr>
      * </table>
      */
+    @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    public final <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Field<?>... fields) {
+    public final <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
+    }
+
+// [jooq-tools] END [merge]
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax)
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public final <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
         return mergeInto(table, Arrays.asList(fields));
     }
 
@@ -3970,8 +4590,8 @@ public class Executor implements Configuration {
      * @see #mergeInto(Table, Field...)
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    public final <R extends Record> MergeKeyStep<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
-        return new MergeImpl<R>(this, table, fields);
+    public final <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
+        return new MergeImpl(this, table, fields);
     }
 
     /**

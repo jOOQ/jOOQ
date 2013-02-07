@@ -851,15 +851,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().mergeInto(TAuthor())
                 .using(create().select(f, l))
                 .on(TAuthor_LAST_NAME().equal(l))
-                .whenNotMatchedThenInsert(
+                .whenNotMatchedThenInsert(Arrays.<Field<?>>asList(
                     TAuthor_ID(),
                     TAuthor_FIRST_NAME(),
                     TAuthor_LAST_NAME(),
                     TAuthor_DATE_OF_BIRTH())
+                )
 
                 // [#1010] Be sure that this type-unsafe clause can deal with
                 // any convertable type
-                .values("4", f, l, 0L);
+                .values(
+                    "4",
+                    f,
+                    l,
+                    0L);
 
         // Execute an insert
         q.execute();

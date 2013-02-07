@@ -44,10 +44,11 @@ import org.jooq.Constants
 class Executor extends Generators {
     
     def static void main(String[] args) {
-        val factory = new Executor();
-        factory.generateSelect();
-        factory.generateSelectDistinct();
-        factory.generateInsert();
+        val executor = new Executor();
+        executor.generateSelect();
+        executor.generateSelectDistinct();
+        executor.generateInsert();
+        executor.generateMerge();
     }
     
     def generateSelect() {
@@ -171,6 +172,7 @@ class Executor extends Generators {
                  *       .execute();
                  * </pre></code>
                  */
+                «generatedMethod»
                 @Support
                 public final <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
                     return new InsertImpl(this, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
@@ -179,5 +181,42 @@ class Executor extends Generators {
         }
 
         insert("org.jooq.impl.Executor", out, "insert");
+    }
+
+    def generateMerge() {
+        val out = new StringBuilder();
+        
+        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+            out.append('''
+            
+                /**
+                 * Create a new DSL merge statement (H2-specific syntax)
+                 * <p>
+                 * This statement is available from DSL syntax only. It is known to be
+                 * supported in some way by any of these dialects:
+                 * <table border="1">
+                 * <tr>
+                 * <td>H2</td>
+                 * <td>H2 natively supports this special syntax</td>
+                 * <td><a href= "www.h2database.com/html/grammar.html#merge"
+                 * >www.h2database.com/html/grammar.html#merge</a></td>
+                 * </tr>
+                 * <tr>
+                 * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+                 * <td>These databases can simulate the H2-specific MERGE statement using a
+                 * standard SQL MERGE statement, without restrictions</td>
+                 * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+                 * </tr>
+                 * </table>
+                 */
+                «generatedMethod»
+                @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                public final <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
+                    return new MergeImpl(this, table, Arrays.asList(«fieldn(degree)»));
+                }
+            ''');
+        }
+
+        insert("org.jooq.impl.Executor", out, "merge");
     }
 }

@@ -40,10 +40,10 @@ import org.jooq.Constants
 /**
  * @author Lukas Eder
  */
-class Update extends Generators {
+class UpdateDSL extends Generators {
     
     def static void main(String[] args) {
-        val update = new Update();
+        val update = new UpdateDSL();
         update.generateUpdateQuery();
         update.generateUpdateQueryImpl();
         update.generateUpdateSetFirstStep();

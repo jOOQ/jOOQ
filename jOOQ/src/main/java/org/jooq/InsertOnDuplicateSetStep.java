@@ -79,6 +79,13 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
+     * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
+     * <code>ON DUPLICATE KEY UPDATE</code> clause
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
+
+    /**
      * Set multiple values for <code>UPDATE</code> in the <code>INSERT</code>
      * statement's <code>ON DUPLICATE KEY UPDATE</code> clause
      * <p>

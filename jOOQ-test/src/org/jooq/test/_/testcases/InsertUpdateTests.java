@@ -444,15 +444,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(3), author.getValue(TAuthor_ID()));
         assertEquals("Hornby", author.getValue(TAuthor_LAST_NAME()));
 
+        assertEquals(1,
         create().update(TAuthor())
                 .set(TAuthor_ID(), ID4)
                 .set(TAuthor_LAST_NAME(), create().select(val("Hitchcock")).<String> asField())
                 .where(TAuthor_ID().equal(3))
-                .execute();
+                .execute());
 
         author = create().fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Hitchcock"));
         assertEquals(Integer.valueOf(4), author.getValue(TAuthor_ID()));
         assertEquals("Hitchcock", author.getValue(TAuthor_LAST_NAME()));
+
+        assertEquals(1,
+        create().update(TAuthor())
+                .set(TAuthor_ID(), select(inline(5)))
+                .set(TAuthor_LAST_NAME(), select(val("Hesse")))
+                .where(TAuthor_ID().equal(4))
+                .execute());
+
+        author = create().fetchOne(TAuthor(), TAuthor_LAST_NAME().equal("Hesse"));
+        assertEquals(Integer.valueOf(5), author.getValue(TAuthor_ID()));
+        assertEquals("Hesse", author.getValue(TAuthor_LAST_NAME()));
     }
 
     @Test

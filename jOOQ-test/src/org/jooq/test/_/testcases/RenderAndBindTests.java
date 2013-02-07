@@ -153,7 +153,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Insert<A> insert1 =
         create().insertInto(TAuthor())
                 .set(TAuthor_ID(), 1)
-                .set(TAuthor_FIRST_NAME(), null)
+                .set(TAuthor_FIRST_NAME(), (String) null)
                 .set(TAuthor_LAST_NAME(), "Koontz");
 
         assertEquals(

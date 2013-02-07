@@ -110,6 +110,7 @@ import org.jooq.MergeUsingStep;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Select;
@@ -673,6 +674,11 @@ implements
         }
 
         return this;
+    }
+
+    @Override
+    public final <T> MergeImpl set(Field<T> field, Select<? extends Record1<T>> value) {
+        return set(field, value.<T>asField());
     }
 
     @Override

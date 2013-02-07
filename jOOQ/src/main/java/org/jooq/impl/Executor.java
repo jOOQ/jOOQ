@@ -232,8 +232,8 @@ public class Executor implements Configuration {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID  = 2681360188806309513L;
-    private final Configuration     configuration;
+    private static final long   serialVersionUID = 2681360188806309513L;
+    private final Configuration configuration;
 
     // -------------------------------------------------------------------------
     // XXX Constructors

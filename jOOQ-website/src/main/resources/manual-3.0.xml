@@ -9172,11 +9172,12 @@ for (Record record : create().select(
 								This section is for all users of jOOQ 2.x who wish to upgrade to the next major release. In the next sub-sections, the most important changes are explained
 							</p>
 							
-							<h3>Type-safe Record1 through Record8</h3>
+							<h3>Type-safe Record1 through Record22</h3>
 							<ul>
 								<li>Subqueries from Factory.select(...) are now type-safe</li>
 								<li>IN predicates and comparison predicates changed incompatibly</li>
 								<li>Result&lt;Record> might change incompatibly</li>
+								<li>Typesafe INSERT and MERGE statements</li>
 							</ul>
 							
 							<h3>SimpleSelectQuery and SimpleSelectXXXStep API were removed</h3>

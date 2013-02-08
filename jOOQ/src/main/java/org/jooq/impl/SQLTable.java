@@ -90,7 +90,7 @@ class SQLTable extends AbstractTable<Record> {
     }
 
     @Override
-    protected final FieldList getFieldList() {
+    protected final FieldList fields0() {
         return new FieldList();
     }
 }

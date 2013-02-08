@@ -95,7 +95,7 @@ class WithTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    protected final FieldList getFieldList() {
-        return delegate.getFieldList();
+    final FieldList fields0() {
+        return delegate.fields0();
     }
 }

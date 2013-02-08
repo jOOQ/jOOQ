@@ -64,7 +64,7 @@ import org.jooq.tools.StringUtils;
 /**
  * @author Lukas Eder
  */
-abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQueryPart<R> implements Table<R> {
+abstract class AbstractTable<R extends Record> extends AbstractQueryPart implements Table<R> {
 
     /**
      * Generated UID
@@ -89,10 +89,18 @@ abstract class AbstractTable<R extends Record> extends AbstractFieldProviderQuer
     // XXX: TableLike API
     // ------------------------------------------------------------------------
 
+    /**
+     * Subclasses should override this method to provide the set of fields
+     * contained in the concrete table implementation. For example, a
+     * <code>TableAlias</code> contains aliased fields of its
+     * <code>AliasProvider</code> table.
+     */
+    abstract FieldList fields0();
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public final Row fieldsRow() {
-        return new RowImpl(getFieldList());
+        return new RowImpl(fields0());
     }
 
     @Override

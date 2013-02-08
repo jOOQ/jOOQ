@@ -1975,6 +1975,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testBenchmarkNewRecord() throws Exception {
+        new BenchmarkTests(this).testBenchmarkNewRecord();
+    }
+
+    @Test
     public void testBenchmarkRecordInto() throws Exception {
         new BenchmarkTests(this).testBenchmarkRecordInto();
     }

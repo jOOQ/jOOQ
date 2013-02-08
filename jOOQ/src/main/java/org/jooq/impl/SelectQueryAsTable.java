@@ -68,8 +68,8 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    protected final FieldList fields0() {
-        return new FieldList(query.getSelect());
+    final Fields fields0() {
+        return new Fields(query.getSelect());
     }
 
     @Override

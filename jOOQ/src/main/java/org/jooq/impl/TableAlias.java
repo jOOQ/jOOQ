@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
@@ -54,7 +55,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     private static final long     serialVersionUID = -8417114874567698325L;
 
     private final Alias<Table<R>> alias;
-    private final FieldList       aliasedFields;
+    private final Fields          aliasedFields;
 
     TableAlias(Table<R> table, String alias) {
         this(table, alias, null, false);
@@ -72,15 +73,15 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
         super(alias, table.getSchema());
 
         this.alias = new Alias<Table<R>>(table, alias, fieldAliases, wrapInParentheses);
-        this.aliasedFields = new FieldList();
-
-        registerFields(fieldAliases);
+        this.aliasedFields = init(fieldAliases);
     }
 
     /**
      * Register fields for this table alias
      */
-    private final void registerFields(String[] fieldAliases) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private final Fields init(String[] fieldAliases) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
         Row row = this.alias.wrapped().fieldsRow();
         int size = row.size();
 
@@ -92,15 +93,10 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
                 name = fieldAliases[i];
             }
 
-            registerTableField(field, name);
+            result.add(new TableFieldImpl(name, field.getDataType(), this));
         }
-    }
 
-    /**
-     * Register a field for this table alias
-     */
-    private final <T> void registerTableField(Field<T> field, String name) {
-        aliasedFields.add(new TableFieldImpl<R, T>(name, field.getDataType(), this));
+        return new Fields(result);
     }
 
     /**
@@ -145,7 +141,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    protected final FieldList fields0() {
+    final Fields fields0() {
         return aliasedFields;
     }
 

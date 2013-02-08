@@ -62,7 +62,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     private static final long       serialVersionUID = 2392515064450536343L;
 
     private final Object[]          array;
-    private final FieldList         field;
+    private final Fields            field;
     private final String            alias;
     private final String            fieldAlias;
 
@@ -80,10 +80,9 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         super(alias);
 
         this.array = array;
-        this.field = new FieldList();
         this.alias = alias;
         this.fieldAlias = fieldAlias == null ? "COLUMN_VALUE" : fieldAlias;
-        this.field.add(fieldByName(Factory.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
+        this.field = new Fields(fieldByName(Factory.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
     }
 
     @Override
@@ -127,7 +126,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     }
 
     @Override
-    protected final FieldList fields0() {
+    final Fields fields0() {
         return field;
     }
 
@@ -138,7 +137,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
             for (Object element : array) {
 
                 // [#1081] Be sure to get the correct cast type also for null
-                Field<?> val = Factory.val(element, field.get(0).getDataType());
+                Field<?> val = Factory.val(element, field.fields[0].getDataType());
                 Select<Record> subselect = create(configuration).select(val.as("COLUMN_VALUE")).select();
 
                 if (select == null) {

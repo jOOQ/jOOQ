@@ -97,7 +97,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    protected final FieldList getFieldList() {
+    protected final FieldList fields0() {
         return fields;
     }
 

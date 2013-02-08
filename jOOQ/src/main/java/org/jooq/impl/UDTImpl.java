@@ -54,7 +54,7 @@ import org.jooq.UDTRecord;
  *
  * @author Lukas Eder
  */
-public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryPart<R> implements UDT<R> {
+public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implements UDT<R> {
 
     private static final long     serialVersionUID = -2208672099190913126L;
 
@@ -105,8 +105,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractFieldProviderQueryP
         return fieldsRow().fields();
     }
 
-    @Override
-    protected final FieldList getFieldList() {
+    final FieldList fields0() {
         return fields;
     }
 

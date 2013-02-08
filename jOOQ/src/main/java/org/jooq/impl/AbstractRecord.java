@@ -333,7 +333,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        AbstractRecord result = Utils.newRecord(getClass(), fields.fields, getConfiguration());
+        AbstractRecord result = Utils.newRecord(getClass(), fields.fields.fields, getConfiguration());
         Value<?>[] v = getValues();
 
         for (int i = 0; i < v.length; i++) {
@@ -520,7 +520,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final ResultSet intoResultSet() {
-        ResultImpl<Record> result = new ResultImpl<Record>(getConfiguration(), fields.fields);
+        ResultImpl<Record> result = new ResultImpl<Record>(getConfiguration(), fields.fields.fields);
         result.add(this);
         return result.intoResultSet();
     }
@@ -663,7 +663,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public String toString() {
-        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields.fields);
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields.fields.fields);
         result.add(this);
         return result.toString();
     }

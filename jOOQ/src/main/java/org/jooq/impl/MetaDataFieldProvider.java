@@ -40,6 +40,8 @@ import static org.jooq.impl.Factory.field;
 import java.io.Serializable;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -69,17 +71,14 @@ class MetaDataFieldProvider implements Serializable {
     private static final long       serialVersionUID = -8482521025536063609L;
     private static final JooqLogger log              = JooqLogger.getLogger(MetaDataFieldProvider.class);
 
-    private final Configuration     configuration;
-    private final FieldList         fields;
+    private final Fields            fields;
 
     MetaDataFieldProvider(Configuration configuration, ResultSetMetaData meta) {
-        this.configuration = configuration;
-        this.fields = new FieldList();
-
-        init(meta);
+        this.fields = init(configuration, meta);
     }
 
-    private final void init(ResultSetMetaData meta) {
+    private Fields init(Configuration configuration, ResultSetMetaData meta) {
+        List<Field<?>> fieldList = new ArrayList<Field<?>>();
         int columnCount = 0;
 
         try {
@@ -90,7 +89,7 @@ class MetaDataFieldProvider implements Serializable {
         // procedures / functions
         catch (SQLException e) {
             log.warn("Cannot fetch column count for cursor : " + e.getMessage());
-            fields.add(field("dummy"));
+            fieldList.add(field("dummy"));
         }
 
         try {
@@ -123,14 +122,14 @@ class MetaDataFieldProvider implements Serializable {
                     log.warn("Not supported by dialect", ignore.getMessage());
                 }
 
-                fields.add(field(name, dataType));
+                fieldList.add(field(name, dataType));
             }
         }
         catch (SQLException e) {
             throw Utils.translate(null, e);
         }
 
-        meta = null;
+        return new Fields(fieldList);
     }
 
     final Field<?>[] getFields() {

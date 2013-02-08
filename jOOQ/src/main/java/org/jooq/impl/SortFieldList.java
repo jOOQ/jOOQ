@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.Field;
@@ -58,12 +59,12 @@ class SortFieldList extends QueryPartList<SortField<?>> {
     }
 
     void addAll(Field<?>... fields) {
-        List<SortField<?>> list = new ArrayList<SortField<?>>();
+        SortField<?>[] result = new SortField[fields.length];
 
-        for (Field<?> field : fields) {
-            list.add(field.asc());
+        for (int i = 0; i < fields.length; i++) {
+            result[i] = fields[i].asc();
         }
 
-        addAll(list);
+        addAll(Arrays.asList(result));
     }
 }

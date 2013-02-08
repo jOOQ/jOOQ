@@ -77,14 +77,23 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     private static final long serialVersionUID = -6052512608911220404L;
 
     final RowImpl             fields;
-    Value<?>[]                values;
+    final Value<?>[]          values;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
-        this.fields = new RowImpl(fields);
+        this(new RowImpl(fields));
     }
 
     AbstractRecord(Field<?>... fields) {
-        this.fields = new RowImpl(fields);
+        this(new RowImpl(fields));
+    }
+
+    AbstractRecord(RowImpl fields) {
+        this.fields = fields;
+        this.values = new Value<?>[fields.size()];
+
+        for (int i = 0; i < values.length; i++) {
+            values[i] = new Value<Object>(null);
+        }
     }
 
     // ------------------------------------------------------------------------
@@ -252,14 +261,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     final Value<?>[] getValues() {
-        if (values == null) {
-            values = new Value<?>[fields.size()];
-
-            for (int i = 0; i < values.length; i++) {
-                values[i] = new Value<Object>(null);
-            }
-        }
-
         return values;
     }
 

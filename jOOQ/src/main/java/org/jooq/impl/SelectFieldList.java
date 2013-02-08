@@ -44,7 +44,7 @@ import org.jooq.RenderContext;
 /**
  * @author Lukas Eder
  */
-class SelectFieldList extends FieldList {
+class SelectFieldList extends QueryPartList<Field<?>> {
 
     private static final long serialVersionUID = 8850104968428500798L;
 

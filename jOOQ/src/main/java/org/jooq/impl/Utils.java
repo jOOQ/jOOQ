@@ -658,6 +658,14 @@ final class Utils {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
+    static final void fieldNames(RenderContext context, Fields fields) {
+        fieldNames(context, list(fields.fields));
+    }
+
+    /**
+     * Render a list of names of the <code>NamedQueryParts</code> contained in
+     * this list.
+     */
     static final void fieldNames(RenderContext context, Field<?>... fields) {
         fieldNames(context, list(fields));
     }

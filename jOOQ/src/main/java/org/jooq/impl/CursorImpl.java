@@ -1230,7 +1230,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         @Override
         public final boolean hasNext() {
             if (hasNext == null) {
-                next = fetch();
+                next = fetchOne();
                 hasNext = (next != null);
             }
 
@@ -1240,7 +1240,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         @Override
         public final R next() {
             if (hasNext == null) {
-                return fetch();
+                return fetchOne();
             }
 
             R result = next;
@@ -1249,7 +1249,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             return result;
         }
 
-        private final R fetch() {
+        private final R fetchOne() {
             R record = null;
 
             try {

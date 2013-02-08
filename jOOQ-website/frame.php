@@ -1,7 +1,7 @@
 <?php
   $root = "";
   $minorVersion = "2.6";
-  $version = $minorVersion . ".0";
+  $version = $minorVersion . ".2";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
@@ -131,6 +131,9 @@
     		</div>
 	        <div class="navigation-item-left <?php if ($menu == 'community') print 'navigation-item-active'?>">
 	    		<a href="<?=$root?>/community.php" title="See who's behind jOOQ and contribute">Community</a>
+    		</div>
+	        <div class="navigation-item-left <?php if ($menu == 'donate') print 'navigation-item-active'?>">
+	    		<a href="<?=$root?>/donate.php" title="Show some love to the jOOQ developer">Donate</a>
     		</div>
 	   	</div>
 	   	</div>

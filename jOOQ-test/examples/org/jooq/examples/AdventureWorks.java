@@ -58,11 +58,11 @@ public class AdventureWorks {
         Executor create = new Executor(connection, SQLDialect.SQLSERVER);
 
         System.out.println(create
-              .select(Employee.getFields())
+              .select(Employee.fields())
               .select(val("###"))
-              .select(Department.getFields())
+              .select(Department.fields())
               .select(val("###"))
-              .select(Contact.getFields())
+              .select(Contact.fields())
               .from(Employee)
               .join(EmployeeAddress).using(Employee.EmployeeID)
               .join(EmployeeDepartmentHistory).using(Employee.EmployeeID)

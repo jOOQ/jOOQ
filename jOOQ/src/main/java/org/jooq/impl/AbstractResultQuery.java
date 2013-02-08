@@ -209,7 +209,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                     }
                 }
                 else {
-                    result = new ResultImpl<R>(ctx, new FieldList());
+                    result = new ResultImpl<R>(ctx);
                 }
             }
 

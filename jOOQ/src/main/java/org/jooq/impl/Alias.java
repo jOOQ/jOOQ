@@ -121,7 +121,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             else if (fieldAliases != null && asList(H2, MYSQL, ORACLE, SQLITE).contains(dialect)) {
                 simulateDerivedColumnList = true;
 
-                FieldList fields = new SelectFieldList();
+                SelectFieldList fields = new SelectFieldList();
                 for (String fieldAlias : fieldAliases) {
                     fields.add(field("null").as(fieldAlias));
                 }

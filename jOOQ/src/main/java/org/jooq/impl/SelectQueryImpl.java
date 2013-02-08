@@ -92,7 +92,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      */
     private static final long               serialVersionUID = 1646393178384872967L;
 
-    private final FieldList                 select;
+    private final SelectFieldList           select;
     private String                          hint;
     private boolean                         distinct;
     private boolean                         forUpdate;
@@ -716,13 +716,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         return getSelect1();
     }
 
-    final FieldList getSelect0() {
+    final SelectFieldList getSelect0() {
         return select;
     }
 
-    final FieldList getSelect1() {
+    final SelectFieldList getSelect1() {
         if (getSelect0().isEmpty()) {
-            FieldList result = new SelectFieldList();
+            SelectFieldList result = new SelectFieldList();
 
             // [#109] [#489]: SELECT * is only applied when at least one table
             // from the table source is "unknown", i.e. not generated from a

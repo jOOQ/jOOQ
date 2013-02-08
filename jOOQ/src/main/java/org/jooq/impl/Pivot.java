@@ -72,12 +72,12 @@ implements
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7918219502110473521L;
+    private static final long     serialVersionUID = -7918219502110473521L;
 
-    private final Table<?>    table;
-    private final FieldList   aggregateFunctions;
-    private Field<T>          on;
-    private FieldList         in;
+    private final Table<?>        table;
+    private final SelectFieldList aggregateFunctions;
+    private Field<T>              on;
+    private SelectFieldList       in;
 
     Pivot(Table<?> table, Field<?>... aggregateFunctions) {
         super("pivot");

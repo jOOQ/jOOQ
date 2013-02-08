@@ -164,15 +164,17 @@ implements
     final Fields              fields;
 
     RowImpl(Field<?>... fields) {
-        super();
-
-        this.fields = new Fields(fields);
+        this(new Fields(fields));
     }
 
     RowImpl(Collection<? extends Field<?>> fields) {
+        this(new Fields(fields));
+    }
+
+    RowImpl(Fields fields) {
         super();
 
-        this.fields = new Fields(fields.toArray(new Field[fields.size()]));
+        this.fields = fields;
     }
 
     // ------------------------------------------------------------------------

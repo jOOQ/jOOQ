@@ -51,7 +51,7 @@ import org.jooq.RenderContext;
 class Fields extends AbstractQueryPart {
 
     private static final long serialVersionUID = -6911012275707591576L;
-    final Field<?>[]          fields;
+    Field<?>[]                fields;
 
     Fields(Field<?>... fields) {
         this.fields = fields;
@@ -141,5 +141,15 @@ class Fields extends AbstractQueryPart {
     @Override
     public final void bind(BindContext context) {
         new FieldList(fields).bind(context);
+    }
+
+    final void add(Field<?> field) {
+        int length = fields.length;
+
+        Field<?>[] result = new Field[length + 1];
+        System.arraycopy(fields, 0, result, 0, length);
+        result[length] = field;
+
+        fields = result;
     }
 }

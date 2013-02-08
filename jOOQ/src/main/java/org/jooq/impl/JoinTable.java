@@ -289,7 +289,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @Override
-    protected final FieldList fields0() {
+    final Fields fields0() {
         Field<?>[] l = lhs.asTable().fields();
         Field<?>[] r = rhs.asTable().fields();
         Field<?>[] all = new Field[l.length + r.length];
@@ -297,7 +297,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         System.arraycopy(l, 0, all, 0, l.length);
         System.arraycopy(r, 0, all, l.length, r.length);
 
-        return new FieldList(all);
+        return new Fields(all);
     }
 
     @Override

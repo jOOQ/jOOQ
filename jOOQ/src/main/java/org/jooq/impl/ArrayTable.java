@@ -37,6 +37,9 @@ package org.jooq.impl;
 
 import static org.jooq.impl.Factory.fieldByName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
@@ -63,9 +66,9 @@ class ArrayTable extends AbstractTable<Record> {
      */
     private static final long serialVersionUID = 2380426377794577041L;
 
-    private final Field<?>          array;
-    private final FieldList         field;
-    private final String            alias;
+    private final Field<?>    array;
+    private final Fields      field;
+    private final String      alias;
 
     ArrayTable(Field<?> array) {
         this(array, "array_table");
@@ -102,14 +105,27 @@ class ArrayTable extends AbstractTable<Record> {
 
         this.array = array;
         this.alias = alias;
-        this.field = new FieldList();
+        this.field = init(alias, arrayType);
+
+        init(alias, arrayType);
+    }
+
+    @SuppressWarnings("unused")
+    ArrayTable(Field<?> array, String alias, String[] fieldAliases) {
+        super(alias);
+
+        throw new UnsupportedOperationException("This constructor is not yet implemented");
+    }
+
+    private static final Fields init(String alias, Class<?> arrayType) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
 
         // [#1114] VARRAY/TABLE of OBJECT have more than one field
         if (UDTRecord.class.isAssignableFrom(arrayType)) {
             try {
                 UDTRecord<?> record = (UDTRecord<?>) arrayType.newInstance();
                 for (Field<?> f : record.fields()) {
-                    this.field.add(fieldByName(f.getDataType(), alias, f.getName()));
+                    result.add(fieldByName(f.getDataType(), alias, f.getName()));
                 }
             }
             catch (Exception e) {
@@ -119,15 +135,10 @@ class ArrayTable extends AbstractTable<Record> {
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else {
-            this.field.add(fieldByName(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
+            result.add(fieldByName(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
         }
-    }
 
-    @SuppressWarnings("unused")
-    ArrayTable(Field<?> array, String alias, String[] fieldAliases) {
-        super(alias);
-
-        throw new UnsupportedOperationException("This constructor is not yet implemented");
+        return new Fields(result);
     }
 
     @Override
@@ -286,7 +297,7 @@ class ArrayTable extends AbstractTable<Record> {
         }
 
         @Override
-        final FieldList fields0() {
+        final Fields fields0() {
             return ArrayTable.this.fields0();
         }
     }
@@ -297,7 +308,7 @@ class ArrayTable extends AbstractTable<Record> {
     }
 
     @Override
-    protected final FieldList fields0() {
+    final Fields fields0() {
         return field;
     }
 }

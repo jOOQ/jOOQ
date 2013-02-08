@@ -95,9 +95,9 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <code>TableAlias</code> contains aliased fields of its
      * <code>AliasProvider</code> table.
      */
-    abstract FieldList fields0();
+    abstract Fields fields0();
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "rawtypes" })
     @Override
     public final Row fieldsRow() {
         return new RowImpl(fields0());

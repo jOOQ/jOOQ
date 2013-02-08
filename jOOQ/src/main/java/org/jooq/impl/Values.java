@@ -157,7 +157,7 @@ class Values<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    protected final FieldList fields0() {
-        return new FieldList(rows[0].fields());
+    final Fields fields0() {
+        return new Fields(rows[0].fields());
     }
 }

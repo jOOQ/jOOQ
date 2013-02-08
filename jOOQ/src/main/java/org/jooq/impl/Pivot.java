@@ -287,7 +287,7 @@ implements
         }
 
         @Override
-        final FieldList fields0() {
+        final Fields fields0() {
             return Pivot.this.fields0();
         }
     }
@@ -321,8 +321,8 @@ implements
     }
 
     @Override
-    protected final FieldList fields0() {
-        return new FieldList();
+    final Fields fields0() {
+        return new Fields();
     }
 
     // ------------------------------------------------------------------------

@@ -12,5 +12,4 @@
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.h2.tools.Server"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="jOOQ-test"/>
-<stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="${workspace_loc:jOOQ-test/hsqldb}"/>
 </launchConfiguration>

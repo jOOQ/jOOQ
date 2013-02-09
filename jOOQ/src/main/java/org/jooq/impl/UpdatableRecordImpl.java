@@ -144,8 +144,17 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             result = storeInsert();
         }
 
-        setAllChanged(false);
         return result;
+    }
+
+    @Override
+    public final int insert() {
+        return storeInsert();
+    }
+
+    @Override
+    public final int update() {
+        return storeUpdate(getMainKey().getFieldsArray());
     }
 
     private final int storeInsert() {
@@ -184,6 +193,8 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                     }
                 }
             }
+
+            setAllChanged(false);
         }
 
         return result;
@@ -218,6 +229,11 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // [#1596] Check if the record was really changed in the database
         int result = update.execute();
         checkIfChanged(result, version, timestamp);
+
+        if (result > 0) {
+            setAllChanged(false);
+        }
+
         return result;
     }
 

@@ -102,7 +102,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * Store this record back to the database.
      * <p>
      * Depending on the state of the primary key's or main unique key's value,
-     * an <code>INSERT</code> or an <code>UPDATE</code> statement is executed.
+     * an {@link #insert()} or an {@link #update()} statement is executed.
      * <p>
      * <h3>Statement type</h3>
      * <p>
@@ -125,6 +125,9 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * fields were modified, neither an <code>UPDATE</code> nor an
      * <code>INSERT</code> will be executed.
      * <h3>Automatic value generation</h3>
+     * <p>
+     * Use {@link #insert()} or {@link #update()} to explicitly force either
+     * statement type.
      * <p>
      * <ul>
      * <li><strong>IDENTITY columns</strong>
@@ -203,17 +206,46 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * WHERE [key fields = key values]
      * AND [version/timestamp fields = version/timestamp values]</pre></code></li>
      * </ul>
-     * <p>
-     * This is in fact the same as calling
-     * <code>store(getTable().getMainKey().getFieldsArray())</code>
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
      * @throws DataAccessException if something went wrong executing the query
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
+     * @see #insert()
+     * @see #update()
      */
     int store() throws DataAccessException, DataChangedException;
+
+    /**
+     * Store this record back to the database using an <code>INSERT</code>
+     * statement.
+     * <p>
+     * This is the same as {@link #store()}, except that an <code>INSERT</code>
+     * statement (or no statement) will always be executed.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @see #store()
+     */
+    int insert() throws DataAccessException;
+
+    /**
+     * Store this record back to the database using an <code>UPDATE</code>
+     * statement.
+     * <p>
+     * This is the same as {@link #store()}, except that an <code>UPDATE</code>
+     * statement (or no statement) will always be executed.
+     *
+     * @return <code>1</code> if the record was stored to the database. <code>0
+     *         </code> if storing was not necessary.
+     * @throws DataAccessException if something went wrong executing the query
+     * @throws DataChangedException If optimistic locking is enabled and the
+     *             record has already been changed/deleted in the database
+     * @see #store()
+     */
+    int update() throws DataAccessException, DataChangedException;
 
     /**
      * Deletes this record from the database, based on the value of the primary

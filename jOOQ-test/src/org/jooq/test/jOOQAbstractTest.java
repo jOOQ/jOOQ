@@ -1424,6 +1424,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdatablesInsertUpdate() throws Exception {
+        new CRUDTests(this).testUpdatablesInsertUpdate();
+    }
+
+    @Test
     public void testUpdatablesPK() throws Exception {
         new CRUDTests(this).testUpdatablesPK();
     }

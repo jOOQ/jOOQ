@@ -160,6 +160,10 @@ class ReflectionMapper<R extends Record, E> implements RecordMapper<R, E> {
 
     @Override
     public final E map(R record) {
+        if (record == null) {
+            return null;
+        }
+
         try {
             return delegate.map(record);
         }

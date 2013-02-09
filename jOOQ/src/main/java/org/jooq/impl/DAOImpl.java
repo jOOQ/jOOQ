@@ -45,21 +45,23 @@ import java.util.List;
 import org.jooq.Condition;
 import org.jooq.DAO;
 import org.jooq.Field;
+import org.jooq.RecordMapper;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdatableTable;
 
 /**
- * A common base implementation for generated DAO's
+ * A common base implementation for generated DAO's.
  *
  * @author Lukas Eder
  */
 public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO<R, P, T> {
 
-    private final Table<R> table;
-    private final Class<P> type;
-    private Executor        create;
+    private final Table<R>     table;
+    private final Class<P>     type;
+    private RecordMapper<R, P> mapper;
+    private Executor           create;
 
     // -------------------------------------------------------------------------
     // XXX: Constructors and initialisation
@@ -73,6 +75,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         this.table = table;
         this.type = type;
         this.create = create;
+        this.mapper = new ReflectionMapper<R, P>(table.fields(), type);
     }
 
     /**
@@ -195,7 +198,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     public final List<P> findAll() {
         return create.selectFrom(table)
                      .fetch()
-                     .into(type);
+                     .map(mapper);
     }
 
     @Override
@@ -209,7 +212,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                            .fetchOne();
         }
 
-        return record == null ? null : record.into(type);
+        return mapper.map(record);
     }
 
     @Override
@@ -217,7 +220,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return create.selectFrom(table)
                      .where(field.in(values))
                      .fetch()
-                     .into(type);
+                     .map(mapper);
     }
 
     @Override
@@ -226,7 +229,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                          .where(field.equal(value))
                          .fetchOne();
 
-        return record == null ? null : record.into(type);
+        return mapper.map(record);
     }
 
     @Override

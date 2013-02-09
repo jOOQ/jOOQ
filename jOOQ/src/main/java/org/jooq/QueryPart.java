@@ -62,4 +62,40 @@ public interface QueryPart extends Serializable {
      */
     @Override
     String toString();
+
+    /**
+     * Check whether this <code>QueryPart</code> can be considered equal to
+     * another <code>QueryPart</code>.
+     * <p>
+     * In general, <code>QueryPart</code> equality is defined in terms of
+     * {@link #toString()} equality. In other words, two query parts are
+     * considered equal if their rendered SQL (with inlined bind variables) is
+     * equal. This means that the two query parts do not necessarily have to be
+     * of the same type.
+     * <p>
+     * Some <code>QueryPart</code> implementations may choose to override this
+     * behaviour for improved performance, as {@link #toString()} is an
+     * expensive operation, if called many times.
+     *
+     * @param object The other <code>QueryPart</code>
+     * @return Whether the two query parts are equal
+     */
+    @Override
+    boolean equals(Object object);
+
+    /**
+     * Generate a hash code from this <code>QueryPart</code>.
+     * <p>
+     * In general, <code>QueryPart</code> hash codes are the same as the hash
+     * codes generated from {@link #toString()}. This guarantees consistent
+     * behaviour with {@link #equals(Object)}
+     * <p>
+     * Some <code>QueryPart</code> implementations may choose to override this
+     * behaviour for improved performance, as {@link #toString()} is an
+     * expensive operation, if called many times.
+     *
+     * @return The <code>QueryPart</code> hash code
+     */
+    @Override
+    int hashCode();
 }

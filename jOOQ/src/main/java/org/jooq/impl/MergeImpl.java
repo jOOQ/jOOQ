@@ -44,11 +44,13 @@ import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Factory.vals;
 import static org.jooq.tools.Convert.convert;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -215,9 +217,9 @@ implements
 
     // Objects for the H2-specific syntax
     private boolean                     h2Style;
-    private Fields                      h2Fields;
-    private FieldList                   h2Keys;
-    private FieldList                   h2Values;
+    private QueryPartList<Field<?>>     h2Fields;
+    private QueryPartList<Field<?>>     h2Keys;
+    private QueryPartList<Field<?>>     h2Values;
     private Select<?>                   h2Select;
 
     MergeImpl(Configuration configuration, Table<R> table) {
@@ -232,7 +234,7 @@ implements
 
         if (fields != null) {
             h2Style = true;
-            h2Fields = new Fields(fields);
+            h2Fields = new QueryPartList<Field<?>>(fields);
         }
     }
 
@@ -240,25 +242,25 @@ implements
     // H2-specific MERGE API
     // -------------------------------------------------------------------------
 
-    Fields getH2Fields() {
+    QueryPartList<Field<?>> getH2Fields() {
         if (h2Fields == null) {
-            h2Fields = new Fields(table.fields());
+            h2Fields = new QueryPartList<Field<?>>(table.fields());
         }
 
         return h2Fields;
     }
 
-    FieldList getH2Keys() {
+    QueryPartList<Field<?>> getH2Keys() {
         if (h2Keys == null) {
-            h2Keys = new FieldList();
+            h2Keys = new QueryPartList<Field<?>>();
         }
 
         return h2Keys;
     }
 
-    FieldList getH2Values() {
+    QueryPartList<Field<?>> getH2Values() {
         if (h2Values == null) {
-            h2Values = new FieldList();
+            h2Values = new QueryPartList<Field<?>>();
         }
 
         return h2Values;
@@ -518,7 +520,7 @@ implements
         // syntax, in case of which, the USING() was not added
         if (using == null) {
             h2Style = true;
-            getH2Values().addAll(vals(convert(values, getH2Fields().fields())));
+            getH2Values().addAll(vals(convert(values, getH2Fields().toArray(new Field[0]))));
         }
         else {
             Field<?>[] fields = notMatchedInsert.keySet().toArray(new Field[0]);
@@ -893,7 +895,7 @@ implements
                 // ------------------------------
                 Table<?> src;
                 if (h2Select != null) {
-                    FieldList v = new FieldList();
+                    List<Field<?>> v = new ArrayList<Field<?>>();
                     Row row = h2Select.fieldsRow();
 
                     for (int i = 0; i < row.size(); i++) {
@@ -905,7 +907,7 @@ implements
                     src = create(config).select(v).from(h2Select).asTable("src");
                 }
                 else {
-                    FieldList v = new FieldList();
+                    List<Field<?>> v = new ArrayList<Field<?>>();
 
                     for (int i = 0; i < getH2Values().size(); i++) {
                         v.add(getH2Values().get(i).as("s" + (i + 1)));
@@ -967,11 +969,11 @@ implements
                 for (int i = 0; i < src.fieldsRow().size(); i++) {
 
                     // Oracle does not allow to update fields from the ON clause
-                    if (!onFields.contains(getH2Fields().field(i))) {
-                        update.put(getH2Fields().field(i), src.field(i));
+                    if (!onFields.contains(getH2Fields().get(i))) {
+                        update.put(getH2Fields().get(i), src.field(i));
                     }
 
-                    insert.put(getH2Fields().field(i), src.field(i));
+                    insert.put(getH2Fields().get(i), src.field(i));
                 }
 
                 return create(config).mergeInto(table)
@@ -1137,7 +1139,7 @@ implements
         context.declareTables(true)
                .bind(table)
                .declareTables(false)
-               .bind(getH2Fields())
+               .bind((QueryPart) getH2Fields())
                .bind((QueryPart) getH2Keys())
                .bind(h2Select)
                .bind((QueryPart) getH2Values());

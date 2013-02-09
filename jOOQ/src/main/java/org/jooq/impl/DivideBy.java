@@ -41,8 +41,10 @@ import static org.jooq.impl.Factory.notExists;
 import static org.jooq.impl.Factory.selectDistinct;
 import static org.jooq.impl.Factory.selectOne;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.DivideByOnConditionStep;
@@ -62,17 +64,17 @@ implements
     DivideByOnStep,
     DivideByOnConditionStep {
 
-    private final Table<?>              dividend;
-    private final Table<?>              divisor;
-    private final ConditionProviderImpl condition;
-    private final FieldList             returning;
+    private final Table<?>                dividend;
+    private final Table<?>                divisor;
+    private final ConditionProviderImpl   condition;
+    private final QueryPartList<Field<?>> returning;
 
     DivideBy(Table<?> dividend, Table<?> divisor) {
         this.dividend = dividend;
         this.divisor = divisor;
 
         this.condition = new ConditionProviderImpl();
-        this.returning = new FieldList();
+        this.returning = new QueryPartList<Field<?>>();
     }
 
     // ------------------------------------------------------------------------
@@ -90,7 +92,7 @@ implements
      */
     private final Table<Record> table() {
         ConditionProviderImpl selfJoin = new ConditionProviderImpl();
-        FieldList select = new FieldList();
+        List<Field<?>> select = new ArrayList<Field<?>>();
         Table<?> outer = dividend.as("dividend");
 
         for (Field<?> field : returning) {

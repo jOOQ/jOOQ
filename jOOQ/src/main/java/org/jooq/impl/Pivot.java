@@ -38,7 +38,9 @@ package org.jooq.impl;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.vals;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
@@ -141,9 +143,9 @@ implements
         }
 
         private Table<Record> select(Context<?> context) {
-            FieldList groupingFields = new FieldList();
-            FieldList aliasedGroupingFields = new FieldList();
-            FieldList aggregatedFields = new FieldList();
+            List<Field<?>> groupingFields = new ArrayList<Field<?>>();
+            List<Field<?>> aliasedGroupingFields = new ArrayList<Field<?>>();
+            List<Field<?>> aggregatedFields = new ArrayList<Field<?>>();
 
             Table<?> pivot = table.as("pivot_outer");
 
@@ -173,7 +175,7 @@ implements
             }
 
             // The product {aggregateFunctions} x {in}
-            FieldList aggregationSelects = new FieldList();
+            List<Field<?>> aggregationSelects = new ArrayList<Field<?>>();
             for (Field<?> inField : in) {
                 for (Field<?> aggregateFunction : aggregateFunctions) {
                     Condition join = trueCondition();

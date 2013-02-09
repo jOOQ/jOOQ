@@ -76,21 +76,21 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  */
 class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
-    private static final long        serialVersionUID = 4466005417945353842L;
+    private static final long             serialVersionUID = 4466005417945353842L;
 
-    private final FieldMapForUpdate  updateMap;
-    private final FieldMapsForInsert insertMaps;
-    private final FieldList          returning;
-    private Result<R>                returned;
-    private boolean                  onDuplicateKeyUpdate;
-    private boolean                  onDuplicateKeyIgnore;
+    private final FieldMapForUpdate       updateMap;
+    private final FieldMapsForInsert      insertMaps;
+    private final QueryPartList<Field<?>> returning;
+    private Result<R>                     returned;
+    private boolean                       onDuplicateKeyUpdate;
+    private boolean                       onDuplicateKeyIgnore;
 
     InsertQueryImpl(Configuration configuration, Table<R> into) {
         super(configuration, into);
 
         updateMap = new FieldMapForUpdate();
         insertMaps = new FieldMapsForInsert();
-        returning = new FieldList();
+        returning = new QueryPartList<Field<?>>();
     }
 
     @Override

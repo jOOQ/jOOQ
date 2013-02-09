@@ -57,6 +57,7 @@ import java.sql.Date;
 import java.sql.ResultSetMetaData;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -4615,7 +4616,7 @@ public class Factory {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
         for (int i = 0; i < fieldSets.length; i++) {
-            array[i] = new WrappedList(new FieldList(fieldSets[i]));
+            array[i] = new WrappedList(new QueryPartList<Field<?>>(fieldSets[i]));
         }
 
         return new Function<Object>("grouping sets", SQLDataType.OTHER, array);
@@ -6860,7 +6861,7 @@ public class Factory {
      */
     @Support
     public static List<Field<?>> vals(Object... values) {
-        FieldList result = new FieldList();
+        List<Field<?>> result = new ArrayList<Field<?>>();
 
         if (values != null) {
             for (Object value : values) {
@@ -6883,7 +6884,7 @@ public class Factory {
      */
     @Support
     public static List<Field<?>> vals(Object[] values, Field<?>[] fields) {
-        FieldList result = new FieldList();
+        List<Field<?>> result = new ArrayList<Field<?>>();
 
         if (values != null && fields != null) {
             for (int i = 0; i < values.length && i < fields.length; i++) {
@@ -6899,7 +6900,7 @@ public class Factory {
      */
     @Support
     public static List<Field<?>> vals(Object[] values, Class<?>[] types) {
-        FieldList result = new FieldList();
+        List<Field<?>> result = new ArrayList<Field<?>>();
 
         if (values != null && types != null) {
             for (int i = 0; i < values.length && i < types.length; i++) {
@@ -6915,7 +6916,7 @@ public class Factory {
      */
     @Support
     public static List<Field<?>> vals(Object[] values, DataType<?>[] types) {
-        FieldList result = new FieldList();
+        List<Field<?>> result = new ArrayList<Field<?>>();
 
         if (values != null && types != null) {
             for (int i = 0; i < values.length && i < types.length; i++) {

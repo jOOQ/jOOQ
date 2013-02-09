@@ -38,7 +38,6 @@ package org.jooq.impl;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
-import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Row;
@@ -60,11 +59,11 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
 
     private final Schema          schema;
     private final String          name;
-    private final FieldList       fields;
+    private final Fields          fields;
     private transient DataType<R> type;
 
     public UDTImpl(String name, Schema schema) {
-        this.fields = new FieldList();
+        this.fields = new Fields();
         this.name = name;
         this.schema = schema;
     }
@@ -79,7 +78,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
         return name;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "rawtypes" })
     @Override
     public final Row fieldsRow() {
         return new RowImpl(fields);
@@ -105,7 +104,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
         return fieldsRow().fields();
     }
 
-    final FieldList fields0() {
+    final Fields fields0() {
         return fields;
     }
 
@@ -134,7 +133,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
 
     @Override
     public final void bind(BindContext context) {
-        context.bind((QueryPart) fields);
+        context.bind(fields);
     }
 
     /**

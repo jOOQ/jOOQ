@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static java.util.Arrays.asList;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.function;
 
@@ -61,7 +60,7 @@ class Rollup extends AbstractFunction<Object> {
         switch (configuration.getDialect()) {
             case CUBRID:
             case MYSQL:
-                return field("{0} {with rollup}", new FieldList(asList(getArguments())));
+                return field("{0} {with rollup}", new QueryPartList<Field<?>>(getArguments()));
 
             default:
                 return function("rollup", Object.class, getArguments());

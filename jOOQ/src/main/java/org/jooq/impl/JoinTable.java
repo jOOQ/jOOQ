@@ -86,26 +86,26 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     /**
      * Generated UID
      */
-    private static final long           serialVersionUID = 8377996833996498178L;
+    private static final long             serialVersionUID = 8377996833996498178L;
 
-    private final Table<?>              lhs;
-    private final Table<?>              rhs;
-    private final FieldList             rhsPartitionBy;
+    private final Table<?>                lhs;
+    private final Table<?>                rhs;
+    private final QueryPartList<Field<?>> rhsPartitionBy;
 
-    private final JoinType              type;
-    private final ConditionProviderImpl condition;
-    private final FieldList             using;
+    private final JoinType                type;
+    private final ConditionProviderImpl   condition;
+    private final QueryPartList<Field<?>> using;
 
     JoinTable(TableLike<?> lhs, TableLike<?> rhs, JoinType type) {
         super("join");
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();
-        this.rhsPartitionBy = new FieldList();
+        this.rhsPartitionBy = new QueryPartList<Field<?>>();
         this.type = type;
 
         this.condition = new ConditionProviderImpl();
-        this.using = new FieldList();
+        this.using = new QueryPartList<Field<?>>();
     }
 
     // ------------------------------------------------------------------------

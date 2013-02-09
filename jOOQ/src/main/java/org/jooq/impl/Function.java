@@ -97,7 +97,7 @@ class Function<T> extends AbstractField<T> implements
     private final boolean                  distinct;
     private final SortFieldList            withinGroupOrderBy;
     private final SortFieldList            keepDenseRankOrderBy;
-    private final FieldList                partitionBy;
+    private final QueryPartList<Field<?>>  partitionBy;
     private final SortFieldList            orderBy;
 
     private boolean                        first;
@@ -107,7 +107,6 @@ class Function<T> extends AbstractField<T> implements
     private boolean                        respectNulls;
     private Integer                        rowsStart;
     private Integer                        rowsEnd;
-
 
     // -------------------------------------------------------------------------
     // XXX Constructors
@@ -129,7 +128,7 @@ class Function<T> extends AbstractField<T> implements
         this.arguments = new QueryPartList<QueryPart>(arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-        this.partitionBy = new FieldList();
+        this.partitionBy = new QueryPartList<Field<?>>();
         this.orderBy = new SortFieldList();
     }
 
@@ -141,7 +140,7 @@ class Function<T> extends AbstractField<T> implements
         this.arguments = new QueryPartList<QueryPart>(arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-        this.partitionBy = new FieldList();
+        this.partitionBy = new QueryPartList<Field<?>>();
         this.orderBy = new SortFieldList();
     }
 

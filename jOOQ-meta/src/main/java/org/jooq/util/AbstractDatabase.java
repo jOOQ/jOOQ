@@ -149,7 +149,9 @@ public abstract class AbstractDatabase implements Database {
             }
 
             if (schemata.isEmpty()) {
-                log.warn("No schemata were loaded", "Please check your connection settings and the case-sensitivity in your configured <inputSchema/> elements : " + inputSchemata);
+                log.warn(
+                    "No schemata were loaded",
+                    "Please check your connection settings, and whether your database (and your database version!) is really supported by jOOQ. Also, check the case-sensitivity in your configured <inputSchema/> elements : " + inputSchemata);
             }
         }
 

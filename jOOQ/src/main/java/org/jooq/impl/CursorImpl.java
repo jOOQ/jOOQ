@@ -205,7 +205,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final <E> E fetchOneInto(Class<? extends E> clazz) {
-        return fetchOne().into(clazz);
+        R record = fetchOne();
+        return record == null ? null : record.into(clazz);
     }
 
     @Override

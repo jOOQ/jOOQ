@@ -914,6 +914,21 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final ResultQuery<R> intern(Field<?>... fields) {
+        return getDelegate().intern(fields);
+    }
+
+    @Override
+    public final ResultQuery<R> intern(int... fieldIndexes) {
+        return getDelegate().intern(fieldIndexes);
+    }
+
+    @Override
+    public final ResultQuery<R> intern(String... fieldNames) {
+        return getDelegate().intern(fieldNames);
+    }
+
+    @Override
     public final Class<? extends R> getRecordType() {
         return getDelegate().getRecordType();
     }

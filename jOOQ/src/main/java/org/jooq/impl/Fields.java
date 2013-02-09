@@ -134,6 +134,26 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return indexOf(field(fieldName));
     }
 
+    final int[] indexesOf(Field<?>... f) {
+        int[] result = new int[f.length];
+
+        for (int i = 0; i < f.length; i++) {
+            result[i] = indexOf(f[i]);
+        }
+
+        return result;
+    }
+
+    final int[] indexesOf(String... fieldNames) {
+        int[] result = new int[fieldNames.length];
+
+        for (int i = 0; i < fieldNames.length; i++) {
+            result[i] = indexOf(fieldNames[i]);
+        }
+
+        return result;
+    }
+
 
     @Override
     public final void toSQL(RenderContext context) {

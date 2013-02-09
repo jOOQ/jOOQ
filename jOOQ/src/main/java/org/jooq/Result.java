@@ -1022,4 +1022,49 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @return The result itself
      */
     Result<R> sortDesc(java.util.Comparator<? super R> comparator);
+
+    /**
+     * Specify a set of fields whose values should be interned.
+     * <p>
+     * See {@link Result#intern(int...)} for more details.
+     *
+     * @param fields The fields whose values should be interned
+     * @return The same result
+     * @see Result#intern(Field...)
+     * @see String#intern()
+     */
+    Result<R> intern(Field<?>... fields);
+
+    /**
+     * Specify a set of field indexes whose values should be interned.
+     * <p>
+     * This traverses all records and interns <code>String</code> values for a
+     * given set of field indexes. Use this method to save memory when a large
+     * result set contains many identical string literals.
+     * <p>
+     * Please refer to {@link String#intern()} and to publicly available
+     * literature to learn more about potential side-effects of string
+     * interning.
+     * <p>
+     * Future versions of jOOQ may also "intern" other data types, such as
+     * {@link Integer}, {@link Long}, within a <code>Result</code> object.
+     *
+     * @param fields The field indexes whose values should be interned
+     * @return The same result
+     * @see Result#intern(Field...)
+     * @see String#intern()
+     */
+    Result<R> intern(int... fieldIndexes);
+
+    /**
+     * Specify a set of field names whose values should be interned.
+     * <p>
+     * See {@link Result#intern(int...)} for more details.
+     *
+     * @param fields The field names whose values should be interned
+     * @return The same result
+     * @see Result#intern(Field...)
+     * @see String#intern()
+     */
+    Result<R> intern(String... fieldNames);
 }

@@ -998,4 +998,46 @@ public interface ResultQuery<R extends Record> extends Query {
      */
     ResultQuery<R> maxRows(int rows);
 
+    /**
+     * Specify a set of fields whose values should be interned.
+     * <p>
+     * Unlike {@link Result}'s <code>intern()</code> methods, this already
+     * interns values right after fetching them from a JDBC result set. See
+     * {@link Result#intern(int...)} for more details.
+     *
+     * @param fields The fields whose values should be interned
+     * @return The same result query
+     * @see Result#intern(Field...)
+     * @see String#intern()
+     */
+    ResultQuery<R> intern(Field<?>... fields);
+
+    /**
+     * Specify a set of field indexes whose values should be interned.
+     * <p>
+     * Unlike {@link Result}'s <code>intern()</code> methods, this already
+     * interns values right after fetching them from a JDBC result set. See
+     * {@link Result#intern(int...)} for more details.
+     *
+     * @param fields The field indexes whose values should be interned
+     * @return The same result query
+     * @see Result#intern(int...)
+     * @see String#intern()
+     */
+    ResultQuery<R> intern(int... fieldIndexes);
+
+    /**
+     * Specify a set of field names whose values should be interned.
+     * <p>
+     * Unlike {@link Result}'s <code>intern()</code> methods, this already
+     * interns values right after fetching them from a JDBC result set. See
+     * {@link Result#intern(int...)} for more details.
+     *
+     * @param fields The field names whose values should be interned
+     * @return The same result query
+     * @see Result#intern(String...)
+     * @see String#intern()
+     */
+    ResultQuery<R> intern(String... fieldNames);
+
 }

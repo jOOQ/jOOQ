@@ -43,6 +43,7 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.field;
@@ -67,6 +68,8 @@ import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+
+import junit.framework.Assert;
 
 import org.jooq.Cursor;
 import org.jooq.Field;
@@ -2031,5 +2034,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (DataAccessException expected) {}
+    }
+
+    @Test
+    public void testInterning() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        assertEquals(1,
+        create().update(TBook())
+                .set(TBook_TITLE(), "1984")
+                .where(TBook_ID().eq(2))
+                .execute());
+
+        Result<B> r1 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
+        Result<B> r2 = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch().intern(TBook_AUTHOR_ID(), TBook_TITLE());
+        Result<B> r3 = create().selectFrom(TBook()).orderBy(TBook_ID()).intern(TBook_AUTHOR_ID(), TBook_TITLE()).fetch();
+
+        assertEquals(r1, r2);
+        assertEquals(r1, r3);
+
+        assertEquals(r1.get(0).getValue(TBook_TITLE()), r1.get(1).getValue(TBook_TITLE()));
+        assertEquals(r2.get(0).getValue(TBook_TITLE()), r2.get(1).getValue(TBook_TITLE()));
+        assertEquals(r3.get(0).getValue(TBook_TITLE()), r3.get(1).getValue(TBook_TITLE()));
+
+        // Some JDBC drivers already perform string interning...
+        if (getDialect() == ORACLE) {
+            Assert.assertNotSame(r1.get(0).getValue(TBook_TITLE()), r1.get(1).getValue(TBook_TITLE()));
+        }
+
+        Assert.assertSame(r2.get(0).getValue(TBook_TITLE()), r2.get(1).getValue(TBook_TITLE()));
+        Assert.assertSame(r3.get(0).getValue(TBook_TITLE()), r3.get(1).getValue(TBook_TITLE()));
+
     }
 }

@@ -67,6 +67,16 @@ class Value<T> implements Serializable {
         return original;
     }
 
+    @SuppressWarnings("unchecked")
+    final void intern() {
+    	
+    	// [#2177] Future versions of jOOQ may optimise this type check by
+    	// performing type-decisions outside of Value
+        if (value instanceof String) {
+            value = (T) ((String) value).intern();
+        }
+    }
+
     final void setValue(T val) {
 
         // The flag is always set to true:

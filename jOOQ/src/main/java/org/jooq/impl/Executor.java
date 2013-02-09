@@ -4754,6 +4754,53 @@ public class Executor implements Configuration {
     }
 
     /**
+     * Execute a set of <code>INSERT</code> queries in batch mode (with bind
+     * values).
+     *
+     * @see #batchStore(UpdatableRecord...)
+     * @see Statement#executeBatch()
+     */
+    @Support
+    public final Batch batchInsert(UpdatableRecord<?>... records) {
+        return new BatchCRUD(this, Action.INSERT, records);
+    }
+
+    /**
+     * Execute a set of <code>INSERT</code> queries in batch mode (with bind
+     * values).
+     *
+     * @see #batchStore(UpdatableRecord...)
+     * @see Statement#executeBatch()
+     */
+    @Support
+    public final Batch batchInsert(Collection<? extends UpdatableRecord<?>> records) {
+        return batchInsert(records.toArray(new UpdatableRecord[records.size()]));
+    }
+
+    /**
+     * Execute a set of <code>UPDATE</code> queries in batch mode (with bind
+     * values).
+     *
+     * @see #batchStore(UpdatableRecord...)
+     * @see Statement#executeBatch()
+     */
+    @Support
+    public final Batch batchUpdate(UpdatableRecord<?>... records) {
+        return new BatchCRUD(this, Action.UPDATE, records);
+    }
+
+    /**
+     * Execute a set of <code>UPDATE</code> queries in batch mode (with bind
+     * values).
+     *
+     * @see #batchStore(UpdatableRecord...)
+     * @see Statement#executeBatch()
+     */
+    @Support
+    public final Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records) {
+        return batchUpdate(records.toArray(new UpdatableRecord[records.size()]));
+    }
+    /**
      * Execute a set of <code>DELETE</code> queries in batch mode (with bind
      * values).
      * <p>

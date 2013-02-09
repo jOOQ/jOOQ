@@ -104,12 +104,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         // Execute a batch INSERT
         if (objects.size() > 1) {
-            create.batchStore(records(objects, false)).execute();
+            create.batchInsert(records(objects, false)).execute();
         }
 
         // Execute a regular INSERT
         else if (objects.size() == 1) {
-            records(objects, false).get(0).store();
+            records(objects, false).get(0).insert();
         }
     }
 
@@ -128,12 +128,12 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         // Execute a batch UPDATE
         if (objects.size() > 1) {
-            create.batchStore(records(objects, true)).execute();
+            create.batchUpdate(records(objects, true)).execute();
         }
 
         // Execute a regular UPDATE
         else if (objects.size() == 1) {
-            records(objects, true).get(0).store();
+            records(objects, true).get(0).update();
         }
     }
 

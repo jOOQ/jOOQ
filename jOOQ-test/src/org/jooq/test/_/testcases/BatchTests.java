@@ -37,6 +37,7 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Connection;
@@ -54,6 +55,7 @@ import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
@@ -200,6 +202,62 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         int[] result2 = create().batchStore(b1, a1, a2, a3).execute();
         assertEquals(2, result2.length);
         testBatchAuthors("XX", "ABC", "ZZ");
+        assertEquals("XX 1", create()
+            .select(TBook_TITLE())
+            .from(TBook())
+            .where(TBook_ID().equal(80))
+            .fetchOne(0));
+    }
+
+    @Test
+    public void testBatchInsertUpdate() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // First, INSERT two authors and one book
+        // --------------------------------------
+        A a1 = create().newRecord(TAuthor());
+        a1.setValue(TAuthor_ID(), 8);
+        a1.setValue(TAuthor_LAST_NAME(), "XX");
+
+        A a2 = create().newRecord(TAuthor());
+        a2.setValue(TAuthor_ID(), 9);
+        a2.setValue(TAuthor_LAST_NAME(), "YY");
+
+        B b1 = create().newRecord(TBook());
+        b1.setValue(TBook_ID(), 80);
+        b1.setValue(TBook_AUTHOR_ID(), 8);
+        b1.setValue(TBook_TITLE(), "XX 1");
+        b1.setValue(TBook_PUBLISHED_IN(), 2000);
+        b1.setValue(TBook_LANGUAGE_ID(), 1);
+
+        Batch batch1 = create().batchInsert(a1, b1, a2);
+        assertEquals(3, batch1.size());
+
+        int[] result1 = batch1.execute();
+        assertEquals(3, result1.length);
+        assertCountAuthors(4);
+        assertCountBooks(5);
+
+        testBatchAuthors("XX", "YY");
+        assertEquals("XX 1", create()
+            .select(TBook_TITLE())
+            .from(TBook())
+            .where(TBook_ID().equal(80))
+            .fetchOne(0));
+
+        // Then, update one author
+        // -----------------------
+        a2.setValue(TAuthor_LAST_NAME(), "ABC");
+
+        try {
+            create().batchInsert(a2).execute();
+            fail();
+        }
+        catch (DataAccessException expected) {}
+
+        int[] result3 = create().batchUpdate(b1, a1, a2).execute();
+        assertEquals(1, result3.length);
+        testBatchAuthors("XX", "ABC");
         assertEquals("XX 1", create()
             .select(TBook_TITLE())
             .from(TBook())

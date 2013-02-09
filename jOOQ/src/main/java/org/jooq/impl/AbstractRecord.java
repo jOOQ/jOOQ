@@ -286,7 +286,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             val.setValue(value, true);
 
             if (val.isChanged()) {
-                setAllChanged(true);
+                changed(true);
             }
         }
     }
@@ -317,15 +317,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     UniqueKey<?> getMainKey() {
         return null;
-    }
-
-    /**
-     * Reset all value flags' changed status
-     */
-    final void setAllChanged(boolean changed) {
-        for (Value<?> value : getValues()) {
-            value.setChanged(changed);
-        }
     }
 
     /*
@@ -504,7 +495,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                     }
 
                     if (isKeySet) {
-                        ((AbstractRecord) result).setAllChanged(false);
+                        result.changed(false);
                     }
                 }
             }

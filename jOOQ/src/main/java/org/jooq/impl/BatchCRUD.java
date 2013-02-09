@@ -208,11 +208,19 @@ class BatchCRUD implements Batch {
     }
 
     private void executeAction(int i) {
-        if (action == Action.STORE) {
-            records[i].store();
-        }
-        else if (action == Action.DELETE) {
-            records[i].delete();
+        switch (action) {
+            case STORE:
+                records[i].store();
+                break;
+            case INSERT:
+                records[i].insert();
+                break;
+            case UPDATE:
+                records[i].update();
+                break;
+            case DELETE:
+                records[i].delete();
+                break;
         }
     }
 
@@ -220,11 +228,8 @@ class BatchCRUD implements Batch {
         // 1. Deleted records should be marked as changed, such that subsequent
         //    calls to store() will insert them again
         // 2. Stored records should be marked as unchanged
-
         for (UpdatableRecord<?> record : records) {
-            if (record instanceof AbstractRecord) {
-                ((AbstractRecord) record).setAllChanged(action == Action.DELETE);
-            }
+            record.changed(action == Action.DELETE);
         }
     }
 
@@ -237,6 +242,16 @@ class BatchCRUD implements Batch {
          * Corresponds to {@link UpdatableRecord#store()}
          */
         STORE,
+
+        /**
+         * Corresponds to {@link UpdatableRecord#insert()}
+         */
+        INSERT,
+
+        /**
+         * Corresponds to {@link UpdatableRecord#update()}
+         */
+        UPDATE,
 
         /**
          * Corresponds to {@link UpdatableRecord#delete()}

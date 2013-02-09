@@ -194,7 +194,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
                 }
             }
 
-            setAllChanged(false);
+            changed(false);
         }
 
         return result;
@@ -231,7 +231,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         checkIfChanged(result, version, timestamp);
 
         if (result > 0) {
-            setAllChanged(false);
+            changed(false);
         }
 
         return result;
@@ -339,7 +339,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // [#673] If store() is called after delete(), a new INSERT should
         // be executed and the record should be recreated
         finally {
-            setAllChanged(true);
+            changed(true);
         }
     }
 

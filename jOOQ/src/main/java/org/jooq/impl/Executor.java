@@ -1470,7 +1470,7 @@ public class Executor implements Configuration {
         ExecuteListener listener = new ExecuteListeners(ctx);
 
         ctx.resultSet(rs);
-        return new CursorImpl<Record>(ctx, listener, fields, false);
+        return new CursorImpl<Record>(ctx, listener, fields, null, false);
     }
 
     /**

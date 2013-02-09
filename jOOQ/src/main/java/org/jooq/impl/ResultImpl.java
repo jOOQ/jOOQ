@@ -89,15 +89,19 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
      */
     private static final long serialVersionUID = 6416154375799578362L;
 
-    private final Field<?>[]  fields;
+    private final Fields      fields;
     private final List<R>     records;
     private Configuration     configuration;
 
     ResultImpl(Configuration configuration, Collection<? extends Field<?>> fields) {
-        this(configuration, fields.toArray(new Field[fields.size()]));
+        this(configuration, new Fields(fields));
     }
 
     ResultImpl(Configuration configuration, Field<?>... fields) {
+        this(configuration, new Fields(fields));
+    }
+
+    ResultImpl(Configuration configuration, Fields fields) {
         this.fields = fields;
         this.records = new ArrayList<R>();
         this.configuration = configuration;
@@ -127,7 +131,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     // XXX: Result API
     // -------------------------------------------------------------------------
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "rawtypes" })
     @Override
     public final Row fieldsRow() {
         return new RowImpl(fields);
@@ -135,22 +139,22 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <T> Field<T> field(Field<T> field) {
-        return fieldsRow().field(field);
+        return fields.field(field);
     }
 
     @Override
     public final Field<?> field(String name) {
-        return fieldsRow().field(name);
+        return fields.field(name);
     }
 
     @Override
     public final Field<?> field(int index) {
-        return index >= 0 && index < fields.length ? fields[index] : null;
+        return fields.field(index);
     }
 
     @Override
     public final Field<?>[] fields() {
-        return fields.clone();
+        return fields.fields().clone();
     }
 
     @Override
@@ -266,11 +270,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         final int MAX_RECORDS = min(50, maxRecords);
 
         // Get max decimal places for numeric type columns
-        final int[] decimalPlaces = new int[fields.length];
-        final int[] widths = new int[fields.length];
+        final int[] decimalPlaces = new int[fields.fields.length];
+        final int[] widths = new int[fields.fields.length];
 
-        for (int index = 0; index < fields.length; index++) {
-            if (Number.class.isAssignableFrom(fields[index].getType())) {
+        for (int index = 0; index < fields.fields.length; index++) {
+            if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
                 List<Integer> decimalPlacesList = new ArrayList<Integer>();
 
                 // Initialize
@@ -290,10 +294,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         // Get max column widths
         int colMaxWidth;
-        for (int index = 0; index < fields.length; index++) {
+        for (int index = 0; index < fields.fields.length; index++) {
 
             // Is number column?
-            boolean isNumCol = Number.class.isAssignableFrom(fields[index].getType());
+            boolean isNumCol = Number.class.isAssignableFrom(fields.fields[index].getType());
 
             colMaxWidth = isNumCol ? NUM_COL_MAX_WIDTH : COL_MAX_WIDTH;
 
@@ -301,7 +305,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             List<Integer> widthList = new ArrayList<Integer>();
 
             // Add column name width first
-            widthList.add(min(colMaxWidth, max(COL_MIN_WIDTH, fields[index].getName().length())));
+            widthList.add(min(colMaxWidth, max(COL_MIN_WIDTH, fields.fields[index].getName().length())));
 
             // Add column values width
             String value;
@@ -325,21 +329,21 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         // Write top line
         sb.append("+");
-        for (int index = 0; index < fields.length; index++) {
+        for (int index = 0; index < fields.fields.length; index++) {
             sb.append(rightPad("", widths[index], "-"));
             sb.append("+");
         }
 
         // Write headers
         sb.append("\n|");
-        for (int index = 0; index < fields.length; index++) {
+        for (int index = 0; index < fields.fields.length; index++) {
             String padded;
 
-            if (Number.class.isAssignableFrom(fields[index].getType())) {
-                padded = leftPad(fields[index].getName(), widths[index]);
+            if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
+                padded = leftPad(fields.fields[index].getName(), widths[index]);
             }
             else {
-                padded = rightPad(fields[index].getName(), widths[index]);
+                padded = rightPad(fields.fields[index].getName(), widths[index]);
             }
 
             sb.append(abbreviate(padded, widths[index]));
@@ -348,7 +352,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
         // Write separator
         sb.append("\n+");
-        for (int index = 0; index < fields.length; index++) {
+        for (int index = 0; index < fields.fields.length; index++) {
             sb.append(rightPad("", widths[index], "-"));
             sb.append("+");
         }
@@ -357,11 +361,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (int i = 0; i < min(maxRecords, size()); i++) {
             sb.append("\n|");
 
-            for (int index = 0; index < fields.length; index++) {
+            for (int index = 0; index < fields.fields.length; index++) {
                 String value = format0(getValue(i, index), get(i).changed(index)).replace("\n", "{lf}").replace("\r", "{cr}");
 
                 String padded;
-                if (Number.class.isAssignableFrom(fields[index].getType())) {
+                if (Number.class.isAssignableFrom(fields.fields[index].getType())) {
                     // Align number value before left pad
                     value = alignNumberValue(decimalPlaces[index], value);
 
@@ -382,7 +386,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         if (size() > 0) {
             sb.append("\n+");
 
-            for (int index = 0; index < fields.length; index++) {
+            for (int index = 0; index < fields.fields.length; index++) {
                 sb.append(rightPad("", widths[index], "-"));
                 sb.append("+");
             }
@@ -447,7 +451,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (Record record : this) {
             sb.append("<tr>");
 
-            for (int index = 0; index < fields.length; index++) {
+            for (int index = 0; index < fields.fields.length; index++) {
                 sb.append("<td>");
                 sb.append(format0(record.getValue(index), false));
                 sb.append("</td>");
@@ -489,7 +493,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (Record record : this) {
             String sep2 = "";
 
-            for (int index = 0; index < fields.length; index++) {
+            for (int index = 0; index < fields.fields.length; index++) {
                 sb.append(sep2);
                 sb.append(formatCSV0(record.getValue(index), nullString));
 
@@ -563,7 +567,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (Record record : this) {
             List<Object> list = new ArrayList<Object>();
 
-            for (int index = 0; index < fields.length; index++) {
+            for (int index = 0; index < fields.fields.length; index++) {
                 list.add(record.getValue(index));
             }
 
@@ -600,11 +604,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (Record record : this) {
             sb.append("<record>");
 
-            for (int index = 0; index < fields.length; index++) {
+            for (int index = 0; index < fields.fields.length; index++) {
                 Object value = record.getValue(index);
 
                 sb.append("<value field=\"");
-                sb.append(escapeXML(fields[index].getName()));
+                sb.append(escapeXML(fields.fields[index].getName()));
                 sb.append("\"");
 
                 if (value == null) {
@@ -654,8 +658,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 Element eRecord = document.createElement("record");
                 eRecords.appendChild(eRecord);
 
-                for (int index = 0; index < fields.length; index++) {
-                    Field<?> field = fields[index];
+                for (int index = 0; index < fields.fields.length; index++) {
+                    Field<?> field = fields.fields[index];
                     Object value = record.getValue(index);
 
                     Element eValue = document.createElement("value");
@@ -751,7 +755,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
 
         if (keys == null) {
             keys = new Field[0];
@@ -776,7 +780,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
         int index = fieldsRow().indexOf(key);
         Map<K, E> map = new LinkedHashMap<K, E>();
 
@@ -865,7 +869,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
         int index = fieldsRow().indexOf(key);
         Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
 
@@ -886,7 +890,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
 
         if (keys == null) {
             keys = new Field[0];
@@ -928,7 +932,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final Object[] intoArray(int fieldIndex) {
-        Class<?> type = fields[fieldIndex].getType();
+        Class<?> type = fields.fields[fieldIndex].getType();
         List<?> list = getValues(fieldIndex);
         return list.toArray((Object[]) Array.newInstance(type, list.size()));
     }
@@ -985,7 +989,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final <E> List<E> into(Class<? extends E> type) {
         List<E> list = new ArrayList<E>(size());
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
 
         for (R record : this) {
             list.add(mapper.map(record));
@@ -1104,6 +1108,29 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final Result<R> sortDesc(Comparator<? super R> comparator) {
         return sortAsc(Collections.reverseOrder(comparator));
+    }
+
+    @Override
+    public final Result<R> intern(Field<?>... f) {
+        return intern(fields.indexesOf(f));
+    }
+
+    @Override
+    public final Result<R> intern(int... fieldIndexes) {
+        for (int fieldIndex : fieldIndexes) {
+            if (fields.fields[fieldIndex].getType() == String.class) {
+                for (Record record : this) {
+                    ((AbstractRecord) record).getValue0(fieldIndex).intern();
+                }
+            }
+        }
+
+        return this;
+    }
+
+    @Override
+    public final Result<R> intern(String... fieldNames) {
+        return intern(fields.indexesOf(fieldNames));
     }
 
     /**

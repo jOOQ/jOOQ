@@ -80,6 +80,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private final ExecuteContext      ctx;
     private final ExecuteListener     listener;
     private final Field<?>[]          fields;
+    private final boolean[]           intern;
     private final Class<? extends R>  type;
     private boolean                   isClosed;
 
@@ -87,16 +88,23 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient Iterator<R>     iterator;
 
     @SuppressWarnings("unchecked")
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, boolean keepStatement) {
-        this(ctx, listener, fields, (Class<? extends R>) RecordImpl.class, keepStatement);
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement) {
+        this(ctx, listener, fields, internIndexes, (Class<? extends R>) RecordImpl.class, keepStatement);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, Class<? extends R> type, boolean keepStatement) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, Class<? extends R> type, boolean keepStatement) {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.fields = fields;
         this.type = type;
         this.rs = new CursorResultSet(keepStatement);
+        this.intern = new boolean[fields.length];
+
+        if (internIndexes != null) {
+            for (int i : internIndexes) {
+                intern[i] = true;
+            }
+        }
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -1270,6 +1278,10 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
                     for (int i = 0; i < fields.length; i++) {
                         setValue((AbstractRecord) record, fields[i], i);
+
+                        if (intern[i]) {
+                            ((AbstractRecord) record).getValue0(i).intern();
+                        }
                     }
 
                     ctx.record(record);

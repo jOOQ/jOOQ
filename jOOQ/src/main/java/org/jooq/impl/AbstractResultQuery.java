@@ -94,6 +94,11 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private Result<R>               result;
     private List<Result<Record>>    results;
 
+    // Some temp variables for String interning
+    private int[]                   internIndexes;
+    private Field<?>[]              internFields;
+    private String[]                internNames;
+
     AbstractResultQuery(Configuration configuration) {
         super(configuration);
     }
@@ -131,6 +136,38 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     public final ResultQuery<R> maxRows(int rows) {
         this.maxRows = rows;
         return this;
+    }
+
+    @Override
+    public final ResultQuery<R> intern(Field<?>... fields) {
+        this.internFields = fields;
+        return this;
+    }
+
+    @Override
+    public final ResultQuery<R> intern(int... fieldIndexes) {
+        this.internIndexes = fieldIndexes;
+        return this;
+    }
+
+    @Override
+    public final ResultQuery<R> intern(String... fieldNames) {
+        this.internNames = fieldNames;
+        return this;
+    }
+
+    private final int[] internIndexes(Field<?>[] fields) {
+        if (internIndexes != null) {
+            return internIndexes;
+        }
+        else if (internFields != null) {
+            return new Fields(fields).indexesOf(internFields);
+        }
+        else if (internNames != null) {
+            return new Fields(fields).indexesOf(internNames);
+        }
+
+        return null;
     }
 
     @Override
@@ -201,7 +238,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             if (!many) {
                 if (ctx.resultSet() != null) {
                     Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                    cursor = new CursorImpl<R>(ctx, listener, fields, getRecordType(), keepStatement());
+                    cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), getRecordType(), keepStatement());
 
                     if (!lazy) {
                         result = cursor.fetch();
@@ -222,7 +259,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                     anyResults = true;
 
                     Field<?>[] fields = new MetaDataFieldProvider(ctx, ctx.resultSet().getMetaData()).getFields();
-                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, true);
+                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), true);
                     results.add(c.fetch());
 
                     if (ctx.statement().getMoreResults()) {

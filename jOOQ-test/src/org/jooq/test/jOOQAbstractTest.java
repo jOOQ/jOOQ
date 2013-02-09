@@ -824,6 +824,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testInterning() throws Exception {
+        new FetchTests(this).testInterning();
+    }
+
+    @Test
     public void testFetchResultSet() throws Exception {
         new FetchTests(this).testFetchResultSet();
     }

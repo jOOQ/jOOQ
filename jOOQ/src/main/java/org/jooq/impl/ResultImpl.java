@@ -751,6 +751,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
+
         if (keys == null) {
             keys = new Field[0];
         }
@@ -763,7 +765,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 keyValueList.add(record.getValue(key));
             }
 
-            if (map.put(keyValueList, record.into(type)) != null) {
+            if (map.put(keyValueList, mapper.map(record)) != null) {
                 throw new InvalidResultException("Key list " + keyValueList + " is not unique in Result for " + this);
             }
         }
@@ -774,11 +776,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
         int index = fieldsRow().indexOf(key);
         Map<K, E> map = new LinkedHashMap<K, E>();
 
         for (R record : this) {
-            if (map.put((K) record.getValue(index), record.into(type)) != null) {
+            if (map.put((K) record.getValue(index), mapper.map(record)) != null) {
                 throw new InvalidResultException("Key " + key + " is not unique in Result for " + this);
             }
         }
@@ -862,6 +865,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
         int index = fieldsRow().indexOf(key);
         Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
 
@@ -874,7 +878,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 map.put(keyVal, list);
             }
 
-            list.add(record.into(type));
+            list.add(mapper.map(record));
         }
 
         return map;
@@ -882,6 +886,8 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
+        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields, type);
+
         if (keys == null) {
             keys = new Field[0];
         }
@@ -902,7 +908,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 map.put(key, list);
             }
 
-            list.add(record.into(type));
+            list.add(mapper.map(record));
         }
 
         return map;

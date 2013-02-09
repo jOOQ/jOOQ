@@ -732,19 +732,17 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         Map<Record, R> map = new LinkedHashMap<Record, R>();
-        FieldList keyList = new FieldList(keys);
-
         for (R record : this) {
 
             @SuppressWarnings({ "rawtypes", "unchecked" })
-            Record key = new RecordImpl(keyList);
+            Record key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
                 Utils.setValue(key, field, record, field);
             }
 
             if (map.put(key, record) != null) {
-                throw new InvalidResultException("Key list " + keyList + " is not unique in Result for " + this);
+                throw new InvalidResultException("Key list " + Arrays.asList(keys) + " is not unique in Result for " + this);
             }
         }
 
@@ -840,12 +838,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         Map<Record, Result<R>> map = new LinkedHashMap<Record, Result<R>>();
-        FieldList keyList = new FieldList(keys);
-
         for (R record : this) {
 
             @SuppressWarnings({ "rawtypes", "unchecked" })
-            Record key = new RecordImpl(keyList);
+            Record key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
                 Utils.setValue(key, field, record, field);
@@ -891,12 +887,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         }
 
         Map<Record, List<E>> map = new LinkedHashMap<Record, List<E>>();
-        FieldList keyList = new FieldList(keys);
-
         for (R record : this) {
 
             @SuppressWarnings({ "rawtypes", "unchecked" })
-            Record key = new RecordImpl(keyList);
+            Record key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
                 Utils.setValue(key, field, record, field);

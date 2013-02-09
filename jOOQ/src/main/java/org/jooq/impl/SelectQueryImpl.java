@@ -96,7 +96,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     private String                          hint;
     private boolean                         distinct;
     private boolean                         forUpdate;
-    private final FieldList                 forUpdateOf;
+    private final QueryPartList<Field<?>>   forUpdateOf;
     private final TableList                 forUpdateOfTables;
     private ForUpdateMode                   forUpdateMode;
     private int                             forUpdateWait;
@@ -143,7 +143,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             this.from.add(from.asTable());
         }
 
-        this.forUpdateOf = new FieldList();
+        this.forUpdateOf = new QueryPartList<Field<?>>();
         this.forUpdateOfTables = new TableList();
     }
 

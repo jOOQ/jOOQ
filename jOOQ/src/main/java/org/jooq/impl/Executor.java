@@ -1599,12 +1599,12 @@ public class Executor implements Configuration {
             catch (IOException ignore) {}
         }
 
-        FieldList fields = new FieldList();
-
         if (all.size() == 0) {
-            return new ResultImpl<Record>(this, fields);
+            return new ResultImpl<Record>(this);
         }
         else {
+            List<Field<?>> fields = new ArrayList<Field<?>>();
+
             for (String name : all.get(0)) {
                 fields.add(fieldByName(String.class, name));
             }

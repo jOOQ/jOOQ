@@ -36,7 +36,9 @@
 
 package org.jooq.impl;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.jooq.BindContext;
 import org.jooq.Field;
@@ -48,7 +50,7 @@ import org.jooq.RenderContext;
  *
  * @author Lukas Eder
  */
-class Fields extends AbstractQueryPart {
+class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
 
     private static final long serialVersionUID = -6911012275707591576L;
     Field<?>[]                fields;
@@ -135,20 +137,28 @@ class Fields extends AbstractQueryPart {
 
     @Override
     public final void toSQL(RenderContext context) {
-        new FieldList(fields).toSQL(context);
+        new QueryPartList<Field<?>>(fields).toSQL(context);
     }
 
     @Override
     public final void bind(BindContext context) {
-        new FieldList(fields).bind(context);
+        new QueryPartList<Field<?>>(fields).bind(context);
     }
 
-    final void add(Field<?> field) {
-        int length = fields.length;
+    // -------------------------------------------------------------------------
+    // XXX: List-like API
+    // -------------------------------------------------------------------------
 
-        Field<?>[] result = new Field[length + 1];
-        System.arraycopy(fields, 0, result, 0, length);
-        result[length] = field;
+    @Override
+    public final Iterator<Field<?>> iterator() {
+        return Arrays.asList(fields).iterator();
+    }
+
+    final void add(Field<?> f) {
+        Field<?>[] result = new Field[fields.length + 1];
+
+        System.arraycopy(fields, 0, result, 0, fields.length);
+        result[fields.length] = f;
 
         fields = result;
     }

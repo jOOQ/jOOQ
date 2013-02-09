@@ -69,7 +69,6 @@ import static org.jooq.impl.Factory.two;
 import static org.jooq.impl.Factory.val;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
@@ -90,19 +89,18 @@ class Expression<T> extends AbstractFunction<T> {
     /**
      * Generated UID
      */
-    private static final long        serialVersionUID = -5522799070693019771L;
+    private static final long             serialVersionUID = -5522799070693019771L;
 
-    private final Field<T>           lhs;
-    private final FieldList          rhs;
-    private final ExpressionOperator operator;
+    private final Field<T>                lhs;
+    private final QueryPartList<Field<?>> rhs;
+    private final ExpressionOperator      operator;
 
     Expression(ExpressionOperator operator, Field<T> lhs, Field<?>... rhs) {
         super(operator.toSQL(), lhs.getDataType(), Utils.combine(lhs, rhs));
 
         this.operator = operator;
         this.lhs = lhs;
-        this.rhs = new FieldList();
-        this.rhs.addAll(Arrays.asList(rhs));
+        this.rhs = new QueryPartList<Field<?>>(rhs);
     }
 
     @Override

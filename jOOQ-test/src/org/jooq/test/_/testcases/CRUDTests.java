@@ -291,6 +291,60 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testUpdatablesInsertUpdate() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        A author = create().newRecord(TAuthor());
+
+        //  No actions on unchanged authors
+        assertFalse(author.changed());
+        assertEquals(0, author.insert());
+        assertCountAuthors(2);
+        assertFalse(author.changed());
+        assertEquals(0, author.update());
+        assertCountAuthors(2);
+        assertFalse(author.changed());
+        assertEquals(0, author.store());
+        assertCountAuthors(2);
+
+        author.setValue(TAuthor_ID(), 3);
+        author.setValue(TAuthor_LAST_NAME(), "XX");
+        assertTrue(author.changed());
+        assertEquals(0, author.update());
+        assertTrue(author.changed());
+        assertCountAuthors(2);
+
+        assertEquals(1, author.insert());
+        assertFalse(author.changed());
+        assertCountAuthors(3);
+        A test = getAuthor(3);
+        assertEquals(3, (int) test.getValue(TAuthor_ID()));
+        assertEquals("XX", test.getValue(TAuthor_LAST_NAME()));
+
+        assertEquals(0, author.insert());
+        assertFalse(author.changed());
+        assertCountAuthors(3);
+
+        assertEquals(0, author.update());
+        assertFalse(author.changed());
+        assertCountAuthors(3);
+
+        author.setValue(TAuthor_LAST_NAME(), "YY");
+        assertTrue(author.changed());
+        try {
+            author.insert();
+            fail();
+        }
+        catch (DataAccessException expected) {}
+
+        assertEquals(1, author.update());
+        assertFalse(author.changed());
+        test.refresh();
+        assertEquals(3, (int) test.getValue(TAuthor_ID()));
+        assertEquals("YY", test.getValue(TAuthor_LAST_NAME()));
+    }
+
+    @Test
     public void testUpdatablesPK() throws Exception {
         jOOQAbstractTest.reset = false;
 

@@ -35,6 +35,8 @@
  */
 package org.jooq.test;
 
+import static junit.framework.Assert.assertEquals;
+
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -779,6 +781,14 @@ public abstract class BaseTest<
         return create().selectFrom(TBook())
                        .where(TBook_ID().equal(id))
                        .fetchOne();
+    }
+
+    protected final void assertCountAuthors(int count) {
+        assertEquals(count, (int) create().selectCount().from(TAuthor()).fetchOne(0, Integer.class));
+    }
+
+    protected final void assertCountBooks(int count) {
+        assertEquals(count, (int) create().selectCount().from(TBook()).fetchOne(0, Integer.class));
     }
 
     @SuppressWarnings("unchecked")

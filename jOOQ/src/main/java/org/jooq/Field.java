@@ -119,7 +119,10 @@ public interface Field<T> extends GroupField {
     Field<T> as(String alias);
 
     /**
-     * Watch out! This is {@link Object#equals(Object)}, not a jOOQ feature! :-)
+     * {@inheritDoc}
+     * <p>
+     * <strong>Watch out! This is {@link Object#equals(Object)}, not a jOOQ DSL
+     * feature! :-).</strong>
      */
     @Override
     boolean equals(Object other);

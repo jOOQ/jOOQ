@@ -142,7 +142,7 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 
 /**
- * A factory providing implementations to the org.jooq interfaces
+ * A factory providing implementations to the org.jooq interfaces.
  * <p>
  * This factory is the main entry point for client code, to access jOOQ classes
  * and functionality. Here, you can instanciate all of those objects that cannot
@@ -246,7 +246,7 @@ public class Factory {
     }
 
     /**
-     * Create a new DSL select statement
+     * Create a new DSL select statement.
      * <p>
      * Unlike {@link Select} factory methods in the {@link Executor} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2219,7 +2219,7 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * A synonym for {@link Select#asTable()}. It might look a bit more fluent
+     * A synonym for {@link Select#asTable()}, which might look a bit more fluent
      * like this, to some users
      *
      * @see Select#asTable()
@@ -2229,7 +2229,7 @@ public class Factory {
     }
 
     /**
-     * A synonym for {@link #unnest(List)}
+     * A synonym for {@link #unnest(List)}.
      *
      * @see #unnest(List)
      */
@@ -2239,7 +2239,7 @@ public class Factory {
     }
 
     /**
-     * A synonym for {@link #unnest(Object[])}
+     * A synonym for {@link #unnest(Object[])}.
      *
      * @see #unnest(Object[])
      */
@@ -2249,7 +2249,7 @@ public class Factory {
     }
 
     /**
-     * A synonym for {@link #unnest(ArrayRecord)}
+     * A synonym for {@link #unnest(ArrayRecord)}.
      *
      * @see #unnest(ArrayRecord)
      */
@@ -2259,7 +2259,7 @@ public class Factory {
     }
 
     /**
-     * A synonym for {@link #unnest(Field)}
+     * A synonym for {@link #unnest(Field)}.
      *
      * @see #unnest(Field)
      */
@@ -2269,7 +2269,7 @@ public class Factory {
     }
 
     /**
-     * Create a table from a list of values
+     * Create a table from a list of values.
      * <p>
      * This is equivalent to the <code>TABLE</code> function for H2, or the
      * <code>UNNEST</code> function in HSQLDB and Postgres
@@ -2286,7 +2286,7 @@ public class Factory {
     }
 
     /**
-     * Create a table from an array of values
+     * Create a table from an array of values.
      * <p>
      * This is equivalent to the <code>TABLE</code> function for H2, or the
      * <code>UNNEST</code> function in HSQLDB and Postgres
@@ -2303,7 +2303,7 @@ public class Factory {
     }
 
     /**
-     * Create a table from an array of values
+     * Create a table from an array of values.
      * <p>
      * This wraps the argument array in a <code>TABLE</code> function for
      * Oracle. Currently, only Oracle knows typed arrays
@@ -2314,8 +2314,9 @@ public class Factory {
     }
 
     /**
-     * Create a table from a field. The supplied field can have any of these
-     * types:
+     * Create a table from a field.
+     * <p>
+     * The supplied field can have any of these types:
      * <ul>
      * <li> {@link Result}: For <code>CURSOR</code> or <code>REF CURSOR</code>
      * fields, typically fetched from stored functions or from nested tables</li>
@@ -2396,7 +2397,7 @@ public class Factory {
     }
 
     /**
-     * Create a qualified schema, given its schema name
+     * Create a qualified schema, given its schema name.
      * <p>
      * This constructs a schema reference given the schema's qualified name.
      * jOOQ will render the schema name according to your
@@ -2421,7 +2422,7 @@ public class Factory {
     }
 
     /**
-     * Create a qualified table, given its table name
+     * Create a qualified table, given its table name.
      * <p>
      * This constructs a table reference given the table's qualified name. jOOQ
      * will render the table name according to your
@@ -2658,6 +2659,8 @@ public class Factory {
     }
 
     /**
+     * Create a "plain SQL" field.
+     * <p>
      * A PlainSQLField is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
@@ -2683,6 +2686,8 @@ public class Factory {
     }
 
     /**
+     * Create a "plain SQL" field.
+     * <p>
      * A PlainSQLField is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must be as many binding
@@ -2709,6 +2714,8 @@ public class Factory {
     }
 
     /**
+     * Create a "plain SQL" field.
+     * <p>
      * A PlainSQLField is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
@@ -2735,6 +2742,8 @@ public class Factory {
     }
 
     /**
+     * Create a "plain SQL" field.
+     * <p>
      * A PlainSQLField is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must be as many binding
@@ -2762,6 +2771,8 @@ public class Factory {
     }
 
     /**
+     * Create a "plain SQL" field.
+     * <p>
      * A PlainSQLField is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must not be any binding
@@ -2788,6 +2799,8 @@ public class Factory {
     }
 
     /**
+     * Create a "plain SQL" field.
+     * <p>
      * A PlainSQLField is a field that can contain user-defined plain SQL,
      * because sometimes it is easier to express things directly in SQL, for
      * instance complex proprietary functions. There must be as many binding
@@ -2917,7 +2930,7 @@ public class Factory {
 
     /**
      * <code>function()</code> can be used to access native functions that are
-     * not yet or insufficiently supported by jOOQ
+     * not yet or insufficiently supported by jOOQ.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2935,7 +2948,7 @@ public class Factory {
 
     /**
      * <code>function()</code> can be used to access native functions that are
-     * not yet or insufficiently supported by jOOQ
+     * not yet or insufficiently supported by jOOQ.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -2952,8 +2965,9 @@ public class Factory {
     }
 
     /**
-     * Create a new condition holding plain SQL. There must not be any binding
-     * variables contained in the SQL
+     * Create a new condition holding plain SQL.
+     * <p>
+     * There must not be any binding variables contained in the SQL.
      * <p>
      * Example:
      * <p>
@@ -2974,8 +2988,10 @@ public class Factory {
     }
 
     /**
-     * Create a new condition holding plain SQL. There must be as many binding
-     * variables contained in the SQL, as passed in the bindings parameter
+     * Create a new condition holding plain SQL.
+     * <p>
+     * There must be as many binding variables contained in the SQL, as passed
+     * in the bindings parameter
      * <p>
      * Example:
      * <p>
@@ -3031,7 +3047,7 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * Return a <code>Condition</code> that will always evaluate to true
+     * Return a <code>Condition</code> that will always evaluate to true.
      */
     @Support
     public static Condition trueCondition() {
@@ -3039,7 +3055,7 @@ public class Factory {
     }
 
     /**
-     * Return a <code>Condition</code> that will always evaluate to false
+     * Return a <code>Condition</code> that will always evaluate to false.
      */
     @Support
     public static Condition falseCondition() {
@@ -3067,7 +3083,7 @@ public class Factory {
     }
 
     /**
-     * Invert a condition
+     * Invert a condition.
      * <p>
      * This is the same as calling {@link Condition#not()}
      */
@@ -3077,7 +3093,7 @@ public class Factory {
     }
 
     /**
-     * Transform a condition into a boolean field
+     * Transform a condition into a boolean field.
      */
     @Support
     public static Field<Boolean> field(Condition condition) {
@@ -3089,8 +3105,10 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * Initialise a {@link Case} statement. Decode is used as a method name to
-     * avoid name clashes with Java's reserved literal "case"
+     * Initialise a {@link Case} statement.
+     * <p>
+     * Decode is used as a method name to avoid name clashes with Java's
+     * reserved literal "case"
      *
      * @see Case
      */
@@ -3102,7 +3120,7 @@ public class Factory {
     /**
      * Gets the Oracle-style
      * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
-     * function
+     * function.
      *
      * @see #decode(Field, Field, Field, Field[])
      */
@@ -3114,7 +3132,7 @@ public class Factory {
     /**
      * Gets the Oracle-style
      * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
-     * function
+     * function.
      *
      * @see #decode(Field, Field, Field, Field[])
      */
@@ -3126,7 +3144,7 @@ public class Factory {
     /**
      * Gets the Oracle-style
      * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
-     * function
+     * function.
      *
      * @see #decode(Field, Field, Field, Field[])
      */
@@ -3138,7 +3156,7 @@ public class Factory {
     /**
      * Gets the Oracle-style
      * <code>DECODE(expression, search, result[, search , result]... [, default])</code>
-     * function
+     * function.
      * <p>
      * Returns the dialect's equivalent to DECODE:
      * <ul>
@@ -3196,7 +3214,7 @@ public class Factory {
     }
 
     /**
-     * Cast a value to another type
+     * Cast a value to another type.
      *
      * @param <T> The generic type of the cast field
      * @param value The value to cast
@@ -3209,7 +3227,7 @@ public class Factory {
     }
 
     /**
-     * Cast null to a type
+     * Cast null to a type.
      *
      * @param <T> The generic type of the cast field
      * @param type The type that is used for the cast
@@ -3221,7 +3239,7 @@ public class Factory {
     }
 
     /**
-     * Cast a value to another type
+     * Cast a value to another type.
      *
      * @param <T> The generic type of the cast field
      * @param value The value to cast
@@ -3234,7 +3252,7 @@ public class Factory {
     }
 
     /**
-     * Cast null to a type
+     * Cast null to a type.
      *
      * @param <T> The generic type of the cast field
      * @param type The type that is used for the cast
@@ -3246,7 +3264,7 @@ public class Factory {
     }
 
     /**
-     * Cast all fields that need casting
+     * Cast all fields that need casting.
      *
      * @param <T> The generic field type
      * @param type The type to cast to
@@ -3265,7 +3283,7 @@ public class Factory {
 
     /**
      * Gets the Oracle-style <code>COALESCE(value1, value2, ... , value n)</code>
-     * function
+     * function.
      *
      * @see #coalesce(Field, Field...)
      */
@@ -3276,7 +3294,7 @@ public class Factory {
 
     /**
      * Gets the Oracle-style <code>COALESCE(field1, field2, ... , field n)</code>
-     * function
+     * function.
      * <p>
      * Returns the dialect's equivalent to COALESCE:
      * <ul>
@@ -3291,7 +3309,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NVL(value, defaultValue) function
+     * Gets the Oracle-style NVL(value, defaultValue) function.
      *
      * @see #nvl(Field, Field)
      */
@@ -3301,7 +3319,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NVL(value, defaultValue) function
+     * Gets the Oracle-style NVL(value, defaultValue) function.
      *
      * @see #nvl(Field, Field)
      */
@@ -3311,7 +3329,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NVL(value, defaultValue) function
+     * Gets the Oracle-style NVL(value, defaultValue) function.
      *
      * @see #nvl(Field, Field)
      */
@@ -3321,7 +3339,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NVL(value, defaultValue) function
+     * Gets the Oracle-style NVL(value, defaultValue) function.
      * <p>
      * Returns the dialect's equivalent to NVL:
      * <ul>
@@ -3354,7 +3372,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
+     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function.
      *
      * @see #nvl2(Field, Field, Field)
      */
@@ -3364,7 +3382,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
+     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function.
      *
      * @see #nvl2(Field, Field, Field)
      */
@@ -3374,7 +3392,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
+     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function.
      *
      * @see #nvl2(Field, Field, Field)
      */
@@ -3384,7 +3402,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function
+     * Gets the Oracle-style NVL2(value, valueIfNotNull, valueIfNull) function.
      * <p>
      * Returns the dialect's equivalent to NVL2:
      * <ul>
@@ -3401,7 +3419,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NULLIF(value, other) function
+     * Gets the Oracle-style NULLIF(value, other) function.
      *
      * @see #nullif(Field, Field)
      */
@@ -3411,7 +3429,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NULLIF(value, other) function
+     * Gets the Oracle-style NULLIF(value, other) function.
      *
      * @see #nullif(Field, Field)
      */
@@ -3421,7 +3439,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NULLIF(value, other) function
+     * Gets the Oracle-style NULLIF(value, other) function.
      *
      * @see #nullif(Field, Field)
      */
@@ -3431,7 +3449,7 @@ public class Factory {
     }
 
     /**
-     * Gets the Oracle-style NULLIF(value, other) function
+     * Gets the Oracle-style NULLIF(value, other) function.
      * <p>
      * Returns the dialect's equivalent to NULLIF:
      * <ul>
@@ -3450,7 +3468,7 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * Get the upper(field) function
+     * Get the upper(field) function.
      *
      * @see #upper(Field)
      */
@@ -3460,7 +3478,7 @@ public class Factory {
     }
 
     /**
-     * Get the upper(field) function
+     * Get the upper(field) function.
      * <p>
      * This renders the upper function in all dialects:
      * <code><pre>upper([field])</pre></code>
@@ -3471,7 +3489,7 @@ public class Factory {
     }
 
     /**
-     * Get the lower(field) function
+     * Get the lower(field) function.
      *
      * @see #lower(Field)
      */
@@ -3481,7 +3499,7 @@ public class Factory {
     }
 
     /**
-     * Get the lower(field) function
+     * Get the lower(field) function.
      * <p>
      * This renders the lower function in all dialects:
      * <code><pre>lower([field])</pre></code>
@@ -3492,7 +3510,7 @@ public class Factory {
     }
 
     /**
-     * Get the trim(field) function
+     * Get the trim(field) function.
      *
      * @see #trim(Field)
      */
@@ -3502,7 +3520,7 @@ public class Factory {
     }
 
     /**
-     * Get the trim(field) function
+     * Get the trim(field) function.
      * <p>
      * This renders the trim function where available:
      * <code><pre>trim([field])</pre></code> ... or simulates it elsewhere using
@@ -3514,7 +3532,7 @@ public class Factory {
     }
 
     /**
-     * Get the rtrim(field) function
+     * Get the rtrim(field) function.
      *
      * @see #rtrim(Field)
      */
@@ -3524,7 +3542,7 @@ public class Factory {
     }
 
     /**
-     * Get the rtrim(field) function
+     * Get the rtrim(field) function.
      * <p>
      * This renders the rtrim function in all dialects:
      * <code><pre>rtrim([field])</pre></code>
@@ -3535,7 +3553,7 @@ public class Factory {
     }
 
     /**
-     * Get the ltrim(field) function
+     * Get the ltrim(field) function.
      *
      * @see #ltrim(Field)
      */
@@ -3545,7 +3563,7 @@ public class Factory {
     }
 
     /**
-     * Get the ltrim(field) function
+     * Get the ltrim(field) function.
      * <p>
      * This renders the ltrim function in all dialects:
      * <code><pre>ltrim([field])</pre></code>
@@ -3556,7 +3574,7 @@ public class Factory {
     }
 
     /**
-     * Get the rpad(field, length) function
+     * Get the rpad(field, length) function.
      *
      * @see #rpad(Field, Field)
      */
@@ -3566,7 +3584,7 @@ public class Factory {
     }
 
     /**
-     * Get the rpad(field, length) function
+     * Get the rpad(field, length) function.
      * <p>
      * This renders the rpad function where available:
      * <code><pre>rpad([field], [length])</pre></code> ... or simulates it
@@ -3580,7 +3598,7 @@ public class Factory {
     }
 
     /**
-     * Get the rpad(field, length, character) function
+     * Get the rpad(field, length, character) function.
      *
      * @see #rpad(Field, Field, Field)
      */
@@ -3590,7 +3608,7 @@ public class Factory {
     }
 
     /**
-     * Get the rpad(field, length, character) function
+     * Get the rpad(field, length, character) function.
      *
      * @see #rpad(Field, Field, Field)
      */
@@ -3600,7 +3618,7 @@ public class Factory {
     }
 
     /**
-     * Get the rpad(field, length, character) function
+     * Get the rpad(field, length, character) function.
      * <p>
      * This renders the rpad function where available:
      * <code><pre>rpad([field], [length])</pre></code> ... or simulates it
@@ -3617,7 +3635,7 @@ public class Factory {
     }
 
     /**
-     * Get the lpad(field, length) function
+     * Get the lpad(field, length) function.
      *
      * @see #lpad(Field, Field)
      */
@@ -3627,7 +3645,7 @@ public class Factory {
     }
 
     /**
-     * Get the lpad(field, length) function
+     * Get the lpad(field, length) function.
      * <p>
      * This renders the lpad function where available:
      * <code><pre>lpad([field], [length])</pre></code> ... or simulates it
@@ -3641,7 +3659,7 @@ public class Factory {
     }
 
     /**
-     * Get the lpad(field, length, character) function
+     * Get the lpad(field, length, character) function.
      *
      * @see #lpad(Field, Field, Field)
      */
@@ -3651,7 +3669,7 @@ public class Factory {
     }
 
     /**
-     * Get the lpad(field, length, character) function
+     * Get the lpad(field, length, character) function.
      *
      * @see #lpad(Field, Field, Field)
      */
@@ -3661,7 +3679,7 @@ public class Factory {
     }
 
     /**
-     * Get the lpad(field, length, character) function
+     * Get the lpad(field, length, character) function.
      * <p>
      * This renders the lpad function where available:
      * <code><pre>lpad([field], [length])</pre></code> ... or simulates it
@@ -3678,7 +3696,7 @@ public class Factory {
     }
 
     /**
-     * Get the repeat(field, count) function
+     * Get the repeat(field, count) function.
      *
      * @see #repeat(Field, Field)
      */
@@ -3688,7 +3706,7 @@ public class Factory {
     }
 
     /**
-     * Get the repeat(field, count) function
+     * Get the repeat(field, count) function.
      *
      * @see #repeat(Field, Field)
      */
@@ -3698,7 +3716,7 @@ public class Factory {
     }
 
     /**
-     * Get the repeat(count) function
+     * Get the repeat(count) function.
      *
      * @see #repeat(Field, Field)
      */
@@ -3708,7 +3726,7 @@ public class Factory {
     }
 
     /**
-     * Get the repeat(field, count) function
+     * Get the repeat(field, count) function.
      * <p>
      * This renders the repeat or replicate function where available:
      * <code><pre>repeat([field], [count]) or
@@ -3727,7 +3745,7 @@ public class Factory {
 
     /**
      * Convenience method for {@link #replace(Field, String, String)} to escape
-     * data for use with {@link Field#like(Field, char)}
+     * data for use with {@link Field#like(Field, char)}.
      * <p>
      * Essentially, this escapes <code>%</code> and <code>_</code> characters
      *
@@ -3742,7 +3760,7 @@ public class Factory {
 
     /**
      * Convenience method for {@link #replace(Field, String, String)} to escape
-     * data for use with {@link Field#like(Field, char)}
+     * data for use with {@link Field#like(Field, char)}.
      * <p>
      * Essentially, this escapes <code>%</code> and <code>_</code> characters
      *
@@ -3762,7 +3780,7 @@ public class Factory {
     }
 
     /**
-     * Get the replace(field, search) function
+     * Get the replace(field, search) function.
      *
      * @see #replace(Field, Field)
      */
@@ -3772,7 +3790,7 @@ public class Factory {
     }
 
     /**
-     * Get the replace(field, search) function
+     * Get the replace(field, search) function.
      * <p>
      * This renders the replace or str_replace function where available:
      * <code><pre>replace([field], [search]) or
@@ -3786,7 +3804,7 @@ public class Factory {
     }
 
     /**
-     * Get the replace(field, search, replace) function
+     * Get the replace(field, search, replace) function.
      *
      * @see #replace(Field, Field, Field)
      */
@@ -3796,7 +3814,7 @@ public class Factory {
     }
 
     /**
-     * Get the replace(field, search, replace) function
+     * Get the replace(field, search, replace) function.
      * <p>
      * This renders the replace or str_replace function:
      * <code><pre>replace([field], [search]) or
@@ -3808,7 +3826,7 @@ public class Factory {
     }
 
     /**
-     * Get the position(in, search) function
+     * Get the position(in, search) function.
      *
      * @see #position(Field, Field)
      */
@@ -3818,7 +3836,7 @@ public class Factory {
     }
 
     /**
-     * Get the position(in, search) function
+     * Get the position(in, search) function.
      *
      * @see #position(Field, Field)
      */
@@ -3828,7 +3846,7 @@ public class Factory {
     }
 
     /**
-     * Get the position(in, search) function
+     * Get the position(in, search) function.
      *
      * @see #position(Field, Field)
      */
@@ -3838,7 +3856,7 @@ public class Factory {
     }
 
     /**
-     * Get the position(in, search) function
+     * Get the position(in, search) function.
      * <p>
      * This renders the position or any equivalent function:
      * <code><pre>position([search] in [in]) or
@@ -3853,7 +3871,7 @@ public class Factory {
     }
 
     /**
-     * Get the ascii(field) function
+     * Get the ascii(field) function.
      *
      * @see #ascii(Field)
      */
@@ -3863,7 +3881,7 @@ public class Factory {
     }
 
     /**
-     * Get the ascii(field) function
+     * Get the ascii(field) function.
      * <p>
      * This renders the ascii function:
      * <code><pre>ascii([field])</pre></code>
@@ -3874,7 +3892,7 @@ public class Factory {
     }
 
     /**
-     * Get the concat(value[, value, ...]) function
+     * Get the concat(value[, value, ...]) function.
      *
      * @see #concat(Field...)
      */
@@ -3884,7 +3902,7 @@ public class Factory {
     }
 
     /**
-     * Get the concat(field[, field, ...]) function
+     * Get the concat(field[, field, ...]) function.
      * <p>
      * This creates <code>fields[0] || fields[1] || ...</code> as an
      * expression, or <code>concat(fields[0], fields[1], ...)</code>,
@@ -3899,7 +3917,7 @@ public class Factory {
     }
 
     /**
-     * Get the substring(field, startingPosition) function
+     * Get the substring(field, startingPosition) function.
      *
      * @see #substring(Field, Field)
      */
@@ -3909,7 +3927,7 @@ public class Factory {
     }
 
     /**
-     * Get the substring(field, startingPosition) function
+     * Get the substring(field, startingPosition) function.
      * <p>
      * This renders the substr or substring function:
      * <code><pre>substr([field], [startingPosition]) or
@@ -3921,7 +3939,7 @@ public class Factory {
     }
 
     /**
-     * Get the substring(field, startingPosition, length) function
+     * Get the substring(field, startingPosition, length) function.
      *
      * @see #substring(Field, Field, Field)
      */
@@ -3931,7 +3949,7 @@ public class Factory {
     }
 
     /**
-     * Get the substring(field, startingPosition, length) function
+     * Get the substring(field, startingPosition, length) function.
      * <p>
      * This renders the substr or substring function:
      * <code><pre>substr([field], [startingPosition], [length]) or
@@ -3944,7 +3962,7 @@ public class Factory {
 
     /**
      * Get the length of a <code>VARCHAR</code> type. This is a synonym for
-     * {@link #charLength(String)}
+     * {@link #charLength(String)}.
      *
      * @see #charLength(String)
      */
@@ -3955,7 +3973,7 @@ public class Factory {
 
     /**
      * Get the length of a <code>VARCHAR</code> type. This is a synonym for
-     * {@link #charLength(Field)}
+     * {@link #charLength(Field)}.
      *
      * @see #charLength(Field)
      */
@@ -3965,7 +3983,7 @@ public class Factory {
     }
 
     /**
-     * Get the char_length(field) function
+     * Get the char_length(field) function.
      * <p>
      * This translates into any dialect
      */
@@ -3975,7 +3993,7 @@ public class Factory {
     }
 
     /**
-     * Get the char_length(field) function
+     * Get the char_length(field) function.
      * <p>
      * This translates into any dialect
      */
@@ -3985,7 +4003,7 @@ public class Factory {
     }
 
     /**
-     * Get the bit_length(field) function
+     * Get the bit_length(field) function.
      * <p>
      * This translates into any dialect
      */
@@ -3995,7 +4013,7 @@ public class Factory {
     }
 
     /**
-     * Get the bit_length(field) function
+     * Get the bit_length(field) function.
      * <p>
      * This translates into any dialect
      */
@@ -4005,7 +4023,7 @@ public class Factory {
     }
 
     /**
-     * Get the octet_length(field) function
+     * Get the octet_length(field) function.
      * <p>
      * This translates into any dialect
      */
@@ -4015,7 +4033,7 @@ public class Factory {
     }
 
     /**
-     * Get the octet_length(field) function
+     * Get the octet_length(field) function.
      * <p>
      * This translates into any dialect
      */
@@ -4029,7 +4047,7 @@ public class Factory {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the MySQL-specific <code>MD5()</code> function
+     * Get the MySQL-specific <code>MD5()</code> function.
      * <p>
      * These are the implementations for various databases:
      * <p>
@@ -4056,7 +4074,7 @@ public class Factory {
     }
 
     /**
-     * Get the MySQL-specific <code>MD5()</code> function
+     * Get the MySQL-specific <code>MD5()</code> function.
      * <p>
      * These are the implementations for various databases:
      * <p>
@@ -4087,7 +4105,7 @@ public class Factory {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the current_date() function
+     * Get the current_date() function.
      * <p>
      * This translates into any dialect
      */
@@ -4097,7 +4115,7 @@ public class Factory {
     }
 
     /**
-     * Get the current_time() function
+     * Get the current_time() function.
      * <p>
      * This translates into any dialect
      */
@@ -4107,7 +4125,7 @@ public class Factory {
     }
 
     /**
-     * Get the current_timestamp() function
+     * Get the current_timestamp() function.
      * <p>
      * This translates into any dialect
      */
@@ -4117,7 +4135,7 @@ public class Factory {
     }
 
     /**
-     * Get the date difference in number of days
+     * Get the date difference in number of days.
      * <p>
      * This translates into any dialect
      *
@@ -4129,7 +4147,7 @@ public class Factory {
     }
 
     /**
-     * Get the date difference in number of days
+     * Get the date difference in number of days.
      * <p>
      * This translates into any dialect
      *
@@ -4141,7 +4159,7 @@ public class Factory {
     }
 
     /**
-     * Add an interval to a date
+     * Add an interval to a date.
      * <p>
      * This translates into any dialect
      *
@@ -4153,7 +4171,7 @@ public class Factory {
     }
 
     /**
-     * Add an interval to a date
+     * Add an interval to a date.
      * <p>
      * This translates into any dialect
      *
@@ -4165,7 +4183,7 @@ public class Factory {
     }
 
     /**
-     * Get the date difference in number of days
+     * Get the date difference in number of days.
      * <p>
      * This translates into any dialect
      *
@@ -4177,7 +4195,7 @@ public class Factory {
     }
 
     /**
-     * Get the date difference in number of days
+     * Get the date difference in number of days.
      * <p>
      * This translates into any dialect
      *
@@ -4189,7 +4207,7 @@ public class Factory {
     }
 
     /**
-     * Add an interval to a timestamp
+     * Add an interval to a timestamp.
      * <p>
      * This translates into any dialect
      *
@@ -4201,7 +4219,7 @@ public class Factory {
     }
 
     /**
-     * Add an interval to a timestamp
+     * Add an interval to a timestamp.
      * <p>
      * This translates into any dialect
      *
@@ -4214,7 +4232,7 @@ public class Factory {
 
     /**
      * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
+     * type.
      * <p>
      * This translates into any dialect
      *
@@ -4227,7 +4245,7 @@ public class Factory {
 
     /**
      * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
+     * type.
      * <p>
      * This translates into any dialect
      *
@@ -4240,7 +4258,7 @@ public class Factory {
 
     /**
      * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
+     * type.
      * <p>
      * This translates into any dialect
      *
@@ -4253,7 +4271,7 @@ public class Factory {
 
     /**
      * Get the timestamp difference as a <code>INTERVAL DAY TO SECOND</code>
-     * type
+     * type.
      * <p>
      * This translates into any dialect
      *
@@ -4269,42 +4287,42 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * This is not yet implemented
+     * This is not yet implemented.
      */
     static Field<Date> trunc(Date date) {
         return trunc(date, DatePart.DAY);
     }
 
     /**
-     * This is not yet implemented
+     * This is not yet implemented.
      */
     static Field<Date> trunc(Date date, DatePart part) {
         return trunc(val(date), part);
     }
 
     /**
-     * This is not yet implemented
+     * This is not yet implemented.
      */
     static Field<Timestamp> trunc(Timestamp timestamp) {
         return trunc(timestamp, DatePart.DAY);
     }
 
     /**
-     * This is not yet implemented
+     * This is not yet implemented.
      */
     static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
         return trunc(val(timestamp), part);
     }
 
     /**
-     * This is not yet implemented
+     * This is not yet implemented.
      */
     static <T extends java.util.Date> Field<T> trunc(Field<T> date) {
         return trunc(date, DatePart.DAY);
     }
 
     /**
-     * This is not yet implemented
+     * This is not yet implemented.
      */
     @SuppressWarnings("unused")
     static <T extends java.util.Date> Field<T> trunc(Field<T> date, DatePart part) {
@@ -4314,7 +4332,7 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * Get the extract(field, datePart) function
+     * Get the extract(field, datePart) function.
      * <p>
      * This translates into any dialect
      */
@@ -4324,7 +4342,7 @@ public class Factory {
     }
 
     /**
-     * Get the extract(field, datePart) function
+     * Get the extract(field, datePart) function.
      * <p>
      * This translates into any dialect
      */
@@ -4334,7 +4352,7 @@ public class Factory {
     }
 
     /**
-     * Get the year part of a date
+     * Get the year part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#YEAR}
@@ -4345,7 +4363,7 @@ public class Factory {
     }
 
     /**
-     * Get the year part of a date
+     * Get the year part of a date.
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#YEAR}
@@ -4356,7 +4374,7 @@ public class Factory {
     }
 
     /**
-     * Get the month part of a date
+     * Get the month part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MONTH}
@@ -4367,7 +4385,7 @@ public class Factory {
     }
 
     /**
-     * Get the month part of a date
+     * Get the month part of a date.
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MONTH}
@@ -4378,7 +4396,7 @@ public class Factory {
     }
 
     /**
-     * Get the day part of a date
+     * Get the day part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#DAY}
@@ -4389,7 +4407,7 @@ public class Factory {
     }
 
     /**
-     * Get the day part of a date
+     * Get the day part of a date.
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#DAY}
@@ -4400,7 +4418,7 @@ public class Factory {
     }
 
     /**
-     * Get the hour part of a date
+     * Get the hour part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#HOUR}
@@ -4411,7 +4429,7 @@ public class Factory {
     }
 
     /**
-     * Get the hour part of a date
+     * Get the hour part of a date.
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#HOUR}
@@ -4422,7 +4440,7 @@ public class Factory {
     }
 
     /**
-     * Get the minute part of a date
+     * Get the minute part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#MINUTE}
@@ -4433,7 +4451,7 @@ public class Factory {
     }
 
     /**
-     * Get the minute part of a date
+     * Get the minute part of a date.
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#MINUTE}
@@ -4444,7 +4462,7 @@ public class Factory {
     }
 
     /**
-     * Get the second part of a date
+     * Get the second part of a date.
      * <p>
      * This is the same as calling {@link #extract(java.util.Date, DatePart)}
      * with {@link DatePart#SECOND}
@@ -4455,7 +4473,7 @@ public class Factory {
     }
 
     /**
-     * Get the second part of a date
+     * Get the second part of a date.
      * <p>
      * This is the same as calling {@link #extract(Field, DatePart)}
      * with {@link DatePart#SECOND}
@@ -4470,7 +4488,7 @@ public class Factory {
     // ------------------------------------------------------------------------
 
     /**
-     * Create a ROLLUP(field1, field2, .., fieldn) grouping field
+     * Create a ROLLUP(field1, field2, .., fieldn) grouping field.
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -4498,7 +4516,7 @@ public class Factory {
     }
 
     /**
-     * Create a CUBE(field1, field2, .., fieldn) grouping field
+     * Create a CUBE(field1, field2, .., fieldn) grouping field.
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -4558,7 +4576,7 @@ public class Factory {
 
     /**
      * Create a GROUPING SETS((field1a, field1b), (field2a), .., (fieldna,
-     * fieldnb)) grouping field
+     * fieldnb)) grouping field.
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -4591,7 +4609,7 @@ public class Factory {
 
     /**
      * Create a GROUPING SETS((field1a, field1b), (field2a), .., (fieldna,
-     * fieldnb)) grouping field
+     * fieldnb)) grouping field.
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -4625,7 +4643,7 @@ public class Factory {
     /**
      * Create a GROUPING(field) aggregation field to be used along with
      * <code>CUBE</code>, <code>ROLLUP</code>, and <code>GROUPING SETS</code>
-     * groupings
+     * groupings.
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -4648,7 +4666,7 @@ public class Factory {
     /**
      * Create a GROUPING_ID(field1, field2, .., fieldn) aggregation field to be
      * used along with <code>CUBE</code>, <code>ROLLUP</code>, and
-     * <code>GROUPING SETS</code> groupings
+     * <code>GROUPING SETS</code> groupings.
      * <p>
      * This has been observed to work with the following databases:
      * <ul>
@@ -5104,7 +5122,7 @@ public class Factory {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the rand() function
+     * Get the rand() function.
      */
     @Support
     public static Field<BigDecimal> rand() {
@@ -5112,7 +5130,7 @@ public class Factory {
     }
 
     /**
-     * Find the greatest among all values
+     * Find the greatest among all values.
      * <p>
      * This function has no equivalent in Adaptive Server, Derby, SQL Server and
      * Sybase SQL Anywhere. Its current simulation implementation has
@@ -5128,7 +5146,7 @@ public class Factory {
     }
 
     /**
-     * Find the greatest among all values
+     * Find the greatest among all values.
      * <p>
      * This function has no equivalent in Adaptive Server, Derby, SQL Server and
      * Sybase SQL Anywhere. Its current simulation implementation has
@@ -5142,7 +5160,7 @@ public class Factory {
     }
 
     /**
-     * Find the least among all values
+     * Find the least among all values.
      * <p>
      * This function has no equivalent in Adaptive Server, Derby, SQL Server and
      * Sybase SQL Anywhere. Its current simulation implementation has
@@ -5158,7 +5176,7 @@ public class Factory {
     }
 
     /**
-     * Find the least among all values
+     * Find the least among all values.
      * <p>
      * This function has no equivalent in Adaptive Server, Derby, SQL Server and
      * Sybase SQL Anywhere. Its current simulation implementation has
@@ -5172,7 +5190,7 @@ public class Factory {
     }
 
     /**
-     * Get the sign of a numeric field: sign(field)
+     * Get the sign of a numeric field: sign(field).
      *
      * @see #sign(Field)
      */
@@ -5182,7 +5200,7 @@ public class Factory {
     }
 
     /**
-     * Get the sign of a numeric field: sign(field)
+     * Get the sign of a numeric field: sign(field).
      * <p>
      * This renders the sign function where available:
      * <code><pre>sign([field])</pre></code>
@@ -5199,7 +5217,7 @@ public class Factory {
     }
 
     /**
-     * Get the absolute value of a numeric field: abs(field)
+     * Get the absolute value of a numeric field: abs(field).
      *
      * @see #abs(Field)
      */
@@ -5209,7 +5227,7 @@ public class Factory {
     }
 
     /**
-     * Get the absolute value of a numeric field: abs(field)
+     * Get the absolute value of a numeric field: abs(field).
      * <p>
      * This renders the same on all dialects:
      * <code><pre>abs([field])</pre></code>
@@ -5220,7 +5238,7 @@ public class Factory {
     }
 
     /**
-     * Get rounded value of a numeric field: round(field)
+     * Get rounded value of a numeric field: round(field).
      *
      * @see #round(Field)
      */
@@ -5230,7 +5248,7 @@ public class Factory {
     }
 
     /**
-     * Get rounded value of a numeric field: round(field)
+     * Get rounded value of a numeric field: round(field).
      * <p>
      * This renders the round function where available:
      * <code><pre>round([field]) or
@@ -5243,7 +5261,7 @@ public class Factory {
     }
 
     /**
-     * Get rounded value of a numeric field: round(field, decimals)
+     * Get rounded value of a numeric field: round(field, decimals).
      *
      * @see #round(Field, int)
      */
@@ -5253,7 +5271,7 @@ public class Factory {
     }
 
     /**
-     * Get rounded value of a numeric field: round(field, decimals)
+     * Get rounded value of a numeric field: round(field, decimals).
      * <p>
      * This renders the round function where available:
      * <code><pre>round([field], [decimals])</pre></code>
@@ -5265,7 +5283,7 @@ public class Factory {
     }
 
     /**
-     * Get the largest integer value not greater than [this]
+     * Get the largest integer value not greater than [this].
      *
      * @see #floor(Field)
      */
@@ -5275,7 +5293,7 @@ public class Factory {
     }
 
     /**
-     * Get the largest integer value not greater than [this]
+     * Get the largest integer value not greater than [this].
      * <p>
      * This renders the floor function where available:
      * <code><pre>floor([this])</pre></code>
@@ -5288,7 +5306,7 @@ public class Factory {
     }
 
     /**
-     * Get the smallest integer value not less than [this]
+     * Get the smallest integer value not less than [this].
      *
      * @see #ceil(Field)
      */
@@ -5298,7 +5316,7 @@ public class Factory {
     }
 
     /**
-     * Get the smallest integer value not less than [field]
+     * Get the smallest integer value not less than [field].
      * <p>
      * This renders the ceil or ceiling function where available:
      * <code><pre>ceil([field]) or
@@ -5312,7 +5330,7 @@ public class Factory {
     }
 
     /**
-     * Truncate a number to a given number of decimals
+     * Truncate a number to a given number of decimals.
      *
      * @see #trunc(Field, Field)
      */
@@ -5322,7 +5340,7 @@ public class Factory {
     }
 
     /**
-     * Truncate a number to a given number of decimals
+     * Truncate a number to a given number of decimals.
      *
      * @see #trunc(Field, Field)
      */
@@ -5332,7 +5350,7 @@ public class Factory {
     }
 
     /**
-     * Truncate a number to a given number of decimals
+     * Truncate a number to a given number of decimals.
      *
      * @see #trunc(Field, Field)
      */
@@ -5342,7 +5360,7 @@ public class Factory {
     }
 
     /**
-     * Truncate a number to a given number of decimals
+     * Truncate a number to a given number of decimals.
      *
      * @see #trunc(Field, Field)
      */
@@ -5352,7 +5370,7 @@ public class Factory {
     }
 
     /**
-     * Truncate a number to a given number of decimals
+     * Truncate a number to a given number of decimals.
      * <p>
      * This function truncates <code>number</code> to the amount of decimals
      * specified in <code>decimals</code>. Passing <code>decimals = 0</code> to
@@ -5400,7 +5418,7 @@ public class Factory {
     }
 
     /**
-     * Get the sqrt(field) function
+     * Get the sqrt(field) function.
      *
      * @see #sqrt(Field)
      */
@@ -5410,7 +5428,7 @@ public class Factory {
     }
 
     /**
-     * Get the sqrt(field) function
+     * Get the sqrt(field) function.
      * <p>
      * This renders the sqrt function where available:
      * <code><pre>sqrt([field])</pre></code> ... or simulates it elsewhere using
@@ -5423,7 +5441,7 @@ public class Factory {
     }
 
     /**
-     * Get the exp(field) function, taking this field as the power of e
+     * Get the exp(field) function, taking this field as the power of e.
      *
      * @see #exp(Field)
      */
@@ -5433,7 +5451,7 @@ public class Factory {
     }
 
     /**
-     * Get the exp(field) function, taking this field as the power of e
+     * Get the exp(field) function, taking this field as the power of e.
      * <p>
      * This renders the same on all dialects:
      * <code><pre>exp([field])</pre></code>
@@ -5444,7 +5462,7 @@ public class Factory {
     }
 
     /**
-     * Get the ln(field) function, taking the natural logarithm of this field
+     * Get the ln(field) function, taking the natural logarithm of this field.
      *
      * @see #ln(Field)
      */
@@ -5454,7 +5472,7 @@ public class Factory {
     }
 
     /**
-     * Get the ln(field) function, taking the natural logarithm of this field
+     * Get the ln(field) function, taking the natural logarithm of this field.
      * <p>
      * This renders the ln or log function where available:
      * <code><pre>ln([field]) or
@@ -5466,7 +5484,7 @@ public class Factory {
     }
 
     /**
-     * Get the log(field, base) function
+     * Get the log(field, base) function.
      *
      * @see #log(Field, int)
      */
@@ -5476,7 +5494,7 @@ public class Factory {
     }
 
     /**
-     * Get the log(field, base) function
+     * Get the log(field, base) function.
      * <p>
      * This renders the log function where available:
      * <code><pre>log([field])</pre></code> ... or simulates it elsewhere (in
@@ -5489,7 +5507,7 @@ public class Factory {
     }
 
     /**
-     * Get the power(field, exponent) function
+     * Get the power(field, exponent) function.
      *
      * @see #power(Field, Field)
      */
@@ -5499,7 +5517,7 @@ public class Factory {
     }
 
     /**
-     * Get the power(field, exponent) function
+     * Get the power(field, exponent) function.
      *
      * @see #power(Field, Field)
      */
@@ -5509,7 +5527,7 @@ public class Factory {
     }
 
     /**
-     * Get the power(field, exponent) function
+     * Get the power(field, exponent) function.
      *
      * @see #power(Field, Field)
      */
@@ -5519,7 +5537,7 @@ public class Factory {
     }
 
     /**
-     * Get the power(field, exponent) function
+     * Get the power(field, exponent) function.
      * <p>
      * This renders the power function where available:
      * <code><pre>power([field], [exponent])</pre></code> ... or simulates it
@@ -5532,7 +5550,7 @@ public class Factory {
     }
 
     /**
-     * Get the arc cosine(field) function
+     * Get the arc cosine(field) function.
      *
      * @see #acos(Field)
      */
@@ -5542,7 +5560,7 @@ public class Factory {
     }
 
     /**
-     * Get the arc cosine(field) function
+     * Get the arc cosine(field) function.
      * <p>
      * This renders the acos function where available:
      * <code><pre>acos([field])</pre></code>
@@ -5553,7 +5571,7 @@ public class Factory {
     }
 
     /**
-     * Get the arc sine(field) function
+     * Get the arc sine(field) function.
      *
      * @see #asin(Field)
      */
@@ -5563,7 +5581,7 @@ public class Factory {
     }
 
     /**
-     * Get the arc sine(field) function
+     * Get the arc sine(field) function.
      * <p>
      * This renders the asin function where available:
      * <code><pre>asin([field])</pre></code>
@@ -5574,7 +5592,7 @@ public class Factory {
     }
 
     /**
-     * Get the arc tangent(field) function
+     * Get the arc tangent(field) function.
      *
      * @see #atan(Field)
      */
@@ -5584,7 +5602,7 @@ public class Factory {
     }
 
     /**
-     * Get the arc tangent(field) function
+     * Get the arc tangent(field) function.
      * <p>
      * This renders the atan function where available:
      * <code><pre>atan([field])</pre></code>
@@ -5595,7 +5613,7 @@ public class Factory {
     }
 
     /**
-     * Get the atan2(field, y) function
+     * Get the atan2(field, y) function.
      *
      * @see #atan2(Field, Field)
      */
@@ -5605,7 +5623,7 @@ public class Factory {
     }
 
     /**
-     * Get the atan2(field, y) function
+     * Get the atan2(field, y) function.
      *
      * @see #atan2(Field, Field)
      */
@@ -5615,7 +5633,7 @@ public class Factory {
     }
 
     /**
-     * Get the atan2(field, y) function
+     * Get the atan2(field, y) function.
       *
      * @see #atan2(Field, Field)
      */
@@ -5625,7 +5643,7 @@ public class Factory {
     }
 
     /**
-     * Get the atan2(field, y) function
+     * Get the atan2(field, y) function.
      * <p>
      * This renders the atan2 or atn2 function where available:
      * <code><pre>atan2([x], [y]) or
@@ -5637,7 +5655,7 @@ public class Factory {
     }
 
     /**
-     * Get the cosine(field) function
+     * Get the cosine(field) function.
      *
      * @see #cos(Field)
      */
@@ -5647,7 +5665,7 @@ public class Factory {
     }
 
     /**
-     * Get the cosine(field) function
+     * Get the cosine(field) function.
      * <p>
      * This renders the cos function where available:
      * <code><pre>cos([field])</pre></code>
@@ -5658,7 +5676,7 @@ public class Factory {
     }
 
     /**
-     * Get the sine(field) function
+     * Get the sine(field) function.
      *
      * @see #sin(Field)
      */
@@ -5668,7 +5686,7 @@ public class Factory {
     }
 
     /**
-     * Get the sine(field) function
+     * Get the sine(field) function.
      * <p>
      * This renders the sin function where available:
      * <code><pre>sin([field])</pre></code>
@@ -5679,7 +5697,7 @@ public class Factory {
     }
 
     /**
-     * Get the tangent(field) function
+     * Get the tangent(field) function.
      *
      * @see #tan(Field)
      */
@@ -5689,7 +5707,7 @@ public class Factory {
     }
 
     /**
-     * Get the tangent(field) function
+     * Get the tangent(field) function.
      * <p>
      * This renders the tan function where available:
      * <code><pre>tan([field])</pre></code>
@@ -5700,7 +5718,7 @@ public class Factory {
     }
 
     /**
-     * Get the cotangent(field) function
+     * Get the cotangent(field) function.
      *
      * @see #cot(Field)
      */
@@ -5710,7 +5728,7 @@ public class Factory {
     }
 
     /**
-     * Get the cotangent(field) function
+     * Get the cotangent(field) function.
      * <p>
      * This renders the cot function where available:
      * <code><pre>cot([field])</pre></code> ... or simulates it elsewhere using
@@ -5722,7 +5740,7 @@ public class Factory {
     }
 
     /**
-     * Get the hyperbolic sine function: sinh(field)
+     * Get the hyperbolic sine function: sinh(field).
      *
      * @see #sinh(Field)
      */
@@ -5732,7 +5750,7 @@ public class Factory {
     }
 
     /**
-     * Get the hyperbolic sine function: sinh(field)
+     * Get the hyperbolic sine function: sinh(field).
      * <p>
      * This renders the sinh function where available:
      * <code><pre>sinh([field])</pre></code> ... or simulates it elsewhere using
@@ -5744,7 +5762,7 @@ public class Factory {
     }
 
     /**
-     * Get the hyperbolic cosine function: cosh(field)
+     * Get the hyperbolic cosine function: cosh(field).
      *
      * @see #cosh(Field)
      */
@@ -5754,7 +5772,7 @@ public class Factory {
     }
 
     /**
-     * Get the hyperbolic cosine function: cosh(field)
+     * Get the hyperbolic cosine function: cosh(field).
      * <p>
      * This renders the cosh function where available:
      * <code><pre>cosh([field])</pre></code> ... or simulates it elsewhere using
@@ -5766,7 +5784,7 @@ public class Factory {
     }
 
     /**
-     * Get the hyperbolic tangent function: tanh(field)
+     * Get the hyperbolic tangent function: tanh(field).
      *
      * @see #tanh(Field)
      */
@@ -5776,7 +5794,7 @@ public class Factory {
     }
 
     /**
-     * Get the hyperbolic tangent function: tanh(field)
+     * Get the hyperbolic tangent function: tanh(field).
      * <p>
      * This renders the tanh function where available:
      * <code><pre>tanh([field])</pre></code> ... or simulates it elsewhere using
@@ -5789,7 +5807,7 @@ public class Factory {
     }
 
     /**
-     * Get the hyperbolic cotangent function: coth(field)
+     * Get the hyperbolic cotangent function: coth(field).
      *
      * @see #coth(Field)
      */
@@ -5799,7 +5817,7 @@ public class Factory {
     }
 
     /**
-     * Get the hyperbolic cotangent function: coth(field)
+     * Get the hyperbolic cotangent function: coth(field).
      * <p>
      * This is not supported by any RDBMS, but simulated using exp exp:
      * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
@@ -5811,7 +5829,7 @@ public class Factory {
     }
 
     /**
-     * Calculate degrees from radians from this field
+     * Calculate degrees from radians from this field.
      *
      * @see #deg(Field)
      */
@@ -5821,7 +5839,7 @@ public class Factory {
     }
 
     /**
-     * Calculate degrees from radians from this field
+     * Calculate degrees from radians from this field.
      * <p>
      * This renders the degrees function where available:
      * <code><pre>degrees([field])</pre></code> ... or simulates it elsewhere:
@@ -5833,7 +5851,7 @@ public class Factory {
     }
 
     /**
-     * Calculate radians from degrees from this field
+     * Calculate radians from degrees from this field.
      *
      * @see #rad(Field)
      */
@@ -5843,7 +5861,7 @@ public class Factory {
     }
 
     /**
-     * Calculate radians from degrees from this field
+     * Calculate radians from degrees from this field.
      * <p>
      * This renders the degrees function where available:
      * <code><pre>degrees([field])</pre></code> ... or simulates it elsewhere:
@@ -5860,7 +5878,7 @@ public class Factory {
 
     /**
      * Retrieve the Oracle-specific <code>LEVEL</code> pseudo-field (to be used
-     * along with <code>CONNECT BY</code> clauses)
+     * along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
     public static Field<Integer> level() {
@@ -5869,7 +5887,7 @@ public class Factory {
 
     /**
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISCYCLE</code> pseudo-field
-     * (to be used along with <code>CONNECT BY</code> clauses)
+     * (to be used along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
     public static Field<Boolean> connectByIsCycle() {
@@ -5878,7 +5896,7 @@ public class Factory {
 
     /**
      * Retrieve the Oracle-specific <code>CONNECT_BY_ISLEAF</code> pseudo-field
-     * (to be used along with <code>CONNECT BY</code> clauses)
+     * (to be used along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
     public static Field<Boolean> connectByIsLeaf() {
@@ -5887,7 +5905,7 @@ public class Factory {
 
     /**
      * Retrieve the Oracle-specific <code>CONNECT_BY_ROOT</code> pseudo-column
-     * (to be used along with <code>CONNECT BY</code> clauses)
+     * (to be used along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
     public static <T> Field<T> connectByRoot(Field<T> field) {
@@ -5906,7 +5924,7 @@ public class Factory {
 
     /**
      * Add the Oracle-specific <code>PRIOR</code> unary operator before a field
-     * (to be used along with <code>CONNECT BY</code> clauses)
+     * (to be used along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
     public static <T> Field<T> prior(Field<T> field) {
@@ -5918,7 +5936,7 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * Get the count(*) function
+     * Get the count(*) function.
      */
     @Support
     public static AggregateFunction<Integer> count() {
@@ -5926,7 +5944,7 @@ public class Factory {
     }
 
     /**
-     * Get the count(field) function
+     * Get the count(field) function.
      */
     @Support
     public static AggregateFunction<Integer> count(Field<?> field) {
@@ -5934,7 +5952,7 @@ public class Factory {
     }
 
     /**
-     * Get the count(distinct field) function
+     * Get the count(distinct field) function.
      */
     @Support
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
@@ -5942,7 +5960,7 @@ public class Factory {
     }
 
     /**
-     * Get the count(distinct field1, field2) function
+     * Get the count(distinct field1, field2) function.
      * <p>
      * Some dialects support several expressions in the <code>COUNT(DISTINCT expr1, expr2)</code> aggregate function.
      */
@@ -5952,7 +5970,7 @@ public class Factory {
     }
 
     /**
-     * Get the max value over a field: max(field)
+     * Get the max value over a field: max(field).
      */
     @Support
     public static <T> AggregateFunction<T> max(Field<T> field) {
@@ -5960,7 +5978,7 @@ public class Factory {
     }
 
     /**
-     * Get the max value over a field: max(distinct field)
+     * Get the max value over a field: max(distinct field).
      */
     @Support
     public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
@@ -5968,7 +5986,7 @@ public class Factory {
     }
 
     /**
-     * Get the min value over a field: min(field)
+     * Get the min value over a field: min(field).
      */
     @Support
     public static <T> AggregateFunction<T> min(Field<T> field) {
@@ -5976,7 +5994,7 @@ public class Factory {
     }
 
     /**
-     * Get the min value over a field: min(distinct field)
+     * Get the min value over a field: min(distinct field).
      */
     @Support
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
@@ -5984,7 +6002,7 @@ public class Factory {
     }
 
     /**
-     * Get the sum over a numeric field: sum(field)
+     * Get the sum over a numeric field: sum(field).
      */
     @Support
     public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
@@ -5992,7 +6010,7 @@ public class Factory {
     }
 
     /**
-     * Get the sum over a numeric field: sum(distinct field)
+     * Get the sum over a numeric field: sum(distinct field).
      */
     @Support
     public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
@@ -6000,7 +6018,7 @@ public class Factory {
     }
 
     /**
-     * Get the average over a numeric field: avg(field)
+     * Get the average over a numeric field: avg(field).
      */
     @Support
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
@@ -6008,7 +6026,7 @@ public class Factory {
     }
 
     /**
-     * Get the average over a numeric field: avg(distinct field)
+     * Get the average over a numeric field: avg(distinct field).
      */
     @Support
     public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
@@ -6016,7 +6034,7 @@ public class Factory {
     }
 
     /**
-     * Get the median over a numeric field: median(field)
+     * Get the median over a numeric field: median(field).
      */
     @Support({ HSQLDB, ORACLE, SYBASE })
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
@@ -6024,7 +6042,7 @@ public class Factory {
     }
 
     /**
-     * Get the population standard deviation of a numeric field: stddev_pop(field)
+     * Get the population standard deviation of a numeric field: stddev_pop(field).
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
@@ -6032,7 +6050,7 @@ public class Factory {
     }
 
     /**
-     * Get the sample standard deviation of a numeric field: stddev_samp(field)
+     * Get the sample standard deviation of a numeric field: stddev_samp(field).
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
@@ -6040,7 +6058,7 @@ public class Factory {
     }
 
     /**
-     * Get the population variance of a numeric field: var_pop(field)
+     * Get the population variance of a numeric field: var_pop(field).
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
@@ -6048,7 +6066,7 @@ public class Factory {
     }
 
     /**
-     * Get the sample variance of a numeric field: var_samp(field)
+     * Get the sample variance of a numeric field: var_samp(field).
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
@@ -6056,7 +6074,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_SLOPE</code> linear regression function
+     * Get the <code>REGR_SLOPE</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6071,7 +6089,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_INTERCEPT</code> linear regression function
+     * Get the <code>REGR_INTERCEPT</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6086,7 +6104,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_COUNT</code> linear regression function
+     * Get the <code>REGR_COUNT</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6101,7 +6119,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_R2</code> linear regression function
+     * Get the <code>REGR_R2</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6116,7 +6134,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_AVGX</code> linear regression function
+     * Get the <code>REGR_AVGX</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6131,7 +6149,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_AVGY</code> linear regression function
+     * Get the <code>REGR_AVGY</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6146,7 +6164,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_SXX</code> linear regression function
+     * Get the <code>REGR_SXX</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6161,7 +6179,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_SYY</code> linear regression function
+     * Get the <code>REGR_SYY</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6176,7 +6194,7 @@ public class Factory {
     }
 
     /**
-     * Get the <code>REGR_SXY</code> linear regression function
+     * Get the <code>REGR_SXY</code> linear regression function.
      * <p>
      * The linear regression functions fit an ordinary-least-squares regression
      * line to a set of number pairs. You can use them as both aggregate and
@@ -6727,7 +6745,7 @@ public class Factory {
     }
 
     /**
-     * Get a bind value
+     * Get a bind value.
      * <p>
      * jOOQ tries to derive the RDBMS {@link DataType} from the provided Java
      * type <code>&lt;T&gt;</code>. This may not always be accurate, which can
@@ -6766,7 +6784,7 @@ public class Factory {
     }
 
     /**
-     * Get a bind value with an associated type, taken from a field
+     * Get a bind value with an associated type, taken from a field.
      *
      * @param <T> The generic value type
      * @param value The constant value
@@ -6780,7 +6798,7 @@ public class Factory {
     }
 
     /**
-     * Get a bind value with an associated type, taken from a field
+     * Get a bind value with an associated type, taken from a field.
      *
      * @param <T> The generic value type
      * @param value The constant value
@@ -6794,7 +6812,7 @@ public class Factory {
     }
 
     /**
-     * Get a bind value with an associated type
+     * Get a bind value with an associated type.
      * <p>
      * This will try to bind <code>value</code> as <code>type</code> in a
      * <code>PreparedStatement</code>. If <code>value</code> and
@@ -6831,7 +6849,7 @@ public class Factory {
 
     /**
      * Get the "most specific" data type between a concrete value and an actual
-     * coercion data type
+     * coercion data type.
      * <p>
      * [#2007] When coercing a (previously converted) value to a type, it may be that
      * the type is still more general than the actual type. This is typically
@@ -6857,7 +6875,7 @@ public class Factory {
     }
 
     /**
-     * Get a list of bind values and fields
+     * Get a list of bind values and fields.
      */
     @Support
     public static List<Field<?>> vals(Object... values) {
@@ -6880,7 +6898,7 @@ public class Factory {
     }
 
     /**
-     * Get a list of bind values for a matching list of fields
+     * Get a list of bind values for a matching list of fields.
      */
     @Support
     public static List<Field<?>> vals(Object[] values, Field<?>[] fields) {
@@ -6896,7 +6914,7 @@ public class Factory {
     }
 
     /**
-     * Get a list of bind values for a matching list of types
+     * Get a list of bind values for a matching list of types.
      */
     @Support
     public static List<Field<?>> vals(Object[] values, Class<?>[] types) {
@@ -6912,7 +6930,7 @@ public class Factory {
     }
 
     /**
-     * Get a list of bind values for a matching list of types
+     * Get a list of bind values for a matching list of types.
      */
     @Support
     public static List<Field<?>> vals(Object[] values, DataType<?>[] types) {
@@ -6929,7 +6947,7 @@ public class Factory {
 
 // [jooq-tools] START [row-value]
     /**
-     * Create a row value expression of degree <code>1</code>
+     * Create a row value expression of degree <code>1</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -6942,7 +6960,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>2</code>
+     * Create a row value expression of degree <code>2</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -6955,7 +6973,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>3</code>
+     * Create a row value expression of degree <code>3</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -6968,7 +6986,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>4</code>
+     * Create a row value expression of degree <code>4</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -6981,7 +6999,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>5</code>
+     * Create a row value expression of degree <code>5</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -6994,7 +7012,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>6</code>
+     * Create a row value expression of degree <code>6</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7007,7 +7025,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>7</code>
+     * Create a row value expression of degree <code>7</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7020,7 +7038,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>8</code>
+     * Create a row value expression of degree <code>8</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7033,7 +7051,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>9</code>
+     * Create a row value expression of degree <code>9</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7046,7 +7064,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>10</code>
+     * Create a row value expression of degree <code>10</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7059,7 +7077,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>11</code>
+     * Create a row value expression of degree <code>11</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7072,7 +7090,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>12</code>
+     * Create a row value expression of degree <code>12</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7085,7 +7103,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>13</code>
+     * Create a row value expression of degree <code>13</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7098,7 +7116,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>14</code>
+     * Create a row value expression of degree <code>14</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7111,7 +7129,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>15</code>
+     * Create a row value expression of degree <code>15</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7124,7 +7142,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>16</code>
+     * Create a row value expression of degree <code>16</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7137,7 +7155,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>17</code>
+     * Create a row value expression of degree <code>17</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7150,7 +7168,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>18</code>
+     * Create a row value expression of degree <code>18</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7163,7 +7181,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>19</code>
+     * Create a row value expression of degree <code>19</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7176,7 +7194,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>20</code>
+     * Create a row value expression of degree <code>20</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7189,7 +7207,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>21</code>
+     * Create a row value expression of degree <code>21</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7202,7 +7220,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>22</code>
+     * Create a row value expression of degree <code>22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7217,7 +7235,7 @@ public class Factory {
 // [jooq-tools] END [row-value]
 
     /**
-     * Create a row value expression of degree <code>N > 8</code>
+     * Create a row value expression of degree <code>N > 22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7230,7 +7248,7 @@ public class Factory {
 
 // [jooq-tools] START [row-field]
     /**
-     * Create a row value expression of degree <code>1</code>
+     * Create a row value expression of degree <code>1</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7243,7 +7261,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>2</code>
+     * Create a row value expression of degree <code>2</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7256,7 +7274,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>3</code>
+     * Create a row value expression of degree <code>3</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7269,7 +7287,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>4</code>
+     * Create a row value expression of degree <code>4</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7282,7 +7300,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>5</code>
+     * Create a row value expression of degree <code>5</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7295,7 +7313,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>6</code>
+     * Create a row value expression of degree <code>6</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7308,7 +7326,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>7</code>
+     * Create a row value expression of degree <code>7</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7321,7 +7339,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>8</code>
+     * Create a row value expression of degree <code>8</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7334,7 +7352,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>9</code>
+     * Create a row value expression of degree <code>9</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7347,7 +7365,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>10</code>
+     * Create a row value expression of degree <code>10</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7360,7 +7378,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>11</code>
+     * Create a row value expression of degree <code>11</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7373,7 +7391,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>12</code>
+     * Create a row value expression of degree <code>12</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7386,7 +7404,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>13</code>
+     * Create a row value expression of degree <code>13</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7399,7 +7417,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>14</code>
+     * Create a row value expression of degree <code>14</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7412,7 +7430,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>15</code>
+     * Create a row value expression of degree <code>15</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7425,7 +7443,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>16</code>
+     * Create a row value expression of degree <code>16</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7438,7 +7456,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>17</code>
+     * Create a row value expression of degree <code>17</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7451,7 +7469,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>18</code>
+     * Create a row value expression of degree <code>18</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7464,7 +7482,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>19</code>
+     * Create a row value expression of degree <code>19</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7477,7 +7495,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>20</code>
+     * Create a row value expression of degree <code>20</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7490,7 +7508,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>21</code>
+     * Create a row value expression of degree <code>21</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7503,7 +7521,7 @@ public class Factory {
     }
 
     /**
-     * Create a row value expression of degree <code>22</code>
+     * Create a row value expression of degree <code>22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7518,7 +7536,7 @@ public class Factory {
 // [jooq-tools] END [row-field]
 
     /**
-     * Create a row value expression of degree <code>N > 8</code>
+     * Create a row value expression of degree <code>N > 22</code>.
      * <p>
      * Note: Not all databases support row value expressions, but many row value
      * expression operations can be simulated on all databases. See relevant row
@@ -7535,7 +7553,7 @@ public class Factory {
 
 // [jooq-tools] START [values]
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>1</code>
+     * Create a <code>VALUES()</code> expression of degree <code>1</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7567,7 +7585,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>2</code>
+     * Create a <code>VALUES()</code> expression of degree <code>2</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7599,7 +7617,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>3</code>
+     * Create a <code>VALUES()</code> expression of degree <code>3</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7631,7 +7649,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>4</code>
+     * Create a <code>VALUES()</code> expression of degree <code>4</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7663,7 +7681,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>5</code>
+     * Create a <code>VALUES()</code> expression of degree <code>5</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7695,7 +7713,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>6</code>
+     * Create a <code>VALUES()</code> expression of degree <code>6</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7727,7 +7745,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>7</code>
+     * Create a <code>VALUES()</code> expression of degree <code>7</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7759,7 +7777,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>8</code>
+     * Create a <code>VALUES()</code> expression of degree <code>8</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7791,7 +7809,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>9</code>
+     * Create a <code>VALUES()</code> expression of degree <code>9</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7823,7 +7841,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>10</code>
+     * Create a <code>VALUES()</code> expression of degree <code>10</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7855,7 +7873,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>11</code>
+     * Create a <code>VALUES()</code> expression of degree <code>11</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7887,7 +7905,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>12</code>
+     * Create a <code>VALUES()</code> expression of degree <code>12</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7919,7 +7937,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>13</code>
+     * Create a <code>VALUES()</code> expression of degree <code>13</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7951,7 +7969,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>14</code>
+     * Create a <code>VALUES()</code> expression of degree <code>14</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -7983,7 +8001,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>15</code>
+     * Create a <code>VALUES()</code> expression of degree <code>15</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -8015,7 +8033,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>16</code>
+     * Create a <code>VALUES()</code> expression of degree <code>16</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -8047,7 +8065,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>17</code>
+     * Create a <code>VALUES()</code> expression of degree <code>17</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -8079,7 +8097,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>18</code>
+     * Create a <code>VALUES()</code> expression of degree <code>18</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -8111,7 +8129,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>19</code>
+     * Create a <code>VALUES()</code> expression of degree <code>19</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -8143,7 +8161,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>20</code>
+     * Create a <code>VALUES()</code> expression of degree <code>20</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -8175,7 +8193,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>21</code>
+     * Create a <code>VALUES()</code> expression of degree <code>21</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -8207,7 +8225,7 @@ public class Factory {
     }
 
     /**
-     * Create a <code>VALUES()</code> expression of degree <code>22</code>
+     * Create a <code>VALUES()</code> expression of degree <code>22</code>.
      * <p>
      * The <code>VALUES()</code> constructor is a tool supported by some
      * databases to allow for constructing tables from constant values.
@@ -8245,21 +8263,21 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * Get the null field
+     * Get the null field.
      */
     static Field<?> NULL() {
         return field("null");
     }
 
     /**
-     * Null-safety of a field
+     * Null-safety of a field.
      */
     protected static <T> Field<T> nullSafe(Field<T> field) {
         return field == null ? val((T) null) : field;
     }
 
     /**
-     * Null-safety of a field
+     * Null-safety of a field.
      */
     protected static Field<?>[] nullSafe(Field<?>... fields) {
         Field<?>[] result = new Field<?>[fields.length];
@@ -8272,7 +8290,7 @@ public class Factory {
     }
 
     /**
-     * Get a default data type if a field is null
+     * Get a default data type if a field is null.
      */
     protected static <T> DataType<T> nullSafeDataType(Field<T> field) {
         return (DataType<T>) (field == null ? SQLDataType.OTHER : field.getDataType());
@@ -8336,7 +8354,7 @@ public class Factory {
     }
 
     /**
-     * The <code>E</code> literal (Euler number)
+     * The <code>E</code> literal (Euler number).
      * <p>
      * This will be any of the following:
      * <ul>
@@ -8354,7 +8372,7 @@ public class Factory {
     // -------------------------------------------------------------------------
 
     /**
-     * Get the current_user() function
+     * Get the current_user() function.
      * <p>
      * This translates into any dialect
      */
@@ -8378,7 +8396,7 @@ public class Factory {
     }
 
     /**
-     * No instances
+     * No instances.
      */
     protected Factory() {}
 }

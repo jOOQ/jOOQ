@@ -169,7 +169,7 @@ class Factory extends Generators {
             out.append('''
             
                 /**
-                 * Create a row value expression of degree <code>«degree»</code>
+                 * Create a row value expression of degree <code>«degree»</code>.
                  * <p>
                  * Note: Not all databases support row value expressions, but many row value
                  * expression operations can be simulated on all databases. See relevant row
@@ -193,7 +193,7 @@ class Factory extends Generators {
             out.append('''
             
                 /**
-                 * Create a row value expression of degree <code>«degree»</code>
+                 * Create a row value expression of degree <code>«degree»</code>.
                  * <p>
                  * Note: Not all databases support row value expressions, but many row value
                  * expression operations can be simulated on all databases. See relevant row
@@ -217,7 +217,7 @@ class Factory extends Generators {
             out.append('''
             
                 /**
-                 * Create a <code>VALUES()</code> expression of degree <code>«degree»</code>
+                 * Create a <code>VALUES()</code> expression of degree <code>«degree»</code>.
                  * <p>
                  * The <code>VALUES()</code> constructor is a tool supported by some
                  * databases to allow for constructing tables from constant values.

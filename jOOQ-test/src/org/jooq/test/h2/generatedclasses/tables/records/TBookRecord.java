@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBook {
 
-	private static final long serialVersionUID = 431509088;
+	private static final long serialVersionUID = 505483895;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK.ID</code>. The book ID
@@ -26,7 +26,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getAuthorId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getCoAuthorId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getDetailsId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.String getTitle() {
-		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getPublishedIn() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getLanguageId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.String getContentText() {
-		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public byte[] getContentPdf() {
-		return (byte[]) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getRecVersion() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_VERSION);
+		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.sql.Timestamp getRecTimestamp() {
-		return (java.sql.Timestamp) getValue(org.jooq.test.h2.generatedclasses.tables.TBook.REC_TIMESTAMP);
+		return (java.sql.Timestamp) getValue(10);
 	}
 
 	// -------------------------------------------------------------------------

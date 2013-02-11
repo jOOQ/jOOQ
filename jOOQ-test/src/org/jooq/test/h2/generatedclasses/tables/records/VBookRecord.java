@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.h2.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = -1946531840;
+	private static final long serialVersionUID = 76625349;
 
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>. 
@@ -24,7 +24,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getAuthorId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getCoAuthorId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getDetailsId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.String getTitle() {
-		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getPublishedIn() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getLanguageId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.String getContentText() {
-		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public byte[] getContentPdf() {
-		return (byte[]) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getRecVersion() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.REC_VERSION);
+		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.sql.Timestamp getRecTimestamp() {
-		return (java.sql.Timestamp) getValue(org.jooq.test.h2.generatedclasses.tables.VBook.REC_TIMESTAMP);
+		return (java.sql.Timestamp) getValue(10);
 	}
 
 	// -------------------------------------------------------------------------

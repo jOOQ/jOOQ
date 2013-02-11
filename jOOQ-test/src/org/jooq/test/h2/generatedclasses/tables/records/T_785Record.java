@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = 121743650;
+	private static final long serialVersionUID = -1800725974;
 
 	/**
 	 * Setter for <code>PUBLIC.T_785.ID</code>. 
@@ -24,7 +24,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.T_785.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.String getName() {
-		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.T_785.NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	@Override
 	public java.lang.String getValue() {
-		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.T_785.VALUE);
+		return (java.lang.String) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------

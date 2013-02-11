@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> implements org.jooq.Record11<java.lang.Integer, org.jooq.test._.converters.Boolean_10, org.jooq.test._.converters.Boolean_TF_LC, org.jooq.test._.converters.Boolean_TF_UC, org.jooq.test._.converters.Boolean_YES_NO_LC, org.jooq.test._.converters.Boolean_YES_NO_UC, org.jooq.test._.converters.Boolean_YN_LC, org.jooq.test._.converters.Boolean_YN_UC, java.lang.Boolean, java.lang.Boolean, java.lang.Boolean>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -384242430;
+	private static final long serialVersionUID = -300760020;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOLEANS.ID</code>. 
@@ -24,7 +24,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_10 getOneZero() {
-		return (org.jooq.test._.converters.Boolean_10) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.ONE_ZERO);
+		return (org.jooq.test._.converters.Boolean_10) getValue(1);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_TF_LC getTrueFalseLc() {
-		return (org.jooq.test._.converters.Boolean_TF_LC) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.TRUE_FALSE_LC);
+		return (org.jooq.test._.converters.Boolean_TF_LC) getValue(2);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_TF_UC getTrueFalseUc() {
-		return (org.jooq.test._.converters.Boolean_TF_UC) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.TRUE_FALSE_UC);
+		return (org.jooq.test._.converters.Boolean_TF_UC) getValue(3);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YES_NO_LC getYesNoLc() {
-		return (org.jooq.test._.converters.Boolean_YES_NO_LC) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.YES_NO_LC);
+		return (org.jooq.test._.converters.Boolean_YES_NO_LC) getValue(4);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YES_NO_UC getYesNoUc() {
-		return (org.jooq.test._.converters.Boolean_YES_NO_UC) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.YES_NO_UC);
+		return (org.jooq.test._.converters.Boolean_YES_NO_UC) getValue(5);
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YN_LC getYNLc() {
-		return (org.jooq.test._.converters.Boolean_YN_LC) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.Y_N_LC);
+		return (org.jooq.test._.converters.Boolean_YN_LC) getValue(6);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.test._.converters.Boolean_YN_UC getYNUc() {
-		return (org.jooq.test._.converters.Boolean_YN_UC) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.Y_N_UC);
+		return (org.jooq.test._.converters.Boolean_YN_UC) getValue(7);
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Boolean getVcBoolean() {
-		return (java.lang.Boolean) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.VC_BOOLEAN);
+		return (java.lang.Boolean) getValue(8);
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Boolean getCBoolean() {
-		return (java.lang.Boolean) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.C_BOOLEAN);
+		return (java.lang.Boolean) getValue(9);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class TBooleansRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Boolean getNBoolean() {
-		return (java.lang.Boolean) getValue(org.jooq.test.h2.generatedclasses.tables.TBooleans.N_BOOLEAN);
+		return (java.lang.Boolean) getValue(10);
 	}
 
 	// -------------------------------------------------------------------------

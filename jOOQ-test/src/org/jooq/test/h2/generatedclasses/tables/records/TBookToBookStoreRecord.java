@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = -154767967;
+	private static final long serialVersionUID = 484782739;
 
 	/**
 	 * Setter for <code>PUBLIC.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
@@ -26,7 +26,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public java.lang.String getBookStoreName() {
-		return (java.lang.String) getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public java.lang.Integer getBookId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.BOOK_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public java.lang.Integer getStock() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TBookToBookStore.STOCK);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------

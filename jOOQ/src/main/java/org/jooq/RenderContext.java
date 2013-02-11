@@ -39,11 +39,10 @@ import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.Settings;
 
 /**
- * The render context is used for rendering {@link QueryPart}'s to SQL. A new
- * render context is instanciated every time a {@link Query} is rendered.
- * <code>QueryPart</code>'s will then pass the same context to their components
+ * The render context is used for rendering {@link QueryPart}'s to SQL.
  * <p>
- * This interface is for JOOQ INTERNAL USE only. Do not reference directly
+ * A new render context is instanciated every time a {@link Query} is rendered.
+ * <code>QueryPart</code>'s will then pass the same context to their components
  *
  * @author Lukas Eder
  * @see BindContext

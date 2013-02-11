@@ -451,24 +451,28 @@ public class Executor implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Get a new {@link RenderContext} for the context of this executor
+     * Get a new {@link RenderContext} for the context of this executor.
      * <p>
      * This will return an initialised render context as such:
      * <ul>
+     * <li>
+     * <code>{@link RenderContext#castMode()} == {@link org.jooq.RenderContext.CastMode#DEFAULT DEFAULT}</code>
+     * </li>
      * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
      * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
+     * <li> <code>{@link RenderContext#format()} == false</code></li>
      * <li> <code>{@link RenderContext#inline()} == false</code></li>
      * <li> <code>{@link RenderContext#namedParams()} == false</code></li>
+     * <li> <code>{@link RenderContext#qualify()} == true</code></li>
+     * <li> <code>{@link RenderContext#subquery()} == false</code></li>
      * </ul>
-     * <p>
-     * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
      */
     public final RenderContext renderContext() {
         return new DefaultRenderContext(this);
     }
 
     /**
-     * Render a QueryPart in the context of this executor
+     * Render a QueryPart in the context of this executor.
      * <p>
      * This is the same as calling <code>renderContext().render(part)</code>
      *
@@ -509,7 +513,7 @@ public class Executor implements Configuration {
 
     /**
      * Retrieve the bind values that will be bound by a given
-     * <code>QueryPart</code>
+     * <code>QueryPart</code>.
      * <p>
      * The returned <code>List</code> is immutable. To modify bind values, use
      * {@link #extractParams(QueryPart)} instead.
@@ -525,7 +529,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Get a <code>Map</code> of named parameters
+     * Get a <code>Map</code> of named parameters.
      * <p>
      * The <code>Map</code> itself is immutable, but the {@link Param} elements
      * allow for modifying bind values on an existing {@link Query} (or any
@@ -557,7 +561,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Get a new {@link BindContext} for the context of this executor
+     * Get a new {@link BindContext} for the context of this executor.
      * <p>
      * This will return an initialised bind context as such:
      * <ul>
@@ -572,7 +576,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Get a new {@link BindContext} for the context of this executor
+     * Get a new {@link BindContext} for the context of this executor.
      * <p>
      * This will return an initialised bind context as such:
      * <ul>
@@ -591,14 +595,14 @@ public class Executor implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Attach this <code>Executor</code> to some attachables
+     * Attach this <code>Executor</code> to some attachables.
      */
     public final void attach(Attachable... attachables) {
         attach(Arrays.asList(attachables));
     }
 
     /**
-     * Attach this <code>Executor</code> to some attachables
+     * Attach this <code>Executor</code> to some attachables.
      */
     public final void attach(Collection<? extends Attachable> attachables) {
         for (Attachable attachable : attachables) {
@@ -612,7 +616,7 @@ public class Executor implements Configuration {
 
     /**
      * Create a new <code>Loader</code> object to load data from a CSV or XML
-     * source
+     * source.
      */
     @Support
     public final <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
@@ -621,7 +625,7 @@ public class Executor implements Configuration {
 
     /**
      * Create a new query holding plain SQL. There must not be any binding
-     * variables contained in the SQL
+     * variables contained in the SQL.
      * <p>
      * Example:
      * <p>
@@ -643,7 +647,7 @@ public class Executor implements Configuration {
 
     /**
      * Create a new query holding plain SQL. There must be as many bind
-     * variables contained in the SQL, as passed in the bindings parameter
+     * variables contained in the SQL, as passed in the bindings parameter.
      * <p>
      * Example:
      * <p>

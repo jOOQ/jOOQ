@@ -24,6 +24,7 @@
             <schemata>
                 <schema>
                 	<inputSchema>TEST</inputSchema>
+                	<outputSchema></outputSchema>
                 </schema>
             </schemata>
         </database>

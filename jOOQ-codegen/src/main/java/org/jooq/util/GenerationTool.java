@@ -184,7 +184,7 @@ public class GenerationTool {
                     schema.setInputSchema(trim(j.getSchema()));
                 }
 
-                if (StringUtils.isBlank(schema.getOutputSchema())) {
+                if (schema.getOutputSchema() == null) {
                     schema.setOutputSchema(trim(schema.getInputSchema()));
                 }
             }

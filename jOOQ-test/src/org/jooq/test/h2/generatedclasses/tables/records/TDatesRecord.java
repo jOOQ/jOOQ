@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = 2024706677;
+	private static final long serialVersionUID = 23580977;
 
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.ID</code>. 
@@ -24,7 +24,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TDates.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.sql.Date getD() {
-		return (java.sql.Date) getValue(org.jooq.test.h2.generatedclasses.tables.TDates.D);
+		return (java.sql.Date) getValue(1);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.sql.Time getT() {
-		return (java.sql.Time) getValue(org.jooq.test.h2.generatedclasses.tables.TDates.T);
+		return (java.sql.Time) getValue(2);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.sql.Timestamp getTs() {
-		return (java.sql.Timestamp) getValue(org.jooq.test.h2.generatedclasses.tables.TDates.TS);
+		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.lang.Integer getDInt() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TDates.D_INT);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.lang.Long getTsBigint() {
-		return (java.lang.Long) getValue(org.jooq.test.h2.generatedclasses.tables.TDates.TS_BIGINT);
+		return (java.lang.Long) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------

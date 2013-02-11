@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITIdentity {
 
-	private static final long serialVersionUID = 1353449312;
+	private static final long serialVersionUID = 88496209;
 
 	/**
 	 * Setter for <code>PUBLIC.T_IDENTITY.ID</code>. 
@@ -24,7 +24,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TIdentity.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getVal() {
-		return (java.lang.Integer) getValue(org.jooq.test.h2.generatedclasses.tables.TIdentity.VAL);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------

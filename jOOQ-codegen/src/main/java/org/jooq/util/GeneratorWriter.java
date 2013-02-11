@@ -217,15 +217,6 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
         return (W) this;
     }
 
-    @Deprecated
-    public final boolean println(boolean doPrint) {
-        if (doPrint) {
-            println();
-        }
-
-        return false;
-    }
-
     @SuppressWarnings("unchecked")
     public final W tab(int tabs) {
         this.indentTabs = tabs;

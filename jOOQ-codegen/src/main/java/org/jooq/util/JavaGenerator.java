@@ -506,7 +506,6 @@ public class JavaGenerator extends AbstractGenerator {
             final String setter = getStrategy().getJavaSetterName(column, Mode.DEFAULT);
             final String getter = getStrategy().getJavaGetterName(column, Mode.DEFAULT);
             final String type = getJavaType(column.getType());
-            final String id = getStrategy().getFullJavaIdentifier(column);
             final String name = column.getQualifiedOutputName();
 
             out.tab(1).javadoc("Setter for <code>%s</code>. %s", name, comment);
@@ -517,9 +516,10 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(1).javadoc("Getter for <code>%s</code>. %s", name, comment);
             printColumnJPAAnnotation(out, column);
+            printColumnValidationAnnotation(out, column);
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", type, getter);
-            out.tab(2).println("return (%s) getValue(%s);", type, id);
+            out.tab(2).println("return (%s) getValue(%s);", type, i);
             out.tab(1).println("}");
         }
 
@@ -646,6 +646,7 @@ public class JavaGenerator extends AbstractGenerator {
 
             out.tab(1).javadoc("Getter for <code>%s</code>. %s", name, comment);
             printColumnJPAAnnotation(out, column);
+            printColumnValidationAnnotation(out, column);
             out.tab(1).println("public %s %s();", type, getter);
         }
 
@@ -1269,8 +1270,6 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         for (ColumnDefinition column : table.getColumns()) {
-            printColumnValidationAnnotation(out, column);
-
             out.tab(1).println("private %s%s %s;",
                 generateImmutablePojos() ? "final " : "",
                 StringUtils.rightPad(getJavaType(column.getType()), maxLength),
@@ -1313,6 +1312,7 @@ public class JavaGenerator extends AbstractGenerator {
             // Getter
             out.println();
             printColumnJPAAnnotation(out, column);
+            printColumnValidationAnnotation(out, column);
             out.tab(1).overrideIf(generateInterfaces());
             out.tab(1).println("public %s %s() {", columnType, columnGetter);
             out.tab(2).println("return this.%s;", columnMember);
@@ -1727,9 +1727,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateValidationAnnotations()) {
             DataTypeDefinition type = column.getType();
 
-            boolean newline = true;
             if (!column.isNullable()) {
-                newline = out.println(newline);
                 out.tab(1).println("@javax.validation.constraints.NotNull");
             }
 
@@ -1737,7 +1735,6 @@ public class JavaGenerator extends AbstractGenerator {
                 int length = type.getLength();
 
                 if (length > 0) {
-                    newline = out.println(newline);
                     out.tab(1).println("@javax.validation.constraints.Size(max = %s)", length);
                 }
             }

@@ -155,7 +155,8 @@
             <records>true</records>
             <pojos>false</pojos>
             <interfaces>true</interfaces>
-            <jpaAnnotations>false</jpaAnnotations>
+            <jpaAnnotations>true</jpaAnnotations>
+            <validationAnnotations>true</validationAnnotations>
         </generate>
         <target>
             <packageName>org.jooq.test.firebird.generatedclasses</packageName>

@@ -6672,6 +6672,8 @@ public class Factory {
      */
     @Support
     public static Param<String> inline(CharSequence character) {
+
+        // Delegate to inline(T)
         return (Param) inline((Object) ((character == null) ? null : ("" + character)));
     }
 

@@ -252,7 +252,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Create an executor with a dialect and settings configured
+     * Create an executor with a dialect and settings configured.
      * <p>
      * Without a connection or data source, this executor cannot execute
      * queries. Use it to render SQL only.
@@ -372,7 +372,7 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Create an executor from a custom configuration
+     * Create an executor from a custom configuration.
      *
      * @param configuration The configuration
      */
@@ -441,10 +441,15 @@ public class Executor implements Configuration {
     // XXX Convenience methods accessing the underlying Connection
     // -------------------------------------------------------------------------
 
+    /**
+     * Access the database meta data.
+     * <p>
+     * This method returns a wrapper type that gives access to your JDBC
+     * connection's database meta data.
+     */
     public final Meta meta() {
         return new MetaImpl(this);
     }
-
 
     // -------------------------------------------------------------------------
     // XXX RenderContext and BindContext accessors
@@ -728,8 +733,10 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Execute a new query holding plain SQL. There must be as many bind
-     * variables contained in the SQL, as passed in the bindings parameter
+     * Execute a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
      * <p>
      * Example (Postgres):
      * <p>
@@ -825,8 +832,10 @@ public class Executor implements Configuration {
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
-     * result. There must be as many bind variables contained in the SQL, as
-     * passed in the bindings parameter
+     * result.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
      * <p>
      * The returned {@link Cursor} holds a reference to the executed
      * {@link PreparedStatement} and the associated {@link ResultSet}. Data can
@@ -899,7 +908,7 @@ public class Executor implements Configuration {
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
-     * sets
+     * sets.
      * <p>
      * Example (Sybase ASE):
      * <p>
@@ -924,8 +933,10 @@ public class Executor implements Configuration {
 
     /**
      * Execute a new query holding plain SQL, possibly returning several result
-     * sets. There must be as many bind variables contained in the SQL, as
-     * passed in the bindings parameter
+     * sets.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
      * <p>
      * Example (Sybase ASE):
      * <p>
@@ -1012,8 +1023,10 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Execute a new query holding plain SQL. There must be as many bind
-     * variables contained in the SQL, as passed in the bindings parameter
+     * Execute a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
      * <p>
      * Example (Postgres):
      * <p>
@@ -1093,8 +1106,10 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Execute a new query holding plain SQL. There must be as many bind
-     * variables contained in the SQL, as passed in the bindings parameter
+     * Execute a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -1144,8 +1159,9 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Create a new query holding plain SQL. There must not be any binding
-     * variables contained in the SQL
+     * Create a new query holding plain SQL.
+     * <p>
+     * There must not be any binding variables contained in the SQL
      * <p>
      * Use this method, when you want to take advantage of the many ways to
      * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
@@ -1194,8 +1210,10 @@ public class Executor implements Configuration {
     }
 
     /**
-     * Create a new query holding plain SQL. There must be as many bind
-     * variables contained in the SQL, as passed in the bindings parameter
+     * Create a new query holding plain SQL.
+     * <p>
+     * There must be as many bind variables contained in the SQL, as passed in
+     * the bindings parameter
      * <p>
      * Use this method, when you want to take advantage of the many ways to
      * fetch results in jOOQ, using {@link ResultQuery}. Some examples:
@@ -1280,8 +1298,9 @@ public class Executor implements Configuration {
 
     /**
      * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Result}. After fetching all data, the JDBC ResultSet will be
-     * closed.
+     * {@link Result}.
+     * <p>
+     * After fetching all data, the JDBC ResultSet will be closed.
      * <p>
      * Use {@link #fetchLazy(ResultSet)}, to fetch one <code>Record</code> at a
      * time, instead of load the entire <code>ResultSet</code> into a jOOQ
@@ -1298,7 +1317,9 @@ public class Executor implements Configuration {
 
     /**
      * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Result}. After fetching all data, the JDBC ResultSet will be
+     * {@link Result}.
+     * <p>
+     * After fetching all data, the JDBC ResultSet will be
      * closed.
      * <p>
      * Use {@link #fetchLazy(ResultSet)}, to fetch one <code>Record</code> at a
@@ -1320,7 +1341,9 @@ public class Executor implements Configuration {
 
     /**
      * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Result}. After fetching all data, the JDBC ResultSet will be
+     * {@link Result}.
+     * <p>
+     * After fetching all data, the JDBC ResultSet will be
      * closed.
      * <p>
      * Use {@link #fetchLazy(ResultSet)}, to fetch one <code>Record</code> at a
@@ -1342,7 +1365,9 @@ public class Executor implements Configuration {
 
     /**
      * Fetch all data from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Result}. After fetching all data, the JDBC ResultSet will be
+     * {@link Result}.
+     * <p>
+     * After fetching all data, the JDBC ResultSet will be
      * closed.
      * <p>
      * Use {@link #fetchLazy(ResultSet)}, to fetch one <code>Record</code> at a
@@ -1364,7 +1389,9 @@ public class Executor implements Configuration {
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Record}. This will internally fetch all records and throw an
+     * {@link Record}.
+     * <p>
+     * This will internally fetch all records and throw an
      * exception if there was more than one resulting record.
      *
      * @param rs The JDBC ResultSet to fetch data from
@@ -1379,7 +1406,9 @@ public class Executor implements Configuration {
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Record}. This will internally fetch all records and throw an
+     * {@link Record}.
+     * <p>
+     * This will internally fetch all records and throw an
      * exception if there was more than one resulting record.
      * <p>
      * The additional <code>fields</code> argument is used by jOOQ to coerce
@@ -1398,7 +1427,9 @@ public class Executor implements Configuration {
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Record}. This will internally fetch all records and throw an
+     * {@link Record}.
+     * <p>
+     * This will internally fetch all records and throw an
      * exception if there was more than one resulting record.
      * <p>
      * The additional <code>types</code> argument is used by jOOQ to coerce
@@ -1417,7 +1448,9 @@ public class Executor implements Configuration {
 
     /**
      * Fetch a record from a JDBC {@link ResultSet} and transform it to a jOOQ
-     * {@link Record}. This will internally fetch all records and throw an
+     * {@link Record}.
+     * <p>
+     * This will internally fetch all records and throw an
      * exception if there was more than one resulting record.
      * <p>
      * The additional <code>types</code> argument is used by jOOQ to coerce
@@ -1636,7 +1669,7 @@ public class Executor implements Configuration {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new DSL select statement
+     * Create a new DSL select statement.
      * <p>
      * Example: <code><pre>
      * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]

@@ -8,28 +8,28 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_TEST_CASE_71", schema = "TEST")
+@javax.persistence.Table(name = "X_TEST_CASE_71")
 public interface X_TEST_CASE_71_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_71.ID</code>. 
+	 * Setter for <code>X_TEST_CASE_71.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_71.ID</code>. 
+	 * Getter for <code>X_TEST_CASE_71.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	public void setTEST_CASE_64_69_ID(java.lang.Short value);
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "TEST_CASE_64_69_ID", precision = 4)
 	public java.lang.Short getTEST_CASE_64_69_ID();

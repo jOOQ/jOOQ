@@ -8,38 +8,38 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_785", schema = "TEST")
+@javax.persistence.Table(name = "T_785")
 public interface T_785_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.T_785.ID</code>. 
+	 * Setter for <code>T_785.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_785.ID</code>. 
+	 * Getter for <code>T_785.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.T_785.NAME</code>. 
+	 * Setter for <code>T_785.NAME</code>. 
 	 */
 	public void setNAME(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.T_785.NAME</code>. 
+	 * Getter for <code>T_785.NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	public java.lang.String getNAME();
 
 	/**
-	 * Setter for <code>TEST.T_785.VALUE</code>. 
+	 * Setter for <code>T_785.VALUE</code>. 
 	 */
 	public void setVALUE(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.T_785.VALUE</code>. 
+	 * Getter for <code>T_785.VALUE</code>. 
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	public java.lang.String getVALUE();

@@ -9,12 +9,12 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_CREATE_AUTHOR extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1344065179;
+	private static final long serialVersionUID = -392555158;
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public P_CREATE_AUTHOR() {
-		super("P_CREATE_AUTHOR", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P_CREATE_AUTHOR", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

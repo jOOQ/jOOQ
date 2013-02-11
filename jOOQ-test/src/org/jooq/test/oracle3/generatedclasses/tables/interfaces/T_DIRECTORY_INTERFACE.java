@@ -8,50 +8,50 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
+@javax.persistence.Table(name = "T_DIRECTORY")
 public interface T_DIRECTORY_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
+	 * Setter for <code>T_DIRECTORY.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.ID</code>. 
+	 * Getter for <code>T_DIRECTORY.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
+	 * Setter for <code>T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	public void setPARENT_ID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
+	 * Getter for <code>T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
 	public java.lang.Integer getPARENT_ID();
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
+	 * Setter for <code>T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	public void setIS_DIRECTORY(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
+	 * Getter for <code>T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	public java.lang.Integer getIS_DIRECTORY();
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.name</code>. 
+	 * Setter for <code>T_DIRECTORY.name</code>. 
 	 */
 	public void setname(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.name</code>. 
+	 * Getter for <code>T_DIRECTORY.name</code>. 
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
 	public java.lang.String getname();

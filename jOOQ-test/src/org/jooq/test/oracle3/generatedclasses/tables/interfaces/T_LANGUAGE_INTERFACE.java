@@ -10,49 +10,49 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
+@javax.persistence.Table(name = "T_LANGUAGE")
 public interface T_LANGUAGE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
+	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	public void setCD(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
+	 * Getter for <code>T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
 	public java.lang.String getCD();
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. The language description
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	public void setDESCRIPTION(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. The language description
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
 	public java.lang.String getDESCRIPTION();
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Setter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public void setDESCRIPTION_ENGLISH(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
+	 * Getter for <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
 	public java.lang.String getDESCRIPTION_ENGLISH();
 
 	/**
-	 * Setter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
+	 * Setter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
+	 * Getter for <code>T_LANGUAGE.ID</code>. The language ID
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)

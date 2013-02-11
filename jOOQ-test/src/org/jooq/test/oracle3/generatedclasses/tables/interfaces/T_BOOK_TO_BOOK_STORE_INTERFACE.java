@@ -10,40 +10,40 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", schema = "TEST", uniqueConstraints = {
+@javax.persistence.Table(name = "T_BOOK_TO_BOOK_STORE", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"BOOK_STORE_NAME", "BOOK_ID"})
 })
 public interface T_BOOK_TO_BOOK_STORE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	public void setBOOK_STORE_NAME(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. The book store name
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
 	public java.lang.String getBOOK_STORE_NAME();
 
 	/**
-	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	public void setBOOK_ID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. The book ID
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
 	public java.lang.Integer getBOOK_ID();
 
 	/**
-	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
+	 * Setter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	public void setSTOCK(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
+	 * Getter for <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. The number of books on stock
 	 */
 	@javax.persistence.Column(name = "STOCK", precision = 7)
 	public java.lang.Integer getSTOCK();

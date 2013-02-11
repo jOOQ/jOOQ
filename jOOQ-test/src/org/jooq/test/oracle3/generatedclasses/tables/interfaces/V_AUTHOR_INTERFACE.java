@@ -8,71 +8,71 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
+@javax.persistence.Table(name = "V_AUTHOR")
 public interface V_AUTHOR_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.ID</code>. 
+	 * Setter for <code>V_AUTHOR.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.ID</code>. 
+	 * Getter for <code>V_AUTHOR.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
+	 * Setter for <code>V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public void setFIRST_NAME(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
+	 * Getter for <code>V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFIRST_NAME();
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.LAST_NAME</code>. 
+	 * Setter for <code>V_AUTHOR.LAST_NAME</code>. 
 	 */
 	public void setLAST_NAME(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.LAST_NAME</code>. 
+	 * Getter for <code>V_AUTHOR.LAST_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLAST_NAME();
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Setter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public void setDATE_OF_BIRTH(java.sql.Date value);
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Getter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	public java.sql.Date getDATE_OF_BIRTH();
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Setter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public void setYEAR_OF_BIRTH(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Getter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	public java.lang.Integer getYEAR_OF_BIRTH();
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.ADDRESS</code>. 
+	 * Setter for <code>V_AUTHOR.ADDRESS</code>. 
 	 */
 	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value);
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.ADDRESS</code>. 
+	 * Getter for <code>V_AUTHOR.ADDRESS</code>. 
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 40)
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE getADDRESS();

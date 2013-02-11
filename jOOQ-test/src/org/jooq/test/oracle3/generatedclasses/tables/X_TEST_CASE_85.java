@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1413389012;
+	private static final long serialVersionUID = 333507092;
 
 	/**
-	 * The singleton instance of <code>TEST.X_TEST_CASE_85</code>
+	 * The singleton instance of <code>X_TEST_CASE_85</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85 X_TEST_CASE_85 = new org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85();
 
@@ -25,32 +25,32 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.te
 	}
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_85.ID</code>. 
+	 * The column <code>X_TEST_CASE_85.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * The column <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85, java.lang.Integer> X_UNUSED_ID = createField("X_UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * The column <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85, java.lang.String> X_UNUSED_NAME = createField("X_UNUSED_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
-	 * Create a <code>TEST.X_TEST_CASE_85</code> table reference
+	 * Create a <code>X_TEST_CASE_85</code> table reference
 	 */
 	public X_TEST_CASE_85() {
-		super("X_TEST_CASE_85", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("X_TEST_CASE_85", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.X_TEST_CASE_85</code> table reference
+	 * Create an aliased <code>X_TEST_CASE_85</code> table reference
 	 */
 	public X_TEST_CASE_85(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85);
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85);
 	}
 
 	/**

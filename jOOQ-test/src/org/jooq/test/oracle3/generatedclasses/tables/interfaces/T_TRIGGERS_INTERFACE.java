@@ -8,39 +8,39 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_TRIGGERS", schema = "TEST")
+@javax.persistence.Table(name = "T_TRIGGERS")
 public interface T_TRIGGERS_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
+	 * Setter for <code>T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public void setID_GENERATED(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
+	 * Getter for <code>T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID_GENERATED", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID_GENERATED();
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.ID</code>. 
+	 * Setter for <code>T_TRIGGERS.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.ID</code>. 
+	 * Getter for <code>T_TRIGGERS.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
+	 * Setter for <code>T_TRIGGERS.COUNTER</code>. 
 	 */
 	public void setCOUNTER(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
+	 * Getter for <code>T_TRIGGERS.COUNTER</code>. 
 	 */
 	@javax.persistence.Column(name = "COUNTER", nullable = false, precision = 7)
 	public java.lang.Integer getCOUNTER();

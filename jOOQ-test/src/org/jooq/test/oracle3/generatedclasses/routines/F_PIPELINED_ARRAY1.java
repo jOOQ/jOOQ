@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F_PIPELINED_ARRAY1 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -896618247;
+	private static final long serialVersionUID = -167306148;
 
 	/**
-	 * The parameter <code>TEST.F_PIPELINED_ARRAY1.RETURN_VALUE</code>. 
+	 * The parameter <code>F_PIPELINED_ARRAY1.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
@@ -20,7 +20,7 @@ public class F_PIPELINED_ARRAY1 extends org.jooq.impl.AbstractRoutine<org.jooq.t
 	 * Create a new routine call instance
 	 */
 	public F_PIPELINED_ARRAY1() {
-		super("F_PIPELINED_ARRAY1", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
+		super("F_PIPELINED_ARRAY1", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
 		setReturnParameter(RETURN_VALUE);
 	}

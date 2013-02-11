@@ -9,17 +9,17 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings("all")
 public class U_NUMBER_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang.Integer> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -239743929;
+	private static final long serialVersionUID = 887578976;
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_ARRAY</code> record
+	 * Create a new <code>U_NUMBER_ARRAY</code> record
 	 */
 	public U_NUMBER_ARRAY(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_NUMBER_ARRAY", org.jooq.impl.SQLDataType.INTEGER, configuration);
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_NUMBER_ARRAY", org.jooq.impl.SQLDataType.INTEGER, configuration);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_ARRAY</code> record
+	 * Create a new <code>U_NUMBER_ARRAY</code> record
 	 */
 	public U_NUMBER_ARRAY(org.jooq.Configuration configuration, java.lang.Integer... array) {
 		this(configuration);
@@ -27,7 +27,7 @@ public class U_NUMBER_ARRAY extends org.jooq.impl.ArrayRecordImpl<java.lang.Inte
 	}
 
 	/**
-	 * Create a new <code>TEST.U_NUMBER_ARRAY</code> record
+	 * Create a new <code>U_NUMBER_ARRAY</code> record
 	 */
 	public U_NUMBER_ARRAY(org.jooq.Configuration configuration, java.util.List<? extends java.lang.Integer> list) {
 		this(configuration);

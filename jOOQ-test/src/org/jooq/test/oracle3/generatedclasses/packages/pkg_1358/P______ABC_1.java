@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.packages.pkg_1358;
 @java.lang.SuppressWarnings("all")
 public class P______ABC_1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1394060552;
+	private static final long serialVersionUID = -1634400463;
 
 	/**
-	 * The parameter <code>TEST.PKG_1358.P.I</code>. 
+	 * The parameter <code>PKG_1358.P.I</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> I = createParameter("I", org.jooq.impl.SQLDataType.VARCHAR);
 
@@ -20,7 +20,7 @@ public class P______ABC_1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> 
 	 * Create a new routine call instance
 	 */
 	public P______ABC_1() {
-		super("P", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.packages.PKG_1358.PKG_1358);
+		super("P", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.packages.PKG_1358.PKG_1358);
 
 		addInParameter(I);
 		setOverloaded(true);

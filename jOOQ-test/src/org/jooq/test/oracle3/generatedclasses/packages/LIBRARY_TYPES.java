@@ -11,10 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.packages;
 @java.lang.SuppressWarnings("all")
 public final class LIBRARY_TYPES extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1765212610;
+	private static final long serialVersionUID = 1825251445;
 
 	/**
-	 * The singleton instance of <code>TEST.LIBRARY_TYPES</code>
+	 * The singleton instance of <code>LIBRARY_TYPES</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_TYPES LIBRARY_TYPES = new org.jooq.test.oracle3.generatedclasses.packages.LIBRARY_TYPES();
 
@@ -22,6 +22,6 @@ public final class LIBRARY_TYPES extends org.jooq.impl.PackageImpl implements ja
 	 * No further instances allowed
 	 */
 	private LIBRARY_TYPES() {
-		super("LIBRARY_TYPES", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("LIBRARY_TYPES", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

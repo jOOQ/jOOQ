@@ -11,10 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class X_UNUSED extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1349064448;
+	private static final long serialVersionUID = 1406476454;
 
 	/**
-	 * The singleton instance of <code>TEST.X_UNUSED</code>
+	 * The singleton instance of <code>X_UNUSED</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED X_UNUSED = new org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED();
 
@@ -27,97 +27,97 @@ public class X_UNUSED extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ora
 	}
 
 	/**
-	 * The column <code>TEST.X_UNUSED.ID</code>. 
+	 * The column <code>X_UNUSED.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.NAME</code>. 
+	 * The column <code>X_UNUSED.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.BIG_INTEGER</code>. 
+	 * The column <code>X_UNUSED.BIG_INTEGER</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.math.BigInteger> BIG_INTEGER = createField("BIG_INTEGER", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38), this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.ID_REF</code>. 
+	 * The column <code>X_UNUSED.ID_REF</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> ID_REF = createField("ID_REF", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.CLASS</code>. 
+	 * The column <code>X_UNUSED.CLASS</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> CLASS = createField("CLASS", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.FIELDS</code>. 
+	 * The column <code>X_UNUSED.FIELDS</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> FIELDS = createField("FIELDS", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.CONFIGURATION</code>. 
+	 * The column <code>X_UNUSED.CONFIGURATION</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> CONFIGURATION = createField("CONFIGURATION", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.U_D_T</code>. 
+	 * The column <code>X_UNUSED.U_D_T</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> U_D_T = createField("U_D_T", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.META_DATA</code>. 
+	 * The column <code>X_UNUSED.META_DATA</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> META_DATA = createField("META_DATA", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.TYPE0</code>. 
+	 * The column <code>X_UNUSED.TYPE0</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> TYPE0 = createField("TYPE0", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.PRIMARY_KEY</code>. 
+	 * The column <code>X_UNUSED.PRIMARY_KEY</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> PRIMARY_KEY = createField("PRIMARY_KEY", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.PRIMARYKEY</code>. 
+	 * The column <code>X_UNUSED.PRIMARYKEY</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> PRIMARYKEY = createField("PRIMARYKEY", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.NAME_REF</code>. 
+	 * The column <code>X_UNUSED.NAME_REF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.String> NAME_REF = createField("NAME_REF", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.FIELD 737</code>. 
+	 * The column <code>X_UNUSED.FIELD 737</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.math.BigDecimal> FIELD_737 = createField("FIELD 737", org.jooq.impl.SQLDataType.NUMERIC.precision(25, 2), this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>. 
+	 * The column <code>X_UNUSED.MS_UNUSED_ID_REF</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.Integer> MS_UNUSED_ID_REF = createField("MS_UNUSED_ID_REF", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>. 
+	 * The column <code>X_UNUSED.MS_UNUSED_NAME_REF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.String> MS_UNUSED_NAME_REF = createField("MS_UNUSED_NAME_REF", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, java.lang.String> MS_UNUSED_NAME_REF = createField("MS_UNUSED_NAME_REF", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
 
 	/**
-	 * Create a <code>TEST.X_UNUSED</code> table reference
+	 * Create a <code>X_UNUSED</code> table reference
 	 */
 	public X_UNUSED() {
-		super("X_UNUSED", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("X_UNUSED", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.X_UNUSED</code> table reference
+	 * Create an aliased <code>X_UNUSED</code> table reference
 	 */
 	public X_UNUSED(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED);
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED);
 	}
 
 	/**

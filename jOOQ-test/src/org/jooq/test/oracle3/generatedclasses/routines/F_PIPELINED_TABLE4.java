@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F_PIPELINED_TABLE4 extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -992391855;
+	private static final long serialVersionUID = 588949370;
 
 	/**
-	 * The parameter <code>TEST.F_PIPELINED_TABLE4.RETURN_VALUE</code>. 
+	 * The parameter <code>F_PIPELINED_TABLE4.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE.class));
 
@@ -20,7 +20,7 @@ public class F_PIPELINED_TABLE4 extends org.jooq.impl.AbstractRoutine<org.jooq.t
 	 * Create a new routine call instance
 	 */
 	public F_PIPELINED_TABLE4() {
-		super("F_PIPELINED_TABLE4", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE.class));
+		super("F_PIPELINED_TABLE4", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType().asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TABLE.class));
 
 		setReturnParameter(RETURN_VALUE);
 	}

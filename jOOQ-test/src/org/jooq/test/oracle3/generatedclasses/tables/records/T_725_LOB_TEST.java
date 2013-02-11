@@ -8,49 +8,45 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
+@javax.persistence.Table(name = "T_725_LOB_TEST")
 public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable, org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_725_LOB_TEST_INTERFACE {
 
-	private static final long serialVersionUID = 144771552;
+	private static final long serialVersionUID = 512099045;
 
 	/**
-	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>. 
+	 * Setter for <code>T_725_LOB_TEST.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.ID, value);
+		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_725_LOB_TEST.ID</code>. 
+	 * Getter for <code>T_725_LOB_TEST.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
 	public java.lang.Integer getID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_725_LOB_TEST.LOB</code>. 
+	 * Setter for <code>T_725_LOB_TEST.LOB</code>. 
 	 */
 	@Override
 	public void setLOB(byte[] value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.LOB, value);
+		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_725_LOB_TEST.LOB</code>. 
+	 * Getter for <code>T_725_LOB_TEST.LOB</code>. 
 	 */
 	@javax.persistence.Column(name = "LOB")
 	@Override
 	public byte[] getLOB() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST.LOB);
+		return (byte[]) getValue(1);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information
@@ -73,7 +69,7 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, byte[]> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -81,7 +77,7 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, byte[]> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

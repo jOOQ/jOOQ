@@ -8,28 +8,28 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_TEST_CASE_64_69", schema = "TEST")
+@javax.persistence.Table(name = "X_TEST_CASE_64_69")
 public interface X_TEST_CASE_64_69_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * Setter for <code>X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * Getter for <code>X_TEST_CASE_64_69.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public void setUNUSED_ID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "UNUSED_ID", precision = 7)
 	public java.lang.Integer getUNUSED_ID();

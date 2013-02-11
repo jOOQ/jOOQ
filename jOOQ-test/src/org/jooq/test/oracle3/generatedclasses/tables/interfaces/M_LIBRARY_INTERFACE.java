@@ -10,27 +10,27 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
+@javax.persistence.Table(name = "M_LIBRARY")
 public interface M_LIBRARY_INTERFACE extends java.io.Serializable, java.lang.Cloneable {
 
 	/**
-	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
+	 * Setter for <code>M_LIBRARY.AUTHOR</code>. 
 	 */
 	public void setAUTHOR(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
+	 * Getter for <code>M_LIBRARY.AUTHOR</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	public java.lang.String getAUTHOR();
 
 	/**
-	 * Setter for <code>TEST.M_LIBRARY.TITLE</code>. 
+	 * Setter for <code>M_LIBRARY.TITLE</code>. 
 	 */
 	public void setTITLE(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.M_LIBRARY.TITLE</code>. 
+	 * Getter for <code>M_LIBRARY.TITLE</code>. 
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTITLE();

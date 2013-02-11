@@ -8,94 +8,94 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_DATES", schema = "TEST")
+@javax.persistence.Table(name = "T_DATES")
 public interface T_DATES_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.T_DATES.ID</code>. 
+	 * Setter for <code>T_DATES.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_DATES.ID</code>. 
+	 * Getter for <code>T_DATES.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.T_DATES.D</code>. 
+	 * Setter for <code>T_DATES.D</code>. 
 	 */
 	public void setD(java.sql.Date value);
 
 	/**
-	 * Getter for <code>TEST.T_DATES.D</code>. 
+	 * Getter for <code>T_DATES.D</code>. 
 	 */
 	@javax.persistence.Column(name = "D", length = 7)
 	public java.sql.Date getD();
 
 	/**
-	 * Setter for <code>TEST.T_DATES.T</code>. 
+	 * Setter for <code>T_DATES.T</code>. 
 	 */
 	public void setT(java.sql.Timestamp value);
 
 	/**
-	 * Getter for <code>TEST.T_DATES.T</code>. 
+	 * Getter for <code>T_DATES.T</code>. 
 	 */
 	@javax.persistence.Column(name = "T", length = 11)
 	public java.sql.Timestamp getT();
 
 	/**
-	 * Setter for <code>TEST.T_DATES.TS</code>. 
+	 * Setter for <code>T_DATES.TS</code>. 
 	 */
 	public void setTS(java.sql.Timestamp value);
 
 	/**
-	 * Getter for <code>TEST.T_DATES.TS</code>. 
+	 * Getter for <code>T_DATES.TS</code>. 
 	 */
 	@javax.persistence.Column(name = "TS", length = 11)
 	public java.sql.Timestamp getTS();
 
 	/**
-	 * Setter for <code>TEST.T_DATES.D_INT</code>. 
+	 * Setter for <code>T_DATES.D_INT</code>. 
 	 */
 	public void setD_INT(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_DATES.D_INT</code>. 
+	 * Getter for <code>T_DATES.D_INT</code>. 
 	 */
 	@javax.persistence.Column(name = "D_INT", precision = 7)
 	public java.lang.Integer getD_INT();
 
 	/**
-	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * Setter for <code>T_DATES.TS_BIGINT</code>. 
 	 */
 	public void setTS_BIGINT(java.lang.Long value);
 
 	/**
-	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * Getter for <code>T_DATES.TS_BIGINT</code>. 
 	 */
 	@javax.persistence.Column(name = "TS_BIGINT", precision = 18)
 	public java.lang.Long getTS_BIGINT();
 
 	/**
-	 * Setter for <code>TEST.T_DATES.I_Y</code>. 
+	 * Setter for <code>T_DATES.I_Y</code>. 
 	 */
 	public void setI_Y(org.jooq.types.YearToMonth value);
 
 	/**
-	 * Getter for <code>TEST.T_DATES.I_Y</code>. 
+	 * Getter for <code>T_DATES.I_Y</code>. 
 	 */
 	@javax.persistence.Column(name = "I_Y", precision = 2)
 	public org.jooq.types.YearToMonth getI_Y();
 
 	/**
-	 * Setter for <code>TEST.T_DATES.I_D</code>. 
+	 * Setter for <code>T_DATES.I_D</code>. 
 	 */
 	public void setI_D(org.jooq.types.DayToSecond value);
 
 	/**
-	 * Getter for <code>TEST.T_DATES.I_D</code>. 
+	 * Getter for <code>T_DATES.I_D</code>. 
 	 */
 	@javax.persistence.Column(name = "I_D", precision = 2, scale = 6)
 	public org.jooq.types.DayToSecond getI_D();

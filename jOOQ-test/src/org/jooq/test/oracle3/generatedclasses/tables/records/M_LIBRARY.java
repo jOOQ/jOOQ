@@ -10,48 +10,44 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
+@javax.persistence.Table(name = "M_LIBRARY")
 public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = -825342060;
+	private static final long serialVersionUID = 2143487081;
 
 	/**
-	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
+	 * Setter for <code>M_LIBRARY.AUTHOR</code>. 
 	 */
 	@Override
 	public void setAUTHOR(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY.AUTHOR, value);
+		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
+	 * Getter for <code>M_LIBRARY.AUTHOR</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
 	@Override
 	public java.lang.String getAUTHOR() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY.AUTHOR);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.M_LIBRARY.TITLE</code>. 
+	 * Setter for <code>M_LIBRARY.TITLE</code>. 
 	 */
 	@Override
 	public void setTITLE(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY.TITLE, value);
+		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.M_LIBRARY.TITLE</code>. 
+	 * Getter for <code>M_LIBRARY.TITLE</code>. 
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	@Override
 	public java.lang.String getTITLE() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY.TITLE);
+		return (java.lang.String) getValue(1);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -62,7 +58,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -70,7 +66,7 @@ public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracl
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

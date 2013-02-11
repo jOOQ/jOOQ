@@ -8,116 +8,112 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
+@javax.persistence.Table(name = "V_AUTHOR")
 public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.V_AUTHOR> implements java.lang.Cloneable, org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_AUTHOR_INTERFACE {
 
-	private static final long serialVersionUID = 1398967273;
+	private static final long serialVersionUID = 1657587443;
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.ID</code>. 
+	 * Setter for <code>V_AUTHOR.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.ID, value);
+		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.ID</code>. 
+	 * Getter for <code>V_AUTHOR.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	@Override
 	public java.lang.Integer getID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
+	 * Setter for <code>V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	@Override
 	public void setFIRST_NAME(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
+	 * Getter for <code>V_AUTHOR.FIRST_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	@Override
 	public java.lang.String getFIRST_NAME() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.LAST_NAME</code>. 
+	 * Setter for <code>V_AUTHOR.LAST_NAME</code>. 
 	 */
 	@Override
 	public void setLAST_NAME(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.LAST_NAME</code>. 
+	 * Getter for <code>V_AUTHOR.LAST_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	@Override
 	public java.lang.String getLAST_NAME() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Setter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	@Override
 	public void setDATE_OF_BIRTH(java.sql.Date value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.DATE_OF_BIRTH, value);
+		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>. 
+	 * Getter for <code>V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	@Override
 	public java.sql.Date getDATE_OF_BIRTH() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.DATE_OF_BIRTH);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Setter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	@Override
 	public void setYEAR_OF_BIRTH(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.YEAR_OF_BIRTH, value);
+		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
+	 * Getter for <code>V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	@Override
 	public java.lang.Integer getYEAR_OF_BIRTH() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.YEAR_OF_BIRTH);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>TEST.V_AUTHOR.ADDRESS</code>. 
+	 * Setter for <code>V_AUTHOR.ADDRESS</code>. 
 	 */
 	@Override
 	public void setADDRESS(org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.ADDRESS, value);
+		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.V_AUTHOR.ADDRESS</code>. 
+	 * Getter for <code>V_AUTHOR.ADDRESS</code>. 
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 40)
 	@Override
 	public org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE getADDRESS() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.V_AUTHOR.V_AUTHOR.ADDRESS);
+		return (org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE) getValue(5);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record6 type implementation
@@ -128,7 +124,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -136,7 +132,7 @@ public class V_AUTHOR extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.oracle3.generatedclasses.udt.records.U_ADDRESS_TYPE> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

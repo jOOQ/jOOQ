@@ -8,202 +8,198 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_639_NUMBERS_TABLE", schema = "TEST")
+@javax.persistence.Table(name = "T_639_NUMBERS_TABLE")
 public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_639_NUMBERS_TABLE> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_639_NUMBERS_TABLE_INTERFACE {
 
-	private static final long serialVersionUID = 969769841;
+	private static final long serialVersionUID = -863427297;
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.ID, value);
+		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
 	public java.lang.Integer getID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
 	@Override
 	public void setBYTE(java.lang.Byte value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.BYTE, value);
+		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
 	@javax.persistence.Column(name = "BYTE", precision = 2)
 	@Override
 	public java.lang.Byte getBYTE() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.BYTE);
+		return (java.lang.Byte) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	@Override
 	public void setSHORT(java.lang.Short value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.SHORT, value);
+		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
 	@javax.persistence.Column(name = "SHORT", precision = 4)
 	@Override
 	public java.lang.Short getSHORT() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.SHORT);
+		return (java.lang.Short) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	@Override
 	public void setINTEGER(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.INTEGER, value);
+		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
 	@javax.persistence.Column(name = "INTEGER", precision = 7)
 	@Override
 	public java.lang.Integer getINTEGER() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.INTEGER);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.LONG</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	@Override
 	public void setLONG(java.lang.Long value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.LONG, value);
+		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.LONG</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
 	@javax.persistence.Column(name = "LONG", precision = 18)
 	@Override
 	public java.lang.Long getLONG() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.LONG);
+		return (java.lang.Long) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	@Override
 	public void setBYTE_DECIMAL(java.lang.Byte value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.BYTE_DECIMAL, value);
+		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "BYTE_DECIMAL", precision = 2)
 	@Override
 	public java.lang.Byte getBYTE_DECIMAL() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.BYTE_DECIMAL);
+		return (java.lang.Byte) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	@Override
 	public void setSHORT_DECIMAL(java.lang.Short value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.SHORT_DECIMAL, value);
+		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "SHORT_DECIMAL", precision = 4)
 	@Override
 	public java.lang.Short getSHORT_DECIMAL() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.SHORT_DECIMAL);
+		return (java.lang.Short) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	@Override
 	public void setINTEGER_DECIMAL(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.INTEGER_DECIMAL, value);
+		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "INTEGER_DECIMAL", precision = 9)
 	@Override
 	public java.lang.Integer getINTEGER_DECIMAL() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.INTEGER_DECIMAL);
+		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	@Override
 	public void setLONG_DECIMAL(java.lang.Long value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.LONG_DECIMAL, value);
+		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "LONG_DECIMAL", precision = 18)
 	@Override
 	public java.lang.Long getLONG_DECIMAL() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.LONG_DECIMAL);
+		return (java.lang.Long) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	@Override
 	public void setBIG_INTEGER(java.math.BigInteger value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.BIG_INTEGER, value);
+		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
 	@javax.persistence.Column(name = "BIG_INTEGER", precision = 22)
 	@Override
 	public java.math.BigInteger getBIG_INTEGER() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.BIG_INTEGER);
+		return (java.math.BigInteger) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * Setter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	@Override
 	public void setBIG_DECIMAL(java.math.BigDecimal value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.BIG_DECIMAL, value);
+		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
+	 * Getter for <code>T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 
 	 */
 	@javax.persistence.Column(name = "BIG_DECIMAL", precision = 22, scale = 5)
 	@Override
 	public java.math.BigDecimal getBIG_DECIMAL() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_639_NUMBERS_TABLE.T_639_NUMBERS_TABLE.BIG_DECIMAL);
+		return (java.math.BigDecimal) getValue(10);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information
@@ -226,7 +222,7 @@ public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 */
 	@Override
 	public org.jooq.Row11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
+		return (org.jooq.Row11) super.fieldsRow();
 	}
 
 	/**
@@ -234,7 +230,7 @@ public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableRecordImpl<org.j
 	 */
 	@Override
 	public org.jooq.Row11<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11());
+		return (org.jooq.Row11) super.valuesRow();
 	}
 
 	/**

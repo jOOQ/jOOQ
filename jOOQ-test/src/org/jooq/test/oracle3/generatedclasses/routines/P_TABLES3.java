@@ -9,23 +9,23 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_TABLES3 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1926172168;
+	private static final long serialVersionUID = -1465963831;
 
 	/**
-	 * The parameter <code>TEST.P_TABLES3.IN_TABLE</code>. 
+	 * The parameter <code>P_TABLES3.IN_TABLE</code>. 
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE.class));
+	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.VARCHAR.length(20).asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE.class));
 
 	/**
-	 * The parameter <code>TEST.P_TABLES3.OUT_TABLE</code>. 
+	 * The parameter <code>P_TABLES3.OUT_TABLE</code>. 
 	 */
-	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.impl.SQLDataType.VARCHAR.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE.class));
+	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.impl.SQLDataType.VARCHAR.length(20).asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_TABLE.class));
 
 	/**
 	 * Create a new routine call instance
 	 */
 	public P_TABLES3() {
-		super("P_TABLES3", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P_TABLES3", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addInParameter(IN_TABLE);
 		addOutParameter(OUT_TABLE);

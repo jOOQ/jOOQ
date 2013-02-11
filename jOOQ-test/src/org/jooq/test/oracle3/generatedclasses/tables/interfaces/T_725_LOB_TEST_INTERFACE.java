@@ -8,28 +8,28 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_725_LOB_TEST", schema = "TEST")
+@javax.persistence.Table(name = "T_725_LOB_TEST")
 public interface T_725_LOB_TEST_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.T_725_LOB_TEST.ID</code>. 
+	 * Setter for <code>T_725_LOB_TEST.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.T_725_LOB_TEST.ID</code>. 
+	 * Getter for <code>T_725_LOB_TEST.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.T_725_LOB_TEST.LOB</code>. 
+	 * Setter for <code>T_725_LOB_TEST.LOB</code>. 
 	 */
 	public void setLOB(byte[] value);
 
 	/**
-	 * Getter for <code>TEST.T_725_LOB_TEST.LOB</code>. 
+	 * Getter for <code>T_725_LOB_TEST.LOB</code>. 
 	 */
 	@javax.persistence.Column(name = "LOB")
 	public byte[] getLOB();

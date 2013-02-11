@@ -8,202 +8,198 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_BOOLEANS", schema = "TEST")
+@javax.persistence.Table(name = "T_BOOLEANS")
 public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS> implements java.lang.Cloneable, org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOLEANS_INTERFACE {
 
-	private static final long serialVersionUID = -290069078;
+	private static final long serialVersionUID = -702206279;
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.ID</code>. 
+	 * Setter for <code>T_BOOLEANS.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ID, value);
+		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.ID</code>. 
+	 * Getter for <code>T_BOOLEANS.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
 	public java.lang.Integer getID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.ONE_ZERO</code>. 
+	 * Setter for <code>T_BOOLEANS.ONE_ZERO</code>. 
 	 */
 	@Override
 	public void setONE_ZERO(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ONE_ZERO, value);
+		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.ONE_ZERO</code>. 
+	 * Getter for <code>T_BOOLEANS.ONE_ZERO</code>. 
 	 */
 	@javax.persistence.Column(name = "ONE_ZERO", precision = 7)
 	@Override
 	public java.lang.Integer getONE_ZERO() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.ONE_ZERO);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>. 
+	 * Setter for <code>T_BOOLEANS.TRUE_FALSE_LC</code>. 
 	 */
 	@Override
 	public void setTRUE_FALSE_LC(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.TRUE_FALSE_LC, value);
+		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.TRUE_FALSE_LC</code>. 
+	 * Getter for <code>T_BOOLEANS.TRUE_FALSE_LC</code>. 
 	 */
 	@javax.persistence.Column(name = "TRUE_FALSE_LC", length = 5)
 	@Override
 	public java.lang.String getTRUE_FALSE_LC() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.TRUE_FALSE_LC);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>. 
+	 * Setter for <code>T_BOOLEANS.TRUE_FALSE_UC</code>. 
 	 */
 	@Override
 	public void setTRUE_FALSE_UC(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.TRUE_FALSE_UC, value);
+		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.TRUE_FALSE_UC</code>. 
+	 * Getter for <code>T_BOOLEANS.TRUE_FALSE_UC</code>. 
 	 */
 	@javax.persistence.Column(name = "TRUE_FALSE_UC", length = 5)
 	@Override
 	public java.lang.String getTRUE_FALSE_UC() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.TRUE_FALSE_UC);
+		return (java.lang.String) getValue(3);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.YES_NO_LC</code>. 
+	 * Setter for <code>T_BOOLEANS.YES_NO_LC</code>. 
 	 */
 	@Override
 	public void setYES_NO_LC(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.YES_NO_LC, value);
+		setValue(4, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.YES_NO_LC</code>. 
+	 * Getter for <code>T_BOOLEANS.YES_NO_LC</code>. 
 	 */
 	@javax.persistence.Column(name = "YES_NO_LC", length = 3)
 	@Override
 	public java.lang.String getYES_NO_LC() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.YES_NO_LC);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.YES_NO_UC</code>. 
+	 * Setter for <code>T_BOOLEANS.YES_NO_UC</code>. 
 	 */
 	@Override
 	public void setYES_NO_UC(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.YES_NO_UC, value);
+		setValue(5, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.YES_NO_UC</code>. 
+	 * Getter for <code>T_BOOLEANS.YES_NO_UC</code>. 
 	 */
 	@javax.persistence.Column(name = "YES_NO_UC", length = 3)
 	@Override
 	public java.lang.String getYES_NO_UC() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.YES_NO_UC);
+		return (java.lang.String) getValue(5);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.Y_N_LC</code>. 
+	 * Setter for <code>T_BOOLEANS.Y_N_LC</code>. 
 	 */
 	@Override
 	public void setY_N_LC(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.Y_N_LC, value);
+		setValue(6, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.Y_N_LC</code>. 
+	 * Getter for <code>T_BOOLEANS.Y_N_LC</code>. 
 	 */
 	@javax.persistence.Column(name = "Y_N_LC", length = 1)
 	@Override
 	public java.lang.String getY_N_LC() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.Y_N_LC);
+		return (java.lang.String) getValue(6);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.Y_N_UC</code>. 
+	 * Setter for <code>T_BOOLEANS.Y_N_UC</code>. 
 	 */
 	@Override
 	public void setY_N_UC(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.Y_N_UC, value);
+		setValue(7, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.Y_N_UC</code>. 
+	 * Getter for <code>T_BOOLEANS.Y_N_UC</code>. 
 	 */
 	@javax.persistence.Column(name = "Y_N_UC", length = 1)
 	@Override
 	public java.lang.String getY_N_UC() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.Y_N_UC);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.VC_BOOLEAN</code>. 
+	 * Setter for <code>T_BOOLEANS.VC_BOOLEAN</code>. 
 	 */
 	@Override
 	public void setVC_BOOLEAN(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.VC_BOOLEAN, value);
+		setValue(8, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.VC_BOOLEAN</code>. 
+	 * Getter for <code>T_BOOLEANS.VC_BOOLEAN</code>. 
 	 */
 	@javax.persistence.Column(name = "VC_BOOLEAN", length = 1)
 	@Override
 	public java.lang.String getVC_BOOLEAN() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.VC_BOOLEAN);
+		return (java.lang.String) getValue(8);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.C_BOOLEAN</code>. 
+	 * Setter for <code>T_BOOLEANS.C_BOOLEAN</code>. 
 	 */
 	@Override
 	public void setC_BOOLEAN(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.C_BOOLEAN, value);
+		setValue(9, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.C_BOOLEAN</code>. 
+	 * Getter for <code>T_BOOLEANS.C_BOOLEAN</code>. 
 	 */
 	@javax.persistence.Column(name = "C_BOOLEAN", length = 1)
 	@Override
 	public java.lang.String getC_BOOLEAN() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.C_BOOLEAN);
+		return (java.lang.String) getValue(9);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_BOOLEANS.N_BOOLEAN</code>. 
+	 * Setter for <code>T_BOOLEANS.N_BOOLEAN</code>. 
 	 */
 	@Override
 	public void setN_BOOLEAN(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.N_BOOLEAN, value);
+		setValue(10, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_BOOLEANS.N_BOOLEAN</code>. 
+	 * Getter for <code>T_BOOLEANS.N_BOOLEAN</code>. 
 	 */
 	@javax.persistence.Column(name = "N_BOOLEAN", precision = 7)
 	@Override
 	public java.lang.Integer getN_BOOLEAN() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_BOOLEANS.T_BOOLEANS.N_BOOLEAN);
+		return (java.lang.Integer) getValue(10);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information
@@ -226,7 +222,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
+		return (org.jooq.Row11) super.fieldsRow();
 	}
 
 	/**
@@ -234,7 +230,7 @@ public class T_BOOLEANS extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11());
+		return (org.jooq.Row11) super.valuesRow();
 	}
 
 	/**

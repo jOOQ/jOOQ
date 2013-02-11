@@ -8,76 +8,61 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_TEST_CASE_85", schema = "TEST")
+@javax.persistence.Table(name = "X_TEST_CASE_85")
 public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85> implements java.lang.Cloneable, org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_TEST_CASE_85_INTERFACE {
 
-	private static final long serialVersionUID = -233497731;
+	private static final long serialVersionUID = 82510006;
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
+	 * Setter for <code>X_TEST_CASE_85.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.ID, value);
+		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.ID</code>. 
+	 * Getter for <code>X_TEST_CASE_85.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
 	public java.lang.Integer getID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	@Override
 	public void setX_UNUSED_ID(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_ID, value);
+		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_ID", precision = 7)
 	@Override
 	public java.lang.Integer getX_UNUSED_ID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Setter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	@Override
 	public void setX_UNUSED_NAME(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 
+	 * Getter for <code>X_TEST_CASE_85.X_UNUSED_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "X_UNUSED_NAME", length = 10)
 	@Override
 	public java.lang.String getX_UNUSED_NAME() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>TEST.X_UNUSED</code> referenced by this <code>TEST.X_TEST_CASE_85</code>
-	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED fetchX_UNUSED() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_ID)))
-			.and(org.jooq.test.oracle3.generatedclasses.tables.X_UNUSED.X_UNUSED.NAME.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_85.X_TEST_CASE_85.X_UNUSED_NAME)))
-			.fetchOne();
+		return (java.lang.String) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -101,7 +86,7 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -109,7 +94,7 @@ public class X_TEST_CASE_85 extends org.jooq.impl.UpdatableRecordImpl<org.jooq.t
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

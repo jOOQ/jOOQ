@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_BOOK", schema = "TEST")
+@javax.persistence.Table(name = "V_BOOK")
 public class V_BOOK_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.V_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 1084830728;
+	private static final long serialVersionUID = 680001614;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer AUTHOR_ID;

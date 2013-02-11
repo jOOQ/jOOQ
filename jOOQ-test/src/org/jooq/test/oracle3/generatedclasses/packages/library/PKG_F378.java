@@ -9,25 +9,25 @@ package org.jooq.test.oracle3.generatedclasses.packages.library;
 @java.lang.SuppressWarnings("all")
 public class PKG_F378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1464790276;
+	private static final long serialVersionUID = -1528626109;
 
 	/**
-	 * The parameter <code>TEST.LIBRARY.PKG_F378.RETURN_VALUE</code>. 
+	 * The parameter <code>LIBRARY.PKG_F378.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.LIBRARY.PKG_F378.I</code>. 
+	 * The parameter <code>LIBRARY.PKG_F378.I</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> I = createParameter("I", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.LIBRARY.PKG_F378.IO</code>. 
+	 * The parameter <code>LIBRARY.PKG_F378.IO</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> IO = createParameter("IO", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.LIBRARY.PKG_F378.O</code>. 
+	 * The parameter <code>LIBRARY.PKG_F378.O</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> O = createParameter("O", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -35,7 +35,7 @@ public class PKG_F378 extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal
 	 * Create a new routine call instance
 	 */
 	public PKG_F378() {
-		super("PKG_F378", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.packages.LIBRARY.LIBRARY, org.jooq.impl.SQLDataType.NUMERIC);
+		super("PKG_F378", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.packages.LIBRARY.LIBRARY, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(I);

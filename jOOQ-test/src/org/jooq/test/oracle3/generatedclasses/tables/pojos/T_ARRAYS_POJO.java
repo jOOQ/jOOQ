@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_ARRAYS", schema = "TEST")
+@javax.persistence.Table(name = "T_ARRAYS")
 public class T_ARRAYS_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_ARRAYS_INTERFACE {
 
-	private static final long serialVersionUID = 1371075433;
+	private static final long serialVersionUID = 833137705;
 
 	private java.lang.Integer                                                      ID;
 	private org.jooq.test.oracle3.generatedclasses.udt.records.U_STRING_ARRAY      STRING_ARRAY;

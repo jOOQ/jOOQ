@@ -10,12 +10,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "X_UNUSED", schema = "TEST", uniqueConstraints = {
+@javax.persistence.Table(name = "X_UNUSED", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ID", "NAME"})
 })
 public class X_UNUSED_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = 1123863048;
+	private static final long serialVersionUID = 184906704;
 
 	private java.lang.Integer    ID;
 	private java.lang.String     NAME;

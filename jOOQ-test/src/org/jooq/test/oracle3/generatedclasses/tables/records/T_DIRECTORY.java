@@ -8,114 +8,78 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
+@javax.persistence.Table(name = "T_DIRECTORY")
 public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> implements java.lang.Cloneable, org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_DIRECTORY_INTERFACE {
 
-	private static final long serialVersionUID = -102629010;
+	private static final long serialVersionUID = 1992357359;
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
+	 * Setter for <code>T_DIRECTORY.ID</code>. 
 	 */
 	@Override
 	public void setID(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID, value);
+		setValue(0, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.ID</code>. 
+	 * Getter for <code>T_DIRECTORY.ID</code>. 
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
 	@Override
 	public java.lang.Integer getID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
+	 * Setter for <code>T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	@Override
 	public void setPARENT_ID(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID, value);
+		setValue(1, value);
 	}
 
 	/**
-	 * Link this record to a given {@link org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY}
-	 */
-	public void setPARENT_ID(org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY value) {
-		if (value == null) {
-			setValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID, value.getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID));
-		}
-	}
-
-	/**
-	 * Getter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
+	 * Getter for <code>T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
 	@Override
 	public java.lang.Integer getPARENT_ID() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
+	 * Setter for <code>T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	@Override
 	public void setIS_DIRECTORY(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.IS_DIRECTORY, value);
+		setValue(2, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
+	 * Getter for <code>T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	@Override
 	public java.lang.Integer getIS_DIRECTORY() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.IS_DIRECTORY);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
-	 * Setter for <code>TEST.T_DIRECTORY.name</code>. 
+	 * Setter for <code>T_DIRECTORY.name</code>. 
 	 */
 	@Override
 	public void setname(java.lang.String value) {
-		setValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.name, value);
+		setValue(3, value);
 	}
 
 	/**
-	 * Getter for <code>TEST.T_DIRECTORY.name</code>. 
+	 * Getter for <code>T_DIRECTORY.name</code>. 
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
 	@Override
 	public java.lang.String getname() {
-		return getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.name);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>TEST.T_DIRECTORY</code> referencing this <code>TEST.T_DIRECTORY</code>
-	 */
-	public org.jooq.Result<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> fetchT_DIRECTORYList() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>TEST.T_DIRECTORY</code> referenced by this <code>TEST.T_DIRECTORY</code>
-	 */
-	public org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY fetchT_DIRECTORY() {
-		return create()
-			.selectFrom(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY)
-			.where(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.ID.equal(getValue(org.jooq.test.oracle3.generatedclasses.tables.T_DIRECTORY.T_DIRECTORY.PARENT_ID)))
-			.fetchOne();
+		return (java.lang.String) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -139,7 +103,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -147,7 +111,7 @@ public class T_DIRECTORY extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

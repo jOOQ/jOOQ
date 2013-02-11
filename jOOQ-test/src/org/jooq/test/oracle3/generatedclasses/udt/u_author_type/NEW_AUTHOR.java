@@ -9,25 +9,25 @@ package org.jooq.test.oracle3.generatedclasses.udt.u_author_type;
 @java.lang.SuppressWarnings("all")
 public class NEW_AUTHOR extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1624170232;
+	private static final long serialVersionUID = -391000787;
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR.P_ID</code>. 
+	 * The parameter <code>U_AUTHOR_TYPE.NEW_AUTHOR.P_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_ID = createParameter("P_ID", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR.P_FIRST_NAME</code>. 
+	 * The parameter <code>U_AUTHOR_TYPE.NEW_AUTHOR.P_FIRST_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_FIRST_NAME = createParameter("P_FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR.P_LAST_NAME</code>. 
+	 * The parameter <code>U_AUTHOR_TYPE.NEW_AUTHOR.P_LAST_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> P_LAST_NAME = createParameter("P_LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.NEW_AUTHOR.P_AUTHOR</code>. 
+	 * The parameter <code>U_AUTHOR_TYPE.NEW_AUTHOR.P_AUTHOR</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> P_AUTHOR = createParameter("P_AUTHOR", org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE.getDataType());
 
@@ -35,7 +35,7 @@ public class NEW_AUTHOR extends org.jooq.impl.AbstractRoutine<java.lang.Void> im
 	 * Create a new routine call instance
 	 */
 	public NEW_AUTHOR() {
-		super("NEW_AUTHOR", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE);
+		super("NEW_AUTHOR", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE);
 
 		addInParameter(P_ID);
 		addInParameter(P_FIRST_NAME);

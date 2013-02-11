@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_ARRAYS1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1584922206;
+	private static final long serialVersionUID = 294332613;
 
 	/**
-	 * The parameter <code>TEST.P_ARRAYS1.IN_ARRAY</code>. 
+	 * The parameter <code>P_ARRAYS1.IN_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> IN_ARRAY = createParameter("IN_ARRAY", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
 	/**
-	 * The parameter <code>TEST.P_ARRAYS1.OUT_ARRAY</code>. 
+	 * The parameter <code>P_ARRAYS1.OUT_ARRAY</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> OUT_ARRAY = createParameter("OUT_ARRAY", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
@@ -25,7 +25,7 @@ public class P_ARRAYS1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> imp
 	 * Create a new routine call instance
 	 */
 	public P_ARRAYS1() {
-		super("P_ARRAYS1", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P_ARRAYS1", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addInParameter(IN_ARRAY);
 		addOutParameter(OUT_ARRAY);

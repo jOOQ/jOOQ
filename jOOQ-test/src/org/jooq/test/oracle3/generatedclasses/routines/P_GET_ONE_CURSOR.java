@@ -9,20 +9,20 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -600354351;
+	private static final long serialVersionUID = 852856966;
 
 	/**
-	 * The parameter <code>TEST.P_GET_ONE_CURSOR.TOTAL</code>. 
+	 * The parameter <code>P_GET_ONE_CURSOR.TOTAL</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> TOTAL = createParameter("TOTAL", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.P_GET_ONE_CURSOR.BOOKS</code>. 
+	 * The parameter <code>P_GET_ONE_CURSOR.BOOKS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The parameter <code>TEST.P_GET_ONE_CURSOR.BOOK_IDS</code>. 
+	 * The parameter <code>P_GET_ONE_CURSOR.BOOK_IDS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> BOOK_IDS = createParameter("BOOK_IDS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class));
 
@@ -30,7 +30,7 @@ public class P_GET_ONE_CURSOR extends org.jooq.impl.AbstractRoutine<java.lang.Vo
 	 * Create a new routine call instance
 	 */
 	public P_GET_ONE_CURSOR() {
-		super("P_GET_ONE_CURSOR", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P_GET_ONE_CURSOR", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addOutParameter(TOTAL);
 		addOutParameter(BOOKS);

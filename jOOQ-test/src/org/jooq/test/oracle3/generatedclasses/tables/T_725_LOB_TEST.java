@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725_LOB_TEST extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -602665050;
+	private static final long serialVersionUID = -125249180;
 
 	/**
-	 * The singleton instance of <code>TEST.T_725_LOB_TEST</code>
+	 * The singleton instance of <code>T_725_LOB_TEST</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST T_725_LOB_TEST = new org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST();
 
@@ -25,27 +25,27 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableTableImpl<org.jooq.te
 	}
 
 	/**
-	 * The column <code>TEST.T_725_LOB_TEST.ID</code>. 
+	 * The column <code>T_725_LOB_TEST.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.T_725_LOB_TEST.LOB</code>. 
+	 * The column <code>T_725_LOB_TEST.LOB</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, this);
 
 	/**
-	 * Create a <code>TEST.T_725_LOB_TEST</code> table reference
+	 * Create a <code>T_725_LOB_TEST</code> table reference
 	 */
 	public T_725_LOB_TEST() {
-		super("T_725_LOB_TEST", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("T_725_LOB_TEST", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.T_725_LOB_TEST</code> table reference
+	 * Create an aliased <code>T_725_LOB_TEST</code> table reference
 	 */
 	public T_725_LOB_TEST(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST);
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_725_LOB_TEST.T_725_LOB_TEST);
 	}
 
 	/**

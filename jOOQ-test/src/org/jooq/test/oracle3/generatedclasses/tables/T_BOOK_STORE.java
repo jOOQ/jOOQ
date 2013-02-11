@@ -11,10 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1068048464;
+	private static final long serialVersionUID = -1355283303;
 
 	/**
-	 * The singleton instance of <code>TEST.T_BOOK_STORE</code>
+	 * The singleton instance of <code>T_BOOK_STORE</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE T_BOOK_STORE = new org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE();
 
@@ -27,22 +27,22 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	}
 
 	/**
-	 * The column <code>TEST.T_BOOK_STORE.NAME</code>. The books store name
+	 * The column <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
-	 * Create a <code>TEST.T_BOOK_STORE</code> table reference
+	 * Create a <code>T_BOOK_STORE</code> table reference
 	 */
 	public T_BOOK_STORE() {
-		super("T_BOOK_STORE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("T_BOOK_STORE", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.T_BOOK_STORE</code> table reference
+	 * Create an aliased <code>T_BOOK_STORE</code> table reference
 	 */
 	public T_BOOK_STORE(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE);
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_BOOK_STORE.T_BOOK_STORE);
 	}
 
 	/**

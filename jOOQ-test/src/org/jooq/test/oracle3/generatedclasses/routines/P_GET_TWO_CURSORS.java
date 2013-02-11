@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_GET_TWO_CURSORS extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1601298316;
+	private static final long serialVersionUID = -2075570043;
 
 	/**
-	 * The parameter <code>TEST.P_GET_TWO_CURSORS.BOOKS</code>. 
+	 * The parameter <code>P_GET_TWO_CURSORS.BOOKS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> BOOKS = createParameter("BOOKS", org.jooq.impl.SQLDataType.RESULT);
 
 	/**
-	 * The parameter <code>TEST.P_GET_TWO_CURSORS.AUTHORS</code>. 
+	 * The parameter <code>P_GET_TWO_CURSORS.AUTHORS</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.Result<org.jooq.Record>> AUTHORS = createParameter("AUTHORS", org.jooq.impl.SQLDataType.RESULT);
 
@@ -25,7 +25,7 @@ public class P_GET_TWO_CURSORS extends org.jooq.impl.AbstractRoutine<java.lang.V
 	 * Create a new routine call instance
 	 */
 	public P_GET_TWO_CURSORS() {
-		super("P_GET_TWO_CURSORS", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P_GET_TWO_CURSORS", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addOutParameter(BOOKS);
 		addOutParameter(AUTHORS);

@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_AUTHOR_EXISTS extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -495842405;
+	private static final long serialVersionUID = 1322982324;
 
 	/**
-	 * The parameter <code>TEST.P_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
+	 * The parameter <code>P_AUTHOR_EXISTS.AUTHOR_NAME</code>. 
 	 */
 	public static final org.jooq.Parameter<java.lang.String> AUTHOR_NAME = createParameter("AUTHOR_NAME", org.jooq.impl.SQLDataType.VARCHAR);
 
 	/**
-	 * The parameter <code>TEST.P_AUTHOR_EXISTS.RESULT</code>. 
+	 * The parameter <code>P_AUTHOR_EXISTS.RESULT</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RESULT = createParameter("RESULT", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -25,7 +25,7 @@ public class P_AUTHOR_EXISTS extends org.jooq.impl.AbstractRoutine<java.lang.Voi
 	 * Create a new routine call instance
 	 */
 	public P_AUTHOR_EXISTS() {
-		super("P_AUTHOR_EXISTS", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P_AUTHOR_EXISTS", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addInParameter(AUTHOR_NAME);
 		addOutParameter(RESULT);

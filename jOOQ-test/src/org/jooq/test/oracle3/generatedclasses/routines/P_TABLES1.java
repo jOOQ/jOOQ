@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P_TABLES1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1966870650;
+	private static final long serialVersionUID = 431400431;
 
 	/**
-	 * The parameter <code>TEST.P_TABLES1.IN_TABLE</code>. 
+	 * The parameter <code>P_TABLES1.IN_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> IN_TABLE = createParameter("IN_TABLE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class));
 
 	/**
-	 * The parameter <code>TEST.P_TABLES1.OUT_TABLE</code>. 
+	 * The parameter <code>P_TABLES1.OUT_TABLE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE> OUT_TABLE = createParameter("OUT_TABLE", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_TABLE.class));
 
@@ -25,7 +25,7 @@ public class P_TABLES1 extends org.jooq.impl.AbstractRoutine<java.lang.Void> imp
 	 * Create a new routine call instance
 	 */
 	public P_TABLES1() {
-		super("P_TABLES1", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P_TABLES1", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addInParameter(IN_TABLE);
 		addOutParameter(OUT_TABLE);

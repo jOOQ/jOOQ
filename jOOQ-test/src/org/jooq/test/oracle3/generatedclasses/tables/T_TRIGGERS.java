@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_TRIGGERS extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 2103153165;
+	private static final long serialVersionUID = 969883173;
 
 	/**
-	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
+	 * The singleton instance of <code>T_TRIGGERS</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS T_TRIGGERS = new org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS();
 
@@ -25,32 +25,32 @@ public class T_TRIGGERS extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	}
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
+	 * The column <code>T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.ID</code>. 
+	 * The column <code>T_TRIGGERS.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>. 
+	 * The column <code>T_TRIGGERS.COUNTER</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_TRIGGERS, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * Create a <code>TEST.T_TRIGGERS</code> table reference
+	 * Create a <code>T_TRIGGERS</code> table reference
 	 */
 	public T_TRIGGERS() {
-		super("T_TRIGGERS", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("T_TRIGGERS", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.T_TRIGGERS</code> table reference
+	 * Create an aliased <code>T_TRIGGERS</code> table reference
 	 */
 	public T_TRIGGERS(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS);
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_TRIGGERS.T_TRIGGERS);
 	}
 
 	/**

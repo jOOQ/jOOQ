@@ -9,35 +9,35 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -114255867;
+	private static final long serialVersionUID = 535343094;
 
 	/**
-	 * The parameter <code>TEST.P391.I1</code>. 
+	 * The parameter <code>P391.I1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> I1 = createParameter("I1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.P391.IO1</code>. 
+	 * The parameter <code>P391.IO1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> IO1 = createParameter("IO1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.P391.O1</code>. 
+	 * The parameter <code>P391.O1</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> O1 = createParameter("O1", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.P391.O2</code>. 
+	 * The parameter <code>P391.O2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> O2 = createParameter("O2", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.P391.IO2</code>. 
+	 * The parameter <code>P391.IO2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> IO2 = createParameter("IO2", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.P391.I2</code>. 
+	 * The parameter <code>P391.I2</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> I2 = createParameter("I2", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -45,7 +45,7 @@ public class P391 extends org.jooq.impl.AbstractRoutine<java.lang.Void> implemen
 	 * Create a new routine call instance
 	 */
 	public P391() {
-		super("P391", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("P391", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		addInParameter(I1);
 		addInOutParameter(IO1);

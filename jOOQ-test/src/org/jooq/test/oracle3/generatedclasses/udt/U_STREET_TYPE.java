@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.udt;
 @java.lang.SuppressWarnings("all")
 public class U_STREET_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1675355506;
+	private static final long serialVersionUID = -1583743685;
 
 	/**
-	 * The singleton instance of <code>TEST.U_STREET_TYPE</code>
+	 * The singleton instance of <code>U_STREET_TYPE</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE U_STREET_TYPE = new org.jooq.test.oracle3.generatedclasses.udt.U_STREET_TYPE();
 
@@ -25,27 +25,27 @@ public class U_STREET_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	}
 
 	/**
-	 * The attribute <code>TEST.U_STREET_TYPE.STREET</code>. 
+	 * The attribute <code>U_STREET_TYPE.STREET</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, java.lang.String> STREET = createField("STREET", org.jooq.impl.SQLDataType.VARCHAR, U_STREET_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, java.lang.String> STREET = createField("STREET", org.jooq.impl.SQLDataType.VARCHAR.length(100), U_STREET_TYPE);
 
 	/**
-	 * The attribute <code>TEST.U_STREET_TYPE.NO</code>. 
+	 * The attribute <code>U_STREET_TYPE.NO</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, java.lang.String> NO = createField("NO", org.jooq.impl.SQLDataType.VARCHAR, U_STREET_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, java.lang.String> NO = createField("NO", org.jooq.impl.SQLDataType.VARCHAR.length(30), U_STREET_TYPE);
 
 	/**
-	 * The attribute <code>TEST.U_STREET_TYPE.FLOORS</code>. 
+	 * The attribute <code>U_STREET_TYPE.FLOORS</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY> FLOORS = createField("FLOORS", org.jooq.impl.SQLDataType.INTEGER.asArrayDataType(org.jooq.test.oracle3.generatedclasses.udt.records.U_NUMBER_ARRAY.class), U_STREET_TYPE);
 
 	/**
-	 * The attribute <code>TEST.U_STREET_TYPE.F_1323</code>. 
+	 * The attribute <code>U_STREET_TYPE.F_1323</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, byte[]> F_1323 = createField("F_1323", org.jooq.impl.SQLDataType.BLOB, U_STREET_TYPE);
 
 	/**
-	 * The attribute <code>TEST.U_STREET_TYPE.F_1326</code>. 
+	 * The attribute <code>U_STREET_TYPE.F_1326</code>. 
 	 */
 	public static final org.jooq.UDTField<org.jooq.test.oracle3.generatedclasses.udt.records.U_STREET_TYPE, java.lang.String> F_1326 = createField("F_1326", org.jooq.impl.SQLDataType.CLOB, U_STREET_TYPE);
 
@@ -53,7 +53,7 @@ public class U_STREET_TYPE extends org.jooq.impl.UDTImpl<org.jooq.test.oracle3.g
 	 * No further instances allowed
 	 */
 	private U_STREET_TYPE() {
-		super("U_STREET_TYPE", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("U_STREET_TYPE", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 
 		// Initialise data type
 		getDataType();

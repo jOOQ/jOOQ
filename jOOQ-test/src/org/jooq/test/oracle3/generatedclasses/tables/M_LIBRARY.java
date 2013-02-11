@@ -11,10 +11,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class M_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1901137898;
+	private static final long serialVersionUID = 855427118;
 
 	/**
-	 * The singleton instance of <code>TEST.M_LIBRARY</code>
+	 * The singleton instance of <code>M_LIBRARY</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY M_LIBRARY = new org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY();
 
@@ -27,27 +27,27 @@ public class M_LIBRARY extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.gen
 	}
 
 	/**
-	 * The column <code>TEST.M_LIBRARY.AUTHOR</code>. 
+	 * The column <code>M_LIBRARY.AUTHOR</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> AUTHOR = createField("AUTHOR", org.jooq.impl.SQLDataType.VARCHAR.length(101), this);
 
 	/**
-	 * The column <code>TEST.M_LIBRARY.TITLE</code>. 
+	 * The column <code>M_LIBRARY.TITLE</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
 
 	/**
-	 * Create a <code>TEST.M_LIBRARY</code> table reference
+	 * Create a <code>M_LIBRARY</code> table reference
 	 */
 	public M_LIBRARY() {
-		super("M_LIBRARY", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("M_LIBRARY", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.M_LIBRARY</code> table reference
+	 * Create an aliased <code>M_LIBRARY</code> table reference
 	 */
 	public M_LIBRARY(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY);
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY);
 	}
 
 	/**

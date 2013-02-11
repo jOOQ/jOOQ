@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.udt.u_author_type;
 @java.lang.SuppressWarnings("all")
 public class GET_AUTHOR extends org.jooq.impl.AbstractRoutine<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -306403226;
+	private static final long serialVersionUID = -1968664991;
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR.RETURN_VALUE</code>. 
+	 * The parameter <code>U_AUTHOR_TYPE.GET_AUTHOR.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE.getDataType());
 
 	/**
-	 * The parameter <code>TEST.U_AUTHOR_TYPE.GET_AUTHOR.P_ID</code>. 
+	 * The parameter <code>U_AUTHOR_TYPE.GET_AUTHOR.P_ID</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> P_ID = createParameter("P_ID", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -25,7 +25,7 @@ public class GET_AUTHOR extends org.jooq.impl.AbstractRoutine<org.jooq.test.orac
 	 * Create a new routine call instance
 	 */
 	public GET_AUTHOR() {
-		super("GET_AUTHOR", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE, org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE.getDataType());
+		super("GET_AUTHOR", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE, org.jooq.test.oracle3.generatedclasses.udt.U_AUTHOR_TYPE.U_AUTHOR_TYPE.getDataType());
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P_ID);

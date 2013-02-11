@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 2038777210;
+	private static final long serialVersionUID = 369273118;
 
 	/**
-	 * The singleton instance of <code>TEST.X_TEST_CASE_64_69</code>
+	 * The singleton instance of <code>X_TEST_CASE_64_69</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69 X_TEST_CASE_64_69 = new org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69();
 
@@ -25,27 +25,27 @@ public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	}
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_64_69.ID</code>. 
+	 * The column <code>X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
+	 * The column <code>X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69, java.lang.Integer> UNUSED_ID = createField("UNUSED_ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * Create a <code>TEST.X_TEST_CASE_64_69</code> table reference
+	 * Create a <code>X_TEST_CASE_64_69</code> table reference
 	 */
 	public X_TEST_CASE_64_69() {
-		super("X_TEST_CASE_64_69", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("X_TEST_CASE_64_69", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.X_TEST_CASE_64_69</code> table reference
+	 * Create an aliased <code>X_TEST_CASE_64_69</code> table reference
 	 */
 	public X_TEST_CASE_64_69(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69);
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.X_TEST_CASE_64_69.X_TEST_CASE_64_69);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69, ?>>asList(org.jooq.test.oracle3.generatedclasses.Keys.FK_X_TEST_CASE_64_69A);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69, ?>>asList(org.jooq.test.oracle3.generatedclasses.Keys.FK_X_TEST_CASE_64_69A, org.jooq.test.oracle3.generatedclasses.Keys.FK_X_TEST_CASE_64_69B);
 	}
 
 	/**

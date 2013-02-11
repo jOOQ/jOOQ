@@ -8,104 +8,104 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  */
 @java.lang.SuppressWarnings("all")
 @javax.persistence.Entity
-@javax.persistence.Table(name = "V_BOOK", schema = "TEST")
+@javax.persistence.Table(name = "V_BOOK")
 public interface V_BOOK_INTERFACE extends java.lang.Cloneable, java.io.Serializable {
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.ID</code>. 
+	 * Setter for <code>V_BOOK.ID</code>. 
 	 */
 	public void setID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.ID</code>. 
+	 * Getter for <code>V_BOOK.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
 	public java.lang.Integer getID();
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
+	 * Setter for <code>V_BOOK.AUTHOR_ID</code>. 
 	 */
 	public void setAUTHOR_ID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
+	 * Getter for <code>V_BOOK.AUTHOR_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
 	public java.lang.Integer getAUTHOR_ID();
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Setter for <code>V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCO_AUTHOR_ID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
+	 * Getter for <code>V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID", precision = 7)
 	public java.lang.Integer getCO_AUTHOR_ID();
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
+	 * Setter for <code>V_BOOK.DETAILS_ID</code>. 
 	 */
 	public void setDETAILS_ID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
+	 * Getter for <code>V_BOOK.DETAILS_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 7)
 	public java.lang.Integer getDETAILS_ID();
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.TITLE</code>. 
+	 * Setter for <code>V_BOOK.TITLE</code>. 
 	 */
 	public void setTITLE(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.TITLE</code>. 
+	 * Getter for <code>V_BOOK.TITLE</code>. 
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
 	public java.lang.String getTITLE();
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
+	 * Setter for <code>V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	public void setPUBLISHED_IN(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
+	 * Getter for <code>V_BOOK.PUBLISHED_IN</code>. 
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
 	public java.lang.Integer getPUBLISHED_IN();
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
+	 * Setter for <code>V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	public void setLANGUAGE_ID(java.lang.Integer value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
+	 * Getter for <code>V_BOOK.LANGUAGE_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
 	public java.lang.Integer getLANGUAGE_ID();
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
+	 * Setter for <code>V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	public void setCONTENT_TEXT(java.lang.String value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 
+	 * Getter for <code>V_BOOK.CONTENT_TEXT</code>. 
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getCONTENT_TEXT();
 
 	/**
-	 * Setter for <code>TEST.V_BOOK.CONTENT_PDF</code>. 
+	 * Setter for <code>V_BOOK.CONTENT_PDF</code>. 
 	 */
 	public void setCONTENT_PDF(byte[] value);
 
 	/**
-	 * Getter for <code>TEST.V_BOOK.CONTENT_PDF</code>. 
+	 * Getter for <code>V_BOOK.CONTENT_PDF</code>. 
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getCONTENT_PDF();

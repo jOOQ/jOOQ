@@ -9,17 +9,17 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings("all")
 public class U_BOOK_ARRAY extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 991189887;
+	private static final long serialVersionUID = 442947838;
 
 	/**
-	 * Create a new <code>TEST.U_BOOK_ARRAY</code> record
+	 * Create a new <code>U_BOOK_ARRAY</code> record
 	 */
 	public U_BOOK_ARRAY(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle3.generatedclasses.TEST.TEST, "U_BOOK_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType(), configuration);
+		super(org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, "U_BOOK_ARRAY", org.jooq.test.oracle3.generatedclasses.udt.U_BOOK_TYPE.U_BOOK_TYPE.getDataType(), configuration);
 	}
 
 	/**
-	 * Create a new <code>TEST.U_BOOK_ARRAY</code> record
+	 * Create a new <code>U_BOOK_ARRAY</code> record
 	 */
 	public U_BOOK_ARRAY(org.jooq.Configuration configuration, org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE... array) {
 		this(configuration);
@@ -27,7 +27,7 @@ public class U_BOOK_ARRAY extends org.jooq.impl.ArrayRecordImpl<org.jooq.test.or
 	}
 
 	/**
-	 * Create a new <code>TEST.U_BOOK_ARRAY</code> record
+	 * Create a new <code>U_BOOK_ARRAY</code> record
 	 */
 	public U_BOOK_ARRAY(org.jooq.Configuration configuration, java.util.List<? extends org.jooq.test.oracle3.generatedclasses.udt.records.U_BOOK_TYPE> list) {
 		this(configuration);

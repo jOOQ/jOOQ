@@ -9,15 +9,15 @@ package org.jooq.test.oracle3.generatedclasses.routines;
 @java.lang.SuppressWarnings("all")
 public class F_NUMBER extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 327558066;
+	private static final long serialVersionUID = -1551028811;
 
 	/**
-	 * The parameter <code>TEST.F_NUMBER.RETURN_VALUE</code>. 
+	 * The parameter <code>F_NUMBER.RETURN_VALUE</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.NUMERIC);
 
 	/**
-	 * The parameter <code>TEST.F_NUMBER.N</code>. 
+	 * The parameter <code>F_NUMBER.N</code>. 
 	 */
 	public static final org.jooq.Parameter<java.math.BigDecimal> N = createParameter("N", org.jooq.impl.SQLDataType.NUMERIC);
 
@@ -25,7 +25,7 @@ public class F_NUMBER extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal
 	 * Create a new routine call instance
 	 */
 	public F_NUMBER() {
-		super("F_NUMBER", org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.impl.SQLDataType.NUMERIC);
+		super("F_NUMBER", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.impl.SQLDataType.NUMERIC);
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(N);

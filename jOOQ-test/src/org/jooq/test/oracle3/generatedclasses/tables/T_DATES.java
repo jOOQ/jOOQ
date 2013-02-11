@@ -9,10 +9,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1881748516;
+	private static final long serialVersionUID = 1931923266;
 
 	/**
-	 * The singleton instance of <code>TEST.T_DATES</code>
+	 * The singleton instance of <code>T_DATES</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.tables.T_DATES T_DATES = new org.jooq.test.oracle3.generatedclasses.tables.T_DATES();
 
@@ -25,57 +25,57 @@ public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	}
 
 	/**
-	 * The column <code>TEST.T_DATES.ID</code>. 
+	 * The column <code>T_DATES.ID</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.T_DATES.D</code>. 
+	 * The column <code>T_DATES.D</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.sql.Date> D = createField("D", org.jooq.impl.SQLDataType.DATE, this);
 
 	/**
-	 * The column <code>TEST.T_DATES.T</code>. 
+	 * The column <code>T_DATES.T</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.sql.Timestamp> T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The column <code>TEST.T_DATES.TS</code>. 
+	 * The column <code>T_DATES.TS</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.sql.Timestamp> TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, this);
 
 	/**
-	 * The column <code>TEST.T_DATES.D_INT</code>. 
+	 * The column <code>T_DATES.D_INT</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.lang.Integer> D_INT = createField("D_INT", org.jooq.impl.SQLDataType.INTEGER, this);
 
 	/**
-	 * The column <code>TEST.T_DATES.TS_BIGINT</code>. 
+	 * The column <code>T_DATES.TS_BIGINT</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT, this);
 
 	/**
-	 * The column <code>TEST.T_DATES.I_Y</code>. 
+	 * The column <code>T_DATES.I_Y</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, org.jooq.types.YearToMonth> I_Y = createField("I_Y", org.jooq.impl.SQLDataType.INTERVALYEARTOMONTH, this);
 
 	/**
-	 * The column <code>TEST.T_DATES.I_D</code>. 
+	 * The column <code>T_DATES.I_D</code>. 
 	 */
 	public final org.jooq.TableField<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES, org.jooq.types.DayToSecond> I_D = createField("I_D", org.jooq.impl.SQLDataType.INTERVALDAYTOSECOND, this);
 
 	/**
-	 * Create a <code>TEST.T_DATES</code> table reference
+	 * Create a <code>T_DATES</code> table reference
 	 */
 	public T_DATES() {
-		super("T_DATES", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("T_DATES", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 
 	/**
-	 * Create an aliased <code>TEST.T_DATES</code> table reference
+	 * Create an aliased <code>T_DATES</code> table reference
 	 */
 	public T_DATES(java.lang.String alias) {
-		super(alias, org.jooq.test.oracle3.generatedclasses.TEST.TEST, org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES);
+		super(alias, org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.test.oracle3.generatedclasses.tables.T_DATES.T_DATES);
 	}
 
 	/**

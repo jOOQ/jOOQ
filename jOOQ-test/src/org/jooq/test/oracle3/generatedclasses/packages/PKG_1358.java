@@ -11,15 +11,15 @@ package org.jooq.test.oracle3.generatedclasses.packages;
 @java.lang.SuppressWarnings("all")
 public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 399387879;
+	private static final long serialVersionUID = -1078307358;
 
 	/**
-	 * The singleton instance of <code>TEST.PKG_1358</code>
+	 * The singleton instance of <code>PKG_1358</code>
 	 */
 	public static final org.jooq.test.oracle3.generatedclasses.packages.PKG_1358 PKG_1358 = new org.jooq.test.oracle3.generatedclasses.packages.PKG_1358();
 
 	/**
-	 * Call <code>TEST.PKG_1358.P</code>
+	 * Call <code>PKG_1358.P</code>
 	 */
 	public static void call_P______ABC_1(org.jooq.Configuration configuration, java.lang.String I) {
 		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_1 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_1();
@@ -29,7 +29,7 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	}
 
 	/**
-	 * Call <code>TEST.PKG_1358.P</code>
+	 * Call <code>PKG_1358.P</code>
 	 */
 	public static void call_P______ABC_2(org.jooq.Configuration configuration, java.lang.String J) {
 		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_2 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_2();
@@ -39,7 +39,7 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	}
 
 	/**
-	 * Call <code>TEST.PKG_1358.P</code>
+	 * Call <code>PKG_1358.P</code>
 	 */
 	public static void call_P______ABC_3(org.jooq.Configuration configuration, java.lang.String K) {
 		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_3 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P______ABC_3();
@@ -49,7 +49,7 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	}
 
 	/**
-	 * Call <code>TEST.PKG_1358.P2</code>
+	 * Call <code>PKG_1358.P2</code>
 	 */
 	public static void call_P2______ABC_1(org.jooq.Configuration configuration, java.lang.String I) {
 		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_1 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_1();
@@ -59,7 +59,7 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	}
 
 	/**
-	 * Call <code>TEST.PKG_1358.P2</code>
+	 * Call <code>PKG_1358.P2</code>
 	 */
 	public static void call_P2______ABC_2(org.jooq.Configuration configuration, java.lang.String J) {
 		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_2 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P2______ABC_2();
@@ -69,7 +69,7 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	}
 
 	/**
-	 * Call <code>TEST.PKG_1358.P21</code>
+	 * Call <code>PKG_1358.P21</code>
 	 */
 	public static void call_P21(org.jooq.Configuration configuration, java.lang.String I) {
 		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P21 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P21();
@@ -79,7 +79,7 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	}
 
 	/**
-	 * Call <code>TEST.PKG_1358.P3</code>
+	 * Call <code>PKG_1358.P3</code>
 	 */
 	public static void call_P3(org.jooq.Configuration configuration, java.lang.String K) {
 		org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3 p = new org.jooq.test.oracle3.generatedclasses.packages.pkg_1358.P3();
@@ -92,6 +92,6 @@ public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.la
 	 * No further instances allowed
 	 */
 	private PKG_1358() {
-		super("PKG_1358", org.jooq.test.oracle3.generatedclasses.TEST.TEST);
+		super("PKG_1358", org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
 	}
 }

@@ -64,6 +64,6 @@ public class SchemaDefinition extends AbstractDefinition {
     }
 
     public boolean isDefaultSchema() {
-        return StringUtils.isBlank(getName());
+        return StringUtils.isBlank(getOutputName());
     }
 }

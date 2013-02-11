@@ -16,6 +16,11 @@
             <name>org.jooq.util.oracle.OracleDatabase</name>
             <includes>.*976.*</includes>
             <excludes></excludes>
+            <schemata>
+                <schema>
+                	<inputSchema>TEST</inputSchema>
+                </schema>
+            </schemata>
             <dateAsTimestamp>true</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
         </database>

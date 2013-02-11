@@ -182,7 +182,7 @@
         schema name for source code generation. If not specified, this
         will be the same as the input-schema.
         -->
-      <element name="outputSchema" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1" />
 
       <!--
         A configuration element to configure several input and/or output
@@ -229,7 +229,7 @@
       <element name="inputSchema" type="string" default="" minOccurs="1" maxOccurs="1" />
 
       <!-- See also database/outputSchema -->
-      <element name="outputSchema" type="string" default="" minOccurs="0" maxOccurs="1" />
+      <element name="outputSchema" type="string" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

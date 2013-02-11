@@ -39,6 +39,7 @@ package org.jooq.test;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.Factory.currentUser;
 import static org.jooq.impl.Factory.sum;
@@ -70,11 +71,13 @@ import static org.jooq.test.oracle.generatedclasses.test.Tables.T_TRIGGERS;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.V_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.V_BOOK;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.V_LIBRARY;
+import static org.jooq.test.oracle.generatedclasses.test.Test.TEST;
 import static org.jooq.test.oracle.generatedclasses.test.UDTs.U_AUTHOR_TYPE;
 import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.countBooks;
 import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.load;
 import static org.jooq.test.oracle2.generatedclasses.Tables.DATE_AS_TIMESTAMP_T_976;
 import static org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE;
+import static org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA;
 import static org.jooq.util.oracle.OracleFactory.contains;
 import static org.jooq.util.oracle.OracleFactory.score;
 import static org.jooq.util.oracle.OracleFactory.sysContext;
@@ -95,8 +98,10 @@ import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Record2;
+import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
@@ -1194,6 +1199,36 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(now, org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976.p_976(create(), now));
         assertEquals(now, org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976.f_976(create(), now));
         assertEquals(now, create().select(org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976.f_976(now)).fetchOne(0));
+    }
+
+    @Test
+    public void testOracleWithDefaultSchema() throws Exception {
+
+        // [#2133] Some checks verifying that the default schema generated code
+        // is similar to the test schema generated code
+        assertEquals(TEST.getSequences().size(), DEFAULT_SCHEMA.getSequences().size());
+        assertEquals(TEST.getTables().size(), DEFAULT_SCHEMA.getTables().size());
+        assertEquals(TEST.getUDTs().size(), DEFAULT_SCHEMA.getUDTs().size());
+
+        Select<Record3<String, String, String>> select =
+        create().select(
+                    org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.FIRST_NAME,
+                    org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.LAST_NAME,
+                    org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK.TITLE)
+                .from(org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK)
+                .join(org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR)
+                .on(org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK.AUTHOR_ID.eq(
+                    org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.ID))
+                .orderBy(org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK.ID);
+
+        // No reference to the TEST schema should be contained
+        assertFalse(select.getSQL().contains("TEST"));
+
+        Result<Record3<String, String, String>> result = select.fetch();
+        assertEquals(4, result.size());
+        assertEquals(BOOK_FIRST_NAMES, result.getValues(org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.FIRST_NAME));
+        assertEquals(BOOK_LAST_NAMES, result.getValues(org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.LAST_NAME));
+        assertEquals(BOOK_TITLES, result.getValues(org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK.TITLE));
     }
 
     @Test

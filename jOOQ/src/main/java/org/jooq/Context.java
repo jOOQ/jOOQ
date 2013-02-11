@@ -38,9 +38,7 @@ package org.jooq;
 import java.sql.PreparedStatement;
 
 /**
- * A context type that is used for rendering SQL or for binding
- * <p>
- * This interface is for JOOQ INTERNAL USE only. Do not reference directly
+ * A context type that is used for rendering SQL or for binding.
  *
  * @author Lukas Eder
  * @see BindContext

@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.vals;
-
 import org.jooq.ForeignKey;
 import org.jooq.Row;
 import org.jooq.Table;
@@ -86,7 +84,7 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Row valuesRow() {
-        return new RowImpl(vals(intoArray(), fields.fields.fields()));
+        return new RowImpl(Utils.fields(intoArray(), fields.fields.fields()));
     }
 
     @SuppressWarnings("unchecked")

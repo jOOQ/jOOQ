@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.row;
-import static org.jooq.impl.Factory.vals;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,6 +44,14 @@ import java.util.Iterator;
 import javax.annotation.Generated;
 
 import org.jooq.BetweenAndStep1;
+import org.jooq.BetweenAndStep2;
+import org.jooq.BetweenAndStep3;
+import org.jooq.BetweenAndStep4;
+import org.jooq.BetweenAndStep5;
+import org.jooq.BetweenAndStep6;
+import org.jooq.BetweenAndStep7;
+import org.jooq.BetweenAndStep8;
+import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStep10;
 import org.jooq.BetweenAndStep11;
 import org.jooq.BetweenAndStep12;
@@ -55,17 +62,9 @@ import org.jooq.BetweenAndStep16;
 import org.jooq.BetweenAndStep17;
 import org.jooq.BetweenAndStep18;
 import org.jooq.BetweenAndStep19;
-import org.jooq.BetweenAndStep2;
 import org.jooq.BetweenAndStep20;
 import org.jooq.BetweenAndStep21;
 import org.jooq.BetweenAndStep22;
-import org.jooq.BetweenAndStep3;
-import org.jooq.BetweenAndStep4;
-import org.jooq.BetweenAndStep5;
-import org.jooq.BetweenAndStep6;
-import org.jooq.BetweenAndStep7;
-import org.jooq.BetweenAndStep8;
-import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStepN;
 import org.jooq.BindContext;
 import org.jooq.Comparator;
@@ -74,6 +73,14 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
+import org.jooq.Record2;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.Record10;
 import org.jooq.Record11;
 import org.jooq.Record12;
@@ -84,20 +91,20 @@ import org.jooq.Record16;
 import org.jooq.Record17;
 import org.jooq.Record18;
 import org.jooq.Record19;
-import org.jooq.Record2;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Row1;
+import org.jooq.Row2;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.Row10;
 import org.jooq.Row11;
 import org.jooq.Row12;
@@ -108,17 +115,9 @@ import org.jooq.Row16;
 import org.jooq.Row17;
 import org.jooq.Row18;
 import org.jooq.Row19;
-import org.jooq.Row2;
 import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
-import org.jooq.Row3;
-import org.jooq.Row4;
-import org.jooq.Row5;
-import org.jooq.Row6;
-import org.jooq.Row7;
-import org.jooq.Row8;
-import org.jooq.Row9;
 import org.jooq.RowN;
 import org.jooq.Select;
 
@@ -266,11 +265,11 @@ implements
     public final DataType<?>[] dataTypes() {
         int size = fields.fields.length;
         DataType<?>[] result = new DataType[size];
-
+        
         for (int i = 0; i < size; i++) {
             result[i] = fields.field(i).getDataType();
         }
-
+        
         return result;
     }
 
@@ -639,7 +638,7 @@ implements
 
     @Override
     public final Condition equal(Record record) {
-        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.EQUALS);
     }
 
@@ -1560,7 +1559,7 @@ implements
 
     @Override
     public final Condition notEqual(Record record) {
-        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.NOT_EQUALS);
     }
 
@@ -2485,7 +2484,7 @@ implements
 
     @Override
     public final Condition lessThan(Record record) {
-        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.LESS);
     }
 
@@ -3406,7 +3405,7 @@ implements
 
     @Override
     public final Condition lessOrEqual(Record record) {
-        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
     }
 
@@ -4327,7 +4326,7 @@ implements
 
     @Override
     public final Condition greaterThan(Record record) {
-        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.GREATER);
     }
 
@@ -5248,7 +5247,7 @@ implements
 
     @Override
     public final Condition greaterOrEqual(Record record) {
-        Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
     }
 
@@ -6403,7 +6402,7 @@ implements
 
     @Override
     public final BetweenAndStepN between(Record record) {
-        RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
+        RowN row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return between(row);
     }
 
@@ -7094,7 +7093,7 @@ implements
 
     @Override
     public final BetweenAndStepN betweenSymmetric(Record record) {
-        RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
+        RowN row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return betweenSymmetric(row);
     }
 
@@ -7785,7 +7784,7 @@ implements
 
     @Override
     public final BetweenAndStepN notBetween(Record record) {
-        RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
+        RowN row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return notBetween(row);
     }
 
@@ -8476,7 +8475,7 @@ implements
 
     @Override
     public final BetweenAndStepN notBetweenSymmetric(Record record) {
-        RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
+        RowN row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return notBetweenSymmetric(row);
     }
 
@@ -9080,7 +9079,7 @@ implements
         RowN[] rows = new RowN[records.length];
 
         for (int i = 0; i < records.length; i++) {
-            rows[i] = new RowImpl(vals(records[i].intoArray(), records[i].fields()));
+            rows[i] = new RowImpl(Utils.fields(records[i].intoArray(), records[i].fields()));
         }
 
         return in(rows);
@@ -9448,7 +9447,7 @@ implements
         RowN[] rows = new RowN[records.length];
 
         for (int i = 0; i < records.length; i++) {
-            rows[i] = new RowImpl(vals(records[i].intoArray(), records[i].fields()));
+            rows[i] = new RowImpl(Utils.fields(records[i].intoArray(), records[i].fields()));
         }
 
         return notIn(rows);
@@ -9565,6 +9564,6 @@ implements
 
     @Override
     public final Iterator<Field<?>> iterator() {
-        return Arrays.asList(fields.fields).iterator();
+        return fields.iterator();
     }
 }

@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
-
 import org.jooq.Case;
 import org.jooq.CaseConditionStep;
 import org.jooq.CaseValueStep;
@@ -53,7 +51,7 @@ class CaseImpl implements Case {
 
     @Override
     public final <V> CaseValueStep<V> value(V value) {
-        return value(val(value));
+        return value(Utils.field(value));
     }
 
     @Override
@@ -63,7 +61,7 @@ class CaseImpl implements Case {
 
     @Override
     public final <T> CaseConditionStep<T> when(Condition condition, T result) {
-        return when(condition, val(result));
+        return when(condition, Utils.field(result));
     }
 
     @Override

@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.impl.Factory.val;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -252,7 +251,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
      * Extracted method to ensure generic type safety.
      */
     private final <T> void addValue(StoreQuery<?> store, Field<T> field, Object value) {
-        store.addValue(field, val(value, field));
+        store.addValue(field, Utils.field(value, field));
     }
 
     /**

@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
-
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
 import org.jooq.Field;
@@ -54,17 +52,17 @@ class CaseValueStepImpl<V> implements CaseValueStep<V> {
 
     @Override
     public <T> CaseWhenStep<V, T> when(V compareValue, T result) {
-        return when(val(compareValue), val(result));
+        return when(Utils.field(compareValue), Utils.field(result));
     }
 
     @Override
     public <T> CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
-        return when(val(compareValue), result);
+        return when(Utils.field(compareValue), result);
     }
 
     @Override
     public <T> CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
-        return when(compareValue, val(result));
+        return when(compareValue, Utils.field(result));
     }
 
     @Override

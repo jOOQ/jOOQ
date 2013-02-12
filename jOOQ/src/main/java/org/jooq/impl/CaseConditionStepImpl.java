@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +66,7 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
 
     @Override
     public final CaseConditionStep<T> when(Condition condition, T result) {
-        return when(condition, val(result));
+        return when(condition, Utils.field(result));
     }
 
     @Override
@@ -81,7 +79,7 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
 
     @Override
     public final Field<T> otherwise(T result) {
-        return otherwise(val(result));
+        return otherwise(Utils.field(result));
     }
 
     @Override

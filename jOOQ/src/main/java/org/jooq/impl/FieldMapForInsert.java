@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -157,7 +155,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
             Field<?> field = entry.getKey();
             Object value = entry.getValue();
 
-            put(entry.getKey(), val(value, field));
+            put(entry.getKey(), Utils.field(value, field));
         }
     }
 }

@@ -38,7 +38,6 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.Factory.val;
 
 import java.util.Map;
 
@@ -107,7 +106,7 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             Field<?> field = entry.getKey();
             Object value = entry.getValue();
 
-            put(entry.getKey(), val(value, field));
+            put(entry.getKey(), Utils.field(value, field));
         }
     }
 }

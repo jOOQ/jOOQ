@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
-
 import java.util.Map;
 
 import org.jooq.Configuration;
@@ -77,16 +75,11 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
     @Override
     public final <T> void addValue(Field<T> field, T value) {
-        addValue(field, val(value, field));
+        getValues().put(field, Utils.field(value, field));
     }
 
     @Override
     public final <T> void addValue(Field<T> field, Field<T> value) {
-        if (value == null) {
-            getValues().put(field, val(null, field));
-        }
-        else {
-            getValues().put(field, value);
-        }
+        getValues().put(field, Utils.field(value, field));
     }
 }

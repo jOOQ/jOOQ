@@ -37,7 +37,6 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.impl.Factory.val;
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.util.sqlite.SQLiteFactory.rowid;
 
@@ -130,17 +129,12 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final <T> void addValueForUpdate(Field<T> field, T value) {
-        addValueForUpdate(field, val(value, field));
+        updateMap.put(field, Utils.field(value, field));
     }
 
     @Override
     public final <T> void addValueForUpdate(Field<T> field, Field<T> value) {
-        if (value == null) {
-            updateMap.put(field, val(null, field));
-        }
-        else {
-            updateMap.put(field, value);
-        }
+        updateMap.put(field, Utils.field(value, field));
     }
 
     @Override

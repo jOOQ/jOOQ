@@ -49,14 +49,14 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 /**
  * @author Lukas Eder
  */
-class UDTConstant<R extends UDTRecord<R>> extends AbstractField<R> {
+class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
-    private static final long  serialVersionUID = 6807729087019209084L;
+    private static final long serialVersionUID = 6807729087019209084L;
 
-    private final UDTRecord<?> record;
+    private final R           record;
 
-    UDTConstant(UDTRecord<R> value) {
-        super(value.toString(), value.getUDT().getDataType());
+    UDTConstant(R value) {
+        super(value, value.getUDT().getDataType());
 
         this.record = value;
     }

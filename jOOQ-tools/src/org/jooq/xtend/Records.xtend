@@ -119,8 +119,6 @@ class Records extends Generators {
         «classHeader»
         package org.jooq.impl;
         
-        import static org.jooq.impl.Factory.vals;
-        
         import java.util.Collection;
         
         import javax.annotation.Generated;
@@ -130,6 +128,7 @@ class Records extends Generators {
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         import org.jooq.Record«degree»;
         «ENDFOR»
+        import org.jooq.impl.Factory;
         
         /**
          * A general purpose record, typically used for ad-hoc types.
@@ -181,7 +180,7 @@ class Records extends Generators {
         
             @Override
             public final RowImpl<«TN(Constants::MAX_ROW_DEGREE)»> valuesRow() {
-                return new RowImpl(vals(intoArray(), fields.fields()));
+                return new RowImpl(Factory.fields(intoArray(), fields.fields()));
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 

@@ -77,7 +77,7 @@ public class ProductInventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductInventory> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductInventory_ProductID_LocationID;
 	}
 

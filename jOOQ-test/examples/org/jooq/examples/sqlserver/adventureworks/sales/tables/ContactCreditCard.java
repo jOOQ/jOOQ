@@ -57,7 +57,7 @@ public class ContactCreditCard extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.ContactCreditCard> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_ContactCreditCard_ContactID_CreditCardID;
 	}
 

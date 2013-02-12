@@ -122,7 +122,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fire
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> getPrimaryKey() {
 		return org.jooq.test.firebird.generatedclasses.Keys.PK_X_UNUSED;
 	}
 

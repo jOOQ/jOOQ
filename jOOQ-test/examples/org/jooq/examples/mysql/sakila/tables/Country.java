@@ -65,7 +65,7 @@ public class Country extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CountryRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CountryRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_COUNTRY_PRIMARY;
 	}
 

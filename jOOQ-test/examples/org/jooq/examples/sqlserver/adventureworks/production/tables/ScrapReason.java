@@ -65,7 +65,7 @@ public class ScrapReason extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ScrapReason> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ScrapReason_ScrapReasonID;
 	}
 

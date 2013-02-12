@@ -55,7 +55,7 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.de
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord> getPrimaryKey() {
 		return org.jooq.test.derby.generatedclasses.Keys.PK_T_LANGUAGE;
 	}
 

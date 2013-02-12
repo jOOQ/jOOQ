@@ -95,7 +95,7 @@ public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.T_639NumbersTableRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.T_639NumbersTableRecord> getPrimaryKey() {
 		return org.jooq.test.derby.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE;
 	}
 

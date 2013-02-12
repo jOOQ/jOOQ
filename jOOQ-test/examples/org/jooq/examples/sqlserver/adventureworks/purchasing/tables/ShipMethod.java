@@ -80,7 +80,7 @@ public class ShipMethod extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ShipMethod> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_ShipMethod_ShipMethodID;
 	}
 

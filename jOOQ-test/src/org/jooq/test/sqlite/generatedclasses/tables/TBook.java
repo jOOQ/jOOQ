@@ -80,7 +80,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TBookRecord> getPrimaryKey() {
 		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_BOOK;
 	}
 

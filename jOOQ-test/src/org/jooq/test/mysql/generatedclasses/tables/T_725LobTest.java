@@ -45,7 +45,7 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> getPrimaryKey() {
 		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_725_LOB_TEST_PRIMARY;
 	}
 

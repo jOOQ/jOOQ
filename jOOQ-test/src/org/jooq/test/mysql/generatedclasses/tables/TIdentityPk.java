@@ -53,7 +53,7 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord> getPrimaryKey() {
 		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_IDENTITY_PK_PRIMARY;
 	}
 

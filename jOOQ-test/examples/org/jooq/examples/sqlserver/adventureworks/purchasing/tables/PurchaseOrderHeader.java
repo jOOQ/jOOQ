@@ -115,7 +115,7 @@ public class PurchaseOrderHeader extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.PurchaseOrderHeader> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_PurchaseOrderHeader_PurchaseOrderID;
 	}
 

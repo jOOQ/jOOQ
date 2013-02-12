@@ -115,7 +115,7 @@ public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_FILM_PRIMARY;
 	}
 

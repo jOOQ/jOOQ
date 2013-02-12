@@ -47,7 +47,7 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> getPrimaryKey() {
 		return org.jooq.test.mysql.generatedclasses.Keys.KEY_X_TEST_CASE_71_PRIMARY;
 	}
 

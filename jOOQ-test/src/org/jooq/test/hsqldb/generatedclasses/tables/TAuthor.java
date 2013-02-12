@@ -72,7 +72,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsql
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TAuthorRecord> getPrimaryKey() {
 		return org.jooq.test.hsqldb.generatedclasses.Keys.PK_T_AUTHOR;
 	}
 

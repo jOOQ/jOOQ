@@ -72,7 +72,7 @@ public class EmployeeDepartmentHistory extends org.jooq.impl.UpdatableTableImpl<
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeeDepartmentHistory> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EmployeeDepartmentHistory_EmployeeID_StartDate_DepartmentID;
 	}
 

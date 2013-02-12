@@ -40,7 +40,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.d
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord> getPrimaryKey() {
 		return org.jooq.test.derby.generatedclasses.Keys.UK_T_BOOK_STORE_NAME;
 	}
 

@@ -95,7 +95,7 @@ public class BillOfMaterials extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.BillOfMaterials> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_BillOfMaterials_BillOfMaterialsID;
 	}
 

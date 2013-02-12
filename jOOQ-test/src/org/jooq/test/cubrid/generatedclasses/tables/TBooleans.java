@@ -90,7 +90,7 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cu
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> getPrimaryKey() {
 		return org.jooq.test.cubrid.generatedclasses.Keys.T_BOOLEANS__PK_T_BOOLEANS;
 	}
 

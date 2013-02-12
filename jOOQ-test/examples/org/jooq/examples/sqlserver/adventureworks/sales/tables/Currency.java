@@ -57,7 +57,7 @@ public class Currency extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Currency> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Currency_CurrencyCode;
 	}
 

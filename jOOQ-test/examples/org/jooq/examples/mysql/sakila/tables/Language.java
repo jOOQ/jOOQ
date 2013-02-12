@@ -65,7 +65,7 @@ public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_LANGUAGE_PRIMARY;
 	}
 

@@ -62,7 +62,7 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fi
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> getPrimaryKey() {
 		return org.jooq.test.firebird.generatedclasses.Keys.PK_T_LANGUAGE;
 	}
 

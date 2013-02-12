@@ -62,7 +62,7 @@ public class DateAsTimestampT_976 extends org.jooq.impl.UpdatableTableImpl<org.j
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> getPrimaryKey() {
 		return org.jooq.test.oracle2.generatedclasses.Keys.DATE_AS_TIMESTAMP_PK_T_976;
 	}
 

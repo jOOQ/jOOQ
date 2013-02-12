@@ -72,7 +72,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TDatesRecord> getPrimaryKey() {
 		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_DATES_PRIMARY;
 	}
 

@@ -62,7 +62,7 @@ public class SpecialOfferProduct extends org.jooq.impl.UpdatableTableImpl<org.jo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SpecialOfferProduct> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SpecialOfferProduct_SpecialOfferID_ProductID;
 	}
 

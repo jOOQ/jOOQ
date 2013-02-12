@@ -95,7 +95,7 @@ public class Customer extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_CUSTOMER_PRIMARY;
 	}
 

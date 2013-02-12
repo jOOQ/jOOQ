@@ -99,7 +99,7 @@ public class DbSerial extends org.jooq.impl.UpdatableTableImpl<org.jooq.Record> 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.Record> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.Record> getPrimaryKey() {
 		return org.jooq.util.cubrid.dba.Keys.DB_SERIAL__PK_DB_SERIAL_NAME;
 	}
 

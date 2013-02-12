@@ -65,7 +65,7 @@ public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_CATEGORY_PRIMARY;
 	}
 

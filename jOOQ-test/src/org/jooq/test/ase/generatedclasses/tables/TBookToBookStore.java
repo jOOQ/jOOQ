@@ -63,7 +63,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	}
 
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
 		return org.jooq.test.ase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS;
 	}
 

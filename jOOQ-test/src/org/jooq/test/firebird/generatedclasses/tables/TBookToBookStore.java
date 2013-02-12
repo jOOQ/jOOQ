@@ -57,7 +57,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
 		return org.jooq.test.firebird.generatedclasses.Keys.PK_B2BS;
 	}
 

@@ -52,7 +52,7 @@ public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableTableImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> getPrimaryKey() {
 		return org.jooq.test.oracle3.generatedclasses.Keys.PK_T_EXOTIC_TYPES;
 	}
 

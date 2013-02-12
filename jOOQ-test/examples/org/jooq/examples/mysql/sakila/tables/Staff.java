@@ -105,7 +105,7 @@ public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_STAFF_PRIMARY;
 	}
 

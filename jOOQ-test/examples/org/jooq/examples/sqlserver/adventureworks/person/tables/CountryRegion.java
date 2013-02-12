@@ -57,7 +57,7 @@ public class CountryRegion extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.CountryRegion> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_CountryRegion_CountryRegionCode;
 	}
 

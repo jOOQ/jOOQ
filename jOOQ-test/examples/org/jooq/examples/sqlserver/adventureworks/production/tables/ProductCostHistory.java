@@ -67,7 +67,7 @@ public class ProductCostHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCostHistory> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductCostHistory_ProductID_StartDate;
 	}
 

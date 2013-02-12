@@ -125,7 +125,7 @@ public class Contact extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Contact> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_Contact_ContactID;
 	}
 

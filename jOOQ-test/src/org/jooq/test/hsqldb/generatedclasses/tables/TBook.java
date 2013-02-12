@@ -97,7 +97,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookRecord> getPrimaryKey() {
 		return org.jooq.test.hsqldb.generatedclasses.Keys.PK_T_BOOK;
 	}
 

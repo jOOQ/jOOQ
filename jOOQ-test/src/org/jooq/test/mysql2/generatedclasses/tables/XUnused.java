@@ -114,7 +114,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> getPrimaryKey() {
 		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_X_UNUSED_PRIMARY;
 	}
 

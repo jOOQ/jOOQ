@@ -90,7 +90,7 @@ public class StateProvince extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.StateProvince> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_StateProvince_StateProvinceID;
 	}
 

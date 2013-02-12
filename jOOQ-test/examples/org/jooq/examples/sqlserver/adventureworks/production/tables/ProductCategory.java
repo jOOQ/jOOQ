@@ -70,7 +70,7 @@ public class ProductCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCategory> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductCategory> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductCategory_ProductCategoryID;
 	}
 

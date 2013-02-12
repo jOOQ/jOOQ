@@ -67,7 +67,7 @@ public class CustomerAddress extends org.jooq.impl.UpdatableTableImpl<org.jooq.e
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CustomerAddress> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CustomerAddress_CustomerID_AddressID;
 	}
 

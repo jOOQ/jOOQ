@@ -77,7 +77,7 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.post
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> getPrimaryKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_ARRAYS;
 	}
 

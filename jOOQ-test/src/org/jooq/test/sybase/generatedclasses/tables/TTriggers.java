@@ -65,7 +65,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord> getPrimaryKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.T_TRIGGERS__PK_T_TRIGGERS;
 	}
 

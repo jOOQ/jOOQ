@@ -62,7 +62,7 @@ public class ProductModelProductDescriptionCulture extends org.jooq.impl.Updatab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductModelProductDescriptionCulture> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductModelProductDescriptionCulture_ProductModelID_ProductDescriptionID_CultureID;
 	}
 

@@ -47,7 +47,7 @@ public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebi
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> getPrimaryKey() {
 		return org.jooq.test.firebird.generatedclasses.Keys.T_937;
 	}
 

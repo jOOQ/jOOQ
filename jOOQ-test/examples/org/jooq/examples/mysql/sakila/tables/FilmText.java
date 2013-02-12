@@ -57,7 +57,7 @@ public class FilmText extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_FILM_TEXT_PRIMARY;
 	}
 

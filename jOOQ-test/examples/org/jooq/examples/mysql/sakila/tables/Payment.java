@@ -85,7 +85,7 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_PAYMENT_PRIMARY;
 	}
 

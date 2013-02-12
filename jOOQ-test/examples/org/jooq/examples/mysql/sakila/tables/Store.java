@@ -70,7 +70,7 @@ public class Store extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_STORE_PRIMARY;
 	}
 

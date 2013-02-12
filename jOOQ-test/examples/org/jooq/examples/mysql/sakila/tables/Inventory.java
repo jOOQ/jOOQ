@@ -70,7 +70,7 @@ public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_INVENTORY_PRIMARY;
 	}
 

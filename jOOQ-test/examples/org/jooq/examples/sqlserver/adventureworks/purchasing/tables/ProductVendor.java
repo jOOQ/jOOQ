@@ -97,7 +97,7 @@ public class ProductVendor extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.purchasing.tables.records.ProductVendor> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.purchasing.Keys.PK_ProductVendor_ProductID_VendorID;
 	}
 

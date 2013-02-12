@@ -52,7 +52,7 @@ public class T_725_LOB_TEST extends org.jooq.impl.UpdatableTableImpl<org.jooq.te
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> getPrimaryKey() {
 		return org.jooq.test.oracle3.generatedclasses.Keys.PK_T_725_LOB_TEST;
 	}
 

@@ -65,7 +65,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubri
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord> getPrimaryKey() {
 		return org.jooq.test.cubrid.generatedclasses.Keys.T_DATES__PK_T_DATES;
 	}
 

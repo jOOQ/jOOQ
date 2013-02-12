@@ -67,7 +67,7 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> getPrimaryKey() {
 		return org.jooq.test.oracle.generatedclasses.multi_schema.Keys.PK_T_BOOK_SALE;
 	}
 

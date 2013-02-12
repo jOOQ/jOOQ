@@ -39,7 +39,7 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.
 	}
 
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.T_986_2Record> getPrimaryKey() {
 		return org.jooq.test.ase.generatedclasses.Keys.T_986_2__PK_986;
 	}
 

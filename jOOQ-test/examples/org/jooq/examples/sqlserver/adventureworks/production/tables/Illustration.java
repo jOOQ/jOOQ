@@ -65,7 +65,7 @@ public class Illustration extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.Illustration> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_Illustration_IllustrationID;
 	}
 

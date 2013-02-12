@@ -74,7 +74,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysq
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> getPrimaryKey() {
 		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_AUTHOR_PRIMARY;
 	}
 

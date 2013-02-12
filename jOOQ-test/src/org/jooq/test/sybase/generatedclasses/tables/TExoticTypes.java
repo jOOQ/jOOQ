@@ -52,7 +52,7 @@ public class TExoticTypes extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord> getPrimaryKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.T_EXOTIC_TYPES__PK_T_EXOTIC_TYPES;
 	}
 

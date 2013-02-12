@@ -82,7 +82,7 @@ public class T_DATES extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.oracle3.generatedclasses.tables.records.T_DATES> getPrimaryKey() {
 		return org.jooq.test.oracle3.generatedclasses.Keys.PK_T_DATES;
 	}
 

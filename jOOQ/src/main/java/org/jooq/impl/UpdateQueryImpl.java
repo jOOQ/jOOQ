@@ -499,6 +499,8 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                    .keyword("where ")
                    .sql(getWhere());
         }
+
+        toSQLReturning(context);
     }
 
     @Override
@@ -525,6 +527,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         }
 
         context.bind(condition);
+        bindReturning(context);
     }
 
     @Override

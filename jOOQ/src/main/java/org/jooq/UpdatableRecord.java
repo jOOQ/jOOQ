@@ -84,7 +84,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     UpdatableTable<R> getTable();
 
     /**
-     * A view holding values for the {@link UpdatableTable#getMainKey()}
+     * A view holding values for the {@link UpdatableTable#getPrimaryKey()}
      * <p>
      * This method returns a "view" of this record itself. Modifications to the
      * returned record will affect values in this record.
@@ -294,7 +294,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * AND [version/timestamp fields = version/timestamp values]</pre></code>
      * <p>
      * This is in fact the same as calling
-     * <code>delete(getTable().getMainKey().getFieldsArray())</code>
+     * <code>delete(getTable().getPrimaryKey().getFieldsArray())</code>
      *
      * @return <code>1</code> if the record was deleted from the database.
      *         <code>0</code> if deletion was not necessary.

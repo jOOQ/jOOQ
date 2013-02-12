@@ -313,7 +313,7 @@ class MetaImpl implements Meta {
         }
 
         @Override
-        public final UniqueKey<Record> getMainKey() {
+        public final UniqueKey<Record> getPrimaryKey() {
             return null;
         }
 

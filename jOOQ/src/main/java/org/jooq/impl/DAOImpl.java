@@ -268,7 +268,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     private final Field<?> pk() {
         if (table instanceof UpdatableTable) {
             UpdatableTable<?> updatable = (UpdatableTable<?>) table;
-            UniqueKey<?> key = updatable.getMainKey();
+            UniqueKey<?> key = updatable.getPrimaryKey();
 
             if (key.getFields().size() == 1) {
                 return key.getFields().get(0);

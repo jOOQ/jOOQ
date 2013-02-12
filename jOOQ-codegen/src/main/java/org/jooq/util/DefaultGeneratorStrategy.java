@@ -123,7 +123,7 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
 
         if (mode == Mode.DAO) {
             TableDefinition table = (TableDefinition) definition;
-            List<ColumnDefinition> keyColumns = table.getMainUniqueKey().getKeyColumns();
+            List<ColumnDefinition> keyColumns = table.getPrimaryKey().getKeyColumns();
 
             String name = DAO.class.getName();
 

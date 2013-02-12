@@ -50,21 +50,18 @@ import org.jooq.conf.Settings;
 public interface UpdatableTable<R extends Record> extends Table<R> {
 
     /**
-     * Retrieve the table's main unique key. If there exists a
-     * <code>PRIMARY KEY</code> in the table, the <code>PRIMARY KEY</code> is
-     * returned. Otherwise, the most suitable <code>UNIQUE KEY</code> is
-     * returned.
+     * Retrieve the table's primary key
      *
-     * @return The main key. This is never <code>null</code> because
-     *         {@link UpdatableTable}'s always have at least one key.
+     * @return The primary key. This is never <code>null</code> for an updatable
+     *         table.
      */
-    UniqueKey<R> getMainKey();
+    UniqueKey<R> getPrimaryKey();
 
     /**
      * Retrieve all of the table's unique keys.
      *
      * @return All keys. This is never <code>null</code> or empty, because
-     *         {@link UpdatableTable}'s always have at least one key. This
+     *         {@link UpdatableTable}'s always have at least a primary key. This
      *         method returns an unmodifiable list.
      */
     List<UniqueKey<R>> getKeys();

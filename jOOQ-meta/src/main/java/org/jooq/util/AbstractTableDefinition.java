@@ -55,8 +55,8 @@ implements TableDefinition {
 
     private List<UniqueKeyDefinition>  uniqueKeys;
     private List<ForeignKeyDefinition> foreignKeys;
-    private boolean                    mainUniqueKeyLoaded;
-    private UniqueKeyDefinition        mainUniqueKey;
+    private boolean                    primaryKeyLoaded;
+    private UniqueKeyDefinition        primaryKey;
     private boolean                    identityLoaded;
     private IdentityDefinition         identity;
 
@@ -65,30 +65,20 @@ implements TableDefinition {
     }
 
     @Override
-    public final UniqueKeyDefinition getMainUniqueKey() {
-        if (!mainUniqueKeyLoaded) {
-            mainUniqueKeyLoaded = true;
+    public final UniqueKeyDefinition getPrimaryKey() {
+        if (!primaryKeyLoaded) {
+            primaryKeyLoaded = true;
 
             // Try finding a primary key first
             for (ColumnDefinition column : getColumns()) {
                 if (column.getPrimaryKey() != null) {
-                    mainUniqueKey = column.getPrimaryKey();
-                    return mainUniqueKey;
-                }
-            }
-
-            // Find best matching unique key. Matching algorithm:
-            // 1. Prefer single-column indexes
-            // 2. Prefer scalar-type indexes
-            for (ColumnDefinition column : getColumns()) {
-                for (UniqueKeyDefinition uniqueKey : column.getUniqueKeys()) {
-                    mainUniqueKey = uniqueKey;
-                    return mainUniqueKey;
+                    primaryKey = column.getPrimaryKey();
+                    return primaryKey;
                 }
             }
         }
 
-        return mainUniqueKey;
+        return primaryKey;
     }
 
     @Override

@@ -266,11 +266,11 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> void setValue(Field<T> field, T value) {
-        UniqueKey<?> mainKey = getMainKey();
+        UniqueKey<?> key = getPrimaryKey();
         Value<T> val = getValue0(field);
 
         // Normal fields' changed flag is always set to true
-        if (mainKey == null || !mainKey.getFields().contains(field)) {
+        if (key == null || !key.getFields().contains(field)) {
             val.setValue(value);
         }
 
@@ -315,7 +315,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     /**
      * Subclasses may override this
      */
-    UniqueKey<?> getMainKey() {
+    UniqueKey<?> getPrimaryKey() {
         return null;
     }
 
@@ -485,7 +485,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             // flags should all be reset in order for the returned record to be
             // updatable using store()
             if (result instanceof AbstractRecord) {
-                UniqueKey<?> key = ((AbstractRecord) result).getMainKey();
+                UniqueKey<?> key = ((AbstractRecord) result).getPrimaryKey();
 
                 if (key != null) {
                     boolean isKeySet = true;

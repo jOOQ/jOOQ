@@ -5440,7 +5440,7 @@ public class Executor implements Configuration {
     @Support
     public final <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException {
         UpdateQuery<R> update = updateQuery(record.getTable());
-        Utils.addConditions(update, record, record.getTable().getMainKey().getFieldsArray());
+        Utils.addConditions(update, record, record.getTable().getPrimaryKey().getFieldsArray());
         update.setRecord(record);
         return update.execute();
     }
@@ -5470,7 +5470,7 @@ public class Executor implements Configuration {
     @Support
     public final <R extends UpdatableRecord<R>> int executeDelete(R record) throws DataAccessException {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
-        Utils.addConditions(delete, record, record.getTable().getMainKey().getFieldsArray());
+        Utils.addConditions(delete, record, record.getTable().getPrimaryKey().getFieldsArray());
         return delete.execute();
     }
 

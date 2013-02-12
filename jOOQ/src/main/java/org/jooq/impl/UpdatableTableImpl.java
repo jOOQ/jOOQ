@@ -78,7 +78,7 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
      * Subclasses should override this method
      */
     @Override
-    public UniqueKey<R> getMainKey() {
+    public UniqueKey<R> getPrimaryKey() {
         return null;
     }
 

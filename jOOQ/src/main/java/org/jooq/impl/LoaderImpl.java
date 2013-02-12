@@ -116,7 +116,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private char                    separator               = CSVParser.DEFAULT_SEPARATOR;
     private String                  nullString              = null;
     private Field<?>[]              fields;
-    private boolean[]               mainKey;
+    private boolean[]               primaryKey;
 
     // Result data
     // -----------
@@ -270,13 +270,13 @@ class LoaderImpl<R extends TableRecord<R>> implements
     @Override
     public final LoaderImpl<R> fields(Field<?>... f) {
         this.fields = f;
-        this.mainKey = new boolean[f.length];
+        this.primaryKey = new boolean[f.length];
 
         if (updatable != null) {
             for (int i = 0; i < fields.length; i++) {
                 if (fields[i] != null) {
-                    if (updatable.getMainKey().getFields().contains(fields[i])) {
-                        mainKey[i] = true;
+                    if (updatable.getPrimaryKey().getFields().contains(fields[i])) {
+                        primaryKey[i] = true;
                     }
                 }
             }
@@ -371,7 +371,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                     insert.onDuplicateKeyUpdate(true);
 
                     for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && fields[i] != null && !mainKey[i]) {
+                        if (i < fields.length && fields[i] != null && !primaryKey[i]) {
                             addValueForUpdate0(insert, fields[i], row[i]);
                         }
                     }
@@ -383,7 +383,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
                     SelectQuery<R> select = create.selectQuery(table);
 
                     for (int i = 0; i < row.length; i++) {
-                        if (i < fields.length && mainKey[i]) {
+                        if (i < fields.length && primaryKey[i]) {
                             select.addConditions(getCondition(fields[i], row[i]));
                         }
                     }

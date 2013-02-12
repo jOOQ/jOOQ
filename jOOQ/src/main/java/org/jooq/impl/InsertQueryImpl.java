@@ -375,7 +375,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             Condition condition = null;
             List<Field<?>> key = new ArrayList<Field<?>>();
 
-            for (Field<?> f : into.getMainKey().getFields()) {
+            for (Field<?> f : into.getPrimaryKey().getFields()) {
                 Field<Object> field = (Field<Object>) f;
                 Field<Object> value = (Field<Object>) insertMaps.getMap().get(field);
 

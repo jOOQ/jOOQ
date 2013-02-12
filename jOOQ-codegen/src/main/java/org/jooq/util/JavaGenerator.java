@@ -463,7 +463,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateRecord(TableDefinition table) {
         log.info("Generating record", getStrategy().getFileName(table, Mode.RECORD));
 
-        final UniqueKeyDefinition key = table.getMainUniqueKey();
+        final UniqueKeyDefinition key = table.getPrimaryKey();
         final String className = getStrategy().getJavaClassName(table, Mode.RECORD);
         final String tableIdentifier = getStrategy().getFullJavaIdentifier(table);
         final String recordType = getStrategy().getFullJavaClassName(table, Mode.RECORD);
@@ -1147,7 +1147,7 @@ public class JavaGenerator extends AbstractGenerator {
         String tType = "Void";
         String pType = getStrategy().getFullJavaClassName(table, Mode.POJO);
 
-        UniqueKeyDefinition key = table.getMainUniqueKey();
+        UniqueKeyDefinition key = table.getPrimaryKey();
         ColumnDefinition keyColumn = null;
 
         if (key != null) {
@@ -1352,7 +1352,7 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void generateTable(SchemaDefinition schema, TableDefinition table) {
-        UniqueKeyDefinition mainKey = table.getMainUniqueKey();
+        UniqueKeyDefinition primaryKey = table.getPrimaryKey();
 
         final String className = getStrategy().getJavaClassName(table);
         final String fullClassName = getStrategy().getFullJavaClassName(table);
@@ -1363,7 +1363,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("Generating table", getStrategy().getFileName(table) +
             " [input=" + table.getInputName() +
             ", output=" + table.getOutputName() +
-            ", pk=" + (mainKey != null ? mainKey.getName() : "N/A") +
+            ", pk=" + (primaryKey != null ? primaryKey.getName() : "N/A") +
             "]");
 
         JavaWriter out = new JavaWriter(getStrategy().getFile(table));
@@ -1371,7 +1371,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassJavadoc(out, table);
 
         Class<?> baseClass;
-        if (generateRelations() && mainKey != null) {
+        if (generateRelations() && primaryKey != null) {
             baseClass = UpdatableTableImpl.class;
         } else {
             baseClass = TableImpl.class;
@@ -1440,11 +1440,11 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             // The primary / main unique key
-            if (mainKey != null) {
-                final String keyFullId = getStrategy().getFullJavaIdentifier(mainKey);
+            if (primaryKey != null) {
+                final String keyFullId = getStrategy().getFullJavaIdentifier(primaryKey);
 
                 out.tab(1).overrideInherit();
-                out.tab(1).println("public %s<%s> getMainKey() {", UniqueKey.class, recordType);
+                out.tab(1).println("public %s<%s> getPrimaryKey() {", UniqueKey.class, recordType);
                 out.tab(2).println("return %s;", keyFullId);
                 out.tab(1).println("}");
             }

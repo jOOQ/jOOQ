@@ -85,7 +85,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public Record key() {
-        RecordImpl result = new RecordImpl(getMainKey().getFields());
+        RecordImpl result = new RecordImpl(getPrimaryKey().getFields());
 
         for (Field<?> field : result.fields) {
             result.setValue(field, getValue0(field));
@@ -111,13 +111,13 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    final UniqueKey<R> getMainKey() {
-        return getTable().getMainKey();
+    final UniqueKey<R> getPrimaryKey() {
+        return getTable().getPrimaryKey();
     }
 
     @Override
     public final int store() {
-        TableField<R, ?>[] keys = getMainKey().getFieldsArray();
+        TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
         boolean executeUpdate = false;
 
         for (TableField<R, ?> field : keys) {
@@ -153,7 +153,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int update() {
-        return storeUpdate(getMainKey().getFieldsArray());
+        return storeUpdate(getPrimaryKey().getFieldsArray());
     }
 
     private final int storeInsert() {
@@ -310,7 +310,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int delete() {
-        TableField<R, ?>[] keys = getMainKey().getFieldsArray();
+        TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
 
         try {
             DeleteQuery<R> delete1 = create().deleteQuery(getTable());
@@ -352,7 +352,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         SelectQuery<?> select = create().selectQuery();
         select.addSelect(f);
         select.addFrom(getTable());
-        Utils.addConditions(select, this, getMainKey().getFieldsArray());
+        Utils.addConditions(select, this, getPrimaryKey().getFieldsArray());
 
         if (select.execute() == 1) {
             AbstractRecord record = (AbstractRecord) select.getResult().get(0);
@@ -374,7 +374,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             result.add(identity.getField());
         }
 
-        result.addAll(getMainKey().getFields());
+        result.addAll(getPrimaryKey().getFields());
         return result;
     }
 
@@ -383,7 +383,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         R copy = create().newRecord(getTable());
 
         // Copy all fields. This marks them all as isChanged, which is important
-        List<TableField<R, ?>> key = getMainKey().getFields();
+        List<TableField<R, ?>> key = getPrimaryKey().getFields();
         for (Field<?> field : fields) {
 
             // Don't copy key values

@@ -177,7 +177,7 @@ class GeneratorStrategyWrapper extends AbstractGeneratorStrategy {
             reserved = reservedColumns(UDTRecordImpl.class);
         }
         else if (definition instanceof ColumnDefinition) {
-            if (((ColumnDefinition) definition).getContainer().getMainUniqueKey() != null) {
+            if (((ColumnDefinition) definition).getContainer().getPrimaryKey() != null) {
                 reserved = reservedColumns(UpdatableRecordImpl.class);
             }
             else {

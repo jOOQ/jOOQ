@@ -13,58 +13,62 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 2107071311;
+	private static final long serialVersionUID = -1509070800;
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	public void setCd(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.CD, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_LANGUAGE.CD</code>. The language ISO code
 	 */
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 2)
 	public java.lang.String getCd() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.CD);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	public void setDescription(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.DESCRIPTION, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION</code>. The language description
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getDescription() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.DESCRIPTION);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.DESCRIPTION_ENGLISH, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getDescriptionEnglish() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.DESCRIPTION_ENGLISH);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_LANGUAGE.ID</code>. The language ID
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.ID, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -72,8 +76,9 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE.ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -97,7 +102,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -105,7 +110,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

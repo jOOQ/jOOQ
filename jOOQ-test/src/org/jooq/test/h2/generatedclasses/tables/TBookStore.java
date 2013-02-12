@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1863363266;
+	private static final long serialVersionUID = -1763123303;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_STORE</code>

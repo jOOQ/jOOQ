@@ -9,174 +9,174 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> implements org.jooq.Record12<java.lang.Integer, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double> {
 
-	private static final long serialVersionUID = 1754846068;
+	private static final long serialVersionUID = 2141135819;
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.short</code>. 
 	 */
 	public void setShort(java.lang.Short value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.short</code>. 
 	 */
 	public java.lang.Short getShort() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT);
+		return (java.lang.Short) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.integer</code>. 
 	 */
 	public void setInteger(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.integer</code>. 
 	 */
 	public java.lang.Integer getInteger() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.long</code>. 
 	 */
 	public void setLong(java.lang.Long value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.long</code>. 
 	 */
 	public java.lang.Long getLong() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG);
+		return (java.lang.Long) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.byte_decimal</code>. 
 	 */
 	public void setByteDecimal(java.lang.Byte value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.byte_decimal</code>. 
 	 */
 	public java.lang.Byte getByteDecimal() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BYTE_DECIMAL);
+		return (java.lang.Byte) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.short_decimal</code>. 
 	 */
 	public void setShortDecimal(java.lang.Short value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.short_decimal</code>. 
 	 */
 	public java.lang.Short getShortDecimal() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.SHORT_DECIMAL);
+		return (java.lang.Short) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.integer_decimal</code>. 
 	 */
 	public void setIntegerDecimal(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER_DECIMAL, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.integer_decimal</code>. 
 	 */
 	public java.lang.Integer getIntegerDecimal() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.INTEGER_DECIMAL);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.long_decimal</code>. 
 	 */
 	public void setLongDecimal(java.lang.Long value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.long_decimal</code>. 
 	 */
 	public java.lang.Long getLongDecimal() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.LONG_DECIMAL);
+		return (java.lang.Long) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.big_integer</code>. 
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.big_integer</code>. 
 	 */
 	public java.math.BigInteger getBigInteger() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_INTEGER);
+		return (java.math.BigInteger) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.big_decimal</code>. 
 	 */
 	public void setBigDecimal(java.math.BigDecimal value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL, value);
+		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.big_decimal</code>. 
 	 */
 	public java.math.BigDecimal getBigDecimal() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.BIG_DECIMAL);
+		return (java.math.BigDecimal) getValue(9);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.float</code>. 
 	 */
 	public void setFloat(java.lang.Float value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT, value);
+		setValue(10, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.float</code>. 
 	 */
 	public java.lang.Float getFloat() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.FLOAT);
+		return (java.lang.Float) getValue(10);
 	}
 
 	/**
 	 * Setter for <code>public.t_639_numbers_table.double</code>. 
 	 */
 	public void setDouble(java.lang.Double value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE, value);
+		setValue(11, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_639_numbers_table.double</code>. 
 	 */
 	public java.lang.Double getDouble() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE.DOUBLE);
+		return (java.lang.Double) getValue(11);
 	}
 
 	// -------------------------------------------------------------------------
@@ -200,7 +200,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Row12<java.lang.Integer, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12());
+		return (org.jooq.Row12) super.fieldsRow();
 	}
 
 	/**
@@ -208,7 +208,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.UpdatableRecordImpl<o
 	 */
 	@Override
 	public org.jooq.Row12<java.lang.Integer, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12());
+		return (org.jooq.Row12) super.valuesRow();
 	}
 
 	/**

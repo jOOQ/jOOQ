@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 637304822;
+	private static final long serialVersionUID = 1921097507;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK</code>

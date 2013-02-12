@@ -9,34 +9,34 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = 775656584;
+	private static final long serialVersionUID = -531714525;
 
 	/**
 	 * Setter for <code>public.t_725_lob_test.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_725_lob_test.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>public.t_725_lob_test.lob</code>. 
 	 */
 	public void setLob(byte[] value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_725_lob_test.lob</code>. 
 	 */
 	public byte[] getLob() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB);
+		return (byte[]) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, byte[]> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, byte[]> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

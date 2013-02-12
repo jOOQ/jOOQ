@@ -9,90 +9,90 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 665670196;
+	private static final long serialVersionUID = 1953007225;
 
 	/**
 	 * Setter for <code>public.v_author.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_author.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>public.v_author.first_name</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_author.first_name</code>. 
 	 */
 	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>public.v_author.last_name</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_author.last_name</code>. 
 	 */
 	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>public.v_author.date_of_birth</code>. 
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_author.date_of_birth</code>. 
 	 */
 	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>public.v_author.year_of_birth</code>. 
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_author.year_of_birth</code>. 
 	 */
 	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>public.v_author.address</code>. 
 	 */
 	public void setAddress(org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_author.address</code>. 
 	 */
 	public org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord getAddress() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS);
+		return (org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -104,7 +104,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.p
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, org.jooq.test.postgres.generatedclasses.udt.records.UAddressTypeRecord> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

@@ -9,146 +9,146 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.postgres.generatedclasses.enums.UBookStatus> {
 
-	private static final long serialVersionUID = 1701451213;
+	private static final long serialVersionUID = -1832240059;
 
 	/**
 	 * Setter for <code>public.v_book.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.author_id</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.author_id</code>. 
 	 */
 	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.co_author_id</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.co_author_id</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.details_id</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.details_id</code>. 
 	 */
 	public java.lang.Integer getDetailsId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.TITLE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.title</code>. 
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.published_in</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.published_in</code>. 
 	 */
 	public java.lang.Integer getPublishedIn() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.language_id</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.language_id</code>. 
 	 */
 	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.content_text</code>. 
 	 */
 	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.content_text</code>. 
 	 */
 	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.content_pdf</code>. 
 	 */
 	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.content_pdf</code>. 
 	 */
 	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>public.v_book.status</code>. 
 	 */
 	public void setStatus(org.jooq.test.postgres.generatedclasses.enums.UBookStatus value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.STATUS, value);
+		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>public.v_book.status</code>. 
 	 */
 	public org.jooq.test.postgres.generatedclasses.enums.UBookStatus getStatus() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK.STATUS);
+		return (org.jooq.test.postgres.generatedclasses.enums.UBookStatus) getValue(9);
 	}
 
 	// -------------------------------------------------------------------------
@@ -160,7 +160,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	 */
 	@Override
 	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.postgres.generatedclasses.enums.UBookStatus> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
+		return (org.jooq.Row10) super.fieldsRow();
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	 */
 	@Override
 	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.postgres.generatedclasses.enums.UBookStatus> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10());
+		return (org.jooq.Row10) super.valuesRow();
 	}
 
 	/**

@@ -15,43 +15,46 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1643718060;
+	private static final long serialVersionUID = -901778523;
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.ID</code>. 
 	 */
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.NAME</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.BIG_INTEGER</code>. 
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.BIG_INTEGER, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -59,14 +62,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "BIG_INTEGER", precision = 38)
 	public java.math.BigInteger getBigInteger() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.BIG_INTEGER);
+		return (java.math.BigInteger) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID_REF</code>. 
 	 */
 	public void setIdRef(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID_REF, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -74,14 +77,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "ID_REF", precision = 7)
 	public java.lang.Integer getIdRef() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.ID_REF);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.CLASS</code>. 
 	 */
 	public void setClass_(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.CLASS, value);
+		setValue(4, value);
 	}
 
 	/**
@@ -89,29 +92,29 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "CLASS", precision = 7)
 	public java.lang.Integer getClass_() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.CLASS);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.FIELDS</code>. 
 	 */
-	public void setFields_(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.FIELDS, value);
+	public void setFields(java.lang.Integer value) {
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.FIELDS</code>. 
 	 */
 	@javax.persistence.Column(name = "FIELDS", precision = 7)
-	public java.lang.Integer getFields_() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.FIELDS);
+	public java.lang.Integer getFields() {
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.CONFIGURATION</code>. 
 	 */
 	public void setConfiguration_(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.CONFIGURATION, value);
+		setValue(6, value);
 	}
 
 	/**
@@ -119,14 +122,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "CONFIGURATION", precision = 7)
 	public java.lang.Integer getConfiguration_() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.CONFIGURATION);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.U_D_T</code>. 
 	 */
 	public void setUDT(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.U_D_T, value);
+		setValue(7, value);
 	}
 
 	/**
@@ -134,14 +137,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "U_D_T", precision = 7)
 	public java.lang.Integer getUDT() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.U_D_T);
+		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.META_DATA</code>. 
 	 */
 	public void setMetaData(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.META_DATA, value);
+		setValue(8, value);
 	}
 
 	/**
@@ -149,14 +152,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "META_DATA", precision = 7)
 	public java.lang.Integer getMetaData() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.META_DATA);
+		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.TYPE0</code>. 
 	 */
 	public void setType0(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.TYPE0, value);
+		setValue(9, value);
 	}
 
 	/**
@@ -164,29 +167,29 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "TYPE0", precision = 7)
 	public java.lang.Integer getType0() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.TYPE0);
+		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.PRIMARY_KEY</code>. 
 	 */
-	public void setPrimaryKey(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.PRIMARY_KEY, value);
+	public void setPrimaryKey_(java.lang.Integer value) {
+		setValue(10, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.PRIMARY_KEY</code>. 
 	 */
 	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 7)
-	public java.lang.Integer getPrimaryKey() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.PRIMARY_KEY);
+	public java.lang.Integer getPrimaryKey_() {
+		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.PRIMARYKEY</code>. 
 	 */
 	public void setPrimarykey(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.PRIMARYKEY, value);
+		setValue(11, value);
 	}
 
 	/**
@@ -194,29 +197,30 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "PRIMARYKEY", precision = 7)
 	public java.lang.Integer getPrimarykey() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.PRIMARYKEY);
+		return (java.lang.Integer) getValue(11);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.NAME_REF</code>. 
 	 */
 	public void setNameRef(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME_REF, value);
+		setValue(12, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.NAME_REF</code>. 
 	 */
 	@javax.persistence.Column(name = "NAME_REF", length = 10)
+	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getNameRef() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.NAME_REF);
+		return (java.lang.String) getValue(12);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.FIELD 737</code>. 
 	 */
 	public void setField_737(java.math.BigDecimal value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.FIELD_737, value);
+		setValue(13, value);
 	}
 
 	/**
@@ -224,14 +228,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "FIELD 737", precision = 25, scale = 2)
 	public java.math.BigDecimal getField_737() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.FIELD_737);
+		return (java.math.BigDecimal) getValue(13);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>. 
 	 */
 	public void setMsUnusedIdRef(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_ID_REF, value);
+		setValue(14, value);
 	}
 
 	/**
@@ -239,22 +243,23 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "MS_UNUSED_ID_REF", precision = 7)
 	public java.lang.Integer getMsUnusedIdRef() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_ID_REF);
+		return (java.lang.Integer) getValue(14);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>. 
 	 */
 	public void setMsUnusedNameRef(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_NAME_REF, value);
+		setValue(15, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>. 
 	 */
 	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF", length = 10)
+	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getMsUnusedNameRef() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED.MS_UNUSED_NAME_REF);
+		return (java.lang.String) getValue(15);
 	}
 
 	// -------------------------------------------------------------------------
@@ -278,7 +283,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14(), field15(), field16());
+		return (org.jooq.Row16) super.fieldsRow();
 	}
 
 	/**
@@ -286,7 +291,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14(), value15(), value16());
+		return (org.jooq.Row16) super.valuesRow();
 	}
 
 	/**
@@ -462,7 +467,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value6() {
-		return getFields_();
+		return getFields();
 	}
 
 	/**
@@ -502,7 +507,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value11() {
-		return getPrimaryKey();
+		return getPrimaryKey_();
 	}
 
 	/**

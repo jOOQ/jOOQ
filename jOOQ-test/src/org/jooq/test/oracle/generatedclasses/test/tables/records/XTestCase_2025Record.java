@@ -11,36 +11,39 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 145552723;
+	private static final long serialVersionUID = -1867292211;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
 	 */
 	public void setRefId(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "REF_ID", nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getRefId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 
 	 */
 	public void setRefName(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getRefName() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.XTestCase_2025.X_TEST_CASE_2025.REF_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -52,7 +55,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

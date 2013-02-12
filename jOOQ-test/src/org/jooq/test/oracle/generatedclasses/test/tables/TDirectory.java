@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = 1318118484;
+	private static final long serialVersionUID = 1892502399;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DIRECTORY</code>

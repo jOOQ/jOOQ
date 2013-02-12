@@ -170,107 +170,56 @@ public interface InsertQuery<R extends Record> extends StoreQuery<R>, Insert<R> 
     void addValuesForUpdate(Map<? extends Field<?>, ?> map);
 
     /**
-     * Configure the <code>INSERT</code> statement to return all fields in
-     * <code>R</code>.
-     *
-     * @see #getReturnedRecords()
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
+    @Override
     @Support
     void setReturning();
 
     /**
-     * Configure the <code>INSERT</code> statement to return the generated
-     * identity value.
-     *
-     * @param identity The table's identity
-     * @see #getReturnedRecords()
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
+    @Override
     @Support
     void setReturning(Identity<R, ? extends Number> identity);
 
     /**
-     * Configure the <code>INSERT</code> statement to return a list of fields in
-     * <code>R</code>.
-     *
-     * @param fields Fields to be returned
-     * @see #getReturnedRecords()
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
+    @Override
     @Support
     void setReturning(Field<?>... fields);
 
     /**
-     * Configure the <code>INSERT</code> statement to return a list of fields in
-     * <code>R</code>.
-     *
-     * @param fields Fields to be returned
-     * @see #getReturnedRecords()
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
+    @Override
     @Support
     void setReturning(Collection<? extends Field<?>> fields);
 
     /**
-     * The record holding returned values as specified by any of the
-     * {@link #setReturning()} methods.
+     * {@inheritDoc}
      * <p>
-     * If the insert statement returns several records, this is the same as
-     * calling <code>getReturnedRecords().get(0)</code>
-     * <p>
-     * This implemented differently for every dialect:
-     * <ul>
-     * <li>Firebird and Postgres have native support for
-     * <code>INSERT .. RETURNING</code> clauses</li>
-     * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
-     * column as "generated key" in one statement</li>
-     * <li>Derby, H2, Ingres, MySQL, SQL Server only allow for retrieving
-     * IDENTITY column values as "generated key". If other fields are requested,
-     * a second statement is issued. Client code must assure transactional
-     * integrity between the two statements.</li>
-     * <li>Sybase and SQLite allow for retrieving IDENTITY values as
-     * <code>@@identity</code> or <code>last_inserted_rowid()</code> values.
-     * Those values are fetched in a separate <code>SELECT</code> statement. If
-     * other fields are requested, a second statement is issued. Client code
-     * must assure transactional integrity between the two statements.</li>
-     * </ul>
-     *
-     * @return The returned value as specified by any of the
-     *         {@link #setReturning()} methods. This may return
-     *         <code>null</code> in case jOOQ could not retrieve any generated
-     *         keys from the JDBC driver.
-     * @see #getReturnedRecords()
+     * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
+    @Override
     @Support
     R getReturnedRecord();
 
     /**
-     * The records holding returned values as specified by any of the
-     * {@link #setReturning()} methods.
+     * {@inheritDoc}
      * <p>
-     * This implemented differently for every dialect:
-     * <ul>
-     * <li>Firebird and Postgres have native support for
-     * <code>INSERT .. RETURNING</code> clauses</li>
-     * <li>HSQLDB, Oracle, and DB2 JDBC drivers allow for retrieving any table
-     * column as "generated key" in one statement</li>
-     * <li>Derby, H2, Ingres, MySQL, SQL Server only allow for retrieving
-     * IDENTITY column values as "generated key". If other fields are requested,
-     * a second statement is issued. Client code must assure transactional
-     * integrity between the two statements.</li>
-     * <li>Sybase and SQLite allow for retrieving IDENTITY values as
-     * <code>@@identity</code> or <code>last_inserted_rowid()</code> values.
-     * Those values are fetched in a separate <code>SELECT</code> statement. If
-     * other fields are requested, a second statement is issued. Client code
-     * must assure transactional integrity between the two statements.</li>
-     * </ul>
-     *
-     * @return The returned values as specified by any of the
-     *         {@link #setReturning()} methods. Note:
-     *         <ul>
-     *         <li>Not all databases / JDBC drivers support returning several
-     *         values on multi-row inserts!</li><li>This may return an empty
-     *         <code>Result</code> in case jOOQ could not retrieve any generated
-     *         keys from the JDBC driver.</li>
-     *         </ul>
+     * This feature works with <code>INSERT</code> statements for all SQL dialects
      */
+    @Override
     @Support
     Result<R> getReturnedRecords();
 

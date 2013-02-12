@@ -37,35 +37,21 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.impl.Utils.fieldArray;
-import static org.jooq.util.sqlite.SQLiteFactory.rowid;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.ExecuteContext;
-import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.Identity;
 import org.jooq.InsertQuery;
 import org.jooq.Merge;
 import org.jooq.MergeNotMatchedStep;
 import org.jooq.MergeOnConditionStep;
-import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
-import org.jooq.Result;
-import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.UpdatableTable;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -79,8 +65,6 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     private final FieldMapForUpdate       updateMap;
     private final FieldMapsForInsert      insertMaps;
-    private final QueryPartList<Field<?>> returning;
-    private Result<R>                     returned;
     private boolean                       onDuplicateKeyUpdate;
     private boolean                       onDuplicateKeyIgnore;
 
@@ -89,7 +73,6 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         updateMap = new FieldMapForUpdate();
         insertMaps = new FieldMapsForInsert();
-        returning = new QueryPartList<Field<?>>();
     }
 
     @Override
@@ -334,20 +317,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .sql(" ")
                .sql(insertMaps);
 
-        if (!returning.isEmpty()) {
-            switch (context.getDialect()) {
-                case FIREBIRD:
-                case POSTGRES:
-                    context.formatSeparator()
-                           .keyword("returning ")
-                           .sql(returning);
-                    break;
-
-                default:
-                    // Other dialects don't render a RETURNING clause, but
-                    // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
-            }
-        }
+        toSQLReturning(context);
     }
 
     private final void bindInsert(BindContext context) {
@@ -355,16 +325,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .bind(insertMaps)
                .bind(updateMap);
 
-        switch (context.getDialect()) {
-            case FIREBIRD:
-            case POSTGRES:
-                context.bind((QueryPart) returning);
-                break;
-
-            default:
-                // Other dialects don't bind a RETURNING clause, but
-                // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
-        }
+        bindReturning(context);
     }
 
     @SuppressWarnings("unchecked")
@@ -414,249 +375,5 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     @Override
     public final boolean isExecutable() {
         return insertMaps.isExecutable();
-    }
-
-    @Override
-    protected final void prepare(ExecuteContext ctx) throws SQLException {
-        Connection connection = ctx.connection();
-
-        // Just in case, always set Sybase ASE statement mode to return
-        // Generated keys if client code wants to SELECT @@identity afterwards
-        if (ctx.getDialect() == SQLDialect.ASE) {
-            ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
-            return;
-        }
-
-        // Normal statement preparing if no values should be returned
-        else if (returning.isEmpty()) {
-            super.prepare(ctx);
-            return;
-        }
-
-        // Values should be returned from the INSERT
-        else {
-            switch (ctx.getDialect()) {
-
-                // Postgres uses the RETURNING clause in SQL
-                case FIREBIRD:
-                case POSTGRES:
-                // SQLite will select last_insert_rowid() after the INSER
-                case SQLITE:
-                // Sybase will select @@identity after the INSERT
-                case CUBRID:
-                case SYBASE:
-                    super.prepare(ctx);
-                    return;
-
-                // Some dialects can only return AUTO_INCREMENT values
-                // Other values have to be fetched in a second step
-                // [#1260] TODO CUBRID supports this, but there's a JDBC bug
-                case ASE:
-                case DERBY:
-                case H2:
-                case INGRES:
-                case MYSQL:
-                case SQLSERVER:
-                    ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
-                    return;
-
-                // The default is to return all requested fields directly
-                default: {
-                    List<String> names = new ArrayList<String>();
-
-                    for (Field<?> field : returning) {
-                        names.add(field.getName());
-                    }
-
-                    ctx.statement(connection.prepareStatement(ctx.sql(), names.toArray(new String[names.size()])));
-                    return;
-                }
-            }
-        }
-    }
-
-    @Override
-    protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        if (returning.isEmpty()) {
-            return super.execute(ctx, listener);
-        }
-        else {
-            int result = 1;
-            ResultSet rs;
-            switch (ctx.getDialect()) {
-
-                // SQLite can select _rowid_ after the insert
-                case SQLITE: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    listener.executeEnd(ctx);
-
-                    Executor create = new Executor(ctx.connection(), SQLDialect.SQLITE, ctx.getSettings());
-                    returned =
-                    create.select(returning)
-                          .from(getInto())
-                          .where(rowid().equal(rowid().getDataType().convert(create.lastID())))
-                          .fetchInto(getInto());
-
-                    return result;
-                }
-
-                // Sybase can select @@identity after the insert
-                // TODO [#832] Fix this. This might be a driver issue. JDBC
-                // Generated keys don't work with jconn3, but they seem to work
-                // with jTDS (which is used for Sybase ASE integration)
-                case CUBRID:
-                case SYBASE: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    listener.executeEnd(ctx);
-
-                    selectReturning(ctx.configuration(), create(ctx).lastID());
-                    return result;
-                }
-
-                // Some dialects can only retrieve "identity" (AUTO_INCREMENT) values
-                // Additional values have to be fetched explicitly
-                // [#1260] TODO CUBRID supports this, but there's a JDBC bug
-                case ASE:
-                case DERBY:
-                case H2:
-                case INGRES:
-                case MYSQL:
-                case SQLSERVER: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    listener.executeEnd(ctx);
-
-                    rs = ctx.statement().getGeneratedKeys();
-
-                    try {
-                        List<Object> list = new ArrayList<Object>();
-                        while (rs.next()) {
-                            list.add(rs.getObject(1));
-                        }
-
-                        selectReturning(ctx, list.toArray());
-                        return result;
-                    }
-                    finally {
-                        rs.close();
-                    }
-                }
-
-                // Firebird and Postgres can execute the INSERT .. RETURNING
-                // clause like a select clause. JDBC support is not implemented
-                // in the Postgres JDBC driver
-                case FIREBIRD:
-                case POSTGRES: {
-                    listener.executeStart(ctx);
-                    rs = ctx.statement().executeQuery();
-                    listener.executeEnd(ctx);
-
-                    break;
-                }
-
-                // These dialects have full JDBC support
-                case DB2:
-                case HSQLDB:
-                case ORACLE:
-                default: {
-                    listener.executeStart(ctx);
-                    result = ctx.statement().executeUpdate();
-                    listener.executeEnd(ctx);
-
-                    rs = ctx.statement().getGeneratedKeys();
-                    break;
-                }
-            }
-
-            ExecuteContext ctx2 = new DefaultExecuteContext(ctx.configuration());
-            ExecuteListener listener2 = new ExecuteListeners(ctx2);
-
-            ctx2.resultSet(rs);
-            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, false).fetch().into(getInto());
-            return result;
-        }
-    }
-
-    /**
-     * Get the returning record in those dialects that do not support fetching
-     * arbitrary fields from JDBC's {@link Statement#getGeneratedKeys()} method.
-     */
-    @SuppressWarnings("unchecked")
-    private final void selectReturning(Configuration configuration, Object... values) {
-        if (values != null && values.length > 0) {
-            Table<R> into = getInto();
-
-            // This shouldn't be null, as relevant dialects should
-            // return empty generated keys ResultSet
-            if (into.getIdentity() != null) {
-                Field<Number> field = (Field<Number>) into.getIdentity().getField();
-                Number[] ids = new Number[values.length];
-                for (int i = 0; i < values.length; i++) {
-                    ids[i] = field.getDataType().convert(values[i]);
-                }
-
-                // Only the IDENTITY value was requested. No need for an
-                // additional query
-                if (returning.size() == 1 && returning.get(0).equals(field)) {
-                    for (Number id : ids) {
-                        R typed = Utils.newRecord(into, configuration);
-                        ((AbstractRecord) typed).setValue(field, new Value<Number>(id));
-                        getReturnedRecords().add(typed);
-                    }
-                }
-
-                // Other values are requested, too. Run another query
-                else {
-                    returned =
-                    create(configuration).select(returning)
-                                         .from(into)
-                                         .where(field.in(ids))
-                                         .fetchInto(into);
-                }
-            }
-        }
-    }
-
-    @Override
-    public final void setReturning() {
-        setReturning(getInto().fields());
-    }
-
-    @Override
-    public final void setReturning(Identity<R, ? extends Number> identity) {
-        if (identity != null) {
-            setReturning(identity.getField());
-        }
-    }
-
-    @Override
-    public final void setReturning(Field<?>... fields) {
-        setReturning(Arrays.asList(fields));
-    }
-
-    @Override
-    public final void setReturning(Collection<? extends Field<?>> fields) {
-        returning.clear();
-        returning.addAll(fields);
-    }
-
-    @Override
-    public final R getReturnedRecord() {
-        if (getReturnedRecords().size() == 0) {
-            return null;
-        }
-
-        return getReturnedRecords().get(0);
-    }
-
-    @Override
-    public final Result<R> getReturnedRecords() {
-        if (returned == null) {
-            returned = new ResultImpl<R>(getConfiguration(), returning);
-        }
-
-        return returned;
     }
 }

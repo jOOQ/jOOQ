@@ -55,6 +55,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
+import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.falseCondition;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
@@ -698,6 +699,59 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         triggered.refresh();
         assertEquals(  ID, (int) triggered.getValue(TTriggers_ID()));
         assertEquals(2*ID, (int) triggered.getValue(TTriggers_COUNTER()));
+    }
+
+    @Test
+    public void testUpdateReturning() throws Exception {
+        switch (getDialect()) {
+            case ASE:
+            case CUBRID:
+            case DB2:
+            case DERBY:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case ORACLE:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "UPDATE .. RETURNING tests");
+                return;
+        }
+
+        jOOQAbstractTest.reset = false;
+        Result<?> result1 =
+        create().update(TBook())
+                .set(TBook_TITLE(), "XYZ")
+                .where(TBook_ID().eq(1))
+                .returning(TBook_ID(), TBook_TITLE())
+                .fetch();
+
+        assertEquals(1, result1.size());
+        assertEquals(1, (int) result1.get(0).getValue(TBook_ID()));
+        assertEquals("XYZ", result1.get(0).getValue(TBook_TITLE()));
+
+        switch (getDialect()) {
+            case FIREBIRD: {
+                break;
+            }
+
+            // Some databases do not support RETURNING clauses that affect more
+            // than one row.
+            default: {
+                Result<?> result2 =
+                create().update(TBook())
+                        .set(TBook_TITLE(), decode().value(TBook_ID()).when(1, "ABC").otherwise(TBook_TITLE()))
+                        .where(TBook_ID().in(1, 2))
+                        .returning(TBook_ID(), TBook_TITLE())
+                        .fetch();
+
+                assertEquals(2, result2.size());
+                assertEquals(asList(1, 2), result2.getValues(TBook_ID()));
+                assertEquals(asList("ABC", "Animal Farm"), result2.getValues(TBook_TITLE()));
+            }
+        }
     }
 
     @Test

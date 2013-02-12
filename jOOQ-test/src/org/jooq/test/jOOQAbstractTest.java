@@ -1379,6 +1379,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUpdateReturning() throws Exception {
+        new InsertUpdateTests(this).testUpdateReturning();
+    }
+
+    @Test
     public void testMerge() throws Exception {
         new InsertUpdateTests(this).testMerge();
     }

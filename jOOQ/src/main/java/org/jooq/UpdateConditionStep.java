@@ -53,7 +53,7 @@ import org.jooq.impl.Factory;
  *
  * @author Lukas Eder
  */
-public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R> {
+public interface UpdateConditionStep<R extends Record> extends UpdateFinalStep<R>, UpdateReturningStep<R> {
 
     /**
      * Combine the currently assembled conditions with another one using the

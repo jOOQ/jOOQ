@@ -72,6 +72,7 @@ import org.jooq.Record6;
 import org.jooq.Record7;
 import org.jooq.Record8;
 import org.jooq.Record9;
+import org.jooq.Result;
 import org.jooq.Row1;
 import org.jooq.Row10;
 import org.jooq.Row11;
@@ -98,6 +99,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.UpdateConditionStep;
 import org.jooq.UpdateQuery;
+import org.jooq.UpdateResultStep;
 import org.jooq.UpdateSetFirstStep;
 import org.jooq.UpdateSetMoreStep;
 import org.jooq.UpdateWhereStep;
@@ -114,7 +116,8 @@ final class UpdateImpl<R extends Record>
     // Cascading interface implementations for Update behaviour
     UpdateSetFirstStep<R>,
     UpdateSetMoreStep<R>,
-    UpdateConditionStep<R> {
+    UpdateConditionStep<R>,
+    UpdateResultStep<R> {
 
     /**
      * Generated UID
@@ -566,5 +569,35 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> orNotExists(Select<?> select) {
         return or(notExists(select));
+    }
+
+    @Override
+    public final UpdateImpl<R> returning() {
+        getDelegate().setReturning();
+        return this;
+    }
+
+    @Override
+    public final UpdateImpl<R> returning(Field<?>... f) {
+        getDelegate().setReturning(f);
+        return this;
+    }
+
+    @Override
+    public final UpdateImpl<R> returning(Collection<? extends Field<?>> f) {
+        getDelegate().setReturning(f);
+        return this;
+    }
+
+    @Override
+    public final Result<R> fetch() {
+        getDelegate().execute();
+        return getDelegate().getReturnedRecords();
+    }
+
+    @Override
+    public final R fetchOne() {
+        getDelegate().execute();
+        return getDelegate().getReturnedRecord();
     }
 }

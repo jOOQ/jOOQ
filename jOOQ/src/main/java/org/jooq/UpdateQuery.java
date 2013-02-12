@@ -37,6 +37,7 @@
 package org.jooq;
 
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
@@ -369,7 +370,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
 // [jooq-tools] END [addValues]
 
     // ------------------------------------------------------------------------
-    // Methods from ConditionProvider
+    // XXX: Methods from ConditionProvider
     // ------------------------------------------------------------------------
 
     /**
@@ -399,5 +400,69 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
     @Override
     @Support
     void addConditions(Operator operator, Collection<Condition> conditions);
+
+    // ------------------------------------------------------------------------
+    // XXX: Methods for the UPDATE .. RETURNING syntax
+    // ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>UPDATE</code> statements for a subset of
+     * SQL dialects
+     */
+    @Override
+    @Support({ FIREBIRD, POSTGRES })
+    void setReturning();
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>UPDATE</code> statements for a subset of
+     * SQL dialects
+     */
+    @Override
+    @Support({ FIREBIRD, POSTGRES })
+    void setReturning(Identity<R, ? extends Number> identity);
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>UPDATE</code> statements for a subset of
+     * SQL dialects
+     */
+    @Override
+    @Support({ FIREBIRD, POSTGRES })
+    void setReturning(Field<?>... fields);
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>UPDATE</code> statements for a subset of
+     * SQL dialects
+     */
+    @Override
+    @Support({ FIREBIRD, POSTGRES })
+    void setReturning(Collection<? extends Field<?>> fields);
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>UPDATE</code> statements for a subset of
+     * SQL dialects
+     */
+    @Override
+    @Support({ FIREBIRD, POSTGRES })
+    R getReturnedRecord();
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This feature works with <code>UPDATE</code> statements for a subset of
+     * SQL dialects
+     */
+    @Override
+    @Support({ FIREBIRD, POSTGRES })
+    Result<R> getReturnedRecords();
 
 }

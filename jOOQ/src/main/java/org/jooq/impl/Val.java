@@ -96,7 +96,7 @@ class Val<T> extends AbstractParam<T> {
         // Casting can be enforced or prevented
         switch (context.castMode()) {
             case NEVER:
-                toSQL(context, getValue(), getType());
+                toSQL(context, value, getType());
                 return;
 
             case ALWAYS:
@@ -115,7 +115,7 @@ class Val<T> extends AbstractParam<T> {
                     toSQLCast(context);
                 }
                 else {
-                    toSQL(context, getValue(), getType());
+                    toSQL(context, value, getType());
                 }
 
                 return;
@@ -128,7 +128,7 @@ class Val<T> extends AbstractParam<T> {
 
         // Most RDBMS can infer types for bind values
         else {
-            toSQL(context, getValue(), getType());
+            toSQL(context, value, getType());
         }
     }
 
@@ -138,7 +138,7 @@ class Val<T> extends AbstractParam<T> {
         if (!isInline(context)) {
 
             // Generated enums should not be cast...
-            if (!(getValue() instanceof EnumType)) {
+            if (!(value instanceof EnumType)) {
                 switch (context.getDialect()) {
 
                     // These dialects can hardly detect the type of a bound constant.
@@ -187,11 +187,11 @@ class Val<T> extends AbstractParam<T> {
         SQLDialect dialect = context.getDialect();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
-        if (getValue() != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, FIREBIRD, HSQLDB).contains(dialect)) {
+        if (value != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, FIREBIRD, HSQLDB).contains(dialect)) {
 
             // Add precision / scale on BigDecimals
-            int scale = ((BigDecimal) getValue()).scale();
-            int precision = scale + ((BigDecimal) getValue()).precision();
+            int scale = ((BigDecimal) value).scale();
+            int precision = scale + ((BigDecimal) value).precision();
 
             // Firebird's max precision is 18
             if (dialect == FIREBIRD) {
@@ -205,8 +205,8 @@ class Val<T> extends AbstractParam<T> {
         else if (SQLDataType.OTHER == type) {
 
             // If the bind value is set, it can be used to derive the cast type
-            if (getValue() != null) {
-                toSQLCast(context, DefaultDataType.getDataType(dialect, getValue().getClass()), 0, 0, 0);
+            if (value != null) {
+                toSQLCast(context, DefaultDataType.getDataType(dialect, value.getClass()), 0, 0, 0);
             }
 
             // [#632] [#722] Current integration tests show that Ingres and
@@ -227,7 +227,7 @@ class Val<T> extends AbstractParam<T> {
         // [#1125] Also with temporal data types, casting is needed some times
         // [#1130] TODO type can be null for ARRAY types, etc.
         else if (dialect == POSTGRES && (type == null || !type.isTemporal())) {
-            toSQL(context, getValue(), getType());
+            toSQL(context, value, getType());
         }
 
         // [#1727] VARCHAR types should be cast to their actual lengths in some
@@ -243,7 +243,7 @@ class Val<T> extends AbstractParam<T> {
     }
 
     private int getValueLength() {
-        String string = (String) getValue();
+        String string = (String) value;
         if (string == null) {
             return 1;
         }
@@ -266,7 +266,7 @@ class Val<T> extends AbstractParam<T> {
 
     private void toSQLCast(RenderContext context, DataType<?> type, int length, int precision, int scale) {
         context.keyword("cast(");
-        toSQL(context, getValue(), getType());
+        toSQL(context, value, getType());
         context.keyword(" as ")
                .sql(type.length(length).precision(precision, scale).getCastTypeName(context))
                .sql(")");
@@ -522,7 +522,7 @@ class Val<T> extends AbstractParam<T> {
 
         // [#1302] Bind value only if it was not explicitly forced to be inlined
         if (!isInline()) {
-            context.bindValue(getValue(), getType());
+            context.bindValue(value, getType());
         }
     }
 

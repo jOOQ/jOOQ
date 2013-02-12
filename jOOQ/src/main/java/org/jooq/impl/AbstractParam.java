@@ -41,7 +41,7 @@ import org.jooq.RenderContext;
 
 /**
  * A base implementation for {@link Param}
- * 
+ *
  * @author Lukas Eder
  */
 abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
@@ -52,7 +52,7 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     private static final long serialVersionUID = 1311856649676227970L;
 
     private final String      paramName;
-    private T                 value;
+    T                         value;
     private boolean           inline;
 
     AbstractParam(T value, DataType<T> type) {

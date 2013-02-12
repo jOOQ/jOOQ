@@ -9,20 +9,20 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_959Record> implements org.jooq.Record1<org.jooq.test.postgres.generatedclasses.enums.U_959> {
 
-	private static final long serialVersionUID = 1610590410;
+	private static final long serialVersionUID = -1678031191;
 
 	/**
 	 * Setter for <code>public.t_959.java_keywords</code>. 
 	 */
 	public void setJavaKeywords(org.jooq.test.postgres.generatedclasses.enums.U_959 value) {
-		setValue(org.jooq.test.postgres.generatedclasses.tables.T_959.T_959.JAVA_KEYWORDS, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>public.t_959.java_keywords</code>. 
 	 */
 	public org.jooq.test.postgres.generatedclasses.enums.U_959 getJavaKeywords() {
-		return getValue(org.jooq.test.postgres.generatedclasses.tables.T_959.T_959.JAVA_KEYWORDS);
+		return (org.jooq.test.postgres.generatedclasses.enums.U_959) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -34,7 +34,7 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	 */
 	@Override
 	public org.jooq.Row1<org.jooq.test.postgres.generatedclasses.enums.U_959> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.pos
 	 */
 	@Override
 	public org.jooq.Row1<org.jooq.test.postgres.generatedclasses.enums.U_959> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

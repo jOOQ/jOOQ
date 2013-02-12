@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -223848048;
+	private static final long serialVersionUID = -377314563;
 
 	/**
 	 * The singleton instance of <code>TEST.T_AUTHOR</code>

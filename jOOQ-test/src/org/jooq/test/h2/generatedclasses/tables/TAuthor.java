@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 297670319;
+	private static final long serialVersionUID = -337620988;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_AUTHOR</code>

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -2009796416;
+	private static final long serialVersionUID = 1152712019;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOLEANS</code>

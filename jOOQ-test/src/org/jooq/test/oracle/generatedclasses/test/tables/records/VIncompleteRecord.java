@@ -11,13 +11,13 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "V_INCOMPLETE", schema = "TEST")
 public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.VIncompleteRecord> implements org.jooq.Record9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> {
 
-	private static final long serialVersionUID = -1693939381;
+	private static final long serialVersionUID = 599008903;
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.ID</code>. 
 	 */
 	public void setId(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -25,14 +25,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "ID")
 	public java.lang.Object getId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.ID);
+		return (java.lang.Object) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.AUTHOR_ID</code>. 
 	 */
 	public void setAuthorId(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.AUTHOR_ID, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,14 +40,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID")
 	public java.lang.Object getAuthorId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.AUTHOR_ID);
+		return (java.lang.Object) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CO_AUTHOR_ID, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -55,14 +55,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "CO_AUTHOR_ID")
 	public java.lang.Object getCoAuthorId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CO_AUTHOR_ID);
+		return (java.lang.Object) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.DETAILS_ID</code>. 
 	 */
 	public void setDetailsId(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.DETAILS_ID, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -70,14 +70,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID")
 	public java.lang.Object getDetailsId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.DETAILS_ID);
+		return (java.lang.Object) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.TITLE, value);
+		setValue(4, value);
 	}
 
 	/**
@@ -85,14 +85,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "TITLE")
 	public java.lang.Object getTitle() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.TITLE);
+		return (java.lang.Object) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.PUBLISHED_IN</code>. 
 	 */
 	public void setPublishedIn(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.PUBLISHED_IN, value);
+		setValue(5, value);
 	}
 
 	/**
@@ -100,14 +100,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN")
 	public java.lang.Object getPublishedIn() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.PUBLISHED_IN);
+		return (java.lang.Object) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.LANGUAGE_ID</code>. 
 	 */
 	public void setLanguageId(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.LANGUAGE_ID, value);
+		setValue(6, value);
 	}
 
 	/**
@@ -115,14 +115,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID")
 	public java.lang.Object getLanguageId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.LANGUAGE_ID);
+		return (java.lang.Object) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_TEXT</code>. 
 	 */
 	public void setContentText(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CONTENT_TEXT, value);
+		setValue(7, value);
 	}
 
 	/**
@@ -130,14 +130,14 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.Object getContentText() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CONTENT_TEXT);
+		return (java.lang.Object) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>TEST.V_INCOMPLETE.CONTENT_PDF</code>. 
 	 */
 	public void setContentPdf(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CONTENT_PDF, value);
+		setValue(8, value);
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public java.lang.Object getContentPdf() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.VIncomplete.V_INCOMPLETE.CONTENT_PDF);
+		return (java.lang.Object) getValue(8);
 	}
 
 	// -------------------------------------------------------------------------
@@ -157,7 +157,7 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+		return (org.jooq.Row9) super.fieldsRow();
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class VIncompleteRecord extends org.jooq.impl.TableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row9<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+		return (org.jooq.Row9) super.valuesRow();
 	}
 
 	/**

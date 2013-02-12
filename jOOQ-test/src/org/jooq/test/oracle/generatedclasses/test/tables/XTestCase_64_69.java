@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1120017027;
+	private static final long serialVersionUID = 1107651662;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_64_69</code>

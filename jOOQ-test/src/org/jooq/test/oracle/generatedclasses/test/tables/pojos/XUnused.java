@@ -15,14 +15,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 })
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1514470162;
+	private static final long serialVersionUID = 1699077008;
 
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer    id;
-
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String     name;
 	private java.math.BigInteger bigInteger;
 	private java.lang.Integer    idRef;
@@ -34,16 +29,13 @@ public class XUnused implements java.io.Serializable {
 	private java.lang.Integer    type0;
 	private java.lang.Integer    primaryKey;
 	private java.lang.Integer    primarykey;
-
-	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String     nameRef;
 	private java.math.BigDecimal field_737;
 	private java.lang.Integer    msUnusedIdRef;
-
-	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String     msUnusedNameRef;
 
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -53,6 +45,8 @@ public class XUnused implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "NAME", nullable = false, length = 10)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getName() {
 		return this.name;
 	}
@@ -89,11 +83,11 @@ public class XUnused implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "FIELDS", precision = 7)
-	public java.lang.Integer getFields_() {
+	public java.lang.Integer getFields() {
 		return this.fields;
 	}
 
-	public void setFields_(java.lang.Integer fields) {
+	public void setFields(java.lang.Integer fields) {
 		this.fields = fields;
 	}
 
@@ -134,11 +128,11 @@ public class XUnused implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 7)
-	public java.lang.Integer getPrimaryKey() {
+	public java.lang.Integer getPrimaryKey_() {
 		return this.primaryKey;
 	}
 
-	public void setPrimaryKey(java.lang.Integer primaryKey) {
+	public void setPrimaryKey_(java.lang.Integer primaryKey) {
 		this.primaryKey = primaryKey;
 	}
 
@@ -152,6 +146,7 @@ public class XUnused implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "NAME_REF", length = 10)
+	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getNameRef() {
 		return this.nameRef;
 	}
@@ -179,6 +174,7 @@ public class XUnused implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "MS_UNUSED_NAME_REF", length = 10)
+	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getMsUnusedNameRef() {
 		return this.msUnusedNameRef;
 	}

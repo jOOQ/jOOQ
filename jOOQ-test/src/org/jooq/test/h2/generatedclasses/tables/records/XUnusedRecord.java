@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 259760144;
+	private static final long serialVersionUID = 920808613;
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>. 
@@ -223,7 +223,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>. 
 	 */
 	@Override
-	public void setPrimaryKey(java.lang.Integer value) {
+	public void setPrimaryKey_(java.lang.Integer value) {
 		setValue(13, value);
 	}
 
@@ -231,7 +231,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Getter for <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>. 
 	 */
 	@Override
-	public java.lang.Integer getPrimaryKey() {
+	public java.lang.Integer getPrimaryKey_() {
 		return (java.lang.Integer) getValue(13);
 	}
 
@@ -536,7 +536,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value14() {
-		return getPrimaryKey();
+		return getPrimaryKey_();
 	}
 
 	/**
@@ -577,7 +577,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 		setMetaData(from.getMetaData());
 		setValues_(from.getValues_());
 		setType0(from.getType0());
-		setPrimaryKey(from.getPrimaryKey());
+		setPrimaryKey_(from.getPrimaryKey_());
 		setPrimarykey(from.getPrimarykey());
 		setField_737(from.getField_737());
 	}

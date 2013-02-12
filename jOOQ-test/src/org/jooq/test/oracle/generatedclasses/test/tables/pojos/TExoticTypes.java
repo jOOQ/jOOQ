@@ -11,15 +11,14 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_EXOTIC_TYPES", schema = "TEST")
 public class TExoticTypes implements java.io.Serializable {
 
-	private static final long serialVersionUID = -269870858;
+	private static final long serialVersionUID = -790312432;
 
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer id;
 	private java.util.UUID    uu;
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
 		return this.id;
 	}

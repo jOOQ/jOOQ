@@ -13,23 +13,16 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguage implements java.io.Serializable {
 
-	private static final long serialVersionUID = 239555792;
+	private static final long serialVersionUID = -2089291636;
 
-
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 2)
 	private java.lang.String  cd;
-
-	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  description;
-
-	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String  descriptionEnglish;
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer id;
 
 	@javax.persistence.Column(name = "CD", nullable = false, length = 2)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 2)
 	public java.lang.String getCd() {
 		return this.cd;
 	}
@@ -39,6 +32,7 @@ public class TLanguage implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "DESCRIPTION", length = 50)
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getDescription() {
 		return this.description;
 	}
@@ -48,6 +42,7 @@ public class TLanguage implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "DESCRIPTION_ENGLISH", length = 50)
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getDescriptionEnglish() {
 		return this.descriptionEnglish;
 	}
@@ -58,6 +53,7 @@ public class TLanguage implements java.io.Serializable {
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
 		return this.id;
 	}

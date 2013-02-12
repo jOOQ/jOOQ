@@ -13,14 +13,14 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK_STORE", schema = "TEST")
 public class TBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = 776338327;
+	private static final long serialVersionUID = 775675634;
 
-
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 400)
 	private java.lang.String name;
 
+	@javax.persistence.Id
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 400)
 	public java.lang.String getName() {
 		return this.name;
 	}

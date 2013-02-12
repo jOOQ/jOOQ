@@ -11,17 +11,13 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "X_TEST_CASE_2025", schema = "TEST")
 public class XTestCase_2025 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1114531076;
+	private static final long serialVersionUID = 1612627776;
 
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer refId;
-
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 10)
 	private java.lang.String  refName;
 
 	@javax.persistence.Column(name = "REF_ID", nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getRefId() {
 		return this.refId;
 	}
@@ -31,6 +27,8 @@ public class XTestCase_2025 implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "REF_NAME", nullable = false, length = 10)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 10)
 	public java.lang.String getRefName() {
 		return this.refName;
 	}

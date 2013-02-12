@@ -11,13 +11,13 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "T_DIRECTORY", schema = "TEST")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1857918427;
+	private static final long serialVersionUID = 1663459567;
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -25,15 +25,16 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
 	public void setParentId(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.PARENT_ID, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -41,14 +42,14 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@javax.persistence.Column(name = "PARENT_ID", precision = 7)
 	public java.lang.Integer getParentId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.PARENT_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
 	public void setIsDirectory(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.IS_DIRECTORY, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,22 +57,23 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@javax.persistence.Column(name = "IS_DIRECTORY", precision = 7)
 	public java.lang.Integer getIsDirectory() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.IS_DIRECTORY);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.NAME, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_DIRECTORY.name</code>. 
 	 */
 	@javax.persistence.Column(name = "name", length = 50)
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY.NAME);
+		return (java.lang.String) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -95,7 +97,7 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -103,7 +105,7 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

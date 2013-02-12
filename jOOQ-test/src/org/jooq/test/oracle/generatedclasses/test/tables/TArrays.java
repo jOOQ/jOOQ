@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -16408425;
+	private static final long serialVersionUID = 1167244954;
 
 	/**
 	 * The singleton instance of <code>TEST.T_ARRAYS</code>

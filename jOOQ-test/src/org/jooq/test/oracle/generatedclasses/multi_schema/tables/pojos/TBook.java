@@ -11,31 +11,21 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK", schema = "MULTI_SCHEMA")
 public class TBook implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1644570779;
+	private static final long serialVersionUID = 1334613565;
 
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer id;
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer authorId;
 	private java.lang.Integer coAuthorId;
 	private java.lang.Integer detailsId;
-
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 400)
 	private java.lang.String  title;
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer publishedIn;
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer languageId;
 	private java.lang.String  contentText;
 	private byte[]            contentPdf;
 
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -45,6 +35,7 @@ public class TBook implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
@@ -72,6 +63,8 @@ public class TBook implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 400)
 	public java.lang.String getTitle() {
 		return this.title;
 	}
@@ -81,6 +74,7 @@ public class TBook implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
@@ -90,6 +84,7 @@ public class TBook implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}

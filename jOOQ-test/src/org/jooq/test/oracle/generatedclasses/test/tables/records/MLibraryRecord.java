@@ -13,36 +13,39 @@ package org.jooq.test.oracle.generatedclasses.test.tables.records;
 @javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
 public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -971998862;
+	private static final long serialVersionUID = -128799511;
 
 	/**
 	 * Setter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.AUTHOR, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.M_LIBRARY.AUTHOR</code>. 
 	 */
 	@javax.persistence.Column(name = "AUTHOR", length = 101)
+	@javax.validation.constraints.Size(max = 101)
 	public java.lang.String getAuthor() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.AUTHOR);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.TITLE, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.M_LIBRARY.TITLE</code>. 
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 400)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 400)
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY.TITLE);
+		return (java.lang.String) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -54,7 +57,7 @@ public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -62,7 +65,7 @@ public class MLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

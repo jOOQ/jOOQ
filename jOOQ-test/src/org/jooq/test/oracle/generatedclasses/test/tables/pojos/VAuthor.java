@@ -11,23 +11,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 @javax.persistence.Table(name = "V_AUTHOR", schema = "TEST")
 public class VAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1382429944;
+	private static final long serialVersionUID = -566289502;
 
-
-	@javax.validation.constraints.NotNull
 	private java.lang.Integer                                                         id;
-
-	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String                                                          firstName;
-
-	@javax.validation.constraints.NotNull
-	@javax.validation.constraints.Size(max = 50)
 	private java.lang.String                                                          lastName;
 	private java.sql.Date                                                             dateOfBirth;
 	private java.lang.Integer                                                         yearOfBirth;
 	private org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord address;
 
 	@javax.persistence.Column(name = "ID", nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
 		return this.id;
 	}
@@ -37,6 +31,7 @@ public class VAuthor implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getFirstName() {
 		return this.firstName;
 	}
@@ -46,6 +41,8 @@ public class VAuthor implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getLastName() {
 		return this.lastName;
 	}

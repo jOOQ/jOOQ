@@ -11,13 +11,13 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_AUTHOR", schema = "MULTI_SCHEMA")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> {
 
-	private static final long serialVersionUID = -1338877342;
+	private static final long serialVersionUID = 636002486;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -25,45 +25,49 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.FIRST_NAME</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_AUTHOR.FIRST_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.LAST_NAME</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_AUTHOR.LAST_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 50)
 	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -71,14 +75,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH", length = 7)
 	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH, value);
+		setValue(4, value);
 	}
 
 	/**
@@ -86,14 +90,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 7)
 	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ADDRESS</code>. 
 	 */
 	public void setAddress(java.lang.Object value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ADDRESS, value);
+		setValue(5, value);
 	}
 
 	/**
@@ -101,7 +105,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 1)
 	public java.lang.Object getAddress() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TAuthor.T_AUTHOR.ADDRESS);
+		return (java.lang.Object) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -125,7 +129,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -133,7 +137,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.Object> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

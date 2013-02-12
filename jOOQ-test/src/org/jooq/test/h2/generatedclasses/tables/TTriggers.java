@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 578487568;
+	private static final long serialVersionUID = -2041415933;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_TRIGGERS</code>

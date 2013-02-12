@@ -11,13 +11,13 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.records;
 @javax.persistence.Table(name = "T_BOOK_SALE", schema = "MULTI_SCHEMA")
 public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> implements org.jooq.Record5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 255262714;
+	private static final long serialVersionUID = -1039361336;
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -25,68 +25,74 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
 	 */
 	public void setBookId(java.lang.Integer value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
 	 */
 	@javax.persistence.Column(name = "BOOK_ID", nullable = false, precision = 7)
+	@javax.validation.constraints.NotNull
 	public java.lang.Integer getBookId() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>. 
 	 */
 	public void setBookStoreName(java.lang.String value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_STORE_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>. 
 	 */
 	@javax.persistence.Column(name = "BOOK_STORE_NAME", nullable = false, length = 400)
+	@javax.validation.constraints.NotNull
+	@javax.validation.constraints.Size(max = 400)
 	public java.lang.String getBookStoreName() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.BOOK_STORE_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>. 
 	 */
 	public void setSoldAt(java.sql.Date value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_AT, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>. 
 	 */
 	@javax.persistence.Column(name = "SOLD_AT", nullable = false, length = 7)
+	@javax.validation.constraints.NotNull
 	public java.sql.Date getSoldAt() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_AT);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>. 
 	 */
 	public void setSoldFor(java.math.BigDecimal value) {
-		setValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_FOR, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>. 
 	 */
 	@javax.persistence.Column(name = "SOLD_FOR", nullable = false, precision = 10, scale = 2)
+	@javax.validation.constraints.NotNull
 	public java.math.BigDecimal getSoldFor() {
-		return getValue(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE.SOLD_FOR);
+		return (java.math.BigDecimal) getValue(4);
 	}
 
 	// -------------------------------------------------------------------------
@@ -110,7 +116,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5());
+		return (org.jooq.Row5) super.fieldsRow();
 	}
 
 	/**
@@ -118,7 +124,7 @@ public class TBookSaleRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row5<java.lang.Integer, java.lang.Integer, java.lang.String, java.sql.Date, java.math.BigDecimal> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5());
+		return (org.jooq.Row5) super.valuesRow();
 	}
 
 	/**

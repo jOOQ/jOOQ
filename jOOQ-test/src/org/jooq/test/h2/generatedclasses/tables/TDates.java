@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 392752825;
+	private static final long serialVersionUID = 1008905122;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_DATES</code>

@@ -65,7 +65,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.TAuthorRecord> getPrimaryKey() {
 		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_AUTHOR;
 	}
 

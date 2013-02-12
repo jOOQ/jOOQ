@@ -90,7 +90,7 @@ public class ProductReview extends org.jooq.impl.UpdatableTableImpl<org.jooq.exa
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductReview> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductReview_ProductReviewID;
 	}
 

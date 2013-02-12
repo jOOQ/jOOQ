@@ -70,7 +70,7 @@ public class JobCandidate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.JobCandidate> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_JobCandidate_JobCandidateID;
 	}
 

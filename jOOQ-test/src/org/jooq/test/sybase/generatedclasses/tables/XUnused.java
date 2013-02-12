@@ -112,7 +112,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> getPrimaryKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__PK_X_UNUSED;
 	}
 

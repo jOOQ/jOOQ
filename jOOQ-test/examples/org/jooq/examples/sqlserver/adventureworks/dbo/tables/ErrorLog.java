@@ -95,7 +95,7 @@ public class ErrorLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.ErrorLog> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_ErrorLog_ErrorLogID;
 	}
 

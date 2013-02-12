@@ -206,12 +206,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // Test correct source code generation for relations
-        assertNotNull(TAuthor().getMainKey());
+        assertNotNull(TAuthor().getPrimaryKey());
         assertNotNull(TAuthor().getKeys());
-        assertTrue(TAuthor().getKeys().contains(TAuthor().getMainKey()));
+        assertTrue(TAuthor().getKeys().contains(TAuthor().getPrimaryKey()));
         assertEquals(1, TAuthor().getKeys().size());
-        assertEquals(1, TAuthor().getMainKey().getFields().size());
-        assertEquals(TAuthor_ID(), TAuthor().getMainKey().getFields().get(0));
+        assertEquals(1, TAuthor().getPrimaryKey().getFields().size());
+        assertEquals(TAuthor_ID(), TAuthor().getPrimaryKey().getFields().get(0));
         assertEquals(Record1.class, TAuthor().getRecordType().getMethod("key").getReturnType());
         assertTrue(TAuthor().getRecordType().getMethod("key").toGenericString().contains("org.jooq.Record1<java.lang.Integer>"));
         assertEquals(Record2.class, TBookToBookStore().getRecordType().getMethod("key").getReturnType());
@@ -221,9 +221,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Without aliasing
             assertEquals(0, TAuthor().getReferences().size());
-            assertEquals(2, TAuthor().getMainKey().getReferences().size());
-            assertEquals(TBook(), TAuthor().getMainKey().getReferences().get(0).getTable());
-            assertEquals(TBook(), TAuthor().getMainKey().getReferences().get(1).getTable());
+            assertEquals(2, TAuthor().getPrimaryKey().getReferences().size());
+            assertEquals(TBook(), TAuthor().getPrimaryKey().getReferences().get(0).getTable());
+            assertEquals(TBook(), TAuthor().getPrimaryKey().getReferences().get(1).getTable());
             assertEquals(Arrays.asList(), TAuthor().getReferencesTo(TBook()));
             assertTrue(TBook().getReferences().containsAll(TAuthor().getReferencesFrom(TBook())));
             assertTrue(TBook().getReferences().containsAll(TBook().getReferencesFrom(TAuthor())));
@@ -246,9 +246,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 UpdatableTable<A> ua = (UpdatableTable<A>) a;
                 UpdatableTable<B> ub = (UpdatableTable<B>) b;
 
-                assertEquals(2, ua.getMainKey().getReferences().size());
-                assertEquals(TBook(), ua.getMainKey().getReferences().get(0).getTable());
-                assertEquals(TBook(), ua.getMainKey().getReferences().get(1).getTable());
+                assertEquals(2, ua.getPrimaryKey().getReferences().size());
+                assertEquals(TBook(), ua.getPrimaryKey().getReferences().get(0).getTable());
+                assertEquals(TBook(), ua.getPrimaryKey().getReferences().get(1).getTable());
                 assertTrue(b.getReferences().containsAll(ua.getReferencesFrom(b)));
                 assertTrue(b.getReferences().containsAll(ub.getReferencesFrom(a)));
                 assertEquals(b.getReferencesTo(a), ua.getReferencesFrom(b));

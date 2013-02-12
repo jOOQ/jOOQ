@@ -47,7 +47,7 @@ public class T_937 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> getPrimaryKey() {
 		return org.jooq.test.hsqldb.generatedclasses.Keys.T_937;
 	}
 

@@ -67,7 +67,7 @@ public class SalesPersonQuotaHistory extends org.jooq.impl.UpdatableTableImpl<or
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPersonQuotaHistory> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesPersonQuotaHistory> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesPersonQuotaHistory_SalesPersonID_QuotaDate;
 	}
 

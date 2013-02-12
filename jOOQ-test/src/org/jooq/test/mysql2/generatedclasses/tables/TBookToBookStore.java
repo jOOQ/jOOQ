@@ -59,7 +59,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
 		return org.jooq.test.mysql2.generatedclasses.Keys.KEY_T_BOOK_TO_BOOK_STORE_PRIMARY;
 	}
 

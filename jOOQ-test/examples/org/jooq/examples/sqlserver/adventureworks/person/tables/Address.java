@@ -90,7 +90,7 @@ public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.person.tables.records.Address> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.person.Keys.PK_Address_AddressID;
 	}
 

@@ -90,7 +90,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.dbo.tables.records.DatabaseLog> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.dbo.Keys.PK_DatabaseLog_DatabaseLogID;
 	}
 

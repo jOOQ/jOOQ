@@ -57,7 +57,7 @@ public class SalesOrderHeaderSalesReason extends org.jooq.impl.UpdatableTableImp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesOrderHeaderSalesReason> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesOrderHeaderSalesReason_SalesOrderID_SalesReasonID;
 	}
 

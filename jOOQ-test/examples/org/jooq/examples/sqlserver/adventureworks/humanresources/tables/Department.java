@@ -70,7 +70,7 @@ public class Department extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Department> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Department_DepartmentID;
 	}
 

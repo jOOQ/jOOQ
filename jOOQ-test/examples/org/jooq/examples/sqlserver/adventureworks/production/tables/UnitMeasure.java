@@ -57,7 +57,7 @@ public class UnitMeasure extends org.jooq.impl.UpdatableTableImpl<org.jooq.examp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.UnitMeasure> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_UnitMeasure_UnitMeasureCode;
 	}
 

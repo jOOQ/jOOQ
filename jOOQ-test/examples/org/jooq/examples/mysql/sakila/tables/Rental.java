@@ -85,7 +85,7 @@ public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.m
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_RENTAL_PRIMARY;
 	}
 

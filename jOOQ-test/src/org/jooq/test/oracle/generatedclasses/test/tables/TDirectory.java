@@ -62,7 +62,7 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> getPrimaryKey() {
 		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_DIRECTORY;
 	}
 

@@ -72,7 +72,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.fireb
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> getPrimaryKey() {
 		return org.jooq.test.firebird.generatedclasses.Keys.PK_T_DATES;
 	}
 

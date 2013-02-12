@@ -92,7 +92,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> getPrimaryKey() {
 		return org.jooq.test.h2.generatedclasses.Keys.PK_T_BOOK;
 	}
 

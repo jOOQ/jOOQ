@@ -74,7 +74,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> getPrimaryKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR;
 	}
 

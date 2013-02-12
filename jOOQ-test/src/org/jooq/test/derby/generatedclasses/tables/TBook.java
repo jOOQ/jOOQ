@@ -85,7 +85,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> getPrimaryKey() {
 		return org.jooq.test.derby.generatedclasses.Keys.PK_T_BOOK;
 	}
 

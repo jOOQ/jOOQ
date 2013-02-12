@@ -75,7 +75,7 @@ public class ProductSubcategory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.ProductSubcategory> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_ProductSubcategory_ProductSubcategoryID;
 	}
 

@@ -87,7 +87,7 @@ public class TransactionHistoryArchive extends org.jooq.impl.UpdatableTableImpl<
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.TransactionHistoryArchive> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_TransactionHistoryArchive_TransactionID;
 	}
 

@@ -47,7 +47,7 @@ public class T_986_1 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> getPrimaryKey() {
 		return org.jooq.test.sybase.generatedclasses.Keys.T_986_1__PK_986;
 	}
 

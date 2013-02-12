@@ -90,7 +90,7 @@ public class Address extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_ADDRESS_PRIMARY;
 	}
 

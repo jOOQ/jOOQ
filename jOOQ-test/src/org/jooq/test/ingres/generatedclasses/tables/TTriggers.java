@@ -58,7 +58,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.in
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TTriggersRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.ingres.generatedclasses.tables.records.TTriggersRecord> getPrimaryKey() {
 		return org.jooq.test.ingres.generatedclasses.Keys.PK_T_TRIGGERS;
 	}
 

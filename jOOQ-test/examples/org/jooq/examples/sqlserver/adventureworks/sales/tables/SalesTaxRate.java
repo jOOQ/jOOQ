@@ -85,7 +85,7 @@ public class SalesTaxRate extends org.jooq.impl.UpdatableTableImpl<org.jooq.exam
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTaxRate> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesTaxRate_SalesTaxRateID;
 	}
 

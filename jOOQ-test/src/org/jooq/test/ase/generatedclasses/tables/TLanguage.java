@@ -54,7 +54,7 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.as
 	}
 
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TLanguageRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TLanguageRecord> getPrimaryKey() {
 		return org.jooq.test.ase.generatedclasses.Keys.T_LANGUAGE__PK_T_LANGUAGE;
 	}
 

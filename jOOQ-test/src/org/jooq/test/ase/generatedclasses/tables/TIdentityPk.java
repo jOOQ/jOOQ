@@ -49,7 +49,7 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	}
 
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TIdentityPkRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TIdentityPkRecord> getPrimaryKey() {
 		return org.jooq.test.ase.generatedclasses.Keys.T_IDENTITY_PK__PK_T_IDENTITY_PK;
 	}
 

@@ -40,7 +40,7 @@ public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqli
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_986_2Record> getPrimaryKey() {
 		return org.jooq.test.sqlite.generatedclasses.Keys.PK_T_986_2;
 	}
 

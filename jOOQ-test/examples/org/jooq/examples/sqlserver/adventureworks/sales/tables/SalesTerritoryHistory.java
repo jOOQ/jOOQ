@@ -72,7 +72,7 @@ public class SalesTerritoryHistory extends org.jooq.impl.UpdatableTableImpl<org.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTerritoryHistory> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.SalesTerritoryHistory> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_SalesTerritoryHistory_SalesPersonID_StartDate_TerritoryID;
 	}
 

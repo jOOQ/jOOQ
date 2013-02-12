@@ -55,7 +55,7 @@ public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord> getPrimaryKey() {
 		return org.jooq.test.h2.generatedclasses.Keys.PK_T_ARRAYS;
 	}
 

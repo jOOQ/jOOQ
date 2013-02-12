@@ -130,7 +130,7 @@ public class Employee extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Employee> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Employee_EmployeeID;
 	}
 

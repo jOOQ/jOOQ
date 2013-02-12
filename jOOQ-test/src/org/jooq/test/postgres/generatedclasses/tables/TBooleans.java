@@ -97,7 +97,7 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.po
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> getPrimaryKey() {
 		return org.jooq.test.postgres.generatedclasses.Keys.PK_T_BOOLEANS;
 	}
 

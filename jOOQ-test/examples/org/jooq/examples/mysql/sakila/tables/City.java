@@ -70,7 +70,7 @@ public class City extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.mysql.sakila.tables.records.CityRecord> getPrimaryKey() {
 		return org.jooq.examples.mysql.sakila.Keys.KEY_CITY_PRIMARY;
 	}
 

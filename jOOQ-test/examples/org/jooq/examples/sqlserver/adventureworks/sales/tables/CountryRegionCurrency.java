@@ -57,7 +57,7 @@ public class CountryRegionCurrency extends org.jooq.impl.UpdatableTableImpl<org.
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.CountryRegionCurrency> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_CountryRegionCurrency_CountryRegionCode_CurrencyCode;
 	}
 

@@ -75,7 +75,7 @@ public class Shift extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.sq
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.Shift> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_Shift_ShiftID;
 	}
 

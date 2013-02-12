@@ -67,7 +67,7 @@ public class EmployeePayHistory extends org.jooq.impl.UpdatableTableImpl<org.joo
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.humanresources.tables.records.EmployeePayHistory> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.humanresources.Keys.PK_EmployeePayHistory_EmployeeID_RateChangeDate;
 	}
 

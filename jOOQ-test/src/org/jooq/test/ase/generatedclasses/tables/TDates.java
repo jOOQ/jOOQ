@@ -64,7 +64,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ase.g
 	}
 
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TDatesRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.ase.generatedclasses.tables.records.TDatesRecord> getPrimaryKey() {
 		return org.jooq.test.ase.generatedclasses.Keys.T_DATES__PK_T_DATES;
 	}
 

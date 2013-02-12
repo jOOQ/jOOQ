@@ -100,7 +100,7 @@ public class WorkOrder extends org.jooq.impl.UpdatableTableImpl<org.jooq.example
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.production.tables.records.WorkOrder> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.production.Keys.PK_WorkOrder_WorkOrderID;
 	}
 

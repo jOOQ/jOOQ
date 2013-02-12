@@ -62,7 +62,7 @@ public class Individual extends org.jooq.impl.UpdatableTableImpl<org.jooq.exampl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.examples.sqlserver.adventureworks.sales.tables.records.Individual> getPrimaryKey() {
 		return org.jooq.examples.sqlserver.adventureworks.sales.Keys.PK_Individual_CustomerID;
 	}
 

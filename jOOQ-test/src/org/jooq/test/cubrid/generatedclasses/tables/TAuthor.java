@@ -65,7 +65,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubr
 	 * {@inheritDoc}
 	 */
 	@Override
-	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> getMainKey() {
+	public org.jooq.UniqueKey<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> getPrimaryKey() {
 		return org.jooq.test.cubrid.generatedclasses.Keys.T_AUTHOR__PK_T_AUTHOR;
 	}
 

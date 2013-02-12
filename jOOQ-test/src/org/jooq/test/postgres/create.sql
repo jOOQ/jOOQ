@@ -285,7 +285,7 @@ COMMENT ON COLUMN t_book.status IS 'The book''s stock status'
 CREATE TABLE t_book_store (
   name VARCHAR(400) NOT NULL,
 
-  CONSTRAINT uk_t_book_store_name UNIQUE(name)
+  CONSTRAINT uk_t_book_store_name PRIMARY KEY(name)
 )
 /
 COMMENT ON TABLE t_book_store IS 'A book store'

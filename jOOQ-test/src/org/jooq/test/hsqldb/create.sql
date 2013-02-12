@@ -214,7 +214,7 @@ CREATE TABLE t_book (
 CREATE TABLE t_book_store (
   name VARCHAR(400) NOT NULL,
 
-  CONSTRAINT uk_t_book_store_name UNIQUE(name)
+  CONSTRAINT uk_t_book_store_name PRIMARY KEY(name)
 );
 /
 

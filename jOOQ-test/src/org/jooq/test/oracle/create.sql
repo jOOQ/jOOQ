@@ -498,7 +498,7 @@ COMMENT ON COLUMN t_book.content_pdf IS 'Some binary content of the book'/
 CREATE TABLE t_book_store (
   name VARCHAR2(400) NOT NULL,
 
-  CONSTRAINT uk_t_book_store_name UNIQUE(name)
+  CONSTRAINT uk_t_book_store_name PRIMARY KEY(name)
 )
 /
 COMMENT ON TABLE t_book_store IS 'A book store'

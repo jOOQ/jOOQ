@@ -202,11 +202,13 @@ public class ArrayRecordImpl<T> extends AbstractStore implements ArrayRecord<T> 
         result.append(getName());
         result.append("(");
 
-        for (T t : array) {
-            result.append(separator);
-            result.append(t);
+        if (array != null) {
+            for (T t : array) {
+                result.append(separator);
+                result.append(t);
 
-            separator = ", ";
+                separator = ", ";
+            }
         }
 
         result.append(")");

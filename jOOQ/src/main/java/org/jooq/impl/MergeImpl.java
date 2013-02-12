@@ -40,8 +40,6 @@ import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
 import static org.jooq.impl.Factory.nullSafe;
-import static org.jooq.impl.Factory.val;
-import static org.jooq.impl.Factory.vals;
 import static org.jooq.tools.Convert.convert;
 
 import java.util.ArrayList;
@@ -520,11 +518,11 @@ implements
         // syntax, in case of which, the USING() was not added
         if (using == null) {
             h2Style = true;
-            getH2Values().addAll(vals(convert(values, getH2Fields().toArray(new Field[0]))));
+            getH2Values().addAll(Utils.fields(convert(values, getH2Fields().toArray(new Field[0]))));
         }
         else {
             Field<?>[] fields = notMatchedInsert.keySet().toArray(new Field[0]);
-            notMatchedInsert.putValues(vals(convert(values, fields)));
+            notMatchedInsert.putValues(Utils.fields(convert(values, fields)));
         }
 
         return this;
@@ -660,7 +658,7 @@ implements
 
     @Override
     public final <T> MergeImpl set(Field<T> field, T value) {
-        return set(field, val(value, field));
+        return set(field, Utils.field(value, field));
     }
 
     @Override

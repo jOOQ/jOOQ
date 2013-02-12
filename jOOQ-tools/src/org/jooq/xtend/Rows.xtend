@@ -1118,7 +1118,6 @@ class Rows extends Generators {
         package org.jooq.impl;
 
         import static org.jooq.impl.Factory.row;
-        import static org.jooq.impl.Factory.vals;
 
         import java.util.Arrays;
         import java.util.Collection;
@@ -1135,7 +1134,6 @@ class Rows extends Generators {
         import org.jooq.Condition;
         import org.jooq.DataType;
         import org.jooq.Field;
-        import org.jooq.QueryPart;
         import org.jooq.Record;
         «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
         import org.jooq.Record«degree»;
@@ -1147,6 +1145,7 @@ class Rows extends Generators {
         «ENDFOR»
         import org.jooq.RowN;
         import org.jooq.Select;
+        import org.jooq.impl.Factory;
 
         /**
          * @author Lukas Eder
@@ -1168,18 +1167,20 @@ class Rows extends Generators {
              */
             private static final long serialVersionUID = -929427349071556318L;
 
-            final FieldList           fields;
+            final Fields              fields;
 
             RowImpl(Field<?>... fields) {
-                super();
-
-                this.fields = new FieldList(fields);
+                this(new Fields(fields));
             }
 
             RowImpl(Collection<? extends Field<?>> fields) {
+                this(new Fields(fields));
+            }
+
+            RowImpl(Fields fields) {
                 super();
 
-                this.fields = new FieldList(fields);
+                this.fields = fields;
             }
 
             // ------------------------------------------------------------------------
@@ -1191,7 +1192,7 @@ class Rows extends Generators {
                 context.sql("(");
 
                 String separator = "";
-                for (Field<?> field : fields) {
+                for (Field<?> field : fields.fields) {
                     context.sql(separator);
                     context.sql(field);
 
@@ -1203,7 +1204,7 @@ class Rows extends Generators {
 
             @Override
             public final void bind(BindContext context) {
-                context.bind((QueryPart) fields);
+                context.bind(fields);
             }
 
             // ------------------------------------------------------------------------
@@ -1212,7 +1213,7 @@ class Rows extends Generators {
 
             @Override
             public final int size() {
-                return fields.size();
+                return fields.fields.length;
             }
 
             @Override
@@ -1247,7 +1248,7 @@ class Rows extends Generators {
 
             @Override
             public final Class<?>[] types() {
-                int size = fields.size();
+                int size = fields.fields.length;
                 Class<?>[] result = new Class[size];
         
                 for (int i = 0; i < size; i++) {
@@ -1269,7 +1270,7 @@ class Rows extends Generators {
 
             @Override
             public final DataType<?>[] dataTypes() {
-                int size = fields.size();
+                int size = fields.fields.length;
                 DataType<?>[] result = new DataType[size];
                 
                 for (int i = 0; i < size; i++) {
@@ -1335,7 +1336,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition equal(Record record) {
-                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+                Row row = new RowImpl(Factory.fields(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.EQUALS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1432,7 +1433,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition notEqual(Record record) {
-                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+                Row row = new RowImpl(Factory.fields(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.NOT_EQUALS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1533,7 +1534,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition lessThan(Record record) {
-                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+                Row row = new RowImpl(Factory.fields(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.LESS);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1630,7 +1631,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition lessOrEqual(Record record) {
-                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+                Row row = new RowImpl(Factory.fields(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1727,7 +1728,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition greaterThan(Record record) {
-                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+                Row row = new RowImpl(Factory.fields(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.GREATER);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1824,7 +1825,7 @@ class Rows extends Generators {
 
             @Override
             public final Condition greaterOrEqual(Record record) {
-                Row row = new RowImpl(vals(record.intoArray(), record.fields()));
+                Row row = new RowImpl(Factory.fields(record.intoArray(), record.fields()));
                 return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -1950,7 +1951,7 @@ class Rows extends Generators {
 
             @Override
             public final BetweenAndStepN «keyword»(Record record) {
-                RowN row = new RowImpl(vals(record.intoArray(), record.fields()));
+                RowN row = new RowImpl(Factory.fields(record.intoArray(), record.fields()));
                 return «keyword»(row);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
@@ -2017,7 +2018,7 @@ class Rows extends Generators {
                 RowN[] rows = new RowN[records.length];
 
                 for (int i = 0; i < records.length; i++) {
-                    rows[i] = new RowImpl(vals(records[i].intoArray(), records[i].fields()));
+                    rows[i] = new RowImpl(Factory.fields(records[i].intoArray(), records[i].fields()));
                 }
 
                 return in(rows);
@@ -2053,7 +2054,7 @@ class Rows extends Generators {
                 RowN[] rows = new RowN[records.length];
 
                 for (int i = 0; i < records.length; i++) {
-                    rows[i] = new RowImpl(vals(records[i].intoArray(), records[i].fields()));
+                    rows[i] = new RowImpl(Factory.fields(records[i].intoArray(), records[i].fields()));
                 }
 
                 return notIn(rows);

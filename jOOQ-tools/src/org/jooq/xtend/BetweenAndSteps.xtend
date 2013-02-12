@@ -109,7 +109,6 @@ class BetweenAndSteps extends Generators {
         
         import static java.util.Arrays.asList;
         import static org.jooq.impl.Factory.row;
-        import static org.jooq.impl.Factory.vals;
         import static org.jooq.SQLDialect.ASE;
         import static org.jooq.SQLDialect.CUBRID;
         import static org.jooq.SQLDialect.DB2;
@@ -225,7 +224,7 @@ class BetweenAndSteps extends Generators {
 
             @Override
             public final Condition and(Record record) {
-                RowN r = new RowImpl(vals(record.intoArray(), record.fields()));
+                RowN r = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
                 return and(r);
             }
             

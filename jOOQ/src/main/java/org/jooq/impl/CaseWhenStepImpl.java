@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +67,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
     @Override
     public final Field<T> otherwise(T result) {
-        return otherwise(val(result));
+        return otherwise(Utils.field(result));
     }
 
     @Override
@@ -81,17 +79,17 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
     @Override
     public final CaseWhenStep<V, T> when(V compareValue, T result) {
-        return when(val(compareValue), val(result));
+        return when(Utils.field(compareValue), Utils.field(result));
     }
 
     @Override
     public final CaseWhenStep<V, T> when(V compareValue, Field<T> result) {
-        return when(val(compareValue), result);
+        return when(Utils.field(compareValue), result);
     }
 
     @Override
     public final CaseWhenStep<V, T> when(Field<V> compareValue, T result) {
-        return when(compareValue, val(result));
+        return when(compareValue, Utils.field(result));
     }
 
     @Override

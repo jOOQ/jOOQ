@@ -300,7 +300,7 @@ abstract class Generators {
      * <p>
      * <code>val(t1), val(t2), .., val(t[N])</code>
      */
-    def val_tn(int degree) {
-        (1..degree).join(", ", [e | "val(t" + e + ")"])
+    def Utils_field_tn(int degree) {
+        (1..degree).join(", ", [e | "Utils.field(t" + e + ")"])
     }
 }

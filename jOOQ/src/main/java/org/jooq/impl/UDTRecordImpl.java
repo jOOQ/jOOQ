@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.vals;
-
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
@@ -88,7 +86,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Row valuesRow() {
-        return new RowImpl(vals(intoArray(), fields.fields.fields()));
+        return new RowImpl(Utils.fields(intoArray(), fields.fields.fields()));
     }
 
     @Override

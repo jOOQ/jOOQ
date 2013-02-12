@@ -63,7 +63,6 @@ import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectOne;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
-import static org.jooq.impl.Factory.vals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -350,7 +349,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1,
         create().insertInto(TAuthor())
                 .values(
-                    create().select(vals(38)),
+                    create().select(val(38)),
                     val("Alfred"),
                     inline("Hitchcock"),
                     val(null),
@@ -377,14 +376,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Insert<A> i =
         create().insertInto(TAuthor())
-                .select(select(vals(
-                            1000,
-                            val("Lukas")))
-                        .select(vals(
-                            "Eder",
+                .select(select(
+                            val(1000),
+                            val("Lukas"))
+                        .select(
+                            val("Eder"),
                             val(new Date(363589200000L)),
                             castNull(Integer.class),
-                            nullField)));
+                            nullField));
 
         assertEquals(1, i.execute());
 

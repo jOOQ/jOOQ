@@ -57,7 +57,6 @@ import java.sql.Date;
 import java.sql.ResultSetMetaData;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -3138,7 +3137,7 @@ public class Factory {
      */
     @Support
     public static <Z, T> Field<Z> decode(T value, T search, Z result, Object... more) {
-        return decode(val(value), val(search), val(result), vals(more).toArray(new Field[0]));
+        return decode(Utils.field(value), Utils.field(search), Utils.field(result), Utils.fields(more).toArray(new Field[0]));
     }
 
     /**
@@ -3198,7 +3197,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> cast(Object value, Field<T> as) {
-        return val(value, as).cast(as);
+        return Utils.field(value, as).cast(as);
     }
 
     /**
@@ -3223,7 +3222,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> cast(Object value, Class<T> type) {
-        return val(value, type).cast(type);
+        return Utils.field(value, type).cast(type);
     }
 
     /**
@@ -3248,7 +3247,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> cast(Object value, DataType<T> type) {
-        return val(value, type).cast(type);
+        return Utils.field(value, type).cast(type);
     }
 
     /**
@@ -3289,7 +3288,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> coalesce(T value, T... values) {
-        return coalesce(val(value), vals(values).toArray(new Field[0]));
+        return coalesce(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -3315,7 +3314,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> nvl(T value, T defaultValue) {
-        return nvl(val(value), val(defaultValue));
+        return nvl(Utils.field(value), Utils.field(defaultValue));
     }
 
     /**
@@ -3325,7 +3324,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
-        return nvl(val(value), nullSafe(defaultValue));
+        return nvl(Utils.field(value), nullSafe(defaultValue));
     }
 
     /**
@@ -3335,7 +3334,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
-        return nvl(nullSafe(value), val(defaultValue));
+        return nvl(nullSafe(value), Utils.field(defaultValue));
     }
 
     /**
@@ -3378,7 +3377,7 @@ public class Factory {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Z valueIfNull) {
-        return nvl2(nullSafe(value), val(valueIfNotNull), val(valueIfNull));
+        return nvl2(nullSafe(value), Utils.field(valueIfNotNull), Utils.field(valueIfNull));
     }
 
     /**
@@ -3388,7 +3387,7 @@ public class Factory {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
-        return nvl2(nullSafe(value), val(valueIfNotNull), nullSafe(valueIfNull));
+        return nvl2(nullSafe(value), Utils.field(valueIfNotNull), nullSafe(valueIfNull));
     }
 
     /**
@@ -3398,7 +3397,7 @@ public class Factory {
      */
     @Support
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
-        return nvl2(nullSafe(value), nullSafe(valueIfNotNull), val(valueIfNull));
+        return nvl2(nullSafe(value), nullSafe(valueIfNotNull), Utils.field(valueIfNull));
     }
 
     /**
@@ -3425,7 +3424,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> nullif(T value, T other) {
-        return nullif(val(value), val(other));
+        return nullif(Utils.field(value), Utils.field(other));
     }
 
     /**
@@ -3435,7 +3434,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> nullif(T value, Field<T> other) {
-        return nullif(val(value), nullSafe(other));
+        return nullif(Utils.field(value), nullSafe(other));
     }
 
     /**
@@ -3445,7 +3444,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> nullif(Field<T> value, T other) {
-        return nullif(nullSafe(value), val(other));
+        return nullif(nullSafe(value), Utils.field(other));
     }
 
     /**
@@ -3474,7 +3473,7 @@ public class Factory {
      */
     @Support
     public static Field<String> upper(String value) {
-        return upper(val(value));
+        return upper(Utils.field(value));
     }
 
     /**
@@ -3495,7 +3494,7 @@ public class Factory {
      */
     @Support
     public static Field<String> lower(String value) {
-        return lower(val(value, String.class));
+        return lower(Utils.field(value, String.class));
     }
 
     /**
@@ -3516,7 +3515,7 @@ public class Factory {
      */
     @Support
     public static Field<String> trim(String value) {
-        return trim(val(value, String.class));
+        return trim(Utils.field(value, String.class));
     }
 
     /**
@@ -3538,7 +3537,7 @@ public class Factory {
      */
     @Support
     public static Field<String> rtrim(String value) {
-        return rtrim(val(value));
+        return rtrim(Utils.field(value));
     }
 
     /**
@@ -3559,7 +3558,7 @@ public class Factory {
      */
     @Support
     public static Field<String> ltrim(String value) {
-        return ltrim(val(value, String.class));
+        return ltrim(Utils.field(value, String.class));
     }
 
     /**
@@ -3580,7 +3579,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length) {
-        return rpad(nullSafe(field), val(length));
+        return rpad(nullSafe(field), Utils.field(length));
     }
 
     /**
@@ -3614,7 +3613,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> rpad(Field<String> field, int length, String character) {
-        return rpad(nullSafe(field), val(length), val(character, String.class));
+        return rpad(nullSafe(field), Utils.field(length), Utils.field(character, String.class));
     }
 
     /**
@@ -3641,7 +3640,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length) {
-        return lpad(nullSafe(field), val(length));
+        return lpad(nullSafe(field), Utils.field(length));
     }
 
     /**
@@ -3675,7 +3674,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> lpad(Field<String> field, int length, String character) {
-        return lpad(nullSafe(field), val(length), val(character, String.class));
+        return lpad(nullSafe(field), Utils.field(length), Utils.field(character, String.class));
     }
 
     /**
@@ -3702,7 +3701,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, int count) {
-        return repeat(val(field, String.class), val(count));
+        return repeat(Utils.field(field, String.class), Utils.field(count));
     }
 
     /**
@@ -3712,7 +3711,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(String field, Field<? extends Number> count) {
-        return repeat(val(field, String.class), nullSafe(count));
+        return repeat(Utils.field(field, String.class), nullSafe(count));
     }
 
     /**
@@ -3722,7 +3721,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
     public static Field<String> repeat(Field<String> field, int count) {
-        return repeat(nullSafe(field), val(count));
+        return repeat(nullSafe(field), Utils.field(count));
     }
 
     /**
@@ -3786,7 +3785,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search) {
-        return replace(nullSafe(field), val(search, String.class));
+        return replace(nullSafe(field), Utils.field(search, String.class));
     }
 
     /**
@@ -3810,7 +3809,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static Field<String> replace(Field<String> field, String search, String replace) {
-        return replace(nullSafe(field), val(search, String.class), val(replace, String.class));
+        return replace(nullSafe(field), Utils.field(search, String.class), Utils.field(replace, String.class));
     }
 
     /**
@@ -3832,7 +3831,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(String in, String search) {
-        return position(val(in, String.class), val(search, String.class));
+        return position(Utils.field(in, String.class), Utils.field(search, String.class));
     }
 
     /**
@@ -3842,7 +3841,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(String in, Field<String> search) {
-        return position(val(in, String.class), nullSafe(search));
+        return position(Utils.field(in, String.class), nullSafe(search));
     }
 
     /**
@@ -3852,7 +3851,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> position(Field<String> in, String search) {
-        return position(nullSafe(in), val(search, String.class));
+        return position(nullSafe(in), Utils.field(search, String.class));
     }
 
     /**
@@ -3877,7 +3876,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<Integer> ascii(String field) {
-        return ascii(val(field, String.class));
+        return ascii(Utils.field(field, String.class));
     }
 
     /**
@@ -3898,7 +3897,7 @@ public class Factory {
      */
     @Support
     public static Field<String> concat(String... values) {
-        return concat(vals((Object[]) values).toArray(new Field[0]));
+        return concat(Utils.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -3923,7 +3922,7 @@ public class Factory {
      */
     @Support
     public static Field<String> substring(Field<String> field, int startingPosition) {
-        return substring(nullSafe(field), val(startingPosition));
+        return substring(nullSafe(field), Utils.field(startingPosition));
     }
 
     /**
@@ -3945,7 +3944,7 @@ public class Factory {
      */
     @Support
     public static Field<String> substring(Field<String> field, int startingPosition, int length) {
-        return substring(nullSafe(field), val(startingPosition), val(length));
+        return substring(nullSafe(field), Utils.field(startingPosition), Utils.field(length));
     }
 
     /**
@@ -3968,7 +3967,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> length(String value) {
-        return length(val(value, String.class));
+        return length(Utils.field(value, String.class));
     }
 
     /**
@@ -3989,7 +3988,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> charLength(String value) {
-        return charLength(val(value));
+        return charLength(Utils.field(value));
     }
 
     /**
@@ -4009,7 +4008,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> bitLength(String value) {
-        return bitLength(val(value));
+        return bitLength(Utils.field(value));
     }
 
     /**
@@ -4029,7 +4028,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> octetLength(String value) {
-        return octetLength(val(value, String.class));
+        return octetLength(Utils.field(value, String.class));
     }
 
     /**
@@ -4070,7 +4069,7 @@ public class Factory {
      */
     @Support({ MYSQL, ORACLE })
     public static Field<String> md5(String string) {
-        return md5(val(string));
+        return md5(Utils.field(string));
     }
 
     /**
@@ -4143,7 +4142,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> dateDiff(Date date1, Date date2) {
-        return dateDiff(val(date1), val(date2));
+        return dateDiff(Utils.field(date1), Utils.field(date2));
     }
 
     /**
@@ -4155,7 +4154,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> dateDiff(Field<Date> date1, Date date2) {
-        return dateDiff(nullSafe(date1), val(date2));
+        return dateDiff(nullSafe(date1), Utils.field(date2));
     }
 
     /**
@@ -4167,7 +4166,7 @@ public class Factory {
      */
     @Support
     public static Field<Date> dateAdd(Date date, Number interval) {
-        return dateAdd(val(date), val(interval));
+        return dateAdd(Utils.field(date), Utils.field(interval));
     }
 
     /**
@@ -4191,7 +4190,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> dateDiff(Date date1, Field<Date> date2) {
-        return dateDiff(val(date1), nullSafe(date2));
+        return dateDiff(Utils.field(date1), nullSafe(date2));
     }
 
     /**
@@ -4215,7 +4214,7 @@ public class Factory {
      */
     @Support
     public static Field<Timestamp> timestampAdd(Timestamp timestamp, Number interval) {
-        return timestampAdd(val(timestamp), val(interval));
+        return timestampAdd(Utils.field(timestamp), Utils.field(interval));
     }
 
     /**
@@ -4240,7 +4239,7 @@ public class Factory {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Timestamp timestamp2) {
-        return timestampDiff(val(timestamp1), val(timestamp2));
+        return timestampDiff(Utils.field(timestamp1), Utils.field(timestamp2));
     }
 
     /**
@@ -4253,7 +4252,7 @@ public class Factory {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Timestamp timestamp2) {
-        return timestampDiff(nullSafe(timestamp1), val(timestamp2));
+        return timestampDiff(nullSafe(timestamp1), Utils.field(timestamp2));
     }
 
     /**
@@ -4266,7 +4265,7 @@ public class Factory {
      */
     @Support
     public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Field<Timestamp> timestamp2) {
-        return timestampDiff(val(timestamp1), nullSafe(timestamp2));
+        return timestampDiff(Utils.field(timestamp1), nullSafe(timestamp2));
     }
 
     /**
@@ -4297,7 +4296,7 @@ public class Factory {
      * This is not yet implemented.
      */
     static Field<Date> trunc(Date date, DatePart part) {
-        return trunc(val(date), part);
+        return trunc(Utils.field(date), part);
     }
 
     /**
@@ -4311,7 +4310,7 @@ public class Factory {
      * This is not yet implemented.
      */
     static Field<Timestamp> trunc(Timestamp timestamp, DatePart part) {
-        return trunc(val(timestamp), part);
+        return trunc(Utils.field(timestamp), part);
     }
 
     /**
@@ -4338,7 +4337,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
-        return extract(val(value), datePart);
+        return extract(Utils.field(value), datePart);
     }
 
     /**
@@ -4696,7 +4695,7 @@ public class Factory {
      */
     @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
     public static Field<Integer> bitCount(Number value) {
-        return bitCount(val(value));
+        return bitCount(Utils.field(value));
     }
 
     /**
@@ -4728,7 +4727,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNot(T value) {
-        return bitNot(val(value));
+        return bitNot(Utils.field(value));
     }
 
     /**
@@ -4749,7 +4748,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
-        return bitAnd(val(value1), val(value2));
+        return bitAnd(Utils.field(value1), Utils.field(value2));
     }
 
     /**
@@ -4759,7 +4758,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
-        return bitAnd(val(value1), nullSafe(value2));
+        return bitAnd(Utils.field(value1), nullSafe(value2));
     }
 
     /**
@@ -4769,7 +4768,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
-        return bitAnd(nullSafe(value1), val(value2));
+        return bitAnd(nullSafe(value1), Utils.field(value2));
     }
 
     /**
@@ -4795,7 +4794,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, T value2) {
-        return bitNand(val(value1), val(value2));
+        return bitNand(Utils.field(value1), Utils.field(value2));
     }
 
     /**
@@ -4806,7 +4805,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
-        return bitNand(val(value1), nullSafe(value2));
+        return bitNand(Utils.field(value1), nullSafe(value2));
     }
 
     /**
@@ -4817,7 +4816,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
-        return bitNand(nullSafe(value1), val(value2));
+        return bitNand(nullSafe(value1), Utils.field(value2));
     }
 
     /**
@@ -4844,7 +4843,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, T value2) {
-        return bitOr(val(value1), val(value2));
+        return bitOr(Utils.field(value1), Utils.field(value2));
     }
 
     /**
@@ -4854,7 +4853,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
-        return bitOr(val(value1), nullSafe(value2));
+        return bitOr(Utils.field(value1), nullSafe(value2));
     }
 
     /**
@@ -4864,7 +4863,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
-        return bitOr(nullSafe(value1), val(value2));
+        return bitOr(nullSafe(value1), Utils.field(value2));
     }
 
     /**
@@ -4890,7 +4889,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, T value2) {
-        return bitNor(val(value1), val(value2));
+        return bitNor(Utils.field(value1), Utils.field(value2));
     }
     /**
      * The bitwise not or operator.
@@ -4900,7 +4899,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
-        return bitNor(val(value1), nullSafe(value2));
+        return bitNor(Utils.field(value1), nullSafe(value2));
     }
     /**
      * The bitwise not or operator.
@@ -4910,7 +4909,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
-        return bitNor(nullSafe(value1), val(value2));
+        return bitNor(nullSafe(value1), Utils.field(value2));
     }
 
     /**
@@ -4937,7 +4936,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, T value2) {
-        return bitXor(val(value1), val(value2));
+        return bitXor(Utils.field(value1), Utils.field(value2));
     }
 
     /**
@@ -4947,7 +4946,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
-        return bitXor(val(value1), nullSafe(value2));
+        return bitXor(Utils.field(value1), nullSafe(value2));
     }
 
     /**
@@ -4957,7 +4956,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
-        return bitXor(nullSafe(value1), val(value2));
+        return bitXor(nullSafe(value1), Utils.field(value2));
     }
 
     /**
@@ -4983,7 +4982,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
-        return bitXNor(val(value1), val(value2));
+        return bitXNor(Utils.field(value1), Utils.field(value2));
     }
 
     /**
@@ -4994,7 +4993,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
-        return bitXNor(val(value1), nullSafe(value2));
+        return bitXNor(Utils.field(value1), nullSafe(value2));
     }
 
     /**
@@ -5005,7 +5004,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
-        return bitXNor(nullSafe(value1), val(value2));
+        return bitXNor(nullSafe(value1), Utils.field(value2));
     }
 
     /**
@@ -5031,7 +5030,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, T value2) {
-        return shl(val(value1), val(value2));
+        return shl(Utils.field(value1), Utils.field(value2));
     }
 
     /**
@@ -5042,7 +5041,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(T value1, Field<T> value2) {
-        return shl(val(value1), nullSafe(value2));
+        return shl(Utils.field(value1), nullSafe(value2));
     }
 
     /**
@@ -5053,7 +5052,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shl(Field<T>value1, T value2) {
-        return shl(nullSafe(value1), val(value2));
+        return shl(nullSafe(value1), Utils.field(value2));
     }
 
     /**
@@ -5078,7 +5077,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, T value2) {
-        return shr(val(value1), val(value2));
+        return shr(Utils.field(value1), Utils.field(value2));
     }
 
     /**
@@ -5089,7 +5088,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(T value1, Field<T> value2) {
-        return shr(val(value1), nullSafe(value2));
+        return shr(Utils.field(value1), nullSafe(value2));
     }
 
     /**
@@ -5100,7 +5099,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     public static <T extends Number> Field<T> shr(Field<T> value1, T value2) {
-        return shr(nullSafe(value1), val(value2));
+        return shr(nullSafe(value1), Utils.field(value2));
     }
 
     /**
@@ -5142,7 +5141,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> greatest(T value, T... values) {
-        return greatest(val(value), vals(values).toArray(new Field[0]));
+        return greatest(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -5172,7 +5171,7 @@ public class Factory {
      */
     @Support
     public static <T> Field<T> least(T value, T... values) {
-        return least(val(value), vals(values).toArray(new Field[0]));
+        return least(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
     }
 
     /**
@@ -5196,7 +5195,7 @@ public class Factory {
      */
     @Support
     public static Field<Integer> sign(Number value) {
-        return sign(val(value));
+        return sign(Utils.field(value));
     }
 
     /**
@@ -5223,7 +5222,7 @@ public class Factory {
      */
     @Support
     public static <T extends Number> Field<T> abs(T value) {
-        return abs(val(value));
+        return abs(Utils.field(value));
     }
 
     /**
@@ -5244,7 +5243,7 @@ public class Factory {
      */
     @Support
     public static <T extends Number> Field<T> round(T value) {
-        return round(val(value));
+        return round(Utils.field(value));
     }
 
     /**
@@ -5267,7 +5266,7 @@ public class Factory {
      */
     @Support
     public static <T extends Number> Field<T> round(T value, int decimals) {
-        return round(val(value), decimals);
+        return round(Utils.field(value), decimals);
     }
 
     /**
@@ -5289,7 +5288,7 @@ public class Factory {
      */
     @Support
     public static <T extends Number> Field<T> floor(T value) {
-        return floor(val(value));
+        return floor(Utils.field(value));
     }
 
     /**
@@ -5312,7 +5311,7 @@ public class Factory {
      */
     @Support
     public static <T extends Number> Field<T> ceil(T value) {
-        return ceil(val(value));
+        return ceil(Utils.field(value));
     }
 
     /**
@@ -5336,7 +5335,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number) {
-        return trunc(val(number), inline(0));
+        return trunc(Utils.field(number), inline(0));
     }
 
     /**
@@ -5346,7 +5345,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number, int decimals) {
-        return trunc(val(number), inline(decimals));
+        return trunc(Utils.field(number), inline(decimals));
     }
 
     /**
@@ -5366,7 +5365,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static <T extends Number> Field<T> trunc(T number, Field<Integer> decimals) {
-        return trunc(val(number), nullSafe(decimals));
+        return trunc(Utils.field(number), nullSafe(decimals));
     }
 
     /**
@@ -5424,7 +5423,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sqrt(Number value) {
-        return sqrt(val(value));
+        return sqrt(Utils.field(value));
     }
 
     /**
@@ -5447,7 +5446,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> exp(Number value) {
-        return exp(val(value));
+        return exp(Utils.field(value));
     }
 
     /**
@@ -5468,7 +5467,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> ln(Number value) {
-        return ln(val(value));
+        return ln(Utils.field(value));
     }
 
     /**
@@ -5490,7 +5489,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> log(Number value, int base) {
-        return log(val(value), base);
+        return log(Utils.field(value), base);
     }
 
     /**
@@ -5513,7 +5512,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Number value, Number exponent) {
-        return power(val(value), val(exponent));
+        return power(Utils.field(value), Utils.field(exponent));
     }
 
     /**
@@ -5523,7 +5522,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
-        return power(nullSafe(field), val(exponent));
+        return power(nullSafe(field), Utils.field(exponent));
     }
 
     /**
@@ -5533,7 +5532,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
-        return power(val(value), nullSafe(exponent));
+        return power(Utils.field(value), nullSafe(exponent));
     }
 
     /**
@@ -5556,7 +5555,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> acos(Number value) {
-        return acos(val(value));
+        return acos(Utils.field(value));
     }
 
     /**
@@ -5577,7 +5576,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> asin(Number value) {
-        return asin(val(value));
+        return asin(Utils.field(value));
     }
 
     /**
@@ -5598,7 +5597,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan(Number value) {
-        return atan(val(value));
+        return atan(Utils.field(value));
     }
 
     /**
@@ -5619,7 +5618,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Number x, Number y) {
-        return atan2(val(x), val(y));
+        return atan2(Utils.field(x), Utils.field(y));
     }
 
     /**
@@ -5629,7 +5628,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
-        return atan2(val(x), nullSafe(y));
+        return atan2(Utils.field(x), nullSafe(y));
     }
 
     /**
@@ -5639,7 +5638,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
-        return atan2(nullSafe(x), val(y));
+        return atan2(nullSafe(x), Utils.field(y));
     }
 
     /**
@@ -5661,7 +5660,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cos(Number value) {
-        return cos(val(value));
+        return cos(Utils.field(value));
     }
 
     /**
@@ -5682,7 +5681,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sin(Number value) {
-        return sin(val(value));
+        return sin(Utils.field(value));
     }
 
     /**
@@ -5703,7 +5702,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tan(Number value) {
-        return tan(val(value));
+        return tan(Utils.field(value));
     }
 
     /**
@@ -5724,7 +5723,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cot(Number value) {
-        return cot(val(value));
+        return cot(Utils.field(value));
     }
 
     /**
@@ -5746,7 +5745,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> sinh(Number value) {
-        return sinh(val(value));
+        return sinh(Utils.field(value));
     }
 
     /**
@@ -5768,7 +5767,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> cosh(Number value) {
-        return cosh(val(value));
+        return cosh(Utils.field(value));
     }
 
     /**
@@ -5790,7 +5789,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> tanh(Number value) {
-        return tanh(val(value));
+        return tanh(Utils.field(value));
     }
 
     /**
@@ -5813,7 +5812,7 @@ public class Factory {
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     public static Field<BigDecimal> coth(Number value) {
-        return coth(val(value));
+        return coth(Utils.field(value));
     }
 
     /**
@@ -5835,7 +5834,7 @@ public class Factory {
      */
     @Support
     public static Field<BigDecimal> deg(Number value) {
-        return deg(val(value));
+        return deg(Utils.field(value));
     }
 
     /**
@@ -5857,7 +5856,7 @@ public class Factory {
      */
     @Support
     public static Field<BigDecimal> rad(Number value) {
-        return rad(val(value));
+        return rad(Utils.field(value));
     }
 
     /**
@@ -6432,7 +6431,7 @@ public class Factory {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
-        return lead(nullSafe(field), offset, val(defaultValue));
+        return lead(nullSafe(field), offset, Utils.field(defaultValue));
     }
 
     /**
@@ -6480,7 +6479,7 @@ public class Factory {
      */
     @Support({ DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
-        return lag(nullSafe(field), offset, val(defaultValue));
+        return lag(nullSafe(field), offset, Utils.field(defaultValue));
     }
 
     /**
@@ -6563,7 +6562,7 @@ public class Factory {
      */
     @Support
     public static <T> Param<T> param(String name, T value) {
-        return new Val<T>(value, val(value).getDataType(), name);
+        return new Val<T>(value, Utils.field(value).getDataType(), name);
     }
 
     /**
@@ -6573,7 +6572,7 @@ public class Factory {
      * @see #val(Object)
      */
     @Support
-    public static <T> Field<T> value(T value) {
+    public static <T> Param<T> value(T value) {
         return val(value);
     }
 
@@ -6584,7 +6583,7 @@ public class Factory {
      * @see #val(Object, Class)
      */
     @Support
-    public static <T> Field<T> value(Object value, Class<T> type) {
+    public static <T> Param<T> value(Object value, Class<T> type) {
         return val(value, type);
     }
 
@@ -6595,7 +6594,7 @@ public class Factory {
      * @see #val(Object, Field)
      */
     @Support
-    public static <T> Field<T> value(Object value, Field<T> field) {
+    public static <T> Param<T> value(Object value, Field<T> field) {
         return val(value, field);
     }
 
@@ -6606,7 +6605,7 @@ public class Factory {
      * @see #val(Object, DataType)
      */
     @Support
-    public static <T> Field<T> value(Object value, DataType<T> type) {
+    public static <T> Param<T> value(Object value, DataType<T> type) {
         return val(value, type);
     }
 
@@ -6627,8 +6626,7 @@ public class Factory {
      */
     @Support
     public static <T> Param<T> inline(T value) {
-        // [#1309] TODO, make this type-safe
-        Param<T> val = (Param<T>) val(value);
+        Param<T> val = val(value);
         val.setInline(true);
         return val;
     }
@@ -6694,8 +6692,7 @@ public class Factory {
      */
     @Support
     public static <T> Param<T> inline(Object value, Class<T> type) {
-        // [#1309] TODO, make this type-safe
-        Param<T> val = (Param<T>) val(value, type);
+        Param<T> val = val(value, type);
         val.setInline(true);
         return val;
     }
@@ -6717,8 +6714,7 @@ public class Factory {
      */
     @Support
     public static <T> Param<T> inline(Object value, Field<T> field) {
-        // [#1309] TODO, make this type-safe
-        Param<T> val = (Param<T>) val(value, field);
+        Param<T> val = val(value, field);
         val.setInline(true);
         return val;
     }
@@ -6740,8 +6736,7 @@ public class Factory {
      */
     @Support
     public static <T> Param<T> inline(Object value, DataType<T> type) {
-        // [#1309] TODO, make this type-safe
-        Param<T> val = (Param<T>) val(value, type);
+        Param<T> val = val(value, type);
         val.setInline(true);
         return val;
     }
@@ -6771,18 +6766,9 @@ public class Factory {
      * @return A field representing the constant value
      */
     @Support
-    public static <T> Field<T> val(T value) {
-
-        // Prevent errors due to type erasure and unchecked invocation
-        if (value instanceof Field<?>) {
-            return (Field<T>) value;
-        }
-
-        // Default behaviour
-        else {
-            Class<?> type = (value == null) ? Object.class : value.getClass();
-            return (Field<T>) val(value, getDataType(type));
-        }
+    public static <T> Param<T> val(T value) {
+        Class<?> type = (value == null) ? Object.class : value.getClass();
+        return (Param<T>) val(value, getDataType(type));
     }
 
     /**
@@ -6795,7 +6781,7 @@ public class Factory {
      * @see #val(Object, DataType)
      */
     @Support
-    public static <T> Field<T> val(Object value, Class<T> type) {
+    public static <T> Param<T> val(Object value, Class<T> type) {
         return val(value, getDataType(type));
     }
 
@@ -6809,7 +6795,7 @@ public class Factory {
      * @see #val(Object, DataType)
      */
     @Support
-    public static <T> Field<T> val(Object value, Field<T> field) {
+    public static <T> Param<T> val(Object value, Field<T> field) {
         return val(value, nullSafeDataType(field));
     }
 
@@ -6827,15 +6813,10 @@ public class Factory {
      * @return A field representing the constant value
      */
     @Support
-    public static <T> Field<T> val(Object value, DataType<T> type) {
-
-        // Prevent errors due to type erasure and unchecked invocation
-        if (value instanceof Field<?>) {
-            return (Field<T>) value;
-        }
+    public static <T> Param<T> val(Object value, DataType<T> type) {
 
         // Advanced data types have dedicated constant types
-        else if (value instanceof UDTRecord) {
+        if (value instanceof UDTRecord) {
             return new UDTConstant((UDTRecord) value);
         }
         else if (value instanceof ArrayRecord) {
@@ -6876,78 +6857,7 @@ public class Factory {
         return dataType;
     }
 
-    /**
-     * Get a list of bind values and fields.
-     */
-    @Support
-    public static List<Field<?>> vals(Object... values) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
-
-        if (values != null) {
-            for (Object value : values) {
-
-                // Fields can be mixed with constant values
-                if (value instanceof Field<?>) {
-                    result.add((Field<?>) value);
-                }
-                else {
-                    result.add(val(value));
-                }
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Get a list of bind values for a matching list of fields.
-     */
-    @Support
-    public static List<Field<?>> vals(Object[] values, Field<?>[] fields) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
-
-        if (values != null && fields != null) {
-            for (int i = 0; i < values.length && i < fields.length; i++) {
-                result.add(val(values[i], fields[i]));
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Get a list of bind values for a matching list of types.
-     */
-    @Support
-    public static List<Field<?>> vals(Object[] values, Class<?>[] types) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
-
-        if (values != null && types != null) {
-            for (int i = 0; i < values.length && i < types.length; i++) {
-                result.add(val(values[i], types[i]));
-            }
-        }
-
-        return result;
-    }
-
-    /**
-     * Get a list of bind values for a matching list of types.
-     */
-    @Support
-    public static List<Field<?>> vals(Object[] values, DataType<?>[] types) {
-        List<Field<?>> result = new ArrayList<Field<?>>();
-
-        if (values != null && types != null) {
-            for (int i = 0; i < values.length && i < types.length; i++) {
-                result.add(val(values[i], types[i]));
-            }
-        }
-
-        return result;
-    }
-
-// [jooq-tools] START [row-value]
+    // [jooq-tools] START [row-value]
     /**
      * Create a row value expression of degree <code>1</code>.
      * <p>
@@ -6958,7 +6868,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1> Row1<T1> row(T1 t1) {
-        return row(val(t1));
+        return row(Utils.field(t1));
     }
 
     /**
@@ -6971,7 +6881,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2> Row2<T1, T2> row(T1 t1, T2 t2) {
-        return row(val(t1), val(t2));
+        return row(Utils.field(t1), Utils.field(t2));
     }
 
     /**
@@ -6984,7 +6894,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3> Row3<T1, T2, T3> row(T1 t1, T2 t2, T3 t3) {
-        return row(val(t1), val(t2), val(t3));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3));
     }
 
     /**
@@ -6997,7 +6907,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(T1 t1, T2 t2, T3 t3, T4 t4) {
-        return row(val(t1), val(t2), val(t3), val(t4));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4));
     }
 
     /**
@@ -7010,7 +6920,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5));
     }
 
     /**
@@ -7023,7 +6933,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6));
     }
 
     /**
@@ -7036,7 +6946,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7));
     }
 
     /**
@@ -7049,7 +6959,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8));
     }
 
     /**
@@ -7062,7 +6972,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9));
     }
 
     /**
@@ -7075,7 +6985,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10));
     }
 
     /**
@@ -7088,7 +6998,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11));
     }
 
     /**
@@ -7101,7 +7011,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12));
     }
 
     /**
@@ -7114,7 +7024,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13));
     }
 
     /**
@@ -7127,7 +7037,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14));
     }
 
     /**
@@ -7140,7 +7050,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15));
     }
 
     /**
@@ -7153,7 +7063,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16));
     }
 
     /**
@@ -7166,7 +7076,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17));
     }
 
     /**
@@ -7179,7 +7089,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18));
     }
 
     /**
@@ -7192,7 +7102,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19));
     }
 
     /**
@@ -7205,7 +7115,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20));
     }
 
     /**
@@ -7218,7 +7128,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20), val(t21));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20), Utils.field(t21));
     }
 
     /**
@@ -7231,7 +7141,7 @@ public class Factory {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
-        return row(val(t1), val(t2), val(t3), val(t4), val(t5), val(t6), val(t7), val(t8), val(t9), val(t10), val(t11), val(t12), val(t13), val(t14), val(t15), val(t16), val(t17), val(t18), val(t19), val(t20), val(t21), val(t22));
+        return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20), Utils.field(t21), Utils.field(t22));
     }
 
 // [jooq-tools] END [row-value]
@@ -7245,7 +7155,7 @@ public class Factory {
      */
     @Support
     public static RowN row(Object... values) {
-        return row(vals(values).toArray(new Field[0]));
+        return row(Utils.fields(values).toArray(new Field[0]));
     }
 
 // [jooq-tools] START [row-field]

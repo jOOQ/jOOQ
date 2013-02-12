@@ -35,10 +35,6 @@
  */
 package org.jooq.xtend
 
-
-/**
- * @author Lukas Eder
- */
 import org.jooq.Constants
 
 class Factory extends Generators {
@@ -178,7 +174,7 @@ class Factory extends Generators {
                 «generatedMethod»
                 @Support
                 public static <«TN(degree)»> Row«degree»<«TN(degree)»> row(«TN_tn(degree)») {
-                    return row(«val_tn(degree)»);
+                    return row(«Utils_field_tn(degree)»);
                 }
             ''');
         }

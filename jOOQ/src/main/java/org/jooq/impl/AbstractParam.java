@@ -35,51 +35,84 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
-
-import org.jooq.ArrayRecord;
-import org.jooq.BindContext;
 import org.jooq.DataType;
+import org.jooq.Param;
 import org.jooq.RenderContext;
 
 /**
+ * A base implementation for {@link Param}
+ * 
  * @author Lukas Eder
  */
-class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
+abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
 
-    private static final long serialVersionUID = -8538560256712388066L;
-    private final R           array;
+    /**
+     * Generated UID
+     */
+    private static final long serialVersionUID = 1311856649676227970L;
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    ArrayConstant(R array) {
-        super(array, (DataType) array.getDataType());
+    private final String      paramName;
+    private T                 value;
+    private boolean           inline;
 
-        this.array = array;
+    AbstractParam(T value, DataType<T> type) {
+        this(value, type, null);
+    }
+
+    AbstractParam(T value, DataType<T> type, String paramName) {
+        super(name(value, paramName), type);
+
+        this.paramName = paramName;
+        this.value = value;
+    }
+
+    /**
+     * A utility method that generates a field name.
+     * <p>
+     * <ul>
+     * <li>If <code>paramName != null</code>, take <code>paramName</code></li>
+     * <li>Otherwise, take the string value of <code>value</code></li>
+     * </ul>
+     */
+    private static String name(Object value, String paramName) {
+        return paramName == null ? String.valueOf(value) : paramName;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Param API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final void setValue(T value) {
+        setConverted(value);
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        if (context.inline()) {
-            context.sql(array.getName());
-            context.sql("(");
-
-            String separator = "";
-            for (Object object : array.get()) {
-                context.sql(separator);
-                context.sql(val(object));
-
-                separator = ", ";
-            }
-
-            context.sql(")");
-        }
-        else {
-            context.sql("?");
-        }
+    public final void setConverted(Object value) {
+        this.value = getDataType().convert(value);
     }
 
     @Override
-    public final void bind(BindContext context) {
-        context.bindValues(array);
+    public final T getValue() {
+        return value;
+    }
+
+    @Override
+    public final String getParamName() {
+        return paramName;
+    }
+
+    @Override
+    public final void setInline(boolean inline) {
+        this.inline = inline;
+    }
+
+    @Override
+    public final boolean isInline() {
+        return inline;
+    }
+
+    final boolean isInline(RenderContext context) {
+        return isInline() || context.inline();
     }
 }

@@ -64,7 +64,6 @@ import org.jooq.BindContext;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.EnumType;
-import org.jooq.Param;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
@@ -74,36 +73,17 @@ import org.jooq.types.Interval;
 /**
  * @author Lukas Eder
  */
-class Val<T> extends AbstractField<T> implements Param<T> {
+class Val<T> extends AbstractParam<T> {
 
     private static final long   serialVersionUID = 6807729087019209084L;
     private static final char[] HEX              = "0123456789abcdef".toCharArray();
 
-    private final String        paramName;
-    private T                   value;
-    private boolean             inline;
-
     Val(T value, DataType<T> type) {
-        this(value, type, null);
+        super(value, type);
     }
 
     Val(T value, DataType<T> type, String paramName) {
-        super(name(value, paramName), type);
-
-        this.paramName = paramName;
-        this.value = value;
-    }
-
-    /**
-     * A utility method that generates a field name.
-     * <p>
-     * <ul>
-     * <li>If <code>paramName != null</code>, take <code>paramName</code></li>
-     * <li>Otherwise, take the string value of <code>value</code></li>
-     * </ul>
-     */
-    private static String name(Object value, String paramName) {
-        return paramName == null ? String.valueOf(value) : paramName;
+        super(value, type, paramName);
     }
 
     // ------------------------------------------------------------------------
@@ -225,8 +205,8 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         else if (SQLDataType.OTHER == type) {
 
             // If the bind value is set, it can be used to derive the cast type
-            if (value != null) {
-                toSQLCast(context, DefaultDataType.getDataType(dialect, value.getClass()), 0, 0, 0);
+            if (getValue() != null) {
+                toSQLCast(context, DefaultDataType.getDataType(dialect, getValue().getClass()), 0, 0, 0);
             }
 
             // [#632] [#722] Current integration tests show that Ingres and
@@ -549,40 +529,6 @@ class Val<T> extends AbstractField<T> implements Param<T> {
     // ------------------------------------------------------------------------
     // XXX: Param API
     // ------------------------------------------------------------------------
-
-    @Override
-    public final void setValue(T value) {
-        setConverted(value);
-    }
-
-    @Override
-    public final void setConverted(Object value) {
-        this.value = getDataType().convert(value);
-    }
-
-    @Override
-    public final T getValue() {
-        return value;
-    }
-
-    @Override
-    public final String getParamName() {
-        return paramName;
-    }
-
-    @Override
-    public final void setInline(boolean inline) {
-        this.inline = inline;
-    }
-
-    @Override
-    public final boolean isInline() {
-        return inline;
-    }
-
-    private final boolean isInline(RenderContext context) {
-        return isInline() || context.inline();
-    }
 
     /**
      * Convert a byte array to a hex encoded string.

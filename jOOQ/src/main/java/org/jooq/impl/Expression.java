@@ -323,14 +323,14 @@ class Expression<T> extends AbstractFunction<T> {
                     }
 
                     if (rhs.get(0).getType() == YearToMonth.class) {
-                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, val(interval, String.class));
+                        return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Utils.field(interval, String.class));
                     }
                     else {
                         if (dialect == MYSQL) {
-                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, val(interval, String.class));
+                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Utils.field(interval, String.class));
                         }
                         else {
-                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, val(interval, String.class));
+                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Utils.field(interval, String.class));
                         }
                     }
                 }

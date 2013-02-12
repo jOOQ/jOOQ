@@ -47,7 +47,6 @@ import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.param;
 import static org.jooq.impl.Factory.val;
-import static org.jooq.impl.Factory.vals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -358,10 +357,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             Executor create = create(new Settings()
                 .withStatementType(StatementType.STATIC_STATEMENT));
 
-            Object[] array1 = create.select(vals(s1, s2, s3, s4)).fetchOneArray();
-            Object[] array2 = create.select(vals(b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2)).fetchOneArray();
-            Object[] array3 = create.select(vals(d1, d2, t1, t2, ts1, ts2)).fetchOneArray();
-            Object[] array4 = create.select(vals(by1, by2, bool1, bool2, bool3)).fetchOneArray();
+            Object[] array1 = create.select(
+                val(s1), val(s2), val(s3), val(s4)
+            ).fetchOneArray();
+            Object[] array2 = create.select(
+                val(b1), val(b2),
+                val(sh1), val(sh2),
+                val(i1), val(i2),
+                val(l1), val(l2),
+                val(bi1), val(bi2),
+                val(bd1), val(bd2),
+                val(db1), val(db2),
+                val(f1), val(f2)
+            ).fetchOneArray();
+            Object[] array3 = create.select(
+                val(d1), val(d2), val(t1), val(t2), val(ts1), val(ts2)
+            ).fetchOneArray();
+            Object[] array4 = create.select(
+                val(by1), val(by2), val(bool1), val(bool2), val(bool3)
+            ).fetchOneArray();
 
             assertEquals(4, array1.length);
             assertEquals(16, array2.length);

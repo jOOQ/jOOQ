@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.trueCondition;
-import static org.jooq.impl.Factory.vals;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -341,7 +340,7 @@ implements
 
     @Override
     public final Table<Record> in(Object... values) {
-        return in(vals(values).toArray(new Field<?>[0]));
+        return in(Utils.fields(values).toArray(new Field<?>[0]));
     }
 
     @Override

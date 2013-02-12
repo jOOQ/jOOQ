@@ -402,6 +402,164 @@ final class Utils {
     // ------------------------------------------------------------------------
 
     /**
+     * Be sure that a given object is a field.
+     *
+     * @param value The argument object
+     * @return The argument object itself, if it is a {@link Field}, or a bind
+     *         value created from the argument object.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> field(T value) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>) {
+            return (Field<T>) value;
+        }
+        else {
+            return val(value);
+        }
+    }
+
+    /**
+     * Be sure that a given object is a field.
+     *
+     * @param value The argument object
+     * @param field The field to take the bind value type from
+     * @return The argument object itself, if it is a {@link Field}, or a bind
+     *         value created from the argument object.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> field(Object value, Field<T> field) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>) {
+            return (Field<T>) value;
+        }
+        else {
+            return val(value, field);
+        }
+    }
+
+    /**
+     * Be sure that a given object is a field.
+     *
+     * @param value The argument object
+     * @param type The type to take the bind value type from
+     * @return The argument object itself, if it is a {@link Field}, or a bind
+     *         value created from the argument object.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> field(Object value, Class<T> type) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>) {
+            return (Field<T>) value;
+        }
+        else {
+            return val(value, type);
+        }
+    }
+
+    /**
+     * Be sure that a given object is a field.
+     *
+     * @param value The argument object
+     * @param type The type to take the bind value type from
+     * @return The argument object itself, if it is a {@link Field}, or a bind
+     *         value created from the argument object.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> field(Object value, DataType<T> type) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>) {
+            return (Field<T>) value;
+        }
+        else {
+            return val(value, type);
+        }
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null) {
+            for (Object value : values) {
+                result.add(field(value));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param fields The fields to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, Field<?>[] fields) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && fields != null) {
+            for (int i = 0; i < values.length && i < fields.length; i++) {
+                result.add(field(values[i], fields[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param types The types to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, Class<?>[] types) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && types != null) {
+            for (int i = 0; i < values.length && i < types.length; i++) {
+                result.add(field(values[i], types[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param types The types to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && types != null) {
+            for (int i = 0; i < values.length && i < types.length; i++) {
+                result.add(field(values[i], types[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
      * Use this rather than {@link Arrays#asList(Object...)} for
      * <code>null</code>-safety
      */
@@ -438,7 +596,7 @@ final class Utils {
      * @throws InvalidResultException Thrown if the list contains more than one
      *             element
      */
-    static <R extends Record> R filterOne(List<R> list) throws InvalidResultException {
+    static final <R extends Record> R filterOne(List<R> list) throws InvalidResultException {
         int size = list.size();
 
         if (size == 1) {
@@ -460,7 +618,7 @@ final class Utils {
      * @throws InvalidResultException Thrown if the cursor returns more than one
      *             element
      */
-    static <R extends Record> R fetchOne(Cursor<R> cursor) throws InvalidResultException {
+    static final <R extends Record> R fetchOne(Cursor<R> cursor) throws InvalidResultException {
         R record = cursor.fetchOne();
 
         if (cursor.hasNext()) {

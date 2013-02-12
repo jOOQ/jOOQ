@@ -53,12 +53,8 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     private static final long serialVersionUID = 6807729087019209084L;
 
-    private final R           record;
-
     UDTConstant(R value) {
         super(value, value.getUDT().getDataType());
-
-        this.record = value;
     }
 
     @Override
@@ -92,11 +88,11 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                 context.sql("()");
 
                 String separator = "..";
-                for (Field<?> field : record.fields()) {
+                for (Field<?> field : value.fields()) {
                     context.sql(separator);
                     context.sql(field.getName());
                     context.sql("(");
-                    context.sql(val(record.getValue(field)));
+                    context.sql(val(value.getValue(field)));
                     context.sql(")");
                 }
 
@@ -115,9 +111,9 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         context.sql("(");
 
         String separator = "";
-        for (Field<?> field : record.fields()) {
+        for (Field<?> field : value.fields()) {
             context.sql(separator);
-            context.sql(val(record.getValue(field), field));
+            context.sql(val(value.getValue(field), field));
             separator = ", ";
         }
 
@@ -135,7 +131,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
             // Assume default behaviour if dialect is not available
             default: {
-                UDT<?> udt = record.getUDT();
+                UDT<?> udt = value.getUDT();
                 Schema mappedSchema = Utils.getMappedSchema(context, udt.getSchema());
 
                 if (mappedSchema != null) {
@@ -155,7 +151,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE:
-                context.bindValues(record);
+                context.bindValues(value);
                 break;
 
             // Is the DB2 case correct? Should it be inlined like the Postgres case?
@@ -164,8 +160,8 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Postgres cannot bind a complete structured type. The type is
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {
-                for (Field<?> field : record.fields()) {
-                    context.bind(val(record.getValue(field)));
+                for (Field<?> field : value.fields()) {
+                    context.bind(val(value.getValue(field)));
                 }
 
                 break;

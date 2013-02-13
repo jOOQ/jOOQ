@@ -9352,6 +9352,9 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 						</content>
 					</section>
 
+					<section id="reference-glossary">
+					</section>
+
 					<section id="reference-credits">
 						<title>Credits</title>
 						<content>

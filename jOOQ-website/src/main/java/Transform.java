@@ -59,6 +59,7 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.jooq.Constants;
 import org.joox.Context;
 import org.joox.Each;
 import org.joox.Match;
@@ -124,6 +125,11 @@ public class Transform {
 
                 if (content.contains("{jooq-version}")) {
                     content = content.replace("{jooq-version}", version + ".0");
+                    changed = true;
+                }
+
+                if (content.contains("{max-row-degree}")) {
+                    content = content.replace("{max-row-degree}", "" + Constants.MAX_ROW_DEGREE);
                     changed = true;
                 }
 

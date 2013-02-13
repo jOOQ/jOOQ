@@ -1,3 +1,9 @@
 /hsqldb
 /sqlite
 /bin
+/test
+/derby.log
+/test.lck
+/test.log
+/test.properties
+/test.script

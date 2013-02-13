@@ -9357,12 +9357,6 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 								<li>The Factory subtypes are no longer instanciable. As Factory now only contains static methods, subclassing is no longer useful. There are still dialect-specific Factories providing static methods for dialect-specific functions. But the code-generator no longer generates a schema-specific Factory</li>
 								<li>The concept of a "main key" is no longer supported. The code generator produces UpdatableTables and UpdatableRecords only if the underlying table has a PRIMARY KEY. The reason for this removal is the fact that "main keys" are not reliable enough. They were chosen arbitrarily among UNIQUE KEYs.</li>
 							</ul>
-							
-														
-							<h3>No sub-factories anymore</h3>
-							<p>
-								As Factory is no longer 
-							</p>
 						</content>
 					</section>
 

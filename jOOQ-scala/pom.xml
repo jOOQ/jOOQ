@@ -22,6 +22,49 @@
 		<sourceDirectory>src/main/scala</sourceDirectory>
 		<testSourceDirectory>src/test/scala</testSourceDirectory>
 		<plugins>
+
+			<!-- The H2 test schema is loaded here -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>com.h2database</groupId>
+						<artifactId>h2</artifactId>
+						<version>1.3.168</version>
+					</dependency>
+				</dependencies>
+
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>org.h2.Driver</driver>
+					<url>jdbc:h2:~/scala-test</url>
+					<username>sa</username>
+					<password></password>
+					<!--all executions are ignored if -Dmaven.test.skip=true -->
+					<skip>${maven.test.skip}</skip>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>create-database</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>src/test/resources/db.sql</srcFile>
+							</srcFiles>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- The Scala compiler plugin -->
 			<plugin>
 				<groupId>org.scala-tools</groupId>
 				<artifactId>maven-scala-plugin</artifactId>
@@ -35,11 +78,14 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!-- The jar plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.2</version>
 			</plugin>
+			
 			<!-- The jOOQ code generator plugin for Postgres / Sybase ASE / MySQL -->
 			<plugin>
 				<groupId>org.jooq</groupId>
@@ -54,8 +100,7 @@
 						<configuration>
 							<jdbc>
 								<driver>org.h2.Driver</driver>
-								<url>jdbc:h2:~/test</url>
-								<schema>PUBLIC</schema>
+								<url>jdbc:h2:~/scala-test</url>
 								<user>sa</user>
 								<password></password>
 							</jdbc>
@@ -66,6 +111,7 @@
 									<includes>.*</includes>
 									<excludes></excludes>
 									<dateAsTimestamp>true</dateAsTimestamp>
+									<inputSchema>PUBLIC</inputSchema>
 								</database>
 								<generate>
 									<deprecated>false</deprecated>

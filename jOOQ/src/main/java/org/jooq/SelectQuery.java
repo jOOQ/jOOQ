@@ -502,8 +502,9 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     /**
      * Sets the "FOR UPDATE" flag onto the query
      * <p>
-     * <h3>Native implementation</h3> This has been observed to be supported by
-     * any of these dialects:
+     * <h5>Native implementation</h5>
+     * <p>
+     * This has been observed to be supported by any of these dialects:
      * <ul>
      * <li><a href=
      * "http://publib.boulder.ibm.com/infocenter/db2luw/v9r7/index.jsp?topic=/com.ibm.db2.luw.sql.ref.doc/doc/r0000879.html"
@@ -526,10 +527,13 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * "http://www.postgresql.org/docs/9.0/static/sql-select.html#SQL-FOR-UPDATE-SHARE"
      * >Postgres FOR UPDATE / FOR SHARE</a></li>
      * </ul>
-     * <h3>Simulation</h3> These dialects can simulate the
-     * <code>FOR UPDATE</code> clause using a cursor. The cursor is handled by
-     * the JDBC driver, at {@link PreparedStatement} construction time, when
-     * calling {@link Connection#prepareStatement(String, int, int)} with
+     * <p>
+     * <h5>Simulation</h5>
+     * <p>
+     * These dialects can simulate the <code>FOR UPDATE</code> clause using a
+     * cursor. The cursor is handled by the JDBC driver, at
+     * {@link PreparedStatement} construction time, when calling
+     * {@link Connection#prepareStatement(String, int, int)} with
      * {@link ResultSet#CONCUR_UPDATABLE}. jOOQ handles simulation of a
      * <code>FOR UPDATE</code> clause using <code>CONCUR_UPDATABLE</code> for
      * these dialects:
@@ -539,8 +543,11 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * </ul>
      * <p>
      * Note: This simulation may not be efficient for large result sets!
-     * <h3>Not supported</h3> These dialects are known not to support the
-     * <code>FOR UPDATE</code> clause in regular SQL:
+     * <p>
+     * <h5>Not supported</h5>
+     * <p>
+     * These dialects are known not to support the <code>FOR UPDATE</code>
+     * clause in regular SQL:
      * <ul>
      * <li> {@link SQLDialect#SQLITE}</li>
      * </ul>

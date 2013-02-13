@@ -104,7 +104,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * Depending on the state of the primary key's or main unique key's value,
      * an {@link #insert()} or an {@link #update()} statement is executed.
      * <p>
-     * <h3>Statement type</h3>
+     * <h5>Statement type</h5>
      * <p>
      * <ul>
      * <li>If this record was created by client code, an <code>INSERT</code>
@@ -124,7 +124,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <code>DEFAULT</code> values to be applied by the underlying RDBMS. If no
      * fields were modified, neither an <code>UPDATE</code> nor an
      * <code>INSERT</code> will be executed.
-     * <h3>Automatic value generation</h3>
+     * <p>
+     * <h5>Automatic value generation</h5>
      * <p>
      * Use {@link #insert()} or {@link #update()} to explicitly force either
      * statement type.
@@ -156,7 +157,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * manually using the various {@link Executor#insertInto(Table)},
      * {@link Executor#update(Table)} methods.</li>
      * </ul>
-     * <h3>Optimistic locking</h3>
+     * <p>
+     * <h5>Optimistic locking</h5>
      * <p>
      * If an <code>UPDATE</code> statement is executed and
      * {@link Settings#isExecuteWithOptimisticLocking()} is set to
@@ -191,7 +193,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * See {@link SelectQuery#setForUpdate(boolean)} for more details</li>
      * </ul>
-     * <h3>Statement examples</h3>
+     * <p>
+     * <h5>Statement examples</h5>
      * <p>
      * Possible statements are
      * <ul>
@@ -251,7 +254,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * Deletes this record from the database, based on the value of the primary
      * key or main unique key.
      * <p>
-     * <h3>Optimistic locking</h3>
+     * <h5>Optimistic locking</h5>
      * <p>
      * If a <code>DELETE</code> statement is executed and
      * {@link Settings#isExecuteWithOptimisticLocking()} is set to
@@ -286,7 +289,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * See {@link SelectQuery#setForUpdate(boolean)} for more details</li>
      * </ul>
-     * <h3>Statement examples</h3>
+     * <h5>Statement examples</h5>
      * <p>
      * The executed statement is <code><pre>
      * DELETE FROM [table]

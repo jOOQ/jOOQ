@@ -4742,11 +4742,14 @@ public class Executor implements Configuration {
      * batch mode (with bind values).
      * <p>
      * This batch operation can be executed in two modes:
-     * <h3>With
+     * <p>
+     * <h5>With
      * <code>{@link Settings#getStatementType()} == {@link StatementType#PREPARED_STATEMENT}</code>
-     * (the default)</h3> In this mode, record order is preserved as much as
-     * possible, as long as two subsequent records generate the same SQL (with
-     * bind variables). The number of executed batch operations corresponds to
+     * (the default)</h5>
+     * <p>
+     * In this mode, record order is preserved as much as possible, as long as
+     * two subsequent records generate the same SQL (with bind variables). The
+     * number of executed batch operations corresponds to
      * <code>[number of distinct rendered SQL statements]</code>. In the worst
      * case, this corresponds to the number of total records.
      * <p>
@@ -4764,12 +4767,14 @@ public class Executor implements Configuration {
      * <li>INSERT b1, b3</li>
      * <li>INSERT c1</li>
      * </ol>
-     * <h3>With
+     * <p>
+     * <h5>With
      * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
-     * </h3> This mode may be better for large and complex batch store
-     * operations, as the order of records is preserved entirely, and jOOQ can
-     * guarantee that only a single batch statement is serialised to the
-     * database.
+     * </h5>
+     * <p>
+     * This mode may be better for large and complex batch store operations, as
+     * the order of records is preserved entirely, and jOOQ can guarantee that
+     * only a single batch statement is serialised to the database.
      *
      * @see Statement#executeBatch()
      */
@@ -4837,16 +4842,20 @@ public class Executor implements Configuration {
     public final Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records) {
         return batchUpdate(records.toArray(new UpdatableRecord[records.size()]));
     }
+
     /**
      * Execute a set of <code>DELETE</code> queries in batch mode (with bind
      * values).
      * <p>
      * This batch operation can be executed in two modes:
-     * <h3>With
+     * <p>
+     * <h5>With
      * <code>{@link Settings#getStatementType()} == {@link StatementType#PREPARED_STATEMENT}</code>
-     * (the default)</h3> In this mode, record order is preserved as much as
-     * possible, as long as two subsequent records generate the same SQL (with
-     * bind variables). The number of executed batch operations corresponds to
+     * (the default)</h5>
+     * <p>
+     * In this mode, record order is preserved as much as possible, as long as
+     * two subsequent records generate the same SQL (with bind variables). The
+     * number of executed batch operations corresponds to
      * <code>[number of distinct rendered SQL statements]</code>. In the worst
      * case, this corresponds to the number of total records.
      * <p>
@@ -4864,12 +4873,14 @@ public class Executor implements Configuration {
      * <li>DELETE c1, c2</li>
      * <li>DELETE a5</li>
      * </ol>
-     * <h3>With
+     * <p>
+     * <h5>With
      * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
-     * </h3> This mode may be better for large and complex batch delete
-     * operations, as the order of records is preserved entirely, and jOOQ can
-     * guarantee that only a single batch statement is serialised to the
-     * database.
+     * </h5>
+     * <p>
+     * This mode may be better for large and complex batch delete operations, as
+     * the order of records is preserved entirely, and jOOQ can guarantee that
+     * only a single batch statement is serialised to the database.
      *
      * @see Statement#executeBatch()
      */

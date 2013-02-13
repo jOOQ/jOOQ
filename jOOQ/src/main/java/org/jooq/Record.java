@@ -65,14 +65,14 @@ import org.jooq.tools.reflect.Reflect;
  * implementations often specialise the above description in any of the
  * following ways:
  * <p>
- * <h3>Table records</h3>
+ * <h5>Table records</h5>
  * <p>
  * Records originating from a concrete database table (or view) are modelled by
  * jOOQ as {@link TableRecord} or {@link UpdatableRecord}, if they contain a
  * primary key. If you're using jOOQ's code generator, you can generate even
  * more concrete types of table records, i.e. one table record per table.
  * <p>
- * <h3>UDT records</h3>
+ * <h5>UDT records</h5>
  * <p>
  * {@link SQLDialect#ORACLE} and {@link SQLDialect#POSTGRES} formally support
  * user defined types (UDT), which are modelled by jOOQ as {@link UDTRecord}. In
@@ -80,7 +80,7 @@ import org.jooq.tools.reflect.Reflect;
  * implement the JDBC {@link SQLData} API in order to be streamed to a JDBC
  * {@link PreparedStatement} or from a JDBC {@link ResultSet}
  * <p>
- * <h3>Records of well-defined degree</h3>
+ * <h5>Records of well-defined degree</h5>
  * <p>
  * When projecting custom record types in SQL, new ad-hoc types of a certain
  * degree are formed on the fly. Records with degree &lt= 22 are reflected by
@@ -91,7 +91,7 @@ import org.jooq.tools.reflect.Reflect;
  * Note that generated <code>TableRecords</code> and <code>UDTRecords</code>
  * also implement a <code>Record[N]</code> interface, if <code>N &lt;= 22</code>
  * <p>
- * <h3>Record implements Comparable</h3>
+ * <h5>Record implements Comparable</h5>
  * <p>
  * jOOQ records have a natural ordering implemented in the same way as this is
  * defined in the SQL standard. For more details, see the
@@ -634,15 +634,18 @@ public interface Record extends Attachable, Comparable<Record> {
      * Map resulting records onto a custom type.
      * <p>
      * The mapping algorithm is this:
-     * <h3>If <code>type</code> is an array:</h3> The resulting array is of the
-     * nature described in {@link #intoArray()}. Arrays more specific than
-     * <code>Object[]</code> can be specified as well, e.g.
-     * <code>String[]</code>. If conversion fails, a {@link MappingException} is
-     * thrown, wrapping conversion exceptions.
      * <p>
-     * <h3>If a default constructor is available and any JPA {@link Column}
+     * <h5>If <code>type</code> is an array:</h5>
+     * <p>
+     * The resulting array is of the nature described in {@link #intoArray()}.
+     * Arrays more specific than <code>Object[]</code> can be specified as well,
+     * e.g. <code>String[]</code>. If conversion fails, a
+     * {@link MappingException} is thrown, wrapping conversion exceptions.
+     * <p>
+     * <h5>If a default constructor is available and any JPA {@link Column}
      * annotations are found on the provided <code>type</code>, only those are
-     * used:</h3>
+     * used:</h5>
+     * <p>
      * <ul>
      * <li>If <code>type</code> contains public single-argument instance methods
      * annotated with <code>Column</code>, those methods are invoked</li>
@@ -661,12 +664,14 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li>Static methods / member fields are ignored</li>
      * <li>Final member fields are ignored</li>
      * </ul>
-     * <h3>If a default constructor is available and if there are no JPA
+     * <p>
+     * <h5>If a default constructor is available and if there are no JPA
      * <code>Column</code> annotations, or jOOQ can't find the
      * <code>javax.persistence</code> API on the classpath, jOOQ will map
-     * <code>Record</code> values by naming convention:</h3> If
-     * {@link Field#getName()} is <code>MY_field</code> (case-sensitive!), then
-     * this field's value will be set on all of these:
+     * <code>Record</code> values by naming convention:</h5>
+     * <p>
+     * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!),
+     * then this field's value will be set on all of these:
      * <ul>
      * <li>Public single-argument instance method <code>MY_field(...)</code></li>
      * <li>Public single-argument instance method <code>myField(...)</code></li>
@@ -675,9 +680,11 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li>Public non-final instance member field <code>MY_field</code></li>
      * <li>Public non-final instance member field <code>myField</code></li>
      * </ul>
-     * <h3>If no default constructor is available, but at least one constructor
+     * <p>
+     * <h5>If no default constructor is available, but at least one constructor
      * annotated with <code>ConstructorProperties</code> is available, that one
-     * is used</h3>
+     * is used</h5>
+     * <p>
      * <ul>
      * <li>The standard JavaBeans {@link ConstructorProperties} annotation is
      * used to match constructor arguments against POJO members or getters.</li>
@@ -692,8 +699,10 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li>When invoking the annotated constructor, values are converted onto
      * constructor argument types</li>
      * </ul>
-     * <h3>If no default constructor is available, but at least one "matching"
-     * constructor is available, that one is used</h3>
+     * <p>
+     * <h5>If no default constructor is available, but at least one "matching"
+     * constructor is available, that one is used</h5>
+     * <p>
      * <ul>
      * <li>A "matching" constructor is one with exactly as many arguments as
      * this record holds fields</li>
@@ -702,13 +711,17 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li>When invoking the "matching" constructor, values are converted onto
      * constructor argument types</li>
      * </ul>
-     * <h3>If the supplied type is an interface or an abstract class</h3>
+     * <p>
+     * <h5>If the supplied type is an interface or an abstract class</h5>
+     * <p>
      * Abstract types are instanciated using Java reflection {@link Proxy}
      * mechanisms. The returned proxy will wrap a {@link HashMap} containing
      * properties mapped by getters and setters of the supplied type. Methods
      * (even JPA-annotated ones) other than standard POJO getters and setters
      * are not supported. Details can be seen in {@link Reflect#as(Class)}.
-     * <h3>Other restrictions</h3>
+     * <p>
+     * <h5>Other restrictions</h5>
+     * <p>
      * <ul>
      * <li><code>type</code> must provide a default or a "matching" constructor.
      * Non-public default constructors are made accessible using
@@ -746,8 +759,8 @@ public interface Record extends Attachable, Comparable<Record> {
     /**
      * Map resulting records onto a custom record type.
      * <p>
-     * The mapping algorithm is this:
-     * <h3>jOOQ will map <code>Record</code> values by equal field names:</h3>
+     * The mapping algorithm is this:<p>
+     * <h5>jOOQ will map <code>Record</code> values by equal field names:</h5><p>
      * <ul>
      * <li>For every field in the <code>table</code> argument with
      * {@link Field#getName()} <code>"MY_field"</code> (case-sensitive!), a
@@ -756,8 +769,8 @@ public interface Record extends Attachable, Comparable<Record> {
      * {@link Field#getName()}, then the first one returning true on
      * {@link Field#equals(Object)} will be returned. (e.g. qualified field
      * names match)</li>
-     * </ul>
-     * <h3>Other restrictions</h3>
+     * </ul><p>
+     * <h5>Other restrictions</h5><p>
      * <ul>
      * <li>{@link Table#getRecordType()} must return a class of type
      * {@link TableRecord}, which must provide a default constructor. Non-public
@@ -811,16 +824,16 @@ public interface Record extends Attachable, Comparable<Record> {
     <E> E map(RecordMapper<Record, E> mapper);
 
     /**
-     * Load data into this record from a source. The mapping algorithm is this:
-     * <h3>If <code>source</code> is an <code>array</code></h3>
+     * Load data into this record from a source.<p>The mapping algorithm is this:<p>
+     * <h5>If <code>source</code> is an <code>array</code></h5>
      * <p>
-     * Loading of data is delegated to {@link #fromArray(Object...)}
-     * <h3>If <code>source</code> is a {@link Map}</h3>
+     * Loading of data is delegated to {@link #fromArray(Object...)}<p>
+     * <h5>If <code>source</code> is a {@link Map}</h5><p>
      * <p>
-     * Loading of data is delegated to {@link #fromMap(Map)}
-     * <h3>If any JPA {@link Column} annotations are found on the {@link Class}
+     * Loading of data is delegated to {@link #fromMap(Map)}<p>
+     * <h5>If any JPA {@link Column} annotations are found on the {@link Class}
      * of the provided <code>source</code>, only those are used. Matching
-     * candidates are:</h3>
+     * candidates are:</h5><p>
      * <ul>
      * <li>Public no-argument instance methods annotated with
      * <code>Column</code></li>
@@ -839,10 +852,10 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li>Explicitly matching methods have a higher priority than implicitly
      * matching methods (implicitly matching getter = setter is annotated)</li>
      * <li>Static methods / member fields are ignored</li>
-     * </ul>
-     * <h3>If there are no JPA <code>Column</code> annotations, or jOOQ can't
+     * </ul><p>
+     * <h5>If there are no JPA <code>Column</code> annotations, or jOOQ can't
      * find the <code>javax.persistence</code> API on the classpath, jOOQ will
-     * map members by naming convention:</h3> If {@link Field#getName()} is
+     * map members by naming convention:</h5><p> If {@link Field#getName()} is
      * <code>MY_field</code> (case-sensitive!), then this field's value will be
      * fetched from the first of these:
      * <ul>
@@ -852,12 +865,12 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li>Public no-argument instance method <code>getMyField()</code></li>
      * <li>Public instance member field <code>MY_field</code></li>
      * <li>Public instance member field <code>myField</code></li>
-     * </ul>
-     * <h3>Other restrictions</h3>
+     * </ul><p>
+     * <h5>Other restrictions</h5><p>
      * <ul>
      * <li>primitive types are supported.</li>
-     * </ul>
-     * <h3>General notes</h3> The resulting record will have its internal
+     * </ul><p>
+     * <h5>General notes</h5><p> The resulting record will have its internal
      * "changed" flags set to true for all values. This means that
      * {@link UpdatableRecord#store()} will perform an <code>INSERT</code>
      * statement. If you wish to store the record using an <code>UPDATE</code>
@@ -958,13 +971,13 @@ public interface Record extends Attachable, Comparable<Record> {
      * jOOQ Records implement {@link Comparable} to allow for naturally ordering
      * Records in a "SQL way", i.e. according to the following rules:
      * <p>
-     * <h3>Records being compared must have the same ROW type</h3>
+     * <h5>Records being compared must have the same ROW type</h5>
      * <p>
      * Two Records are comparable if and only if they have the same
-     * <code>ROW</code> type, i.e. if their {@link Record#fieldsRow() fieldsRow()}
-     * methods return fields of the same type and degree.
+     * <code>ROW</code> type, i.e. if their {@link Record#fieldsRow()
+     * fieldsRow()} methods return fields of the same type and degree.
      * <p>
-     * <h3>Comparison rules</h3>
+     * <h5>Comparison rules</h5>
      * <p>
      * Assume the following notations:
      * <ul>

@@ -99,12 +99,13 @@ public interface Table<R extends Record> extends TableLike<R> {
      * on {@link Settings#getRenderNameStyle()}. By default, table aliases are
      * quoted, and thus case-sensitive!
      * <p>
-     * <h3>Derived column lists for table references</h3> Note, not all
-     * databases support derived column lists for their table aliases. On the
-     * other hand, some databases do support derived column lists, but only for
-     * derived tables. jOOQ will try to turn table references into derived
-     * tables to make this syntax work. In other words, the following statements
-     * are equivalent: <code><pre>
+     * <h5>Derived column lists for table references</h5>
+     * <p>
+     * Note, not all databases support derived column lists for their table
+     * aliases. On the other hand, some databases do support derived column
+     * lists, but only for derived tables. jOOQ will try to turn table
+     * references into derived tables to make this syntax work. In other words,
+     * the following statements are equivalent: <code><pre>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM my_table t(a, b)
@@ -116,9 +117,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * ) t(a, b)
      * </pre></code>
      * <p>
-     * <h3>Derived column lists for derived tables</h3> Other databases may not
-     * support derived column lists at all, but they do support common table
-     * expressions. The following statements are equivalent: <code><pre>
+     * <h5>Derived column lists for derived tables</h5>
+     * <p>
+     * Other databases may not support derived column lists at all, but they do
+     * support common table expressions. The following statements are
+     * equivalent: <code><pre>
      * -- Using derived column lists to rename columns (e.g. Postgres)
      * SELECT t.a, t.b
      * FROM (

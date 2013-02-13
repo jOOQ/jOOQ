@@ -100,7 +100,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     /**
      * Clean up blobs, clobs and the local configuration.
      * <p>
-     * <h3>BLOBS and CLOBS</h3>
+     * <h5>BLOBS and CLOBS</h5>
      * <p>
      * [#1326] This is necessary in those dialects that have long-lived
      * temporary lob objects, which can cause memory leaks in certain contexts,
@@ -114,7 +114,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
      * {@link OutOfMemoryError}</li>
      * </ol>
      * <p>
-     * <h3>Local configuration</h3>
+     * <h5>Local configuration</h5>
      * <p>
      * [#1544] There exist some corner-cases regarding the {@link SQLOutput}
      * API, used for UDT serialisation / deserialisation, which have no elegant

@@ -1341,23 +1341,15 @@ create.selectFrom(AUTHOR).fetch();</java>
 								<title>Factory subclasses</title>
 								<content>
 									<p>
-										There are a couple of subclasses for the general Factory. Each SQL dialect has its own dialect-specific factory. For instance, if you're only using the MySQL dialect, you can choose to create a new Factory using any of the following types:
+										There are a couple of subclasses for the general Factory. Each SQL dialect has its own dialect-specific Factory. For instance, if you're only using the MySQL dialect, you can choose to reference the MySQLFactory instead of the standard Factory:
 									</p>
-<java>// A general, dialect-unspecific factory
-Factory create = new Factory(connection, SQLDialect.MYSQL);
-
-// A MySQL-specific factory
-MySQLFactory create = new MySQLFactory(connection);</java>
 									<p>
-										The advantage of using a dialect-specific Factory lies in the fact,	that you have access to more proprietary RDMBS functionality. This may include:
+										The advantage of referencing a dialect-specific Factory lies in the fact that you have access to more proprietary RDMBS functionality. This may include:
 									</p>
 									<ul>
 		    							<li>MySQL's encryption functions</li>
 		    							<li>PL/SQL constructs, pgplsql, or any other dialect's ROUTINE-language (maybe in the future)</li>
 									</ul>
-									<p>
-										Another type of Factory subclasses are each generated schema's factories. If you generate your schema TEST, then you will have access to a TestFactory. By default, such a schema-specific Factory will not render the schema name.
-									</p>
 								</content>
 							</section>
 						</sections>
@@ -1544,7 +1536,7 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
 										A very similar, but limited API is available, if you want to select from single physical tables in order to retrieve <reference id="crud-with-updatablerecords" title="TableRecords or even UpdatableRecords"/>. The decision, which type of select to create is already made at the very first step, when you create the SELECT statement with the Factory:
 									</p>
 
-<java><![CDATA[public <R extends Record> SimpleSelectWhereStep<R> selectFrom(Table<R> table);]]></java>
+<java><![CDATA[public <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);]]></java>
 									<p>
 										As you can see, there is no way to further restrict/project the selected fields. This just selects all known TableFields in the supplied Table, and it also binds &lt;R extends Record&gt; to your Table's associated Record. An example of such a Query would then be:
 									</p>

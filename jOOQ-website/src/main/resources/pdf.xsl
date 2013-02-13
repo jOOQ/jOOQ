@@ -173,7 +173,7 @@
 	   					</fo:block>
 	   					<fo:block width="100%" text-align="center" padding-top="20mm">
 	   						<fo:external-graphic
-	   							src="url('C:/Users/lukas/workspace/jOOQ-website/img/logo.png')"
+	   							src="url('C:/Users/lukas/workspace/jOOQ/jOOQ-website/img/logo.png')"
 								xsl:use-attribute-sets="img"/>
 	   					</fo:block>
    					</fo:block>
@@ -435,7 +435,7 @@
 	<xsl:template match="img" mode="content">
 		<fo:block text-align="center">
 			<fo:external-graphic
-				src="url('C:/Users/lukas/workspace/jOOQ-website/img/{substring-after(@src, 'img/')}')"
+				src="url('C:/Users/lukas/workspace/jOOQ/jOOQ-website/img/{substring-after(@src, 'img/')}')"
 				xsl:use-attribute-sets="img"/>
 		</fo:block>
 	</xsl:template>

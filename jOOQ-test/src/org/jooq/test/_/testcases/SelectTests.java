@@ -36,6 +36,7 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.Factory.count;
@@ -343,6 +344,39 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         }
 
         assertEquals(4, q.execute());
+
+        // [#2190] Handle ClassCastException scenario provided by user Aaron
+        Select<Record> q2 = null;
+
+        for (int i = 0; i < 10; i++) {
+
+            // Check SimpleSelectQuery API
+            @SuppressWarnings({ "rawtypes", "unchecked" })
+            Select<Record> stepA = (Select) create()
+                .selectFrom(TBook())
+                .where(TBook_TITLE().like("O%"));
+
+            // Check SelectQuery API
+            Select<Record> stepB = create()
+                .select().from(TBook())
+                .where(TBook_TITLE().like("O%"));
+
+            if (null == q2) {
+                q2 = stepA;
+            }
+            else if (i % 2 == 0) {
+                q2 = q2.unionAll(stepA);
+            }
+            else {
+                q2 = q2.unionAll(stepB);
+            }
+        }
+
+        if (q2 != null) {
+            assertEquals(10, q2.execute());
+            assertEquals(nCopies(10, 3), q2.getResult().getValues(TBook_ID()));
+            assertEquals(nCopies(10, "O Alquimista"), q2.getResult().getValues(TBook_TITLE()));
+        }
     }
 
     @Test

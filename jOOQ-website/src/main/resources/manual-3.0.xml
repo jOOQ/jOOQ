@@ -236,6 +236,11 @@ BOOK.TITLE, AUTHOR.LAST_NAME // correspond to com.example.generated.Tables.BOOK.
 // Whenever you see "create" being used in Java code, assume that this is an instance of org.jooq.impl.Factory:
 Factory create = new Factory(connection, SQLDialect.ORACLE);]]></java>
 
+							<h3>Arity / Degree</h3>
+							<p>
+							    jOOQ records (and many other API elements) have a degree N between 1 and {max-row-degree}. The variable degree of an API element is denoted as [N], e.g. Row[N] or Record[N]
+							</p>
+
 							<h3>Settings</h3>
 							<p>
 								jOOQ allows to override runtime behaviour using <reference class="org.jooq.conf.Settings"/>. If nothing is specified, the default runtime settings are assumed.
@@ -2992,7 +2997,7 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 						<title>Column expressions</title>
 						<content>
 						    <p>
-						    	Column expressions can be used in various SQL clauses in order to refer to one or several columns. This chapter explains how to form various types of column expressions with jOOQ. A particular type of column expression is given in the section about <reference id="row-value-expressions" title="s or row value expressions"/>, where an expression may have a degree of more than one.
+						    	Column expressions can be used in various SQL clauses in order to refer to one or several columns. This chapter explains how to form various types of column expressions with jOOQ. A particular type of column expression is given in the section about <reference id="row-value-expressions" title="tuples or row value expressions"/>, where an expression may have a degree of more than one.
 						    </p>
 						
 						    <h3>Using column expressions in jOOQ</h3>
@@ -9172,46 +9177,192 @@ for (Record record : create().select(
 						<title>Migrating to jOOQ 3.0</title>
 						<content>
 							<p>
-								This section is for all users of jOOQ 2.x who wish to upgrade to the next major release. In the next sub-sections, the most important changes are explained
+								This section is for all users of jOOQ 2.x who wish to upgrade to the next major release. In the next sub-sections, the most important changes are explained. Some code hints are also added to help you fix compilation errors.
 							</p>
 							
-							<h3>Type-safe Record1 through Record22</h3>
+							<h3>Type-safe row value expressions</h3>
+							<p>
+								Support for <reference id="row-value-expressions" title="row value expressions"/> has been added in jOOQ 2.6. In jOOQ 3.0, many API parts were thoroughly (but often incompatibly) changed, in order to provide you with even more type-safety. 
+							</p>
+							
+							<p>
+								Here are some affected API parts:
+							</p>
 							<ul>
-								<li>Subqueries from Factory.select(...) are now type-safe</li>
-								<li>IN predicates and comparison predicates changed incompatibly</li>
-								<li>Result&lt;Record> might change incompatibly</li>
-								<li>Typesafe INSERT and MERGE statements</li>
+								<li>[N] in Row[N] has been raised from 8 to 22. This means that existing row value expressions with degree >= 9 are now type-safe</li>
+								<li>Subqueries returned from Factory.select(...) now implement Select&lt;Record[N]>, not Select&lt;Record></li>
+								<li>IN predicates and comparison predicates taking subselects changed incompatibly</li>
+								<li>INSERT and MERGE statements now take typesafe VALUES() clauses</li>
 							</ul>
+							
+							<p>
+								Some hints related to row value expressions:
+							</p>
+							
+<java><![CDATA[// SELECT statements are now more typesafe:
+Record2<String, Integer> record         = create.select(BOOK.TITLE, BOOK.ID).from(BOOK).where(ID.eq(1)).fetchOne();
+Result<Record2<String, Integer>> result = create.select(BOOK.TITLE, BOOK.ID).from(BOOK).fetch();
+
+// But Record2 extends Record. You don't have to use the additional typesafety:
+Record record    = create.select(BOOK.TITLE, BOOK.ID).from(BOOK).where(ID.eq(1)).fetchOne();
+Result<?> result = create.select(BOOK.TITLE, BOOK.ID).from(BOOK).fetch();]]></java>
+							
+							<h3>SelectQuery and SelectXXXStep are now generic</h3>
+							<p>
+								In order to support type-safe row value expressions and type-safe Record[N] types, SelectQuery is now generic: SelectQuery&lt;R>
+							</p>
 							
 							<h3>SimpleSelectQuery and SimpleSelectXXXStep API were removed</h3>
-							<h3>Separation of query building and query execution, removed FactoryOperations</h3>
-							<h3>No sub-factories anymore (no deprecation yet)</h3>
-							<h3>Quantified comparison predicates (no deprecation yet)</h3>
-							<h3>Master data types have been removed</h3>
-							<h3>GroupField</h3>
-							<h3>? extends T has been relaxed, e.g. for casting, Field.getType(), etc.</h3>
-							<h3>Ant task removed</h3>
-							<h3>#2001 eq/equal(null) and ne/notEqual(null) now work as in SQL</h3>
-							<h3>ConnectionProvider</h3>
-							<ul>
-								<li>Connection-related utility methods (commit, rollback, etc) moved to DefaultConnectionProvider</li>
-							</ul>
-							<h3>ExecuteListeners are configured as instances in Configuration, no longer in Settings</h3>
+							<p>
+							    The duplication of the SELECT API is no longer useful, now that SelectQuery and SelectXXXStep are generic.
+							</p>
 							
-							<h3>The data type API has been changed heavily</h3>
+							<h3>Query building vs. query execution</h3>
+							<p>
+								The pre-existing Factory class has been split into two parts:
+							</p>
+							
+							<ol>
+								<li><strong>The Factory</strong>: This class contains only static factory methods. All QueryParts constructed from this class are "unattached", i.e. queries that are constructed through a Factory cannot be executed immediately. This is useful for subqueries.</li>
+								<li><strong>The Executor</strong>: This class holds a reference to a Configuration and can construct executable ("attached") QueryParts.</li>
+							</ol>
+							
+							<p>
+								The FactoryOperations interface has been removed entirely. An example:
+							</p>
+							
+<java><![CDATA[// jOOQ 2.6, check if there are any books
+Factory create = new Factory(connection, dialect);
+create.selectOne()
+      .whereExists(
+        create.selectFrom(BOOK) // Reuse the factory to create subselects
+      ).fetch();                // Execute the "attached" query
+
+// jOOQ 3.0
+Executor create = new Executor(connection, dialect);
+create.selectOne()
+      .whereExists(
+        selectFrom(BOOK)        // Create a static subselect from the Factory
+      ).fetch();                // Execute the "attached" query]]></java>							
+							
+							<h3>Quantified comparison predicates</h3>
+							<p>
+								Field.equalAny(...) and similar methods have been removed in favour of Field.equal(any(...)). This greatly simplified the Field API. An example:
+							</p>
+							
+<java><![CDATA[// jOOQ 2.6
+Condition condition = BOOK.ID.equalAny(create.select(BOOK.ID).from(BOOK));
+
+// jOOQ 3.0 adds some typesafety to comparison predicates involving quantified selects
+QuantifiedSelect<Record1<Integer>> subselect = any(select(BOOK.ID).from(BOOK));
+Condition condition = BOOK.ID.equal(subselect);]]></java>							
+							
+							<h3>GroupField</h3>
+							<p>
+								GroupField has been introduced as a DSL marker interface to denote fields that can be passed to GROUP BY clauses. This includes all org.jooq.Field types. However, fields obtained from ROLLUP(), CUBE(), and GROUPING SETS() functions no longer implement Field. Instead, they only implement GroupField. An example:
+							</p>
+							
+<java><![CDATA[// jOOQ 2.6
+Field<?>   field1a = Factory.rollup(...); // OK
+Field<?>   field2a = Factory.one();       // OK
+
+// jOOQ 3.0
+GroupField field1b = Factory.rollup(...); // OK
+Field<?>   field1c = Factory.rollup(...); // Compilation error
+GroupField field2b = Factory.one();       // OK
+Field<?>   field2c = Factory.one();       // OK]]></java>
+							
+							<h3>NULL predicate</h3>
+							<p>
+							   Beware! Previously, Field.equal(null) was translated internally to an IS NULL predicate. This is no longer the case. Binding Java "null" to a comparison predicate will result in a regular comparison predicate (which never returns true). This was changed for several reasons:
+							</p>
+							
+							<ul>
+								<li>To most users, this was a surprising "feature".</li>
+								<li>Other predicates didn't behave in such a way, e.g. the IN predicate, the BETWEEN predicate, or the LIKE predicate.</li>
+								<li>Variable binding behaved unpredictably, as IS NULL predicates don't bind any variables.</li>
+								<li>The generated SQL depended on the possible combinations of bind values, which creates unnecessary hard-parses every time a new unique SQL statement is rendered.</li>
+							</ul>
+							
+							<p>
+								Here is an example how to check if a field has a given value, without applying SQL's ternary NULL logic:
+							</p>
+
+<java><![CDATA[String possiblyNull = null; // Or else...
+
+// jOOQ 2.6
+Condition condition1 = BOOK.TITLE.equal(possiblyNull);
+
+// jOOQ 3.0
+Condition condition2 = BOOK.TITLE.equal(possiblyNull).or(BOOK.TITLE.isNull().and(val(possiblyNull).isNull()));
+Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
+							
+							<h3>ConnectionProvider</h3>
+							<p>
+							    In order to allow for simpler connection / data source management, jOOQ externalised connection handling in a new ConnectionProvider type. The previous two connection modes are maintained backwards-compatibly (JDBC standalone connection mode, pooled DataSource mode). Other connection modes can be injected using:
+							</p>
+
+<java><![CDATA[public interface ConnectionProvider {
+
+    // Provide jOOQ with a connection
+    Connection acquire() throws DataAccessException;
+  
+    // Get a connection back from jOOQ
+    void release(Connection connection) throws DataAccessException;
+}]]></java>
+							
+							<p>
+							    These are some side-effects of the above change
+							</p>
+							
+							<ul>
+								<li>Connection-related JDBC wrapper utility methods (commit, rollback, etc) have been moved to the new DefaultConnectionProvider. They're no longer available from the Factory/Executor. This had been confusing to some users who called upon these methods while operating in pool DataSource mode.</li>
+							</ul>
+							
+							<h3>ExecuteListeners</h3>
+							<p>
+								ExecuteListeners can no longer be configured via Settings. Instead they have to be injected into the Configuration (e.g. the Executor). This resolves many class loader issues that were encountered before. It also helps listener implementations control their lifecycles themselves.
+							</p>
+							
+							<h3>Data type API</h3>
+							<p>
+								The data type API has been changed drastically in order to enable some new DataType-related features. These changes include:
+							</p>
+
 							<ul>
 								<li>[SQLDialect]DataType and SQLDataType no longer implement DataType. They're mere constant containers</li>
-								<li>Various API changes have been done</li>
+								<li>Various minor API changes have been done.</li>
 							</ul>
-							
-							<h3>No more navigation methods and "foreign key setters"</h3>
-							<h3>No more comma-separated regular expressions</h3>
-							<h3>No more .properties files for code generation</h3>
-							
+														
 							<h3>Object renames</h3>
+							<p>
+								These objects have been moved / renamed:
+							</p>
+							
 							<ul>
-								<li>jOOU</li>
+								<li>jOOU: a library used to represent unsigned integer types was moved from <code>org.jooq.util.unsigned</code> to <code>org.jooq.util.types</code> (which already contained INTERVAL data types)</li>
 							</ul>
+							
+							<h3>Feature removals</h3>
+							<p>
+								Here are some minor features that have been removed in jOOQ 3.0
+							</p>
+
+							<ul>
+								<li>The ant task for code generation was removed, as it was not up to date at all. Code generation through ant can be performed easily by calling jOOQ's GenerationTool through a &lt;java> target.</li>
+								<li>The navigation methods and "foreign key setters" are no longer generated in Record classes, as they are useful only to few users and the generated code is very collision-prone.</li>
+								<li>The code generation configuration no longer accepts comma-separated regular expressions. Use the regex pipe | instead.</li>
+								<li>The code generation configuration can no longer be loaded from .properties files. Only XML configurations are supported.</li>
+								<li>The master data type feature is no longer supported. This feature was unlikely to behave exactly as users expected. It is better if users write their own code generators to generate master enum data types from their database tables. jOOQ's enum mapping and converter features sufficiently cover interacting with such user-defined types.</li>
+								<li>The Factory subtypes are no longer instanciable. As Factory now only contains static methods, subclassing is no longer useful. There are still dialect-specific Factories providing static methods for dialect-specific functions. But the code-generator no longer generates a schema-specific Factory</li>
+								<li>The concept of a "main key" is no longer supported. The code generator produces UpdatableTables and UpdatableRecords only if the underlying table has a PRIMARY KEY. The reason for this removal is the fact that "main keys" are not reliable enough. They were chosen arbitrarily among UNIQUE KEYs.</li>
+							</ul>
+							
+														
+							<h3>No sub-factories anymore</h3>
+							<p>
+								As Factory is no longer 
+							</p>
 						</content>
 					</section>
 

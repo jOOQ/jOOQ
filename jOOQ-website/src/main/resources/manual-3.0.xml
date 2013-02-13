@@ -9379,6 +9379,7 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 								<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html">JPA</a>: The de-facto standard in the javax.persistence packages, supplied by Oracle. Its annotations are useful to jOOQ as well.</li>
 								<li><a href="http://onewebsql.com">OneWebSQL</a>: A commercial SQL abstraction API with support for DAO source code generation, which was integrated also in jOOQ</li>
 								<li><a href="http://www.querydsl.com">QueryDSL</a>: A "LINQ-port" to Java. It has a similar fluent API, a similar code-generation facility, yet quite a different purpose. While jOOQ is all about SQL, QueryDSL (like LINQ) is mostly about querying.</li>
+								<li><a href="http://slick.typesafe.com">SLICK</a>: A "LINQ-like" database abstraction layer for Scala. Unlike LINQ, its API doesn't really remind of SQL. Instead, it makes SQL look like Scala.</li>
 								<li><a href="http://www.springsource.org/features/data-access">Spring Data</a>: Spring's JdbcTemplate knows RowMappers, which are reflected by jOOQ's <reference id="recordhandler"/> or <reference id="recordmapper"/></li>
 							</ul>
 						</content>

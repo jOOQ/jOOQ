@@ -69,7 +69,7 @@ public interface LockProvider {
     /**
      * Sets the "FOR UPDATE" flag onto the query
      * <p>
-     * <h3>Native implementation</h3> This has been observed to be supported by
+     * <h5>Native implementation</h5> This has been observed to be supported by
      * any of these dialects:
      * <ul>
      * <li><a href=
@@ -93,7 +93,7 @@ public interface LockProvider {
      * "http://www.postgresql.org/docs/9.0/static/sql-select.html#SQL-FOR-UPDATE-SHARE"
      * >Postgres FOR UPDATE / FOR SHARE</a></li>
      * </ul>
-     * <h3>Simulation</h3> These dialects can simulate the
+     * <h5>Simulation</h5> These dialects can simulate the
      * <code>FOR UPDATE</code> clause using a cursor. The cursor is handled by
      * the JDBC driver, at {@link PreparedStatement} construction time, when
      * calling {@link Connection#prepareStatement(String, int, int)} with
@@ -106,7 +106,7 @@ public interface LockProvider {
      * </ul>
      * <p>
      * Note: This simulation may not be efficient for large result sets!
-     * <h3>Not supported</h3> These dialects are known not to support the
+     * <h5>Not supported</h5> These dialects are known not to support the
      * <code>FOR UPDATE</code> clause in regular SQL:
      * <ul>
      * <li> {@link SQLDialect#SQLITE}</li>

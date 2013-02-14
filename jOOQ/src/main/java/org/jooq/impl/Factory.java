@@ -175,7 +175,7 @@ import org.jooq.types.DayToSecond;
  * Condition condition = Factory.exists(new Factory().select(...));
  * </pre></code>
  * <p>
- * <h3>Factory and static imports</h3> For increased fluency and readability of
+ * <h5>Factory and static imports</h5> For increased fluency and readability of
  * your jOOQ client code, it is recommended that you static import all methods
  * from the <code>Factory</code>. For example: <code><pre>
  * import static org.jooq.impl.Factory.*;

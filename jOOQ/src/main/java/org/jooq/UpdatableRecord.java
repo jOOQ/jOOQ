@@ -88,7 +88,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * Depending on the state of the primary key's or main unique key's value,
      * an <code>INSERT</code> or an <code>UPDATE</code> statement is executed.
      * <p>
-     * <h3>Statement type</h3>
+     * <h5>Statement type</h5>
      * <p>
      * <ul>
      * <li>If this record was created by client code, an <code>INSERT</code>
@@ -108,7 +108,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * <code>DEFAULT</code> values to be applied by the underlying RDBMS. If no
      * fields were modified, neither an <code>UPDATE</code> nor an
      * <code>INSERT</code> will be executed.
-     * <h3>Automatic value generation</h3>
+     * <h5>Automatic value generation</h5>
      * <p>
      * <ul>
      * <li><strong>IDENTITY columns</strong>
@@ -137,7 +137,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * manually using the various {@link Factory#insertInto(Table)},
      * {@link Factory#update(Table)} methods.</li>
      * </ul>
-     * <h3>Optimistic locking</h3>
+     * <h5>Optimistic locking</h5>
      * <p>
      * If an <code>UPDATE</code> statement is executed and
      * {@link Settings#isExecuteWithOptimisticLocking()} is set to
@@ -172,7 +172,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * <p>
      * See {@link SimpleSelectQuery#setForUpdate(boolean)} for more details</li>
      * </ul>
-     * <h3>Statement examples</h3>
+     * <h5>Statement examples</h5>
      * <p>
      * Possible statements are
      * <ul>
@@ -203,7 +203,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * Deletes this record from the database, based on the value of the primary
      * key or main unique key.
      * <p>
-     * <h3>Optimistic locking</h3>
+     * <h5>Optimistic locking</h5>
      * <p>
      * If a <code>DELETE</code> statement is executed and
      * {@link Settings#isExecuteWithOptimisticLocking()} is set to
@@ -238,7 +238,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends Updatable
      * <p>
      * See {@link SimpleSelectQuery#setForUpdate(boolean)} for more details</li>
      * </ul>
-     * <h3>Statement examples</h3>
+     * <h5>Statement examples</h5>
      * <p>
      * The executed statement is <code><pre>
      * DELETE FROM [table]

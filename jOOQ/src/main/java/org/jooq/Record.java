@@ -1437,15 +1437,15 @@ public interface Record extends FieldProvider, Store<Object> {
      * Map resulting records onto a custom type.
      * <p>
      * The mapping algorithm is this:
-     * <h3>If <code>type</code> is an array:</h3> The resulting array is of the
+     * <h5>If <code>type</code> is an array:</h5> The resulting array is of the
      * nature described in {@link #intoArray()}. Arrays more specific than
      * <code>Object[]</code> can be specified as well, e.g.
      * <code>String[]</code>. If conversion fails, a {@link MappingException} is
      * thrown, wrapping conversion exceptions.
      * <p>
-     * <h3>If a default constructor is available and any JPA {@link Column}
+     * <h5>If a default constructor is available and any JPA {@link Column}
      * annotations are found on the provided <code>type</code>, only those are
-     * used:</h3>
+     * used:</h5>
      * <ul>
      * <li>If <code>type</code> contains public single-argument instance methods
      * annotated with <code>Column</code>, those methods are invoked</li>
@@ -1464,10 +1464,10 @@ public interface Record extends FieldProvider, Store<Object> {
      * <li>Static methods / member fields are ignored</li>
      * <li>Final member fields are ignored</li>
      * </ul>
-     * <h3>If a default constructor is available and if there are no JPA
+     * <h5>If a default constructor is available and if there are no JPA
      * <code>Column</code> annotations, or jOOQ can't find the
      * <code>javax.persistence</code> API on the classpath, jOOQ will map
-     * <code>Record</code> values by naming convention:</h3> If
+     * <code>Record</code> values by naming convention:</h5> If
      * {@link Field#getName()} is <code>MY_field</code> (case-sensitive!), then
      * this field's value will be set on all of these:
      * <ul>
@@ -1478,9 +1478,9 @@ public interface Record extends FieldProvider, Store<Object> {
      * <li>Public non-final instance member field <code>MY_field</code></li>
      * <li>Public non-final instance member field <code>myField</code></li>
      * </ul>
-     * <h3>If no default constructor is available, but at least one constructor
+     * <h5>If no default constructor is available, but at least one constructor
      * annotated with <code>ConstructorProperties</code> is available, that one
-     * is used</h3>
+     * is used</h5>
      * <ul>
      * <li>The standard JavaBeans {@link ConstructorProperties} annotation is
      * used to match constructor arguments against POJO members or getters.</li>
@@ -1495,8 +1495,8 @@ public interface Record extends FieldProvider, Store<Object> {
      * <li>When invoking the annotated constructor, values are converted onto
      * constructor argument types</li>
      * </ul>
-     * <h3>If no default constructor is available, but at least one "matching"
-     * constructor is available, that one is used</h3>
+     * <h5>If no default constructor is available, but at least one "matching"
+     * constructor is available, that one is used</h5>
      * <ul>
      * <li>A "matching" constructor is one with exactly as many arguments as
      * this record holds fields</li>
@@ -1505,13 +1505,13 @@ public interface Record extends FieldProvider, Store<Object> {
      * <li>When invoking the "matching" constructor, values are converted onto
      * constructor argument types</li>
      * </ul>
-     * <h3>If the supplied type is an interface or an abstract class</h3>
+     * <h5>If the supplied type is an interface or an abstract class</h5>
      * Abstract types are instanciated using Java reflection {@link Proxy}
      * mechanisms. The returned proxy will wrap a {@link HashMap} containing
      * properties mapped by getters and setters of the supplied type. Methods
      * (even JPA-annotated ones) other than standard POJO getters and setters
      * are not supported. Details can be seen in {@link Reflect#as(Class)}.
-     * <h3>Other restrictions</h3>
+     * <h5>Other restrictions</h5>
      * <ul>
      * <li><code>type</code> must provide a default or a "matching" constructor.
      * Non-public default constructors are made accessible using
@@ -1550,7 +1550,7 @@ public interface Record extends FieldProvider, Store<Object> {
      * Map resulting records onto a custom record type.
      * <p>
      * The mapping algorithm is this:
-     * <h3>jOOQ will map <code>Record</code> values by equal field names:</h3>
+     * <h5>jOOQ will map <code>Record</code> values by equal field names:</h5>
      * <ul>
      * <li>For every field in the <code>table</code> argument with
      * {@link Field#getName()} <code>"MY_field"</code> (case-sensitive!), a
@@ -1560,7 +1560,7 @@ public interface Record extends FieldProvider, Store<Object> {
      * {@link Field#equals(Object)} will be returned. (e.g. qualified field
      * names match)</li>
      * </ul>
-     * <h3>Other restrictions</h3>
+     * <h5>Other restrictions</h5>
      * <ul>
      * <li>{@link Table#getRecordType()} must return a class of type
      * {@link TableRecord}, which must provide a default constructor. Non-public
@@ -1583,9 +1583,9 @@ public interface Record extends FieldProvider, Store<Object> {
 
     /**
      * Load data into this record from a source. The mapping algorithm is this:
-     * <h3>If any JPA {@link Column} annotations are found on the {@link Class}
+     * <h5>If any JPA {@link Column} annotations are found on the {@link Class}
      * of the provided <code>source</code>, only those are used. Matching
-     * candidates are:</h3>
+     * candidates are:</h5>
      * <ul>
      * <li>Public no-argument instance methods annotated with
      * <code>Column</code></li>
@@ -1605,9 +1605,9 @@ public interface Record extends FieldProvider, Store<Object> {
      * matching methods (implicitly matching getter = setter is annotated)</li>
      * <li>Static methods / member fields are ignored</li>
      * </ul>
-     * <h3>If there are no JPA <code>Column</code> annotations, or jOOQ can't
+     * <h5>If there are no JPA <code>Column</code> annotations, or jOOQ can't
      * find the <code>javax.persistence</code> API on the classpath, jOOQ will
-     * map members by naming convention:</h3> If {@link Field#getName()} is
+     * map members by naming convention:</h5> If {@link Field#getName()} is
      * <code>MY_field</code> (case-sensitive!), then this field's value will be
      * fetched from the first of these:
      * <ul>
@@ -1618,11 +1618,11 @@ public interface Record extends FieldProvider, Store<Object> {
      * <li>Public instance member field <code>MY_field</code></li>
      * <li>Public instance member field <code>myField</code></li>
      * </ul>
-     * <h3>Other restrictions</h3>
+     * <h5>Other restrictions</h5>
      * <ul>
      * <li>primitive types are supported.</li>
      * </ul>
-     * <h3>General notes</h3> The resulting record will have its internal
+     * <h5>General notes</h5> The resulting record will have its internal
      * "changed" flags set to true for all values. This means that
      * {@link UpdatableRecord#store()} will perform an <code>INSERT</code>
      * statement. If you wish to store the record using an <code>UPDATE</code>

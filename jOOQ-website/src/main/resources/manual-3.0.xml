@@ -1124,7 +1124,7 @@ Result<?> result = select.fetch();]]></java>
  * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
  */
 @Support({ SQLDialect.CUBRID, SQLDialect.ORACLE })
-SelectConnectByConditionStep connectBy(Condition condition);]]></java>
+SelectConnectByConditionStep<R> connectBy(Condition condition);]]></java>
 
 									<p>
 									    jOOQ API methods which are not annotated with the <reference class="org.jooq.Support"/> annotation, or which are annotated with the Support annotation, but without any SQL dialects can be safely used in all SQL dialects. An example for this is the <reference id="select-statement" title="SELECT statement"/> factory method:
@@ -1133,7 +1133,7 @@ SelectConnectByConditionStep connectBy(Condition condition);]]></java>
  * Create a new DSL select statement.
  */
 @Support
-SelectSelectStep select(Field<?>... fields);]]></java>
+SelectSelectStep<R> select(Field<?>... fields);]]></java>
 
 									<h3>jOOQ's SQL clause simulation capabilities</h3>
 									<p>
@@ -2712,6 +2712,28 @@ create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 									<p>
 										The above row value expressions usages are completely typesafe.
 									</p>
+									
+									<h3>UPDATE .. RETURNING</h3>
+									<p>
+										The Firebird and Postgres databases support a <code>RETURNING</code> clause on their <code>UPDATE</code> statements, similar as the <code>RETURNING</code> clause in <reference id="insert-statement" title="INSERT statements"/>. This is useful to fetch trigger-generated values in one go. An example is given here:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[-- Fetch a trigger-generated value
+UPDATE BOOK
+SET TITLE = 'Animal Farm'
+WHERE ID = 5
+RETURNING UPDATE_COUNT]]></sql>
+<java><![CDATA[int count = create.update(BOOK)
+                  .set(BOOK.TITLE, "Animal Farm")
+                  .where(BOOK.ID.equal(5))
+                  .returning(BOOK.UPDATE_COUNT)
+                  .fetchOne().getValue(BOOK.UPDATE_COUNT);]]></java>
+</code-pair>
+
+									<p>
+										The <code>UPDATE .. RETURNING</code> clause is currently not simulated for other databases. Future versions might execute an additional <reference id="select-statement" title="SELECT statement"/> to fetch results.
+									</p>
 								</content>
 							</section>
 
@@ -2881,13 +2903,72 @@ create.select()
       .orderBy(b.TITLE);]]></java></code-pair>
 								
 									<p>
-										As you can see in the above example, calling as() on generated tables returns an object of the same type as the table. This means that the resulting object can be used to dereference fields from the aliased table. This is quite powerful in terms of having your Java compiler check the syntax of your SQL statements. If you remove a column from a table, dereferencing that column from that table alias will cause compilation errors.
+										As you can see in the above example, calling <code>as()</code> on generated tables returns an object of the same type as the table. This means that the resulting object can be used to dereference fields from the aliased table. This is quite powerful in terms of having your Java compiler check the syntax of your SQL statements. If you remove a column from a table, dereferencing that column from that table alias will cause compilation errors.
 									</p>
 									
 									<h3>Dereferencing columns from other table expressions</h3>
 									<p>
-										TODO document this
+										Only few table expressions provide the SQL syntax typesafety as shown above, where generated tables are used. Most tables, however, expose their fields through <code>field()</code> methods:
 									</p>
+
+<java><![CDATA[// "Type-unsafe" aliased table:
+Table<?> a = AUTHOR.as("a");
+
+// Get fields from a:
+Field<?> id = a.field("ID");
+Field<?> firstName = a.field("FIRST_NAME");]]></java>
+									
+									<h3>Derived column lists</h3>
+									<p>
+										The SQL standard specifies how a table can be renamed / aliased in one go along with its columns. It references the term "derived column list" for the following syntax (as supported by Postgres, for instance):
+									</p>
+									
+<sql><![CDATA[SELECT t.a, t.b
+FROM (
+  SELECT 1, 2
+) t(a, b)]]></sql>
+
+									<p>
+										This feature is useful in various use-cases where column names are not known in advance (but the table's degree is!). An example for this are <reference id="array-and-cursor-unnesting" title="unnested tables"/>, or the <reference id="values" title="VALUES() table constructor"/>:
+									</p>
+
+<sql><![CDATA[-- Unnested tables
+SELECT t.a, t.b
+FROM unnest(my_table_function()) t(a, b)
+
+-- VALUES() constructor
+SELECT t.a, t.b
+FROM VALUES(1, 2),(3, 4) t(a, b)]]></sql>
+
+									<p>
+										Only few databaes really support such a syntax, but fortunately, jOOQ can simulate it easily using <code>UNION ALL</code> and an empty dummy record specifying the new column names. The two statements are equivalent:
+									</p>
+
+<sql><![CDATA[-- Using derived column lists
+SELECT t.a, t.b
+FROM (
+  SELECT 1, 2
+) t(a, b)
+
+-- Using UNION ALL and a dummy record
+SELECT t.a, t.b
+FROM (
+  SELECT null a, null b FROM DUAL WHERE 1 = 0
+  UNION ALL
+  SELECT 1, 2 FROM DUAL
+) t]]></sql>
+									<p>
+										In jOOQ, you would simply specify a varargs list of column aliases as such:
+									</p>
+									
+<java><![CDATA[// Unnested tables
+create.select().from(unnest(myTableFunction()).as("t", "a", "b"));
+
+// VALUES() constructor
+create.select().from(values(
+  row(1, 2),
+  row(3, 4)
+).as("t", "a", "b"));]]></java>									
 								</content>
 							</section>
 
@@ -2945,6 +3026,10 @@ Table<Record> naturalRightOuterJoin(TableLike<?>)]]></java>
 										Note that most of jOOQ's JOIN operations give way to a similar DSL API hierarchy as previously seen in the manual's section about the <reference id="join-clause" title="JOIN clause"/>
 									</p>		
 								</content>
+							</section>
+
+							<section id="values">
+								<title>The VALUES() table constructor</title>
 							</section>
 
 							<section id="nested-selects">
@@ -4238,6 +4323,11 @@ public static RowN row(Object... values) { ... }]]></java>
                                 	<p>
                                 		The <reference id="update-statement" title="UPDATE statement"/> also supports a variant where row value expressions are updated, rather than single columns. See the relevant section for more details
                                 	</p>
+                                	
+									<h3>Higher-degree row value expressions</h3>
+									<p>
+										jOOQ chose to explicitly support degrees up to {max-row-degree} to match Scala's typesafe tuple, function and product support. Unlike Scala, however, jOOQ also supports higher degrees without the additional typesafety. 
+									</p>
 								</content>
 							</section>
 						</sections>
@@ -6039,6 +6129,11 @@ System.out.println("Published in: " + book.getPublishedIn());]]></java>
     T1 value1();
     T2 value2();
 }]]></java>
+
+									<h3>Higher-degree records</h3>
+									<p>
+										jOOQ chose to explicitly support degrees up to {max-row-degree} to match Scala's typesafe tuple, function and product support. Unlike Scala, however, jOOQ also supports higher degrees without the additional typesafety. 
+									</p>
 								</content>
 							</section>
 
@@ -6614,6 +6709,59 @@ for (BookRecord book : create.selectFrom(BOOK).fetch()) {
 									</p>
 								</content>
 							</section>
+
+							<section id="interning">
+								<title>Interning data</title>
+								<content>
+									<p>
+										SQL result tables are not optimal in terms of used memory as they are not designed to represent hierarchical data as produced by <code>JOIN</code> operations. Specifically, <code>FOREIGN KEY</code> values may repeat themselves unnecessarily:
+									</p>
+
+<text>+----+-----------+--------------+
+| ID | AUTHOR_ID | TITLE        |
++----+-----------+--------------+
+|  1 |         1 | 1984         |
+|  2 |         1 | Animal Farm  |
+|  3 |         2 | O Alquimista |
+|  4 |         2 | Brida        |
++----+-----------+--------------+</text>
+
+									<p>
+										Now, if you have millions of records with only few distinct values for <code>AUTHOR_ID</code>, you may not want to hold references to distinct (but equal) <reference class="java.lang.Integer"/> objects. This is specifically true for IDs of type <reference class="java.util.UUID"/> or string representations thereof. jOOQ allows you to "intern" those values:
+									</p>
+
+<java><![CDATA[// Interning data after fetching
+Result<?> r1 = create.select(BOOK.ID, BOOK.AUTHOR_ID, BOOK.TITLE)
+                     .from(BOOK)
+                     .join(AUTHOR).on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
+                     .fetch()
+                     .intern(BOOK.AUTHOR_ID);
+
+// Interning data while fetching
+Result<?> r1 = create.select(BOOK.ID, BOOK.AUTHOR_ID, BOOK.TITLE)
+                     .from(BOOK)
+                     .join(AUTHOR).on(BOOK.AUTHOR_ID.eq(AUTHOR.ID))
+                     .intern(BOOK.AUTHOR_ID)
+                     .fetch();]]></java>
+                     
+                     				<p>
+                     					You can specify as many fields as you want for interning. The above has the following effect:
+                     				</p>
+                     				
+                     				<ul>
+                     					<li>If the interned Field is of type <reference class="java.lang.String"/>, then <reference class="java.lang.String" anchor="#intern()" title="String.intern()"/> is called upon each string</li>
+                     					<li>If the interned Field is of any other type, then the call is ignored</li>
+                     				</ul>
+                     				
+                     				<p>
+                     					Future versions of jOOQ will implement interning of data for non-String data types by collecting values in <reference class="java.util.Set"/>, removing duplicate instances.
+                     				</p>
+                     				
+                     				<p>
+                     					Note, that jOOQ will not use interned data for identity comparisons: <code>string1 == string2</code>. Interning is used only to reduce the memory footprint of <reference class="org.jooq.Result"/> objects.
+                     				</p>
+								</content>
+							</section>							
 						</sections>
 					</section>
 					
@@ -7425,6 +7573,10 @@ for (BookRecord book : create.fetch(BOOK, BOOK.PUBLISHED_IN.equal(1948))) {
 								</content>
 							</section>
 
+							<section id="internal-flags">
+								<title>Records' internal flags</title>
+							</section>
+
 							<section id="identity-values">
 								<title>IDENTITY values</title>
 								<content>
@@ -7897,6 +8049,10 @@ public class PrettyPrinter extends DefaultExecuteListener {
 								See also the manual's sections about <reference id="logging" title="logging"/> and the <reference id="jooq-console" title="jOOQ Console"/> for more sample implementations of actual ExecuteListeners.
 							</p>
 						</content>
+					</section>
+
+					<section id="meta-data">
+						<title>Database meta data</title>
 					</section>
 
 				    <section id="logging">
@@ -9559,9 +9715,14 @@ Condition condition = BOOK.ID.equalAny(create.select(BOOK.ID).from(BOOK));
 QuantifiedSelect<Record1<Integer>> subselect = any(select(BOOK.ID).from(BOOK));
 Condition condition = BOOK.ID.equal(subselect);]]></java>							
 							
+							<h3>FieldProvider</h3>
+							<p>
+								The FieldProvider marker interface was removed. Its methods still exist on FieldProvider subtypes. Note, they have changed names from <code>getField()</code> to <code>field()</code> and from <code>getIndex()</code> to <code>indexOf()</code>
+							</p>
+							
 							<h3>GroupField</h3>
 							<p>
-								GroupField has been introduced as a DSL marker interface to denote fields that can be passed to GROUP BY clauses. This includes all org.jooq.Field types. However, fields obtained from ROLLUP(), CUBE(), and GROUPING SETS() functions no longer implement Field. Instead, they only implement GroupField. An example:
+								GroupField has been introduced as a DSL marker interface to denote fields that can be passed to <code>GROUP BY</code> clauses. This includes all org.jooq.Field types. However, fields obtained from <code>ROLLUP()</code>, <code>CUBE()</code>, and <code>GROUPING SETS()</code> functions no longer implement Field. Instead, they only implement GroupField. An example:
 							</p>
 							
 <java><![CDATA[// jOOQ 2.6

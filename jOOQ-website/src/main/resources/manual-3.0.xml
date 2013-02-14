@@ -1664,6 +1664,21 @@ Select<?> select2 = create.selectOne();]]></java>
 <java><![CDATA[Select<?> select1 = create.selectDistinct(BOOK.TITLE);]]></java>
 </code-pair>
 
+                                            <h3>SELECT *</h3>
+                                            <p>
+                                            	jOOQ does not explicitly support the asterisk operator in projections. However, you can omit the projection as in these examples:
+                                            </p>
+                                            
+<java><![CDATA[// Explicitly selects all columns available from BOOK
+create.select().from(BOOK);
+
+// Explicitly selects all columns available from BOOK and AUTHOR
+create.select().from(BOOK, AUTHOR);
+create.select().from(BOOK).crossJoin(AUTHOR);
+
+// Renders a SELECT * statement, as columns are unknown to jOOQ
+create.select().from(tableByName("BOOK"));]]></java>                                            
+
 											<h3>Typesafe projections with degree up to {max-row-degree}</h3>
 											<p>
 												Since jOOQ 3.0, <reference id="record-n" title="records"/> and <reference id="row-value-expressions" title="row value expressions"/> up to degree {max-row-degree} are now generically typesafe. This is reflected by an overloaded <code>SELECT</code> (and <code>SELECT DISTINCT</code>) API in both Factory and Executor. An extract from Factory:

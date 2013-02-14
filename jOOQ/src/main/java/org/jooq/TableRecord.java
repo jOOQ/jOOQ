@@ -62,7 +62,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * Depending on the state of the provided keys' value, an
      * <code>INSERT</code> or an <code>UPDATE</code> statement is executed.
      * <p>
-     * <h3>Statement type</h3>
+     * <h5>Statement type</h5>
      * <p>
      * <ul>
      * <li>If this record was created by client code, an <code>INSERT</code>
@@ -82,7 +82,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * <code>DEFAULT</code> values to be applied by the underlying RDBMS. If no
      * fields were modified, neither an <code>UPDATE</code> nor an
      * <code>INSERT</code> will be executed.
-     * <h3>Automatic value generation</h3>
+     * <h5>Automatic value generation</h5>
      * <p>
      * <ul>
      * <li><strong>IDENTITY columns</strong>
@@ -111,7 +111,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * manually using the various {@link Factory#insertInto(Table)},
      * {@link Factory#update(Table)} methods.</li>
      * </ul>
-     * <h3>Optimistic locking</h3>
+     * <h5>Optimistic locking</h5>
      * <p>
      * If an <code>UPDATE</code> statement is executed and
      * {@link Settings#isExecuteWithOptimisticLocking()} is set to
@@ -146,7 +146,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * <p>
      * See {@link LockProvider#setForUpdate(boolean)} for more details</li>
      * </ul>
-     * <h3>Statement examples</h3>
+     * <h5>Statement examples</h5>
      * <p>
      * Possible statements are
      * <ul>
@@ -181,7 +181,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * Deletes this record from the database, based on the value of the provided
      * keys.
      * <p>
-     * <h3>Optimistic locking</h3>
+     * <h5>Optimistic locking</h5>
      * <p>
      * If a <code>DELETE</code> statement is executed and
      * {@link Settings#isExecuteWithOptimisticLocking()} is set to
@@ -216,7 +216,7 @@ public interface TableRecord<R extends TableRecord<R>> extends Record {
      * <p>
      * See {@link LockProvider#setForUpdate(boolean)} for more details</li>
      * </ul>
-     * <h3>Statement examples</h3>
+     * <h5>Statement examples</h5>
      * <p>
      * The executed statement is <code><pre>
      * DELETE FROM [table]

@@ -780,9 +780,9 @@ public interface FactoryOperations extends Configuration {
      * batch mode (with bind values).
      * <p>
      * This batch operation can be executed in two modes:
-     * <h3>With
+     * <h5>With
      * <code>{@link Settings#getStatementType()} == {@link StatementType#PREPARED_STATEMENT}</code>
-     * (the default)</h3> In this mode, record order is preserved as much as
+     * (the default)</h5> In this mode, record order is preserved as much as
      * possible, as long as two subsequent records generate the same SQL (with
      * bind variables). The number of executed batch operations corresponds to
      * <code>[number of distinct rendered SQL statements]</code>. In the worst
@@ -802,9 +802,9 @@ public interface FactoryOperations extends Configuration {
      * <li>INSERT b1, b3</li>
      * <li>INSERT c1</li>
      * </ol>
-     * <h3>With
+     * <h5>With
      * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
-     * </h3> This mode may be better for large and complex batch store
+     * </h5> This mode may be better for large and complex batch store
      * operations, as the order of records is preserved entirely, and jOOQ can
      * guarantee that only a single batch statement is serialised to the
      * database.

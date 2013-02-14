@@ -238,7 +238,7 @@ import org.jooq.tools.StopWatchListener;
  * </tr>
  * </table>
  * <br/>
- * <h3>Legend:</h3>
+ * <h5>Legend:</h5>
  * <ol>
  * <li>Used with {@link ResultQuery} of statement type
  * {@link StatementType#PREPARED_STATEMENT}</li>

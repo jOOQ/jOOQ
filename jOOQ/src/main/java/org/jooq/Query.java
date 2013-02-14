@@ -168,6 +168,14 @@ public interface Query extends QueryPart, Attachable {
 
     /**
      * Bind a new value to a named parameter
+     * <p>
+     * [#1886] If the bind value with name <code>param</code> is inlined (
+     * {@link Param#isInline()}) or if this query was created with
+     * {@link StatementType#STATIC_STATEMENT} and there is an underlying
+     * <code>PreparedStatement</code> kept open because of
+     * {@link #keepStatement(boolean)}, the underlying
+     * <code>PreparedStatement</code> will be closed automatically in order for
+     * new bind values to have an effect.
      *
      * @param param The named parameter name. If this is a number, then this is
      *            the same as calling {@link #bind(int, Object)}
@@ -181,6 +189,14 @@ public interface Query extends QueryPart, Attachable {
 
     /**
      * Bind a new value to an indexed parameter
+     * <p>
+     * [#1886] If the bind value at <code>index</code> is inlined (
+     * {@link Param#isInline()}) or if this query was created with
+     * {@link StatementType#STATIC_STATEMENT} and there is an underlying
+     * <code>PreparedStatement</code> kept open because of
+     * {@link #keepStatement(boolean)}, the underlying
+     * <code>PreparedStatement</code> will be closed automatically in order for
+     * new bind values to have an effect.
      *
      * @param index The parameter index, starting with 1
      * @param value The new bind value.

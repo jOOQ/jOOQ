@@ -4631,7 +4631,7 @@ public class Factory {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
-    public static GroupField groupingSets(Collection<Field<?>>... fieldSets) {
+    public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
         for (int i = 0; i < fieldSets.length; i++) {

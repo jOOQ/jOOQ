@@ -46,21 +46,35 @@
 
 	<xsl:template match="section" mode="toc">
 		<xsl:if test="count(sections/section) &gt; 0">
-			<ol>
-				<xsl:for-each select="sections/section">
-					<li>
-						<xsl:variable name="href">
-							<xsl:apply-templates select="." mode="href"/>
-						</xsl:variable>
+			<dl class="toc">
+				<xsl:apply-templates select="." mode="toc-contents"/>
+			</dl>
+		</xsl:if>
+	</xsl:template>
+	
+	<xsl:template match="section" mode="toc-contents">
+		<xsl:if test="count(sections/section) &gt; 0">
+			<xsl:for-each select="sections/section">
+			    <xsl:variable name="class">
+			    	<xsl:if test="../../@id = 'manual'">toc-main</xsl:if>
+				</xsl:variable>
+				
+				<dt class="{$class}">
+				    <xsl:apply-templates select="." mode="chapter-number"/>
+				</dt>
+				
+				<dd class="{$class}">
+					<xsl:variable name="href">
+						<xsl:apply-templates select="." mode="href"/>
+					</xsl:variable>
 
-						<a href="{$href}" title="{title}">
-							<xsl:value-of select="title"/>
-						</a>
-
-						<xsl:apply-templates select="." mode="toc"/>
-					</li>
-				</xsl:for-each>
-			</ol>
+					<a href="{$href}" title="{title}">
+						<xsl:value-of select="title"/>
+					</a>
+				</dd>
+				
+				<xsl:apply-templates select="." mode="toc-contents"/>
+			</xsl:for-each>
 		</xsl:if>
 	</xsl:template>
 
@@ -224,4 +238,13 @@
 			</xsl:otherwise>
 		</xsl:choose>
     </xsl:template>
+    
+	<xsl:template match="section" mode="chapter-number">
+		<xsl:if test="@id != 'manual'">
+			<xsl:apply-templates select="../.." mode="chapter-number"/>
+
+			<xsl:value-of select="count(preceding-sibling::section) + 1"/>
+			<xsl:text>.</xsl:text>
+		</xsl:if>
+	</xsl:template>
 </xsl:stylesheet>

@@ -102,13 +102,4 @@ function printContent() {
 		<xsl:text>#</xsl:text>
 		<xsl:value-of select="@id"/>
 	</xsl:template>
-
-	<xsl:template match="section" mode="chapter-number">
-		<xsl:if test="@id != 'manual'">
-			<xsl:apply-templates select="../.." mode="chapter-number"/>
-
-			<xsl:value-of select="count(preceding-sibling::section) + 1"/>
-			<xsl:text>.</xsl:text>
-		</xsl:if>
-	</xsl:template>
 </xsl:stylesheet>

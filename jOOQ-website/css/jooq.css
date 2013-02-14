@@ -1,6 +1,6 @@
 body {
-	font-family: 'Oxygen', sans-serif;
-	font-weight: normal;
+    font-family: 'Oxygen', sans-serif;
+    font-weight: normal;
     text-shadow: 0 1px 0 #FFFFFF;
     font-size: 15px;
     font-style: normal;
@@ -18,31 +18,31 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Special Elite', cursive;
-   	font-weight: normal;
-   	color: #000000;
-   	margin-top: 0.5em;
-   	margin-bottom: 0.5em;
+       font-weight: normal;
+       color: #000000;
+       margin-top: 0.5em;
+       margin-bottom: 0.5em;
 }
 
 h1 {
-	font-size: 4em;
-	text-shadow: 0 1px 1px #444;
-	padding-top: 10px;
-	margin: 0;
+    font-size: 4em;
+    text-shadow: 0 1px 1px #444;
+    padding-top: 10px;
+    margin: 0;
 }
 
 h2 {
-	font-size: 2.5em;
-	text-shadow: 0 1px 1px #444;
+    font-size: 2.5em;
+    text-shadow: 0 1px 1px #444;
 }
 
 h3 {
-	font-size: 1.3em;
-	text-shadow: 0 1px 0 #444;
+    font-size: 1.3em;
+    text-shadow: 0 1px 0 #444;
 }
 
 pre {
-	background: none repeat scroll 0 0 #333333;
+    background: none repeat scroll 0 0 #333333;
     border-radius: 10px 10px 10px 10px;
     border-width: 2px;
     border-style: solid;
@@ -61,45 +61,69 @@ pre {
 }
 
 p {
-	padding-left: 1em;
-	padding-right: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 td.left, th.left {
-	padding-right: 5px;
-	padding-bottom: 5px;
-	vertical-align: top;
-	text-align: right;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    vertical-align: top;
+    text-align: right;
 }
 td.right, th.right {
-	padding-left: 5px;
-	padding-bottom: 5px;
-	vertical-align: top;
-	text-align: left;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    vertical-align: top;
+    text-align: left;
 }
 
 table.ticket-table td {
-	vertical-align: top;
+    vertical-align: top;
 }
 
 td h3 {
-	white-space: nowrap;
+    white-space: nowrap;
 }
 
 ul {
-	margin: 0;
-	list-style-image:url(../img/favicon-16.png);
+    margin: 0;
+    list-style-image:url(../img/favicon-16.png);
 }
 
 ol {
-	padding-top: 1em;
-	padding-bottom: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+dl.toc { 
+    overflow: hidden; 
+}
+
+dl.toc dt {
+    float: left;
+    clear: left;
+    width: 4em;
+}
+
+dl.toc dt.toc-main {
+    padding-top: 1em;
+}
+
+dl.toc dd {
+    float: left;
+    width: 50%;
+    margin: 0 0.5em;
+}
+
+dl.toc dd.toc-main {
+    padding-top: 1em;
 }
 
 a, a:link, a:visited, a:hover, a:active {
     color: #000000;
     text-decoration: none;
-	text-shadow: 0 1px 2px #333333;
+    text-shadow: 0 1px 2px #333333;
 }
 
 a:hover {
@@ -109,15 +133,15 @@ a:hover {
 h2 a, h2 a:link, h2 a:visited, h2 a:hover, h2 a:active {
     color: #aaaaaa;
     text-decoration: none;
-	text-shadow: 0 1px 1px #444444;
+    text-shadow: 0 1px 1px #444444;
 
-	left: -30px;
+    left: -30px;
     position: absolute;
     width: 740px;
 }
 
 h2 a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .wrapper {
@@ -129,7 +153,7 @@ h2 a:hover {
 }
 
 .block {
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
     width: 100%;
 
     border-width: 0;
@@ -148,7 +172,7 @@ h2 a:hover {
     background: -webkit-linear-gradient(left, #aaaaaa, #ffeeee);
     background: -moz-linear-gradient(left, #aaaaaa, #ffeeee);
     background: gradient(linear, left, right, from(#aaaaaa), to(#ffeeee));
-	filter: progid:DXImageTransform.Microsoft.Gradient(
+    filter: progid:DXImageTransform.Microsoft.Gradient(
                 StartColorStr='#aaaaaa', EndColorStr='#ffeeee', GradientType=1);
 
     -webkit-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
@@ -166,7 +190,7 @@ h2 a:hover {
     background: -webkit-linear-gradient(left, #e8e8e8, #ffffff);
     background: -moz-linear-gradient(left, #e8e8e8, #ffffff);
     background: gradient(linear, left, right, from(#e8e8e8), to(#ffffff));
-	filter: progid:DXImageTransform.Microsoft.Gradient(
+    filter: progid:DXImageTransform.Microsoft.Gradient(
                 StartColorStr='#e8e8e8', EndColorStr='#ffffff', GradientType=1);
 
     -webkit-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
@@ -176,13 +200,13 @@ h2 a:hover {
 }
 
 #navigation {
-	font-family: 'Special Elite',cursive;
+    font-family: 'Special Elite',cursive;
 
-	padding-top: 25px;
-	padding-left: 3em;
+    padding-top: 25px;
+    padding-left: 3em;
     padding-right: 3em;
 
-	height: 50px;
+    height: 50px;
     background: #444;
     background: -webkit-linear-gradient(left top, #555, #333);
     background: -moz-linear-gradient(top, #555, #333);
@@ -190,20 +214,20 @@ h2 a:hover {
 }
 
 #tweets {
-	padding-top: 4px;
-	height: 25px;
-	float: left;
+    padding-top: 4px;
+    height: 25px;
+    float: left;
 }
 
 #menu {
-	float: right;
+    float: right;
 }
 
 div.tweet-item {
-	float: left;
-	width: 100px;
-	white-space: nowrap;
-	overflow: hidden;
+    float: left;
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #navigation a,
@@ -226,13 +250,13 @@ div.tweet-item {
 }
 
 #navigation a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 div.navigation-item-left {
-	float: left;
-	margin-left: 2em;
-	height: 50px;
+    float: left;
+    margin-left: 2em;
+    height: 50px;
 }
 
 div.navigation-item-active {
@@ -240,11 +264,11 @@ div.navigation-item-active {
 }
 
 #footer {
-	font-size: 0.7em;
-	color: #ddd;
+    font-size: 0.7em;
+    color: #ddd;
 
-	padding-top: 1em;
-	padding-left: 3em;
+    padding-top: 1em;
+    padding-left: 3em;
     padding-right: 3em;
     padding-bottom: 1em;
 
@@ -260,7 +284,7 @@ div.navigation-item-active {
 }
 
 div.screenshot {
-	background: none repeat scroll 0 0 #ffffff;
+    background: none repeat scroll 0 0 #ffffff;
     border-radius: 10px 10px 10px 10px;
     border-width: 2px;
     border-style: solid;
@@ -274,12 +298,12 @@ div.screenshot {
     margin: 1.5em 0;
     white-space: pre-wrap;
     word-wrap: break-word;
-	text-align: center;
+    text-align: center;
 }
 
 code {
-	font-family: monospace;
-	font-size: 12px;
+    font-family: monospace;
+    font-size: 12px;
 }
 
 .mono {

@@ -83,10 +83,10 @@ public class Transform {
         System.out.println("-------------------------------");
         singlePage();
 
-        System.out.println();
-        System.out.println("Transforming PDF manual");
-        System.out.println("-------------------------------");
-        pdf();
+//        System.out.println();
+//        System.out.println("Transforming PDF manual");
+//        System.out.println("-------------------------------");
+//        pdf();
     }
 
     private static String file(String name) {
@@ -114,7 +114,7 @@ public class Transform {
     }
 
     private static void replaceVariables(Match manual) {
-        manual.find("content").each(new Each() {
+        manual.find("content").add(manual.find("title")).each(new Each() {
             @Override
             public void each(Context context) {
                 String content = $(context.element()).content();
@@ -130,6 +130,21 @@ public class Transform {
 
                 if (content.contains("{max-row-degree}")) {
                     content = content.replace("{max-row-degree}", "" + Constants.MAX_ROW_DEGREE);
+                    changed = true;
+                }
+
+                if (content.contains("{codegen-xsd-version}")) {
+                    content = content.replace("{codegen-xsd-version}", "3.0.0");
+                    changed = true;
+                }
+
+                if (content.contains("{export-xsd-version}")) {
+                    content = content.replace("{export-xsd-version}", "2.6.0");
+                    changed = true;
+                }
+
+                if (content.contains("{runtime-xsd-version}")) {
+                    content = content.replace("{runtime-xsd-version}", "3.0.0");
                     changed = true;
                 }
 

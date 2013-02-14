@@ -209,7 +209,7 @@ org.jooq.property=value]]></config>
 <sql><![CDATA[-- In SQL:
 SELECT 1 FROM DUAL]]></sql>
 <java><![CDATA[// Using jOOQ:
-create.select()]]></java>
+create.selectOne()]]></java>
 </code-pair>
 
 							<h3>Code block contents</h3>
@@ -233,12 +233,13 @@ exists(); max(); min(); val(); inline(); // correspond to Factory.exists(); Fact
 // Whenever you see BOOK/Book, AUTHOR/Author and similar entities, assume they were (static) imported from the generated schema
 BOOK.TITLE, AUTHOR.LAST_NAME // correspond to com.example.generated.Tables.BOOK.TITLE, com.example.generated.Tables.BOOK.TITLE
 
-// Whenever you see "create" being used in Java code, assume that this is an instance of org.jooq.impl.Factory:
-Factory create = new Factory(connection, SQLDialect.ORACLE);]]></java>
+// Whenever you see "create" being used in Java code, assume that this is an instance of org.jooq.impl.Executor.
+// The reason why it is called "create" is the fact, that a jOOQ QueryPart is being created from an Executor:
+Executor create = new Executor(connection, SQLDialect.ORACLE);]]></java>
 
-							<h3>Arity / Degree</h3>
+							<h3>Term: Degree (arity)</h3>
 							<p>
-							    jOOQ records (and many other API elements) have a degree N between 1 and {max-row-degree}. The variable degree of an API element is denoted as [N], e.g. Row[N] or Record[N]
+							    jOOQ records (and many other API elements) have a degree N between 1 and {max-row-degree}. The variable degree of an API element is denoted as [N], e.g. Row[N] or Record[N]. The term "degree" is preferred over arity, as "degree" is the term used in the SQL standard, whereas "arity" is used more often in mathematics and relational theory.
 							</p>
 
 							<h3>Settings</h3>
@@ -248,7 +249,7 @@ Factory create = new Factory(connection, SQLDialect.ORACLE);]]></java>
 							
 							<h3>Sample database</h3>
 							<p>
-								See the manual's section about <reference id="sample-database" title="the sample database used in this manual"/> to learn more about the sample database.
+								jOOQ query examples run against the sample database. See the manual's section about <reference id="sample-database" title="the sample database used in this manual"/> to learn more about the sample database.
 							</p>
 						</content>
 					</section>
@@ -260,46 +261,42 @@ Factory create = new Factory(connection, SQLDialect.ORACLE);]]></java>
 							For the examples in this manual, the same database will always be referred to. It essentially consists of these entities created using the Oracle dialect
 							</p>
 <sql>CREATE TABLE language (
-  id NUMBER(7) NOT NULL PRIMARY KEY,
-  cd CHAR(2) NOT NULL,
-  description VARCHAR2(50)
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  cd              CHAR(2)       NOT NULL,
+  description     VARCHAR2(50)
 )
 
 CREATE TABLE author (
-  id NUMBER(7) NOT NULL PRIMARY KEY,
-  first_name VARCHAR2(50),
-  last_name VARCHAR2(50) NOT NULL,
-  date_of_birth DATE,
-  year_of_birth NUMBER(7)
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  first_name      VARCHAR2(50),
+  last_name       VARCHAR2(50)  NOT NULL,
+  date_of_birth   DATE,
+  year_of_birth   NUMBER(7)
 )
 
 CREATE TABLE book (
-  id NUMBER(7) NOT NULL PRIMARY KEY,
-  author_id NUMBER(7) NOT NULL,
-  title VARCHAR2(400) NOT NULL,
-  published_in NUMBER(7) NOT NULL,
-  language_id NUMBER(7) NOT NULL,
-  FOREIGN KEY (AUTHOR_ID) REFERENCES author(ID),
-  FOREIGN KEY (LANGUAGE_ID) REFERENCES language(ID)
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  author_id       NUMBER(7)     NOT NULL,
+  title           VARCHAR2(400) NOT NULL,
+  published_in    NUMBER(7)     NOT NULL,
+  language_id     NUMBER(7)     NOT NULL,
+  
+  CONSTRAINT fk_book_author     FOREIGN KEY (author_id)   REFERENCES author(id),
+  CONSTRAINT fk_book_language   FOREIGN KEY (language_id) REFERENCES language(id)
 )
 
 CREATE TABLE book_store (
-  name VARCHAR2(400) NOT NULL UNIQUE
+  name            VARCHAR2(400) NOT NULL UNIQUE
 )
 
 CREATE TABLE book_to_book_store (
-  book_store_name VARCHAR2(400) NOT NULL,
-  book_id INTEGER NOT NULL,
-  stock INTEGER,
-  PRIMARY KEY(book_store_name, book_id),
-  CONSTRAINT b2bs_book_store_id
-    FOREIGN KEY (book_store_name)
-    REFERENCES book_store (name)
-    ON DELETE CASCADE,
-  CONSTRAINT b2bs_book_id
-    FOREIGN KEY (book_id)
-    REFERENCES book (id)
-    ON DELETE CASCADE
+  name            VARCHAR2(400) NOT NULL,
+  book_id         INTEGER       NOT NULL,
+  stock           INTEGER,
+  
+  PRIMARY KEY(name, book_id),
+  CONSTRAINT fk_b2bs_book_store FOREIGN KEY (name)        REFERENCES book_store (name) ON DELETE CASCADE,
+  CONSTRAINT fk_b2bs_book       FOREIGN KEY (book_id)     REFERENCES book (id)         ON DELETE CASCADE
 )</sql>
 							<p>
 								More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc), stored procedures and packages are introduced for specific examples
@@ -404,13 +401,14 @@ String sql = create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 										Instead of any tool mentioned in the previous chapters, you can also use jOOQ directly to execute your jOOQ-generated SQL statements. This will add a lot of convenience on top of the previously discussed API for typesafe SQL construction, when you can re-use the information from generated classes to fetch records and custom data types. An example is given here:
 									</p>
 									
-<java><![CDATA[// Execute the SQL statement directly with jOOQ
-Result<Record> result = create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
-			                  .from(BOOK)
-			                  .join(AUTHOR)
-			                  .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
-			                  .where(BOOK.PUBLISHED_IN.equal(1948))
-			                  .fetch();]]></java>
+<java><![CDATA[// Typesafely execute the SQL statement directly with jOOQ
+Result<Record3<String, String, String>> result = 
+create.select(BOOK.TITLE, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .from(BOOK)
+      .join(AUTHOR)
+      .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+      .where(BOOK.PUBLISHED_IN.equal(1948))
+      .fetch();]]></java>
 
 									<p>
 										jOOQ doesn't stop here, though! You can execute any SQL with jOOQ. In other words, you can use any other SQL building tool and run the SQL statements with jOOQ. An example is given here:
@@ -450,7 +448,7 @@ Result<Record> result = create.fetch(rs);]]></java>
 for (AuthorRecord author : create.fetch(AUTHOR)) {
   
     // Check if the author has written more than 5 books
-    if (author.fetchBookListByAuthorId().size() > 5) {
+    if (author.fetchChildren(FK_BOOK_AUTHOR).size() > 5) {
     
         // Congratulate the author by email:
         if (author.getMailSent()) {
@@ -485,6 +483,7 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 										<li><reference id="execute-listeners" title="jOOQ's Execute Listeners"/>: jOOQ allows you to hook your custom execute listeners into jOOQ's SQL statement execution lifecycle in order to centrally coordinate any arbitrary operation performed on SQL being executed. Use this for logging, identity generation, SQL tracing, performance measurements, etc.</li>
 										<li><reference id="logging" title="Logging"/>: jOOQ has a standard DEBUG logger built-in, for logging and tracing all your executed SQL statements and fetched result sets</li>
 										<li><reference id="stored-procedures" title="Stored Procedures"/>: jOOQ supports stored procedures and functions of your favourite database. All routines and user-defined types are generated and can be included in jOOQ's SQL building API as function references.</li>
+										<li><reference id="batch-execution" title="Batch execution"/>: Batch execution is important when executing a big load of SQL statements. jOOQ simplifies these operations compared to JDBC</li>
 										<li><reference id="exporting" title="Exporting"/> and <reference id="importing" title="Importing"/>: jOOQ ships with an API to easily export/import data in various formats</li>
 									</ul>
 									<p>
@@ -575,7 +574,7 @@ CREATE TABLE `posts` (
 											</p>
 											
 <xml><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.5.0.xsd">
+<configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd">
   <!-- Configure the database connection here -->
   <jdbc>
     <driver>com.mysql.jdbc.Driver</driver>
@@ -649,15 +648,15 @@ INFO:   dialect                : MYSQL
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO:   schema                 : guestbook
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO:   target dir             : /Users/jOOQ/Documents/workspace/MySQLTest/src
+INFO:   target dir             : C:/workspace/MySQLTest/src
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO:   target package         : test.generated
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: ----------------------------------------------------------
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Emptying                 : /Users/jOOQ/workspace/MySQLTest/src/test/generated
+INFO: Emptying                 : C:/workspace/MySQLTest/src/test/generated
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Generating classes in    : /Users/jOOQ/workspace/MySQLTest/src/test/generated
+INFO: Generating classes in    : C:/workspace/MySQLTest/src/test/generated
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Generating schema        : Guestbook.java
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
@@ -667,7 +666,7 @@ INFO: Sequences fetched        : 0 (0 included, 0 excluded)
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Tables fetched           : 5 (5 included, 0 excluded)
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Generating tables        : /Users/jOOQ/workspace/MySQLTest/src/test/generated/tables
+INFO: Generating tables        : C:/workspace/MySQLTest/src/test/generated/tables
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: ARRAYs fetched           : 0 (0 included, 0 excluded)
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
@@ -679,11 +678,11 @@ INFO: Generating table         : Posts.java
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Tables generated         : Total: 680.464ms, +558.284ms
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Generating Keys          : /Users/jOOQ/workspace/MySQLTest/src/test/generated/tables
+INFO: Generating Keys          : C:/workspace/MySQLTest/src/test/generated/tables
 Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
 INFO: Keys generated           : Total: 718.621ms, +38.157ms
 Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
-INFO: Generating records       : /Users/jOOQ/workspace/MySQLTest/src/test/generated/tables/records
+INFO: Generating records       : C:/workspace/MySQLTest/src/test/generated/tables/records
 Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
 INFO: Generating record        : PostsRecord.java
 Nov 1, 2011 7:25:08 PM org.jooq.impl.JooqLogger info
@@ -748,11 +747,11 @@ public class Main {
 												Let's add a simple query:
 											</p>
 											
-<java><![CDATA[Factory create = new Factory(conn, SQLDialect.MYSQL);
-Result<Record> result = create.select().from(POSTS).fetch();]]></java>
+<java><![CDATA[Executor create = new Executor(conn, SQLDialect.MYSQL);
+Result<Record> result = Executor.select().from(POSTS).fetch();]]></java>
 
 											<p>
-												First get an instance of <code>Factory</code> so we can write a simple <code>SELECT</code> query. We pass an instance of the MySQL connection to <code>Factory</code>. Note that the factory doesn't close the connection. We'll have to do that ourselves.
+												First get an instance of <code>Executor</code> so we can write a simple <code>SELECT</code> query. We pass an instance of the MySQL connection to <code>Executor</code>. Note that the executor doesn't close the connection. We'll have to do that ourselves.
 											</p>
 											<p>
 												We then use jOOQ's DSL to return an instance of Result. We'll be using this result in the next step.
@@ -786,16 +785,10 @@ Result<Record> result = create.select().from(POSTS).fetch();]]></java>
 import static test.generated.Tables.*;
 import static org.jooq.impl.Factory.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
-import org.jooq.Record;
-import org.jooq.Result;
-
-import test.generated.GuestbookFactory;
-import test.generated.tables.Posts;
+import org.jooq.*;
+import org.jooq.impl.*;
 
 public class Main {
 
@@ -813,8 +806,8 @@ public class Main {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
-            Factory create = new Factory(conn, SQLDialect.MYSQL);
-            Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
+            Executor create = new Executor(conn, SQLDialect.MYSQL);
+            Result<Record> result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {
                 Long id = r.getValue(POSTS.ID);
@@ -843,8 +836,8 @@ public class Main {
 										<title>Step 7: Explore!</title>
 										<content>
 											<p>
-												jOOQ has grown to be a comprehensive SQL library. For more information, please consider the manual:<br/>
-												<a href="http://www.jooq.org/manual/" title="jOOQ Manual">http://www.jooq.org/manual/</a>
+												jOOQ has grown to be a comprehensive SQL library. For more information, please consider the documentation:<br/>
+												<a href="http://www.jooq.org/learn.php" title="jOOQ Manual">http://www.jooq.org/learn.php</a>
 											</p>
 											<p>
 												... explore the Javadoc:<br/>
@@ -925,10 +918,10 @@ import org.jooq.scala.Conversions._                                  // Import i
 object Test {                                                        //
   def main(args: Array[String]): Unit = {                            //
     val c = DriverManager.getConnection("jdbc:h2:~/test", "sa", ""); // Standard JDBC connection
-    val f = new Factory(c, SQLDialect.H2);                           //
+    val e = new Executor(c, SQLDialect.H2);                          //
     val x = T_AUTHOR as "x"                                          // SQL-esque table aliasing
                                                                      //
-    for (r <- f                                                      // Iteration over Result. "r" is an org.jooq.Record
+    for (r <- e                                                      // Iteration over Result. "r" is an org.jooq.Record3
         select (                                                     //
           T_BOOK.ID * T_BOOK.AUTHOR_ID,                              // Using the overloaded "*" operator
           T_BOOK.ID + T_BOOK.AUTHOR_ID * 3 + 4,                      // Using the overloaded "+" operator
@@ -936,7 +929,7 @@ object Test {                                                        //
         )                                                            //
         from T_BOOK                                                  // No need to use parentheses or "." here
         leftOuterJoin (                                              //
-          f select (x.ID, x.YEAR_OF_BIRTH)                           // Dereference fields from aliased table
+          select (x.ID, x.YEAR_OF_BIRTH)                             // Dereference fields from aliased table
           from x                                                     //
           limit 1                                                    //
           asTable x.getName()                                        //
@@ -965,14 +958,14 @@ object Test {                                                        //
 							</p>
 							<ul>
 								<li><reference id="logging" title="logging APIs"/> are referenced as "optional dependencies". jOOQ tries to find slf4j or log4j on the classpath. If it fails, it will use the <reference class="java.util.logging.Logger"/></li>
-								<li>Oracle ojdbc types used for array creation are loaded using reflection.</li>
-								<li>Small libraries with compatible licenses are incorporated into jOOQ (<a href="http://code.google.com/p/joor/">jOOR</a>, <a href="http://code.google.com/p/joou/">jOOU</a>, <a href="http://opencsv.sourceforge.net/">OpenCSV</a>, <a href="http://code.google.com/p/json-simple/">json simple</a>, <a href="http://commons.apache.org/lang/">commons-lang</a>)</li>
+								<li>Oracle ojdbc types used for array creation are loaded using reflection. The same applies to Postgres PG* types.</li>
+								<li>Small libraries with compatible licenses are incorporated into jOOQ. These include <a href="https://github.com/jOOQ/jOOR">jOOR</a>, <a href="https://github.com/jOOQ/jOOU">jOOU</a>, <a href="http://opencsv.sourceforge.net/">OpenCSV</a>, <a href="http://code.google.com/p/json-simple/">json simple</a>, <a href="http://commons.apache.org/lang/">commons-lang</a></li>
 								<li>javax.persistence and javax.validation will be needed if you activate the relevant <reference id="code-generation" title="code generation flags"/></li>
 							</ul>
 							
 							<h3>Build your own</h3>
 							<p>
-								In order to build jOOQ, please download the sources from <a href="https://github.com/jOOQ/jOOQ">https://github.com/jOOQ/jOOQ</a> and use Maven to build it, preferably in Eclipse.
+								In order to build jOOQ, please download the sources from <a href="https://github.com/jOOQ/jOOQ">https://github.com/jOOQ/jOOQ</a> and use Maven to build jOOQ, preferably in Eclipse. jOOQ requires Java 6 to compile and run.
 							</p>
 						</content>
 					</section>
@@ -1019,7 +1012,7 @@ object Test {                                                        //
 					    SQL is a declarative language that is hard to integrate into procedural, object-oriented, functional or any other type of programming languages. jOOQ's philosophy is to give SQL the credit it deserves and integrate SQL itself as an <a href="http://en.wikipedia.org/wiki/Domain_Specific_Language">"internal domain specific language"</a> directly into Java.
 					</p>
 					<p>
-						With this philosophy in mind, SQL building is the main feature of jOOQ. All other features (such as <reference id="sql-execution"/> and <reference id="code-generation"/>) are mere convenience built on top of jOOQ's SQL building capabilities.
+						With this philosophy in mind, SQL building is the main feature of jOOQ. All other features (such as <reference id="sql-execution" title="SQL execution"/> and <reference id="code-generation" title="code generation"/>) are mere convenience built on top of jOOQ's SQL building capabilities.
 					</p>
 					<p>
 						This section explains all about the various syntax elements involved with jOOQ's SQL building capabilities. For a complete overview of all syntax elements, please refer to the manual's section about <reference id="reference-bnf-notation"/>
@@ -1028,8 +1021,8 @@ object Test {                                                        //
 
 				<sections>
 					<section id="factory">
-						<title>The Factory class</title>
-						<content>
+					    <title>The Factory class</title>
+					    <content>
 							<p>
 								jOOQ exposes a lot of interfaces and hides most implementation facts from client code. The reasons for this are:
 							</p>
@@ -1039,45 +1032,78 @@ object Test {                                                        //
 								<li>API guarantee. You only depend on the exposed interfaces, not concrete (potentially dialect-specific) implementations.</li>
 							</ul>
 							<p>
-								The <reference class="org.jooq.impl.Factory"/> class is the main class from where you will create all jOOQ objects.	The Factory serves two types of purposes:
+								The <reference class="org.jooq.impl.Factory"/> class is the main class from where you will create all jOOQ objects.	It serves as a static factory for <reference id="table-expressions" title="table expressions"/>, <reference id="column-expressions" title="column expressions"/> (or "fields"), <reference id="conditional-expressions" title="conditional expressions"/> and many other <reference id="queryparts" title="QueryParts"/>.
 							</p>
-							<ul>
-								<li>It serves as a static factory for <reference id="table-expressions" title="table expressions"/>, <reference id="column-expressions" title="column expressions"/> (or "fields"), <reference id="conditional-expressions" title="conditional expressions"/> and many other <reference id="queryparts" title="QueryParts"/>.</li>
-								<li>It implements <reference class="org.jooq.Configuration"/>, an object that configures jOOQ's behaviour when executing queries (see <reference id="sql-execution"/> for more details). Factories allow for creating <reference id="sql-statements" title="SQL statements"/> that are already "configured" and ready for execution.</li>
-							</ul>
 
 							<h3>The static Factory API</h3>
 							<p>
 								With jOOQ 2.0, static factory methods have been introduced in order to make client code look more like SQL. Ideally, when working with jOOQ, you will simply static import all methods from the Factory class:
 							</p>
-							<java>import static org.jooq.impl.Factory.*;</java>
+
+<java>import static org.jooq.impl.Factory.*;</java>
+
 							<p>
 							    Note, that when working with Eclipse, you could also add the Factory to your favourites. This will allow to access functions even more fluently:
 							</p>
 <java>concat(trim(FIRST_NAME), trim(LAST_NAME));
+
 // ... which is in fact the same as:
 Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</java>
-
-							<h3>The Factory as a Configuration object</h3>
+					    </content>
+					    
+					    <sections>
+							<section id="factory-subclasses">
+								<title>Factory subclasses</title>
+								<content>
+									<p>
+										There are a couple of subclasses for the general Factory. Each SQL dialect has its own dialect-specific Factory. For instance, if you're only using the MySQL dialect, you can choose to reference the MySQLFactory instead of the standard Factory:
+									</p>
+									<p>
+										The advantage of referencing a dialect-specific Factory lies in the fact that you have access to more proprietary RDMBS functionality. This may include:
+									</p>
+									<ul>
+		    							<li>MySQL's encryption functions</li>
+		    							<li>PL/SQL constructs, pgplsql, or any other dialect's ROUTINE-language (maybe in the future)</li>
+									</ul>
+								</content>
+							</section>
+					    </sections>
+					</section>
+					
+					<section id="executor">
+						<title>The Executor class</title>
+						<content>
 							<p>
-							    As any Configuration object, a Factory can be supplied with these objects:
+							Executor implements <reference class="org.jooq.Configuration"/>, an object that configures jOOQ's behaviour when executing queries (see <reference id="sql-execution"/> for more details). Unlike Factories, Executors allow for creating <reference id="sql-statements" title="SQL statements"/> that are already "configured" and ready for execution.
+							</p>
+							
+							<h3>The Executor as a Configuration object</h3>
+							<p>
+							    As any Configuration object, an Executor can be supplied with these objects:
 							</p>
 							<ul>
 								<li><reference class="org.jooq.SQLDialect"/> : The dialect of your database. This may be any of the currently supported database types (see <reference id="sql-dialects"/> for more details)</li>
-								<li><reference class="java.sql.Connection"/> : An optional JDBC Connection that will be re-used for the whole lifecycle of your Factory (see <reference id="connection-vs-datasource"/> for more details)</li>
-    							<li><reference class="java.sql.DataSource"/> : An optional JDBC DataSource that will be re-used for the whole lifecycle of your Factory. If you prefer using DataSources over Connections, jOOQ will internally fetch new Connections from your DataSource, conveniently closing them again after query execution. This is particularly useful in J2EE or Spring contexts (see <reference id="connection-vs-datasource"/> for more details)</li>
     							<li><reference class="org.jooq.conf.Settings"/> : An optional runtime configuration (see <reference id="custom-settings"/> for more details)</li>
+								<li>
+									Any of these:
+									<ul>
+										<li><reference class="java.sql.Connection"/> : An optional JDBC Connection that will be re-used for the whole lifecycle of your Executor (see <reference id="connection-vs-datasource"/> for more details). For simplicity, this is the use-case referenced from this manual, most of the time.</li>
+		    							<li><reference class="java.sql.DataSource"/> : An optional JDBC DataSource that will be re-used for the whole lifecycle of your Executor. If you prefer using DataSources over Connections, jOOQ will internally fetch new Connections from your DataSource, conveniently closing them again after query execution. This is particularly useful in J2EE or Spring contexts (see <reference id="connection-vs-datasource"/> for more details)</li>
+		    							<li><reference class="org.jooq.ConnectionProvider"/> : A custom abstraction that is used by jOOQ to "acquire" and "release" connections. jOOQ will internally "acquire" new Connections from your ConnectionProvider, conveniently "releasing" them again after query execution. (see <reference id="connection-vs-datasource"/> for more details)</li>
+									</ul>
+								</li>
 							</ul>
+							
 							<p>
-								As a Configuration object, a Factory can construct <reference id="sql-statements" title="statements"/>, for later <reference id="sql-execution" title="execution"/>. An example is given here:
+								As a Configuration object, an Executor can construct <reference id="sql-statements" title="statements"/>, for later <reference id="sql-execution" title="execution"/>. An example is given here:
 							</p>
-<java><![CDATA[// The Factory is "configured" with a Connection and a SQLDialect
-Factory create = new Factory(connection, dialect);
+<java><![CDATA[// The Executor is "configured" with a Connection and a SQLDialect
+Executor create = new Executor(connection, dialect);
 
-// This select statement contains an internal reference to the Factory:
+// This select statement contains an internal reference to the Executor:
 Select<?> select = create.selectOne();
 
-// Using the internally referenced Factory, the select statement can now be executed:
+// Using the internally referenced Executor, the select statement can now be executed:
 Result<?> result = select.fetch();]]></java>
 						</content>
 
@@ -1089,7 +1115,7 @@ Result<?> result = select.fetch();]]></java>
 										While jOOQ tries to represent the SQL standard as much as possible, many features are vendor-specific to a given database and to its "SQL dialect". jOOQ models this using the <reference class="org.jooq.SQLDialect"/> enum type.
 									</p>
 									<p>
-										The SQL dialect is one of the main attributes of a <reference id="factory" title="Factory"/>. Queries created from such factories will assume dialect-specific behaviour when <reference id="sql-rendering" title="rendering SQL"/> and <reference id="variable-binding" title="binding bind values"/>.
+										The SQL dialect is one of the main attributes of an <reference id="executor" title="Executor"/>. Queries created from such executors will assume dialect-specific behaviour when <reference id="sql-rendering" title="rendering SQL"/> and <reference id="variable-binding" title="binding bind values"/>.
 									</p>
 									<p>
 										Some parts of the jOOQ API are officially supported only by a given subset of the supported SQL dialects. For instance, the <reference id="connect-by-clause" title="Oracle CONNECT BY clause"/>, which is supported by the Oracle and CUBRID databases, is annotated with a <reference class="org.jooq.Support"/> annotation, as such:
@@ -1097,8 +1123,9 @@ Result<?> result = select.fetch();]]></java>
 <java><![CDATA[/**
  * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
  */
-@Support({ CUBRID, ORACLE })
+@Support({ SQLDialect.CUBRID, SQLDialect.ORACLE })
 SelectConnectByConditionStep connectBy(Condition condition);]]></java>
+
 									<p>
 									    jOOQ API methods which are not annotated with the <reference class="org.jooq.Support"/> annotation, or which are annotated with the Support annotation, but without any SQL dialects can be safely used in all SQL dialects. An example for this is the <reference id="select-statement" title="SELECT statement"/> factory method:
 									</p>
@@ -1116,7 +1143,7 @@ SelectSelectStep select(Field<?>... fields);]]></java>
 <sql><![CDATA[A IS DISTINCT FROM B]]></sql>
 
 									<p>
-										Nevertheless, the <code>IS DISTINCT FROM</code> predicate is supported in all dialects, as its semantics can be expressed with an equivalent <reference id="case-expressions" title="CASE expression"/>. For more details, see the manual's section about the <reference id="distinct-predicate" title="DISTINCT predicate"/>.
+										Nevertheless, the <code>IS DISTINCT FROM</code> predicate is supported by jOOQ in all dialects, as its semantics can be expressed with an equivalent <reference id="case-expressions" title="CASE expression"/>. For more details, see the manual's section about the <reference id="distinct-predicate" title="DISTINCT predicate"/>.
 									</p>
 									
 									<h3>jOOQ and the Oracle SQL dialect</h3>
@@ -1141,34 +1168,67 @@ SelectSelectStep select(Field<?>... fields);]]></java>
 								<content>
 									<h3>Interact with JDBC Connections</h3>
 									<p>
-										While you can use jOOQ for <reference id="sql-building" title="SQL building"/> only, you can also run queries against a JDBC <reference class="java.sql.Connection"/>. Internally, jOOQ creates <reference class="java.sql.Statement"/> or <reference class="java.sql.PreparedStatement"/> objects from such a Connection, in order to execute statements. The normal operation mode is to provide a <reference id="factory" title="Factory"/> with a JDBC Connection, whose lifecycle you will control yourself. This means that jOOQ will not actively close connections, rollback or commit transactions.
+										While you can use jOOQ for <reference id="sql-building" title="SQL building"/> only, you can also run queries against a JDBC <reference class="java.sql.Connection"/>. Internally, jOOQ creates <reference class="java.sql.Statement"/> or <reference class="java.sql.PreparedStatement"/> objects from such a Connection, in order to execute statements. The normal operation mode is to provide an <reference id="executor" title="Executor"/> with a JDBC Connection, whose lifecycle you will control yourself. This means that jOOQ will not actively close connections, rollback or commit transactions.
 									</p>
+									<p>
+										Note, in this case, jOOQ will internally use a <reference class="org.jooq.impl.DefaultConnectionProvider"/>, which you can reference directly if you prefer that. The DefaultConnectionProvider exposes various transaction-control methods, such as commit(), rollback(), etc.
+									</p>
+									
 									<h3>Interact with JDBC DataSources</h3>
 									<p>
-										If you're in a J2EE or Spring context, however, you may wish to use a <reference class="javax.sql.DataSource"/> instead. Currently, Connections obtained from such a DataSource will be closed after query execution by jOOQ. The semantics of such a close operation should be the returning of the connection into a connection pool, not the actual closing of the underlying physical connection. Typically, this makes sense in an environment using distributed JTA transactions. An example of using DataSources with jOOQ can be seen in the tutorial section about <reference id="jooq-with-spring" title="using jOOQ with Spring"/>.
+										If you're in a J2EE or Spring context, however, you may wish to use a <reference class="javax.sql.DataSource"/> instead. Connections obtained from such a DataSource will be closed after query execution by jOOQ. The semantics of such a close operation should be the returning of the connection into a connection pool, not the actual closing of the underlying physical connection. Typically, this makes sense in an environment using distributed JTA transactions. An example of using DataSources with jOOQ can be seen in the tutorial section about <reference id="jooq-with-spring" title="using jOOQ with Spring"/>.
+									</p>
+									<p>
+										Note, in this case, jOOQ iwll internally use a <reference class="org.jooq.impl.DataSourceConnectionProvider"/>, which you can reference directly if you prefer that.
+									</p>
+									
+									<h3>Inject custom behaviour</h3>
+									<p>
+										If your specific environment works differently from any of the above approaches, you can inject your own custom implementation of a ConnectionProvider into jOOQ. This is the API contract you have to fulfil:
+									</p>
+									
+<java><![CDATA[public interface ConnectionProvider {
+
+    // Provide jOOQ with a connection
+    Connection acquire() throws DataAccessException;
+  
+    // Get a connection back from jOOQ
+    void release(Connection connection) throws DataAccessException;
+}]]></java>
+
+									<p>
+									    Note that <code>acquire()</code> should always return the same Connection until this connection is returned via <code>release()</code> 
 									</p>
 								</content>
+							</section>
+							
+							<section id="custom-data">
+								<title>Custom data</title>
+							</section>
+
+							<section id="custom-execute-listeners">
+								<title>Execute listeners</title>
 							</section>
 
 							<section id="custom-settings">
 								<title>Custom Settings</title>
 								<content>
 									<p>
-										The jOOQ Factory allows for some optional configuration elements to be used by advanced users. The <reference class="org.jooq.conf.Settings" /> class is a JAXB-annotated type, that can be provided to a Factory in several ways:
+										The jOOQ Executor allows for some optional configuration elements to be used by advanced users. The <reference class="org.jooq.conf.Settings" /> class is a JAXB-annotated type, that can be provided to an Executor in several ways:
 									</p>
 									<ul>
 										<li>In the constructor. This will override default settings below</li>
 										<li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
 										<li>From the classpath at /jooq-settings.xml</li>
-										<li>From the settings defaults, as specified in <a href="http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd</a></li>
+										<li>From the settings defaults, as specified in <a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd</a></li>
 									</ul>
 									<h3>Example</h3>
 									<p>
-										For example, if you want to indicate to jOOQ, that it should inline all bind variables, and execute static <reference class="java.sql.Statement"/> instead of binding its variables to <reference class="java.sql.PreparedStatement"/>, you can do so by using the following Factory:
+										For example, if you want to indicate to jOOQ, that it should inline all bind variables, and execute static <reference class="java.sql.Statement"/> instead of binding its variables to <reference class="java.sql.PreparedStatement"/>, you can do so by using the following Executor:
 									</p>
 <java><![CDATA[Settings settings = new Settings();
 settings.setStatementType(StatementType.STATIC_STATEMENT);
-Factory create = new Factory(connection, dialect, settings);]]></java>
+Executor create = new Executor(connection, dialect, settings);]]></java>
 									<p>
 										Subsequent sections of the manual contain some more in-depth explanations about these settings:
 									</p>
@@ -1176,9 +1236,6 @@ Factory create = new Factory(connection, dialect, settings);]]></java>
 										<li>
 		     								<reference id="schema-mapping" title="Runtime schema and table mapping"/>
 		   								</li>
-		     							<li>
-		     								<reference id="execute-listeners" title="Execute listeners and SQL tracing"/>
-		     							</li>
 		     							<li>
 		     								<reference id="optimistic-locking" title="Execute CRUD with optimistic locking enabled"/>
 		     							</li>
@@ -1188,7 +1245,7 @@ Factory create = new Factory(connection, dialect, settings);]]></java>
 		   							</ul>
 		   							<p>
 										Please refer to the jOOQ runtime configuration XSD for more details:<br/>
-										<a href="http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd</a>
+										<a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd</a>
 									</p>
 								</content>
 							</section>
@@ -1212,7 +1269,7 @@ Factory create = new Factory(connection, dialect, settings);]]></java>
 
 									<h3>Mapping DEV to MY_BOOK_WORLD with jOOQ</h3>
 									<p>
-										When a user from My Book World logs in, you want them to access the MY_BOOK_WORLD schema using classes generated from DEV. This can be achieved with the <reference class="org.jooq.conf.RenderMapping"/> class, that you can equip your Factory's <reference id="custom-settings" title="settings"/> with. Take the following example:
+										When a user from My Book World logs in, you want them to access the MY_BOOK_WORLD schema using classes generated from DEV. This can be achieved with the <reference class="org.jooq.conf.RenderMapping"/> class, that you can equip your Executor's <reference id="custom-settings" title="settings"/> with. Take the following example:
 									</p>
 
 <java>Settings settings = new Settings()
@@ -1221,14 +1278,14 @@ Factory create = new Factory(connection, dialect, settings);]]></java>
         new MappedSchema().withInput("DEV")
                           .withOutput("MY_BOOK_WORLD")));
 
-// Add the settings to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+// Add the settings to the executor
+Executor create = new Executor(connection, SQLDialect.ORACLE, settings);
 
-// Run queries with the "mapped" factory
+// Run queries with the "mapped" executor
 create.selectFrom(AUTHOR).fetch();</java>
 
 									<p>
-										The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement:
+										The query executed with an Executor equipped with the above mapping will in fact produce this SQL statement:
 									</p>
 									
 <sql>SELECT * FROM MY_BOOK_WORLD.AUTHOR</sql>
@@ -1241,7 +1298,7 @@ create.selectFrom(AUTHOR).fetch();</java>
 										Your development database may not be restricted to hold only one DEV schema. You may also have a LOG schema and a MASTER schema. Let's say the MASTER schema is shared among all customers, but each customer has their own LOG schema instance. Then you can enhance your RenderMapping like this (e.g. using an XML configuration file):
 									</p>
 
-<xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-2.5.0.xsd">
+<xml><![CDATA[<settings xmlns="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd">
   <renderMapping>
     <schemata>
       <schema>
@@ -1263,24 +1320,24 @@ create.selectFrom(AUTHOR).fetch();</java>
 <java>Settings settings = JAXB.unmarshal(new File("jooq-runtime.xml"), Settings.class);</java>
 
 									<p>
-										This will map generated classes from DEV to MY_BOOK_WORLD, from LOG to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you want to change your mapping configuration, you will have to create a new Factory
+										This will map generated classes from DEV to MY_BOOK_WORLD, from LOG to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you want to change your mapping configuration, you will have to create a new Executor.
 									</p>
 
 
 									<h3>Using a default schema</h3>
 									<p>
-										Another option to switch schema names is to use a default schema for the Factory's underlying Connection. Many RDBMS support a USE or SET SCHEMA command, which you can call like this:
+										Another option to switch schema names is to use a default schema for the Executor's underlying Connection. Many RDBMS support a USE or SET SCHEMA command, which you can call like this:
 									</p>
 
 <java>// Set the default schema
 Schema MY_BOOK_WORLD = ...
 create.use(MY_BOOK_WORLD);
 
-// Run queries with factory having a default schema
+// Run queries with an executor having a default schema
 create.selectFrom(AUTHOR).fetch();</java>
 
 									<p>
-										Queries generated from the above Factory will produce this kind of SQL statement:
+										Queries generated from the above Executor will produce this kind of SQL statement:
 									</p>
 
 <sql>-- the schema name is omitted from all SQL constructs.
@@ -1294,8 +1351,8 @@ SELECT * FROM AUTHOR</sql>
 <java>Settings settings = new Settings()
     .withRenderSchema(false);
 
-// Add the settings to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+// Add the settings to the executor
+Executor create = new Executor(connection, SQLDialect.ORACLE, settings);
 
 // Run queries that omit rendering schema names
 create.selectFrom(AUTHOR).fetch();</java>
@@ -1314,14 +1371,14 @@ create.selectFrom(AUTHOR).fetch();</java>
          new MappedTable().withInput("AUTHOR")
                           .withOutput("MY_APP__AUTHOR"))));
 
-// Add the settings to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+// Add the settings to the executor
+Executor create = new Executor(connection, SQLDialect.ORACLE, settings);
 
-// Run queries with the "mapped" factory
+// Run queries with the "mapped" executor
 create.selectFrom(AUTHOR).fetch();</java>
 
 									<p>
-										The query executed with a Factory equipped with the above mapping will in fact produce this SQL statement:
+										The query executed with an Executor equipped with the above mapping will in fact produce this SQL statement:
 									</p>
 									
 <sql>SELECT * FROM MY_BOOK_WORLD.MY_APP__AUTHOR</sql>
@@ -1336,22 +1393,6 @@ create.selectFrom(AUTHOR).fetch();</java>
 									</p>									
 								</content>
 							</section>
-
-							<section id="factory-subclasses">
-								<title>Factory subclasses</title>
-								<content>
-									<p>
-										There are a couple of subclasses for the general Factory. Each SQL dialect has its own dialect-specific Factory. For instance, if you're only using the MySQL dialect, you can choose to reference the MySQLFactory instead of the standard Factory:
-									</p>
-									<p>
-										The advantage of referencing a dialect-specific Factory lies in the fact that you have access to more proprietary RDMBS functionality. This may include:
-									</p>
-									<ul>
-		    							<li>MySQL's encryption functions</li>
-		    							<li>PL/SQL constructs, pgplsql, or any other dialect's ROUTINE-language (maybe in the future)</li>
-									</ul>
-								</content>
-							</section>
 						</sections>
 					</section>
 
@@ -1359,13 +1400,13 @@ create.selectFrom(AUTHOR).fetch();</java>
 						<title>SQL Statements</title>
 						<content>
 							<p>
-								jOOQ currently supports 6 types of SQL statements. All of these statements are constructed from a Factory instance with an optional <reference id="connection-vs-datasource" title="JDBC Connection or DataSource"/>. If supplied with a Connection or DataSource, they can be executed. Depending on the <reference id="query-vs-resultquery" title="query type"/>, executed queries can return results.
+								jOOQ currently supports 6 types of SQL statements. All of these statements are constructed from an Executor instance with an optional <reference id="connection-vs-datasource" title="JDBC Connection or DataSource"/>. If supplied with a Connection or DataSource, they can be executed. Depending on the <reference id="query-vs-resultquery" title="query type"/>, executed queries can return results.
 							</p>
 						</content>
 
 						<sections>
 							<section id="dsl-and-non-dsl">
-								<title>jOOQ's DSL and non-DSL API</title>
+								<title>jOOQ's DSL and model API</title>
 								<content>
 									<p>
 										jOOQ ships with its own DSL (or	<a href="http://en.wikipedia.org/wiki/Domain-specific_language" title="Domain Specific Language">Domain Specific Language</a>) that	simulates SQL in Java. This means, that you can	write SQL statements almost as if Java natively supported it, just like .NET's C# does with <a href="http://msdn.microsoft.com/en-us/library/bb425822.aspx">LINQ to SQL.</a>
@@ -1395,11 +1436,12 @@ create.select()
 										We'll see how the aliasing works later in the section about <reference id="aliased-tables" title="aliased tables"/>
 									</p>
 
-									<h3>jOOQ as an internal domain specific language in Java (a.k.a. the DSL-API)</h3>
+									<h3>jOOQ as an internal domain specific language in Java (a.k.a. the DSL API)</h3>
 									<p>
 										Many other frameworks have similar APIs with similar feature sets. Yet, what makes jOOQ special is its informal <reference id="reference-bnf-notation" title="BNF notation"/> modelling a unified SQL dialect suitable for many vendor-specific dialects, and implementing that BNF notation as a hierarchy of interfaces in Java. This concept is extremely powerful, when <reference id="jooq-in-modern-ides" title="using jOOQ in modern IDEs" /> with syntax completion. Not only can you code much faster, your SQL code will be compile-checked to a certain extent. An example of a DSL query equivalent to the previous one is given here:
 									</p>
-<java><![CDATA[Factory create = new Factory(connection, dialect);
+									
+<java><![CDATA[Executor create = new Executor(connection, dialect);
 Result<?> result = create.select()
                          .from(AUTHOR)
                          .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
@@ -1408,7 +1450,7 @@ Result<?> result = create.select()
                          			<p>
                          				Unlike other, simpler frameworks that use <a href="http://en.wikipedia.org/wiki/Fluent_interface">"fluent APIs"</a> or <a href="http://en.wikipedia.org/wiki/Method_chaining">"method chaining"</a>, jOOQ's BNF-based interface hierarchy will not allow bad query syntax. The following will not compile, for instance:
                          			</p>
-<java><![CDATA[Factory create = new Factory(connection, dialect);
+<java><![CDATA[Executor create = new Executor(connection, dialect);
 Result<?> result = create.select()
                          .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
                       //  ^^^^ "join" is not possible here
@@ -1424,14 +1466,29 @@ Result<?> result = create.select()
 Result<?> result = create.select(rowNumber())
                       //         ^^^^^^^^^ "over()" is missing here
                          .from(AUTHOR)
+                         .fetch();
+
+Result<?> result = create.select()
+                         .from(AUTHOR)
+                         .where(AUTHOR.ID.in(select(BOOK.TITLE).from(BOOK)))
+                      //                     ^^^^^^^^^^^^^^^^^^
+                      // AUTHOR.ID is of type Field<Integer> but subselect returns Record1<String>
+                         .fetch();
+
+Result<?> result = create.select()
+                         .from(AUTHOR)
+                         .where(AUTHOR.ID.in(select(BOOK.AUTHOR_ID, BOOK.ID).from(BOOK)))
+                      //                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                      // AUTHOR.ID is of degree 1 but subselect returns Record2<Integer, Integer>
                          .fetch();]]></java>
 
-									<h3>History of SQL building and incremental query building (a.k.a. the non-DSL API)</h3>
+									<h3>History of SQL building and incremental query building (a.k.a. the model API)</h3>
 									<p>
-										Historically, jOOQ started out as an object-oriented SQL builder library like any other. This meant that all queries and their syntactic components were modeled as so-called <reference id="queryparts" title="QueryParts"/>, which delegate <reference id="sql-rendering" title="SQL rendering"/> and <reference id="variable-binding" title="variable binding"/> to child components. This part of the API will be referred to as the non-DSL API, which is still maintained and used internally by jOOQ for incremental query building. An example of incremental query building is given here:
+										Historically, jOOQ started out as an object-oriented SQL builder library like any other. This meant that all queries and their syntactic components were modeled as so-called <reference id="queryparts" title="QueryParts"/>, which delegate <reference id="sql-rendering" title="SQL rendering"/> and <reference id="variable-binding" title="variable binding"/> to child components. This part of the API will be referred to as the model API (or non-DSL API), which is still maintained and used internally by jOOQ for incremental query building. An example of incremental query building is given here:
 									</p>
-<java><![CDATA[Factory create = new Factory(connection, dialect);
-SelectQuery query = create.selectQuery();
+									
+<java><![CDATA[Executor create = new Executor(connection, dialect);
+SelectQuery<Record> query = create.selectQuery();
 query.addFrom(AUTHOR);
 
 // Join books only under certain circumstances
@@ -1442,14 +1499,14 @@ if (join) {
 Result<?> result = query.fetch();]]></java>
 
 									<p>
-										This query is equivalent to the one shown before using the DSL syntax. In fact, internally, the DSL API constructs precisely this QueryObject. Note, that you can always access the SelectQuery object to switch between DSL and non-DSL APIs:
+										This query is equivalent to the one shown before using the DSL syntax. In fact, internally, the DSL API constructs precisely this SelectQuery object. Note, that you can always access the SelectQuery object to switch between DSL and model APIs:
 									</p>
 
-<java><![CDATA[Factory create = new Factory(connection, dialect);
-SelectFinalStep select = create.select().from(AUTHOR);
+<java><![CDATA[Executor create = new Executor(connection, dialect);
+SelectFinalStep<?> select = create.select().from(AUTHOR);
 
 // Add the JOIN clause on the internal QueryObject representation
-SelectQuery query = select.getQuery();
+SelectQuery<?> query = select.getQuery();
 query.addJoin(BOOK, BOOK.AUTHOR_ID.equal(AUTHOR.ID));]]></java>
 
 									<h3>Mutability</h3>
@@ -1468,16 +1525,16 @@ a.or(b) != a.or(b); // or() always creates new objects
 
 // Statements (mutable)
 // --------------------
-SelectFromStep s1 = create.select();
-SelectJoinStep s2 = s1.from(BOOK);
-SelectJoinStep s3 = s1.from(AUTHOR);
+SelectFromStep<?> s1 = select();
+SelectJoinStep<?> s2 = s1.from(BOOK);
+SelectJoinStep<?> s3 = s1.from(AUTHOR);
 
 // The following can be said
 s1 == s2; // The internal object is always the same
 s2 == s3; // The internal object is always the same]]></java>
 
 									<p>
-										Mutability may be removed in a future version of jOOQ.
+										On the other hand, beware that you can always extract and modify <reference id="bind-values" title="bind values"/> from any <code>QueryPart</code>.
 									</p>
 								</content>
 							</section>
@@ -1488,6 +1545,8 @@ s2 == s3; // The internal object is always the same]]></java>
 									<p>
 										When you don't just perform <reference id="crud-with-updatablerecords" title="CRUD"/> (i.e. SELECT * FROM your_table WHERE ID = ?), you're usually generating new record types using custom projections. With jOOQ, this is as intuitive, as if using SQL directly. A more or less complete example of the "standard" SQL syntax, plus some extensions, is provided by a query like this:
 									</p>
+
+									<h3>SELECT from a complex table expression</h3>
 <code-pair>
 <sql><![CDATA[-- get all authors' first and last names, and the number
 -- of books they've written in German, if they have written
@@ -1512,7 +1571,7 @@ ORDER BY AUTHOR.LAST_NAME ASC NULLS FIRST
 
 
 
-Factory create = new Factory(connection, dialect);
+Executor create = new Executor(connection, dialect);
 
 create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
       .from(AUTHOR)
@@ -1528,12 +1587,12 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
 </code-pair>
 
 									<p>
-										Details about the various clauses of this query will be provided in subsequent sections
+										Details about the various clauses of this query will be provided in subsequent sections.
 									</p>
 
 									<h3>SELECT from single physical tables</h3>
 									<p>
-										A very similar, but limited API is available, if you want to select from single physical tables in order to retrieve <reference id="crud-with-updatablerecords" title="TableRecords or even UpdatableRecords"/>. The decision, which type of select to create is already made at the very first step, when you create the SELECT statement with the Factory:
+										A very similar, but limited API is available, if you want to select from single physical tables in order to retrieve <reference id="crud-with-updatablerecords" title="TableRecords or even UpdatableRecords"/>. The decision, which type of select to create is already made at the very first step, when you create the <code>SELECT</code> statement with the Factory or Executor:
 									</p>
 
 <java><![CDATA[public <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);]]></java>
@@ -1546,16 +1605,14 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
                         .fetchAny();]]></java>
 
                    					<p>
-                   						The simple SELECT API is limited in the way that it does not support any of these clauses:
+                   						The "reduced" SELECT API is limited in the way that it skips DSL access to any of these clauses:
                    					</p>
                    					<ul>
                    						<li><reference id="select-clause"/></li>
                    						<li><reference id="join-clause"/></li>
-                   						<li><reference id="group-by-clause"/></li>
-                   						<li><reference id="having-clause"/></li>
                    					</ul>
                    					<p>
-                   						In most parts of this manual, it is assumed that you do not use the simple SELECT API. For more information about the simple SELECT API, see the manual's section about <reference id="record-vs-tablerecord" title="fetching strongly or weakly typed records"/>.
+                   						In most parts of this manual, it is assumed that you do not use the "reduced" SELECT API. For more information about the simple SELECT API, see the manual's section about <reference id="record-vs-tablerecord" title="fetching strongly or weakly typed records"/>.
                    					</p>
 								</content>
 
@@ -1606,6 +1663,32 @@ Select<?> select2 = create.selectOne();]]></java>
 <sql><![CDATA[SELECT DISTINCT BOOK.TITLE]]></sql>
 <java><![CDATA[Select<?> select1 = create.selectDistinct(BOOK.TITLE);]]></java>
 </code-pair>
+
+											<h3>Typesafe projections with degree up to {max-row-degree}</h3>
+											<p>
+												Since jOOQ 3.0, <reference id="record-n" title="records"/> and <reference id="row-value-expressions" title="row value expressions"/> up to degree {max-row-degree} are now generically typesafe. This is reflected by an overloaded <code>SELECT</code> (and <code>SELECT DISTINCT</code>) API in both Factory and Executor. An extract from Factory:
+											</p>
+											
+<java><![CDATA[// Non-typesafe select methods:
+public static SelectSelectStep<Record> select(Collection<? extends Field<?>> fields);
+public static SelectSelectStep<Record> select(Field<?>... fields);
+
+// Typesafe select methods:
+public static <T1>         SelectSelectStep<Record1<T1>>         select(Field<T1> field1);
+public static <T1, T2>     SelectSelectStep<Record2<T1, T2>>     select(Field<T1> field1, Field<T2> field2);
+public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3);
+// [...]]]></java>
+		
+											<p>
+												Since the generic R type is bound to some <reference id="record-n" title="Record[N]"/>, the associated T type information can be used in various other contexts, e.g. the <reference id="in-predicate" title="IN predicate"/>. Such a <code>SELECT</code> statement can be assigned typesafely:
+											</p>
+
+<java><![CDATA[Select<Record2<Integer, String>> s1 = create.select(BOOK.ID, BOOK.TITLE);
+Select<Record2<Integer, String>> s2 = create.select(BOOK.ID, trim(BOOK.TITLE));]]></java>
+																				
+											<p>
+												For more information about typesafe record types with degree up to {max-row-degree}, see the manual's section about <reference id="record-n" title="Record1 to Record{max-row-degree}"/>.
+											</p>
 										</content>
 									</section>
 
@@ -1654,8 +1737,8 @@ FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(null, null, 'ALLSTATS'));]]></sql>
 <code-pair>
 	<sql><![CDATA[SELECT 1 FROM DUAL
 SELECT 1]]></sql>
-	<java><![CDATA[new Factory(SQLDialect.ORACLE).selectOne().getSQL();
-new Factory(SQLDialect.POSTGRES).selectOne().getSQL();]]></java>
+	<java><![CDATA[new Executor(SQLDialect.ORACLE).selectOne().getSQL();
+new Executor(SQLDialect.POSTGRES).selectOne().getSQL();]]></java>
 </code-pair>
 
 											<p>
@@ -1685,7 +1768,7 @@ new Factory(SQLDialect.POSTGRES).selectOne().getSQL();]]></java>
 												All of these JOIN methods can be called on <reference class="org.jooq.Table"/> types, or directly after the FROM clause for convenience. The following example joins AUTHOR and BOOK
 											</p>
 
-<java><![CDATA[Factory create = new Factory(connection, dialect);
+<java><![CDATA[Executor create = new Executor(connection, dialect);
 
 // Call "join" directly on the AUTHOR table
 Result<?> result = create.select()
@@ -1727,7 +1810,7 @@ create.select()
 
 											<h3>JOIN ON KEY, convenience provided by jOOQ</h3>
 											<p>
-												Surprisingly, SQL does not allow to formally JOIN on well-known foreign key relationship information. Naturally, when you join BOOK to AUTHOR, you will want to do that based on the BOOK.AUTHOR_ID foreign key to AUTHOR.ID primary key relation. Not being able to do this in SQL leads to a lot of repetitive code, re-writing the same JOIN predicate again and again - especially, when your foreign keys contain more than one column. With jOOQ, when you use <reference id="code-generation" title="code generation"/>, you can use foreign key constraint information in JOIN expressions as such:
+												Surprisingly, the SQL standard does not allow to formally JOIN on well-known foreign key relationship information. Naturally, when you join BOOK to AUTHOR, you will want to do that based on the BOOK.AUTHOR_ID foreign key to AUTHOR.ID primary key relation. Not being able to do this in SQL leads to a lot of repetitive code, re-writing the same JOIN predicate again and again - especially, when your foreign keys contain more than one column. With jOOQ, when you use <reference id="code-generation" title="code generation"/>, you can use foreign key constraint information in JOIN expressions as such:
 											</p>
 
 <code-pair>
@@ -1740,6 +1823,9 @@ JOIN BOOK ON BOOK.AUTHOR_ID = AUTHOR.ID]]></sql>
 
       										<p>
       											In case of ambiguity, you can also supply field references for your foreign keys, or the generated foreign key reference to the onKey() method.
+      										</p>
+      										<p>
+      											Note that formal support for the Sybase <code>JOIN ON KEY</code> syntax is on the roadmap.
       										</p>
 
 											<h3>The JOIN USING syntax</h3>
@@ -1903,7 +1989,7 @@ ORDER BY 1]]></sql>
 											</ul>
 
 											<p>
-												Note that this syntax is also supported in the CUBRID database.
+												Note that this syntax is also supported in the CUBRID database and might be simulated in other dialects supporting common table expressions in the future.
 											</p>
 											
 											<h3>ORDER SIBLINGS</h3>
@@ -1942,15 +2028,18 @@ FROM BOOK
 GROUP BY AUTHOR_ID]]></sql>
 <java><![CDATA[create.select(BOOK.AUTHOR_ID, count())
       .from(BOOK)
-      .groupBy(AUTHOR_ID);]]></java></code-pair>
+      .groupBy(BOOK.AUTHOR_ID);]]></java></code-pair>
 
 											<p>
-												As defined in the SQL standard, when grouping, you may no longer project any columns that are not a formal part of the GROUP BY clause, or <reference id="aggregate-functions" title="aggregate functions"/>. The above example counts all books per author
+												The above example counts all books per author.
 											</p>
-
+											<p>
+												Note, as defined in the SQL standard, when grouping, you may no longer project any columns that are not a formal part of the GROUP BY clause, or <reference id="aggregate-functions" title="aggregate functions"/>.
+											</p>
+											
 											<h3>MySQL's deviation from the SQL standard</h3>
 											<p>
-												MySQL has a peculiar way of not adhering to this standard behaviour. This is documented in the <a href="http://dev.mysql.com/doc/refman/5.6/en/group-by-hidden-columns.html">MySQL manual</a>. In short, with MySQL, you can also project any other field that are not part of the GROUP BY clause. The projected values will just be arbitrary values from within the group. You cannot rely on any ordering. For example:
+												MySQL has a peculiar way of not adhering to this standard behaviour. This is documented in the <a href="http://dev.mysql.com/doc/refman/5.6/en/group-by-hidden-columns.html">MySQL manual</a>. In short, with MySQL, you can also project any other field that is not part of the GROUP BY clause. The projected values will just be arbitrary values from within the group. You cannot rely on any ordering. For example:
 											</p>
 
 <code-pair>
@@ -1967,7 +2056,7 @@ GROUP BY AUTHOR_ID]]></sql>
 
 											<h3>Empty GROUP BY clauses</h3>
 											<p>
-												jOOQ supports empty <code>GROUP BY ()</code> clauses as well. This will result in <reference id="select-statement" title="SELECT statements"/> that return only one record.
+												jOOQ supports empty <code>GROUP BY ()</code> clause as well. This will result in <reference id="select-statement" title="SELECT statements"/> that return only one record.
 											</p>
 
 <code-pair>
@@ -2051,12 +2140,12 @@ ORDER BY 1 ASC, 2 DESC]]></sql>
       .orderBy(one().asc(), inline(2).desc());]]></java></code-pair>
 
 											<p>
-												Note, how one() is used as a convenience short-cut for inline(1)
+												Note, how <code>one()</code> is used as a convenience short-cut for <code>inline(1)</code>
 											</p>
 
 											<h3>Ordering and NULLS</h3>
 											<p>
-												A few databases support the SQL standard "null ordering" clause in sort specification lists, to define whether NULL values should come first or last in an ordered result.
+												A few databases support the SQL standard "null ordering" clause in sort specification lists, to define whether <code>NULL</code> values should come first or last in an ordered result.
 											</p>
 
 <code-pair>
@@ -2250,9 +2339,9 @@ FOR UPDATE OF TITLE]]></sql>
 												Oracle goes a bit further and also allows to specify the actual locking behaviour. It features these additional clauses, which are all supported by jOOQ:
 											</p>
 											<ul>
-												<li>FOR UPDATE NOWAIT: This is the default behaviour. If the lock cannot be acquired, the query fails immediately</li>
-												<li>FOR UPDATE WAIT n: Try to wait for [n] seconds for the lock acquisition. The query will fail only afterwards</li>
-												<li>FOR UPDATE SKIP LOCKED: This peculiar syntax will skip all locked records. This is particularly useful when implementing queue tables with multiple consumers</li>
+												<li><code>FOR UPDATE NOWAIT</code>: This is the default behaviour. If the lock cannot be acquired, the query fails immediately</li>
+												<li><code>FOR UPDATE WAIT n</code>: Try to wait for [n] seconds for the lock acquisition. The query will fail only afterwards</li>
+												<li><code>FOR UPDATE SKIP LOCKED</code>: This peculiar syntax will skip all locked records. This is particularly useful when implementing queue tables with multiple consumers</li>
 											</ul>
 											<p>
 												With jOOQ, you can use those Oracle extensions as such:
@@ -2310,7 +2399,7 @@ SELECT * FROM author ORDER BY id DESC;]]></sql>
 										<title>UNION, INTERSECTION and EXCEPT</title>
 										<content>
 											<p>
-												SQL allows to perform set operations as understood in standard set theory on result sets. These operations include unions, intersections, subtractions. For two subselects to be combinable by such a set operator, each subselect must return a <reference id="table-expressions" title="table expression"/> of the same arity and type.
+												SQL allows to perform set operations as understood in standard set theory on result sets. These operations include unions, intersections, subtractions. For two subselects to be combinable by such a set operator, each subselect must return a <reference id="table-expressions" title="table expression"/> of the same degree and type.
 											</p>
 											
 											<h3>UNION and UNION ALL</h3>
@@ -2328,7 +2417,7 @@ create.selectFrom(BOOK).where(BOOK.ID.equal(5)));]]></java></code-pair>
 											
 											<h3>INTERSECT [ ALL ] and EXCEPT [ ALL ]</h3>
 											<p>
-												INTERSECT is the operation that produces only those s that are returned by both subselects. EXCEPT is the operation that returns only those s that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the ALL keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support INTERSECT ALL, EXEPT ALL operations either. 
+												INTERSECT is the operation that produces only those values that are returned by both subselects. EXCEPT is the operation that returns only those values that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the ALL keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support INTERSECT ALL, EXEPT ALL operations either. 
 											</p>
 											
 											<h3>jOOQ's set operators and how they're different from standard SQL</h3>
@@ -2348,6 +2437,21 @@ UNION
 create.selectFrom(AUTHOR)
       .orderBy(AUTHOR.DATE_OF_BIRTH.desc()).limit(1));]]></java></code-pair>
 		
+											<h3>Projection typesafety for degrees between 1 and {max-row-degree}</h3>
+											<p>
+												Two subselects that are combined by a set operator are required to be of the same degree and, in most databases, also of the same type. jOOQ 3.0's introduction of <reference id="record-n" title="Typesafe Record[N] types"/> helps compile-checking these constraints:
+											</p>
+											
+<java><![CDATA[// Some sample SELECT statements
+Select<Record2<Integer, String>>  s1 = select(BOOK.ID, BOOK.TITLE).from(BOOK);
+Select<Record1<Integer>>          s2 = selectOne();
+Select<Record2<Integer, Integer>> s3 = select(one(), zero());
+Select<Record2<Integer, String>>  s4 = select(one(), inline("abc"));
+
+// Let's try to combine them:
+s1.union(s2); // Doesn't compile because of a degree mismatch. Expected: Record2<...>, got: Record1<...>
+s1.union(s3); // Doesn't compile because of a type mismatch. Expected: <Integer, String>, got: <Integer, Integer>
+s1.union(s4); // OK. The two Record[N] types match]]></java>											
 										</content>
 									</section>
 
@@ -2383,6 +2487,10 @@ FROM table1
 </code-pair>
 										</content>
 									</section>
+									
+									<section id="select-lexical-vs-logical-order">
+										<title>Lexical and logical SELECT clause order</title>
+									</section>
 								</sections>
 							</section>
 
@@ -2402,6 +2510,14 @@ VALUES (100, 'Hermann', 'Hesse');</sql>
         AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
       .values(100, "Hermann", "Hesse");</java></code-pair>
 
+									<p>
+										Note that for explicit degrees up to {max-row-degree}, the <code>VALUES()</code> constructor provides additional typesafety. The following example illustrates this:
+									</p>
+
+<java><![CDATA[InsertValuesStep3<AuthorRecord, Integer, String, String> step = 
+  create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME);
+    step.values("A", "B", "C");
+         // ^^^ Doesn't compile, the expected type is Integer]]></java>
 									<h3>INSERT multiple rows with the VALUES() constructor</h3>
 									<p>
 										The SQL standard specifies that multiple rows can be supplied to the VALUES() constructor in an INSERT statement. Here's an example of a multi-record INSERT
@@ -2449,7 +2565,7 @@ SELECT 101, 'Alfred', 'Döblin' FROM DUAL;</sql>
       .set(AUTHOR.LAST_NAME, "Döblin");</java>
       
 									<p>
-										As you can see, this syntax is a bit more verbose, but also more type-safe, as every field can be matched with its value. Internally, the two syntaxes are strictly equivalent.
+										As you can see, this syntax is a bit more verbose, but also more readable, as every field can be matched with its value. Internally, the two syntaxes are strictly equivalent.
 									</p>
 
 									<h3>MySQL's INSERT .. ON DUPLICATE KEY UPDATE</h3>
@@ -2533,7 +2649,69 @@ create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
       .set(AUTHOR.LAST_NAME, "Hesse")
       .where(AUTHOR.ID.equal(3));</java>
 </code-pair>
-								
+
+									<p>
+										Most databases allow for using scalar subselects in UPDATE statements in one way or another. jOOQ models this through a <code>set(Field&lt;T>, Select&lt;? extends Record1&lt;T>>) method in the UPDATE DSL API:</code>
+									</p>
+
+<code-pair>
+<sql>UPDATE AUTHOR
+   SET FIRST_NAME = (
+         SELECT FIRST_NAME
+         FROM PERSON
+         WHERE PERSON.ID = AUTHOR.ID
+       ),
+ WHERE ID = 3;</sql>
+<java>create.update(AUTHOR)
+      .set(AUTHOR.FIRST_NAME, 
+         select(PERSON.FIRST_NAME)
+        .from(PERSON)
+        .where(PERSON.ID.equal(AUTHOR.ID))
+      )
+      .where(AUTHOR.ID.equal(3));</java>
+</code-pair>
+
+
+									<h3>Using row value expressions in an UPDATE statement</h3>
+									<p>
+										jOOQ supports formal <reference id="row-value-expressions" title="row value expressions"/> in various contexts, among which the UPDATE statement. Only one row value expression can be updated at a time. Here's an example:
+									</p>
+									
+<code-pair>
+<sql>UPDATE AUTHOR
+   SET (FIRST_NAME, LAST_NAME) = 
+       ('Hermann',  'Hesse')
+ WHERE ID = 3;</sql>
+<java>create.update(AUTHOR)
+      .set(row(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME),
+           row("Herman",          "Hesse"))
+      .where(AUTHOR.ID.equal(3));</java>
+</code-pair>
+
+									<p>
+										This can be particularly useful when using subselects:
+									</p>
+
+<code-pair>
+<sql>UPDATE AUTHOR
+   SET (FIRST_NAME, LAST_NAME) = (
+         SELECT PERSON.FIRST_NAME, PERSON.LAST_NAME
+         FROM PERSON
+         WHERE PERSON.ID = AUTHOR.ID
+       )
+ WHERE ID = 3;</sql>
+<java>create.update(AUTHOR)
+      .set(row(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME),
+           select(PERSON.FIRST_NAME, PERSON.LAST_NAME)
+          .from(PERSON)
+          .where(PERSON.ID.equal(AUTHOR.ID))
+      )
+      .where(AUTHOR.ID.equal(3));</java>
+</code-pair>
+
+									<p>
+										The above row value expressions usages are completely typesafe.
+									</p>
 								</content>
 							</section>
 
@@ -2607,6 +2785,10 @@ VALUES ('John', 'Hitchcock')</sql>
 		                                <a href="http://www.h2database.com/html/grammar.html#merge">http://www.h2database.com/html/grammar.html#merge</a>
 		                            </p>
 								
+									<h3>Typesafety of VALUES() for degrees up to {max-row-degree}</h3>
+									<p>
+										Much like the <reference id="insert-statement" title="INSERT statement"/>, the <code>MERGE</code> statement's <code>VALUES()</code> clause provides typesafety for degrees up to {max-row-degree}, in both the standard syntax variant as well as the H2 variant.
+									</p>
 								</content>
 							</section>
 
@@ -2939,12 +3121,12 @@ FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(null, null, 'ALLSTATS'));]]></sql>
 										The SQL standard specifies that the <reference id="from-clause" title="FROM clause"/> is optional in a <reference id="select-statement" title="SELECT statement"/>. However, according to the standard, you may then no longer use some other clauses, such as the <reference id="where-clause" title="WHERE clause"/>. In the real world, there exist three types of databases:
 									</p>
 									<ul>
-										<li>The ones that always require a FROM clause</li>
-										<li>The ones that never require a FROM clause (and still allow a WHERE clause)</li>
+										<li>The ones that always require a <code>FROM</code> clause</li>
+										<li>The ones that never require a <code>FROM</code> clause (and still allow a <code>WHERE</code> clause)</li>
 										<li>The ones that correctly implement the SQL standard</li>
 									</ul>
 									<p>
-										With jOOQ, you don't have to worry about the above distinction of SQL dialects. jOOQ never requires a FROM clause, but renders the necessary "DUAL" table, if needed. The following program shows how jOOQ renders "DUAL" tables
+										With jOOQ, you don't have to worry about the above distinction of SQL dialects. jOOQ never requires a <code>FROM</code> clause, but renders the necessary <code>"DUAL"</code> table, if needed. The following program shows how jOOQ renders <code>"DUAL"</code> tables
 									</p>
 
 <code-pair>
@@ -2952,6 +3134,7 @@ FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(null, null, 'ALLSTATS'));]]></sql>
 SELECT 1 FROM "db_root"
 SELECT 1 FROM "SYSIBM"."DUAL"
 SELECT 1 FROM "SYSIBM"."SYSDUMMY1"
+SELECT 1 FROM "RDB$DATABASE"
 SELECT 1 FROM dual
 SELECT 1 FROM "INFORMATION_SCHEMA"."SYSTEM_USERS"
 SELECT 1 FROM (select 1 as dual) as dual
@@ -2962,23 +3145,24 @@ SELECT 1
 SELECT 1
 SELECT 1 FROM [SYS].[DUMMY]
 ]]></sql>
-	<java><![CDATA[new Factory(SQLDialect.ASE      ).selectOne().getSQL();
-new Factory(SQLDialect.CUBRID   ).selectOne().getSQL();
-new Factory(SQLDialect.DB2      ).selectOne().getSQL();
-new Factory(SQLDialect.DERBY    ).selectOne().getSQL();
-new Factory(SQLDialect.H2       ).selectOne().getSQL();
-new Factory(SQLDialect.HSQLDB   ).selectOne().getSQL();
-new Factory(SQLDialect.INGRES   ).selectOne().getSQL();
-new Factory(SQLDialect.MYSQL    ).selectOne().getSQL();
-new Factory(SQLDialect.ORACLE   ).selectOne().getSQL();
-new Factory(SQLDialect.POSTGRES ).selectOne().getSQL();
-new Factory(SQLDialect.SQLITE   ).selectOne().getSQL();
-new Factory(SQLDialect.SQLSERVER).selectOne().getSQL();
-new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
+	<java><![CDATA[new Executor(SQLDialect.ASE      ).selectOne().getSQL();
+new Executor(SQLDialect.CUBRID   ).selectOne().getSQL();
+new Executor(SQLDialect.DB2      ).selectOne().getSQL();
+new Executor(SQLDialect.DERBY    ).selectOne().getSQL();
+new Executor(SQLDialect.FIREBIRD ).selectOne().getSQL();
+new Executor(SQLDialect.H2       ).selectOne().getSQL();
+new Executor(SQLDialect.HSQLDB   ).selectOne().getSQL();
+new Executor(SQLDialect.INGRES   ).selectOne().getSQL();
+new Executor(SQLDialect.MYSQL    ).selectOne().getSQL();
+new Executor(SQLDialect.ORACLE   ).selectOne().getSQL();
+new Executor(SQLDialect.POSTGRES ).selectOne().getSQL();
+new Executor(SQLDialect.SQLITE   ).selectOne().getSQL();
+new Executor(SQLDialect.SQLSERVER).selectOne().getSQL();
+new Executor(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 </code-pair>
 
 									<p>
-										Note, that some databases (H2, MySQL) can normally do without "dual". However, there exist some corner-cases with complex nested SELECT statements, where this will cause syntax errors (or parser bugs). To stay on the safe side, jOOQ will always render "dual" in those dialects.
+										Note, that some databases (H2, MySQL) can normally do without <code>"DUAL"</code>. However, there exist some corner-cases with complex nested <code>SELECT</code> statements, where this will cause syntax errors (or parser bugs). To stay on the safe side, jOOQ will always render "dual" in those dialects.
 									</p>
 								</content>
 							</section>
@@ -3036,7 +3220,7 @@ ORDER BY BOOK.TITLE]]></sql>
 </code-pair>
 
 									<p>
-										Table columns implement a more specific interface called <reference class="org.jooq.TableField"/>, which is parameterised with its associated &lt;R extends Record&gt; record type.
+										Table columns implement a more specific interface called <reference class="org.jooq.TableField"/>, which is parameterised with its associated <code>&lt;R extends Record&gt;</code> record type.
 									</p>
 									<p>
 										See the manual's section about <reference id="codegen-tables" title="generated tables"/> for more information about what is really generated by the <reference id="code-generation" title="code generator"/>
@@ -3081,10 +3265,10 @@ System.out.println("Books  : " + record.getValue("books"));</java>
 								<title>Cast expressions</title>
 								<content>
 									<p>
-										jOOQ's source code generator tries to find the most accurate type mapping between your vendor-specific data types and a matching Java type. For instance, most VARCHAR, CHAR, CLOB types will map to String. Most BINARY, BYTEA, BLOB types will map to byte[]. NUMERIC types will default to java.math.BigDecimal, but can also be any of java.math.BigInteger, Long, Integer, Short, Byte, Double, Float.
+										jOOQ's source code generator tries to find the most accurate type mapping between your vendor-specific data types and a matching Java type. For instance, most <code>VARCHAR</code>, <code>CHAR</code>, <code>CLOB</code> types will map to String. Most <code>BINARY</code>, <code>BYTEA</code>, <code>BLOB</code> types will map to <code>byte[]</code>. <code>NUMERIC</code> types will default to <reference class="java.math.BigDecimal"/>, but can also be any of <reference class="java.math.BigInteger"/>, <reference class="java.lang.Long"/>, <reference class="java.lang.Integer"/>, <reference class="java.lang.Short"/>, <reference class="java.lang.Byte"/>, <reference class="java.lang.Double"/>, <reference class="java.lang.Float"/>.
 									</p>
 									<p>
-										Sometimes, this automatic mapping might not be what you needed, or jOOQ cannot know the type of a field. In those cases you would write SQL type CASTs like this:
+										Sometimes, this automatic mapping might not be what you needed, or jOOQ cannot know the type of a field. In those cases you would write SQL type <code>CAST</code> like this:
 									</p>
 									
 <sql>-- Let's say, your Postgres column LAST_NAME was VARCHAR(30)
@@ -3098,13 +3282,13 @@ SELECT CAST(AUTHOR.LAST_NAME AS TEXT) FROM DUAL</sql>
 <java>create.select(TAuthor.LAST_NAME.cast(PostgresDataType.TEXT));</java>
 
 									<p>
-										The same thing can be achieved by casting a Field directly to String.class, as TEXT is the default data type in Postgres to map to Java's String
+										The same thing can be achieved by casting a Field directly to String.class, as <code>TEXT</code> is the default data type in Postgres to map to Java's String
 									</p>
 									
 <java>create.select(TAuthor.LAST_NAME.cast(String.class));</java>
 		
 									<p>
-										The complete CAST API in Field consists of these three methods:
+										The complete <code>CAST</code> API in <reference class="org.jooq.Field"/> consists of these three methods:
 									</p>
 									
 <java><![CDATA[public interface Field<T> {
@@ -3164,11 +3348,11 @@ public class Factory {
 </code-pair>
 
 									<p>
-										For more advanced datetime arithmetic, use the Factory's timestampDiff() and dateDiff() functions, as well as jOOQ's built-in SQL standard INTERVAL data type support:
+										For more advanced datetime arithmetic, use the Factory's timestampDiff() and dateDiff() functions, as well as jOOQ's built-in SQL standard <code>INTERVAL</code> data type support:
 									</p>
 									<ul>
-										<li>INTERVAL YEAR TO MONTH: <reference class="org.jooq.types.YearToMonth"/></li>
-										<li>INTERVAL DAY TO SECOND: <reference class="org.jooq.types.DayToSecond"/></li>
+										<li><code>INTERVAL YEAR TO MONTH</code>: <reference class="org.jooq.types.YearToMonth"/></li>
+										<li><code>INTERVAL DAY TO SECOND</code>: <reference class="org.jooq.types.DayToSecond"/></li>
 									</ul>
 								</content>
 							</section>
@@ -3202,10 +3386,10 @@ create.select(concat("A", "B", "C"));
 										This is a list of general functions supported by jOOQ's <reference id="factory" title="Factory"/>:
 									</p>
 									<ul>
-										<li><strong>COALESCE</strong>: Get the first non-null value in a list of arguments.</li>
-										<li><strong>NULLIF</strong>: Return NULL if both arguments are equal, or the first argument, otherwise.</li>
-										<li><strong>NVL</strong>: Get the first non-null value among two arguments.</li>
-										<li><strong>NVL2</strong>: Get the second argument if the first is null, or the third argument, otherwise.</li>
+										<li><strong><code>COALESCE</code></strong>: Get the first non-null value in a list of arguments.</li>
+										<li><strong><code>NULLIF</code></strong>: Return <code>NULL</code> if both arguments are equal, or the first argument, otherwise.</li>
+										<li><strong><code>NVL</code></strong>: Get the first non-null value among two arguments.</li>
+										<li><strong><code>NVL2</code></strong>: Get the second argument if the first is null, or the third argument, otherwise.</li>
 									</ul>
 																
 									<p>
@@ -3225,34 +3409,34 @@ create.select(concat("A", "B", "C"));
 									</p>
 									
 									<ul>
-										<li><strong>ABS</strong>: Get the absolute value of a value.</li>
-										<li><strong>ACOS</strong>: Get the arc cosine of a value.</li>
-										<li><strong>ASIN</strong>: Get the arc sine of a value.</li>
-										<li><strong>ATAN</strong>: Get the arc tangent of a value.</li>
-										<li><strong>ATAN2</strong>: Get the atan2 function of two values.</li>
-										<li><strong>CEIL</strong>: Get the smalles integer value larger than a given numeric value.</li>
-										<li><strong>COS</strong>: Get the cosine of a value.</li>
-										<li><strong>COSH</strong>: Get the hyperbolic cosine of a value.</li>
-										<li><strong>COT</strong>: Get the cotangent of a value.</li>
-										<li><strong>COTH</strong>: Get the hyperbolic cotangent of a value.</li>
-										<li><strong>DEG</strong>: Transform radians into degrees.</li>
-										<li><strong>EXP</strong>: Calculate e^value.</li>
-										<li><strong>FLOOR</strong>: Get the largest integer value smaller than a given numeric value.</li>
-										<li><strong>GREATEST</strong>: Finds the greatest among all argument values (can also be used with non-numeric values).</li>
-										<li><strong>LEAST</strong>: Finds the least among all argument values (can also be used with non-numeric values).</li>
-										<li><strong>LN</strong>: Get the natural logarithm of a value.</li>
-										<li><strong>LOG</strong>: Get the logarithm of a value given a base.</li>
-										<li><strong>POWER</strong>: Calculate value^exponent.</li>
-										<li><strong>RAD</strong>: Transform degrees into radians.</li>
-										<li><strong>RAND</strong>: Get a random number.</li>
-										<li><strong>ROUND</strong>: Rounds a value to the nearest integer.</li>
-										<li><strong>SIGN</strong>: Get the sign of a value (-1, 0, 1).</li>
-										<li><strong>SIN</strong>: Get the sine of a value.</li>
-										<li><strong>SINH</strong>: Get the hyperbolic sine of a value.</li>
-										<li><strong>SQRT</strong>: Calculate the square root of a value.</li>
-										<li><strong>TAN</strong>: Get the tangent of a value.</li>
-										<li><strong>TANH</strong>: Get the hyperbolic tangent of a value.</li>
-										<li><strong>TRUNC</strong>: Truncate the decimals off a given value.</li>
+										<li><strong><code>ABS</code></strong>: Get the absolute value of a value.</li>
+										<li><strong><code>ACOS</code></strong>: Get the arc cosine of a value.</li>
+										<li><strong><code>ASIN</code></strong>: Get the arc sine of a value.</li>
+										<li><strong><code>ATAN</code></strong>: Get the arc tangent of a value.</li>
+										<li><strong><code>ATAN2</code></strong>: Get the atan2 function of two values.</li>
+										<li><strong><code>CEIL</code></strong>: Get the smalles integer value larger than a given numeric value.</li>
+										<li><strong><code>COS</code></strong>: Get the cosine of a value.</li>
+										<li><strong><code>COSH</code></strong>: Get the hyperbolic cosine of a value.</li>
+										<li><strong><code>COT</code></strong>: Get the cotangent of a value.</li>
+										<li><strong><code>COTH</code></strong>: Get the hyperbolic cotangent of a value.</li>
+										<li><strong><code>DEG</code></strong>: Transform radians into degrees.</li>
+										<li><strong><code>EXP</code></strong>: Calculate e^value.</li>
+										<li><strong><code>FLOOR</code></strong>: Get the largest integer value smaller than a given numeric value.</li>
+										<li><strong><code>GREATEST</code></strong>: Finds the greatest among all argument values (can also be used with non-numeric values).</li>
+										<li><strong><code>LEAST</code></strong>: Finds the least among all argument values (can also be used with non-numeric values).</li>
+										<li><strong><code>LN</code></strong>: Get the natural logarithm of a value.</li>
+										<li><strong><code>LOG</code></strong>: Get the logarithm of a value given a base.</li>
+										<li><strong><code>POWER</code></strong>: Calculate value^exponent.</li>
+										<li><strong><code>RAD</code></strong>: Transform degrees into radians.</li>
+										<li><strong><code>RAND</code></strong>: Get a random number.</li>
+										<li><strong><code>ROUND</code></strong>: Rounds a value to the nearest integer.</li>
+										<li><strong><code>SIGN</code></strong>: Get the sign of a value (-1, 0, 1).</li>
+										<li><strong><code>SIN</code></strong>: Get the sine of a value.</li>
+										<li><strong><code>SINH</code></strong>: Get the hyperbolic sine of a value.</li>
+										<li><strong><code>SQRT</code></strong>: Calculate the square root of a value.</li>
+										<li><strong><code>TAN</code></strong>: Get the tangent of a value.</li>
+										<li><strong><code>TANH</code></strong>: Get the hyperbolic tangent of a value.</li>
+										<li><strong><code>TRUNC</code></strong>: Truncate the decimals off a given value.</li>
 									</ul>
 									
 									<p>
@@ -3268,16 +3452,16 @@ create.select(concat("A", "B", "C"));
 										Interestingly, bitwise functions and bitwise arithmetic is not very popular among SQL databases. Most databases only support a few bitwise operations, while others ship with the full set of operators. jOOQ's API includes most bitwise operations as listed below. In order to avoid ambiguities with <reference id="conditional-expressions" title="conditional operators"/>, all bitwise functions are prefixed with "bit"
 									</p>
 									<ul>
-										<li><strong>BIT_COUNT</strong>: Count the number of bits set to 1 in a number</li>
-										<li><strong>BIT_AND</strong>: Set only those bits that are set in two numbers</li>
-										<li><strong>BIT_OR</strong>: Set all bits that are set in at least one number</li>
-										<li><strong>BIT_NAND</strong>: Set only those bits that are set in two numbers, and inverse the result</li>
-										<li><strong>BIT_NOR</strong>: Set all bits that are set in at least one number, and inverse the result</li>
-										<li><strong>BIT_NOT</strong>: Inverse the bits in a number</li>
-										<li><strong>BIT_XOR</strong>: Set all bits that are set in at exactly one number</li>
-										<li><strong>BIT_XNOR</strong>: Set all bits that are set in at exactly one number, and inverse the result</li>
-										<li><strong>SHL</strong>: Shift bits to the left</li>
-										<li><strong>SHR</strong>: Shift bits to the right</li>
+										<li><strong><code>BIT_COUNT</code></strong>: Count the number of bits set to 1 in a number</li>
+										<li><strong><code>BIT_AND</code></strong>: Set only those bits that are set in two numbers</li>
+										<li><strong><code>BIT_OR</code></strong>: Set all bits that are set in at least one number</li>
+										<li><strong><code>BIT_NAND</code></strong>: Set only those bits that are set in two numbers, and inverse the result</li>
+										<li><strong><code>BIT_NOR</code></strong>: Set all bits that are set in at least one number, and inverse the result</li>
+										<li><strong><code>BIT_NOT</code></strong>: Inverse the bits in a number</li>
+										<li><strong><code>BIT_XOR</code></strong>: Set all bits that are set in at exactly one number</li>
+										<li><strong><code>BIT_XNOR</code></strong>: Set all bits that are set in at exactly one number, and inverse the result</li>
+										<li><strong><code>SHL</code></strong>: Shift bits to the left</li>
+										<li><strong><code>SHR</code></strong>: Shift bits to the right</li>
 									</ul>
 									
 									<h3>Some background about bitwise operation simulation</h3>
@@ -3300,33 +3484,33 @@ create.select(concat("A", "B", "C"));
 									</p>
 									
 									<ul>
-										<li><strong>ASCII</strong>: Get the ASCII code of a character.</li>
-										<li><strong>BIT_LENGTH</strong>: Get the length of a string in bits.</li>
-										<li><strong>CHAR_LENGTH</strong>: Get the length of a string in characters.</li>
-										<li><strong>CONCAT</strong>: Concatenate several strings.</li>
-										<li><strong>ESCAPE</strong>: Escape a string for use with the <reference id="like-predicate" title="LIKE predicate"/>.</li>
-										<li><strong>LENGTH</strong>: Get the length of a string.</li>
-										<li><strong>LOWER</strong>: Get a string in lower case letters.</li>
-										<li><strong>LPAD</strong>: Pad a string on the left side.</li>
-										<li><strong>LTRIM</strong>: Trim a string on the left side.</li>
-										<li><strong>OCTET_LENGTH</strong>: Get the length of a string in octets.</li>
-										<li><strong>POSITION</strong>: Find a string within another string.</li>
-										<li><strong>REPEAT</strong>: Repeat a string a given number of times.</li>
-										<li><strong>REPLACE</strong>: Replace a string within another string.</li>
-										<li><strong>RPAD</strong>: Pad a string on the right side.</li>
-										<li><strong>RTRIM</strong>: Trim a string on the right side.</li>
-										<li><strong>SUBSTRING</strong>: Get a substring of a string.</li>
-										<li><strong>TRIM</strong>: Trim a string on both sides.</li>
-										<li><strong>UPPER</strong>: Get a string in upper case letters.</li>
+										<li><strong><code>ASCII</code></strong>: Get the <code>ASCII</code> code of a character.</li>
+										<li><strong><code>BIT_LENGTH</code></strong>: Get the length of a string in bits.</li>
+										<li><strong><code>CHAR_LENGTH</code></strong>: Get the length of a string in characters.</li>
+										<li><strong><code>CONCAT</code></strong>: Concatenate several strings.</li>
+										<li><strong><code>ESCAPE</code></strong>: Escape a string for use with the <reference id="like-predicate" title="LIKE predicate"/>.</li>
+										<li><strong><code>LENGTH</code></strong>: Get the length of a string.</li>
+										<li><strong><code>LOWER</code></strong>: Get a string in lower case letters.</li>
+										<li><strong><code>LPAD</code></strong>: Pad a string on the left side.</li>
+										<li><strong><code>LTRIM</code></strong>: Trim a string on the left side.</li>
+										<li><strong><code>OCTET_LENGTH</code></strong>: Get the length of a string in octets.</li>
+										<li><strong><code>POSITION</code></strong>: Find a string within another string.</li>
+										<li><strong><code>REPEAT</code></strong>: Repeat a string a given number of times.</li>
+										<li><strong><code>REPLACE</code></strong>: Replace a string within another string.</li>
+										<li><strong><code>RPAD</code></strong>: Pad a string on the right side.</li>
+										<li><strong><code>RTRIM</code></strong>: Trim a string on the right side.</li>
+										<li><strong><code>SUBSTRING</code></strong>: Get a substring of a string.</li>
+										<li><strong><code>TRIM</code></strong>: Trim a string on both sides.</li>
+										<li><strong><code>UPPER</code></strong>: Get a string in upper case letters.</li>
 									</ul>
 									
 									<p>
 										Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
 									</p>
 									
-									<h3>Regular expressions, REGEXP, REGEXP_LIKE, etc.</h3>
+									<h3>Regular expressions, <code>REGEXP</code>, <code>REGEXP_LIKE</code>, etc.</h3>
 									<p>
-										Various databases have some means of searching through columns using regular expressions if the <reference id="like-predicate" title="LIKE predicate"/> does not provide sufficient pattern matching power. While there are many different functions and operators in the various databases, jOOQ settled for the SQL:2008 standard REGEX_LIKE operator. Being an operator (and not a function), you should use the corresponding method on <reference class="org.jooq.Field"/>:
+										Various databases have some means of searching through columns using regular expressions if the <reference id="like-predicate" title="LIKE predicate"/> does not provide sufficient pattern matching power. While there are many different functions and operators in the various databases, jOOQ settled for the SQL:2008 standard <code>REGEX_LIKE</code> operator. Being an operator (and not a function), you should use the corresponding method on <reference class="org.jooq.Field"/>:
 									</p>
 									
 <java><![CDATA[create.selectFrom(BOOK).where(TITLE.likeRegex("^.*SQL.*$"));]]></java>
@@ -3346,18 +3530,18 @@ create.select(concat("A", "B", "C"));
 									</p>
 									
 									<ul>
-										<li><strong>CURRENT_DATE</strong>: Get current date as a DATE object.</li>
-										<li><strong>CURRENT_TIME</strong>: Get current time as a TIME object.</li>
-										<li><strong>CURRENT_TIMESTAMP</strong>: Get current date as a TIMESTAMP object.</li>
-										<li><strong>DATE_ADD</strong>: Add a number of days or an interval to a date.</li>
-										<li><strong>DATE_DIFF</strong>: Get the difference in days between two dates.</li>
-										<li><strong>TIMESTAMP_ADD</strong>: Add a number of days or an interval to a timestamp.</li>
-										<li><strong>TIMESTAMP_DIFF</strong>: Get the difference as an INTERVAL DAY TO SECOND between two dates.</li>
+										<li><strong><code>CURRENT_DATE</code></strong>: Get current date as a <code>DATE</code> object.</li>
+										<li><strong><code>CURRENT_TIME</code></strong>: Get current time as a <code>TIME</code> object.</li>
+										<li><strong><code>CURRENT_TIMESTAMP</code></strong>: Get current date as a <code>TIMESTAMP</code> object.</li>
+										<li><strong><code>DATE_ADD</code></strong>: Add a number of days or an interval to a date.</li>
+										<li><strong><code>DATE_DIFF</code></strong>: Get the difference in days between two dates.</li>
+										<li><strong><code>TIMESTAMP_ADD</code></strong>: Add a number of days or an interval to a timestamp.</li>
+										<li><strong><code>TIMESTAMP_DIFF</code></strong>: Get the difference as an <code>INTERVAL DAY TO SECOND</code> between two dates.</li>
 									</ul>
 									
 									<h3>Intervals in jOOQ</h3>
 									<p>
-										jOOQ fills a gap opened by JDBC, which neglects an important SQL data type as defined by the SQL standards: INTERVAL types. See the manual's section about <reference id="data-types-intervals" title="INTERVAL data types"/> for more details.
+										jOOQ fills a gap opened by JDBC, which neglects an important SQL data type as defined by the SQL standards: <code>INTERVAL</code> types. See the manual's section about <reference id="data-types-intervals" title="INTERVAL data types"/> for more details.
 									</p>
 								</content>
 							</section>
@@ -3369,7 +3553,7 @@ create.select(concat("A", "B", "C"));
 										This is a list of system functions supported by jOOQ's <reference id="factory" title="Factory"/>:
 									</p>
 									<ul>
-										<li><strong>CURRENT_USER</strong>: Get current user.</li>
+										<li><strong><code>CURRENT_USER</code></strong>: Get current user.</li>
 									</ul>
 								</content>
 							</section>
@@ -3439,7 +3623,7 @@ GROUP BY AUTHOR_ID</sql>
 
 		                            <h3>Ordered aggregate functions</h3>
 		                            <p>
-		                            	Oracle and some other databases support "ordered aggregate functions". This means you can provide an ORDER BY clause to an aggregate function, which will be taken into consideration when aggregating. The best example for this is Oracle's <code>LISTAGG()</code> (also known as <code>GROUP_CONCAT</code> in other <reference id="sql-dialects" title="SQL dialects"/>). The following query groups by authors and concatenates their books' titles
+		                            	Oracle and some other databases support "ordered aggregate functions". This means you can provide an <code>ORDER BY</code> clause to an aggregate function, which will be taken into consideration when aggregating. The best example for this is Oracle's <code>LISTAGG()</code> (also known as <code>GROUP_CONCAT</code> in other <reference id="sql-dialects" title="SQL dialects"/>). The following query groups by authors and concatenates their books' titles
 		                           	</p>
 <code-pair>
 <sql>SELECT   LISTAGG(TITLE, ', ')
@@ -3465,7 +3649,7 @@ GROUP BY AUTHOR_ID</sql>
 
 									<h3>FIRST and LAST: Oracle's "ranked" aggregate functions</h3>
 									<p>
-										Oracle allows for restricting aggregate functions using the <code>KEEP()</code> clause, which is supported by jOOQ. In Oracle, some aggregate functions (MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV) can be restricted by this clause, hence <reference class="org.jooq.AggregateFunction"/> also allows for specifying it. Here are a couple of examples using this clause:
+										Oracle allows for restricting aggregate functions using the <code>KEEP()</code> clause, which is supported by jOOQ. In Oracle, some aggregate functions (<code>MIN</code>, <code>MAX</code>, <code>SUM</code>, <code>AVG</code>, <code>COUNT</code>, <code>VARIANCE</code>, or <code>STDDEV</code>) can be restricted by this clause, hence <reference class="org.jooq.AggregateFunction"/> also allows for specifying it. Here are a couple of examples using this clause:
 									</p>
 
 <code-pair>
@@ -3596,9 +3780,9 @@ FROM     BOOK</sql>
       .from(BOOK)</java>
 </code-pair>
 
-									<h3>Window functions created from Oracle's FIRST and LAST aggregate functions</h3>
+									<h3>Window functions created from Oracle's <code>FIRST</code> and <code>LAST</code> aggregate functions</h3>
 									<p>
-										In the previous chapter about <reference id="aggregate-functions" title="aggregate functions"/>, we have seen the concept of "FIRST and LAST aggregate functions". These functions have a window function / analytical function variant, as well. For example:
+										In the previous chapter about <reference id="aggregate-functions" title="aggregate functions"/>, we have seen the concept of "<code>FIRST</code> and <code>LAST</code> aggregate functions". These functions have a window function / analytical function variant, as well. For example:
 									</p>
 
 <code-pair>
@@ -3623,7 +3807,7 @@ FROM     BOOK</sql>
 								<content>
 									<h3>ROLLUP() explained in SQL</h3>
 									<p>
-										The SQL standard defines special functions that can be used in the <reference id="group-by-clause" title="GROUP BY clause"/>: the grouping functions. These functions can be used to generate several groupings in a single clause. This can best be explained in SQL. Let's take ROLLUP() for instance:
+										The SQL standard defines special functions that can be used in the <reference id="group-by-clause" title="GROUP BY clause"/>: the grouping functions. These functions can be used to generate several groupings in a single clause. This can best be explained in SQL. Let's take <code>ROLLUP()</code> for instance:
 									</p>
 
 <code-pair>
@@ -3756,11 +3940,11 @@ ORDER BY 1 NULLS FIRST, 2 NULLS FIRST
 									</p>
 									
 <java><![CDATA[// The various grouping function constructors
-Field<?> rollup(Field<?>... fields);
-Field<?> cube(Field<?>... fields);
-Field<?> groupingSets(Field<?>... fields);
-Field<?> groupingSets(Field<?>[]... fields);
-Field<?> groupingSets(Collection<Field<?>>... fields);
+GroupField rollup(Field<?>... fields);
+GroupField cube(Field<?>... fields);
+GroupField groupingSets(Field<?>... fields);
+GroupField groupingSets(Field<?>[]... fields);
+GroupField groupingSets(Collection<? extends Field<?>>... fields);
 
 // The utility functions generating IDs per GROUPING SET
 Field<Integer> grouping(Field<?>);
@@ -3820,7 +4004,7 @@ END echo;
 								<title>User-defined aggregate functions</title>
 								<content>
 									<p>
-										Some databases support user-defined aggregate functions, which can then be used along with <reference id="group-by-clause" title="GROUP BY clauses"/> or as <reference id="window-functions" title="window functions"/>. An example for such a database is Oracle. With Oracle, you can define the following OBJECT type (the example was taken from the <a href="http://docs.oracle.com/cd/B28359_01/appdev.111/b28425/ext_agg_ref.htm">Oracle 11g documentation</a>): 
+										Some databases support user-defined aggregate functions, which can then be used along with <reference id="group-by-clause" title="GROUP BY clauses"/> or as <reference id="window-functions" title="window functions"/>. An example for such a database is Oracle. With Oracle, you can define the following <code>OBJECT</code> type (the example was taken from the <a href="http://docs.oracle.com/cd/B28359_01/appdev.111/b28425/ext_agg_ref.htm">Oracle 11g documentation</a>): 
 									</p>
 									
 <sql><![CDATA[CREATE TYPE U_SECOND_MAX AS OBJECT
@@ -3875,7 +4059,7 @@ END;
 END;]]></sql>
 
 									<p>
-										The above OBJECT type is then available to function declarations as such:
+										The above <code>OBJECT</code> type is then available to function declarations as such:
 									</p>
 
 <sql><![CDATA[
@@ -3884,7 +4068,7 @@ PARALLEL_ENABLE AGGREGATE USING U_SECOND_MAX;]]></sql>
 
 									<h3>Using the generated aggregate function</h3>
 									<p>
-										jOOQ's <reference id="code-generation" title="code generator"/> will detect such aggregate functions and generate them differently from regular <reference id="user-defined-functions" title="user-defined functions"/>. They implement the <reference class="org.jooq.AggregateFunction"/> type, as mentioned in the manual's section about <reference id="aggregate-functions" title="aggregate functions"/>. Here's how you can use the SECOND_MAX() aggregate function with jOOQ:
+										jOOQ's <reference id="code-generation" title="code generator"/> will detect such aggregate functions and generate them differently from regular <reference id="user-defined-functions" title="user-defined functions"/>. They implement the <reference class="org.jooq.AggregateFunction"/> type, as mentioned in the manual's section about <reference id="aggregate-functions" title="aggregate functions"/>. Here's how you can use the <code>SECOND_MAX()</code> aggregate function with jOOQ:
 									</p>
 				
 <code-pair>					
@@ -3904,7 +4088,7 @@ create.select(secondMax(BOOK.PUBLISHED_IN))
 								<title>The CASE expression</title>
 								<content>
 									<p>
-										The CASE expression is part of the standard SQL syntax. While some RDBMS also offer an IF expression, or a DECODE function, you can always rely on the two types of CASE syntax:
+										The <code>CASE</code> expression is part of the standard SQL syntax. While some RDBMS also offer an <code>IF</code> expression, or a <code>DECODE</code> function, you can always rely on the two types of <code>CASE</code> syntax:
 									</p>
 
 <code-pair>
@@ -3933,11 +4117,11 @@ create.decode().value(AUTHOR.FIRST_NAME)
 </code-pair>
 
 								<p>
-									In jOOQ, both syntaxes are supported (The second one is simulated in Derby, which only knows the first one). Unfortunately, both case and else are reserved words in Java. jOOQ chose to use decode() from the Oracle DECODE function, and otherwise(), which means the same as else.
+									In jOOQ, both syntaxes are supported (The second one is simulated in Derby, which only knows the first one). Unfortunately, both case and else are reserved words in Java. jOOQ chose to use decode() from the Oracle <code>DECODE</code> function, and otherwise(), which means the same as else.
 								</p>
 
 								<p>
-									A CASE expression can be used anywhere where you can place a <reference id="column-expressions" title="column expression (or Field)"/>. For instance, you can SELECT the above expression, if you're selecting from AUTHOR:
+									A <code>CASE</code> expression can be used anywhere where you can place a <reference id="column-expressions" title="column expression (or Field)"/>. For instance, you can <code>SELECT</code> the above expression, if you're selecting from <code>AUTHOR</code>:
 							 	</p>
 
 <sql>SELECT AUTHOR.FIRST_NAME, [... CASE EXPR ...] AS nationality
@@ -3945,7 +4129,7 @@ create.decode().value(AUTHOR.FIRST_NAME)
 
 								<h3>The Oracle DECODE() function</h3>
 								<p>
-									Oracle knows a more succinct, but maybe less readable DECODE() function with a variable number of arguments. This function roughly does the same as the second case expression syntax. jOOQ supports the DECODE() function and simulates it using CASE expressions in all dialects other than Oracle:
+									Oracle knows a more succinct, but maybe less readable <code>DECODE()</code> function with a variable number of arguments. This function roughly does the same as the second case expression syntax. jOOQ supports the <code>DECODE()</code> function and simulates it using <code>CASE</code> expressions in all dialects other than Oracle:
 								</p>
 
 <code-pair>
@@ -3974,7 +4158,7 @@ create.decode(AUTHOR.FIRST_NAME,
 
 		  							<h3>CASE clauses in an ORDER BY clause</h3>
 									<p>
-										Sort indirection is often implemented with a CASE clause of a SELECT's ORDER BY clause. See the manual's section about the <reference id="order-by-clause" title="ORDER BY clause"/> for more details.
+										Sort indirection is often implemented with a <code>CASE</code> clause of a <code>SELECT</code>'s <code>ORDER BY</code> clause. See the manual's section about the <reference id="order-by-clause" title="ORDER BY clause"/> for more details.
 									</p>
 								</content>
 							</section>
@@ -4021,23 +4205,33 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 								<title>Tuples or row value expressions</title>
 								<content>
 									<p>
-										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the VALUES row value constructor allows for providing a row value expression as a source for INSERT data. Row value expressions can appear in various other places, though. They are supported by jOOQ as s / rows. jOOQ's <reference id="factory" title="Factory"/> allows for the construction of type-safe s up to the degree / arity of 8. Higher-degree s are supported as well, but without any type-safety.  types are modelled as follows:
+										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the <code>VALUES</code> row value constructor allows for providing a row value expression as a source for <code>INSERT</code> data. Row value expressions can appear in various other places, though. They are supported by jOOQ as records / rows. jOOQ's <reference id="factory" title="Factory"/> allows for the construction of type-safe records up to the degree of {max-row-degree}. Higher-degree Rows are supported as well, but without any type-safety. Row types are modelled as follows:
 									</p>
 									
 <java><![CDATA[// The Factory provides overloaded row value expression constructor methods:
-public static <T1> Row1<T1> row(T1 t1) { ... }
-public static <T1, T2> Row2<T1, T2> row(T1 t1, T2 t2) { ... }
-public static <T1, T2, T3> Row3<T1, T2, T3> row(T1 t1, T2 t2, T3 t3) { ... }
+public static <T1>             Row1<T1>             row(T1 t1)                      { ... }
+public static <T1, T2>         Row2<T1, T2>         row(T1 t1, T2 t2)               { ... }
+public static <T1, T2, T3>     Row3<T1, T2, T3>     row(T1 t1, T2 t2, T3 t3)        { ... }
 public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(T1 t1, T2 t2, T3 t3, T4 t4) { ... }
 
-// [ ... idem for Row5, Row6, Row7, Row8 ... ]
+// [ ... idem for Row5, Row6, Row7, ..., Row{max-row-degree} ]
 
-// Degrees of more than 8 are supported without type-safety
+// Degrees of more than {max-row-degree} are supported without type-safety
 public static RowN row(Object... values) { ... }]]></java>
 
 									<h3>Using row value expressions in predicates</h3>
                                 	<p>
-                                		Row value expressions are incompatible with most other <reference id="queryparts" title="QueryParts"/>, but they can be used as a basis for constructing various <reference id="conditional-expressions" title="conditional expressions"/>, such as <reference id="comparison-predicate" title="comparison predicates"/>, <reference id="in-predicate" title="IN predicates"/>, or the "degree 2 row value expression only" <reference id="overlaps-predicate" title="OVERLAPS predicate"/>. See the relevant sections for more details about how to use row value expressions in predicates.
+                                		Row value expressions are incompatible with most other <reference id="queryparts" title="QueryParts"/>, but they can be used as a basis for constructing various <reference id="conditional-expressions" title="conditional expressions"/>, such as:
+                                	</p>
+                                	<ul>
+                                		<li><reference id="comparison-predicate-degree-n" title="comparison predicates"/></li>
+                                		<li><reference id="null-predicate-degree-n" title="NULL predicates"/></li>
+                                		<li><reference id="between-predicate-degree-n" title="BETWEEN predicates"/></li>
+                                		<li><reference id="in-predicate-degree-n" title="IN predicates"/></li>
+                                		<li><reference id="overlaps-predicate" title="OVERLAPS predicate"/> (for degree 2 row value expressions only)</li>
+                                	</ul>
+                                	<p>
+                                		See the relevant sections for more details about how to use row value expressions in predicates.
                                 	</p>
                                 	
                                 	<h3>Using row value expressions in UPDATE statements</h3>
@@ -4057,7 +4251,7 @@ public static RowN row(Object... values) { ... }]]></java>
 							</p>
 							<ul>
 								<li>The <reference id="case-expressions" title="CASE expression"/></li>
-								<li>The <reference id="join-clause" title="JOIN clause"/> (or JOIN .. ON clause, to be precise) of a <reference id="select-statement" title="SELECT statement"/>, <reference id="update-statement" title="UPDATE statement"/>, <reference id="delete-statement" title="DELETE statement"/></li>
+								<li>The <reference id="join-clause" title="JOIN clause"/> (or <code>JOIN .. ON</code> clause, to be precise) of a <reference id="select-statement" title="SELECT statement"/>, <reference id="update-statement" title="UPDATE statement"/>, <reference id="delete-statement" title="DELETE statement"/></li>
 								<li>The <reference id="where-clause" title="WHERE clause"/> of a <reference id="select-statement" title="SELECT statement"/>, <reference id="update-statement" title="UPDATE statement"/>, <reference id="delete-statement" title="DELETE statement"/></li>
 								<li>The <reference id="connect-by-clause" title="CONNECT BY clause"/> of a <reference id="select-statement" title="SELECT statement"/></li>
 								<li>The <reference id="having-clause" title="HAVING clause"/> of a <reference id="select-statement" title="SELECT statement"/></li>
@@ -4069,21 +4263,21 @@ public static RowN row(Object... values) { ... }]]></java>
 								Before SQL:1999, boolean types did not really exist in SQL. They were modelled by 0 and 1 numeric/char values. With SQL:1999, true booleans were introduced and are now supported by most databases. In short, these are possible boolean values:
 							</p>
 							<ul>
-								<li>1 or TRUE</li>
-								<li>0 or FALSE</li>
-								<li>NULL or UNKNOWN</li>
+								<li><code>1</code> or <code>TRUE</code></li>
+								<li><code>0</code> or <code>FALSE</code></li>
+								<li><code>NULL</code> or <code>UNKNOWN</code></li>
 							</ul>
 							<p>
-								It is important to know that SQL differs from many other languages in the way it interprets the NULL boolean value. Most importantly, the following facts are to be remembered:
+								It is important to know that SQL differs from many other languages in the way it interprets the <code>NULL</code> boolean value. Most importantly, the following facts are to be remembered:
 							</p>
 							<ul>
-								<li>[ANY] = NULL yields NULL (not FALSE)</li>
-								<li>[ANY] != NULL yields NULL (not TRUE)</li>
-								<li>NULL = NULL yields NULL (not TRUE)</li>
-								<li>NULL != NULL yields NULL (not FALSE)</li>
+								<li><code>[ANY] = NULL</code> yields <code>NULL</code> (not <code>FALSE</code>)</li>
+								<li><code>[ANY] != NULL</code> yields <code>NULL</code> (not <code>TRUE</code>)</li>
+								<li><code>NULL = NULL</code> yields <code>NULL</code> (not <code>TRUE</code>)</li>
+								<li><code>NULL != NULL</code> yields <code>NULL</code> (not <code>FALSE</code>)</li>
 							</ul>
 							<p>
-								For simplified NULL handling, please refer to the section about the <reference id="distinct-predicate" title="DISTINCT predicate"/>.
+								For simplified <code>NULL</code> handling, please refer to the section about the <reference id="distinct-predicate" title="DISTINCT predicate"/>.
 							</p>
 							<p>
 								Note that jOOQ does not model these values as actual <reference id="column-expressions" title="column expression"/> compatible.
@@ -4112,7 +4306,7 @@ BOOK.TITLE.notEqual("Animal Farm")]]></java>
 									<ul>
 										<li><reference id="plain-sql" title="plain SQL conditions"/>, that allow you to phrase your own SQL string <reference id="conditional-expressions" title="conditional expression"/></li>
 										<li>The <reference id="exists-predicate" title="EXISTS predicate"/>, a standalone predicate that creates a conditional expression</li>
-										<li>Constant TRUE and FALSE conditional expressions</li>
+										<li>Constant <code>TRUE</code> and <code>FALSE</code> conditional expressions</li>
 									</ul>
 
 									<h3>Connect conditions using boolean operators</h3>
@@ -4126,7 +4320,7 @@ BOOK.TITLE.notEqual("Animal Farm")]]></java>
 							    <title>AND, OR, NOT boolean operators</title>
 								<content>
 									<p>
-										In SQL, as in most other languages, <reference id="conditional-expressions" title="conditional expressions"/> can be connected using the AND and OR binary operators, as well as the NOT unary operator, to form new conditional expressions. In jOOQ, this is modelled as such: 
+										In SQL, as in most other languages, <reference id="conditional-expressions" title="conditional expressions"/> can be connected using the <code>AND</code> and <code>OR</code> binary operators, as well as the <code>NOT</code> unary operator, to form new conditional expressions. In jOOQ, this is modelled as such: 
 									</p>
 
 <code-pair>
@@ -4199,34 +4393,29 @@ not()                     // Invert a condition (synonym for Factory.not(Conditi
 										Unfortunately, Java does not support operator overloading, hence these operators are also implemented as methods in jOOQ, like any other SQL syntax elements. The relevant parts of the <reference class="org.jooq.Field"/> interface are these:
 									</p>
 									
-<java><![CDATA[eq or equal(T);                  // =  (some bind value)
-eq or equal(Field<T>);           // =  (some column expression)
-eq or equal(Select<T>);          // =  (some scalar SELECT statement)
-ne or notEqual(T);               // <> (some bind value)
-ne or notEqual(Field<T>);        // <> (some column expression)
-ne or notEqual(Select<T>);       // <> (some scalar SELECT statement)
-lt or lessThan(T);               // <  (some bind value)
-lt or lessThan(Field<T>);        // <  (some column expression)
-lt or lessThan(Select<T>);       // <  (some scalar SELECT statement)
-le or lessOrEqual(T);            // <= (some bind value)
-le or lessOrEqual(Field<T>);     // <= (some column expression)
-le or lessOrEqual(Select<T>);    // <= (some scalar SELECT statement)
-gt or greaterThan(T);            // >  (some bind value)
-gt or greaterThan(Field<T>);     // >  (some column expression)
-gt or greaterThan(Select<T>);    // >  (some scalar SELECT statement)
-ge or greaterOrEqual(T);         // >= (some bind value)
-ge or greaterOrEqual(Field<T>);  // >= (some column expression)
-ge or greaterOrEqual(Select<T>); // >= (some scalar SELECT statement)]]></java>
+<java><![CDATA[eq or equal(T);                                     // =  (some bind value)
+eq or equal(Field<T>);                              // =  (some column expression)
+eq or equal(Select<? extends Record1<T>>);          // =  (some scalar SELECT statement)
+ne or notEqual(T);                                  // <> (some bind value)
+ne or notEqual(Field<T>);                           // <> (some column expression)
+ne or notEqual(Select<? extends Record1<T>>);       // <> (some scalar SELECT statement)
+lt or lessThan(T);                                  // <  (some bind value)
+lt or lessThan(Field<T>);                           // <  (some column expression)
+lt or lessThan(Select<? extends Record1<T>>);       // <  (some scalar SELECT statement)
+le or lessOrEqual(T);                               // <= (some bind value)
+le or lessOrEqual(Field<T>);                        // <= (some column expression)
+le or lessOrEqual(Select<? extends Record1<T>>);    // <= (some scalar SELECT statement)
+gt or greaterThan(T);                               // >  (some bind value)
+gt or greaterThan(Field<T>);                        // >  (some column expression)
+gt or greaterThan(Select<? extends Record1<T>>);    // >  (some scalar SELECT statement)
+ge or greaterOrEqual(T);                            // >= (some bind value)
+ge or greaterOrEqual(Field<T>);                     // >= (some column expression)
+ge or greaterOrEqual(Select<? extends Record1<T>>); // >= (some scalar SELECT statement)]]></java>
 
 									<p>
-										Note that every operator is represented by two methods. A verbose one (such as equal()) and a two-character one (such as eq()). Both methods are the same. You may choose either one, depending on your taste. The manual will always use the more verbose one.
+										Note that every operator is represented by two methods. A verbose one (such as <code>equal()</code>) and a two-character one (such as <code>eq()</code>). Both methods are the same. You may choose either one, depending on your taste. The manual will always use the more verbose one.
 									</p>
 									
-									<h3>NULL in jOOQ's comparison predicates</h3>
-									<p>
-										jOOQ has a special way of dealing with null bind values, when you pass them to comparison predicates equal() and notEqual(). For convenience, jOOQ will render <reference id="null-predicate" title="IS NULL or IS NOT NULL"/> predicates.
-									</p>
-
 									<h3>jOOQ's convenience methods using comparison operators</h3>
 									<p>
 										In addition to the above, jOOQ provides a few convenience methods for common operations performed on strings using comparison predicates:
@@ -4243,18 +4432,99 @@ BOOK.TITLE.notEqualIgnoreCase("animal farm")]]></java>
 								</content>
 							</section>
 
+							<section id="comparison-predicate-degree-n">
+							    <title>Comparison predicate (degree > 1)</title>
+							    <content>
+							    	<p>
+							    		All variants of the <reference id="comparison-predicate" title="comparison predicate"/> that we've seen in the previous chapter also work for <reference id="row-value-expressions" title="row value expressions"/>. If your database does not support row value expression comparison predicates, jOOQ simulates them the way they are defined in the SQL standard:
+							    	</p>
+	
+<code-pair>
+<sql><![CDATA[-- Row value expressions (equal)
+(A, B)    =  (X, Y)
+(A, B, C) =  (X, Y, Z)
+-- greater than
+(A, B)    >  (X, Y)
+
+(A, B, C) >  (X, Y, Z)
+
+
+-- greater or equal  
+(A, B)    >= (X, Y)
+
+
+(A, B, C) >= (X, Y, Z)
+
+
+
+-- Inverse comparisons
+
+(A, B)    <> (X, Y)
+(A, B)    <  (X, Y)
+(A, B)    <= (X, Y)]]></sql>	
+<sql><![CDATA[-- Equivalent factored-out predicates (equal)
+(A = X) AND (B = Y)
+(A = X) AND (B = Y) AND (C = Z)
+-- greater than
+(A > X) 
+  OR ((A = X) AND (B > Y)) 
+(A > X) 
+  OR ((A = X) AND (B > Y)) 
+  OR ((A = X) AND (B = Y) AND (C > Z))
+-- greater or equal  
+(A > X) 
+  OR ((A = X) AND (B > Y))
+  OR ((A = X) AND (B = Y))
+(A > X) 
+  OR ((A = X) AND (B > Y)) 
+  OR ((A = X) AND (B = Y) AND (C > Z))
+  OR ((A = X) AND (B = Y) AND (C = Z))
+-- For simplicity, these predicates are shown in terms
+-- of their negated counter parts
+NOT((A, B) =  (X, Y))
+NOT((A, B) >= (X, Y))
+NOT((A, B) >  (X, Y))]]></sql>	
+</code-pair>						    	
+
+									<p>
+										jOOQ supports all of the above row value expression comparison predicates, both with <reference id="column-expressions" title="column expression lists"/> and <reference id="select-statement" title="scalar subselects"/> at the right-hand side:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[-- With regular column expressions
+(BOOK.AUTHOR_ID, BOOK.TITLE) = (1, 'Animal Farm')
+
+-- With scalar subselects
+(BOOK.AUTHOR_ID, BOOK.TITLE) = (
+  SELECT PERSON.ID, 'Animal Farm'
+  FROM PERSON
+  WHERE PERSON.ID = 1
+)]]></sql>
+<java><![CDATA[// Column expressions
+row(BOOK.AUTHOR_ID, BOOK.TITLE).equal(1, "Animal Farm");
+
+// Subselects
+row(BOOK.AUTHOR_ID, BOOK.TITLE).equal(
+  select(PERSON.ID, val("Animal Farm"))
+  .from(PERSON)
+  .where(PERSON.ID.equal(1))
+);]]></java>
+</code-pair>									
+							    </content>
+						    </section>
+						    
 						    <section id="quantified-comparison-predicate">
 							    <title>Quantified comparison predicate</title>
 								<content>
 									<p>
-										If the right-hand side of a <reference id="comparison-predicate" title="comparison predicate"/> turns out to be a non-scalar table subquery, you can wrap that subquery in a quantifier, such as ALL, ANY, or SOME. Note that the SQL standard defines ANY and SOME to be equivalent. jOOQ settled for the more intuitive ANY and doesn't support SOME. Here are some examples, supported by jOOQ:
+										If the right-hand side of a <reference id="comparison-predicate" title="comparison predicate"/> turns out to be a non-scalar table subquery, you can wrap that subquery in a quantifier, such as <code>ALL</code>, <code>ANY</code>, or <code>SOME</code>. Note that the SQL standard defines <code>ANY</code> and <code>SOME</code> to be equivalent. jOOQ settled for the more intuitive <code>ANY</code> and doesn't support <code>SOME</code>. Here are some examples, supported by jOOQ:
 									</p>
 
 <code-pair>
 <sql><![CDATA[TITLE = ANY('Animal Farm', '1982')
 PUBLISHED_IN > ALL(1920, 1940)]]></sql>
-<java><![CDATA[BOOK.TITLE.equalAny("Animal Farm", "1982");
-BOOK.PUBLISHED_IN.greaterThanAll(1920, 1940);]]></java>
+<java><![CDATA[BOOK.TITLE.equal(any("Animal Farm", "1982"));
+BOOK.PUBLISHED_IN.greaterThan(all(1920, 1940));]]></java>
 </code-pair>
 
 									<p>
@@ -4263,12 +4533,12 @@ BOOK.PUBLISHED_IN.greaterThanAll(1920, 1940);]]></java>
 
 									<h3>ANY and the IN predicate</h3>
 									<p>
-										It is interesting to note that the SQL standard defines the <reference id="in-predicate" title="IN predicate"/> in terms of the ANY-quantified predicate. The following two expressions are equivalent:
+										It is interesting to note that the SQL standard defines the <reference id="in-predicate" title="IN predicate"/> in terms of the <code>ANY</code>-quantified predicate. The following two expressions are equivalent:
 									</p>
 									
 <code-pair>
-<sql><![CDATA[[ROW VALUE EXPRESSION] IN [IN PREDICATE VALUE]]]></sql>
-<sql><![CDATA[[ROW VALUE EXPRESSION] = ANY [IN PREDICATE VALUE]]]></sql>
+<text><![CDATA[[ROW VALUE EXPRESSION] IN [IN PREDICATE VALUE]]]></text>
+<text><![CDATA[[ROW VALUE EXPRESSION] = ANY [IN PREDICATE VALUE]]]></text>
 </code-pair>
 
 									<p>
@@ -4276,12 +4546,12 @@ BOOK.PUBLISHED_IN.greaterThanAll(1920, 1940);]]></java>
 									</p>
 								</content>
 							</section>
-
+							
 						    <section id="null-predicate">
 							    <title>NULL predicate</title>
 								<content>
 									<p>
-										In SQL, you cannot compare NULL with any value using <reference id="comparison-predicate" title="comparison predicates"/>, as the result would yield NULL again, which is neither TRUE nor FALSE (see also the manual's section about <reference id="conditional-expressions" title="conditional expressions"/>). In order to test a <reference id="column-expressions" title="column expression"/> for NULL, use the NULL predicate as such:
+										In SQL, you cannot compare <code>NULL</code> with any value using <reference id="comparison-predicate" title="comparison predicates"/>, as the result would yield <code>NULL</code> again, which is neither <code>TRUE</code> nor <code>FALSE</code> (see also the manual's section about <reference id="conditional-expressions" title="conditional expressions"/>). In order to test a <reference id="column-expressions" title="column expression"/> for <code>NULL</code>, use the <code>NULL</code> predicate as such:
 									</p>
 									
 <code-pair>
@@ -4294,20 +4564,68 @@ BOOK.TITLE.isNotNull()]]></java>
 								</content>
 							</section>
 
+						    <section id="null-predicate-degree-n">
+							    <title>NULL predicate (degree > 1)</title>
+							    <content>
+							    	<p>
+							    		The SQL <code>NULL</code> predicate also works well for <reference id="row-value-expressions" title="row value expressions"/>, although it has some subtle, counter-intuitive features when it comes to inversing predicates with the <code>NOT()</code> operator! Here are some examples:
+							    	</p>
+
+<code-pair>
+<sql><![CDATA[-- Row value expressions
+(A, B) IS     NULL
+(A, B) IS NOT NULL
+
+-- Inverse of the above
+NOT((A, B) IS     NULL)
+NOT((A, B) IS NOT NULL)]]></sql>	
+<sql><![CDATA[-- Equivalent factored-out predicates
+(A IS     NULL) AND (B IS     NULL)
+(A IS NOT NULL) AND (B IS NOT NULL)
+
+-- Inverse
+(A IS NOT NULL) OR  (B IS NOT NULL)
+(A IS     NULL) OR  (B IS     NULL)]]></sql>	
+</code-pair>						    	
+
+									<p>
+										The SQL standard contains a nice truth table for the above rules:
+									</p>
+									
+<text>+-----------------------+-----------+---------------+---------------+-------------------+
+| Expression            | R IS NULL | R IS NOT NULL | NOT R IS NULL | NOT R IS NOT NULL |
++-----------------------+-----------+---------------+---------------+-------------------+
+| degree 1: null        | true      | false         | false         |  true             |
+| degree 1: not null    | false     | true          | true          |  false            |
+| degree > 1: all null  | true      | false         | false         |  true             |
+| degree > 1: some null | false     | false         | true          |  true             |
+| degree > 1: none null | false     | true          | true          |  false            |
++-----------------------+-----------+---------------+---------------+-------------------+</text>		
+
+									<p>
+										In jOOQ, you would simply use the <code>isNull()</code> and <code>isNotNull()</code> methods on row value expressions. Again, as with the <reference id="comparison-predicate-degree-n" title="row value expression comparison predicate"/>, the row value expression <code>NULL</code> predicate is simulated by jOOQ, if your database does not natively support it:
+									</p>
+									
+<java><![CDATA[row(BOOK.ID, BOOK.TITLE).isNull();
+row(BOOK.ID, BOOK.TITLE).isNotNull();]]></java>
+
+							    </content>
+						    </section>
+						    
 						    <section id="distinct-predicate">
 							    <title>DISTINCT predicate</title>
 								<content>
 									<p>
-										Some databases support the DISTINCT predicate, which serves as a convenient, NULL-safe <reference id="comparison-predicate" title="comparison predicate"/>. With the DISTINCT predicate, the following truth table can be assumed:
+										Some databases support the <code>DISTINCT</code> predicate, which serves as a convenient, <code>NULL</code>-safe <reference id="comparison-predicate" title="comparison predicate"/>. With the <code>DISTINCT</code> predicate, the following truth table can be assumed:
 									</p>
 									<ul>
-										<li>[ANY] IS DISTINCT FROM NULL yields TRUE</li>
-										<li>[ANY] IS NOT DISTINCT FROM NULL yields FALSE</li>
-										<li>NULL IS DISTINCT FROM NULL yields FALSE</li>
-										<li>NULL IS NOT DISTINCT FROM NULL yields TRUE</li>
+										<li><code>[ANY] IS DISTINCT FROM NULL</code> yields <code>TRUE</code></li>
+										<li><code>[ANY] IS NOT DISTINCT FROM NULL</code> yields <code>FALSE</code></li>
+										<li><code>NULL IS DISTINCT FROM NULL</code> yields <code>FALSE</code></li>
+										<li><code>NULL IS NOT DISTINCT FROM NULL</code> yields <code>TRUE</code></li>
 									</ul>
 									<p>
-										For instance, you can compare two fields for distinctness, ignoring the fact that any of the two could be NULL, which would lead to funny results. This is supported by jOOQ as such:
+										For instance, you can compare two fields for distinctness, ignoring the fact that any of the two could be <code>NULL</code>, which would lead to funny results. This is supported by jOOQ as such:
 									</p>
 
 <code-pair>
@@ -4318,7 +4636,7 @@ BOOK.TITLE.isNotDistinctFrom(BOOK.SUB_TITLE)]]></java>
 </code-pair>
 
 									<p>
-										If your database does not natively support the DISTINCT predicate, jOOQ simulates it with an equivalent <reference id="case-expressions" title="CASE expression"/>, modelling the above truth table:
+										If your database does not natively support the <code>DISTINCT</code> predicate, jOOQ simulates it with an equivalent <reference id="case-expressions" title="CASE expression"/>, modelling the above truth table:
 									</p>
 	
 <code-pair>								
@@ -4346,7 +4664,7 @@ END
 							    <title>BETWEEN predicate</title>
 								<content>
 									<p>
-										The BETWEEN predicate can be seen as syntactic sugar for a pair of <reference id="comparison-predicate" title="comparison predicates"/>. According to the SQL standard, the following two predicates are equivalent:
+										The <code>BETWEEN</code> predicate can be seen as syntactic sugar for a pair of <reference id="comparison-predicate" title="comparison predicates"/>. According to the SQL standard, the following two predicates are equivalent:
 									</p>
 									
 <code-pair>
@@ -4355,7 +4673,7 @@ END
 </code-pair>
 
 									<p>
-										Note the inclusiveness of range boundaries in the definition of the BETWEEN predicate. Intuitively, this is supported in jOOQ as such:
+										Note the inclusiveness of range boundaries in the definition of the <code>BETWEEN</code> predicate. Intuitively, this is supported in jOOQ as such:
 									</p>
 
 <code-pair>
@@ -4367,7 +4685,7 @@ BOOK.PUBLISHED_IN.notBetween(1920).and(1940)]]></java>
 
 									<h3>BETWEEN SYMMETRIC</h3>
 									<p>
-										The SQL standard defines the SYMMETRIC keyword to be used along with BETWEEN to indicate that you do not care which bound of the range is larger than the other. A database system should simply swap range bounds, in case the first bound is greater than the second one. jOOQ supports this keyword as well, simulating it if necessary.
+										The SQL standard defines the <code>SYMMETRIC</code> keyword to be used along with <code>BETWEEN</code> to indicate that you do not care which bound of the range is larger than the other. A database system should simply swap range bounds, in case the first bound is greater than the second one. jOOQ supports this keyword as well, simulating it if necessary.
 									</p>
 									
 <code-pair>
@@ -4389,18 +4707,45 @@ BOOK.PUBLISHED_IN.notBetweenSymmetric(1940).and(1920)]]></java>
 								</content>
 							</section>
 
+						    <section id="between-predicate-degree-n">
+							    <title>BETWEEN predicate (degree > 1)</title>
+							    <content>
+							    	<p>
+							    	    The SQL <code>BETWEEN</code> predicate also works well for <reference id="row-value-expressions" title="row value expressions"/>. Much like the <reference id="between-predicate" title="BETWEEN predicate for degree 1"/>, it is defined in terms of a pair of regular <reference id="comparison-predicate" title="comparison predicates"/>:
+							    	</p>
+							    	
+<code-pair>
+<sql><![CDATA[[A] BETWEEN           [B] AND [C]
+[A] BETWEEN SYMMETRIC [B] AND [C]]]></sql>
+<sql><![CDATA[ [A] >= [B] AND [A] <= [C]
+([A] >= [B] AND [A] <= [C]) OR ([A] >= [C] AND [A] <= [B])]]></sql>
+</code-pair>
+							    	
+							    	<p>
+							    		The above can be factored out according to the rules listed in the manual's section about <reference id="comparison-predicate-degree-n" title="row value expression comparison predicates"/>.
+							    	</p>
+							    	
+							    	<p>
+							    		jOOQ supports the <code>BETWEEN [SYMMETRIC]</code> predicate and simulates it in all SQL dialects where necessary. An example is given here:
+							    	</p>
+							    	
+<java><![CDATA[row(BOOK.ID, BOOK.TITLE).between(1, "A").and(10, "Z");]]></java>
+							    	
+							    </content>
+							</section>
+							
 						    <section id="like-predicate">
 							    <title>LIKE predicate</title>
 								<content>
 									<p>
-										LIKE predicates are popular for simple wildcard-enabled pattern matching. Supported wildcards in all SQL databases are:
+										<code>LIKE</code> predicates are popular for simple wildcard-enabled pattern matching. Supported wildcards in all SQL databases are:
 									</p>
 									<ul>
 										<li><strong>_</strong>: (single-character wildcard)</li>
 										<li><strong>%</strong>: (multi-character wildcard)</li>
 									</ul>
 									<p>
-										With jOOQ, the LIKE predicate can be created from any <reference id="column-expressions" title="column expression"/> as such:
+										With jOOQ, the <code>LIKE</code> predicate can be created from any <reference id="column-expressions" title="column expression"/> as such:
 									</p>
 
 <code-pair>
@@ -4412,7 +4757,7 @@ BOOK.TITLE.notLike("%abc%")]]></java>
 									
 									<h3>Escaping operands with the LIKE predicate</h3>
 									<p>
-										Often, your pattern may contain any of the wildcard characters "_" and "%", in case of which you may want to escape them. jOOQ does not automatically escape patterns in like() and notLike() methods. Instead, you can explicitly define an escape character as such:
+										Often, your pattern may contain any of the wildcard characters <code>"_"</code> and <code>"%"</code>, in case of which you may want to escape them. jOOQ does not automatically escape patterns in <code>like()</code> and <code>notLike()</code> methods. Instead, you can explicitly define an escape character as such:
 									</p>
 
 <code-pair>
@@ -4423,15 +4768,15 @@ BOOK.TITLE.notLike("%The !%-Sign Book%", '!')]]></java>
 </code-pair>
 
 									<p>
-										In the above predicate expressions, the exclamation mark character is passed as the escape character to escape wildcard characters "!_" and "!%", as well as to escape the escape character itself: "!!"
+										In the above predicate expressions, the exclamation mark character is passed as the escape character to escape wildcard characters <code>"!_"</code> and <code>"!%"</code>, as well as to escape the escape character itself: <code>"!!"</code>
 									</p>
 									<p>
-										Please refer to your database manual for more details about escaping patterns with the LIKE predicate.
+										Please refer to your database manual for more details about escaping patterns with the <code>LIKE</code> predicate.
 									</p>
 									
 									<h3>jOOQ's convenience methods using the LIKE predicate</h3>
 									<p>
-										In addition to the above, jOOQ provides a few convenience methods for common operations performed on strings using the LIKE predicate. Typical operations are "contains predicates", "starts with predicates", "ends with predicates", etc. Here is the full convenience API wrapping LIKE predicates:
+										In addition to the above, jOOQ provides a few convenience methods for common operations performed on strings using the <code>LIKE</code> predicate. Typical operations are "contains predicates", "starts with predicates", "ends with predicates", etc. Here is the full convenience API wrapping <code>LIKE</code> predicates:
 									</p>
 									
 <code-pair>
@@ -4454,7 +4799,7 @@ BOOK.TITLE.endsWith("abc")]]></java>
 </code-pair>
 
 									<p>
-										Note, that jOOQ escapes % and _ characters in value in some of the above predicate implementations. For simplicity, this has been omitted in this manual.
+										Note, that jOOQ escapes <code>%</code> and <code>_</code> characters in value in some of the above predicate implementations. For simplicity, this has been omitted in this manual.
 									</p>
 								</content>
 							</section>
@@ -4463,20 +4808,20 @@ BOOK.TITLE.endsWith("abc")]]></java>
 							    <title>IN predicate</title>
 								<content>
 									<p>
-										In SQL, apart from comparing a value against several values, the IN predicate can be used to create semi-joins or anti-joins. jOOQ knows the following methods on the <reference class="org.jooq.Field" /> interface, to construct such IN predicates:
+										In SQL, apart from comparing a value against several values, the <code>IN</code> predicate can be used to create semi-joins or anti-joins. jOOQ knows the following methods on the <reference class="org.jooq.Field" /> interface, to construct such <code>IN</code> predicates:
 									</p>
 
-<java><![CDATA[in(Collection<T>)    // Construct an IN predicate from a collection of bind values
-in(T...)             // Construct an IN predicate from bind values
-in(Field<?>...)      // Construct an IN predicate from column expressions
-in(Select<?>)        // Construct an IN predicate from a subselect
-notIn(Collection<T>) // Construct a NOT IN predicate from a collection of bind values
-notIn(T...)          // Construct a NOT IN predicate from bind values
-notIn(Field<?>...)   // Construct a NOT IN predicate from column expressions
-notIn(Select<?>)     // Construct a NOT IN predicate from a subselect]]></java>
+<java><![CDATA[in(Collection<T>)                   // Construct an IN predicate from a collection of bind values
+in(T...)                            // Construct an IN predicate from bind values
+in(Field<?>...)                     // Construct an IN predicate from column expressions
+in(Select<? extends Record1<T>>)    // Construct an IN predicate from a subselect
+notIn(Collection<T>)                // Construct a NOT IN predicate from a collection of bind values
+notIn(T...)                         // Construct a NOT IN predicate from bind values
+notIn(Field<?>...)                  // Construct a NOT IN predicate from column expressions
+notIn(Select<? extends Record1<T>>) // Construct a NOT IN predicate from a subselect]]></java>
 
 									<p>
-										A sample IN predicate might look like this:
+										A sample <code>IN</code> predicate might look like this:
 									</p>
 									
 <code-pair>
@@ -4489,7 +4834,7 @@ BOOK.TITLE.notIn("Animal Farm", "1984")]]></java>
 									
 									<h3>NOT IN and NULL values</h3>
 									<p>
-										Beware that you should probably not have any NULL values in the right hand side of a NOT IN predicate, as the whole expression would evaluate to NULL, which is rarely desired. This can be shown informally using the following reasoning:
+										Beware that you should probably not have any <code>NULL</code> values in the right hand side of a <code>NOT IN</code> predicate, as the whole expression would evaluate to <code>NULL</code>, which is rarely desired. This can be shown informally using the following reasoning:
 									</p>
 									
 <sql>-- The following conditional expressions are formally or informally equivalent
@@ -4504,16 +4849,36 @@ A != B AND NULL      -- [ANY] != NULL yields NULL
 NULL                 -- [ANY] AND NULL yields NULL</sql>
 
 									<p>
-										A good way to prevent this from happening is to use the <reference id="exists-predicate" title="EXISTS predicate"/> for anti-joins, which is NULL-value insensitive. See the manual's section about <reference id="conditional-expressions" title="conditional expressions"/> to see a boolean truth table.
+										A good way to prevent this from happening is to use the <reference id="exists-predicate" title="EXISTS predicate"/> for anti-joins, which is <code>NULL</code>-value insensitive. See the manual's section about <reference id="conditional-expressions" title="conditional expressions"/> to see a boolean truth table.
 									</p>
 								</content>
 							</section>
 
+						    <section id="in-predicate-degree-n">
+							    <title>IN predicate (degree > 1)</title>
+							    <content>
+							    	<p>
+							    	    The SQL <code>IN</code> predicate also works well for <reference id="row-value-expressions" title="row value expressions"/>. Much like the <reference id="in-predicate" title="IN predicate for degree 1"/>, it is defined in terms of a <reference id="quantified-comparison-predicate" title="quantified comparison predicate"/>. The two expressions are equivalent:
+							    	</p>
+
+<code-pair>
+<sql><![CDATA[R IN [IN predicate value]]]></sql>
+<sql><![CDATA[R = ANY [IN predicate value]]]></sql>
+</code-pair>		
+
+									<p>
+							    		jOOQ supports the <code>IN</code> predicate. Simulation of the <code>IN</code> predicate where row value expressions aren't well supported is currently only available for <code>IN</code> predicates that do not take a subselect as an <code>IN</code> predicate value. An example is given here:
+							    	</p>
+							    	
+<java><![CDATA[row(BOOK.ID, BOOK.TITLE).in(row(1, "A"), row(2, "B"));]]></java>					    	
+							    </content>
+							</section>
+							
 						    <section id="exists-predicate">
 							    <title>EXISTS predicate</title>
 								<content>
 									<p>
-										Slightly less intuitive, yet more powerful than the previously discussed <reference id="in-predicate" title="IN predicate"/> is the EXISTS predicate, that can be used to form semi-joins or anti-joins. With jOOQ, the EXISTS predicate can be formed in various ways:
+										Slightly less intuitive, yet more powerful than the previously discussed <reference id="in-predicate" title="IN predicate"/> is the <code>EXISTS</code> predicate, that can be used to form semi-joins or anti-joins. With jOOQ, the <code>EXISTS</code> predicate can be formed in various ways:
 									</p>
 									<ul>
 										<li>From the <reference id="factory" title="Factory"/>, using static methods. This is probably the most used case</li>
@@ -4522,7 +4887,7 @@ NULL                 -- [ANY] AND NULL yields NULL</sql>
 									</ul>
 									
 									<p>
-										An example of an EXISTS predicate can be seen here:
+										An example of an <code>EXISTS</code> predicate can be seen here:
 									</p>
 
 <code-pair>
@@ -4537,7 +4902,7 @@ notExists(create.selectOne().from(BOOK)
 </code-pair>
 
 									<p>
-										Note that in SQL, the projection of a subselect in an EXISTS predicate is irrelevant. To help you write queries like the above, you can use jOOQ's selectZero() or selectOne() <reference id="factory" title="Factory"/> methods
+										Note that in SQL, the projection of a subselect in an <code>EXISTS</code> predicate is irrelevant. To help you write queries like the above, you can use jOOQ's selectZero() or selectOne() <reference id="factory" title="Factory"/> methods
 									</p>
 									
 									<h3>Performance of IN vs. EXISTS</h3>
@@ -4552,7 +4917,7 @@ notExists(create.selectOne().from(BOOK)
 								<title>OVERLAPS predicate</title>
 								<content>
 									<p>
-										When comparing dates, the SQL standard allows for using a special OVERLAPS predicate, which checks whether two date ranges overlap each other. The following can be said:
+										When comparing dates, the SQL standard allows for using a special <code>OVERLAPS</code> predicate, which checks whether two date ranges overlap each other. The following can be said:
 									</p>
 
 <sql><![CDATA[-- This yields true
@@ -4564,7 +4929,7 @@ notExists(create.selectOne().from(BOOK)
 
 									<h3>The OVERLAPS predicate in jOOQ</h3>
 									<p>
-									    jOOQ supports the OVERLAPS predicate on <reference id="row-value-expressions" title="row value expressions of degree 2"/>. The following methods are contained in <reference class="org.jooq.Row2"/>:
+									    jOOQ supports the <code>OVERLAPS</code> predicate on <reference id="row-value-expressions" title="row value expressions of degree 2"/>. The following methods are contained in <reference class="org.jooq.Row2"/>:
 									</p>
 
 <java><![CDATA[Condition overlaps(T1 t1, T2 t2);
@@ -4583,7 +4948,7 @@ row(Date.valueOf('2010-01-01'), new DayToSecond(2)).overlaps(Date.valueOf('2010-
 
 									<h3>jOOQ's extensions to the standard</h3>
 									<p>
-										Unlike the standard (or any database implementing the standard), jOOQ also supports the OVERLAPS predicate for comparing arbitrary <reference id="row-value-expressions" title="row vlaue expressions of degree 2"/>. For instance, (1, 3) OVERLAPS (2, 4) will yield true in jOOQ. This is simulated as such
+										Unlike the standard (or any database implementing the standard), jOOQ also supports the <code>OVERLAPS</code> predicate for comparing arbitrary <reference id="row-value-expressions" title="row vlaue expressions of degree 2"/>. For instance, <code>(1, 3) OVERLAPS (2, 4)</code> will yield true in jOOQ. This is simulated as such
 									</p>
 									
 <sql><![CDATA[-- This predicate
@@ -4694,7 +5059,7 @@ Result<Record> fetch(String sql, Object... bindings);
 Result<Record> fetch(String sql, QueryPart... parts);]]></java>
 
 							<p>
-								Apart from the general factory methods, plain SQL is also available in various other contexts. For instance, when adding a .where("a = b") clause to a query. Hence, there exist several convenience methods where plain SQL can be inserted usefully. This is an example displaying all various use-cases in one single query:
+								Apart from the general factory methods, plain SQL is also available in various other contexts. For instance, when adding a <code>.where("a = b")</code> clause to a query. Hence, there exist several convenience methods where plain SQL can be inserted usefully. This is an example displaying all various use-cases in one single query:
 							</p>
 							
 <java><![CDATA[// You can use your table aliases in plain SQL fields
@@ -4880,7 +5245,7 @@ WHERE LAST_NAME = :lastName]]></sql>
 									</p>
 									<ul>
 										<li>
-											By using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such a Factory.
+											By using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such an Executor.
 										</li>
 										<li>
 											By using <reference class="org.jooq.impl.Factory" anchor="#inline(java.lang.Object)" title="Factory.inline()"/> methods.
@@ -4903,8 +5268,8 @@ create.select()
 Settings settings = new Settings()
     .withStatementType(StatementType.STATIC_STATEMENT);
 
-// Add the settings to the factory
-Factory create = new Factory(connection, SQLDialect.ORACLE, settings);
+// Add the settings to the executor
+Executor create = new Executor(connection, SQLDialect.ORACLE, settings);
 
 // Run queries that omit rendering schema names
 create.select()
@@ -5027,7 +5392,7 @@ int peekIndex();]]></java>
 
 									<h3>An example of rendering SQL</h3>
 								   	<p>
-								   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the AUTHOR.ID = BOOK.AUTHOR_ID condition here:
+								   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the <code>AUTHOR.ID = BOOK.AUTHOR_ID</code> condition here:
 							   		</p>
 							   		
 <sql>-- [...]
@@ -5036,7 +5401,7 @@ JOIN BOOK ON AUTHOR.ID = BOOK.AUTHOR_ID
 -- [...]</sql>
 
 									<p>
-										This is how jOOQ renders such a condition:
+										This is how jOOQ renders such a condition (simplified example):
 									</p>
 
 <java><![CDATA[@Override
@@ -5044,32 +5409,10 @@ public final void toSQL(RenderContext context) {
     // The CompareCondition delegates rendering of the Fields to the Fields
     // themselves and connects them using the Condition's comparator operator:
     context.sql(field1)
-           .sql(" ");
-
-    // If the second field is null, some convenience behaviour can be
-    // implemented here
-    if (field2.isNullLiteral()) {
-        switch (comparator) {
-            case EQUALS:
-                context.sql("is null");
-                break;
-
-            case NOT_EQUALS:
-                context.sql("is not null");
-                break;
-
-            default:
-                throw new IllegalStateException("Cannot compare null with " + comparator);
-        }
-    }
-
-    // By default, also delegate the right hand side's SQL rendering to the
-    // underlying field
-    else {
-        context.sql(comparator.toSQL())
-               .sql(" ")
-               .sql(field2);
-    }
+           .sql(" ")
+           .sql(comparator.toSQL())
+           .sql(" ")
+           .sql(field2);
 }]]></java>
 
 									<p>
@@ -5086,8 +5429,8 @@ public final void toSQL(RenderContext context) {
 									</p>
 	
 	
-<java><![CDATA[// Create a factory that will render "formatted" SQL
-Factory pretty = new Factory(dialect, new Settings().withRenderFormatted(true));]]></java>
+<java><![CDATA[// Create an executor that will render "formatted" SQL
+Executor pretty = new Executor(dialect, new Settings().withRenderFormatted(true));]]></java>
 
 									<p>
 										And then, use the above factory to render pretty-printed SQL:
@@ -5152,7 +5495,7 @@ BindContext bindValues(Object... values) throws DataAccessException;]]></java>
 
 									<h3>An example of binding values to SQL</h3>
 								   	<p>
-								   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the AUTHOR.ID = BOOK.AUTHOR_ID condition here:
+								   		A simple example can be provided by checking out jOOQ's internal representation of a (simplified) <reference id="comparison-predicate" title="CompareCondition"/>. It is used for any <reference class="org.jooq.Condition"/> comparing two fields as for example the <code>AUTHOR.ID = BOOK.AUTHOR_ID</code> condition here:
 							   		</p>
 							   		
 <sql>-- [...]
@@ -5245,9 +5588,6 @@ create.select(IDx2).from(BOOK);]]></java>
 								</content>
 							</section>
 							
-							<section id="rendercontext">
-							</section>
-
 						    <section id="plain-sql-queryparts">
 							    <title>Plain SQL QueryParts</title>
 								<content>
@@ -5281,7 +5621,7 @@ create.selectFrom(BOOK).where("BOOK.ID = {0} AND TITLE = {1}", id, title);]]></j
 							    <title>Serializability</title>
 								<content>
 									<p>
-										The only transient, non-serializable element in any jOOQ object is the <reference id="factory" title="Factory's"/> underlying <reference class="java.sql.Connection"/>. When you want to execute queries after de-serialisation, or when you want to store/refresh/delete <reference id="crud-with-updatablerecords" title="Updatable Records"/>, you will have to "re-attach" them to a Factory
+										The only transient, non-serializable element in any jOOQ object is the <reference id="executor" title="Executor's"/> underlying <reference class="java.sql.Connection"/>. When you want to execute queries after de-serialisation, or when you want to store/refresh/delete <reference id="crud-with-updatablerecords" title="Updatable Records"/>, you will have to "re-attach" them to an Executor
 									</p>
 
 <java><![CDATA[// Deserialise a SELECT statement
@@ -5292,7 +5632,7 @@ Select<?> select = (Select<?>) in.readObject();
 select.execute();
 
 // In order to execute the above select, attach it first
-Factory create = new Factory(connection, SQLDialect.ORACLE);
+Executor create = new Executor(connection, SQLDialect.ORACLE);
 create.attach(select);]]></java>
 
 									<h3>Automatically attaching QueryParts</h3>
@@ -5420,7 +5760,7 @@ trait SNumberField[T <: Number] extends SAnyField[T] {
   T_BOOK.TITLE || " abc" || " xy")
 from T_BOOK
 leftOuterJoin (
-  f select (x.ID, x.YEAR_OF_BIRTH)
+  select (x.ID, x.YEAR_OF_BIRTH)
   from x
   limit 1
   asTable x.getName()
@@ -5653,7 +5993,7 @@ ResultSet fetchResultSet();]]></java>
 								<title>Record vs. TableRecord</title>
 								<content>
 									<p>
-										jOOQ understands that SQL is much more expressive than Java, when it comes to the declarative typing of <reference id="table-expressions" title="table expressions"/>. As a declarative language, SQL allows for creating ad-hoc row value expressions (records with indexed columns) and records (records with named columns). In Java, this is not possible to the same extent. Yet, still, sometimes you wish to use strongly typed records, when you know that you're selecting only from a single table
+										jOOQ understands that SQL is much more expressive than Java, when it comes to the declarative typing of <reference id="table-expressions" title="table expressions"/>. As a declarative language, SQL allows for creating ad-hoc row value expressions (records with indexed columns, or tuples) and records (records with named columns). In Java, this is not possible to the same extent. Yet, still, sometimes you wish to use strongly typed records, when you know that you're selecting only from a single table
 									</p>
 									
 									<h3>Fetching strongly or weakly typed records</h3>
@@ -5674,9 +6014,31 @@ System.out.println("Published in: " + book.getPublishedIn());]]></java>
 									<ul>
                    						<li><reference id="select-clause" title="The SELECT clause"/></li>
                    						<li><reference id="join-clause" title="The JOIN clause"/></li>
-                   						<li><reference id="group-by-clause" title="The GROUP BY clause"/></li>
-                   						<li><reference id="having-clause" title="The HAVING clause"/></li>
                    					</ul>		
+								</content>
+							</section>
+
+							<section id="record-n">
+								<title>Record1 to Record{max-row-degree}</title>
+								<content>
+									<p>
+										jOOQ's <reference id="row-value-expressions" title="row value expression (or tuple)"/> support has been explained earlier in this manual. It is useful for constructing row value expressions where they can be used in SQL. The same typesafety is also applied to records for degrees up to {max-row-degree}. To express this fact, <reference class="org.jooq.Record"/> is extended by <reference class="org.jooq.Record1"/> to <reference class="org.jooq.Record{max-row-degree}"/>. Apart from the fact that these extensions of the R type can be used throughout the <reference id="dsl-and-non-dsl" title="jOOQ DSL"/>, they also provide a useful API. Here is <reference class="org.jooq.Record2"/>, for instance: 
+									</p>
+
+<java><![CDATA[public interface Record2<T1, T2> extends Record {
+
+    // Access fields and values as row value expressions
+    Row2<T1, T2> fieldsRow();
+    Row2<T1, T2> valuesRow();
+
+    // Access fields by index
+    Field<T1> field1();
+    Field<T2> field2();
+
+    // Access values by index
+    T1 value1();
+    T2 value2();
+}]]></java>
 								</content>
 							</section>
 
@@ -5943,10 +6305,10 @@ create.executeUpdate(book);]]></java>
 										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to <reference id="codegen-daos" title="generate DAOs"/> for you. Those DAOs operate on <reference id="codegen-pojos" title="generated POJOs"/>. An example of using such a DAO is given here:
 									</p>
 
-<java><![CDATA[// Initialise a Factory
-Factory create = new Factory(connection, SQLDialect.ORACLE);
+<java><![CDATA[// Initialise an Executor
+Executor create = new Executor(connection, SQLDialect.ORACLE);
 
-// Initialise the DAO with the Factory
+// Initialise the DAO with the Executor
 BookDao bookDao = new BookDao(create);
 
 // Start using the DAO
@@ -6262,7 +6624,7 @@ for (BookRecord book : create.selectFrom(BOOK).fetch()) {
 								With JDBC, you have full control over your SQL statements. You can decide yourself, if you want to execute a static <reference class="java.sql.Statement"/> without bind values, or a <reference class="java.sql.PreparedStatement"/> with (or without) bind values. But you have to decide early, which way to go. And you'll have to prevent SQL injection and syntax errors manually, when inlining your bind variables.
 							</p>
 							<p>
-								With jOOQ, this is easier. As a matter of fact, it is plain simple. With jOOQ, you can just set a flag in your <reference id="factory" title="Factory's"/> <reference id="custom-settings" title="Settings"/>, and all queries produced by that factory will be executed as static statements, with all bind values inlined. An example is given here:
+								With jOOQ, this is easier. As a matter of fact, it is plain simple. With jOOQ, you can just set a flag in your <reference id="executor" title="Executor's"/> <reference id="custom-settings" title="Settings"/>, and all queries produced by that executor will be executed as static statements, with all bind values inlined. An example is given here:
 							</p>
 							
 <code-pair>
@@ -6276,11 +6638,11 @@ for (BookRecord book : create.selectFrom(BOOK).fetch()) {
 -- These statements are rendered by the two factories:
 SELECT ? FROM DUAL WHERE ? = ?
 SELECT 1 FROM DUAL WHERE 1 = 1]]></sql>
-<java><![CDATA[// This Factory executes PreparedStatements
-Factory prepare = new Factory(connection, SQLDialect.ORACLE);
+<java><![CDATA[// This Executor executes PreparedStatements
+Executor prepare = new Executor(connection, SQLDialect.ORACLE);
 
-// This Factory exeecutes static Statements
-Factory inlined = new Factory(connection, SQLDialect.ORACLE, 
+// This Executor executes static Statements
+Executor inlined = new Executor(connection, SQLDialect.ORACLE, 
   new Settings().withStatementType(StatementType.STATIC_STATEMENT));
   
 prepare.select(val(1)).where(val(1).equal(1)).fetch();
@@ -6441,7 +6803,7 @@ create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
 
 							<h3>Standalone calls to sequences</h3>
 							<p>
-								Instead of actually phrasing a select statement, you can also use the <reference id="factory" title="Factory's"/> convenience methods:
+								Instead of actually phrasing a select statement, you can also use the <reference id="executor" title="Executor's"/> convenience methods:
 							</p>							
 							
 <java><![CDATA[// Fetch the next value from a sequence
@@ -6661,7 +7023,7 @@ String xml = create.selectFrom(BOOK).fetch().formatXML();</java>
 										The above query will result in an XML document looking like the following one:
 									</p>
 
-<xml><![CDATA[<result xmlns="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">
+<xml><![CDATA[<result xmlns="http://www.jooq.org/xsd/jooq-export-{export-xsd-version}.xsd">
   <fields>
     <field name="ID" type="INTEGER"/>
     <field name="AUTHOR_ID" type="INTEGER"/>
@@ -6691,7 +7053,7 @@ Document xml = create.selectFrom(BOOK).fetch().intoXML();</java>
 
 									<p>
 										See the XSD schema definition here, for a formal definition of the XML export format:<br/>
-										<a href="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">http://www.jooq.org/xsd/jooq-export-1.6.2.xsd</a>
+										<a href="http://www.jooq.org/xsd/jooq-export-{export-xsd-version}.xsd">http://www.jooq.org/xsd/jooq-export-{export-xsd-version}.xsd</a>
 									</p>
 								</content>
 							</section>
@@ -6834,7 +7196,7 @@ String text = create.selectFrom(BOOK).fetch().format();</java>
 										With jOOQ, you can load this data using various parameters from the	loader API. A simple load may look like this:
 									</p>
 
-<java>Factory create = new Factory(connection, dialect);
+<java>Executor create = new Executor(connection, dialect);
 
 // Load data into the AUTHOR table from an input stream
 // holding the CSV data.
@@ -6963,19 +7325,6 @@ DELETE FROM BOOK WHERE ID = 5;]]></sql>
 							<p>
 								Normalised databases assume that a primary key is unique "forever", i.e. that a key, once inserted into a table, will never be changed or re-inserted after deletion. In order to use jOOQ's <reference id="simple-crud" title="CRUD"/> operations correctly, you should design your database accordingly.
 							</p>
-							
-							<h3>Main UNIQUE keys</h3>
-							<p>
-								In SQL, a primary key is always also a unique key. In fact, unique keys have very similar properties as primary keys. For instance, they can be referenced from other tables' foreign keys in most databases. In the absence of a formal primary key, jOOQ assumes that the first unique key it encounters will serve as a primary key substitute. This is called the "main key" in jOOQ. In other words, a main key is:
-							</p>
-							<ul>
-								<li>The primary key, if available</li>
-								<li>The first unique key, otherwise</li>
-							</ul>
-							
-							<p>
-								For simplicity, the term "primary key" will be used in the sense of such a "main unique key" in this manual.
-							</p>
 						</content>
 
 						<sections>
@@ -7062,14 +7411,14 @@ book.refresh();]]></java>
 
 									<h3>CRUD and SELECT statements</h3>
 									<p>
-										CRUD operations can be combined with regular querying, if you select records from single database tables, as explained in the manual's section about <reference id="select-statement" title="SELECT statements"/>. For this, you will need to use the selectFrom() method from the <reference id="factory" title="Factory"/>:
+										CRUD operations can be combined with regular querying, if you select records from single database tables, as explained in the manual's section about <reference id="select-statement" title="SELECT statements"/>. For this, you will need to use the <code>selectFrom()</code> method from the <reference id="executor" title="Executor"/>:
 									</p>
 									
 <java><![CDATA[// Loop over records returned from a SELECT statement
 for (BookRecord book : create.fetch(BOOK, BOOK.PUBLISHED_IN.equal(1948))) {
 
   // Perform actions on BookRecords depending on some conditions
-  if ("Orwell".equals(book.fetchAuthorByAuthorId().getLastName())) {
+  if ("Orwell".equals(book.fetchParent(FK_BOOK_AUTHOR).getLastName())) {
     book.delete();
   }
 }]]></java>
@@ -7163,7 +7512,7 @@ END my_trigger;]]></sql>
 								<title>Navigation methods</title>
 								<content>
 									<p>
-										When using jOOQ's <reference id="code-generation" title="code generator"/> along with its <reference id="codegen-records" title="record generation capabilities"/>, generated records can have navigation methods contained in them, if properly <reference id="codegen-advanced" title="configured"/>. These navigation methods allow for "navigating" inbound or outbound foreign key references by executing an appropriate query. An example is given here: 
+										<reference class="org.jooq.TableRecord"/> and <reference class="org.jooq.UpdatableRecord"/> contain foreign key navigation methods. These navigation methods allow for "navigating" inbound or outbound foreign key references by executing an appropriate query. An example is given here: 
 									</p>
 				
 <code-pair>
@@ -7177,39 +7526,14 @@ END my_trigger;]]></sql>
 <java><![CDATA[BookRecord book = create.fetch(BOOK, BOOK.ID.equal(5));
 
 // Find the author of a book
-AuthorRecord author = book.fetchAuthor();
+AuthorRecord author = book.fetchParent(FK_BOOK_AUTHOR);
 
 // Find other books by that author
-List<BookRecord> books = author.fetchBookList();]]></java>
+List<BookRecord> books = author.fetchChildren(FK_BOOK_AUTHOR);]]></java>
 </code-pair>					
 
 									<p>
-										These methods are safe for use with several foreign keys referencing the same tables:
-									</p>
-				
-<code-pair>
-<sql><![CDATA[CREATE TABLE book (
-  AUTHOR_ID NUMBER(7) NOT NULL,
-  CO_AUTHOR_ID NUMBER(7) NOT NULL,
-  
-  -- [...]
-  
-  FOREIGN KEY (AUTHOR_ID) REFERENCES author(ID),
-  FOREIGN KEY (CO_AUTHOR_ID) REFERENCES author(ID)
-)]]></sql>
-<java><![CDATA[BookRecord book = create.fetch(BOOK, BOOK.ID.equal(5));
-
-// Find the author of a book
-AuthorRecord author   = book.fetchAuthorByAuthorId();
-AuthorRecord coAuthor = book.fetchAuthorByCoAuthorId();
-
-// Find other books by those authors
-List<BookRecord> books = author.fetchBookListByAuthorId();
-List<BookRecord> books = coAuthor.fetchBookListByCoAuthorId();]]></java>
-</code-pair>					
-
-									<p>
-										Note that, unlike in Hibernate, jOOQ's generated navigation methods will always lazy-fetch relevant records, without caching any results. In other words, every time you run such a fetch method, a new query will be issued.
+										Note that, unlike in Hibernate, jOOQ's navigation methods will always lazy-fetch relevant records, without caching any results. In other words, every time you run such a fetch method, a new query will be issued.
 									</p>
 									<p>
 										These fetch methods only work on "attached" records. See the manual's section about <reference id="serializability" title="serializability"/> for some more insight on "attached" objects.
@@ -7221,7 +7545,7 @@ List<BookRecord> books = coAuthor.fetchBookListByCoAuthorId();]]></java>
 								<title>Non-updatable records</title>
 								<content>
 									<p>
-										Tables without UNIQUE keys are considered non-updatable by jOOQ, as jOOQ has no way of uniquely identifying such a record within the database. If you're using jOOQ's <reference id="code-generation" title="code generator"/>, such tables will generate <reference class="org.jooq.TableRecord"/> classes, instead of <reference class="org.jooq.UpdatableRecord"/> classes. When you fetch <reference id="record-vs-tablerecord" title="typed records"/> from such a table, the returned records will not allow for calling any of the <reference id="crud-with-updatablerecords" title="store(), refresh(), delete()"/> methods. 
+										Tables without a <code>PRIMARY KEY</code> are considered non-updatable by jOOQ, as jOOQ has no way of uniquely identifying such a record within the database. If you're using jOOQ's <reference id="code-generation" title="code generator"/>, such tables will generate <reference class="org.jooq.TableRecord"/> classes, instead of <reference class="org.jooq.UpdatableRecord"/> classes. When you fetch <reference id="record-vs-tablerecord" title="typed records"/> from such a table, the returned records will not allow for calling any of the <reference id="crud-with-updatablerecords" title="store(), refresh(), delete()"/> methods. 
 									</p>
 									
 									<p>
@@ -7247,8 +7571,8 @@ List<BookRecord> books = coAuthor.fetchBookListByCoAuthorId();]]></java>
 										The above changes to jOOQ's behaviour are transparent to the API, the only thing you need to do for it to be activated is to set the Settings flag. Here is an example illustrating optimistic locking:
 									</p>
 
-<java><![CDATA[// Properly configure the Factory
-Factory optimistic = new Factory(connection, SQLDialect.ORACLE, 
+<java><![CDATA[// Properly configure the Executor
+Executor optimistic = new Executor(connection, SQLDialect.ORACLE, 
   new Settings().withExecuteWithOptimisticLocking(true));
   
 // Fetch a book two times
@@ -7280,8 +7604,8 @@ book2.store();]]></java>
 										The MODIFIED column will contain a timestamp indicating the last modification timestamp for any book in the BOOK table. If you're using jOOQ and it's <reference id="crud-with-updatablerecords" title="store() methods on UpdatableRecords"/>, jOOQ will then generate this TIMESTAMP value for you, automatically. However, instead of running an additional <reference id="for-update-clause" title="SELECT .. FOR UPDATE"/> statement prior to an UPDATE or DELETE statement, jOOQ adds a WHERE-clause to the UPDATE or DELETE statement, checking for TIMESTAMP's integrity. This can be best illustrated with an example:   
 									</p>
 									
-<java><![CDATA[// Properly configure the Factory
-Factory optimistic = new Factory(connection, SQLDialect.ORACLE, 
+<java><![CDATA[// Properly configure the Executor
+Executor optimistic = new Executor(connection, SQLDialect.ORACLE, 
   new Settings().withExecuteWithOptimisticLocking(true));
   
 // Fetch a book two times
@@ -7401,10 +7725,10 @@ public class BookDao extends DAOImpl<BookRecord, Book, Integer> {
 								Note that you can further subtype those pre-generated DAO classes, to add more useful DAO methods to them. Using such a DAO is simple:
 							</p>
 							
-<java><![CDATA[// Initialise a Factory
-Factory create = new Factory(connection, SQLDialect.ORACLE);
+<java><![CDATA[// Initialise an Executor
+Executor create = new Executor(connection, SQLDialect.ORACLE);
 
-// Initialise the DAO with the Factory
+// Initialise the DAO with the Executor
 BookDao bookDao = new BookDao(create);
 
 // Start using the DAO
@@ -7463,7 +7787,7 @@ bookDao.delete(book);]]></java>
 						<title>ExecuteListeners</title>
 						<content>
 							<p>
-								The <reference id="custom-settings" title="jOOQ Factory Settings"/> let you specify a list of <reference class="org.jooq.ExecuteListener"/> classes. The ExecuteListener is essentially an event listener for Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a base type for loggers, debuggers, profilers, data collectors, triggers, etc. Advanced ExecuteListeners can also provide custom implementations of Connection, PreparedStatement and ResultSet to jOOQ in apropriate methods.
+								The <reference id="executor" title="Executor class"/> lets you specify a list of <reference class="org.jooq.ExecuteListener"/> instances. The ExecuteListener is essentially an event listener for Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a base type for loggers, debuggers, profilers, data collectors, triggers, etc. Advanced ExecuteListeners can also provide custom implementations of Connection, PreparedStatement and ResultSet to jOOQ in apropriate methods.
 							</p>
 							<p>
 								For convenience and better backwards-compatibility, consider extending <reference class="org.jooq.impl.DefaultExecuteListener"/> instead of implementing this interface.
@@ -7497,11 +7821,8 @@ public class StatisticsListener extends DefaultExecuteListener {
 								Now, configure jOOQ's runtime to load your listener
 							</p>
 
-<xml><![CDATA[<settings>
-  <executeListeners>
-    <executeListener>com.example.StatisticsListener</executeListener>
-  </executeListeners>
-</settings>]]></xml>
+<java><![CDATA[Executor create = new Executor(connection, dialect);
+create.getExecuteListeners().add(new StatisticsListener());]]></java>
 
 							<p>
 								And log results any time with a snippet like this:
@@ -7538,7 +7859,7 @@ for (ExecuteType type : ExecuteType.values()) {
 <java><![CDATA[import org.jooq.ExecuteContext;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Factory;
+import org.jooq.impl.Executor;
 import org.jooq.tools.StringUtils;
 
 public class PrettyPrinter extends DefaultExecuteListener {
@@ -7549,21 +7870,21 @@ public class PrettyPrinter extends DefaultExecuteListener {
     @Override
     public void executeStart(ExecuteContext ctx) {
 
-        // Create a new factory for logging rendering purposes
-        // This factory doesn't need a connection, only the SQLDialect...
-        Factory factory = new Factory(ctx.getDialect(), 
+        // Create a new Executor for logging rendering purposes
+        // This Executor doesn't need a connection, only the SQLDialect...
+        Executor executor = new Executor(ctx.getDialect(), 
         
         // ... and the flag for pretty-printing
         	new Settings().withRenderFormatted(true));
 
         // If we're executing a query
         if (ctx.query() != null) {
-            System.out.println(factory.renderInlined(ctx.query()));
+            System.out.println(executor.renderInlined(ctx.query()));
         }
         
         // If we're executing a routine
         else if (ctx.routine() != null) {
-            System.out.println(factory.renderInlined(ctx.routine()));
+            System.out.println(executor.renderInlined(ctx.routine()));
         }
         
         // If we're executing anything else (e.g. plain SQL)
@@ -7646,7 +7967,7 @@ Finishing                : Total: 4.814ms, +3.375ms
 								Many users may have switched from higher-level abstractions such as Hibernate to jOOQ, because of Hibernate's hard-to-manage performance, when it comes to large database schemas and complex second-level caching strategies. jOOQ is not a lightweight database abstraction framework, and it comes with its own overhead. Please be sure to consider the following points:
 							</p>
 							<ul>
-								<li>It takes some time to construct jOOQ queries. If you can reuse the same queries, you might cache them. Beware of thread-safety issues, though, as jOOQ's <reference id="factory" title="Factory"/> is not threadsafe, and queries are "attached" to their creating Factory</li>
+								<li>It takes some time to construct jOOQ queries. If you can reuse the same queries, you might cache them. Beware of thread-safety issues, though, as jOOQ's <reference id="executor" title="Executor"/> is not threadsafe, and queries are "attached" to their creating Executor</li>
 								<li>It takes some time to render SQL strings. Internally, jOOQ reuses the same <reference class="java.lang.StringBuilder"/> for the complete query, but some rendering elements may take their time. You could, of course, cache SQL generated by jOOQ and prepare your own <reference class="java.sql.PreparedStatement"/> objects</li>
 								<li>It takes some time to bind values to prepared statements. jOOQ does not keep any open prepared statements, internally. Use a sophisticated connection pool, that will cache prepared statements and inject them into jOOQ through the standard JDBC API</li>
 								<li>It takes some time to fetch results. By default, jOOQ will always fetch the complete <reference class="java.sql.ResultSet"/> into memory. Use <reference id="lazy-fetching" title="lazy fetching"/> to prevent that, and scroll over an open underlying database cursor</li>
@@ -7788,7 +8109,7 @@ Finishing                : Total: 4.814ms, +3.375ms
 
 							<p>
 								There are also lots of advanced configuration parameters, which will be treated in the <reference id="codegen-advanced" title="manual's section about advanced code generation features"/> Note, you can find the official XSD file for a formal specification at:<br/>
-							    <a href="http://www.jooq.org/xsd/jooq-codegen-2.5.0.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-2.5.0.xsd</a>
+							    <a href="http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd" title="The jOOQ-codegen configuration XSD">http://www.jooq.org/xsd/jooq-codegen-{codegen-xsd-version}.xsd</a>
 						    </p>
 
 							<h3>Run jOOQ code generation</h3>
@@ -8465,8 +8786,8 @@ public class Book implements java.io.Serializable
         super(BOOK, Book.class);
     }
 
-    public BookDao(Factory factory) {
-        super(BOOK, Book.class, factory);
+    public BookDao(Executor executor) {
+        super(BOOK, Book.class, executor);
     }
 
     // Every column generates at least one fetch method
@@ -8734,22 +9055,11 @@ create.selectFrom(AUTHOR)
 							</ul>
 
 							<p>
-								Both modes will require that you set the <reference class="org.jooq.debug.impl.DebugListener"/> in the Factory's settings. When using XML settings:
+								Both modes will require that you set the <reference class="org.jooq.debug.impl.DebugListener"/> in the Executor's configuration:
 							</p>
 
-<xml><![CDATA[<settings>
-  <executeListeners>
-    <executeListener>org.jooq.debug.impl.DebugListener</executeListener>
-  </executeListeners>
-</settings>]]></xml>
-
-							<p>
-								Or when using programmatic settings:
-							</p>
-							
-<java><![CDATA[Settings settings = new Settings()
-    .getExecuteListeners().add("org.jooq.debug.impl.DebugListener");
-Factory factory = new Factory(connection, dialect, settings);]]></java>
+<java><![CDATA[Executor executor = new Executor(connection, dialect);
+executor.getExecuteListeners().add(new org.jooq.debug.impl.DebugListener());]]></java>
 
 							<h3>In-process mode</h3>
 							<p>
@@ -9182,9 +9492,9 @@ for (Record record : create().select(
 							</p>
 							<ul>
 								<li>[N] in Row[N] has been raised from 8 to 22. This means that existing row value expressions with degree >= 9 are now type-safe</li>
-								<li>Subqueries returned from Factory.select(...) now implement Select&lt;Record[N]>, not Select&lt;Record></li>
-								<li>IN predicates and comparison predicates taking subselects changed incompatibly</li>
-								<li>INSERT and MERGE statements now take typesafe VALUES() clauses</li>
+								<li>Subqueries returned from <code>Factory.select(...)</code> now implement <code>Select&lt;Record[N]>, not Select&lt;Record></code></li>
+								<li><code>IN</code> predicates and comparison predicates taking subselects changed incompatibly</li>
+								<li><code>INSERT</code> and <code>MERGE</code> statements now take typesafe <code>VALUES()</code> clauses</li>
 							</ul>
 							
 							<p>
@@ -9353,6 +9663,82 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 					</section>
 
 					<section id="reference-glossary">
+					<!-- 
+					  Analytical function -> window function
+					  Arity -> Degree
+					  AST
+					  Batch
+					  BNF
+					  Catalog
+					  Clause
+					  Code generation
+					  Column -> Field
+					  Column expression
+					  Common table expression
+					  Condition -> Predicate
+					  Configuration
+					  Connection
+					  Console
+					  CRUD -> OLTP
+					  DAO
+					  Database
+					  DataSource
+					  Degree
+					  Dialect
+					  Domain Specific language (internal / external)
+					  Execute
+					  Execute listener
+					  Execution lifecycle
+					  Executor
+					  Export
+					  Expression
+					  Factory
+					  Fetch
+					  Field
+					  Function
+					  Generic R-type
+					  Generic T-type
+					  JDBC
+					  JPQL
+					  Hibernate
+					  Hierarchical query
+					  HQL
+					  Identifier
+					  Import
+					  Keyword
+					  LINQ
+					  Literal
+					  Locking (optimistic / pessimistic)
+					  Name -> Identifier
+					  OLAP
+					  OLTP
+					  Pivot
+					  POJO
+					  Predicate
+					  PreparedStatement
+					  Procedure
+					  Projection
+					  Query
+					  Schema
+					  Settings
+					  SLICK
+					  SQL
+					  SQL building
+					  SQL execution
+					  SQL standard
+					  Statement
+					  Table
+					  Table expression
+					  Record
+					  Row
+					  Row value expression
+					  Result
+					  ResultQuery
+					  UDT
+					  View
+					  Window function
+					
+					  -->
 					</section>
 
 					<section id="reference-credits">

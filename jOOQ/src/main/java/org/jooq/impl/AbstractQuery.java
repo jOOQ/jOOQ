@@ -52,6 +52,8 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.conf.SettingsTools;
+import org.jooq.conf.StatementType;
 import org.jooq.exception.DetachedException;
 import org.jooq.tools.JooqLogger;
 
@@ -115,6 +117,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             }
 
             p.setConverted(value);
+            closeIfNecessary(p);
             return this;
         }
     }
@@ -126,14 +129,44 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      */
     @Override
     public Query bind(int index, Object value) {
-        Param<?>[] array = getParams().values().toArray(new Param[0]);
+        Param<?>[] params = getParams().values().toArray(new Param[0]);
 
-        if (index < 1 || index > array.length) {
+        if (index < 1 || index > params.length) {
             throw new IllegalArgumentException("Index out of range for Query parameters : " + index);
         }
 
-        array[index - 1].setConverted(value);
+        Param<?> param = params[index - 1];
+        param.setConverted(value);
+        closeIfNecessary(param);
         return this;
+    }
+
+    /**
+     * Close the statement if necessary.
+     * <p>
+     * [#1886] If there is an open (cached) statement and its bind values are
+     * inlined due to a {@link StatementType#STATIC_STATEMENT} setting, the
+     * statement should be closed.
+     *
+     * @param param The param that was changed
+     */
+    private final void closeIfNecessary(Param<?> param) {
+
+        // This is relevant when there is an open statement, only
+        if (keepStatement() && statement != null) {
+
+            // When an inlined param is being changed, the previous statement
+            // has to be closed, regardless if variable binding is performed
+            if (param.isInline()) {
+                close();
+            }
+
+            // If all params are inlined, the previous statement always has to
+            // be closed
+            else if (SettingsTools.executeStaticStatements(getConfiguration().getSettings())) {
+                close();
+            }
+        }
     }
 
     /**

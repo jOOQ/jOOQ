@@ -40,6 +40,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.val;
 
 import java.lang.reflect.InvocationHandler;
@@ -57,6 +58,7 @@ import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
+import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
@@ -97,7 +99,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
 
         // [#385] By default, new statements are created for every execution
         KeepStatementListener.reset();
-        ResultQuery<Record> query = create(settings).select(val(1));
+        ResultQuery<Record> query = create(settings).select(val(1), inline(2));
         assertEquals(1, query.fetchOne(0));
         assertEquals(2, query.bind(1, 2).fetchOne(0));
 
@@ -111,21 +113,43 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         KeepStatementListener.reset();
         query.keepStatement(true);
         assertEquals(2, query.fetchOne(0));
-
-        // [#1886] TODO: Fix this for StatementType.STATIC_STATEMENT
         assertEquals(3, query.bind(1, 3).fetchOne(0));
 
         Cursor<Record> cursor = query.fetchLazy();
         assertEquals(3, cursor.fetchOne().getValue(0));
         assertEquals(3, query.fetchOne(0));
 
+        // [#1886] The first underlying statement should've been closed when
+        // using StatementType.STATIC_STATEMENT
         assertEquals(4, KeepStatementListener.statements.size());
         assertEquals(0, KeepStatementListener.closed);
-        assertTrue(
+        assertEquals(
+            create().getSettings().getStatementType() == StatementType.PREPARED_STATEMENT,
             KeepStatementListener.statements.get(0) ==
             KeepStatementListener.statements.get(1));
+
+        // Statements #2, #3, #4 should be identical
         assertTrue(
-            KeepStatementListener.statements.get(0) ==
+            KeepStatementListener.statements.get(1) ==
+            KeepStatementListener.statements.get(2));
+        assertTrue(
+            KeepStatementListener.statements.get(2) ==
+            KeepStatementListener.statements.get(3));
+
+        // [#1886] Check if inline bind values are correctly changed
+        KeepStatementListener.reset();
+        assertEquals(3, query.fetchOne(0));
+        assertEquals(3, query.bind(2, 4).fetchOne(0));
+        assertEquals(4, query.bind(2, 4).fetchOne(1));
+
+        // All statements should be closed, as the inline bind value was changed
+        assertEquals(3, KeepStatementListener.statements.size());
+        assertEquals(0, KeepStatementListener.closed);
+        assertTrue(
+            KeepStatementListener.statements.get(0) !=
+            KeepStatementListener.statements.get(1));
+        assertTrue(
+            KeepStatementListener.statements.get(1) !=
             KeepStatementListener.statements.get(2));
 
         cursor.close();

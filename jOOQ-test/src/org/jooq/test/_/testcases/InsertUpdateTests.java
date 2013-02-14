@@ -485,8 +485,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, I, IPK, T658, 
         assertNull(query.getReturnedRecord());
 
         // Check if the trigger works correctly
+        ID = create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED());
         assertEquals(1, create().selectFrom(TTriggers()).fetch().size());
-        assertEquals(++ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED()));
+        assertEquals(  ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED()));
         assertEquals(  ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID()));
         assertEquals(2*ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_COUNTER()));
 

@@ -14,6 +14,11 @@ body {
     word-spacing: 0;
     margin: 0;
     padding: 0;
+    
+    background: #888787;
+    background: -webkit-gradient(linear, left, right, from(#888787), to(#666));
+    background: -moz-linear-gradient(left, #888787, #666);
+    background: gradient(linear, left, right, from(#888787), to(#666));
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -273,9 +278,9 @@ div.navigation-item-active {
     padding-bottom: 1em;
 
     background: #888787;
-    background: -webkit-gradient(linear, left bottom, right top, from(#888787), to(#666));
-    background: -moz-linear-gradient(left bottom, #888787, #666);
-    background: gradient(linear, left bottom, right top, from(#888787), to(#666));
+    background: -webkit-gradient(linear, left, right, from(#888787), to(#666));
+    background: -moz-linear-gradient(left, #888787, #666);
+    background: gradient(linear, left, right, from(#888787), to(#666));
     -webkit-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
     -moz-box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;
     box-shadow: inset rgba(0,0,0,.1) 0 5px 5px;

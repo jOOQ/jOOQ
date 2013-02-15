@@ -71,7 +71,9 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -565,6 +567,20 @@ final class Utils {
      */
     static final <T> List<T> list(T... array) {
         return array == null ? Collections.<T>emptyList() : Arrays.asList(array);
+    }
+
+    /**
+     * Turn a {@link Record} into a {@link Map}
+     */
+    static final Map<Field<?>, Object> map(Record record) {
+        Map<Field<?>, Object> result = new LinkedHashMap<Field<?>, Object>();
+        int size = record.size();
+
+        for (int i = 0; i < size; i++) {
+            result.put(record.field(i), record.getValue(i));
+        }
+
+        return result;
     }
 
     /**

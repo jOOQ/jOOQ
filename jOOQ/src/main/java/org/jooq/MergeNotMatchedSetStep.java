@@ -67,21 +67,21 @@ public interface MergeNotMatchedSetStep<R extends Record> {
 
     /**
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
-     * <code>WHEN NOT MATCHED</code> clause
+     * <code>WHEN NOT MATCHED</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
-     * <code>WHEN NOT MATCHED</INSERT> clause
+     * <code>WHEN NOT MATCHED</INSERT> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set values for <code>INSERT</code> in the <code>MERGE</code> statement's
-     * <code>WHEN NOT MATCHED</INSERT> clause
+     * <code>WHEN NOT MATCHED</INSERT> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
@@ -90,10 +90,22 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * Set multiple values for <code>INSERT</code> in the <code>MERGE</code>
      * statement's <code>WHEN NOT MATCHED</code> clause.
      * <p>
-     * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
-     * types. Values can either be of type <code>&lt;T&gt;</code> or
-     * <code>Field&lt;T&gt;</code>
+     * Values can either be of type <code>&lt;T&gt;</code> or
+     * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
+     * corresponding field's type.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeNotMatchedSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
+
+    /**
+     * Set multiple values for <code>INSERT</code> in the <code>MERGE</code>
+     * statement's <code>WHEN NOT MATCHED</code> clause.
+     * <p>
+     * This is the same as calling {@link #set(Map)} with the argument record
+     * treated as a <code>Map<Field<?>, Object></code>.
+     *
+     * @see #set(Map)
+     */
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    MergeNotMatchedSetMoreStep<R> set(Record record);
 }

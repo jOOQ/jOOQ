@@ -697,6 +697,11 @@ implements
     }
 
     @Override
+    public final MergeImpl set(Record record) {
+        return set(Utils.map(record));
+    }
+
+    @Override
     public final MergeImpl whenNotMatchedThenInsert() {
         return whenNotMatchedThenInsert(Collections.<Field<?>>emptyList());
     }

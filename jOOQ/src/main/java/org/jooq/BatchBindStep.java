@@ -37,8 +37,6 @@ package org.jooq;
 
 import java.sql.Statement;
 
-import org.jooq.exception.DataAccessException;
-
 /**
  * This type is used for the {@link Batch}'s DSL API.
  * <p>
@@ -51,9 +49,14 @@ import org.jooq.exception.DataAccessException;
 public interface BatchBindStep extends Batch {
 
     /**
-     * Set bind values on the batch statement
-     *
-     * @throws DataAccessException if something went wrong executing the query
+     * Set bind values on the batch statement.
      */
-    BatchBindStep bind(Object... bindValues) throws DataAccessException;
+    BatchBindStep bind(Object... bindValues);
+
+    /**
+     * Set several bind values on the batch statement.
+     * <p>
+     * This is the same as calling {@link #bind(Object...)} several times.
+     */
+    BatchBindStep bind(Object[][] bindValues);
 }

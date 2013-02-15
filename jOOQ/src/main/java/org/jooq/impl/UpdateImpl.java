@@ -151,6 +151,11 @@ final class UpdateImpl<R extends Record>
         return this;
     }
 
+    @Override
+    public final UpdateImpl<R> set(Record record) {
+        return set(Utils.map(record));
+    }
+
 // [jooq-tools] START [set]
     @Generated("This method was generated using jOOQ-tools")
     @Override

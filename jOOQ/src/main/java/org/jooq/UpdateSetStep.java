@@ -55,30 +55,40 @@ import java.util.Map;
 public interface UpdateSetStep<R extends Record> {
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
     <T> UpdateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
     <T> UpdateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
     <T> UpdateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
-     * Set a value for a field in the <code>UPDATE</code> statement
+     * Set a value for a field in the <code>UPDATE</code> statement.
      * <p>
-     * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
-     * types. Values can either be of type <code>&lt;T&gt;</code> or
-     * <code>Field&lt;T&gt;</code>
+     * Values can either be of type <code>&lt;T&gt;</code> or
+     * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
+     * corresponding field's type.
      */
     @Support
     UpdateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
-}
+
+    /**
+     * Set a value for a field in the <code>UPDATE</code> statement.
+     * <p>
+     * This is the same as calling {@link #set(Map)} with the argument record
+     * treated as a <code>Map<Field<?>, Object></code>.
+     *
+     * @see #set(Map)
+     */
+    @Support
+    UpdateSetMoreStep<R> set(Record record);}

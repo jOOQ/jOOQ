@@ -66,34 +66,46 @@ public interface InsertOnDuplicateSetStep<R extends Record> {
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> clause
+     * <code>ON DUPLICATE KEY UPDATE</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> clause
+     * <code>ON DUPLICATE KEY UPDATE</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set values for <code>UPDATE</code> in the <code>INSERT</code> statement's
-     * <code>ON DUPLICATE KEY UPDATE</code> clause
+     * <code>ON DUPLICATE KEY UPDATE</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     <T> InsertOnDuplicateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
      * Set multiple values for <code>UPDATE</code> in the <code>INSERT</code>
-     * statement's <code>ON DUPLICATE KEY UPDATE</code> clause
+     * statement's <code>ON DUPLICATE KEY UPDATE</code> clause.
      * <p>
-     * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
-     * types. Values can either be of type <code>&lt;T&gt;</code> or
-     * <code>Field&lt;T&gt;</code>
+     * Values can either be of type <code>&lt;T&gt;</code> or
+     * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
+     * corresponding field's type.
      */
     @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertOnDuplicateSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
+
+    /**
+     * Set multiple values for <code>UPDATE</code> in the <code>INSERT</code>
+     * statement's <code>ON DUPLICATE KEY UPDATE</code> clause.
+     * <p>
+     * This is the same as calling {@link #set(Map)} with the argument record
+     * treated as a <code>Map<Field<?>, Object></code>.
+     *
+     * @see #set(Map)
+     */
+    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    InsertOnDuplicateSetMoreStep<R> set(Record record);
 
 }

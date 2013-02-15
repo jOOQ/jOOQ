@@ -63,54 +63,65 @@ import org.jooq.impl.Executor;
 public interface InsertSetStep<R extends Record> {
 
     /**
-     * Set a value for a field in the <code>INSERT</code> statement
+     * Set a value for a field in the <code>INSERT</code> statement.
      */
     @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, T value);
 
     /**
-     * Set a value for a field in the <code>INSERT</code> statement
+     * Set a value for a field in the <code>INSERT</code> statement.
      */
     @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
-     * Set a value for a field in the <code>INSERT</code> statement
+     * Set a value for a field in the <code>INSERT</code> statement.
      */
     @Support
     <T> InsertSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
-     * Set a value for a field in the <code>INSERT</code> statement
+     * Set values in the <code>INSERT</code> statement.
      * <p>
-     * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
-     * types. Values can either be of type <code>&lt;T&gt;</code> or
-     * <code>Field&lt;T&gt;</code>
+     * Values can either be of type <code>&lt;T&gt;</code> or
+     * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
+     * corresponding field's type.
      */
     @Support
     InsertSetMoreStep<R> set(Map<? extends Field<?>, ?> map);
 
     /**
-     * Add values to the insert statement with implicit field names
+     * Set values in the <code>INSERT</code> statement.
+     * <p>
+     * This is the same as calling {@link #set(Map)} with the argument record
+     * treated as a <code>Map<Field<?>, Object></code>.
+     *
+     * @see #set(Map)
+     */
+    @Support
+    InsertSetMoreStep<R> set(Record record);
+
+    /**
+     * Add values to the insert statement with implicit field names.
      */
     @Support
     InsertValuesStepN<R> values(Object... values);
 
     /**
-     * Add values to the insert statement with implicit field names
+     * Add values to the insert statement with implicit field names.
      */
     @Support
     InsertValuesStepN<R> values(Field<?>... values);
 
     /**
-     * Add values to the insert statement with implicit field names
+     * Add values to the insert statement with implicit field names.
      */
     @Support
     InsertValuesStepN<R> values(Collection<?> values);
 
     /**
      * Use a <code>SELECT</code> statement as the source of values for the
-     * <code>INSERT</code> statement
+     * <code>INSERT</code> statement.
      * <p>
      * This variant of the <code>INSERT .. SELECT</code> statement does not
      * allow for specifying a subset of the fields inserted into. It will insert

@@ -77,9 +77,9 @@ public interface StoreQuery<R extends Record> extends Query {
     /**
      * Add multiple values to the store statement.
      * <p>
-     * Please assure that key/value pairs have matching <code>&lt;T&gt;</code>
-     * types. Values can either be of type <code>&lt;T&gt;</code> or
-     * <code>Field&lt;T&gt;</code>
+     * Values can either be of type <code>&lt;T&gt;</code> or
+     * <code>Field&lt;T&gt;</code>. jOOQ will attempt to convert values to their
+     * corresponding field's type.
      */
     @Support
     void addValues(Map<? extends Field<?>, ?> map);

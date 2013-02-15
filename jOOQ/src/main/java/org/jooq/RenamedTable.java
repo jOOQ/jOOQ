@@ -42,14 +42,14 @@ import org.jooq.impl.TableImpl;
  *
  * @author Lukas Eder
  */
-class RenamedTable extends TableImpl<Record> {
+class RenamedTable<R extends Record> extends TableImpl<R> {
 
     /**
      * Generated UID
      */
     private static final long serialVersionUID = -309012919785933903L;
 
-    RenamedTable(Table<?> delegate, String rename) {
+    RenamedTable(Table<R> delegate, String rename) {
         super(rename, delegate.getSchema());
 
         for (Field<?> field : delegate.fields()) {

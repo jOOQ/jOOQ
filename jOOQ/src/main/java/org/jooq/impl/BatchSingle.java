@@ -75,6 +75,15 @@ class BatchSingle implements BatchBindStep {
     }
 
     @Override
+    public final BatchSingle bind(Object[][] bindValues) {
+        for (Object[] v : bindValues) {
+            bind(v);
+        }
+
+        return this;
+    }
+
+    @Override
     public final int size() {
         return allBindValues.size();
     }

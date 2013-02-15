@@ -51,6 +51,7 @@ import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -60,12 +61,15 @@ import java.util.UUID;
 
 import javax.swing.UIManager;
 
+import junit.framework.Assert;
+
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -132,6 +136,10 @@ import org.jooq.test._.testcases.ValuesConstructorTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.jdbc.MockConnection;
+import org.jooq.tools.jdbc.MockDataProvider;
+import org.jooq.tools.jdbc.MockExecuteContext;
+import org.jooq.tools.jdbc.MockResult;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -452,6 +460,68 @@ public abstract class jOOQAbstractTest<
         if (!connectionInitialised) {
             connectionInitialised = true;
             connection = getConnection0(null, null);
+            final Connection c = connection;
+
+            // Reactivate this, to enable mock connections
+            if (false)
+            connection = new MockConnection(new MockDataProvider() {
+
+                @Override
+                public MockResult[] execute(MockExecuteContext context) throws SQLException {
+                    Executor executor = new Executor(c, getDialect());
+
+                    if (context.isSingleBatch()) {
+                        Query query = executor.query(context.getSQL(), new Object[context.getBatchBindings()[0].length]);
+                        int[] result =
+                        executor.batch(query)
+                                .bind(context.getBatchBindings())
+                                .execute();
+
+                        MockResult[] r = new MockResult[result.length];
+                        for (int i = 0; i < r.length; i++) {
+                            r[i] = new MockResult(result[i], null);
+                        }
+
+                        return r;
+                    }
+                    else if (context.isMultiBatch()) {
+                        List<Query> queries = new ArrayList<Query>();
+
+                        for (String sql : context.getBatchSQL()) {
+                            queries.add(executor.query(sql));
+                        }
+
+                        int[] result =
+                        executor.batch(queries)
+                                .execute();
+
+                        MockResult[] r = new MockResult[result.length];
+                        for (int i = 0; i < r.length; i++) {
+                            r[i] = new MockResult(result[i], null);
+                        }
+
+                        return r;
+                    }
+                    else if (context.getSQL().toLowerCase().matches("(?s:\\W*(select|with).*)")) {
+                        List<Result<Record>> result = executor.fetchMany(context.getSQL(), context.getBindings());
+                        MockResult[] r = new MockResult[result.size()];
+
+                        for (int i = 0; i < result.size(); i++) {
+                            r[i] = new MockResult(result.get(i).size(), result.get(i));
+                        }
+
+                        return r;
+                    }
+                    else {
+                        int result = executor.execute(context.getSQL(), context.getBindings());
+
+                        MockResult[] r = new MockResult[1];
+                        r[0] = new MockResult(result, null);
+
+                        return r;
+                    }
+                }
+            });
 
             if (RUN_CONSOLE_IN_PROCESS) {
                 try {

@@ -73,6 +73,7 @@ import org.jooq.Table;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.StringUtils;
+import org.jooq.tools.jdbc.MockResultSet;
 import org.jooq.tools.json.JSONObject;
 
 import org.w3c.dom.Document;
@@ -1020,7 +1021,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final ResultSet intoResultSet() {
-        return new ResultSetImpl(this);
+        return new MockResultSet(this);
     }
 
     @Override

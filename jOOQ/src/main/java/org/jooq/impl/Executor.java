@@ -5190,7 +5190,7 @@ public class Executor implements Configuration {
      * @param table The table holding records of type &lt;R&gt;
      * @return The new record
      */
-    public final <R extends TableRecord<R>> R newRecord(Table<R> table) {
+    public final <R extends Record> R newRecord(Table<R> table) {
         return Utils.newRecord(table, this);
     }
 
@@ -5219,7 +5219,7 @@ public class Executor implements Configuration {
      * @see Record#from(Object)
      * @see Record#into(Class)
      */
-    public final <R extends TableRecord<R>> R newRecord(Table<R> table, Object source) {
+    public final <R extends Record> R newRecord(Table<R> table, Object source) {
         R result = newRecord(table);
         result.from(source);
         return result;

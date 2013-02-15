@@ -437,6 +437,34 @@ public class Executor implements Configuration {
         configuration.setExecuteListeners(listeners);
     }
 
+    /**
+     * Map a schema to another one.
+     * <p>
+     * This will map a schema onto another one, depending on configured schema
+     * mapping in this <code>Executor</code>. If no applicable schema mapping
+     * can be found, the schema itself is returned.
+     *
+     * @param schema A schema
+     * @return The mapped schema
+     */
+    public final Schema map(Schema schema) {
+        return Utils.getMappedSchema(this, schema);
+    }
+
+    /**
+     * Map a table to another one.
+     * <p>
+     * This will map a table onto another one, depending on configured table
+     * mapping in this <code>Executor</code>. If no applicable table mapping
+     * can be found, the table itself is returned.
+     *
+     * @param table A table
+     * @return The mapped table
+     */
+    public final <R extends Record> Table<R> map(Table<R> table) {
+        return Utils.getMappedTable(this, table);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Convenience methods accessing the underlying Connection
     // -------------------------------------------------------------------------

@@ -993,7 +993,7 @@ final class Utils {
      * Map a {@link Table} according to the configured {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("deprecation")
-    static final Table<?> getMappedTable(Configuration configuration, Table<?> table) {
+    static final <R extends Record> Table<R> getMappedTable(Configuration configuration, Table<R> table) {
         org.jooq.SchemaMapping mapping = configuration.getSchemaMapping();
 
         if (mapping != null) {

@@ -61,8 +61,6 @@ import java.util.UUID;
 
 import javax.swing.UIManager;
 
-import junit.framework.Assert;
-
 import org.jooq.ArrayRecord;
 import org.jooq.DAO;
 import org.jooq.DataType;

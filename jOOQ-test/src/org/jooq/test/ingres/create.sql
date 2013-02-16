@@ -234,11 +234,10 @@ CREATE TABLE x_unused (
   "FIELD 737" DECIMAL(25, 2),
 
   CONSTRAINT pk_x_unused PRIMARY KEY(ID, NAME),
-  CONSTRAINT uk_x_unused_id UNIQUE(ID),
-  CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
+  CONSTRAINT uk_x_unused_id UNIQUE(ID)
 )
 /
-COMMENT ON TABLE x_unused IS 'An unused table in the same schema.'
+COMMENT ON TABLE x_unused IS 'An unused table in the same schema. Note: Ingres suddenly could not handle composite self-references anymore... CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)'
 /
 
 CREATE TABLE t_exotic_types (
@@ -304,7 +303,7 @@ CREATE TABLE x_test_case_2025 (
   CONSTRAINT fk_x_test_case_2025_1 FOREIGN KEY(ref_id) REFERENCES x_test_case_85(ID),
   CONSTRAINT fk_x_test_case_2025_2 FOREIGN KEY(ref_id) REFERENCES x_test_case_71(ID),
   CONSTRAINT fk_x_test_case_2025_3 FOREIGN KEY(ref_id, ref_name) REFERENCES X_UNUSED(id, name)
-);
+)
 /
 
 CREATE VIEW V_LIBRARY (AUTHOR, TITLE) AS

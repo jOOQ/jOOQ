@@ -38,7 +38,9 @@ package org.jooq;
 import java.util.List;
 
 /**
- * An object representing a database catalog
+ * An object representing a database catalog.
+ * <p>
+ * NOTE: Catalogs are experimental in jOOQ 3.0
  *
  * @author Lukas Eder
  */

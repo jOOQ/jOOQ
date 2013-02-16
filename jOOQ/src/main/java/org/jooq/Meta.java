@@ -68,6 +68,8 @@ public interface Meta {
      * For those databases that don't really support JDBC meta data catalogs, a
      * single empty catalog (named <code>""</code>) will be returned. In other
      * words, there is always at least one catalog in a database.
+     * <p>
+     * NOTE: Catalogs are experimental in jOOQ 3.0
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects

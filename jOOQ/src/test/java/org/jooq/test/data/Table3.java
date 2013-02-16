@@ -39,6 +39,7 @@ import java.sql.Date;
 
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 /**
@@ -53,9 +54,9 @@ public class Table3 extends TableImpl<Table3Record> {
 
     public static final Table<Table3Record>               TABLE3      = new Table3();
 
-    public static final TableField<Table3Record, Integer> FIELD_ID3   = createField("ID3", TestDataType.INTEGER_TYPE, TABLE3);
-    public static final TableField<Table3Record, String>  FIELD_NAME3 = createField("NAME3", TestDataType.STRING_TYPE, TABLE3);
-    public static final TableField<Table3Record, Date>    FIELD_DATE3 = createField("DATE3", TestDataType.DATE_TYPE, TABLE3);
+    public static final TableField<Table3Record, Integer> FIELD_ID3   = createField("ID3", SQLDataType.INTEGER, TABLE3);
+    public static final TableField<Table3Record, String>  FIELD_NAME3 = createField("NAME3", SQLDataType.VARCHAR, TABLE3);
+    public static final TableField<Table3Record, Date>    FIELD_DATE3 = createField("DATE3", SQLDataType.DATE, TABLE3);
 
     public Table3() {
         super("TABLE3");

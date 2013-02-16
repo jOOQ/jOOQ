@@ -1678,10 +1678,10 @@ public class Executor implements Configuration {
 
             if (all.size() > 1) {
                 for (String[] values : all.subList(1, all.size())) {
-                    Record record = new RecordImpl(fields);
+                    RecordImpl record = new RecordImpl(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {
-                        Utils.setValue(record, fields.get(i), values[i]);
+                        record.setValue(i, new Value<Object>(values[i]));
                     }
 
                     result.add(record);

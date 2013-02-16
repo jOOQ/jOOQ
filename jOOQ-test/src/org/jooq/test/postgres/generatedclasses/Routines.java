@@ -217,6 +217,43 @@ public final class Routines {
 	}
 
 	/**
+	 * Call <code>public.f_search_book</code>
+	 */
+	public static java.lang.Object fSearchBook(org.jooq.Configuration configuration, java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {
+		org.jooq.test.postgres.generatedclasses.routines.FSearchBook f = new org.jooq.test.postgres.generatedclasses.routines.FSearchBook();
+		f.setPTitle(pTitle);
+		f.setPLimit(pLimit);
+		f.setPOffset(pOffset);
+
+		f.execute(configuration);
+		return f.getReturnValue();
+	}
+
+	/**
+	 * Get <code>public.f_search_book</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Object> fSearchBook(java.lang.String pTitle, java.lang.Long pLimit, java.lang.Long pOffset) {
+		org.jooq.test.postgres.generatedclasses.routines.FSearchBook f = new org.jooq.test.postgres.generatedclasses.routines.FSearchBook();
+		f.setPTitle(pTitle);
+		f.setPLimit(pLimit);
+		f.setPOffset(pOffset);
+
+		return f.asField();
+	}
+
+	/**
+	 * Get <code>public.f_search_book</code> as a field
+	 */
+	public static org.jooq.Field<java.lang.Object> fSearchBook(org.jooq.Field<java.lang.String> pTitle, org.jooq.Field<java.lang.Long> pLimit, org.jooq.Field<java.lang.Long> pOffset) {
+		org.jooq.test.postgres.generatedclasses.routines.FSearchBook f = new org.jooq.test.postgres.generatedclasses.routines.FSearchBook();
+		f.setPTitle(pTitle);
+		f.setPLimit(pLimit);
+		f.setPOffset(pOffset);
+
+		return f.asField();
+	}
+
+	/**
 	 * Call <code>public.f317</code>
 	 */
 	public static java.lang.Integer f317(org.jooq.Configuration configuration, java.lang.Integer p1, java.lang.Integer p2, java.lang.Integer p3, java.lang.Integer p4) {
@@ -259,8 +296,8 @@ public final class Routines {
 	/**
 	 * Call <code>public.p_arrays</code>
 	 */
-	public static java.lang.Long[] pArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays2 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
+	public static java.lang.String[] pArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.PArrays3 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
 		p.setInArray(inArray);
 
 		p.execute(configuration);
@@ -281,8 +318,8 @@ public final class Routines {
 	/**
 	 * Call <code>public.p_arrays</code>
 	 */
-	public static java.lang.String[] pArrays3(org.jooq.Configuration configuration, java.lang.String[] inArray) {
-		org.jooq.test.postgres.generatedclasses.routines.PArrays3 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays3();
+	public static java.lang.Long[] pArrays2(org.jooq.Configuration configuration, java.lang.Long[] inArray) {
+		org.jooq.test.postgres.generatedclasses.routines.PArrays2 p = new org.jooq.test.postgres.generatedclasses.routines.PArrays2();
 		p.setInArray(inArray);
 
 		p.execute(configuration);

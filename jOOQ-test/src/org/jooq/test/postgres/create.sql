@@ -26,6 +26,7 @@ DROP FUNCTION f317(p1 int, p2 int, p3 int, p4 int);/
 DROP FUNCTION p_get_two_cursors(books OUT refcursor, authors OUT refcursor)/
 DROP FUNCTION p_get_one_cursor(total OUT int, books OUT refcursor, book_ids in int[])/
 DROP FUNCTION f_get_one_cursor(book_ids IN int[])/
+DROP FUNCTION f_search_book(p_title character varying, p_limit bigint, p_offset bigint)/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
 DROP FUNCTION p_triggers()/
@@ -449,6 +450,16 @@ CREATE VIEW v_book AS
 SELECT * FROM t_book
 /
 
+CREATE OR REPLACE FUNCTION f_search_book(p_title character varying, p_limit bigint, p_offset bigint)
+  RETURNS SETOF t_book AS
+$BODY$
+SELECT * FROM t_book
+WHERE (LOWER(title) LIKE LOWER('%' || p_title || '%'))
+LIMIT p_limit OFFSET p_offset;
+$BODY$
+  LANGUAGE sql VOLATILE
+  COST 100
+  ROWS 1000;
 
 CREATE FUNCTION p_unused (in1 VARCHAR, out1 OUT INT, out2 IN OUT INT)
 AS $$

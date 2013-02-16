@@ -383,18 +383,18 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final void changed(boolean changed, Field<?> field) {
-        changed(changed, fieldsRow().indexOf(field));
+    public final void changed(Field<?> field, boolean changed) {
+        changed(fieldsRow().indexOf(field), changed);
     }
 
     @Override
-    public final void changed(boolean changed, int fieldIndex) {
+    public final void changed(int fieldIndex, boolean changed) {
         getValue0(fieldIndex).setChanged(changed);
     }
 
     @Override
-    public final void changed(boolean changed, String fieldName) {
-        changed(changed, fieldsRow().indexOf(fieldName));
+    public final void changed(String fieldName, boolean changed) {
+        changed(fieldsRow().indexOf(fieldName), changed);
     }
 
     @Override

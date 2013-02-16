@@ -139,7 +139,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("abc", book.original(TBook_TITLE()));
 
         book.changed(false);
-        book.changed(true, TBook_TITLE());
+        book.changed(TBook_TITLE(), true);
         assertTrue(book.changed());
         assertTrue(book.changed(TBook_TITLE()));
         assertTrue(book.changed(TBook_TITLE().getName()));

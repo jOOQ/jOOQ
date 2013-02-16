@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.test.postgres.generatedclasses.Routines.fSearchBook;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_785;
@@ -839,5 +840,17 @@ public class PostgresTest extends jOOQAbstractTest<
                 .where(T_ARRAYS.NUMBER_ARRAY.contains(new Integer[] { 1, 2, 3 }))
                 .fetchOne(0));
 
+    }
+
+    @Test
+    public void testPostgresTableFunction() throws Exception {
+
+        // TODO [#1139] Further elaborate this test
+        create().select().from(fSearchBook("Animal", 1L, 0L).toString()).fetch();
+        System.out.println(create().select(fSearchBook("Animal", 1L, 0L)).fetch());
+
+        // This doesn't work, as jOOQ doesn't know how to correctly register
+        // OUT parameters for the returned cursor
+        // Object result = Routines.fSearchBook(create(), "Animal", 1L, 0L);
     }
 }

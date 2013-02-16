@@ -543,7 +543,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             try {
                 boolean useAnnotations = hasColumnAnnotations(type);
 
-                for (Field<?> field : fields) {
+                for (Field<?> field : fields.fields) {
                     List<java.lang.reflect.Field> members;
                     Method method;
 
@@ -603,7 +603,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      * public for broader use...?
      */
     protected final void from(Record source) {
-        for (Field<?> field : fields) {
+        for (Field<?> field : fields.fields) {
             Field<?> sourceField = source.field(field);
 
             if (sourceField != null) {

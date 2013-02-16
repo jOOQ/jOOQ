@@ -182,7 +182,7 @@ public class MockExecuteContext {
      * @return The single (or first "single batch") set of bind variables.
      */
     public Object[] getBindings() {
-        return bindings[0];
+        return (bindings != null && bindings.length > 0) ? bindings[0] : new Object[0];
     }
 
     /**

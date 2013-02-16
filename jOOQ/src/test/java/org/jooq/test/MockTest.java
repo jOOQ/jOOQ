@@ -38,6 +38,7 @@ package org.jooq.test;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.fail;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
@@ -45,9 +46,12 @@ import static org.jooq.test.data.Table1.TABLE1;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.jooq.InsertResultStep;
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.Executor;
 import org.jooq.test.data.Table1;
 import org.jooq.test.data.Table1Record;
@@ -84,7 +88,7 @@ public class MockTest extends AbstractTest {
             execute0(ctx);
 
             return new MockResult[] {
-                new MockResult(0, create.newResult(Table1.TABLE1))
+                new MockResult(0, resultEmpty)
             };
         }
     }
@@ -94,7 +98,7 @@ public class MockTest extends AbstractTest {
         Executor e = new Executor(new MockConnection(new SingleResult()), SQLDialect.H2);
         Result<Record> result = e.fetch("select ?, ? from dual", 1, 2);
 
-        assertEquals(2, result.size());
+        assertEquals(1, result.size());
         assertEquals(3, result.fields().length);
 
         for (int i = 0; i < 3; i++) {
@@ -103,11 +107,8 @@ public class MockTest extends AbstractTest {
         }
 
         assertEquals(1, (int) result.getValue(0, FIELD_ID1));
-        assertEquals(2, (int) result.getValue(1, FIELD_ID1));
         assertEquals("1", result.getValue(0, FIELD_NAME1));
-        assertEquals("2", result.getValue(1, FIELD_NAME1));
         assertNull(result.getValue(0, Table1.FIELD_DATE1));
-        assertNull(result.getValue(1, Table1.FIELD_DATE1));
     }
 
     class SingleResult extends AbstractResult {
@@ -115,17 +116,8 @@ public class MockTest extends AbstractTest {
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             execute0(ctx);
 
-            Result<Table1Record> result = create.newResult(TABLE1);
-            result.add(create.newRecord(TABLE1));
-            result.add(create.newRecord(TABLE1));
-
-            result.get(0).setValue(FIELD_ID1, 1);
-            result.get(1).setValue(FIELD_ID1, 2);
-            result.get(0).setValue(FIELD_NAME1, "1");
-            result.get(1).setValue(FIELD_NAME1, "2");
-
             return new MockResult[] {
-                new MockResult(0, result)
+                new MockResult(0, resultOne)
             };
         }
     }
@@ -164,22 +156,9 @@ public class MockTest extends AbstractTest {
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
             execute0(ctx);
 
-            Result<Table1Record> result1 = create.newResult(TABLE1);
-            Result<Table1Record> result2 = create.newResult(TABLE1);
-            result1.add(create.newRecord(TABLE1));
-            result2.add(create.newRecord(TABLE1));
-            result2.add(create.newRecord(TABLE1));
-
-            result1.get(0).setValue(FIELD_ID1, 1);
-            result2.get(0).setValue(FIELD_ID1, 2);
-            result2.get(1).setValue(FIELD_ID1, 3);
-            result1.get(0).setValue(FIELD_NAME1, "1");
-            result2.get(0).setValue(FIELD_NAME1, "2");
-            result2.get(1).setValue(FIELD_NAME1, "3");
-
             return new MockResult[] {
-                new MockResult(0, result1),
-                new MockResult(0, result2),
+                new MockResult(0, resultOne),
+                new MockResult(0, resultTwo),
             };
         }
     }
@@ -193,6 +172,133 @@ public class MockTest extends AbstractTest {
             assertEquals(1, ctx.getBatchBindings().length);
             assertEquals(asList(1, 2), asList(ctx.getBatchBindings()[0]));
             assertEquals(asList(1, 2), asList(ctx.getBindings()));
+        }
+    }
+
+    @Test
+    public void testBatchSingle() {
+        Executor e = new Executor(new MockConnection(new BatchSingle()), SQLDialect.H2);
+
+        int[] result =
+        e.batch(
+            e.query("insert into x values(1)"),
+            e.query("insert into x values(2)")
+        ).execute();
+
+        assertEquals(2, result.length);
+        assertEquals(0, result[0]);
+        assertEquals(1, result[1]);
+    }
+
+    class BatchSingle implements MockDataProvider {
+
+        @Override
+        public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
+            assertEquals(2, ctx.getBatchSQL().length);
+            assertEquals("insert into x values(1)", ctx.getBatchSQL()[0]);
+            assertEquals("insert into x values(2)", ctx.getBatchSQL()[1]);
+            assertEquals("insert into x values(1)", ctx.getSQL());
+
+            assertEquals(0, ctx.getBatchBindings().length);
+            assertEquals(asList(), asList(ctx.getBindings()));
+
+            return new MockResult[] {
+                new MockResult(0, null),
+                new MockResult(1, null)
+            };
+        }
+    }
+
+    @Test
+    public void testBatchMultiple() {
+        Executor e = new Executor(new MockConnection(new BatchMultiple()), SQLDialect.H2);
+
+        Query query = e.query("insert into x values(?, ?)", null, null);
+
+        int[] result =
+        e.batch(query)
+         .bind(1, 2)
+         .bind(3, 4)
+         .execute();
+
+        assertEquals(2, result.length);
+        assertEquals(0, result[0]);
+        assertEquals(1, result[1]);
+    }
+
+    class BatchMultiple implements MockDataProvider {
+
+        @Override
+        public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
+            assertEquals(1, ctx.getBatchSQL().length);
+            assertEquals("insert into x values(?, ?)", ctx.getBatchSQL()[0]);
+            assertEquals("insert into x values(?, ?)", ctx.getSQL());
+
+            assertEquals(2, ctx.getBatchBindings().length);
+            assertEquals(asList(1, 2), asList(ctx.getBatchBindings()[0]));
+            assertEquals(asList(3, 4), asList(ctx.getBatchBindings()[1]));
+            assertEquals(asList(1, 2), asList(ctx.getBindings()));
+
+            return new MockResult[] {
+                new MockResult(0, null),
+                new MockResult(1, null)
+            };
+        }
+    }
+
+    @Test
+    public void testException() {
+        Executor e = new Executor(new MockConnection(new Exceptional()), SQLDialect.H2);
+
+        Query query = e.query("insert into x values(1)");
+
+        try {
+            query.execute();
+            fail();
+        }
+        catch (DataAccessException expected) {
+            assertEquals("Expected", expected.getCause().getMessage());
+        }
+    }
+
+    class Exceptional implements MockDataProvider {
+
+        @Override
+        public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
+            throw new SQLException("Expected");
+        }
+    }
+
+    @Test
+    public void testInsertReturning() {
+
+        // Note: INSERT .. RETURNING is hard to mock for all dialects...
+        Executor e = new Executor(new MockConnection(new InsertReturning()), SQLDialect.ORACLE);
+
+        InsertResultStep<Table1Record> query = e
+            .insertInto(TABLE1, FIELD_ID1)
+            .values(1)
+            .returning();
+
+        assertEquals(1, query.execute());
+        Table1Record record = query.fetchOne();
+
+        assertEquals(1, (int) record.getValue(FIELD_ID1));
+        assertEquals("1", record.getValue(FIELD_NAME1));
+    }
+
+    class InsertReturning implements MockDataProvider {
+
+        @Override
+        public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
+            assertEquals(1, ctx.getBatchSQL().length);
+            assertEquals(1, ctx.getBatchBindings().length);
+            assertEquals(asList(1), asList(ctx.getBatchBindings()[0]));
+            assertEquals(asList(1), asList(ctx.getBindings()));
+
+            return new MockResult[] {
+                new MockResult(1, resultOne)
+            };
         }
     }
 }

@@ -130,11 +130,11 @@ public interface MockDataProvider {
      * </li>
      * </ul>
      *
-     * @param context The execution context.
+     * @param ctx The execution context.
      * @return The execution results. This should be non-null and non-empty, as
      *         every execution is expected to return at least one result.
      * @throws SQLException A <code>SQLException</code> that is passed through
      *             to jOOQ.
      */
-    MockResult[] execute(MockExecuteContext context) throws SQLException;
+    MockResult[] execute(MockExecuteContext ctx) throws SQLException;
 }

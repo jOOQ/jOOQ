@@ -35,12 +35,18 @@
  */
 package org.jooq.test;
 
+import static org.jooq.test.data.Table1.FIELD_ID1;
+import static org.jooq.test.data.Table1.FIELD_NAME1;
+import static org.jooq.test.data.Table1.TABLE1;
+
 import java.sql.PreparedStatement;
 
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
+import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
+import org.jooq.test.data.Table1Record;
 import org.jooq.util.oracle.OracleDataType;
 
 import org.jmock.Mockery;
@@ -55,9 +61,12 @@ import org.junit.BeforeClass;
  */
 public abstract class AbstractTest {
 
-    protected Mockery context;
-    protected PreparedStatement statement;
-    protected Executor create;
+    protected Mockery              context;
+    protected PreparedStatement    statement;
+    protected Executor             create;
+    protected Result<Table1Record> resultEmpty;
+    protected Result<Table1Record> resultOne;
+    protected Result<Table1Record> resultTwo;
 
     @BeforeClass
     public static void init() throws Exception {
@@ -72,6 +81,24 @@ public abstract class AbstractTest {
         context = new Mockery();
         statement = context.mock(PreparedStatement.class);
         create = new Executor(SQLDialect.ORACLE);
+
+        resultEmpty = create.newResult(TABLE1);
+
+        resultOne = create.newResult(TABLE1);
+        resultOne.add(create.newRecord(TABLE1));
+        resultOne.get(0).setValue(FIELD_ID1, 1);
+        resultOne.get(0).setValue(FIELD_NAME1, "1");
+        resultOne.get(0).changed(false);
+
+        resultTwo = create.newResult(TABLE1);
+        resultTwo.add(create.newRecord(TABLE1));
+        resultTwo.add(create.newRecord(TABLE1));
+        resultTwo.get(0).setValue(FIELD_ID1, 2);
+        resultTwo.get(0).setValue(FIELD_NAME1, "2");
+        resultTwo.get(0).changed(false);
+        resultTwo.get(1).setValue(FIELD_ID1, 3);
+        resultTwo.get(1).setValue(FIELD_NAME1, "3");
+        resultTwo.get(1).changed(false);
     }
 
     @After

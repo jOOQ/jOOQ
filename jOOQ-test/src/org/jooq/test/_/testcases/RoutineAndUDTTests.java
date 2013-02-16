@@ -848,7 +848,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        Result<A> authors = create().selectFrom(TAuthor()).fetch();
+        Result<A> authors = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
         UDTRecord<?> a1 = authors.get(0).getValue(TAuthor_ADDRESS());
         UDTRecord<?> a2 = authors.get(1).getValue(TAuthor_ADDRESS());
 

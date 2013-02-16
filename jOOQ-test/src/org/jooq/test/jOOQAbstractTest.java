@@ -1682,7 +1682,7 @@ public abstract class jOOQAbstractTest<
         new AliasTests(this).testAliasingSelectAndFields();
     }
 
-    @Test
+    // @Test TODO [#579]: Reenable this test
     public void testAliasingJoins() throws Exception {
         new AliasTests(this).testAliasingJoins();
     }
@@ -1692,7 +1692,7 @@ public abstract class jOOQAbstractTest<
         new ExoticTests(this).testAliasingPivot();
     }
 
-    @Test
+    // @Test TODO [#579]: Reenable this test
     public void testUnaliasedSubqueryProjections() throws Exception {
         new SelectTests(this).testUnaliasedSubqueryProjections();
     }

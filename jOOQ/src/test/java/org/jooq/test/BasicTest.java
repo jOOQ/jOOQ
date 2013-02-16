@@ -121,8 +121,8 @@ import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
 import org.jooq.impl.Factory;
+import org.jooq.impl.SQLDataType;
 import org.jooq.test.data.Table1Record;
-import org.jooq.test.data.TestDataType;
 
 import org.jmock.Expectations;
 import org.junit.Test;
@@ -1042,7 +1042,7 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testCustomField() throws Exception {
-        Field<?> f = new CustomField<Integer>("test", TestDataType.INTEGER_TYPE) {
+        Field<?> f = new CustomField<Integer>("test", SQLDataType.INTEGER) {
             private static final long serialVersionUID = 1L;
 
             @Override

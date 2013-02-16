@@ -37,6 +37,7 @@ package org.jooq.test.data;
 
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
 /**
@@ -51,9 +52,9 @@ public class Table4 extends TableImpl<Table4Record> {
 
     public static final Table<Table4Record>                TABLE4      = new Table4();
 
-    public static final TableField<Table4Record, Integer>  FIELD_ID4   = createField("ID4", TestDataType.INTEGER_TYPE, TABLE4);
-    public static final TableField<Table4Record, String>   FIELD_NAME4 = createField("NAME4", TestDataType.STRING_TYPE, TABLE4);
-    public static final TableField<Table4Record, Object[]> FIELD_ARRAY4 = createField("ARRAY4", TestDataType.ARRAY_TYPE, TABLE4);
+    public static final TableField<Table4Record, Integer>  FIELD_ID4   = createField("ID4", SQLDataType.INTEGER, TABLE4);
+    public static final TableField<Table4Record, String>   FIELD_NAME4 = createField("NAME4", SQLDataType.VARCHAR, TABLE4);
+    public static final TableField<Table4Record, Object[]> FIELD_ARRAY4 = createField("ARRAY4", SQLDataType.OTHER.getArrayDataType(), TABLE4);
 
     public Table4() {
         super("TABLE4");

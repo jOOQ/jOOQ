@@ -1185,8 +1185,8 @@ public class OracleTest extends jOOQAbstractTest<
         record.setD(later);
         o.setD(later);
         t.set(later, later, later);
-        record.changed(true, DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_O);
-        record.changed(true, DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_T);
+        record.changed(DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_O, true);
+        record.changed(DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_T, true);
         record.store();
         assertEquals(record, create().fetchOne(DATE_AS_TIMESTAMP_T_976, DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID.equal(2)));
 

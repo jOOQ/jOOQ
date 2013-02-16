@@ -533,9 +533,9 @@ public interface Record extends Attachable, Comparable<Record> {
      * values as well
      *
      * @see #changed()
-     * @see #changed(boolean, Field)
-     * @see #changed(boolean, int)
-     * @see #changed(boolean, String)
+     * @see #changed(Field, boolean)
+     * @see #changed(int, boolean)
+     * @see #changed(String, boolean)
      */
     void changed(boolean changed);
 
@@ -550,7 +550,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #changed()
      * @see #changed(Field)
      */
-    void changed(boolean changed, Field<?> field);
+    void changed(Field<?> field, boolean changed);
 
     /**
      * Set this record's internal changed flag to the supplied value for a given
@@ -563,7 +563,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #changed()
      * @see #changed(int)
      */
-    void changed(boolean changed, int fieldIndex);
+    void changed(int fieldIndex, boolean changed);
 
     /**
      * Set this record's internal changed flag to the supplied value for a given
@@ -576,7 +576,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * @see #changed()
      * @see #changed(String)
      */
-    void changed(boolean changed, String fieldName);
+    void changed(String fieldName, boolean changed);
 
     /**
      * Reset all values to their {@link #original()} values and all

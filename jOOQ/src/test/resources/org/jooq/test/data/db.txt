@@ -1,0 +1,20 @@
+# This is a sample test database for MockFileDatabase
+# Its syntax is inspired from H2's test script files
+select 'A' from dual;
+> A
+> -
+> A
+@ rows: 1
+
+select 'A', 'B' from dual;
+> A B
+> - -
+> A B
+@ rows: 1
+
+select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1";
+> ID1 NAME1
+> --- -----
+> 1 X
+> 2 Y
+@ rows: 2

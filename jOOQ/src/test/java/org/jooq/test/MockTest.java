@@ -39,16 +39,20 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
+import static org.jooq.impl.Factory.val;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.InsertResultStep;
 import org.jooq.Query;
 import org.jooq.Record;
+import org.jooq.Record1;
+import org.jooq.Record2;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
@@ -58,8 +62,10 @@ import org.jooq.test.data.Table1Record;
 import org.jooq.tools.jdbc.MockConnection;
 import org.jooq.tools.jdbc.MockDataProvider;
 import org.jooq.tools.jdbc.MockExecuteContext;
+import org.jooq.tools.jdbc.MockFileDatabase;
 import org.jooq.tools.jdbc.MockResult;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -68,6 +74,14 @@ import org.junit.Test;
  * @author Lukas Eder
  */
 public class MockTest extends AbstractTest {
+
+    private static Executor MOCK;
+
+    @BeforeClass
+    public static void before() throws Exception {
+        File file = new File(MockTest.class.getResource("/org/jooq/test/data/db.txt").toURI());
+        MOCK = new Executor(new MockConnection(new MockFileDatabase(file)), SQLDialect.ORACLE);
+    }
 
     @Test
     public void testEmptyResult() {
@@ -300,5 +314,24 @@ public class MockTest extends AbstractTest {
                 new MockResult(1, resultOne)
             };
         }
+    }
+
+    @Test
+    public void testFileDatabase_SELECT_A_FROM_DUAL() throws Exception {
+        Result<Record> r1 = MOCK.fetch("select 'A' from dual");
+        Result<Record> r2 = MOCK.fetch("select ? from dual", "A");
+        Result<Record1<String>> r3 = MOCK.select(val("A")).fetch();
+
+        assertEquals(1, r1.size());
+        assertEquals(1, r1.fields().length);
+        assertEquals("A", r1.field(0).getName());
+        assertEquals("A", r1.get(0).getValue(0));
+        assertEquals(r1, r2);
+        assertEquals(r1, r3);
+    }
+
+    @Test
+    public void testFileDatabase_SELECT_ID1_NAME1_FROM_TABLE1() throws Exception {
+        Result<Record2<Integer, String>> r = MOCK.select(FIELD_ID1, FIELD_NAME1).from(TABLE1).fetch();
     }
 }

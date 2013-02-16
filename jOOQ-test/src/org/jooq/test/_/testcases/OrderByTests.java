@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.inline;
@@ -314,7 +315,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitAliased() throws Exception {
-        if (getDialect() == SQLDialect.ASE) {
+        if (asList(ASE, SQLSERVER).contains(getDialect())) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }

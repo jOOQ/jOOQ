@@ -5225,6 +5225,20 @@ public class Executor implements Configuration {
         return result;
     }
 
+    /**
+     * Create a new empty {@link Result}.
+     * <p>
+     * The result is attached to this {@link Configuration} by default. This
+     * result can be used as a container for records.
+     *
+     * @param <R> The generic record type
+     * @param table The table holding records of type &lt;R&gt;
+     * @return The new result
+     */
+    public final <R extends Record> Result<R> newResult(Table<R> table) {
+        return new ResultImpl<R>(this, table.fields());
+    }
+
     // -------------------------------------------------------------------------
     // XXX Executing queries
     // -------------------------------------------------------------------------

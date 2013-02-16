@@ -226,7 +226,7 @@ class LocalDebugger implements Debugger {
         }
         Set<String> columnNameSet = new HashSet<String>();
         for(Table<?> table: databaseDescriptor.getSchema().getTables()) {
-            for(Field<?> field: table.getFields()) {
+            for(Field<?> field: table.fields()) {
                 String columnName = field.getName();
                 columnNameSet.add(columnName);
             }

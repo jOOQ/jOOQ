@@ -44,7 +44,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface Row extends QueryPart, Iterable<Field<?>> {
+public interface Row extends QueryPart {
 
     /**
      * Get the degree of this row value expression

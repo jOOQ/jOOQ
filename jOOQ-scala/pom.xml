@@ -50,7 +50,7 @@
 				<executions>
 					<execution>
 						<id>create-database</id>
-						<phase>process-test-resources</phase>
+						<phase>generate-sources</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>

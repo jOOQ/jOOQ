@@ -165,13 +165,13 @@ public class MockTest extends AbstractTest {
 
     abstract class AbstractResult implements MockDataProvider {
         public void execute0(MockExecuteContext ctx) {
-            assertEquals(1, ctx.getBatchSQL().length);
-            assertEquals("select ?, ? from dual", ctx.getBatchSQL()[0]);
-            assertEquals("select ?, ? from dual", ctx.getSQL());
+            assertEquals(1, ctx.batchSQL().length);
+            assertEquals("select ?, ? from dual", ctx.batchSQL()[0]);
+            assertEquals("select ?, ? from dual", ctx.sql());
 
-            assertEquals(1, ctx.getBatchBindings().length);
-            assertEquals(asList(1, 2), asList(ctx.getBatchBindings()[0]));
-            assertEquals(asList(1, 2), asList(ctx.getBindings()));
+            assertEquals(1, ctx.batchBindings().length);
+            assertEquals(asList(1, 2), asList(ctx.batchBindings()[0]));
+            assertEquals(asList(1, 2), asList(ctx.bindings()));
         }
     }
 
@@ -194,13 +194,13 @@ public class MockTest extends AbstractTest {
 
         @Override
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
-            assertEquals(2, ctx.getBatchSQL().length);
-            assertEquals("insert into x values(1)", ctx.getBatchSQL()[0]);
-            assertEquals("insert into x values(2)", ctx.getBatchSQL()[1]);
-            assertEquals("insert into x values(1)", ctx.getSQL());
+            assertEquals(2, ctx.batchSQL().length);
+            assertEquals("insert into x values(1)", ctx.batchSQL()[0]);
+            assertEquals("insert into x values(2)", ctx.batchSQL()[1]);
+            assertEquals("insert into x values(1)", ctx.sql());
 
-            assertEquals(0, ctx.getBatchBindings().length);
-            assertEquals(asList(), asList(ctx.getBindings()));
+            assertEquals(0, ctx.batchBindings().length);
+            assertEquals(asList(), asList(ctx.bindings()));
 
             return new MockResult[] {
                 new MockResult(0, null),
@@ -230,14 +230,14 @@ public class MockTest extends AbstractTest {
 
         @Override
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
-            assertEquals(1, ctx.getBatchSQL().length);
-            assertEquals("insert into x values(?, ?)", ctx.getBatchSQL()[0]);
-            assertEquals("insert into x values(?, ?)", ctx.getSQL());
+            assertEquals(1, ctx.batchSQL().length);
+            assertEquals("insert into x values(?, ?)", ctx.batchSQL()[0]);
+            assertEquals("insert into x values(?, ?)", ctx.sql());
 
-            assertEquals(2, ctx.getBatchBindings().length);
-            assertEquals(asList(1, 2), asList(ctx.getBatchBindings()[0]));
-            assertEquals(asList(3, 4), asList(ctx.getBatchBindings()[1]));
-            assertEquals(asList(1, 2), asList(ctx.getBindings()));
+            assertEquals(2, ctx.batchBindings().length);
+            assertEquals(asList(1, 2), asList(ctx.batchBindings()[0]));
+            assertEquals(asList(3, 4), asList(ctx.batchBindings()[1]));
+            assertEquals(asList(1, 2), asList(ctx.bindings()));
 
             return new MockResult[] {
                 new MockResult(0, null),
@@ -291,10 +291,10 @@ public class MockTest extends AbstractTest {
 
         @Override
         public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
-            assertEquals(1, ctx.getBatchSQL().length);
-            assertEquals(1, ctx.getBatchBindings().length);
-            assertEquals(asList(1), asList(ctx.getBatchBindings()[0]));
-            assertEquals(asList(1), asList(ctx.getBindings()));
+            assertEquals(1, ctx.batchSQL().length);
+            assertEquals(1, ctx.batchBindings().length);
+            assertEquals(asList(1), asList(ctx.batchBindings()[0]));
+            assertEquals(asList(1), asList(ctx.bindings()));
 
             return new MockResult[] {
                 new MockResult(1, resultOne)

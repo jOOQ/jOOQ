@@ -470,11 +470,11 @@ public abstract class jOOQAbstractTest<
                 public MockResult[] execute(MockExecuteContext context) throws SQLException {
                     Executor executor = new Executor(c, getDialect());
 
-                    if (context.isSingleBatch()) {
-                        Query query = executor.query(context.getSQL(), new Object[context.getBatchBindings()[0].length]);
+                    if (context.batchSingle()) {
+                        Query query = executor.query(context.sql(), new Object[context.batchBindings()[0].length]);
                         int[] result =
                         executor.batch(query)
-                                .bind(context.getBatchBindings())
+                                .bind(context.batchBindings())
                                 .execute();
 
                         MockResult[] r = new MockResult[result.length];
@@ -484,10 +484,10 @@ public abstract class jOOQAbstractTest<
 
                         return r;
                     }
-                    else if (context.isMultiBatch()) {
+                    else if (context.batchMultiple()) {
                         List<Query> queries = new ArrayList<Query>();
 
-                        for (String sql : context.getBatchSQL()) {
+                        for (String sql : context.batchSQL()) {
                             queries.add(executor.query(sql));
                         }
 
@@ -502,8 +502,8 @@ public abstract class jOOQAbstractTest<
 
                         return r;
                     }
-                    else if (context.getSQL().toLowerCase().matches("(?s:\\W*(select|with).*)")) {
-                        List<Result<Record>> result = executor.fetchMany(context.getSQL(), context.getBindings());
+                    else if (context.sql().toLowerCase().matches("(?s:\\W*(select|with).*)")) {
+                        List<Result<Record>> result = executor.fetchMany(context.sql(), context.bindings());
                         MockResult[] r = new MockResult[result.size()];
 
                         for (int i = 0; i < result.size(); i++) {
@@ -513,7 +513,7 @@ public abstract class jOOQAbstractTest<
                         return r;
                     }
                     else {
-                        int result = executor.execute(context.getSQL(), context.getBindings());
+                        int result = executor.execute(context.sql(), context.bindings());
 
                         MockResult[] r = new MockResult[1];
                         r[0] = new MockResult(result, null);

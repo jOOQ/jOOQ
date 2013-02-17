@@ -382,6 +382,8 @@ Bug fixes
 #2187 - Change all Javadoc <h3/> tags to <h5/> (To fix Java 7 standard Javadoc
         style layout issues)
 #2210 - Executor.fetchFromCSV() shouldn't mark resulting records as "changed"
+#2215 - Improve example in the "jOOQ for CRUD" section. Use only columns from
+        the sample database
 #2223 - SQL injection is possible in org.jooq.impl.Val, if client code doesn't
         correctly enforce generic typesafety, and bind variables are inlined
 #2227 - Field.in(T...) doesn't convert argument values to the Field's type

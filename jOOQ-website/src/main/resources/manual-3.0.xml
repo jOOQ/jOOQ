@@ -1206,10 +1206,104 @@ SelectSelectStep<R> select(Field<?>... fields);]]></java>
 							
 							<section id="custom-data">
 								<title>Custom data</title>
+								<content>
+									<p>
+										In advanced use cases of integrating your application with jOOQ, you may want to put custom data into your <reference id="executor" title="Executors"/>, which you can then access from your...
+									</p>
+									
+									<ul>
+										<li><reference id="custom-execute-listeners" title="Custom ExecuteListeners"/></li>
+										<li><reference id="custom-queryparts" title="Custom QueryParts"/></li>
+									</ul>
+									
+									<p>
+										Here is an example of how to use the custom data API. Let's assume that you have written an <reference id="execute-listeners" title="ExecuteListener"/>, that prevents <code>INSERT</code> statements, when a given flag is set to <code>true</code>: 
+									</p>
+
+<java><![CDATA[// Implement an ExecuteListener
+public class NoInsertListener extends DefaultExecuteListener {
+
+    @Override
+    public void start(ExecuteContext ctx) {
+    
+        // This listener is active only, when your custom flag is set to true
+        if (Boolean.TRUE.equals(ctx.getData("com.example.my-namespace.no-inserts"))) {
+        
+            // If active, fail this execution, if an INSERT statement is being executed
+            if (ctx.query() instanceof Insert) {
+                throw new DataAccessException("No INSERT statements allowed");
+            }
+        }
+    }
+}]]></java>
+									<p>
+										See the manual's section about <reference id="execute-listeners" title="ExecuteListeners"/> to learn more about how to implement an <code>ExecuteListener</code>.
+									</p>
+									
+									<p>
+										Now, the above listener can be added to your <reference id="executor" title="Executors"/>, but you will also need to pass the flag to the <code>Executor</code>, in order for the listener to work:
+									</p>
+									
+<java><![CDATA[// Create your Executor
+Executor create = new Executor(connection, dialect);
+
+// Hook your own ExecuteListener into your Executor
+create.getExecuteListeners().add(new NoInsertListener());
+
+// Use any String literal to identify your custom data
+create.setData("com.example.my-namespace.no-inserts", true);
+
+// Try to execute an INSERT statement
+try {
+    create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.LAST_NAME)
+          .values(1, "Orwell")
+          .execute();
+          
+    // You shouldn't get here
+    Assert.fail();
+}
+
+// Your NoInsertListener should be throwing this exception here:
+catch (DataAccessException expected) {
+    Assert.assertEquals("No INSERT statements allowed", expected.getMessage());
+}]]></java>
+
+									<p>
+										Using the <code>getData()</code> and <code>setData()</code> methods, you can store and retrieve custom data in your <code>Executors</code> and <code>Configurations</code>.
+									</p>
+								</content>
 							</section>
 
 							<section id="custom-execute-listeners">
-								<title>Execute listeners</title>
+								<title>Custom ExecuteListeners</title>
+								<content>
+									<p>
+										<code>ExecuteListeners</code> are a useful tool to...
+									</p>
+									
+									<ul>
+										<li>implement custom logging</li>
+										<li>apply triggers written in Java</li>
+										<li>collect query execution statistics</li>
+										<li>integrate with the <reference id="jooq-console" title="jOOQ Console"/></li>
+									</ul>
+									
+									<p>
+										ExecuteListeners are hooked into your <reference id="executor" title="Executor"/> by adding them to the <code>getExecuteListeners()</code> property:
+									</p>
+
+<java><![CDATA[// Create your Executor
+Executor create = new Executor(connection, dialect);
+
+// Hook your listeners to the Executor's listener list:
+create.getExecuteListeners().add(new MyFirstListener());
+create.getExecuteListeners().add(new PerformanceLoggingListener());
+create.getExecuteListeners().add(new NoInsertListener());]]></java>
+									
+									<p>
+										See the manual's section about <reference id="execute-listeners" title="ExecuteListeners"/> to see examples of such listener implementations.
+									</p>
+								</content>
 							</section>
 
 							<section id="custom-settings">
@@ -2370,7 +2464,7 @@ create.select().from(BOOK).where(BOOK.ID.equal(3)).forUpdate().skipLocked();]]><
 
 											<h3>FOR UPDATE in CUBRID and SQL Server</h3>
 											<p>
-												The SQL standard specifies a FOR UPDATE clause to be applicable for cursors. Most databases interpret this as being applicable for all SELECT statements. An exception to this rule are the CUBRID and SQL Server databases, that do not allow for any FOR UPDATE clause in a regular SQL SELECT statement. jOOQ simulates the FOR UPDATE behaviour, by locking record by record with JDBC. JDBC allows for specifying the flags TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE for any statement, and then using ResultSet.updateXXX() methods to produce a cell-lock / row-lock. Here's a simplified example in JDBC:
+												The SQL standard specifies a <code>FOR UPDATE</code> clause to be applicable for cursors. Most databases interpret this as being applicable for all <code>SELECT</code> statements. An exception to this rule are the CUBRID and SQL Server databases, that do not allow for any <code>FOR UPDATE</code> clause in a regular SQL <code>SELECT</code> statement. jOOQ simulates the <code>FOR UPDATE</code> behaviour, by locking record by record with JDBC. JDBC allows for specifying the flags <code>TYPE_SCROLL_SENSITIVE</code>, <code>CONCUR_UPDATABLE</code> for any statement, and then using ResultSet.updateXXX() methods to produce a cell-lock / row-lock. Here's a simplified example in JDBC:
 											</p>
 <java><![CDATA[PreparedStatement stmt = connection.prepareStatement(
   "SELECT * FROM author WHERE id IN (3, 4, 5)",
@@ -2400,9 +2494,9 @@ SELECT * FROM author ORDER BY id DESC;]]></sql>
 												So use this technique with care, possibly only ever locking single rows!
 											</p>
 
-											<h3>Pessimistic (shared) locking with the FOR SHARE clause</h3>
+											<h3>Pessimistic (shared) locking with the <code>FOR SHARE</code> clause</h3>
 											<p>
-												Some databases (MySQL, Postgres) also allow to issue a non-exclusive lock explicitly using a FOR SHARE clause. This is also supported by jOOQ
+												Some databases (MySQL, Postgres) also allow to issue a non-exclusive lock explicitly using a <code>FOR SHARE</code> clause. This is also supported by jOOQ
 											</p>
 
 											<h3>Optimistic locking in jOOQ</h3>
@@ -2421,7 +2515,7 @@ SELECT * FROM author ORDER BY id DESC;]]></sql>
 											
 											<h3>UNION and UNION ALL</h3>
 											<p>
-												These operators combine two results into one. While UNION removes all duplicate records resulting from this combination, UNION ALL leaves subselect results as they are. Typically, you should prefer UNION ALL over UNION, if you don't really need to remove duplicates. The following example shows how to use such a UNION operation in jOOQ.
+												These operators combine two results into one. While <code>UNION</code> removes all duplicate records resulting from this combination, <code>UNION ALL</code> leaves subselect results as they are. Typically, you should prefer <code>UNION ALL</code> over <code>UNION</code>, if you don't really need to remove duplicates. The following example shows how to use such a <code>UNION</code> operation in jOOQ.
 											</p>
 
 <code-pair>
@@ -2434,7 +2528,7 @@ create.selectFrom(BOOK).where(BOOK.ID.equal(5)));]]></java></code-pair>
 											
 											<h3>INTERSECT [ ALL ] and EXCEPT [ ALL ]</h3>
 											<p>
-												INTERSECT is the operation that produces only those values that are returned by both subselects. EXCEPT is the operation that returns only those values that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the ALL keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support INTERSECT ALL, EXEPT ALL operations either. 
+												<code>INTERSECT</code> is the operation that produces only those values that are returned by both subselects. <code>EXCEPT</code> is the operation that returns only those values that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the <code>ALL</code> keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support <code>INTERSECT ALL</code>, <code>EXEPT ALL</code> operations either. 
 											</p>
 											
 											<h3>jOOQ's set operators and how they're different from standard SQL</h3>
@@ -2476,14 +2570,14 @@ s1.union(s4); // OK. The two Record[N] types match]]></java>
 										<title>Oracle-style hints</title>
 										<content>
 											<p>
-												If you are closely coupling your application to an Oracle (or CUBRID) database,	you might need to be able to pass hints of the form /*+HINT*/ with your SQL statements to the Oracle database. For example:
+												If you are closely coupling your application to an Oracle (or CUBRID) database,	you might need to be able to pass hints of the form <code>/*+HINT*/</code> with your SQL statements to the Oracle database. For example:
 											</p>
 
 <sql>SELECT /*+ALL_ROWS*/ FIRST_NAME, LAST_NAME
   FROM AUTHOR</sql>
 
 				  							<p>
-				  								This can be done in jOOQ using the .hint() clause in your SELECT statement:
+				  								This can be done in jOOQ using the <code>.hint()</code> clause in your SELECT statement:
 			  								</p>
 
 <java>create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
@@ -2491,7 +2585,7 @@ s1.union(s4); // OK. The two Record[N] types match]]></java>
       .from(AUTHOR);</java>
 
 											<p>
-												Note that you can pass any string in the .hint() clause. If you use that clause, the passed string will always be put in between the SELECT [DISTINCT] keywords and the actual projection list. This can be useful in other databases too, such as MySQL, for instance:
+												Note that you can pass any string in the <code>.hint()</code> clause. If you use that clause, the passed string will always be put in between the <code>SELECT [DISTINCT]</code> keywords and the actual projection list. This can be useful in other databases too, such as MySQL, for instance:
 											</p>
 											
 <code-pair>
@@ -2507,6 +2601,89 @@ FROM table1
 									
 									<section id="select-lexical-vs-logical-order">
 										<title>Lexical and logical SELECT clause order</title>
+										<content>
+											<p>
+												SQL has a lexical and a logical order of <code>SELECT</code> clauses. The lexical order of <code>SELECT</code> clauses is inspired by the English language. As SQL statements are commands for the database, it is natural to express a statement in an imperative tense, such as "SELECT this and that!".
+											</p>
+											
+											<h3>Logical SELECT clause order</h3>
+											<p>
+												The logical order of <code>SELECT</code> clauses, however, does not correspond to the syntax. In fact, the logical order is this:
+											</p>
+											
+											<ul>
+												<li><reference id="from-clause" title="The FROM clause"/>: First, all data sources are defined and joined</li>
+												<li><reference id="where-clause" title="The WHERE clause"/>: Then, data is filtered as early as possible</li>
+												<li><reference id="connect-by-clause" title="The CONNECT BY clause"/>: Then, data is traversed iteratively or recursively, to produce new tuples</li>
+												<li><reference id="group-by-clause" title="The GROUP BY clause"/>: Then, data is reduced to groups, possibly producing new tuples if <reference id="grouping-functions" title="grouping functions like ROLLUP(), CUBE(), GROUPING SETS()"/> are used</li>
+												<li><reference id="having-clause" title="The HAVING clause"/>: Then, data is filtered again</li>
+												<li><reference id="select-clause" title="The SELECT clause"/>: Only now, the projection is evaluated. In case of a <code>SELECT DISTINCT</code> statement, data is further reduced to remove duplicates</li>
+												<li><reference id="union-clause" title="The UNION clause"/>: Optionally, the above is repeated for several <code>UNION</code>-connected subqueries. Unless this is a <code>UNION ALL</code> clause, data is further reduced to remove duplicates</li>
+												<li><reference id="order-by-clause" title="The ORDER BY clause"/>: Now, all remaining tuples are ordered</li>
+												<li><reference id="limit-clause" title="The LIMIT clause"/>: Then, a paging view is created for the ordered tuples</li>
+												<li><reference id="for-update-clause" title="The FOR UPDATE clause"/>: Finally, pessimistic locking is applied</li>
+											</ul>
+											
+											<p>
+												The <a href="http://msdn.microsoft.com/en-us/library/ms189499.aspx">SQL Server documentation</a> also explains this, with slightly different clauses:
+											</p>
+											
+											<ul>
+												<li><code>FROM</code></li>
+												<li><code>ON</code></li>
+												<li><code>JOIN</code></li>
+												<li><code>WHERE</code></li>
+												<li><code>GROUP BY</code></li>
+												<li><code>WITH CUBE</code> or <code>WITH ROLLUP</code></li>
+												<li><code>HAVING</code></li>
+												<li><code>SELECT</code></li>
+												<li><code>DISTINCT</code></li>
+												<li><code>ORDER BY</code></li>
+												<li><code>TOP</code></li>
+											</ul>
+											
+											<p>
+												As can be seen, databases have to logically reorder a SQL statement in order to determine the best execution plan. 
+											</p>
+											
+											<h3>Alternative syntaxes: LINQ, SLICK</h3>
+											<p>
+											    Some "higher-level" abstractions, such as C#'s LINQ or Scala's SLICK try to inverse the lexical order of <code>SELECT</code> clauses to what appears to be closer to the logical order. The obvious advantage of moving the <code>SELECT</code> clause to the end is the fact that the projection type, which is the record type returned by the <code>SELECT</code> statement can be re-used more easily in the target environment of the internal domain specific language.
+											</p>
+											
+											<p>
+												A LINQ example:
+											</p>
+<java><![CDATA[// LINQ-to-SQL looks somewhat similar to SQL
+// AS clause    // FROM clause
+From p          In db.Products
+
+// WHERE clause
+Where p.UnitsInStock <= p.ReorderLevel AndAlso Not p.Discontinued
+
+// SELECT clause
+Select p]]></java>											
+											
+											<p> 
+											    A SLICK example:
+											</p>
+											
+<scala><![CDATA[// "for" is the "entry-point" to the DSL
+val q = for {
+
+    // FROM clause   WHERE clause
+    c <- Coffees     if c.supID === 101
+
+// SELECT clause and projection to a tuple
+} yield (c.name, c.price)]]></scala>
+
+											<p>
+												While this looks like a good idea at first, it only complicates translation to more advanced SQL statements while impairing readability for those users that are used to writing SQL. jOOQ is designed to look just like SQL. This is specifically true for SLICK, which not only changed the <code>SELECT</code> clause order, but also heavily "integrated" SQL clauses with the Scala language.
+											</p>
+											<p>
+												For these reasons, the jOOQ DSL API is modelled in SQL's lexical order.
+											</p>
+										</content>
 									</section>
 								</sections>
 							</section>
@@ -2515,7 +2692,7 @@ FROM table1
 								<title>The INSERT statement</title>
 								<content>
 									<p>
-										The INSERT statement is used to insert new records into a database table. Records can either be supplied using a VALUES() constructor, or a SELECT statement. jOOQ supports both types of INSERT statements. An example of an INSERT statement using a VALUES() constructor is given here:
+										The <code>INSERT</code> statement is used to insert new records into a database table. Records can either be supplied using a <code>VALUES()</code> constructor, or a <code>SELECT</code> statement. jOOQ supports both types of <code>INSERT</code> statements. An example of an <code>INSERT</code> statement using a <code>VALUES()</code> constructor is given here:
 									</p>
 
 
@@ -3047,6 +3224,48 @@ Table<Record> naturalRightOuterJoin(TableLike<?>)]]></java>
 
 							<section id="values">
 								<title>The VALUES() table constructor</title>
+								<content>
+									<p>
+										Some databases allow for expressing in-memory temporary tables using a <code>VALUES()</code> constructor. This constructor usually works the same way as the <code>VALUES()</code> clause known from the <reference id="insert-statement" title="INSERT statement"/> or from the <reference id="merge-statement" title="MERGE statement"/>. With jOOQ, you can also use the <code>VALUES()</code> table constructor, to create tables that can be used in a <reference id="select-statement" title="SELECT statement's"/> <reference id="from-clause" title="FROM clause"/>:
+									</p>
+									
+<code-pair>
+<sql><![CDATA[SELECT a, b
+FROM VALUES(1, 'a'), 
+           (2, 'b') t(a, b)]]></sql>
+<java><![CDATA[create.select()
+      .from(values(row(1, "a"),
+                   row(2, "b")).as("t", "a", "b"));]]></java>
+</code-pair>
+
+									<p>
+										Note, that it is usually quite useful to provide column aliases ("derived column lists") along with the table alias for the <code>VALUES()</code> constructor.
+									</p>
+									
+									<p>
+										The above statement is simulated by jOOQ for those databases that do not support the <code>VALUES()</code> constructor, natively (actual simulations may vary):
+									</p>
+									
+<sql><![CDATA[-- If derived column expressions are supported:
+SELECT a, b
+FROM (
+  SELECT 1, 'a' FROM DUAL UNION ALL
+  SELECT 2, 'b' FROM DUAL
+) t(a, b)
+
+-- If derived column expressions are not supported:
+SELECT a, b
+FROM (
+
+  -- An empty dummy record is added to provide column names for the simulated derived column expression
+  SELECT NULL a, NULL b FROM DUAL WHERE 1 = 0 UNION ALL
+  
+  -- Then, the actual VALUES() constructor is simulated
+  SELECT 1,      'a'    FROM DUAL             UNION ALL
+  SELECT 2,      'b'    FROM DUAL
+) t
+]]></sql>									
+								</content>
 							</section>
 
 							<section id="nested-selects">
@@ -7592,6 +7811,20 @@ for (BookRecord book : create.fetch(BOOK, BOOK.PUBLISHED_IN.equal(1948))) {
 
 							<section id="internal-flags">
 								<title>Records' internal flags</title>
+								<content>
+									<p>
+										All of jOOQ's <reference id="record-vs-tablerecord" title="Record types and subtypes"/> maintain an internal state for every column value. This state is composed of three elements:
+									</p>
+									<ul>
+										<li>The value itself</li>
+										<li>The "original" value, i.e. the value as it was originally fetched from the database or <code>null</code>, if the record was never in the database</li>
+										<li>The "changed" flag, indicating if the value was ever changed through the <code>Record</code> API.</li>
+									</ul>
+									
+									<p>
+										The purpose of the above information is for jOOQ's <reference id="simple-crud" title="CRUD operations"/> to know, which values need to be stored to the database, and which values have been left untouched.
+									</p>
+								</content>
 							</section>
 
 							<section id="identity-values">
@@ -8070,6 +8303,11 @@ public class PrettyPrinter extends DefaultExecuteListener {
 
 					<section id="meta-data">
 						<title>Database meta data</title>
+						<content>
+							<p>
+								Since jOOQ 3.0, a simple wrapping API has been added to wrap JDBC's rather awkward <reference class="java.sql.DatabaseMetaData"/>. This API is still experimental, as the calls to the underlying JDBC type are not always available for all SQL dialects.
+							</p>
+						</content>
 					</section>
 
 				    <section id="logging">

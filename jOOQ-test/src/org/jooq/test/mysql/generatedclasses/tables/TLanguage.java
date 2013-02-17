@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -842572053;
+	private static final long serialVersionUID = 1969236820;
 
 	/**
 	 * The singleton instance of <code>test.t_language</code>

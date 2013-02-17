@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 81255652;
+	private static final long serialVersionUID = -1077416593;
 
 	/**
 	 * The singleton instance of <code>test2.t_book_to_book_store</code>

@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1321864932;
+	private static final long serialVersionUID = 1132995733;
 
 	/**
 	 * The singleton instance of <code>x_unused</code>

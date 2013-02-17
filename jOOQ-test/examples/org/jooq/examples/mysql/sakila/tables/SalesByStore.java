@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> {
 
-	private static final long serialVersionUID = 1221491828;
+	private static final long serialVersionUID = 811739380;
 
 	/**
 	 * The singleton instance of <code>sakila.sales_by_store</code>
@@ -29,17 +29,17 @@ public class SalesByStore extends org.jooq.impl.TableImpl<org.jooq.examples.mysq
 	/**
 	 * The column <code>sakila.sales_by_store.store</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.lang.String> STORE = createField("store", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.lang.String> STORE = createField("store", org.jooq.impl.SQLDataType.VARCHAR.length(101), this);
 
 	/**
 	 * The column <code>sakila.sales_by_store.manager</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.lang.String> MANAGER = createField("manager", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.lang.String> MANAGER = createField("manager", org.jooq.impl.SQLDataType.VARCHAR.length(91), this);
 
 	/**
 	 * The column <code>sakila.sales_by_store.total_sales</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.math.BigDecimal> TOTAL_SALES = createField("total_sales", org.jooq.impl.SQLDataType.DECIMAL, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord, java.math.BigDecimal> TOTAL_SALES = createField("total_sales", org.jooq.impl.SQLDataType.DECIMAL.precision(27, 2), this);
 
 	/**
 	 * Create a <code>sakila.sales_by_store</code> table reference

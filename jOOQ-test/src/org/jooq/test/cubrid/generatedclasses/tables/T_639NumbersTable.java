@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 1759338385;
+	private static final long serialVersionUID = -117928094;
 
 	/**
 	 * The singleton instance of <code>t_639_numbers_table</code>

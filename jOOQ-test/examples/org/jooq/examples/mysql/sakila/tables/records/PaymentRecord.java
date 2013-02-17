@@ -9,174 +9,104 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> implements org.jooq.Record7<java.lang.Short, java.lang.Short, java.lang.Byte, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1886442086;
+	private static final long serialVersionUID = -101145787;
 
 	/**
 	 * Setter for <code>sakila.payment.payment_id</code>. 
 	 */
 	public void setPaymentId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.payment.payment_id</code>. 
 	 */
 	public java.lang.Short getPaymentId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_ID);
+		return (java.lang.Short) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.payment.customer_id</code>. 
 	 */
 	public void setCustomerId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CustomerRecord}
-	 */
-	public void setCustomerId(org.jooq.examples.mysql.sakila.tables.records.CustomerRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID));
-		}
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.payment.customer_id</code>. 
 	 */
 	public java.lang.Short getCustomerId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID);
+		return (java.lang.Short) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.payment.staff_id</code>. 
 	 */
 	public void setStaffId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord}
-	 */
-	public void setStaffId(org.jooq.examples.mysql.sakila.tables.records.StaffRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID));
-		}
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.payment.staff_id</code>. 
 	 */
 	public java.lang.Byte getStaffId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID);
+		return (java.lang.Byte) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>sakila.payment.rental_id</code>. 
 	 */
 	public void setRentalId(java.lang.Integer value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.RentalRecord}
-	 */
-	public void setRentalId(org.jooq.examples.mysql.sakila.tables.records.RentalRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID));
-		}
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.payment.rental_id</code>. 
 	 */
 	public java.lang.Integer getRentalId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>sakila.payment.amount</code>. 
 	 */
 	public void setAmount(java.math.BigDecimal value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.AMOUNT, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.payment.amount</code>. 
 	 */
 	public java.math.BigDecimal getAmount() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.AMOUNT);
+		return (java.math.BigDecimal) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>sakila.payment.payment_date</code>. 
 	 */
 	public void setPaymentDate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_DATE, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.payment.payment_date</code>. 
 	 */
 	public java.sql.Timestamp getPaymentDate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.PAYMENT_DATE);
+		return (java.sql.Timestamp) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>sakila.payment.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.LAST_UPDATE, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.payment.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.LAST_UPDATE);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>sakila.customer</code> referenced by this <code>sakila.payment</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.CustomerRecord fetchCustomer() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.CUSTOMER_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.CUSTOMER_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>sakila.staff</code> referenced by this <code>sakila.payment</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.StaffRecord fetchStaff() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Staff.STAFF)
-			.where(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>sakila.rental</code> referenced by this <code>sakila.payment</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.RentalRecord fetchRental() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL)
-			.where(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.RENTAL_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.RENTAL_ID)))
-			.fetchOne();
+		return (java.sql.Timestamp) getValue(6);
 	}
 
 	// -------------------------------------------------------------------------
@@ -200,7 +130,7 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	@Override
 	public org.jooq.Row7<java.lang.Short, java.lang.Short, java.lang.Byte, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
+		return (org.jooq.Row7) super.fieldsRow();
 	}
 
 	/**
@@ -208,7 +138,7 @@ public class PaymentRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	@Override
 	public org.jooq.Row7<java.lang.Short, java.lang.Short, java.lang.Byte, java.lang.Integer, java.math.BigDecimal, java.sql.Timestamp, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
+		return (org.jooq.Row7) super.valuesRow();
 	}
 
 	/**

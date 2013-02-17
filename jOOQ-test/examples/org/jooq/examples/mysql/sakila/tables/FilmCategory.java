@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class FilmCategory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> {
 
-	private static final long serialVersionUID = -1200507768;
+	private static final long serialVersionUID = 787424127;
 
 	/**
 	 * The singleton instance of <code>sakila.film_category</code>

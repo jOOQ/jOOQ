@@ -9,120 +9,62 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 138567927;
+	private static final long serialVersionUID = -1609509935;
 
 	/**
 	 * Setter for <code>sakila.inventory.inventory_id</code>. 
 	 */
 	public void setInventoryId(java.lang.Integer value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.INVENTORY_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.inventory.inventory_id</code>. 
 	 */
 	public java.lang.Integer getInventoryId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.INVENTORY_ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.inventory.film_id</code>. 
 	 */
 	public void setFilmId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.FILM_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.FilmRecord}
-	 */
-	public void setFilmId(org.jooq.examples.mysql.sakila.tables.records.FilmRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.FILM_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.FILM_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID));
-		}
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.inventory.film_id</code>. 
 	 */
 	public java.lang.Short getFilmId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.FILM_ID);
+		return (java.lang.Short) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.inventory.store_id</code>. 
 	 */
 	public void setStoreId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StoreRecord}
-	 */
-	public void setStoreId(org.jooq.examples.mysql.sakila.tables.records.StoreRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID));
-		}
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.inventory.store_id</code>. 
 	 */
 	public java.lang.Byte getStoreId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID);
+		return (java.lang.Byte) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>sakila.inventory.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.LAST_UPDATE, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.inventory.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.LAST_UPDATE);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>sakila.rental</code> referencing this <code>sakila.inventory</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> fetchRentalList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL)
-			.where(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.INVENTORY_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.INVENTORY_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>sakila.film</code> referenced by this <code>sakila.inventory</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.FilmRecord fetchFilm() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Film.FILM)
-			.where(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.FILM_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>sakila.store</code> referenced by this <code>sakila.inventory</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.StoreRecord fetchStore() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Store.STORE)
-			.where(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID)))
-			.fetchOne();
+		return (java.sql.Timestamp) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -146,7 +88,7 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -154,7 +96,7 @@ public class InventoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Short, java.lang.Byte, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

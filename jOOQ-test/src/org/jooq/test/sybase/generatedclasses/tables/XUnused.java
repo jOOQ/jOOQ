@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1002035122;
+	private static final long serialVersionUID = 1961141265;
 
 	/**
 	 * The singleton instance of <code>DBA.x_unused</code>

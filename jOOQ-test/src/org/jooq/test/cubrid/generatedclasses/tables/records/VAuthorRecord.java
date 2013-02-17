@@ -9,90 +9,90 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 763570883;
+	private static final long serialVersionUID = -2136120539;
 
 	/**
 	 * Setter for <code>v_author.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>v_author.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>v_author.first_name</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>v_author.first_name</code>. 
 	 */
 	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>v_author.last_name</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>v_author.last_name</code>. 
 	 */
 	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>v_author.date_of_birth</code>. 
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.DATE_OF_BIRTH, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>v_author.date_of_birth</code>. 
 	 */
 	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.DATE_OF_BIRTH);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>v_author.year_of_birth</code>. 
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>v_author.year_of_birth</code>. 
 	 */
 	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.YEAR_OF_BIRTH);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>v_author.address</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.ADDRESS, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>v_author.address</code>. 
 	 */
 	public java.lang.String getAddress() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.VAuthor.ADDRESS);
+		return (java.lang.String) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -104,7 +104,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.c
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.c
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

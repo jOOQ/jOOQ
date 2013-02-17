@@ -11,123 +11,119 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class StaffListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.StaffListRecord> implements org.jooq.Record8<java.lang.Byte, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> {
 
-	private static final long serialVersionUID = 1733656814;
+	private static final long serialVersionUID = 1430573073;
 
 	/**
 	 * Setter for <code>sakila.staff_list.ID</code>. 
 	 */
 	public void setId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.ID</code>. 
 	 */
 	public java.lang.Byte getId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ID);
+		return (java.lang.Byte) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff_list.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.name</code>. 
 	 */
 	public java.lang.String getName() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff_list.address</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ADDRESS, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.address</code>. 
 	 */
 	public java.lang.String getAddress() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ADDRESS);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff_list.zip code</code>. 
 	 */
 	public void setZipCode(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ZIP_CODE, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.zip code</code>. 
 	 */
 	public java.lang.String getZipCode() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.ZIP_CODE);
+		return (java.lang.String) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff_list.phone</code>. 
 	 */
 	public void setPhone(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.PHONE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.phone</code>. 
 	 */
 	public java.lang.String getPhone() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.PHONE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff_list.city</code>. 
 	 */
 	public void setCity(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.CITY, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.city</code>. 
 	 */
 	public java.lang.String getCity() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.CITY);
+		return (java.lang.String) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff_list.country</code>. 
 	 */
 	public void setCountry(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.COUNTRY, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.country</code>. 
 	 */
 	public java.lang.String getCountry() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.COUNTRY);
+		return (java.lang.String) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff_list.SID</code>. 
 	 */
 	public void setSid(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.SID, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.SID</code>. 
 	 */
 	public java.lang.Byte getSid() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.StaffList.STAFF_LIST.SID);
+		return (java.lang.Byte) getValue(7);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record8 type implementation
@@ -138,7 +134,7 @@ public class StaffListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.exam
 	 */
 	@Override
 	public org.jooq.Row8<java.lang.Byte, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+		return (org.jooq.Row8) super.fieldsRow();
 	}
 
 	/**
@@ -146,7 +142,7 @@ public class StaffListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.exam
 	 */
 	@Override
 	public org.jooq.Row8<java.lang.Byte, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+		return (org.jooq.Row8) super.valuesRow();
 	}
 
 	/**

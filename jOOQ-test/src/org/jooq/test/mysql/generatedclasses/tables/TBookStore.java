@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 792823576;
+	private static final long serialVersionUID = -7043965;
 
 	/**
 	 * The singleton instance of <code>test.t_book_store</code>
@@ -43,7 +43,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.m
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_STORE_UK_T_BOOK_STORE_NAME;
+		return org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_STORE_PRIMARY;
 	}
 
 	/**
@@ -51,6 +51,6 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.m
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_STORE_UK_T_BOOK_STORE_NAME);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.mysql.generatedclasses.Keys.KEY_T_BOOK_STORE_PRIMARY);
 	}
 }

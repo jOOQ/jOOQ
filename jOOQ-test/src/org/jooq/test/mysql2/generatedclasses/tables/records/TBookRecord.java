@@ -13,13 +13,13 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book", schema = "test2")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = -91846097;
+	private static final long serialVersionUID = 1717303247;
 
 	/**
 	 * Setter for <code>test2.t_book.ID</code>. The book ID
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -28,14 +28,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	public void setAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -43,14 +43,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "AUTHOR_ID", nullable = false, precision = 10)
 	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.co_author_id</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -58,14 +58,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "co_author_id", precision = 10)
 	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.DETAILS_ID</code>. Some more details about the book
 	 */
 	public void setDetailsId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -73,14 +73,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "DETAILS_ID", precision = 10)
 	public java.lang.Integer getDetailsId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.TITLE</code>. The book's title
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.TITLE, value);
+		setValue(4, value);
 	}
 
 	/**
@@ -88,14 +88,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "TITLE", nullable = false, length = 65535)
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN, value);
+		setValue(5, value);
 	}
 
 	/**
@@ -103,14 +103,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "PUBLISHED_IN", nullable = false, precision = 10)
 	public java.lang.Integer getPublishedIn() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.LANGUAGE_ID</code>. The language of the book
 	 */
 	public void setLanguageId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value);
+		setValue(6, value);
 	}
 
 	/**
@@ -118,14 +118,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "LANGUAGE_ID", nullable = false, precision = 10)
 	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT, value);
+		setValue(7, value);
 	}
 
 	/**
@@ -133,14 +133,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "CONTENT_TEXT")
 	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF, value);
+		setValue(8, value);
 	}
 
 	/**
@@ -148,14 +148,14 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "CONTENT_PDF")
 	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book.STATUS</code>. The book's stock status
 	 */
 	public void setStatus(org.jooq.test.mysql2.generatedclasses.enums.TBookStatus value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.STATUS, value);
+		setValue(9, value);
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@javax.persistence.Column(name = "STATUS", length = 8)
 	public org.jooq.test.mysql2.generatedclasses.enums.TBookStatus getStatus() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBook.T_BOOK.STATUS);
+		return (org.jooq.test.mysql2.generatedclasses.enums.TBookStatus) getValue(9);
 	}
 
 	// -------------------------------------------------------------------------
@@ -187,7 +187,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
+		return (org.jooq.Row10) super.fieldsRow();
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.TBookStatus> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10());
+		return (org.jooq.Row10) super.valuesRow();
 	}
 
 	/**

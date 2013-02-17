@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1128941668;
+	private static final long serialVersionUID = 161799919;
 
 	/**
 	 * The singleton instance of <code>TEST.T_LANGUAGE</code>

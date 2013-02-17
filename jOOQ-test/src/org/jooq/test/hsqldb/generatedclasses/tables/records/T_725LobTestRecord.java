@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_725LobTest {
 
-	private static final long serialVersionUID = -623938306;
+	private static final long serialVersionUID = -1915739451;
 
 	/**
 	 * Setter for <code>PUBLIC.T_725_LOB_TEST.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public void setLob(byte[] value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public byte[] getLob() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST.LOB);
+		return (byte[]) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -64,7 +64,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, byte[]> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, byte[]> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

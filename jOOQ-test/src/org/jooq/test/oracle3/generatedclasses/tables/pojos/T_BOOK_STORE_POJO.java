@@ -13,10 +13,11 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
 @javax.persistence.Table(name = "T_BOOK_STORE")
 public class T_BOOK_STORE_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -1228342692;
+	private static final long serialVersionUID = 1600164909;
 
 	private java.lang.String NAME;
 
+	@javax.persistence.Id
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
 	@Override
 	public java.lang.String getNAME() {

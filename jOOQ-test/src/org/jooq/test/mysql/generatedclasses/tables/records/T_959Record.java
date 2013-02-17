@@ -9,34 +9,34 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_959Record> implements org.jooq.Record2<org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters> {
 
-	private static final long serialVersionUID = -1898578349;
+	private static final long serialVersionUID = 757164511;
 
 	/**
 	 * Setter for <code>test.t_959.java_keywords</code>. 
 	 */
 	public void setJavaKeywords(org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.T_959.JAVA_KEYWORDS, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_959.java_keywords</code>. 
 	 */
 	public org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords getJavaKeywords() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.T_959.JAVA_KEYWORDS);
+		return (org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.t_959.special_characters</code>. 
 	 */
 	public void setSpecialCharacters(org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.T_959.SPECIAL_CHARACTERS, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_959.special_characters</code>. 
 	 */
 	public org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters getSpecialCharacters() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.T_959.SPECIAL_CHARACTERS);
+		return (org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -48,7 +48,7 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@Override
 	public org.jooq.Row2<org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class T_959Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@Override
 	public org.jooq.Row2<org.jooq.test.mysql.generatedclasses.enums.T_959JavaKeywords, org.jooq.test.mysql.generatedclasses.enums.T_959SpecialCharacters> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

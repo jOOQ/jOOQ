@@ -9,140 +9,62 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class StoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> implements org.jooq.Record4<java.lang.Byte, java.lang.Byte, java.lang.Short, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -14453077;
+	private static final long serialVersionUID = -1357648150;
 
 	/**
 	 * Setter for <code>sakila.store.store_id</code>. 
 	 */
 	public void setStoreId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.store.store_id</code>. 
 	 */
 	public java.lang.Byte getStoreId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID);
+		return (java.lang.Byte) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.store.manager_staff_id</code>. 
 	 */
 	public void setManagerStaffId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StaffRecord}
-	 */
-	public void setManagerStaffId(org.jooq.examples.mysql.sakila.tables.records.StaffRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID));
-		}
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.store.manager_staff_id</code>. 
 	 */
 	public java.lang.Byte getManagerStaffId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID);
+		return (java.lang.Byte) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.store.address_id</code>. 
 	 */
 	public void setAddressId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.AddressRecord}
-	 */
-	public void setAddressId(org.jooq.examples.mysql.sakila.tables.records.AddressRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID));
-		}
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.store.address_id</code>. 
 	 */
 	public java.lang.Short getAddressId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID);
+		return (java.lang.Short) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>sakila.store.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.LAST_UPDATE, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.store.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.LAST_UPDATE);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>sakila.customer</code> referencing this <code>sakila.store</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.CustomerRecord> fetchCustomerList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER)
-			.where(org.jooq.examples.mysql.sakila.tables.Customer.CUSTOMER.STORE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>sakila.inventory</code> referencing this <code>sakila.store</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> fetchInventoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY)
-			.where(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.STORE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>sakila.staff</code> referencing this <code>sakila.store</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> fetchStaffList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Staff.STAFF)
-			.where(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STORE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>sakila.staff</code> referenced by this <code>sakila.store</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.StaffRecord fetchStaff() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Staff.STAFF)
-			.where(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>sakila.address</code> referenced by this <code>sakila.store</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.AddressRecord fetchAddress() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS)
-			.where(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.ADDRESS_ID)))
-			.fetchOne();
+		return (java.sql.Timestamp) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -166,7 +88,7 @@ public class StoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Byte, java.lang.Byte, java.lang.Short, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -174,7 +96,7 @@ public class StoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Byte, java.lang.Byte, java.lang.Short, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

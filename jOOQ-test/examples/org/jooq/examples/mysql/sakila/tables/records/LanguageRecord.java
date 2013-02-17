@@ -9,72 +9,48 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> implements org.jooq.Record3<java.lang.Byte, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = -1937264368;
+	private static final long serialVersionUID = -210831919;
 
 	/**
 	 * Setter for <code>sakila.language.language_id</code>. 
 	 */
 	public void setLanguageId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.language.language_id</code>. 
 	 */
 	public java.lang.Byte getLanguageId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID);
+		return (java.lang.Byte) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.language.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.language.name</code>. 
 	 */
 	public java.lang.String getName() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.language.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LAST_UPDATE, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.language.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LAST_UPDATE);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>sakila.film</code> referencing this <code>sakila.language</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> fetchFilmListByLanguageId() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Film.FILM)
-			.where(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>sakila.film</code> referencing this <code>sakila.language</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> fetchFilmListByOriginalLanguageId() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Film.FILM)
-			.where(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID)))
-			.fetch();
+		return (java.sql.Timestamp) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -98,7 +74,7 @@ public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Byte, java.lang.String, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -106,7 +82,7 @@ public class LanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Byte, java.lang.String, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

@@ -9,34 +9,34 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_64_69Record> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1143951598;
+	private static final long serialVersionUID = -557483249;
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_TEST_CASE_64_69.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public void setUnusedId(java.lang.Integer value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.UNUSED_ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.X_TEST_CASE_64_69.UNUSED_ID</code>. 
 	 */
 	public java.lang.Integer getUnusedId() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.XTestCase_64_69.UNUSED_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class XTestCase_64_69Record extends org.jooq.impl.UpdatableRecordImpl<org
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

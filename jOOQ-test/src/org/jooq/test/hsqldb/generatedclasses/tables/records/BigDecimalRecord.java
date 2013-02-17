@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.BigDecimalRecord> implements org.jooq.Record2<java.lang.Integer, java.math.BigInteger>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IBigDecimal {
 
-	private static final long serialVersionUID = 857851097;
+	private static final long serialVersionUID = 1801142164;
 
 	/**
 	 * Setter for <code>PUBLIC.BIG_DECIMAL.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public void setOther(java.math.BigInteger value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL.OTHER, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.math.BigInteger getOther() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.BigDecimal.BIG_DECIMAL.OTHER);
+		return (java.math.BigInteger) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -52,7 +52,7 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.math.BigInteger> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class BigDecimalRecord extends org.jooq.impl.TableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.math.BigInteger> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

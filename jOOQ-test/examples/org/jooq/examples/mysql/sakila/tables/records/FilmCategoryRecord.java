@@ -9,96 +9,48 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> implements org.jooq.Record3<java.lang.Short, java.lang.Byte, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 160156381;
+	private static final long serialVersionUID = 170315584;
 
 	/**
 	 * Setter for <code>sakila.film_category.film_id</code>. 
 	 */
 	public void setFilmId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.FilmRecord}
-	 */
-	public void setFilmId(org.jooq.examples.mysql.sakila.tables.records.FilmRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID));
-		}
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_category.film_id</code>. 
 	 */
 	public java.lang.Short getFilmId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID);
+		return (java.lang.Short) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_category.category_id</code>. 
 	 */
 	public void setCategoryId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.CATEGORY_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.CategoryRecord}
-	 */
-	public void setCategoryId(org.jooq.examples.mysql.sakila.tables.records.CategoryRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.CATEGORY_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.CATEGORY_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY.CATEGORY_ID));
-		}
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_category.category_id</code>. 
 	 */
 	public java.lang.Byte getCategoryId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.CATEGORY_ID);
+		return (java.lang.Byte) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_category.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.LAST_UPDATE, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_category.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.LAST_UPDATE);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>sakila.film</code> referenced by this <code>sakila.film_category</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.FilmRecord fetchFilm() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Film.FILM)
-			.where(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>sakila.category</code> referenced by this <code>sakila.film_category</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.CategoryRecord fetchCategory() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY)
-			.where(org.jooq.examples.mysql.sakila.tables.Category.CATEGORY.CATEGORY_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.CATEGORY_ID)))
-			.fetchOne();
+		return (java.sql.Timestamp) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -122,7 +74,7 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Short, java.lang.Byte, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -130,7 +82,7 @@ public class FilmCategoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Short, java.lang.Byte, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 321881724;
+	private static final long serialVersionUID = 1810936661;
 
 	/**
 	 * The singleton instance of <code>DBA.t_author</code>

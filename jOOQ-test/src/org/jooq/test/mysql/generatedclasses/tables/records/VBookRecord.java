@@ -11,146 +11,146 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql.generatedclasses.enums.VBookStatus> {
 
-	private static final long serialVersionUID = -149234161;
+	private static final long serialVersionUID = -332957877;
 
 	/**
 	 * Setter for <code>test.v_book.ID</code>. The book ID
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.ID</code>. The book ID
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	public void setAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.AUTHOR_ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
 	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.co_author_id</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.CO_AUTHOR_ID, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.co_author_id</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.DETAILS_ID</code>. Some more details about the book
 	 */
 	public void setDetailsId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.DETAILS_ID, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.DETAILS_ID</code>. Some more details about the book
 	 */
 	public java.lang.Integer getDetailsId() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.TITLE</code>. The book's title
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.TITLE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.TITLE</code>. The book's title
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.PUBLISHED_IN, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
 	public java.lang.Integer getPublishedIn() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.LANGUAGE_ID</code>. The language of the book
 	 */
 	public void setLanguageId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.LANGUAGE_ID, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.LANGUAGE_ID</code>. The language of the book
 	 */
 	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.CONTENT_TEXT, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.CONTENT_TEXT</code>. Some textual content of the book
 	 */
 	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.CONTENT_PDF, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.CONTENT_PDF</code>. Some binary content of the book
 	 */
 	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>test.v_book.STATUS</code>. The book's stock status
 	 */
 	public void setStatus(org.jooq.test.mysql.generatedclasses.enums.VBookStatus value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VBook.STATUS, value);
+		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_book.STATUS</code>. The book's stock status
 	 */
 	public org.jooq.test.mysql.generatedclasses.enums.VBookStatus getStatus() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VBook.STATUS);
+		return (org.jooq.test.mysql.generatedclasses.enums.VBookStatus) getValue(9);
 	}
 
 	// -------------------------------------------------------------------------
@@ -162,7 +162,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@Override
 	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql.generatedclasses.enums.VBookStatus> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
+		return (org.jooq.Row10) super.fieldsRow();
 	}
 
 	/**
@@ -170,7 +170,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@Override
 	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql.generatedclasses.enums.VBookStatus> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10());
+		return (org.jooq.Row10) super.valuesRow();
 	}
 
 	/**

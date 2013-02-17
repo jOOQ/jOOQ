@@ -11,53 +11,49 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1584583132;
+	private static final long serialVersionUID = -788592662;
 
 	/**
 	 * Setter for <code>sakila.sales_by_store.store</code>. 
 	 */
 	public void setStore(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.STORE, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.sales_by_store.store</code>. 
 	 */
 	public java.lang.String getStore() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.STORE);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.sales_by_store.manager</code>. 
 	 */
 	public void setManager(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.MANAGER, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.sales_by_store.manager</code>. 
 	 */
 	public java.lang.String getManager() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.MANAGER);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.sales_by_store.total_sales</code>. 
 	 */
 	public void setTotalSales(java.math.BigDecimal value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.TOTAL_SALES, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.sales_by_store.total_sales</code>. 
 	 */
 	public java.math.BigDecimal getTotalSales() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByStore.SALES_BY_STORE.TOTAL_SALES);
+		return (java.math.BigDecimal) getValue(2);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record3 type implementation
@@ -68,7 +64,7 @@ public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.e
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.String, java.lang.String, java.math.BigDecimal> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -76,7 +72,7 @@ public class SalesByStoreRecord extends org.jooq.impl.TableRecordImpl<org.jooq.e
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.String, java.lang.String, java.math.BigDecimal> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

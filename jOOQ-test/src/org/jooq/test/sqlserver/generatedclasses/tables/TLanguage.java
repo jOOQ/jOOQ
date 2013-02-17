@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1365896012;
+	private static final long serialVersionUID = 341533713;
 
 	/**
 	 * The singleton instance of <code>dbo.t_language</code>

@@ -9,238 +9,160 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> implements org.jooq.Record11<java.lang.Byte, java.lang.String, java.lang.String, java.lang.Short, byte[], java.lang.String, java.lang.Byte, java.lang.Byte, java.lang.String, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1059920359;
+	private static final long serialVersionUID = 845391475;
 
 	/**
 	 * Setter for <code>sakila.staff.staff_id</code>. 
 	 */
 	public void setStaffId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.staff_id</code>. 
 	 */
 	public java.lang.Byte getStaffId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID);
+		return (java.lang.Byte) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.first_name</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.first_name</code>. 
 	 */
 	public java.lang.String getFirstName() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.last_name</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.last_name</code>. 
 	 */
 	public java.lang.String getLastName() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.address_id</code>. 
 	 */
 	public void setAddressId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ADDRESS_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.AddressRecord}
-	 */
-	public void setAddressId(org.jooq.examples.mysql.sakila.tables.records.AddressRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ADDRESS_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ADDRESS_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID));
-		}
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.address_id</code>. 
 	 */
 	public java.lang.Short getAddressId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ADDRESS_ID);
+		return (java.lang.Short) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.picture</code>. 
 	 */
 	public void setPicture(byte[] value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.PICTURE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.picture</code>. 
 	 */
 	public byte[] getPicture() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.PICTURE);
+		return (byte[]) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.email</code>. 
 	 */
 	public void setEmail(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.EMAIL, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.email</code>. 
 	 */
 	public java.lang.String getEmail() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.EMAIL);
+		return (java.lang.String) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.store_id</code>. 
 	 */
 	public void setStoreId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STORE_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.StoreRecord}
-	 */
-	public void setStoreId(org.jooq.examples.mysql.sakila.tables.records.StoreRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STORE_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STORE_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID));
-		}
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.store_id</code>. 
 	 */
 	public java.lang.Byte getStoreId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STORE_ID);
+		return (java.lang.Byte) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.active</code>. 
 	 */
 	public void setActive(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ACTIVE, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.active</code>. 
 	 */
 	public java.lang.Byte getActive() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ACTIVE);
+		return (java.lang.Byte) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.username</code>. 
 	 */
 	public void setUsername(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.USERNAME, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.username</code>. 
 	 */
 	public java.lang.String getUsername() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.USERNAME);
+		return (java.lang.String) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.password</code>. 
 	 */
 	public void setPassword(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.PASSWORD, value);
+		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.password</code>. 
 	 */
 	public java.lang.String getPassword() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.PASSWORD);
+		return (java.lang.String) getValue(9);
 	}
 
 	/**
 	 * Setter for <code>sakila.staff.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.LAST_UPDATE, value);
+		setValue(10, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.LAST_UPDATE);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>sakila.payment</code> referencing this <code>sakila.staff</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> fetchPaymentList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT)
-			.where(org.jooq.examples.mysql.sakila.tables.Payment.PAYMENT.STAFF_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>sakila.rental</code> referencing this <code>sakila.staff</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> fetchRentalList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL)
-			.where(org.jooq.examples.mysql.sakila.tables.Rental.RENTAL.STAFF_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>sakila.store</code> referencing this <code>sakila.staff</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> fetchStoreList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Store.STORE)
-			.where(org.jooq.examples.mysql.sakila.tables.Store.STORE.MANAGER_STAFF_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STAFF_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>sakila.address</code> referenced by this <code>sakila.staff</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.AddressRecord fetchAddress() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS)
-			.where(org.jooq.examples.mysql.sakila.tables.Address.ADDRESS.ADDRESS_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.ADDRESS_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>sakila.store</code> referenced by this <code>sakila.staff</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.StoreRecord fetchStore() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Store.STORE)
-			.where(org.jooq.examples.mysql.sakila.tables.Store.STORE.STORE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Staff.STAFF.STORE_ID)))
-			.fetchOne();
+		return (java.sql.Timestamp) getValue(10);
 	}
 
 	// -------------------------------------------------------------------------
@@ -264,7 +186,7 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	@Override
 	public org.jooq.Row11<java.lang.Byte, java.lang.String, java.lang.String, java.lang.Short, byte[], java.lang.String, java.lang.Byte, java.lang.Byte, java.lang.String, java.lang.String, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
+		return (org.jooq.Row11) super.fieldsRow();
 	}
 
 	/**
@@ -272,7 +194,7 @@ public class StaffRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	@Override
 	public org.jooq.Row11<java.lang.Byte, java.lang.String, java.lang.String, java.lang.Short, byte[], java.lang.String, java.lang.Byte, java.lang.Byte, java.lang.String, java.lang.String, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11());
+		return (org.jooq.Row11) super.valuesRow();
 	}
 
 	/**

@@ -9,20 +9,20 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_1Record> implements org.jooq.Record1<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1855774514;
+	private static final long serialVersionUID = 1339430377;
 
 	/**
 	 * Setter for <code>t_986_1.ref</code>. 
 	 */
 	public void setRef(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.T_986_1.REF, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>t_986_1.ref</code>. 
 	 */
 	public java.lang.Integer getRef() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.T_986_1.REF);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -46,7 +46,7 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class T_986_1Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

@@ -11,123 +11,119 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class FilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.FilmListRating, java.lang.String> {
 
-	private static final long serialVersionUID = 328312868;
+	private static final long serialVersionUID = 2042487324;
 
 	/**
 	 * Setter for <code>sakila.film_list.FID</code>. 
 	 */
 	public void setFid(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.FID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_list.FID</code>. 
 	 */
 	public java.lang.Short getFid() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.FID);
+		return (java.lang.Short) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_list.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.TITLE, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_list.title</code>. 
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.TITLE);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_list.description</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.DESCRIPTION, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_list.description</code>. 
 	 */
 	public java.lang.String getDescription() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.DESCRIPTION);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_list.category</code>. 
 	 */
 	public void setCategory(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.CATEGORY, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_list.category</code>. 
 	 */
 	public java.lang.String getCategory() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.CATEGORY);
+		return (java.lang.String) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_list.price</code>. 
 	 */
 	public void setPrice(java.math.BigDecimal value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.PRICE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_list.price</code>. 
 	 */
 	public java.math.BigDecimal getPrice() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.PRICE);
+		return (java.math.BigDecimal) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_list.length</code>. 
 	 */
 	public void setLength(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.LENGTH, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_list.length</code>. 
 	 */
 	public java.lang.Short getLength() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.LENGTH);
+		return (java.lang.Short) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_list.rating</code>. 
 	 */
 	public void setRating(org.jooq.examples.mysql.sakila.enums.FilmListRating value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.RATING, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_list.rating</code>. 
 	 */
 	public org.jooq.examples.mysql.sakila.enums.FilmListRating getRating() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.RATING);
+		return (org.jooq.examples.mysql.sakila.enums.FilmListRating) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_list.actors</code>. 
 	 */
 	public void setActors(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.ACTORS, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_list.actors</code>. 
 	 */
 	public java.lang.String getActors() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmList.FILM_LIST.ACTORS);
+		return (java.lang.String) getValue(7);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record8 type implementation
@@ -138,7 +134,7 @@ public class FilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examp
 	 */
 	@Override
 	public org.jooq.Row8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.FilmListRating, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+		return (org.jooq.Row8) super.fieldsRow();
 	}
 
 	/**
@@ -146,7 +142,7 @@ public class FilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examp
 	 */
 	@Override
 	public org.jooq.Row8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.FilmListRating, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+		return (org.jooq.Row8) super.valuesRow();
 	}
 
 	/**

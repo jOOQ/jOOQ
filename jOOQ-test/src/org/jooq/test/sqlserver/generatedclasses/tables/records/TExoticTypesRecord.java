@@ -9,34 +9,34 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID> {
 
-	private static final long serialVersionUID = 413522491;
+	private static final long serialVersionUID = -481593957;
 
 	/**
 	 * Setter for <code>dbo.t_exotic_types.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_exotic_types.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_exotic_types.UU</code>. 
 	 */
 	public void setUu(java.util.UUID value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UU, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_exotic_types.UU</code>. 
 	 */
 	public java.util.UUID getUu() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UU);
+		return (java.util.UUID) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.util.UUID> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.util.UUID> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

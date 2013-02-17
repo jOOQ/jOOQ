@@ -13,7 +13,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
 @javax.persistence.Table(name = "T_BOOK_STORE")
 public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record1<java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -1732546540;
+	private static final long serialVersionUID = 2090650629;
 
 	/**
 	 * Setter for <code>T_BOOK_STORE.NAME</code>. The books store name
@@ -26,6 +26,7 @@ public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	/**
 	 * Getter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
+	@javax.persistence.Id
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
 	@Override
 	public java.lang.String getNAME() {

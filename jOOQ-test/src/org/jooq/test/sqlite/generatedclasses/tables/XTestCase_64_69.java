@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1078251343;
+	private static final long serialVersionUID = 953723088;
 
 	/**
 	 * The singleton instance of <code>x_test_case_64_69</code>

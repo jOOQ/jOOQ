@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 811671200;
+	private static final long serialVersionUID = -1368361173;
 
 	/**
 	 * The singleton instance of <code>X_TEST_CASE_71</code>

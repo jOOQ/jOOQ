@@ -11,34 +11,34 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1099559893;
+	private static final long serialVersionUID = 1817905885;
 
 	/**
 	 * Setter for <code>test.x_test_case_2025.ref_id</code>. 
 	 */
 	public void setRefId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.REF_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_test_case_2025.ref_id</code>. 
 	 */
 	public java.lang.Integer getRefId() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.REF_ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.x_test_case_2025.ref_name</code>. 
 	 */
 	public void setRefName(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.REF_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_test_case_2025.ref_name</code>. 
 	 */
 	public java.lang.String getRefName() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XTestCase_2025.REF_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -50,7 +50,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

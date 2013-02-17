@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 1523196421;
+	private static final long serialVersionUID = -619449378;
 
 	/**
 	 * The singleton instance of <code>TEST.T_IDENTITY_PK</code>

@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -1405115913;
+	private static final long serialVersionUID = 1309436002;
 
 	/**
 	 * The singleton instance of <code>dbo.t_author</code>

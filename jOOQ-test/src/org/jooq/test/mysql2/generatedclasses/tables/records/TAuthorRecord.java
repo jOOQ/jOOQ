@@ -13,13 +13,13 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_author", schema = "test2")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -266066297;
+	private static final long serialVersionUID = -1777938889;
 
 	/**
 	 * Setter for <code>test2.t_author.ID</code>. The author ID
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -28,14 +28,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "ID", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test2.t_author.FIRST_NAME</code>. The author's first name
 	 */
 	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -43,14 +43,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "FIRST_NAME", length = 50)
 	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test2.t_author.LAST_NAME</code>. The author's last name
 	 */
 	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -58,14 +58,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "LAST_NAME", nullable = false, length = 50)
 	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>test2.t_author.DATE_OF_BIRTH</code>. The author's date of birth
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -73,14 +73,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "DATE_OF_BIRTH")
 	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>test2.t_author.YEAR_OF_BIRTH</code>. The author's year of birth
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH, value);
+		setValue(4, value);
 	}
 
 	/**
@@ -88,14 +88,14 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "YEAR_OF_BIRTH", precision = 10)
 	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>test2.t_author.ADDRESS</code>. The author's address
 	 */
 	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS, value);
+		setValue(5, value);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "ADDRESS", length = 200)
 	public java.lang.String getAddress() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
+		return (java.lang.String) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -127,7 +127,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

@@ -9,53 +9,49 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class FilmTextRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> implements org.jooq.Record3<java.lang.Short, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -1174440155;
+	private static final long serialVersionUID = -1651722426;
 
 	/**
 	 * Setter for <code>sakila.film_text.film_id</code>. 
 	 */
 	public void setFilmId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.FILM_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_text.film_id</code>. 
 	 */
 	public java.lang.Short getFilmId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.FILM_ID);
+		return (java.lang.Short) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_text.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.TITLE, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_text.title</code>. 
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.TITLE);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.film_text.description</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.DESCRIPTION, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film_text.description</code>. 
 	 */
 	public java.lang.String getDescription() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.FilmText.FILM_TEXT.DESCRIPTION);
+		return (java.lang.String) getValue(2);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Primary key information
@@ -78,7 +74,7 @@ public class FilmTextRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Short, java.lang.String, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -86,7 +82,7 @@ public class FilmTextRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.e
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Short, java.lang.String, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

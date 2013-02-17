@@ -9,12 +9,12 @@ package org.jooq.examples.mysql.sakila.routines;
 @java.lang.SuppressWarnings("all")
 public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -204461197;
+	private static final long serialVersionUID = -2090540941;
 
 	/**
 	 * The parameter <code>sakila.get_customer_balance.RETURN_VALUE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.DECIMAL);
+	public static final org.jooq.Parameter<java.math.BigDecimal> RETURN_VALUE = createParameter("RETURN_VALUE", org.jooq.impl.SQLDataType.DECIMAL.precision(5, 2));
 
 	/**
 	 * The parameter <code>sakila.get_customer_balance.p_customer_id</code>. 
@@ -30,7 +30,7 @@ public class GetCustomerBalance extends org.jooq.impl.AbstractRoutine<java.math.
 	 * Create a new routine call instance
 	 */
 	public GetCustomerBalance() {
-		super("get_customer_balance", org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.impl.SQLDataType.DECIMAL);
+		super("get_customer_balance", org.jooq.examples.mysql.sakila.Sakila.SAKILA, org.jooq.impl.SQLDataType.DECIMAL.precision(5, 2));
 
 		setReturnParameter(RETURN_VALUE);
 		addInParameter(P_CUSTOMER_ID);

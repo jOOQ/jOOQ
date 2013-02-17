@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class X_UNUSED extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1406476454;
+	private static final long serialVersionUID = -1083011619;
 
 	/**
 	 * The singleton instance of <code>X_UNUSED</code>

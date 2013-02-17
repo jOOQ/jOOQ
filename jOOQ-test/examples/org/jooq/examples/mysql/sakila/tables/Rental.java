@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Rental extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.RentalRecord> {
 
-	private static final long serialVersionUID = -377279028;
+	private static final long serialVersionUID = 1137487565;
 
 	/**
 	 * The singleton instance of <code>sakila.rental</code>

@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Country extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CountryRecord> {
 
-	private static final long serialVersionUID = -1523341944;
+	private static final long serialVersionUID = -933973393;
 
 	/**
 	 * The singleton instance of <code>sakila.country</code>
@@ -32,7 +32,7 @@ public class Country extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	/**
 	 * The column <code>sakila.country.country</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CountryRecord, java.lang.String> COUNTRY_ = createField("country", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CountryRecord, java.lang.String> COUNTRY_ = createField("country", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>sakila.country.last_update</code>. 

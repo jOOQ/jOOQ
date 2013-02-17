@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -452938444;
+	private static final long serialVersionUID = -1795414113;
 
 	/**
 	 * The singleton instance of <code>test.t_booleans</code>

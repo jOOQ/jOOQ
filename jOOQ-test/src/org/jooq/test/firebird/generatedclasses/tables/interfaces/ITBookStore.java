@@ -19,6 +19,7 @@ public interface ITBookStore extends java.io.Serializable {
 	/**
 	 * Getter for <code>T_BOOK_STORE.NAME</code>. 
 	 */
+	@javax.persistence.Id
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
 	@javax.validation.constraints.NotNull
 	@javax.validation.constraints.Size(max = 400)

@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1128504612;
+	private static final long serialVersionUID = 446822125;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOLEANS</code>

@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_EXOTIC_TYPES extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_EXOTIC_TYPES> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1126436653;
+	private static final long serialVersionUID = 1820080012;
 
 	/**
 	 * The singleton instance of <code>T_EXOTIC_TYPES</code>

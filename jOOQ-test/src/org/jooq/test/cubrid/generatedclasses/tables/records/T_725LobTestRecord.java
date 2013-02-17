@@ -9,34 +9,34 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_725LobTestRecord> implements org.jooq.Record2<java.lang.Integer, byte[]> {
 
-	private static final long serialVersionUID = -1840568456;
+	private static final long serialVersionUID = 1164904323;
 
 	/**
 	 * Setter for <code>t_725_lob_test.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>t_725_lob_test.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>t_725_lob_test.lob</code>. 
 	 */
 	public void setLob(byte[] value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest.LOB, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>t_725_lob_test.lob</code>. 
 	 */
 	public byte[] getLob() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.T_725LobTest.LOB);
+		return (byte[]) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, byte[]> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class T_725LobTestRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, byte[]> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

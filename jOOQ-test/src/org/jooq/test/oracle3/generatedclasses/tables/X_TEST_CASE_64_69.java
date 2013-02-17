@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class X_TEST_CASE_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_64_69> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 369273118;
+	private static final long serialVersionUID = -770717785;
 
 	/**
 	 * The singleton instance of <code>X_TEST_CASE_64_69</code>

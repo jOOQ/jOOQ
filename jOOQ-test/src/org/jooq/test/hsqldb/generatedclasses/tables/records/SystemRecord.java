@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.SystemRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ISystem {
 
-	private static final long serialVersionUID = -876960054;
+	private static final long serialVersionUID = -1149327147;
 
 	/**
 	 * Setter for <code>PUBLIC.SYSTEM.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.System.SYSTEM.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -36,7 +36,7 @@ public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class SystemRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

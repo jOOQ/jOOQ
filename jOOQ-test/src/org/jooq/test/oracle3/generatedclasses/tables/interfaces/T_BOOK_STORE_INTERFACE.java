@@ -21,6 +21,7 @@ public interface T_BOOK_STORE_INTERFACE extends java.lang.Cloneable, java.io.Ser
 	/**
 	 * Getter for <code>T_BOOK_STORE.NAME</code>. The books store name
 	 */
+	@javax.persistence.Id
 	@javax.persistence.Column(name = "NAME", unique = true, nullable = false, length = 400)
 	public java.lang.String getNAME();
 

@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_BOOLEANS extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOLEANS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -22170368;
+	private static final long serialVersionUID = -1029788003;
 
 	/**
 	 * The singleton instance of <code>T_BOOLEANS</code>

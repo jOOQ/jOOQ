@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 63906153;
+	private static final long serialVersionUID = 388195892;
 
 	/**
 	 * The singleton instance of <code>dbo.t_725_lob_test</code>

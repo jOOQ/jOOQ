@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 119454671;
+	private static final long serialVersionUID = 1800341950;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_IDENTITY_PK</code>

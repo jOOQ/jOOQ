@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -1025766221;
+	private static final long serialVersionUID = -231320704;
 
 	/**
 	 * The singleton instance of <code>t_986_2</code>

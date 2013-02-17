@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = -50215994;
+	private static final long serialVersionUID = -1877255098;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_2025</code>
@@ -46,6 +46,6 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.derby.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.derby.generatedclasses.Keys.FK_X_TEST_CASE_2025_3, org.jooq.test.derby.generatedclasses.Keys.FK_X_TEST_CASE_2025_2, org.jooq.test.derby.generatedclasses.Keys.FK_X_TEST_CASE_2025_1);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.derby.generatedclasses.Keys.FK_X_TEST_CASE_2025_1, org.jooq.test.derby.generatedclasses.Keys.FK_X_TEST_CASE_2025_2, org.jooq.test.derby.generatedclasses.Keys.FK_X_TEST_CASE_2025_3);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1056139459;
+	private static final long serialVersionUID = 550085404;
 
 	/**
 	 * The singleton instance of <code>dbo.t_triggers</code>

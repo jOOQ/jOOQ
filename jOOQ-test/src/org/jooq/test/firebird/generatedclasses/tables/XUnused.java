@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -998304343;
+	private static final long serialVersionUID = -364927430;
 
 	/**
 	 * The singleton instance of <code>X_UNUSED</code>

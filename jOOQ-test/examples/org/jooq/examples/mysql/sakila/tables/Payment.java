@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord> {
 
-	private static final long serialVersionUID = 1719808324;
+	private static final long serialVersionUID = 20006959;
 
 	/**
 	 * The singleton instance of <code>sakila.payment</code>
@@ -47,7 +47,7 @@ public class Payment extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.
 	/**
 	 * The column <code>sakila.payment.amount</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.math.BigDecimal> AMOUNT = createField("amount", org.jooq.impl.SQLDataType.DECIMAL, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.PaymentRecord, java.math.BigDecimal> AMOUNT = createField("amount", org.jooq.impl.SQLDataType.DECIMAL.precision(5, 2), this);
 
 	/**
 	 * The column <code>sakila.payment.payment_date</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TExoticTypes extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -1955543214;
+	private static final long serialVersionUID = 1250145665;
 
 	/**
 	 * The singleton instance of <code>test.t_exotic_types</code>

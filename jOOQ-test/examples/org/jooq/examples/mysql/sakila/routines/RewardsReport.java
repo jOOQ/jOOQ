@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.routines;
 @java.lang.SuppressWarnings("all")
 public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -1380109134;
+	private static final long serialVersionUID = 396215612;
 
 	/**
 	 * The parameter <code>sakila.rewards_report.min_monthly_purchases</code>. 
@@ -21,7 +21,7 @@ public class RewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void>
 	/**
 	 * The parameter <code>sakila.rewards_report.min_dollar_amount_purchased</code>. 
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> MIN_DOLLAR_AMOUNT_PURCHASED = createParameter("min_dollar_amount_purchased", org.jooq.impl.SQLDataType.DECIMAL);
+	public static final org.jooq.Parameter<java.math.BigDecimal> MIN_DOLLAR_AMOUNT_PURCHASED = createParameter("min_dollar_amount_purchased", org.jooq.impl.SQLDataType.DECIMAL.precision(10, 2));
 
 	/**
 	 * The parameter <code>sakila.rewards_report.count_rewardees</code>. 

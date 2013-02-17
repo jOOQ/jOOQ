@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -1993800917;
+	private static final long serialVersionUID = 213434527;
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. 
 	 */
 	@Override
 	public void setCd(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.CD, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.String getCd() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.CD);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public void setDescription(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.DESCRIPTION, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.String getDescription() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.DESCRIPTION);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public void setDescriptionEnglish(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.DESCRIPTION_ENGLISH, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.String getDescriptionEnglish() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.DESCRIPTION_ENGLISH);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.ID, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TLanguage.T_LANGUAGE.ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -96,7 +96,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

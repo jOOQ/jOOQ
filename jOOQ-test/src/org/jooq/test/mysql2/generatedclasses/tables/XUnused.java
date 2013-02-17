@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1892738993;
+	private static final long serialVersionUID = -1641602182;
 
 	/**
 	 * The singleton instance of <code>test2.x_unused</code>

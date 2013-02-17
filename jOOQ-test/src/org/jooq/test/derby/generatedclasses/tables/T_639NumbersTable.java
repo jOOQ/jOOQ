@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -132421858;
+	private static final long serialVersionUID = -1930711163;
 
 	/**
 	 * The singleton instance of <code>TEST.T_639_NUMBERS_TABLE</code>

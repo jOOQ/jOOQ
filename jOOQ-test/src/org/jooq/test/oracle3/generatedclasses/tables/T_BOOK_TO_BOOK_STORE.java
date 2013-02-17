@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_BOOK_TO_BOOK_STORE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_TO_BOOK_STORE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -2135250151;
+	private static final long serialVersionUID = 644294146;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_TO_BOOK_STORE</code>

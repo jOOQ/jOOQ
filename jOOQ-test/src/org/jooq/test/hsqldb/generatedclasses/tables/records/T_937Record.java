@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_937Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_937 {
 
-	private static final long serialVersionUID = -1380615783;
+	private static final long serialVersionUID = 1718700992;
 
 	/**
 	 * Setter for <code>PUBLIC.T_937.T_937</code>. 
 	 */
 	@Override
 	public void setT_937(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937.T_937_, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public java.lang.Integer getT_937() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_937.T_937.T_937_);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -48,7 +48,7 @@ public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class T_937Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

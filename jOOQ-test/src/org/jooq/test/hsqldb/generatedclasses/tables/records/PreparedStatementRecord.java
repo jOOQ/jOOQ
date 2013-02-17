@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.PreparedStatementRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IPreparedStatement {
 
-	private static final long serialVersionUID = -544081153;
+	private static final long serialVersionUID = 43573566;
 
 	/**
 	 * Setter for <code>PUBLIC.PREPARED_STATEMENT.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.j
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.PreparedStatement.PREPARED_STATEMENT.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -36,7 +36,7 @@ public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.j
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class PreparedStatementRecord extends org.jooq.impl.TableRecordImpl<org.j
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

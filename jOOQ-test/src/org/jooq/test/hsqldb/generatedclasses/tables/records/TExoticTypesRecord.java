@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = 1168411230;
+	private static final long serialVersionUID = 1326104314;
 
 	/**
 	 * Setter for <code>PUBLIC.T_EXOTIC_TYPES.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public void setUu(java.util.UUID value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UU, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public java.util.UUID getUu() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.UU);
+		return (java.util.UUID) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -64,7 +64,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.util.UUID> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.util.UUID> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

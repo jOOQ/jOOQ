@@ -9,34 +9,34 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TIdentityPkRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 2015644055;
+	private static final long serialVersionUID = 1741577952;
 
 	/**
 	 * Setter for <code>TEST.T_IDENTITY_PK.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_IDENTITY_PK.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_IDENTITY_PK.VAL</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.VAL, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_IDENTITY_PK.VAL</code>. 
 	 */
 	public java.lang.Integer getVal() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TIdentityPk.VAL);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class TIdentityPkRecord extends org.jooq.impl.UpdatableRecordImpl<org.joo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

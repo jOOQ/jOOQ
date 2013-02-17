@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -37323294;
+	private static final long serialVersionUID = 676740287;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_STORE</code>

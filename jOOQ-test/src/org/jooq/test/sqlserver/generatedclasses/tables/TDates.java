@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 810275345;
+	private static final long serialVersionUID = 1357911584;
 
 	/**
 	 * The singleton instance of <code>dbo.t_dates</code>

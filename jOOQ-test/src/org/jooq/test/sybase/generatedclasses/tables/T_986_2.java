@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_986_2 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = -1813242174;
+	private static final long serialVersionUID = -108621881;
 
 	/**
 	 * The singleton instance of <code>DBA.t_986_2</code>

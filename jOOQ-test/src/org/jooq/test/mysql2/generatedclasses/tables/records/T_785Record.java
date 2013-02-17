@@ -11,13 +11,13 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_785", schema = "test2")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = 790044902;
+	private static final long serialVersionUID = -1384094915;
 
 	/**
 	 * Setter for <code>test2.t_785.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -25,14 +25,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@javax.persistence.Column(name = "ID", precision = 10)
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test2.t_785.NAME</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.NAME, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,14 +40,14 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@javax.persistence.Column(name = "NAME", length = 50)
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test2.t_785.VALUE</code>. 
 	 */
 	public void setValue(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.VALUE, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@javax.persistence.Column(name = "VALUE", length = 50)
 	public java.lang.String getValue() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.T_785.T_785.VALUE);
+		return (java.lang.String) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -67,7 +67,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.String, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mys
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.String, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

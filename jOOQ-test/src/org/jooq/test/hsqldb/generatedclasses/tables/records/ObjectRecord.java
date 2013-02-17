@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ObjectRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Object>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IObject {
 
-	private static final long serialVersionUID = -1592208915;
+	private static final long serialVersionUID = 1384428801;
 
 	/**
 	 * Setter for <code>PUBLIC.OBJECT.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	@Override
 	public void setOther(java.lang.Object value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT.OTHER, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	@Override
 	public java.lang.Object getOther() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Object.OBJECT.OTHER);
+		return (java.lang.Object) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -52,7 +52,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.Object> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class ObjectRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hs
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.Object> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

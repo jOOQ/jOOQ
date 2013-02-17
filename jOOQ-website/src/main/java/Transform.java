@@ -83,10 +83,10 @@ public class Transform {
         System.out.println("-------------------------------");
         singlePage();
 
-//        System.out.println();
-//        System.out.println("Transforming PDF manual");
-//        System.out.println("-------------------------------");
-//        pdf();
+        System.out.println();
+        System.out.println("Transforming PDF manual");
+        System.out.println("-------------------------------");
+        pdf();
     }
 
     private static String file(String name) {

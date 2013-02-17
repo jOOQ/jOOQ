@@ -40,9 +40,21 @@ running. It shows how to use jOOQ and its code generator with a simple MySQL dat
 <th class="right">Manual</th>
 </tr>
 <tr>
-<td class="right">2.6.0</td>
+<td class="right">3.0.0</td>
 <td class="right">
 	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/latest/" title="The jOOQ Javadoc">HTML</a>
+</td>
+<td class="right">
+	<a style="padding-right: 20px" href="<?=$root?>/doc/3.0/manual-single-page" title="The jOOQ Manual on one single page">HTML</a>
+	<a style="padding-right: 20px" href="<?=$root?>/doc/3.0/manual" title="The jOOQ Manual on multiple pages">HTML (multi-page)</a>
+	<a style="padding-right: 20px" href="<?=$root?>/doc/3.0/manual-pdf/jOOQ-manual-3.0.pdf" title="The jOOQ Manual as a PDF">PDF</a>
+</td>
+</tr>
+
+<tr>
+<td class="right">2.6.0</td>
+<td class="right">
+	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/2.6.x/" title="The jOOQ Javadoc">HTML</a>
 </td>
 <td class="right">
 	<a style="padding-right: 20px" href="<?=$root?>/doc/2.6/manual-single-page" title="The jOOQ Manual on one single page">HTML</a>

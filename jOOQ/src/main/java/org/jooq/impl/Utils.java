@@ -1076,10 +1076,7 @@ final class Utils {
             result.add(new LoggerListener());
         }
 
-        for (ExecuteListener listener : configuration.getExecuteListeners()) {
-            result.add(listener);
-        }
-
+        result.addAll(configuration.getExecuteListeners());
         return result;
     }
 

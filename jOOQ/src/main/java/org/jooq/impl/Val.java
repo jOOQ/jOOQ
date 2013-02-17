@@ -336,6 +336,11 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         }
 
         if (isInline(context)) {
+            // [#2223] Some type-casts in this section may seem unnecessary, e.g.
+            // ((Boolean) val).toString(). They have been put in place to avoid
+            // accidental type confusions where type != val.getClass(), and thus
+            // SQL injection may occur
+
             if (val == null) {
                 context.keyword("null");
             }
@@ -347,7 +352,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                     context.sql(((Boolean) val) ? "1" : "0");
                 }
                 else {
-                    context.keyword(val.toString());
+                    context.keyword(((Boolean) val).toString());
                 }
             }
 
@@ -393,12 +398,12 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             // Interval extends Number, so let Interval come first!
             else if (Interval.class.isAssignableFrom(type)) {
                 context.sql("'")
-                       .sql(val.toString())
+                       .sql(escape(val))
                        .sql("'");
             }
 
             else if (Number.class.isAssignableFrom(type)) {
-                context.sql(val.toString());
+                context.sql(((Number) val).toString());
             }
 
             // [#1156] Date/Time data types should be inlined using JDBC
@@ -408,17 +413,17 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
-                    context.sql("'").sql(val.toString()).sql("'");
+                    context.sql("'").sql(escape(val)).sql("'");
                 }
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (dialect == DERBY) {
-                    context.keyword("date('").sql(val.toString()).sql("')");
+                    context.keyword("date('").sql(escape(val)).sql("')");
                 }
 
                 // Most dialects implement SQL standard date literals
                 else {
-                    context.keyword("date '").sql(val.toString()).sql("'");
+                    context.keyword("date '").sql(escape(val)).sql("'");
                 }
             }
             else if (type == Timestamp.class) {
@@ -426,22 +431,22 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
-                    context.sql("'").sql(val.toString()).sql("'");
+                    context.sql("'").sql(escape(val)).sql("'");
                 }
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (dialect == DERBY) {
-                    context.keyword("timestamp('").sql(val.toString()).sql("')");
+                    context.keyword("timestamp('").sql(escape(val)).sql("')");
                 }
 
                 // CUBRID timestamps have no fractional seconds
                 else if (dialect == CUBRID) {
-                    context.keyword("datetime '").sql(val.toString()).sql("'");
+                    context.keyword("datetime '").sql(escape(val)).sql("'");
                 }
 
                 // Most dialects implement SQL standard timestamp literals
                 else {
-                    context.keyword("timestamp '").sql(val.toString()).sql("'");
+                    context.keyword("timestamp '").sql(escape(val)).sql("'");
                 }
             }
             else if (type == Time.class) {
@@ -449,22 +454,22 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
                 if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
-                    context.sql("'").sql(val.toString()).sql("'");
+                    context.sql("'").sql(escape(val)).sql("'");
                 }
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (dialect == DERBY) {
-                    context.keyword("time('").sql(val.toString()).sql("')");
+                    context.keyword("time('").sql(escape(val)).sql("')");
                 }
 
                 // [#1253] Oracle doesn't know time literals
                 else if (dialect == ORACLE) {
-                    context.keyword("timestamp '1970-01-01 ").sql(val.toString()).sql("'");
+                    context.keyword("timestamp '1970-01-01 ").sql(escape(val)).sql("'");
                 }
 
                 // Most dialects implement SQL standard time literals
                 else {
-                    context.keyword("time '").sql(val.toString()).sql("'");
+                    context.keyword("time '").sql(escape(val)).sql("'");
                 }
             }
             else if (type.isArray()) {
@@ -498,7 +503,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
             // - String
             else {
                 context.sql("'")
-                       .sql(val.toString().replace("'", "''"))
+                       .sql(escape(val))
                        .sql("'");
             }
         }
@@ -534,6 +539,13 @@ class Val<T> extends AbstractField<T> implements Param<T> {
         else {
             context.sql(getBindVariable(context));
         }
+    }
+
+    /**
+     * Escape a string literal by replacing <code>'</code> by <code>''</code>
+     */
+    private String escape(Object val) {
+        return val.toString().replace("'", "''");
     }
 
     @Override

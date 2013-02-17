@@ -597,12 +597,14 @@ CREATE TABLE `posts` (
            can be the owner, user, database name) to be generated -->
       <inputSchema>guestbook</inputSchema>
 
-      <!-- All elements that are generated from your schema (A Java regular expression. Use the pipe to separate several expressions)
+      <!-- All elements that are generated from your schema 
+           (A Java regular expression. Use the pipe to separate several expressions)
            Watch out for case-sensitivity. Depending on your database, this might be important! -->
       <includes>.*</includes>
 
-      <!-- All elements that are excluded from your schema (A Java regular expression. Use the pipe to separate several expressions).
-              Excludes match before includes -->
+      <!-- All elements that are excluded from your schema 
+           (A Java regular expression. Use the pipe to separate several expressions).
+           Excludes match before includes -->
       <excludes></excludes>
     </database>
 

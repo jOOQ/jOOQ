@@ -518,11 +518,11 @@ implements
         // syntax, in case of which, the USING() was not added
         if (using == null) {
             h2Style = true;
-            getH2Values().addAll(Utils.fields(convert(values, getH2Fields().toArray(new Field[0]))));
+            getH2Values().addAll(Utils.fields(values, getH2Fields().toArray(new Field[0])));
         }
         else {
             Field<?>[] fields = notMatchedInsert.keySet().toArray(new Field[0]);
-            notMatchedInsert.putValues(Utils.fields(convert(values, fields)));
+            notMatchedInsert.putValues(Utils.fields(values, fields));
         }
 
         return this;

@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> {
 
-	private static final long serialVersionUID = 2010301386;
+	private static final long serialVersionUID = 200295596;
 
 	/**
 	 * The singleton instance of <code>sakila.language</code>
@@ -32,7 +32,7 @@ public class Language extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	/**
 	 * The column <code>sakila.language.name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.CHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.CHAR.length(20), this);
 
 	/**
 	 * The column <code>sakila.language.last_update</code>. 

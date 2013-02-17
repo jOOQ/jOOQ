@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639NumbersTable extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 152758661;
+	private static final long serialVersionUID = 687582796;
 
 	/**
 	 * The singleton instance of <code>T_639_NUMBERS_TABLE</code>

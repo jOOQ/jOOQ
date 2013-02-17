@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1925534595;
+	private static final long serialVersionUID = 1993694192;
 
 	/**
 	 * The singleton instance of <code>t_language</code>

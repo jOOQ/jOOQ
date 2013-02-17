@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class FilmActor extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> {
 
-	private static final long serialVersionUID = -1071950951;
+	private static final long serialVersionUID = 137644378;
 
 	/**
 	 * The singleton instance of <code>sakila.film_actor</code>

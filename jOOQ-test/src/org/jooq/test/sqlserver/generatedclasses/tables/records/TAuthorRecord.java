@@ -9,90 +9,90 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -602303284;
+	private static final long serialVersionUID = -1530126408;
 
 	/**
 	 * Setter for <code>dbo.t_author.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_author.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_author.FIRST_NAME</code>. 
 	 */
 	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_author.FIRST_NAME</code>. 
 	 */
 	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_author.LAST_NAME</code>. 
 	 */
 	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_author.LAST_NAME</code>. 
 	 */
 	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_author.DATE_OF_BIRTH</code>. 
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_author.DATE_OF_BIRTH</code>. 
 	 */
 	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.DATE_OF_BIRTH);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_author.YEAR_OF_BIRTH</code>. 
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_author.YEAR_OF_BIRTH</code>. 
 	 */
 	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.YEAR_OF_BIRTH);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_author.ADDRESS</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_author.ADDRESS</code>. 
 	 */
 	public java.lang.String getAddress() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TAuthor.T_AUTHOR.ADDRESS);
+		return (java.lang.String) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -116,7 +116,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

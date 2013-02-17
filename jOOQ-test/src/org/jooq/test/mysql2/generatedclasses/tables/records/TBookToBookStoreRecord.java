@@ -15,13 +15,13 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -373407959;
+	private static final long serialVersionUID = -1830629911;
 
 	/**
 	 * Setter for <code>test2.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
 	public void setBookStoreName(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -29,14 +29,14 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@javax.persistence.Column(name = "book_store_name", nullable = false, length = 400)
 	public java.lang.String getBookStoreName() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book_to_book_store.book_id</code>. The book ID
 	 */
 	public void setBookId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -44,14 +44,14 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@javax.persistence.Column(name = "book_id", nullable = false, precision = 10)
 	public java.lang.Integer getBookId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.BOOK_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test2.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
 	public void setStock(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@javax.persistence.Column(name = "stock", precision = 10)
 	public java.lang.Integer getStock() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE.STOCK);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -83,7 +83,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.String, java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.String, java.lang.Integer, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

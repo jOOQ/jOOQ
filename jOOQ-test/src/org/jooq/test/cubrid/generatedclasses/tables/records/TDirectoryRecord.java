@@ -9,62 +9,62 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -1274396880;
+	private static final long serialVersionUID = 1783039628;
 
 	/**
 	 * Setter for <code>t_directory.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>t_directory.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>t_directory.parent_id</code>. 
 	 */
 	public void setParentId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.PARENT_ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>t_directory.parent_id</code>. 
 	 */
 	public java.lang.Integer getParentId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.PARENT_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>t_directory.is_directory</code>. 
 	 */
 	public void setIsDirectory(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.IS_DIRECTORY, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>t_directory.is_directory</code>. 
 	 */
 	public java.lang.Integer getIsDirectory() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.IS_DIRECTORY);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>t_directory.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.NAME, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>t_directory.name</code>. 
 	 */
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TDirectory.NAME);
+		return (java.lang.String) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -88,7 +88,7 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class TDirectoryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

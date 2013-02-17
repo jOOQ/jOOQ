@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1238495887;
+	private static final long serialVersionUID = -1484180466;
 
 	/**
 	 * The singleton instance of <code>t_725_lob_test</code>

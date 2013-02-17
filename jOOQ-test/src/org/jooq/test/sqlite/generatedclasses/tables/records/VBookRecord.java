@@ -9,132 +9,132 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
 
-	private static final long serialVersionUID = -1487840437;
+	private static final long serialVersionUID = -1108559004;
 
 	/**
 	 * Setter for <code>v_book.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>v_book.AUTHOR_ID</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.AUTHOR_ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>v_book.co_author_id</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.CO_AUTHOR_ID, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.co_author_id</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>v_book.DETAILS_ID</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.DETAILS_ID, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.DETAILS_ID</code>. 
 	 */
 	public java.lang.Integer getDetailsId() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>v_book.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.TITLE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.TITLE</code>. 
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>v_book.PUBLISHED_IN</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.PUBLISHED_IN, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.PUBLISHED_IN</code>. 
 	 */
 	public java.lang.Integer getPublishedIn() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>v_book.LANGUAGE_ID</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.LANGUAGE_ID, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.LANGUAGE_ID</code>. 
 	 */
 	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>v_book.CONTENT_TEXT</code>. 
 	 */
 	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.CONTENT_TEXT, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.CONTENT_TEXT</code>. 
 	 */
 	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>v_book.CONTENT_PDF</code>. 
 	 */
 	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.CONTENT_PDF, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>v_book.CONTENT_PDF</code>. 
 	 */
 	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.sqlite.generatedclasses.tables.VBook.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	// -------------------------------------------------------------------------
@@ -146,7 +146,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sql
 	 */
 	@Override
 	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+		return (org.jooq.Row9) super.fieldsRow();
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sql
 	 */
 	@Override
 	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+		return (org.jooq.Row9) super.valuesRow();
 	}
 
 	/**

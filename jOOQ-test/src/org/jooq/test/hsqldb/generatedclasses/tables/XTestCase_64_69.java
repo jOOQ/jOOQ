@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_64_69 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1211488630;
+	private static final long serialVersionUID = -1832690595;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_64_69</code>

@@ -9,34 +9,34 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TIdentityRecord> implements org.jooq.Record2<java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 1338015468;
+	private static final long serialVersionUID = -433404613;
 
 	/**
 	 * Setter for <code>dbo.t_identity.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_identity.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_identity.val</code>. 
 	 */
 	public void setVal(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.VAL, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_identity.val</code>. 
 	 */
 	public java.lang.Integer getVal() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TIdentity.T_IDENTITY.VAL);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -48,7 +48,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TIdentityRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

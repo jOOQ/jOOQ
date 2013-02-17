@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = -1768275532;
+	private static final long serialVersionUID = -228410363;
 
 	/**
 	 * Setter for <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
 	@Override
 	public void setIdGenerated(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Integer getIdGenerated() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS.ID, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS.ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public void setCounter(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.Integer getCounter() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -80,7 +80,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

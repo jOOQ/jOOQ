@@ -11,34 +11,34 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VLibraryRecord> implements org.jooq.Record2<java.lang.String, java.lang.String> {
 
-	private static final long serialVersionUID = -332221268;
+	private static final long serialVersionUID = 2011460809;
 
 	/**
 	 * Setter for <code>test.v_library.AUTHOR</code>. 
 	 */
 	public void setAuthor(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.AUTHOR, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_library.AUTHOR</code>. 
 	 */
 	public java.lang.String getAuthor() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.AUTHOR);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.v_library.TITLE</code>. The book's title
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.TITLE, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.v_library.TITLE</code>. The book's title
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.VLibrary.TITLE);
+		return (java.lang.String) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -50,7 +50,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record8<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = 164093824;
+	private static final long serialVersionUID = -722273327;
 
 	/**
 	 * Setter for <code>PUBLIC.T_DATES.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public void setD(java.sql.Date value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.D, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.sql.Date getD() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.D);
+		return (java.sql.Date) getValue(1);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public void setT(java.sql.Time value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.T, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.sql.Time getT() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.T);
+		return (java.sql.Time) getValue(2);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public void setTs(java.sql.Timestamp value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.TS, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.sql.Timestamp getTs() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.TS);
+		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public void setDInt(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.D_INT, value);
+		setValue(4, value);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.lang.Integer getDInt() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.D_INT);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public void setTsBigint(java.lang.Long value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.TS_BIGINT, value);
+		setValue(5, value);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public java.lang.Long getTsBigint() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.TS_BIGINT);
+		return (java.lang.Long) getValue(5);
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public void setIY(org.jooq.types.YearToMonth value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.I_Y, value);
+		setValue(6, value);
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.types.YearToMonth getIY() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.I_Y);
+		return (org.jooq.types.YearToMonth) getValue(6);
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public void setID(org.jooq.types.DayToSecond value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.I_D, value);
+		setValue(7, value);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.types.DayToSecond getID() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TDates.T_DATES.I_D);
+		return (org.jooq.types.DayToSecond) getValue(7);
 	}
 
 	// -------------------------------------------------------------------------
@@ -160,7 +160,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Row8<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+		return (org.jooq.Row8) super.fieldsRow();
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Row8<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long, org.jooq.types.YearToMonth, org.jooq.types.DayToSecond> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+		return (org.jooq.Row8) super.valuesRow();
 	}
 
 	/**

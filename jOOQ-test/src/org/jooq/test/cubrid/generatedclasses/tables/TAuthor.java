@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1272716266;
+	private static final long serialVersionUID = -10656663;
 
 	/**
 	 * The singleton instance of <code>t_author</code>

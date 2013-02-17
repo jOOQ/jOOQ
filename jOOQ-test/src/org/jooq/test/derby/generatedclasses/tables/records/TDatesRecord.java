@@ -9,90 +9,90 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord> implements org.jooq.Record6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> {
 
-	private static final long serialVersionUID = 626950623;
+	private static final long serialVersionUID = 441985413;
 
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TDates.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_DATES.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TDates.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DATES.D</code>. 
 	 */
 	public void setD(java.sql.Date value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TDates.D, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_DATES.D</code>. 
 	 */
 	public java.sql.Date getD() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TDates.D);
+		return (java.sql.Date) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DATES.T</code>. 
 	 */
 	public void setT(java.sql.Time value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TDates.T, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_DATES.T</code>. 
 	 */
 	public java.sql.Time getT() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TDates.T);
+		return (java.sql.Time) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DATES.TS</code>. 
 	 */
 	public void setTs(java.sql.Timestamp value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TDates.TS, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_DATES.TS</code>. 
 	 */
 	public java.sql.Timestamp getTs() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TDates.TS);
+		return (java.sql.Timestamp) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DATES.D_INT</code>. 
 	 */
 	public void setDInt(java.lang.Integer value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TDates.D_INT, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_DATES.D_INT</code>. 
 	 */
 	public java.lang.Integer getDInt() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TDates.D_INT);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>. 
 	 */
 	public void setTsBigint(java.lang.Long value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TDates.TS_BIGINT, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>. 
 	 */
 	public java.lang.Long getTsBigint() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TDates.TS_BIGINT);
+		return (java.lang.Long) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -116,7 +116,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

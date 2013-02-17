@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_DIRECTORY extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_DIRECTORY> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 722346098;
+	private static final long serialVersionUID = -1164552237;
 
 	/**
 	 * The singleton instance of <code>T_DIRECTORY</code>

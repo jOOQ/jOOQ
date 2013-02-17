@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class NicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord> {
 
-	private static final long serialVersionUID = -1489510592;
+	private static final long serialVersionUID = -544635573;
 
 	/**
 	 * The singleton instance of <code>sakila.nicer_but_slower_film_list</code>
@@ -34,22 +34,22 @@ public class NicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.exa
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.title</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(255), this);
 
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.description</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
 
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.category</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR.length(25), this);
 
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.price</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL.precision(4, 2), this);
 
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.length</code>. 
@@ -64,7 +64,7 @@ public class NicerButSlowerFilmList extends org.jooq.impl.TableImpl<org.jooq.exa
 	/**
 	 * The column <code>sakila.nicer_but_slower_film_list.actors</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> ACTORS = createField("actors", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.NicerButSlowerFilmListRecord, java.lang.String> ACTORS = createField("actors", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
 
 	/**
 	 * Create a <code>sakila.nicer_but_slower_film_list</code> table reference

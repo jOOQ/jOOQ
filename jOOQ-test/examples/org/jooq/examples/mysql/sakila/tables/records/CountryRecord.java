@@ -9,62 +9,48 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class CountryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CountryRecord> implements org.jooq.Record3<java.lang.Short, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1423219423;
+	private static final long serialVersionUID = -2048941490;
 
 	/**
 	 * Setter for <code>sakila.country.country_id</code>. 
 	 */
 	public void setCountryId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.country.country_id</code>. 
 	 */
 	public java.lang.Short getCountryId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_ID);
+		return (java.lang.Short) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.country.country</code>. 
 	 */
 	public void setCountry(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.country.country</code>. 
 	 */
 	public java.lang.String getCountry() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.country.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.LAST_UPDATE, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.country.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.LAST_UPDATE);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>sakila.city</code> referencing this <code>sakila.country</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.CityRecord> fetchCityList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.City.CITY)
-			.where(org.jooq.examples.mysql.sakila.tables.City.CITY.COUNTRY_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Country.COUNTRY.COUNTRY_ID)))
-			.fetch();
+		return (java.sql.Timestamp) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -88,7 +74,7 @@ public class CountryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Short, java.lang.String, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -96,7 +82,7 @@ public class CountryRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Short, java.lang.String, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

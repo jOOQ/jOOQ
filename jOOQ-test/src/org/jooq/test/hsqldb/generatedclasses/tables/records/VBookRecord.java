@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = 741178684;
+	private static final long serialVersionUID = 206558223;
 
 	/**
 	 * Setter for <code>PUBLIC.V_BOOK.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setCoAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setDetailsId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getDetailsId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.TITLE, value);
+		setValue(4, value);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setPublishedIn(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN, value);
+		setValue(5, value);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getPublishedIn() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setLanguageId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID, value);
+		setValue(6, value);
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT, value);
+		setValue(7, value);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF, value);
+		setValue(8, value);
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setRecVersion(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.REC_VERSION, value);
+		setValue(9, value);
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getRecVersion() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.REC_VERSION);
+		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
@@ -176,7 +176,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setRecTimestamp(java.sql.Timestamp value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.REC_TIMESTAMP, value);
+		setValue(10, value);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.sql.Timestamp getRecTimestamp() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VBook.V_BOOK.REC_TIMESTAMP);
+		return (java.sql.Timestamp) getValue(10);
 	}
 
 	// -------------------------------------------------------------------------
@@ -196,7 +196,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11());
+		return (org.jooq.Row11) super.fieldsRow();
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public org.jooq.Row11<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], java.lang.Integer, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11());
+		return (org.jooq.Row11) super.valuesRow();
 	}
 
 	/**

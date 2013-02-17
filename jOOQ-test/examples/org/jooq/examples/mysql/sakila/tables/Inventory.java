@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Inventory extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> {
 
-	private static final long serialVersionUID = -1003525865;
+	private static final long serialVersionUID = 1865719216;
 
 	/**
 	 * The singleton instance of <code>sakila.inventory</code>

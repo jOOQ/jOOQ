@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class FilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord> {
 
-	private static final long serialVersionUID = 1381701434;
+	private static final long serialVersionUID = 1460807825;
 
 	/**
 	 * The singleton instance of <code>sakila.film_list</code>
@@ -34,22 +34,22 @@ public class FilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sa
 	/**
 	 * The column <code>sakila.film_list.title</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(255), this);
 
 	/**
 	 * The column <code>sakila.film_list.description</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
 
 	/**
 	 * The column <code>sakila.film_list.category</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> CATEGORY = createField("category", org.jooq.impl.SQLDataType.VARCHAR.length(25), this);
 
 	/**
 	 * The column <code>sakila.film_list.price</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.math.BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL.precision(4, 2), this);
 
 	/**
 	 * The column <code>sakila.film_list.length</code>. 
@@ -64,7 +64,7 @@ public class FilmList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sa
 	/**
 	 * The column <code>sakila.film_list.actors</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> ACTORS = createField("actors", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmListRecord, java.lang.String> ACTORS = createField("actors", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
 
 	/**
 	 * Create a <code>sakila.film_list</code> table reference

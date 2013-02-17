@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -527603746;
+	private static final long serialVersionUID = -629244969;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_DATES</code>

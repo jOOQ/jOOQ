@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> {
 
-	private static final long serialVersionUID = -893765385;
+	private static final long serialVersionUID = -841387090;
 
 	/**
 	 * The singleton instance of <code>sakila.category</code>
@@ -32,7 +32,7 @@ public class Category extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples
 	/**
 	 * The column <code>sakila.category.name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(25), this);
 
 	/**
 	 * The column <code>sakila.category.last_update</code>. 

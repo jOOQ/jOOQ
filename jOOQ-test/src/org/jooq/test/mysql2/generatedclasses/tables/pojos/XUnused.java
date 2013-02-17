@@ -15,7 +15,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
 })
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = 126867519;
+	private static final long serialVersionUID = -260237329;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -87,11 +87,11 @@ public class XUnused implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "FIELDS", precision = 10)
-	public java.lang.Integer getFields_() {
+	public java.lang.Integer getFields() {
 		return this.fields;
 	}
 
-	public void setFields_(java.lang.Integer fields) {
+	public void setFields(java.lang.Integer fields) {
 		this.fields = fields;
 	}
 
@@ -132,11 +132,11 @@ public class XUnused implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "PRIMARY_KEY", precision = 10)
-	public java.lang.Integer getPrimaryKey() {
+	public java.lang.Integer getPrimaryKey_() {
 		return this.primaryKey;
 	}
 
-	public void setPrimaryKey(java.lang.Integer primaryKey) {
+	public void setPrimaryKey_(java.lang.Integer primaryKey) {
 		this.primaryKey = primaryKey;
 	}
 

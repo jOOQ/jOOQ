@@ -9,20 +9,20 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = 372793442;
+	private static final long serialVersionUID = -1070398336;
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_STORE.NAME</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TBookStore.NAME, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_BOOK_STORE.NAME</code>. 
 	 */
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TBookStore.NAME);
+		return (java.lang.String) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -46,7 +46,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

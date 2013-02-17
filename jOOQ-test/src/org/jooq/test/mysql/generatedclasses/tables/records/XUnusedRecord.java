@@ -11,202 +11,202 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1578974936;
+	private static final long serialVersionUID = 1861690736;
 
 	/**
 	 * Setter for <code>test.x_unused.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.NAME</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.NAME</code>. 
 	 */
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.BIG_INTEGER</code>. 
 	 */
 	public void setBigInteger(java.math.BigInteger value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.BIG_INTEGER, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.BIG_INTEGER</code>. 
 	 */
 	public java.math.BigInteger getBigInteger() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.BIG_INTEGER);
+		return (java.math.BigInteger) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.ID_REF</code>. 
 	 */
 	public void setIdRef(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.ID_REF, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.ID_REF</code>. 
 	 */
 	public java.lang.Integer getIdRef() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.ID_REF);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.NAME_REF</code>. 
 	 */
 	public void setNameRef(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.NAME_REF, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.NAME_REF</code>. 
 	 */
 	public java.lang.String getNameRef() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.NAME_REF);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.CLASS</code>. 
 	 */
 	public void setClass_(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.CLASS, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.CLASS</code>. 
 	 */
 	public java.lang.Integer getClass_() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.CLASS);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.FIELDS</code>. 
 	 */
-	public void setFields_(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.FIELDS, value);
+	public void setFields(java.lang.Integer value) {
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.FIELDS</code>. 
 	 */
-	public java.lang.Integer getFields_() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.FIELDS);
+	public java.lang.Integer getFields() {
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.CONFIGURATION</code>. 
 	 */
 	public void setConfiguration_(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.CONFIGURATION, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.CONFIGURATION</code>. 
 	 */
 	public java.lang.Integer getConfiguration_() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.CONFIGURATION);
+		return (java.lang.Integer) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.U_D_T</code>. 
 	 */
 	public void setUDT(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.U_D_T, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.U_D_T</code>. 
 	 */
 	public java.lang.Integer getUDT() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.U_D_T);
+		return (java.lang.Integer) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.META_DATA</code>. 
 	 */
 	public void setMetaData(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.META_DATA, value);
+		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.META_DATA</code>. 
 	 */
 	public java.lang.Integer getMetaData() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.META_DATA);
+		return (java.lang.Integer) getValue(9);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.TYPE0</code>. 
 	 */
 	public void setType0(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.TYPE0, value);
+		setValue(10, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.TYPE0</code>. 
 	 */
 	public java.lang.Integer getType0() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.TYPE0);
+		return (java.lang.Integer) getValue(10);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.PRIMARY_KEY</code>. 
 	 */
-	public void setPrimaryKey(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.PRIMARY_KEY, value);
+	public void setPrimaryKey_(java.lang.Integer value) {
+		setValue(11, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.PRIMARY_KEY</code>. 
 	 */
-	public java.lang.Integer getPrimaryKey() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.PRIMARY_KEY);
+	public java.lang.Integer getPrimaryKey_() {
+		return (java.lang.Integer) getValue(11);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.PRIMARYKEY</code>. 
 	 */
 	public void setPrimarykey(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.PRIMARYKEY, value);
+		setValue(12, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.PRIMARYKEY</code>. 
 	 */
 	public java.lang.Integer getPrimarykey() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.PRIMARYKEY);
+		return (java.lang.Integer) getValue(12);
 	}
 
 	/**
 	 * Setter for <code>test.x_unused.FIELD 737</code>. 
 	 */
 	public void setField_737(java.math.BigDecimal value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.FIELD_737, value);
+		setValue(13, value);
 	}
 
 	/**
 	 * Getter for <code>test.x_unused.FIELD 737</code>. 
 	 */
 	public java.math.BigDecimal getField_737() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.XUnused.FIELD_737);
+		return (java.math.BigDecimal) getValue(13);
 	}
 
 	// -------------------------------------------------------------------------
@@ -230,7 +230,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14());
+		return (org.jooq.Row14) super.fieldsRow();
 	}
 
 	/**
@@ -238,7 +238,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14());
+		return (org.jooq.Row14) super.valuesRow();
 	}
 
 	/**
@@ -406,7 +406,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value7() {
-		return getFields_();
+		return getFields();
 	}
 
 	/**
@@ -446,7 +446,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value12() {
-		return getPrimaryKey();
+		return getPrimaryKey_();
 	}
 
 	/**

@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IVAuthor {
 
-	private static final long serialVersionUID = 138498858;
+	private static final long serialVersionUID = 985505202;
 
 	/**
 	 * Setter for <code>PUBLIC.V_AUTHOR.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.DATE_OF_BIRTH);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH, value);
+		setValue(4, value);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.YEAR_OF_BIRTH);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS, value);
+		setValue(5, value);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public java.lang.String getAddress() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.VAuthor.V_AUTHOR.ADDRESS);
+		return (java.lang.String) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -116,7 +116,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.h
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

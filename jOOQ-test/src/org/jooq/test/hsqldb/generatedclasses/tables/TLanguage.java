@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -688307598;
+	private static final long serialVersionUID = 1604162335;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_LANGUAGE</code>

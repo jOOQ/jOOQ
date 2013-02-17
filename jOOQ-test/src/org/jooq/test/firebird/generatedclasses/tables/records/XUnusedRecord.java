@@ -13,7 +13,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.lang.Long, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -1488297643;
+	private static final long serialVersionUID = 1829243088;
 
 	/**
 	 * Setter for <code>X_UNUSED.ID</code>. 
@@ -192,7 +192,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>X_UNUSED.PRIMARY_KEY</code>. 
 	 */
 	@Override
-	public void setPrimaryKey(java.lang.Integer value) {
+	public void setPrimaryKey_(java.lang.Integer value) {
 		setValue(10, value);
 	}
 
@@ -201,7 +201,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "PRIMARY_KEY", length = 4)
 	@Override
-	public java.lang.Integer getPrimaryKey() {
+	public java.lang.Integer getPrimaryKey_() {
 		return (java.lang.Integer) getValue(10);
 	}
 
@@ -536,7 +536,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value11() {
-		return getPrimaryKey();
+		return getPrimaryKey_();
 	}
 
 	/**
@@ -598,7 +598,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 		setUDT(from.getUDT());
 		setMetaData(from.getMetaData());
 		setType0(from.getType0());
-		setPrimaryKey(from.getPrimaryKey());
+		setPrimaryKey_(from.getPrimaryKey_());
 		setPrimarykey(from.getPrimarykey());
 		setNameRef(from.getNameRef());
 		setField_737(from.getField_737());

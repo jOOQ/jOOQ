@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1087474714;
+	private static final long serialVersionUID = -816932883;
 
 	/**
 	 * The singleton instance of <code>t_triggers</code>

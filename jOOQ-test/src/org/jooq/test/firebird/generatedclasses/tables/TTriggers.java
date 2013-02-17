@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -1521178176;
+	private static final long serialVersionUID = -1495228143;
 
 	/**
 	 * The singleton instance of <code>T_TRIGGERS</code>

@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TArrays extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 96171586;
+	private static final long serialVersionUID = -751432881;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_ARRAYS</code>

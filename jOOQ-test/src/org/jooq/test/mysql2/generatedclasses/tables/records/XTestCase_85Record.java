@@ -13,13 +13,13 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "x_test_case_85", schema = "test2")
 public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -310433627;
+	private static final long serialVersionUID = -712187211;
 
 	/**
 	 * Setter for <code>test2.x_test_case_85.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -28,14 +28,14 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	@javax.persistence.Id
 	@javax.persistence.Column(name = "id", unique = true, nullable = false, precision = 10)
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test2.x_test_case_85.x_unused_id</code>. 
 	 */
 	public void setXUnusedId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -43,14 +43,14 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@javax.persistence.Column(name = "x_unused_id", precision = 10)
 	public java.lang.Integer getXUnusedId() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test2.x_test_case_85.x_unused_name</code>. 
 	 */
 	public void setXUnusedName(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@javax.persistence.Column(name = "x_unused_name", length = 10)
 	public java.lang.String getXUnusedName() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85.X_UNUSED_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -82,7 +82,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class XTestCase_85Record extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

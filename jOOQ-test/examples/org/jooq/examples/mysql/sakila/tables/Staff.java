@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.StaffRecord> {
 
-	private static final long serialVersionUID = -848697643;
+	private static final long serialVersionUID = -1547963062;
 
 	/**
 	 * The singleton instance of <code>sakila.staff</code>
@@ -32,12 +32,12 @@ public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	/**
 	 * The column <code>sakila.staff.first_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
 
 	/**
 	 * The column <code>sakila.staff.last_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
 
 	/**
 	 * The column <code>sakila.staff.address_id</code>. 
@@ -47,12 +47,12 @@ public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	/**
 	 * The column <code>sakila.staff.picture</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, byte[]> PICTURE = createField("picture", org.jooq.impl.SQLDataType.BLOB, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, byte[]> PICTURE = createField("picture", org.jooq.impl.SQLDataType.BLOB.length(65535), this);
 
 	/**
 	 * The column <code>sakila.staff.email</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
 
 	/**
 	 * The column <code>sakila.staff.store_id</code>. 
@@ -67,12 +67,12 @@ public class Staff extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.my
 	/**
 	 * The column <code>sakila.staff.username</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR.length(16), this);
 
 	/**
 	 * The column <code>sakila.staff.password</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.StaffRecord, java.lang.String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR.length(40), this);
 
 	/**
 	 * The column <code>sakila.staff.last_update</code>. 

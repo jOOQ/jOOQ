@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 195923642;
+	private static final long serialVersionUID = -1518168207;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOLEANS</code>

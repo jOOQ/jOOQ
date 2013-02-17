@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.T_785Record> implements org.jooq.Record3<java.lang.Integer, java.lang.String, java.lang.String>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = -1532661362;
+	private static final long serialVersionUID = -105014517;
 
 	/**
 	 * Setter for <code>PUBLIC.T_785.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785.NAME, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785.NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public void setValue(java.lang.String value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785.VALUE, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.String getValue() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.T_785.T_785.VALUE);
+		return (java.lang.String) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -68,7 +68,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.String, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class T_785Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.String, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

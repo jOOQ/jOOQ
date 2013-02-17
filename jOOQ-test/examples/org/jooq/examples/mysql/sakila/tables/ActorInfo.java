@@ -11,7 +11,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class ActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord> {
 
-	private static final long serialVersionUID = -806244724;
+	private static final long serialVersionUID = -947748100;
 
 	/**
 	 * The singleton instance of <code>sakila.actor_info</code>
@@ -34,17 +34,17 @@ public class ActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.s
 	/**
 	 * The column <code>sakila.actor_info.first_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FIRST_NAME = createField("first_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
 
 	/**
 	 * The column <code>sakila.actor_info.last_name</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(45), this);
 
 	/**
 	 * The column <code>sakila.actor_info.film_info</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FILM_INFO = createField("film_info", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.ActorInfoRecord, java.lang.String> FILM_INFO = createField("film_info", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
 
 	/**
 	 * Create a <code>sakila.actor_info</code> table reference

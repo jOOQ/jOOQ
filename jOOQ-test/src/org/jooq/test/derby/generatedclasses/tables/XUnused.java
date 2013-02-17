@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1111019686;
+	private static final long serialVersionUID = -716800593;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>

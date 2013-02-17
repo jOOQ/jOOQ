@@ -13,21 +13,22 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 @javax.persistence.Table(name = "t_book_store", schema = "test2")
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = -2142695209;
+	private static final long serialVersionUID = 570307064;
 
 	/**
 	 * Setter for <code>test2.t_book_store.name</code>. The books store name
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.mysql2.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test2.t_book_store.name</code>. The books store name
 	 */
+	@javax.persistence.Id
 	@javax.persistence.Column(name = "name", unique = true, nullable = false, length = 400)
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.mysql2.generatedclasses.tables.TBookStore.T_BOOK_STORE.NAME);
+		return (java.lang.String) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -51,7 +52,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

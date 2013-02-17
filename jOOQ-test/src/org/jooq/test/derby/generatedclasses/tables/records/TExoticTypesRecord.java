@@ -9,34 +9,34 @@ package org.jooq.test.derby.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.derby.generatedclasses.tables.records.TExoticTypesRecord> implements org.jooq.Record2<java.lang.Integer, java.util.UUID> {
 
-	private static final long serialVersionUID = 405487502;
+	private static final long serialVersionUID = -1345945934;
 
 	/**
 	 * Setter for <code>TEST.T_EXOTIC_TYPES.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TExoticTypes.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_EXOTIC_TYPES.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TExoticTypes.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>TEST.T_EXOTIC_TYPES.UU</code>. 
 	 */
 	public void setUu(java.util.UUID value) {
-		setValue(org.jooq.test.derby.generatedclasses.tables.TExoticTypes.UU, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>TEST.T_EXOTIC_TYPES.UU</code>. 
 	 */
 	public java.util.UUID getUu() {
-		return getValue(org.jooq.test.derby.generatedclasses.tables.TExoticTypes.UU);
+		return (java.util.UUID) getValue(1);
 	}
 
 	// -------------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.util.UUID> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class TExoticTypesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jo
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.Integer, java.util.UUID> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

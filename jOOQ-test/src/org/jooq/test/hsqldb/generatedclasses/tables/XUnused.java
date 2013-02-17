@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -575442189;
+	private static final long serialVersionUID = 2142984688;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>

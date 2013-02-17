@@ -9,48 +9,48 @@ package org.jooq.test.sqlserver.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TTriggersRecord> implements org.jooq.Record3<java.lang.Integer, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1494122927;
+	private static final long serialVersionUID = 3211764;
 
 	/**
 	 * Setter for <code>dbo.t_triggers.id_generated</code>. 
 	 */
 	public void setIdGenerated(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_triggers.id_generated</code>. 
 	 */
 	public java.lang.Integer getIdGenerated() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_triggers.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_triggers.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>dbo.t_triggers.counter</code>. 
 	 */
 	public void setCounter(java.lang.Integer value) {
-		setValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>dbo.t_triggers.counter</code>. 
 	 */
 	public java.lang.Integer getCounter() {
-		return getValue(org.jooq.test.sqlserver.generatedclasses.tables.TTriggers.T_TRIGGERS.COUNTER);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -74,7 +74,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

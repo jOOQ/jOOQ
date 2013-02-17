@@ -9,146 +9,146 @@ package org.jooq.test.cubrid.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.cubrid.generatedclasses.enums.TBookStatus> {
 
-	private static final long serialVersionUID = 1261408429;
+	private static final long serialVersionUID = 22579102;
 
 	/**
 	 * Setter for <code>t_book.id</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.id</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>t_book.author_id</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.AUTHOR_ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.author_id</code>. 
 	 */
 	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>t_book.co_author_id</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CO_AUTHOR_ID, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.co_author_id</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>t_book.details_id</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.DETAILS_ID, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.details_id</code>. 
 	 */
 	public java.lang.Integer getDetailsId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>t_book.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.TITLE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.title</code>. 
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>t_book.published_in</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.PUBLISHED_IN, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.published_in</code>. 
 	 */
 	public java.lang.Integer getPublishedIn() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>t_book.language_id</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.language_id</code>. 
 	 */
 	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>t_book.content_text</code>. 
 	 */
 	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CONTENT_TEXT, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.content_text</code>. 
 	 */
 	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>t_book.content_pdf</code>. 
 	 */
 	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CONTENT_PDF, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.content_pdf</code>. 
 	 */
 	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>t_book.status</code>. 
 	 */
 	public void setStatus(org.jooq.test.cubrid.generatedclasses.enums.TBookStatus value) {
-		setValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.STATUS, value);
+		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>t_book.status</code>. 
 	 */
 	public org.jooq.test.cubrid.generatedclasses.enums.TBookStatus getStatus() {
-		return getValue(org.jooq.test.cubrid.generatedclasses.tables.TBook.STATUS);
+		return (org.jooq.test.cubrid.generatedclasses.enums.TBookStatus) getValue(9);
 	}
 
 	// -------------------------------------------------------------------------
@@ -172,7 +172,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.cubrid.generatedclasses.enums.TBookStatus> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10());
+		return (org.jooq.Row10) super.fieldsRow();
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.cubrid.generatedclasses.enums.TBookStatus> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10());
+		return (org.jooq.Row10) super.valuesRow();
 	}
 
 	/**

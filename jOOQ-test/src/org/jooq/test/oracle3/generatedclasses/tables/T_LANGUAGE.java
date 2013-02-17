@@ -11,7 +11,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_LANGUAGE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1124242305;
+	private static final long serialVersionUID = 508643530;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>

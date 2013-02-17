@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> implements org.jooq.Record4<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[]>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = 1660678905;
+	private static final long serialVersionUID = 26103571;
 
 	/**
 	 * Setter for <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
 	@Override
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.ID, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public void setStringArray(java.lang.String[] value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.STRING_ARRAY, value);
+		setValue(1, value);
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.String[] getStringArray() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.STRING_ARRAY);
+		return (java.lang.String[]) getValue(1);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public void setNumberArray(java.lang.Integer[] value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.NUMBER_ARRAY, value);
+		setValue(2, value);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer[] getNumberArray() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.NUMBER_ARRAY);
+		return (java.lang.Integer[]) getValue(2);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public void setDateArray(java.sql.Date[] value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.DATE_ARRAY, value);
+		setValue(3, value);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.sql.Date[] getDateArray() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.TArrays.T_ARRAYS.DATE_ARRAY);
+		return (java.sql.Date[]) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -96,7 +96,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[]> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class TArraysRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.String[], java.lang.Integer[], java.sql.Date[]> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

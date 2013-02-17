@@ -11,137 +11,133 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class CustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.CustomerListRecord> implements org.jooq.Record9<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> {
 
-	private static final long serialVersionUID = -726979520;
+	private static final long serialVersionUID = 556464182;
 
 	/**
 	 * Setter for <code>sakila.customer_list.ID</code>. 
 	 */
 	public void setId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.ID</code>. 
 	 */
 	public java.lang.Short getId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ID);
+		return (java.lang.Short) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.customer_list.name</code>. 
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.name</code>. 
 	 */
 	public java.lang.String getName() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.customer_list.address</code>. 
 	 */
 	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ADDRESS, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.address</code>. 
 	 */
 	public java.lang.String getAddress() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ADDRESS);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>sakila.customer_list.zip code</code>. 
 	 */
 	public void setZipCode(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ZIP_CODE, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.zip code</code>. 
 	 */
 	public java.lang.String getZipCode() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.ZIP_CODE);
+		return (java.lang.String) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>sakila.customer_list.phone</code>. 
 	 */
 	public void setPhone(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.PHONE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.phone</code>. 
 	 */
 	public java.lang.String getPhone() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.PHONE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>sakila.customer_list.city</code>. 
 	 */
 	public void setCity(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.CITY, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.city</code>. 
 	 */
 	public java.lang.String getCity() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.CITY);
+		return (java.lang.String) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>sakila.customer_list.country</code>. 
 	 */
 	public void setCountry(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.COUNTRY, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.country</code>. 
 	 */
 	public java.lang.String getCountry() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.COUNTRY);
+		return (java.lang.String) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>sakila.customer_list.notes</code>. 
 	 */
 	public void setNotes(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NOTES, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.notes</code>. 
 	 */
 	public java.lang.String getNotes() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.NOTES);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>sakila.customer_list.SID</code>. 
 	 */
 	public void setSid(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.SID, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.customer_list.SID</code>. 
 	 */
 	public java.lang.Byte getSid() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.CustomerList.CUSTOMER_LIST.SID);
+		return (java.lang.Byte) getValue(8);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record9 type implementation
@@ -152,7 +148,7 @@ public class CustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.e
 	 */
 	@Override
 	public org.jooq.Row9<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+		return (org.jooq.Row9) super.fieldsRow();
 	}
 
 	/**
@@ -160,7 +156,7 @@ public class CustomerListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.e
 	 */
 	@Override
 	public org.jooq.Row9<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+		return (org.jooq.Row9) super.valuesRow();
 	}
 
 	/**

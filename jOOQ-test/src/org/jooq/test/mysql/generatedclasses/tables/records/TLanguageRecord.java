@@ -11,62 +11,62 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1365200269;
+	private static final long serialVersionUID = -1985105885;
 
 	/**
 	 * Setter for <code>test.t_language.CD</code>. The language ISO code
 	 */
 	public void setCd(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.CD, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_language.CD</code>. The language ISO code
 	 */
 	public java.lang.String getCd() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.CD);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.t_language.DESCRIPTION</code>. The language description
 	 */
 	public void setDescription(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_language.DESCRIPTION</code>. The language description
 	 */
 	public java.lang.String getDescription() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test.t_language.description_english</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_language.description_english</code>. 
 	 */
 	public java.lang.String getDescriptionEnglish() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>test.t_language.ID</code>. The language ID
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_language.ID</code>. The language ID
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.mysql.generatedclasses.tables.TLanguage.ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -90,7 +90,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

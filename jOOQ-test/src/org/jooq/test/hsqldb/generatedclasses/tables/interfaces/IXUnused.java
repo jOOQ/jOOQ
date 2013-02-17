@@ -62,12 +62,12 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.FIELDS</code>. 
 	 */
-	public void setFields_(java.lang.Integer value);
+	public void setFields(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.FIELDS</code>. 
 	 */
-	public java.lang.Integer getFields_();
+	public java.lang.Integer getFields();
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.CONFIGURATION</code>. 
@@ -112,12 +112,12 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>. 
 	 */
-	public void setPrimaryKey(java.lang.Integer value);
+	public void setPrimaryKey_(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>PUBLIC.X_UNUSED.PRIMARY_KEY</code>. 
 	 */
-	public java.lang.Integer getPrimaryKey();
+	public java.lang.Integer getPrimaryKey_();
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.PRIMARYKEY</code>. 

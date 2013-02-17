@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1731011459;
+	private static final long serialVersionUID = 1503705454;
 
 	/**
 	 * The singleton instance of <code>DBA.t_triggers</code>

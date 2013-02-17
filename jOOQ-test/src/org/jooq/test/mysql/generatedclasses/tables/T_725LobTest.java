@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 1232569975;
+	private static final long serialVersionUID = -1795438404;
 
 	/**
 	 * The singleton instance of <code>test.t_725_lob_test</code>

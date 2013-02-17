@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class T_639_NUMBERS_TABLE extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_639_NUMBERS_TABLE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1168797234;
+	private static final long serialVersionUID = 1141159903;
 
 	/**
 	 * The singleton instance of <code>T_639_NUMBERS_TABLE</code>

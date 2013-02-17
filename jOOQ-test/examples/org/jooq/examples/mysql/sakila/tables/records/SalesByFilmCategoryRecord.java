@@ -11,39 +11,35 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SalesByFilmCategoryRecord> implements org.jooq.Record2<java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = -1582040782;
+	private static final long serialVersionUID = 1830608435;
 
 	/**
 	 * Setter for <code>sakila.sales_by_film_category.category</code>. 
 	 */
 	public void setCategory(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.CATEGORY, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.sales_by_film_category.category</code>. 
 	 */
 	public java.lang.String getCategory() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.CATEGORY);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.sales_by_film_category.total_sales</code>. 
 	 */
 	public void setTotalSales(java.math.BigDecimal value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.TOTAL_SALES, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.sales_by_film_category.total_sales</code>. 
 	 */
 	public java.math.BigDecimal getTotalSales() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.SalesByFilmCategory.SALES_BY_FILM_CATEGORY.TOTAL_SALES);
+		return (java.math.BigDecimal) getValue(1);
 	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
 
 	// -------------------------------------------------------------------------
 	// Record2 type implementation
@@ -54,7 +50,7 @@ public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.math.BigDecimal> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return (org.jooq.Row2) super.fieldsRow();
 	}
 
 	/**
@@ -62,7 +58,7 @@ public class SalesByFilmCategoryRecord extends org.jooq.impl.TableRecordImpl<org
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.math.BigDecimal> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return (org.jooq.Row2) super.valuesRow();
 	}
 
 	/**

@@ -9,14 +9,14 @@ package org.jooq.test.hsqldb.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.ClassRecord> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.hsqldb.generatedclasses.tables.interfaces.IClass {
 
-	private static final long serialVersionUID = 1132076705;
+	private static final long serialVersionUID = -1082381332;
 
 	/**
 	 * Setter for <code>PUBLIC.CLASS.CLASS</code>. 
 	 */
 	@Override
 	public void setClass_(java.lang.Integer value) {
-		setValue(org.jooq.test.hsqldb.generatedclasses.tables.Class.CLASS.CLASS_, value);
+		setValue(0, value);
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public java.lang.Integer getClass_() {
-		return getValue(org.jooq.test.hsqldb.generatedclasses.tables.Class.CLASS.CLASS_);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -36,7 +36,7 @@ public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class ClassRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.hsq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings("all")
 public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> {
 
-	private static final long serialVersionUID = -1118412662;
+	private static final long serialVersionUID = -2141554802;
 
 	/**
 	 * The singleton instance of <code>sakila.film</code>
@@ -32,12 +32,12 @@ public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	/**
 	 * The column <code>sakila.film.title</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(255), this);
 
 	/**
 	 * The column <code>sakila.film.description</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.CLOB.length(65535), this);
 
 	/**
 	 * The column <code>sakila.film.release_year</code>. 
@@ -62,7 +62,7 @@ public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	/**
 	 * The column <code>sakila.film.rental_rate</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.math.BigDecimal> RENTAL_RATE = createField("rental_rate", org.jooq.impl.SQLDataType.DECIMAL, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.math.BigDecimal> RENTAL_RATE = createField("rental_rate", org.jooq.impl.SQLDataType.DECIMAL.precision(4, 2), this);
 
 	/**
 	 * The column <code>sakila.film.length</code>. 
@@ -72,7 +72,7 @@ public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	/**
 	 * The column <code>sakila.film.replacement_cost</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.math.BigDecimal> REPLACEMENT_COST = createField("replacement_cost", org.jooq.impl.SQLDataType.DECIMAL, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.math.BigDecimal> REPLACEMENT_COST = createField("replacement_cost", org.jooq.impl.SQLDataType.DECIMAL.precision(5, 2), this);
 
 	/**
 	 * The column <code>sakila.film.rating</code>. 
@@ -82,7 +82,7 @@ public class Film extends org.jooq.impl.UpdatableTableImpl<org.jooq.examples.mys
 	/**
 	 * The column <code>sakila.film.special_features</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.String> SPECIAL_FEATURES = createField("special_features", org.jooq.impl.SQLDataType.VARCHAR, this);
+	public final org.jooq.TableField<org.jooq.examples.mysql.sakila.tables.records.FilmRecord, java.lang.String> SPECIAL_FEATURES = createField("special_features", org.jooq.impl.SQLDataType.VARCHAR.length(54), this);
 
 	/**
 	 * The column <code>sakila.film.last_update</code>. 

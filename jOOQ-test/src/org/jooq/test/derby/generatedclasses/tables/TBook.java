@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1764393836;
+	private static final long serialVersionUID = 1427745247;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK</code>

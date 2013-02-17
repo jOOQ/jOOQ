@@ -9,266 +9,188 @@ package org.jooq.examples.mysql.sakila.tables.records;
 @java.lang.SuppressWarnings("all")
 public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.FilmRecord> implements org.jooq.Record13<java.lang.Short, java.lang.String, java.lang.String, java.sql.Date, java.lang.Byte, java.lang.Byte, java.lang.Byte, java.math.BigDecimal, java.lang.Short, java.math.BigDecimal, org.jooq.examples.mysql.sakila.enums.FilmRating, java.lang.String, java.sql.Timestamp> {
 
-	private static final long serialVersionUID = 1114244180;
+	private static final long serialVersionUID = -1097397793;
 
 	/**
 	 * Setter for <code>sakila.film.film_id</code>. 
 	 */
 	public void setFilmId(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.film_id</code>. 
 	 */
 	public java.lang.Short getFilmId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID);
+		return (java.lang.Short) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.title</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.TITLE, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.title</code>. 
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.TITLE);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.description</code>. 
 	 */
 	public void setDescription(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.DESCRIPTION, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.description</code>. 
 	 */
 	public java.lang.String getDescription() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.DESCRIPTION);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.release_year</code>. 
 	 */
 	public void setReleaseYear(java.sql.Date value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RELEASE_YEAR, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.release_year</code>. 
 	 */
 	public java.sql.Date getReleaseYear() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RELEASE_YEAR);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.language_id</code>. 
 	 */
 	public void setLanguageId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.LanguageRecord}
-	 */
-	public void setLanguageId(org.jooq.examples.mysql.sakila.tables.records.LanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID));
-		}
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.language_id</code>. 
 	 */
 	public java.lang.Byte getLanguageId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID);
+		return (java.lang.Byte) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.original_language_id</code>. 
 	 */
 	public void setOriginalLanguageId(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.examples.mysql.sakila.tables.records.LanguageRecord}
-	 */
-	public void setOriginalLanguageId(org.jooq.examples.mysql.sakila.tables.records.LanguageRecord value) {
-		if (value == null) {
-			setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID, null);
-		}
-		else {
-			setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID, value.getValue(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID));
-		}
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.original_language_id</code>. 
 	 */
 	public java.lang.Byte getOriginalLanguageId() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID);
+		return (java.lang.Byte) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.rental_duration</code>. 
 	 */
 	public void setRentalDuration(java.lang.Byte value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RENTAL_DURATION, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.rental_duration</code>. 
 	 */
 	public java.lang.Byte getRentalDuration() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RENTAL_DURATION);
+		return (java.lang.Byte) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.rental_rate</code>. 
 	 */
 	public void setRentalRate(java.math.BigDecimal value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RENTAL_RATE, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.rental_rate</code>. 
 	 */
 	public java.math.BigDecimal getRentalRate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RENTAL_RATE);
+		return (java.math.BigDecimal) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.length</code>. 
 	 */
 	public void setLength(java.lang.Short value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LENGTH, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.length</code>. 
 	 */
 	public java.lang.Short getLength() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LENGTH);
+		return (java.lang.Short) getValue(8);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.replacement_cost</code>. 
 	 */
 	public void setReplacementCost(java.math.BigDecimal value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.REPLACEMENT_COST, value);
+		setValue(9, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.replacement_cost</code>. 
 	 */
 	public java.math.BigDecimal getReplacementCost() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.REPLACEMENT_COST);
+		return (java.math.BigDecimal) getValue(9);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.rating</code>. 
 	 */
 	public void setRating(org.jooq.examples.mysql.sakila.enums.FilmRating value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RATING, value);
+		setValue(10, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.rating</code>. 
 	 */
 	public org.jooq.examples.mysql.sakila.enums.FilmRating getRating() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.RATING);
+		return (org.jooq.examples.mysql.sakila.enums.FilmRating) getValue(10);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.special_features</code>. 
 	 */
 	public void setSpecialFeatures(java.lang.String value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.SPECIAL_FEATURES, value);
+		setValue(11, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.special_features</code>. 
 	 */
 	public java.lang.String getSpecialFeatures() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.SPECIAL_FEATURES);
+		return (java.lang.String) getValue(11);
 	}
 
 	/**
 	 * Setter for <code>sakila.film.last_update</code>. 
 	 */
 	public void setLastUpdate(java.sql.Timestamp value) {
-		setValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LAST_UPDATE, value);
+		setValue(12, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.film.last_update</code>. 
 	 */
 	public java.sql.Timestamp getLastUpdate() {
-		return getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LAST_UPDATE);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>sakila.film_actor</code> referencing this <code>sakila.film</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.FilmActorRecord> fetchFilmActorList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR)
-			.where(org.jooq.examples.mysql.sakila.tables.FilmActor.FILM_ACTOR.FILM_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>sakila.film_category</code> referencing this <code>sakila.film</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.FilmCategoryRecord> fetchFilmCategoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY)
-			.where(org.jooq.examples.mysql.sakila.tables.FilmCategory.FILM_CATEGORY.FILM_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>sakila.inventory</code> referencing this <code>sakila.film</code>
-	 */
-	public org.jooq.Result<org.jooq.examples.mysql.sakila.tables.records.InventoryRecord> fetchInventoryList() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY)
-			.where(org.jooq.examples.mysql.sakila.tables.Inventory.INVENTORY.FILM_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.FILM_ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a <code>sakila.language</code> referenced by this <code>sakila.film</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.LanguageRecord fetchLanguageByLanguageId() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE)
-			.where(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.LANGUAGE_ID)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>sakila.language</code> referenced by this <code>sakila.film</code>
-	 */
-	public org.jooq.examples.mysql.sakila.tables.records.LanguageRecord fetchLanguageByOriginalLanguageId() {
-		return create()
-			.selectFrom(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE)
-			.where(org.jooq.examples.mysql.sakila.tables.Language.LANGUAGE.LANGUAGE_ID.equal(getValue(org.jooq.examples.mysql.sakila.tables.Film.FILM.ORIGINAL_LANGUAGE_ID)))
-			.fetchOne();
+		return (java.sql.Timestamp) getValue(12);
 	}
 
 	// -------------------------------------------------------------------------
@@ -292,7 +214,7 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 */
 	@Override
 	public org.jooq.Row13<java.lang.Short, java.lang.String, java.lang.String, java.sql.Date, java.lang.Byte, java.lang.Byte, java.lang.Byte, java.math.BigDecimal, java.lang.Short, java.math.BigDecimal, org.jooq.examples.mysql.sakila.enums.FilmRating, java.lang.String, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13());
+		return (org.jooq.Row13) super.fieldsRow();
 	}
 
 	/**
@@ -300,7 +222,7 @@ public class FilmRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examp
 	 */
 	@Override
 	public org.jooq.Row13<java.lang.Short, java.lang.String, java.lang.String, java.sql.Date, java.lang.Byte, java.lang.Byte, java.lang.Byte, java.math.BigDecimal, java.lang.Short, java.math.BigDecimal, org.jooq.examples.mysql.sakila.enums.FilmRating, java.lang.String, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13());
+		return (org.jooq.Row13) super.valuesRow();
 	}
 
 	/**

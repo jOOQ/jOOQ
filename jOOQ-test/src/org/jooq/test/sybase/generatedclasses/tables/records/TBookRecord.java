@@ -11,132 +11,132 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
 @java.lang.SuppressWarnings("all")
 public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> implements org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> {
 
-	private static final long serialVersionUID = 1528340295;
+	private static final long serialVersionUID = 255043042;
 
 	/**
 	 * Setter for <code>DBA.t_book.ID</code>. 
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.ID</code>. 
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>DBA.t_book.AUTHOR_ID</code>. 
 	 */
 	public void setAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getAuthorId() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.AUTHOR_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>DBA.t_book.CO_AUTHOR_ID</code>. 
 	 */
 	public void setCoAuthorId(java.lang.Integer value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.CO_AUTHOR_ID</code>. 
 	 */
 	public java.lang.Integer getCoAuthorId() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.CO_AUTHOR_ID);
+		return (java.lang.Integer) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>DBA.t_book.DETAILS_ID</code>. 
 	 */
 	public void setDetailsId(java.lang.Integer value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.DETAILS_ID</code>. 
 	 */
 	public java.lang.Integer getDetailsId() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.DETAILS_ID);
+		return (java.lang.Integer) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>DBA.t_book.TITLE</code>. 
 	 */
 	public void setTitle(java.lang.String value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.TITLE, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.TITLE</code>. 
 	 */
 	public java.lang.String getTitle() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.TITLE);
+		return (java.lang.String) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>DBA.t_book.PUBLISHED_IN</code>. 
 	 */
 	public void setPublishedIn(java.lang.Integer value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.PUBLISHED_IN</code>. 
 	 */
 	public java.lang.Integer getPublishedIn() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.PUBLISHED_IN);
+		return (java.lang.Integer) getValue(5);
 	}
 
 	/**
 	 * Setter for <code>DBA.t_book.LANGUAGE_ID</code>. 
 	 */
 	public void setLanguageId(java.lang.Integer value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID, value);
+		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.LANGUAGE_ID</code>. 
 	 */
 	public java.lang.Integer getLanguageId() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.LANGUAGE_ID);
+		return (java.lang.Integer) getValue(6);
 	}
 
 	/**
 	 * Setter for <code>DBA.t_book.CONTENT_TEXT</code>. 
 	 */
 	public void setContentText(java.lang.String value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT, value);
+		setValue(7, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.CONTENT_TEXT</code>. 
 	 */
 	public java.lang.String getContentText() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.CONTENT_TEXT);
+		return (java.lang.String) getValue(7);
 	}
 
 	/**
 	 * Setter for <code>DBA.t_book.CONTENT_PDF</code>. 
 	 */
 	public void setContentPdf(byte[] value) {
-		setValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF, value);
+		setValue(8, value);
 	}
 
 	/**
 	 * Getter for <code>DBA.t_book.CONTENT_PDF</code>. 
 	 */
 	public byte[] getContentPdf() {
-		return getValue(org.jooq.test.sybase.generatedclasses.tables.TBook.T_BOOK.CONTENT_PDF);
+		return (byte[]) getValue(8);
 	}
 
 	// -------------------------------------------------------------------------
@@ -160,7 +160,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9());
+		return (org.jooq.Row9) super.fieldsRow();
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class TBookRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.Row9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9());
+		return (org.jooq.Row9) super.valuesRow();
 	}
 
 	/**

@@ -129,13 +129,13 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>X_UNUSED.PRIMARY_KEY</code>. 
 	 */
-	public void setPrimaryKey(java.lang.Integer value);
+	public void setPrimaryKey_(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>X_UNUSED.PRIMARY_KEY</code>. 
 	 */
 	@javax.persistence.Column(name = "PRIMARY_KEY", length = 4)
-	public java.lang.Integer getPrimaryKey();
+	public java.lang.Integer getPrimaryKey_();
 
 	/**
 	 * Setter for <code>X_UNUSED.PRIMARYKEY</code>. 

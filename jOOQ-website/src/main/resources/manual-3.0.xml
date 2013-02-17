@@ -271,7 +271,8 @@ CREATE TABLE author (
   first_name      VARCHAR2(50),
   last_name       VARCHAR2(50)  NOT NULL,
   date_of_birth   DATE,
-  year_of_birth   NUMBER(7)
+  year_of_birth   NUMBER(7),
+  distinguished   NUMBER(1)
 )
 
 CREATE TABLE book (
@@ -446,18 +447,17 @@ Result<Record> result = create.fetch(rs);]]></java>
 
 <java><![CDATA[// Fetch all authors
 for (AuthorRecord author : create.fetch(AUTHOR)) {
+
+    // Skip previously distinguished authors  
+    if ((int) author.getDistinguished() == 1)
+        continue;
   
     // Check if the author has written more than 5 books
     if (author.fetchChildren(FK_BOOK_AUTHOR).size() > 5) {
     
-        // Congratulate the author by email:
-        if (author.getMailSent()) {
-            sendCongratulationMail(author);
-    
-            // Don't send the mail twice, so store that flag in the database
-            author.setMailSent(true);
-            author.store();
-        }
+        // Mark the author as a "distinguished" author
+        author.setDistinguished(1);
+        author.store();
     }
 }]]></java>
 

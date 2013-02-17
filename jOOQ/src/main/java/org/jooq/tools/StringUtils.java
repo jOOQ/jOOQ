@@ -535,7 +535,6 @@ public final class StringUtils {
      * @param padChar  character to repeat
      * @return String with repeated character
      * @throws IndexOutOfBoundsException if <code>repeat &lt; 0</code>
-     * @see #repeat(String, int)
      */
     private static String padding(int repeat, char padChar) throws IndexOutOfBoundsException {
         if (repeat < 0) {

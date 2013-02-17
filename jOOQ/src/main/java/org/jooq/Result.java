@@ -1049,7 +1049,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * Future versions of jOOQ may also "intern" other data types, such as
      * {@link Integer}, {@link Long}, within a <code>Result</code> object.
      *
-     * @param fields The field indexes whose values should be interned
+     * @param fieldIndexes The field indexes whose values should be interned
      * @return The same result
      * @see Result#intern(Field...)
      * @see String#intern()
@@ -1061,7 +1061,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * <p>
      * See {@link Result#intern(int...)} for more details.
      *
-     * @param fields The field names whose values should be interned
+     * @param fieldNames The field names whose values should be interned
      * @return The same result
      * @see Result#intern(Field...)
      * @see String#intern()

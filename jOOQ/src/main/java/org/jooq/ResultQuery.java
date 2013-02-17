@@ -1019,7 +1019,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * interns values right after fetching them from a JDBC result set. See
      * {@link Result#intern(int...)} for more details.
      *
-     * @param fields The field indexes whose values should be interned
+     * @param fieldIndexes The field indexes whose values should be interned
      * @return The same result query
      * @see Result#intern(int...)
      * @see String#intern()
@@ -1033,7 +1033,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * interns values right after fetching them from a JDBC result set. See
      * {@link Result#intern(int...)} for more details.
      *
-     * @param fields The field names whose values should be interned
+     * @param fieldNames The field names whose values should be interned
      * @return The same result query
      * @see Result#intern(String...)
      * @see String#intern()

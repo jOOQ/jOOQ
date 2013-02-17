@@ -10,6 +10,382 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.0.0 (RC1) - February 16, 2013
+================================================================================
+
+This major release is a great move towards better integration of SQL as a
+language in Java. Unlike any other database abstraction framework, jOOQ now
+formally supports the notion of "row value expressions". The jOOQ API uses
+Xtend-generated API types from Row1 .. Row22, as well as Record1 .. Record22 to 
+bring you even more compile-time typesafety on a record-level.
+
+In SQL, you can typesafely write
+
+  SELECT * FROM t WHERE (t.a, t.b) = (1, 2)
+  SELECT * FROM t WHERE (t.a, t.b) OVERLAPS (date1, date2)
+  SELECT * FROM t WHERE (t.a, t.b) IN (SELECT x, y FROM t2)
+  UPDATE t SET (a, b) = (SELECT x, y FROM t2 WHERE ...)
+  INSERT INTO t (a, b) VALUES (1, 2)
+
+In jOOQ, you can now (also typesafely!) write
+
+  select().from(t).where(row(t.a, t.b).eq(1, 2));
+  // Type-check here: ----------------->  ^^^^
+  
+  select().from(t).where(row(t.a, t.b).overlaps(date1, date2));
+  // Type-check here: ------------------------> ^^^^^^^^^^^^
+  
+  select().from(t).where(row(t.a, t.b).in(select(t2.x, t2.y).from(t2)));
+  // Type-check here: -------------------------> ^^^^^^^^^^
+  
+  update(t).set(row(t.a, t.b), select(t2.x, t2.y).where(...));
+  // Type-check here: --------------> ^^^^^^^^^^
+
+  insertInto(t, t.a, t.b).values(1, 2);
+  // Type-check here: ---------> ^^^^
+
+This also applies for existing API, which doesn't involve row value expressions:
+
+  select().from(t).where(t.a.eq(select(t2.x).from(t2));
+  // Type-check here: ---------------> ^^^^
+  
+  select().from(t).where(t.a.eq(any(select(t2.x).from(t2)));
+  // Type-check here: -------------------> ^^^^
+  
+  select().from(t).where(t.a.in(select(t2.x).from(t2));
+  // Type-check here: ---------------> ^^^^
+
+And for UNIONs
+
+  select(t1.a, t1.b).from(t1).union(select(t2.a, t2.b).from(t2));
+  // Type-check here: -------------------> ^^^^^^^^^^
+
+These type-checks are preformed by your Java compiler, considering the generic
+type information of your SQL statement's Record data types. These include:
+
+- Record1<T1>
+- Record2<T1, T2>
+- Record3<T1, T2, T3>
+- ...
+- Record22<T1, T2, T3, .., T22>
+
+The highest degree of typesafety was chosen to be 22, to match Scala's Tuple22,
+Product22 and Function22 types. Higher degree records are still supported by
+jOOQ, just without the additional typesafety.
+
+This Record typesafety is applied to
+
+- SELECT statements
+- INSERT and MERGE statements: the VALUES() clause
+- UPDATE statements: SET A = (SELECT...)
+- UPDATE statements with row value expressions: SET (A, B) = (SELECT...)
+- Quantified comparison predicates: ANY(SELECT...) and ALL(SELECT...)
+- Comparison predicates: = (SELECT...)
+- IN predicates: IN (SELECT...)
+- BETWEEN predicates: BETWEEN (SELECT...) AND (SELECT...)
+- Generated records
+- The new VALUES() constructor
+- Scala integration for conversion of jOOQ Record[N] to Scala's Tuple[N]
+  
+Apart from this major improvement, there had been many minor changes throughout
+the jOOQ API. Here are some important ones:
+
+- Factory has been split into Factory (static QueryPart construction) and
+  Executor (Query execution, "attached" QueryPart construction). This greatly
+  improves the overall DSL experience while allowing for more fine-grained
+  Executor lifecycle control.
+- A ConnectionProvider has been introduced as an abstraction of the JDBC
+  Connection lifecycle. The standalone Connection and pooled DataSource modes
+  are still supported, but you can now inject your own ConnectionProvider for
+  more control.
+- A lot of performance improvements have been implemented within the jOOQ API
+  removing most of the overhead caused by jOOQ when fetching data from JDBC
+- A JDBC Mock API has been added to help you create simple unit tests for your
+  application built on top of jOOQ.
+- A VALUES() constructor is now supported, and derived column lists to alias
+  tables and columns in one go.
+- The data type API has been greatly simplified. This allowed for the 
+  introduction of runtime precision, scale, and length information. 
+- CRUD has been improved through many more CRUD batch operations, explicit
+  INSERT and UPDATE (in addition to store()), and explicit handling of jOOQ's
+  internal changed flags.
+
+As this is a major release, some backwards-incompatibilities were inevitable.
+For those users among you, migrating from jOOQ 2.x to 3.0, here are a couple of
+useful hints:
+http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/
+
+Note, that for technical reasons, jOOQ 3.0.0-RC1 could not yet be integration
+tested with DB2, Ingres, and Sybase ASE.
+
+Note, that further code generation and model API improvements were postponed to
+a later release
+
+Features and improvements
+-------------------------
+#456  - Add runtime support for PRECISION, SCALE, and LENGTH attributes
+#834  - Add support for the Firebird / Postgres UPDATE .. RETURNING clause
+#915  - Add <T1, T2, ..., T[N]> Table<Record[N]<T1, T2, ..., T[N]>> 
+        Factory.values(Row[N]<T1, T2, ..., T[N]>...), to create ad-hoc tables
+        from data
+#1038 - Introduce new type GroupField for cube(), rollup() and groupingSets()
+        functions. Accept only GroupField... in groupBy() clauses
+#1097 - Add org.jooq.Catalog, a type modelling an entity combining several
+        org.jooq.Schema
+#1144 - Overload Executor.fetch[One|Lazy](ResultSet, X...) with X being 
+        Field<?>, DataType<?>, Class<?>
+#1178 - Allow for treating Condition as Field<Boolean>
+#1583 - Add support for row value expressions in UPDATE statements: UPDATE ..
+        SET (A, B, C) = (SELECT X, Y, Z)
+#1624 - Add support for java.util.UUID as a <T> type
+#1663 -	Document RenderContext and make it part of the public API
+#1686 - Add UpdatableRecord.insert() and update()
+#1689 - Generate <E> E into(E) and <E> R from(E) methods to generated records
+#1690 - Add UpdatableRecord.key() returning a Record holding PK values
+#1695 - Add Factory.all() and Factory.any() to create quantified expressions
+#1703 - Add Executor.batchDelete(UpdatableRecord<?>...) to mass-delete a set of
+        UpdatableRecords
+#1801 - Add Table.as(String, String...) to allow for creating a table aliases
+        (correlation names) with derived column lists
+#1874 - Add Record1, Record2, ... Record[N] similar to Row1, Row2, ... Row[N] to
+        support record type-safety
+#1897 - Add a section to the manual about the migration to jOOQ 3.0
+#1899 - Make some JDBC-related utility methods publicly available in
+        org.jooq.tools.jdbc.JDBCUtils
+#1902 - Duplicate SELECT API between Executor and Factory
+#1904 - Add Executor.fetch(ResultQuery), Executor.execute(Query), and similar
+        methods
+#1905 - Add Row[N].equal(Select<? extends Record[N]>) and similar methods
+#1906 - Use Xtend to generate Row[N], Record[N] and other [N]-related API code
+        artefacts
+#1914 - Document the fact that SELECT * is performed by leaving the SELECT list
+        empty
+#1917 - Add support for CUBRID 9.0's window functions and MERGE statement
+#1918 - Let generated Records implement Record[N] if applicable
+#1919 - Support higher degrees of Row[N] and Record[N] types. Match Scala's max
+        degree of 22
+#1920 - Add more implicit defs in order to treat Record[N] as Scala's Tuple[N]
+#1923 - Add Record.intoResultSet() to create a single-record JDBC ResultSet from
+        a Record
+#1924 - Add support for CUBRID 9.0's ENUM data type
+#1932 - Generate Javadocs for Table constructors
+#1934 - Improve generated Record Javadoc
+#1951 - Add support for the SQL Server WITH (...) table hints
+#1966 - Add Row[N].equal(Record[N]) and similar convenience methods
+#1967 - Document using MySQL's SQL_CALC_FOUND_ROWS as an Oracle hint
+#1968 - Add org.jooq.Meta returned from Executor.meta() to return a wrapped JDBC
+        DatabaseMetaData object
+#1972 - Move MySQLFactory.md5() to Factory and simulate it for Oracle
+#1973 - Add Executor.fetchOne(ResultSet)
+#1975 - Add Result.sort{Asc|Desc}(int) and (String) to order by field index /
+        name
+#1981 - Add support for DB2 CGTT and MQT
+#1983 - Improve the Javadoc on Table.as() and Field.as() to hint at
+        case-sensitivity and RenderNameStyle
+#1984 - Add ResultQuery.fetchOneInto()
+#1986 - Add Record.fromMap() as the inverse operation of Record.intoMap()
+#1987 - Allow for reading data from arrays, Maps through Record.from()
+#1988 - Add Record.fromArray() as the inverse operation of Record.intoArray()
+#1989 - Add Record.changed(Field<?>), changed(int), changed(String) to check
+        whether a single field's value has changed
+#1990 - Add <T> T Record.original(Field<T>), original(int), original(String) to
+        get a Field's original value
+#1991 - Reflect changed flag in Result.toString() (and thus also 
+        Record.toString())
+#1999 - Add Record.changed(boolean) changed(Field<?>, boolean) 
+        changed(int, boolean) changed(String, boolean) as setters for the 
+        changed flag
+#2000 - Add Record.reset(), reset(Field<?>), reset(int), reset(String) to 
+        restore original values in a record
+#2008 - Add elementFormDefault="qualified" to XSD specifications to allow for 
+        XML validation of jOOQ configuration files
+#2020 - Let org.jooq.ExecuteListener extend java.util.EventListener
+#2021 - Add UpdatableRecord.refresh(Field<?>...) to allow for refreshing a 
+        subset of the Record's values
+#2027 - Document semantic versioning rules as understood by jOOQ
+#2028 - Add Batch.size() to indicate the number of queries that will be executed
+        by a batch operation
+#2030 - Add reusable wrapper types for JDBC Connection, Statement, ResultSet, 
+        etc.
+#2044 - Add various TableRecord.fetchParent(...), fetchChild(...) and 
+        fetchChildren(...) methods to follow foreign key relationships
+#2049 - Add gt() / ge() / lt() / le() to Row[N] types
+#2052 - Add [not]Between[Symmetric]() to Row[N] types
+#2053 - Add is[Not]Null() to Row[N] types
+#2066 - Add Executor.extractBindValues(QueryPart), extractParams(QueryPart) to 
+        extract bind values in the context of an Executor (i.e. Configuration)
+#2072 - Let UDTRecordImpl and ArrayRecordImpl.toString() return a valid 
+        constructor expression
+#2078 - Add Postgres to @Support annotation of SelectForUpdateWaitStep.wait()
+#2079 - Support generation of bean validation annotations on records and
+        interfaces
+#2089 - Generate an "empty" DefaultSchema for those databases that do not have
+        any schema (CUBRID, Firebird, SQLite)
+#2094 - Add unit tests for org.jooq.tools.Convert
+#2107 - Let Record implement Comparable
+#2111 - Improve org.jooq.Record Javadoc, to explain the various Record subtypes
+#2112 - Add Row.types() and Row.dataTypes() as a convenience
+#2113 - Document Record.hashCode() and equals() through Javadoc
+#2133 - Allow for mapping <outputSchema/> to "" (empty) in order to avoid the
+        generation of a schema
+#2156 - Add Row.type(int), type(String), dataType(int), dataType(String) for 
+        convenience
+#2158 - Add Executor.fetchLazy(Table) and fetchLazy(Table, Condition) for 
+        convenience
+#2159 - Let ExecuteListener extend Serializable
+#2160 - Add Executor.batchUpdate(UpdatableRecord<?>...) to mass-update a set of
+        UpdatableRecords
+#2161 - Add Executor.batchInsert(UpdatableRecord<?>...) to mass-insert a set of
+        UpdatableRecords
+#2162 - Add some more Javadoc to JooqLogger
+#2170 - Add 0.0 and 1.0 to Convert.FALSE_VALUES and Convert.TRUE_VALUES
+#2171 - Allow for converting booleans to numbers through org.jooq.tools.Convert:
+        TRUE => 1, FALSE => 0
+#2172 - Add <T> set(Field<T>, Select<? extends Record1<T>>) methods to UPDATE, 
+        MERGE and INSERT statements
+#2176 - Add hint in code generation, when an unsupported, old database version
+        is being used (e.g. MS SQL Server 2000)
+#2177 - Add ResultQuery.intern() and Result.intern() for string interning in
+        result sets
+#2179 - Add Javadoc to QueryPart.hashCode() and equals()
+#2199 - Allow for INSERT and UPDATE of pre-existing records through 
+        SET [ Record ] clauses
+#2202 - Add Mock JDBC objects for unit testing with jOOQ
+#2203 - Add Executor.map(Schema) and Executor.map(Table) as a convenience to
+        apply runtime schema mapping
+#2204 - Add BatchBindStep.bind(Object[][]) to bind lots of bind values at a time
+#2205 - Add <R> Result<R> Executor.newResult(Table<R>) to generate custom 
+        results
+
+API changes (backwards-compatible)
+----------------------------------
+#1309 - Let Factory.val() return Param<T> instead of Field<T>
+#2031 - Change union(Select<R>) and similar methods to 
+        union(Select<? extends R>)
+#2157 - Change the bounds of various <H extends RecordHandler<R>> H 
+        fetchInto(H handler) methods to RecordHandler<? super R>
+#2197 - Relax bounds on Factory.groupingSets(Collection<Field<?>>...) to 
+        Collection<? extends Field<?>>...
+#2206 - Relax bounds of R on Executor.newRecord() from TableRecord<R> to Record
+
+API changes (backwards-incompatible)
+------------------------------------
+#1118 - Remove support for the code generation ant task
+#1254 - Move org.jooq.tools.unsigned contents to org.jooq.types (along with the
+        INTERVAL types)
+#1374 - Relax usage of generic <? extends T>. Replace by <T> where data types
+        are involved.
+#1533 - Extract Executor API from Factory. Let Factory contain only static
+        QueryPart factory methods
+#1549 - Externalise connection lifecycle through new ConnectionProvider
+#1649 - Remove support for code generation from pre-jOOQ 2.0 .properties file
+#1740 - Remove support for generated master data enums
+#1875 - Add generic <R extends Record> type to SelectXXXStep DSL type hierarchy
+        for increased tuple type-safety
+#1887 - Remove all deprecated code
+#1894 - Remove constructors from dialect-specific factories
+#1907 - Remove FactoryOperations, push its API down to org.jooq.impl.Executor
+#1921 - Add <T1, T2, ..., T[N]> InsertValuesStep[N]<R, T1, T2, ..., T[N]> 
+        Executor.insertInto(Table<R>, Field<T1>, Field<T2>, ..., Field<TN>)
+#1926 - Add <T1, T2, ..., T[N]> MergeXXXStep<R, T1, T2, ..., T[N]> 
+        Executor.mergeInto(Table<?>, Field<T1>, Field<T2>, ..., Field<TN>)
+#1977 - Remove the confusing concept of having a "main key" as opposed to a
+        "primary key"
+#2042 - Remove generated setters, setting foreign key values from records
+#2043 - Remove generated navigation methods
+#2060 - Remove redundant SimpleSelectXXX API
+#2117 - Remove the FieldProvider marker interface. Simplify the FieldProvider
+        API
+#2119 - Rename Row.getDegree() to Row.size()
+
+Behaviour changes (backwards-incompatible)
+------------------------------------------
+#1235 - SQLite BIGINT data type erroneously maps to java.math.BigInteger
+#1578 - Change configuration of ExecuteListeners in Configuration. Listeners 
+        instances should be provided, not classes
+#2076 - Stop "supporting" comma-separated regular expressions in the code
+        generator configuration
+#2088 - Do not treat CUBRID "owner" as schema in generated code
+
+Bug fixes
+---------
+#1170 - Improve performance on jOOQ's reflection usage
+#1626 - Explicitly implement hashCode() and equals() in some additional
+        QueryParts
+#1886 - Query.bind() has no effect when Query.keepStatement(true) and 
+        StatementType.STATIC_STATEMENT are combined
+#1890 - Bad Postgres array serialisation when " or \ characters are contained in
+        a String[]
+#1938 - Improve AbstractField.hashCode() and AbstractTable.hashCode() and
+        similar, as these two are called very often
+#1942 - Inefficient call to String.split() in StringUtils.toCamelCase() leads to
+        non-negligible performance overhead in POJO transformation calls
+#1937 - Inefficient implementations of AbstractDataType.equals() and hashCode()
+#1954 - Bad SQL rendered when combining ORDER BY [ some-function ] with LIMIT ..
+        OFFSET in DB2, SQL Server
+#1958 - Bad SQL rendered for OVER (ORDER BY [ some-function ]) for SQL Server
+        and Sybase
+#1974 - Optimise various Executor.fetchOne() methods, which consume the whole
+        ResultSet before throwing an InvalidResultException
+#1979 - Thread safety issue in org.jooq.impl.FieldList
+#1982 - Change RenderNameStyle.UPPER, LOWER, AS_IS to quote literals if needed
+#1992 - Bad reference to org.jooq.debug.[impl].DebugListener in the manual
+#1993 - Bad code generated when the same table name exists in multiple schemas 
+        in SQL Server
+#1995 - Record.original() values aren't updated after a Record.store() operation
+#1997 - Review the manual's tutorial for integrity
+#2001 - Named Params are treated as null literals on right sides of comparisons
+#2007 - Bad type coercion on the right hand side of a comparison predicate, when
+        the left hand side is Field<Object>
+#2011 - Implement some micro-optimisations in DefaultRenderContext
+#2025 - Correctly handle multiple foreign keys defined on the same column
+#2045 - Bad hashCode calculation when Records contain arrays or byte[]
+#2055 - MySQL's UPDATE [t1] JOIN [t2] syntax can cause syntax errors as column 
+        references are not fully qualified
+#2057 - Cannot properly extract bind values for LIMIT .. OFFSET clause from a 
+        SELECT statement 
+#2063 - jOOQ-meta loads Firebird composite unique key columns in wrong order
+#2073 - The code generator's <dateAsTimestamp/> flag doesn't affect Oracle
+        VARRAY and TABLE types
+#2082 - Oracle PIVOT expression doesn't bind any variables of a derived table
+        being pivoted
+#2085 - java.lang.NoSuchMethodError: org.apache.log4j.Logger.isTraceEnabled()Z
+        when logger dependency is missing
+#2086 - SQL syntax error when aliasing outcome of a relational division
+#2091 - CUBRID doesn't really have a NVARCHAR data type
+#2098 - NullPointerException when org.jooq.impl.EnumConverter converts null
+#2104 - SQLite code generation treats multi-column primary keys like multiple 
+        single-column unique keys
+#2108 - SQLite returns NULL for val(new Date(0)).add(-1) and some other date
+        time arithmetic expressions
+#2128 - Misleading Javadoc in Factory / Executor.selectCount()
+#2137 - Failure to assign a value to a record pojo for a column with a 
+        composite type when using select into.
+#2139 - batchStore with Postgres composite types incorrectly reuses values from
+        the first record.
+#2140 - No table java mapping generated using maven plugin - missing inputSchema
+        in postgres
+#2143 - UnsupportedOperationException when binding UDTRecord in batchStore() for
+        Oracle
+#2144 - Improve AbstractField.equals() and AbstractTable.equals() and similar,
+        as these two are called very often
+#2145 - Improve QueryPartList.removeNulls() as this is called very often 
+#2154 - Generated Records should access values by index, not by field, for 
+        performance reasons
+#2165 - Add H2 database definitions to the jOOQ-scala module (to prevent
+        compilation errors)
+#2167 - Convert.convert("xx", boolean.class) returns null, instead of false
+#2178 - Improve FieldList. Avoid creating excessive array lists, where simple
+        (immutable) Field<?>[] are sufficient
+#2180 - Optimise DAOImpl by using the new ReflectionMapper instead of calling
+        Record.into() all the time
+#2187 - Change all Javadoc <h3/> tags to <h5/> (To fix Java 7 standard Javadoc
+        style layout issues)
+#2210 - Executor.fetchFromCSV() shouldn't mark resulting records as "changed"
+#2223 - SQL injection is possible in org.jooq.impl.Val, if client code doesn't
+        correctly enforce generic typesafety, and bind variables are inlined
+#2227 - Field.in(T...) doesn't convert argument values to the Field's type
+
 Version 2.6.0 - October 26, 2012
 ================================================================================
 

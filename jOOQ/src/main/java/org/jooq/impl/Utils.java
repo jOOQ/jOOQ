@@ -505,6 +505,26 @@ final class Utils {
      * Be sure that a given set of objects are fields.
      *
      * @param values The argument objects
+     * @param field The field to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, Field<?> field) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && field != null) {
+            for (int i = 0; i < values.length; i++) {
+                result.add(field(values[i], field));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
      * @param fields The fields to take the bind value types from
      * @return The argument objects themselves, if they are {@link Field}s, or a bind
      *         values created from the argument objects.
@@ -525,6 +545,26 @@ final class Utils {
      * Be sure that a given set of objects are fields.
      *
      * @param values The argument objects
+     * @param type The type to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, Class<?> type) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && type != null) {
+            for (int i = 0; i < values.length; i++) {
+                result.add(field(values[i], type));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
      * @param types The types to take the bind value types from
      * @return The argument objects themselves, if they are {@link Field}s, or a bind
      *         values created from the argument objects.
@@ -535,6 +575,26 @@ final class Utils {
         if (values != null && types != null) {
             for (int i = 0; i < values.length && i < types.length; i++) {
                 result.add(field(values[i], types[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param type The type to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, DataType<?> type) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && type != null) {
+            for (int i = 0; i < values.length; i++) {
+                result.add(field(values[i], type));
             }
         }
 

@@ -63,7 +63,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- The jOOQ code generator plugin for Postgres / Sybase ASE / MySQL -->
 			<plugin>
 				<groupId>org.jooq</groupId>
@@ -113,7 +113,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			
+
 			<!-- The Scala compiler plugin -->
 			<plugin>
 				<groupId>org.scala-tools</groupId>
@@ -128,7 +128,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<!-- The jar plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -21,44 +21,46 @@ bring you even more compile-time typesafety on a record-level.
 
 In SQL, you can typesafely write
 
+<pre class="prettyprint lang-sql">
   SELECT * FROM t WHERE (t.a, t.b) = (1, 2)
   SELECT * FROM t WHERE (t.a, t.b) OVERLAPS (date1, date2)
   SELECT * FROM t WHERE (t.a, t.b) IN (SELECT x, y FROM t2)
   UPDATE t SET (a, b) = (SELECT x, y FROM t2 WHERE ...)
   INSERT INTO t (a, b) VALUES (1, 2)
+</pre>
 
 In jOOQ, you can now (also typesafely!) write
 
+<pre class="prettyprint lang-java">
   select().from(t).where(row(t.a, t.b).eq(1, 2));
   // Type-check here: ----------------->  ^^^^
-  
   select().from(t).where(row(t.a, t.b).overlaps(date1, date2));
   // Type-check here: ------------------------> ^^^^^^^^^^^^
-  
   select().from(t).where(row(t.a, t.b).in(select(t2.x, t2.y).from(t2)));
   // Type-check here: -------------------------> ^^^^^^^^^^
-  
   update(t).set(row(t.a, t.b), select(t2.x, t2.y).where(...));
   // Type-check here: --------------> ^^^^^^^^^^
-
   insertInto(t, t.a, t.b).values(1, 2);
   // Type-check here: ---------> ^^^^
+</pre>
 
 This also applies for existing API, which doesn't involve row value expressions:
 
+<pre class="prettyprint lang-java">
   select().from(t).where(t.a.eq(select(t2.x).from(t2));
   // Type-check here: ---------------> ^^^^
-  
   select().from(t).where(t.a.eq(any(select(t2.x).from(t2)));
   // Type-check here: -------------------> ^^^^
-  
   select().from(t).where(t.a.in(select(t2.x).from(t2));
   // Type-check here: ---------------> ^^^^
+</pre>
 
 And for UNIONs
 
+<pre class="prettyprint lang-java">
   select(t1.a, t1.b).from(t1).union(select(t2.a, t2.b).from(t2));
   // Type-check here: -------------------> ^^^^^^^^^^
+</pre>
 
 These type-checks are preformed by your Java compiler, considering the generic
 type information of your SQL statement's Record data types. These include:

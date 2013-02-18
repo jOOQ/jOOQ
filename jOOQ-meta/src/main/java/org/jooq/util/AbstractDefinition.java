@@ -54,6 +54,11 @@ public abstract class AbstractDefinition implements Definition {
     private final String           comment;
     private final String           overload;
 
+    // [#2238] Some caches for strings that are heavy to calculate in large schemas
+    private transient String       qualifiedInputName;
+    private transient String       qualifiedOutputName;
+    private transient Integer      hashCode;
+
     public AbstractDefinition(Database database, SchemaDefinition schema, String name) {
         this(database, schema, name, null);
     }
@@ -121,21 +126,25 @@ public abstract class AbstractDefinition implements Definition {
      */
     @Override
     public final String getQualifiedInputName() {
-        StringBuilder sb = new StringBuilder();
+        if (qualifiedInputName == null) {
+            StringBuilder sb = new StringBuilder();
 
-        String separator = "";
-        for (Definition part : getDefinitionPath()) {
-            if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema()) {
-                continue;
+            String separator = "";
+            for (Definition part : getDefinitionPath()) {
+                if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema()) {
+                    continue;
+                }
+
+                sb.append(separator);
+                sb.append(part.getInputName());
+
+                separator = ".";
             }
 
-            sb.append(separator);
-            sb.append(part.getInputName());
-
-            separator = ".";
+            qualifiedInputName = sb.toString();
         }
 
-        return sb.toString();
+        return qualifiedInputName;
     }
 
     /**
@@ -145,21 +154,25 @@ public abstract class AbstractDefinition implements Definition {
      */
     @Override
     public final String getQualifiedOutputName() {
-       StringBuilder sb = new StringBuilder();
+        if (qualifiedOutputName == null) {
+            StringBuilder sb = new StringBuilder();
 
-        String separator = "";
-        for (Definition part : getDefinitionPath()) {
-            if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema()) {
-                continue;
+            String separator = "";
+            for (Definition part : getDefinitionPath()) {
+                if (part instanceof SchemaDefinition && ((SchemaDefinition) part).isDefaultSchema()) {
+                    continue;
+                }
+
+                sb.append(separator);
+                sb.append(part.getOutputName());
+
+                separator = ".";
             }
 
-            sb.append(separator);
-            sb.append(part.getOutputName());
-
-            separator = ".";
+            qualifiedOutputName = sb.toString();
         }
 
-        return sb.toString();
+        return qualifiedOutputName;
     }
 
     @Override
@@ -188,7 +201,11 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public final int hashCode() {
-        return getQualifiedName().hashCode();
+        if (hashCode == null) {
+            hashCode = getQualifiedName().hashCode();
+        }
+
+        return hashCode;
     }
 
     protected final Factory create() {

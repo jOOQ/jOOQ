@@ -407,6 +407,7 @@ public abstract class jOOQAbstractTest<
         if (!initialised) {
             initialised = true;
             execute(getCreateScript());
+            // execute(getLargeScript());
         }
 
         if (!reset) {
@@ -623,6 +624,10 @@ public abstract class jOOQAbstractTest<
      */
     protected String getJdbcURL() {
         return jdbcURL;
+    }
+
+    protected final String getLargeScript() throws Exception {
+        return "/org/jooq/test/" + getDialect().getName().toLowerCase() + "/large-schema.sql";
     }
 
     protected final String getCreateScript() throws Exception {

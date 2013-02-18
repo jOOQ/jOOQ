@@ -57,7 +57,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
@@ -66,6 +70,7 @@ import javax.persistence.Entity;
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -83,6 +88,7 @@ import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
+import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
@@ -394,6 +400,303 @@ final class Utils {
      */
     static final DataType<?>[] getDataTypes(Object[] values) {
         return getDataTypes(getClasses(values));
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: General utility methods
+    // ------------------------------------------------------------------------
+
+    /**
+     * Be sure that a given object is a field.
+     *
+     * @param value The argument object
+     * @return The argument object itself, if it is a {@link Field}, or a bind
+     *         value created from the argument object.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> field(T value) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>) {
+            return (Field<T>) value;
+        }
+        else {
+            return val(value);
+        }
+    }
+
+    /**
+     * Be sure that a given object is a field.
+     *
+     * @param value The argument object
+     * @param field The field to take the bind value type from
+     * @return The argument object itself, if it is a {@link Field}, or a bind
+     *         value created from the argument object.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> field(Object value, Field<T> field) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>) {
+            return (Field<T>) value;
+        }
+        else {
+            return val(value, field);
+        }
+    }
+
+    /**
+     * Be sure that a given object is a field.
+     *
+     * @param value The argument object
+     * @param type The type to take the bind value type from
+     * @return The argument object itself, if it is a {@link Field}, or a bind
+     *         value created from the argument object.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> field(Object value, Class<T> type) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>) {
+            return (Field<T>) value;
+        }
+        else {
+            return val(value, type);
+        }
+    }
+
+    /**
+     * Be sure that a given object is a field.
+     *
+     * @param value The argument object
+     * @param type The type to take the bind value type from
+     * @return The argument object itself, if it is a {@link Field}, or a bind
+     *         value created from the argument object.
+     */
+    @SuppressWarnings("unchecked")
+    static final <T> Field<T> field(Object value, DataType<T> type) {
+
+        // Fields can be mixed with constant values
+        if (value instanceof Field<?>) {
+            return (Field<T>) value;
+        }
+        else {
+            return val(value, type);
+        }
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null) {
+            for (Object value : values) {
+                result.add(field(value));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param field The field to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, Field<?> field) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && field != null) {
+            for (int i = 0; i < values.length; i++) {
+                result.add(field(values[i], field));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param fields The fields to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, Field<?>[] fields) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && fields != null) {
+            for (int i = 0; i < values.length && i < fields.length; i++) {
+                result.add(field(values[i], fields[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param type The type to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, Class<?> type) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && type != null) {
+            for (int i = 0; i < values.length; i++) {
+                result.add(field(values[i], type));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param types The types to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, Class<?>[] types) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && types != null) {
+            for (int i = 0; i < values.length && i < types.length; i++) {
+                result.add(field(values[i], types[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param type The type to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, DataType<?> type) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && type != null) {
+            for (int i = 0; i < values.length; i++) {
+                result.add(field(values[i], type));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Be sure that a given set of objects are fields.
+     *
+     * @param values The argument objects
+     * @param types The types to take the bind value types from
+     * @return The argument objects themselves, if they are {@link Field}s, or a bind
+     *         values created from the argument objects.
+     */
+    static final List<Field<?>> fields(Object[] values, DataType<?>[] types) {
+        List<Field<?>> result = new ArrayList<Field<?>>();
+
+        if (values != null && types != null) {
+            for (int i = 0; i < values.length && i < types.length; i++) {
+                result.add(field(values[i], types[i]));
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Turn a {@link Record} into a {@link Map}
+     */
+    static final Map<Field<?>, Object> map(Record record) {
+        Map<Field<?>, Object> result = new LinkedHashMap<Field<?>, Object>();
+        int size = record.size();
+
+        for (int i = 0; i < size; i++) {
+            result.put(record.getField(i), record.getValue(i));
+        }
+
+        return result;
+    }
+
+    /**
+     * Extract the first item from an iterable or <code>null</code>, if there is
+     * no such item, or if iterable itself is <code>null</code>
+     */
+    static final <T> T first(Iterable<? extends T> iterable) {
+        if (iterable == null) {
+            return null;
+        }
+        else {
+            Iterator<? extends T> iterator = iterable.iterator();
+
+            if (iterator.hasNext()) {
+                return iterator.next();
+            }
+            else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Get the only element from a list or <code>null</code>, or throw an
+     * exception
+     *
+     * @param list The list
+     * @return The only element from the list or <code>null</code>
+     * @throws InvalidResultException Thrown if the list contains more than one
+     *             element
+     */
+    static final <R extends Record> R filterOne(List<R> list) throws InvalidResultException {
+        int size = list.size();
+
+        if (size == 1) {
+            return list.get(0);
+        }
+        else if (size > 1) {
+            throw new InvalidResultException("Too many rows selected : " + size);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the only element from a cursor or <code>null</code>, or throw an
+     * exception
+     *
+     * @param cursor The cursor
+     * @return The only element from the cursor or <code>null</code>
+     * @throws InvalidResultException Thrown if the cursor returns more than one
+     *             element
+     */
+    static final <R extends Record> R fetchOne(Cursor<R> cursor) throws InvalidResultException {
+        R record = cursor.fetchOne();
+
+        if (cursor.hasNext()) {
+            throw new InvalidResultException("Cursor returned more than one result");
+        }
+
+        return record;
     }
 
     /**

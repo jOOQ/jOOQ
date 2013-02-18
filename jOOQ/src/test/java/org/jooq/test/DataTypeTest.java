@@ -152,6 +152,87 @@ public class DataTypeTest extends AbstractTest {
         }
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Test
+    public void testInPredicateTypeCoercion() throws Exception {
+        // [#2227] This test checks whether automatic type coercion works well for
+        // IN predicates
+
+        Field integer = Table1.FIELD_ID1;
+        Field string = Table1.FIELD_NAME1;
+        Field object = fieldByName("ANY");
+
+        // Check if a correct type was coerced correctly
+        // ---------------------------------------------
+        {
+            Condition int_int = integer.in(1);
+            assertEquals("\"TABLE1\".\"ID1\" in (1)", r_refI().render(int_int));
+            context.checking(new Expectations() {{
+                oneOf(statement).setInt(1, 1);
+            }});
+
+            assertEquals(2, b_ref().bind(int_int).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        {
+            Condition string_string = string.in("1");
+            assertEquals("\"TABLE1\".\"NAME1\" in ('1')", r_refI().render(string_string));
+            context.checking(new Expectations() {{
+                oneOf(statement).setString(1, "1");
+            }});
+
+            assertEquals(2, b_ref().bind(string_string).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        // Check if a convertible type was coerced correctly
+        // -------------------------------------------------
+        {
+            Condition int_string = integer.in("1");
+            assertEquals("\"TABLE1\".\"ID1\" in (1)", r_refI().render(int_string));
+            context.checking(new Expectations() {{
+                oneOf(statement).setInt(1, 1);
+            }});
+
+            assertEquals(2, b_ref().bind(int_string).peekIndex());
+            context.assertIsSatisfied();
+
+            Condition string_int = string.in(1);
+            assertEquals("\"TABLE1\".\"NAME1\" in ('1')", r_refI().render(string_int));
+            context.checking(new Expectations() {{
+                oneOf(statement).setString(1, "1");
+            }});
+
+            assertEquals(2, b_ref().bind(string_int).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        // Check if ...
+        // ------------
+        {
+            Condition object_int = object.in(1);
+            assertEquals("\"ANY\" in (1)", r_refI().render(object_int));
+            context.checking(new Expectations() {{
+                oneOf(statement).setInt(1, 1);
+            }});
+
+            assertEquals(2, b_ref().bind(object_int).peekIndex());
+            context.assertIsSatisfied();
+        }
+
+        {
+            Condition object_string = object.in("1");
+            assertEquals("\"ANY\" in ('1')", r_refI().render(object_string));
+            context.checking(new Expectations() {{
+                oneOf(statement).setString(1, "1");
+            }});
+
+            assertEquals(2, b_ref().bind(object_string).peekIndex());
+            context.assertIsSatisfied();
+        }
+    }
+
     @Test
     public void testYearToMonth() {
         for (int i = 0; i <= 5; i++) {

@@ -36,6 +36,7 @@
 package org.jooq.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -46,15 +47,15 @@ import org.jooq.tools.JooqLogger;
 
 public class DefaultRelations implements Relations {
 
-    private static final JooqLogger                           log                 = JooqLogger.getLogger(DefaultRelations.class);
+    private static final JooqLogger                                     log         = JooqLogger.getLogger(DefaultRelations.class);
 
-    private Map<Key, UniqueKeyDefinition>                     primaryKeys         = new LinkedHashMap<Key, UniqueKeyDefinition>();
-    private Map<Key, UniqueKeyDefinition>                     uniqueKeys          = new LinkedHashMap<Key, UniqueKeyDefinition>();
-    private Map<Key, ForeignKeyDefinition>                    foreignKeys         = new LinkedHashMap<Key, ForeignKeyDefinition>();
+    private Map<Key, UniqueKeyDefinition>                               primaryKeys = new LinkedHashMap<Key, UniqueKeyDefinition>();
+    private Map<Key, UniqueKeyDefinition>                               uniqueKeys  = new LinkedHashMap<Key, UniqueKeyDefinition>();
+    private Map<Key, ForeignKeyDefinition>                              foreignKeys = new LinkedHashMap<Key, ForeignKeyDefinition>();
 
-    private Map<ColumnDefinition, UniqueKeyDefinition>        primaryKeysByColumn = new LinkedHashMap<ColumnDefinition, UniqueKeyDefinition>();
-    private Map<ColumnDefinition, List<UniqueKeyDefinition>>  uniqueKeysByColumn  = new LinkedHashMap<ColumnDefinition, List<UniqueKeyDefinition>>();
-    private Map<ColumnDefinition, List<ForeignKeyDefinition>> foreignKeysByColumn = new LinkedHashMap<ColumnDefinition, List<ForeignKeyDefinition>>();
+    private transient Map<ColumnDefinition, UniqueKeyDefinition>        primaryKeysByColumn;
+    private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>  uniqueKeysByColumn;
+    private transient Map<ColumnDefinition, List<ForeignKeyDefinition>> foreignKeysByColumn;
 
     public void addPrimaryKey(String keyName, ColumnDefinition column) {
 	    if (log.isDebugEnabled()) {
@@ -125,17 +126,14 @@ public class DefaultRelations implements Relations {
 
 	@Override
 	public UniqueKeyDefinition getPrimaryKey(ColumnDefinition column) {
-	    if (!primaryKeysByColumn.containsKey(column)) {
-	        UniqueKeyDefinition key = null;
+	    if (primaryKeysByColumn == null) {
+	        primaryKeysByColumn = new LinkedHashMap<ColumnDefinition, UniqueKeyDefinition>();
 
 	        for (UniqueKeyDefinition primaryKey : primaryKeys.values()) {
-	            if (primaryKey.getKeyColumns().contains(column)) {
-	                key = primaryKey;
-	                break;
+	            for (ColumnDefinition keyColumn : primaryKey.getKeyColumns()) {
+	                primaryKeysByColumn.put(keyColumn, primaryKey);
 	            }
 	        }
-
-	        primaryKeysByColumn.put(column, key);
 	    }
 
 	    return primaryKeysByColumn.get(column);
@@ -143,19 +141,25 @@ public class DefaultRelations implements Relations {
 
 	@Override
     public List<UniqueKeyDefinition> getUniqueKeys(ColumnDefinition column) {
-	    if (!uniqueKeysByColumn.containsKey(column)) {
-            List<UniqueKeyDefinition> list = new ArrayList<UniqueKeyDefinition>();
+	    if (uniqueKeysByColumn == null) {
+	        uniqueKeysByColumn = new LinkedHashMap<ColumnDefinition, List<UniqueKeyDefinition>>();
 
-            for (UniqueKeyDefinition uniqueKey : uniqueKeys.values()) {
-                if (uniqueKey.getKeyColumns().contains(column)) {
+	        for (UniqueKeyDefinition uniqueKey : uniqueKeys.values()) {
+                for (ColumnDefinition keyColumn : uniqueKey.getKeyColumns()) {
+                    List<UniqueKeyDefinition> list = uniqueKeysByColumn.get(keyColumn);
+
+                    if (list == null) {
+                        list = new ArrayList<UniqueKeyDefinition>();
+                        uniqueKeysByColumn.put(keyColumn, list);
+                    }
+
                     list.add(uniqueKey);
                 }
             }
-
-            uniqueKeysByColumn.put(column, list);
         }
 
-        return uniqueKeysByColumn.get(column);
+        List<UniqueKeyDefinition> list = uniqueKeysByColumn.get(column);
+        return list != null ? list : Collections.<UniqueKeyDefinition>emptyList();
     }
 
     @Override
@@ -171,19 +175,26 @@ public class DefaultRelations implements Relations {
 
     @Override
 	public List<ForeignKeyDefinition> getForeignKeys(ColumnDefinition column) {
-        if (!foreignKeysByColumn.containsKey(column)) {
-            List<ForeignKeyDefinition> list = new ArrayList<ForeignKeyDefinition>();
+        if (foreignKeysByColumn == null) {
+            foreignKeysByColumn = new LinkedHashMap<ColumnDefinition, List<ForeignKeyDefinition>>();
 
             for (ForeignKeyDefinition foreignKey : foreignKeys.values()) {
-                if (foreignKey.getKeyColumns().contains(column)) {
+                for (ColumnDefinition keyColumn : foreignKey.getKeyColumns()) {
+                    List<ForeignKeyDefinition> list = foreignKeysByColumn.get(keyColumn);
+
+                    if (list == null) {
+                        list = new ArrayList<ForeignKeyDefinition>();
+                        foreignKeysByColumn.put(keyColumn, list);
+                    }
+
                     list.add(foreignKey);
                 }
             }
-
-            foreignKeysByColumn.put(column, list);
         }
 
-        return foreignKeysByColumn.get(column);
+
+        List<ForeignKeyDefinition> list = foreignKeysByColumn.get(column);
+        return list != null ? list : Collections.<ForeignKeyDefinition>emptyList();
 	}
 
     @Override

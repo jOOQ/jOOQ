@@ -2312,6 +2312,8 @@ public class DefaultGenerator extends AbstractGenerator {
 
     protected void registerInSchema(List<? extends Definition> definitions, Class<?> type, boolean isGeneric) {
         if (outS != null) {
+            final int METHOD_SIZE = 500;
+
             outS.println();
             printOverride(outS);
             outS.print("\tpublic final ");
@@ -2327,6 +2329,63 @@ public class DefaultGenerator extends AbstractGenerator {
             outS.print(type.getSimpleName());
             outS.println("s() {");
 
+            outS.print("\t\t");
+            outS.print(List.class);
+            outS.print("<");
+            outS.print(type);
+
+            if (isGeneric) {
+                outS.print("<?>");
+            }
+
+            outS.println("> result = new java.util.ArrayList();");
+            for (int i = 0; i < definitions.size() / METHOD_SIZE + 1; i++) {
+                outS.print("\t\tresult.addAll(get");
+                outS.print(type.getSimpleName());
+                outS.print("s");
+                outS.print(i);
+                outS.println("());");
+            }
+            outS.println("\t\treturn result;");
+
+            outS.println("\t}");
+
+            int definitionCounter = 0;
+            for (Definition definition : definitions) {
+                generateDefinition(METHOD_SIZE, definitionCounter, definition, type, isGeneric);
+                definitionCounter++;
+            }
+
+            if (definitionCounter > 0) {
+                outS.println(");");
+                outS.println("\t}");
+            }
+        }
+    }
+
+    protected void generateDefinition(final int METHOD_SIZE, int definitionCounter, Definition definition, Class<?> type, boolean isGeneric) {
+        if (definitionCounter % METHOD_SIZE == 0) {
+            if (definitionCounter > 0) {
+                outS.println(");");
+                outS.println("\t}");
+            }
+
+            outS.println();
+            outS.print("\tprivate ");
+            outS.print(List.class);
+            outS.print("<");
+            outS.print(type);
+
+            if (isGeneric) {
+                outS.print("<?>");
+            }
+
+            outS.print("> get");
+            outS.print(type.getSimpleName());
+            outS.print("s");
+            outS.print(definitionCounter / METHOD_SIZE);
+            outS.println("() {");
+
             outS.print("\t\treturn ");
             outS.print(Arrays.class);
             outS.print(".<");
@@ -2336,25 +2395,12 @@ public class DefaultGenerator extends AbstractGenerator {
                 outS.print("<?>");
             }
 
-            outS.print(">asList(");
-
-            if (definitions.size() > 1) {
-                outS.print("\n\t\t\t");
-            }
-
-            for (int i = 0; i < definitions.size(); i++) {
-                Definition def = definitions.get(i);
-
-                if (i > 0) {
-                    outS.print(",\n\t\t\t");
-                }
-
-                printSingletonReference(outS, def);
-            }
-
-            outS.println(");");
-            outS.println("\t}");
+            outS.print(">asList(\n\t\t\t");
+        } else {
+            outS.print(",\n\t\t\t");
         }
+
+        printSingletonReference(outS, definition);
     }
 
     protected void printRoutine(SchemaDefinition schema, RoutineDefinition routine) {

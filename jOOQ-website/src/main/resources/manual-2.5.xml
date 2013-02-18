@@ -216,46 +216,43 @@ Factory create = new Factory(connection, SQLDialect.ORACLE);]]></java>
 							For the examples in this manual, the same database will always be referred to. It essentially consists of these entities created using the Oracle dialect
 							</p>
 <sql>CREATE TABLE language (
-  id NUMBER(7) NOT NULL PRIMARY KEY,
-  cd CHAR(2) NOT NULL,
-  description VARCHAR2(50)
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  cd              CHAR(2)       NOT NULL,
+  description     VARCHAR2(50)
 )
 
 CREATE TABLE author (
-  id NUMBER(7) NOT NULL PRIMARY KEY,
-  first_name VARCHAR2(50),
-  last_name VARCHAR2(50) NOT NULL,
-  date_of_birth DATE,
-  year_of_birth NUMBER(7)
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  first_name      VARCHAR2(50),
+  last_name       VARCHAR2(50)  NOT NULL,
+  date_of_birth   DATE,
+  year_of_birth   NUMBER(7),
+  distinguished   NUMBER(1)
 )
 
 CREATE TABLE book (
-  id NUMBER(7) NOT NULL PRIMARY KEY,
-  author_id NUMBER(7) NOT NULL,
-  title VARCHAR2(400) NOT NULL,
-  published_in NUMBER(7) NOT NULL,
-  language_id NUMBER(7) NOT NULL,
-  FOREIGN KEY (AUTHOR_ID) REFERENCES author(ID),
-  FOREIGN KEY (LANGUAGE_ID) REFERENCES language(ID)
+  id              NUMBER(7)     NOT NULL PRIMARY KEY,
+  author_id       NUMBER(7)     NOT NULL,
+  title           VARCHAR2(400) NOT NULL,
+  published_in    NUMBER(7)     NOT NULL,
+  language_id     NUMBER(7)     NOT NULL,
+  
+  CONSTRAINT fk_book_author     FOREIGN KEY (author_id)   REFERENCES author(id),
+  CONSTRAINT fk_book_language   FOREIGN KEY (language_id) REFERENCES language(id)
 )
 
 CREATE TABLE book_store (
-  name VARCHAR2(400) NOT NULL UNIQUE
+  name            VARCHAR2(400) NOT NULL UNIQUE
 )
 
 CREATE TABLE book_to_book_store (
-  book_store_name VARCHAR2(400) NOT NULL,
-  book_id INTEGER NOT NULL,
-  stock INTEGER,
-  PRIMARY KEY(book_store_name, book_id),
-  CONSTRAINT b2bs_book_store_id
-    FOREIGN KEY (book_store_name)
-    REFERENCES book_store (name)
-    ON DELETE CASCADE,
-  CONSTRAINT b2bs_book_id
-    FOREIGN KEY (book_id)
-    REFERENCES book (id)
-    ON DELETE CASCADE
+  name            VARCHAR2(400) NOT NULL,
+  book_id         INTEGER       NOT NULL,
+  stock           INTEGER,
+  
+  PRIMARY KEY(name, book_id),
+  CONSTRAINT fk_b2bs_book_store FOREIGN KEY (name)        REFERENCES book_store (name) ON DELETE CASCADE,
+  CONSTRAINT fk_b2bs_book       FOREIGN KEY (book_id)     REFERENCES book (id)         ON DELETE CASCADE
 )</sql>
 							<p>
 								More entities, types (e.g. UDT's, ARRAY types, ENUM types, etc), stored procedures and packages are introduced for specific examples
@@ -404,18 +401,17 @@ Result<Record> result = create.fetch(rs);]]></java>
 
 <java><![CDATA[// Fetch all authors
 for (AuthorRecord author : create.fetch(AUTHOR)) {
+
+    // Skip previously distinguished authors  
+    if ((int) author.getDistinguished() == 1)
+        continue;
   
     // Check if the author has written more than 5 books
-    if (author.fetchBookListByAuthorId().size() > 5) {
+    if (author.fetchChildren(FK_BOOK_AUTHOR).size() > 5) {
     
-        // Congratulate the author by email:
-        if (author.getMailSent()) {
-            sendCongratulationMail(author);
-    
-            // Don't send the mail twice, so store that flag in the database
-            author.setMailSent(true);
-            author.store();
-        }
+        // Mark the author as a "distinguished" author
+        author.setDistinguished(1);
+        author.store();
     }
 }]]></java>
 

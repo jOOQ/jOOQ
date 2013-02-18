@@ -484,7 +484,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
 
     @Override
     public final Condition in(T... values) {
-        return in(vals(values).toArray(new Field<?>[0]));
+        return in(Utils.fields(values, this).toArray(new Field<?>[0]));
     }
 
     @Override
@@ -519,7 +519,7 @@ abstract class AbstractField<T> extends AbstractNamedTypeProviderQueryPart<T> im
             return trueCondition();
         }
         else {
-            return notIn(vals(values).toArray(new Field<?>[0]));
+            return notIn(Utils.fields(values, this).toArray(new Field<?>[0]));
         }
     }
 

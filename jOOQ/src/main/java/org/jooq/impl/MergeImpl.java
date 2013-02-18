@@ -40,7 +40,6 @@ import static org.jooq.impl.Factory.condition;
 import static org.jooq.impl.Factory.exists;
 import static org.jooq.impl.Factory.notExists;
 import static org.jooq.impl.Factory.nullSafe;
-import static org.jooq.tools.Convert.convert;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -50,7 +50,7 @@
 				<executions>
 					<execution>
 						<id>create-database</id>
-						<phase>generate-sources</phase>
+						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>
@@ -64,28 +64,6 @@
 				</executions>
 			</plugin>
 			
-			<!-- The Scala compiler plugin -->
-			<plugin>
-				<groupId>org.scala-tools</groupId>
-				<artifactId>maven-scala-plugin</artifactId>
-				<version>2.15.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-							<goal>testCompile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			
-			<!-- The jar plugin -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.2</version>
-			</plugin>
-			
 			<!-- The jOOQ code generator plugin for Postgres / Sybase ASE / MySQL -->
 			<plugin>
 				<groupId>org.jooq</groupId>
@@ -94,6 +72,7 @@
 				<executions>
 					<execution>
 						<id>exec1</id>
+						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
@@ -120,7 +99,7 @@
 								</generate>
 								<target>
 									<packageName>org.jooq.scala.example.h2</packageName>
-									<directory>target/generated-sources/jooq-h2</directory>
+									<directory>target/generated-test-sources/jooq-h2</directory>
 								</target>
 							</generator>
 						</configuration>
@@ -133,6 +112,28 @@
 						<version>1.3.168</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			
+			<!-- The Scala compiler plugin -->
+			<plugin>
+				<groupId>org.scala-tools</groupId>
+				<artifactId>maven-scala-plugin</artifactId>
+				<version>2.15.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<!-- The jar plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
 			</plugin>
 		</plugins>
 	</build>

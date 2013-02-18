@@ -81,7 +81,7 @@
 				<executions>
 					<execution>
 						<id>create-database</id>
-						<phase>generate-sources</phase>
+						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>execute</goal>
 						</goals>
@@ -103,6 +103,7 @@
 				<executions>
 					<execution>
 						<id>exec1</id>
+						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>generate</goal>
 						</goals>
@@ -129,7 +130,7 @@
 								</generate>
 								<target>
 									<packageName>org.jooq.maven.example.h2</packageName>
-									<directory>target/generated-sources/jooq-h2</directory>
+									<directory>target/generated-test-sources/jooq-h2</directory>
 								</target>
 							</generator>
 						</configuration>

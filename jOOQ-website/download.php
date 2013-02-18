@@ -49,7 +49,8 @@ The jOOQ roadmap plans for:
 Find release notes for currently maintained branches here:
 </p>
 <ul>
-  <li><a href="notes.php?version=<?=preg_replace('/(\\d+\\.\\d+)\\.\\d+/', '$1', $version)?>" title="Release notes for the latest jOOQ version">The latest version</a></li>
+  <li><a href="notes.php?version=<?=preg_replace('/(\\d+\\.\\d+)\\.\\d+/', '$1', $version)?>" title="Release notes for the latest jOOQ version">The <?=$minorVersion?> branch (the latest version)</a></li>
+  <li><a href="notes.php?version=2.6" title="Release notes for the 2.6 jOOQ branch">The 2.6 branch</a></li>
   <li><a href="notes.php?version=2.5" title="Release notes for the 2.5 jOOQ branch">The 2.5 branch</a></li>
   <li><a href="notes.php?version=2.4" title="Release notes for the 2.4 jOOQ branch">The 2.4 branch</a></li>
   <li><a href="notes.php?version=2.3" title="Release notes for the 2.3 jOOQ branch">The 2.3 branch</a></li>

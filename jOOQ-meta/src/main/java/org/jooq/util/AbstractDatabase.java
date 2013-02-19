@@ -43,7 +43,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
@@ -65,45 +67,51 @@ import org.jooq.util.oracle.OracleDatabase;
  */
 public abstract class AbstractDatabase implements Database {
 
-    private static final JooqLogger log = JooqLogger.getLogger(AbstractDatabase.class);
+    private static final JooqLogger                                   log = JooqLogger.getLogger(AbstractDatabase.class);
 
     // -------------------------------------------------------------------------
     // Configuration elements
     // -------------------------------------------------------------------------
 
-    private SQLDialect                      dialect;
-    private Connection                      connection;
-    private Factory                         create;
-    private String[]                        excludes;
-    private String[]                        includes;
-    private String[]                        recordVersionFields;
-    private String[]                        recordTimestampFields;
-    private boolean                         supportsUnsignedTypes;
-    private boolean                         dateAsTimestamp;
-    private List<Schema>                    configuredSchemata;
-    private List<MasterDataTable>           configuredMasterDataTables;
-    private List<CustomType>                configuredCustomTypes;
-    private List<EnumType>                  configuredEnumTypes;
-    private List<ForcedType>                configuredForcedTypes;
+    private SQLDialect                                                dialect;
+    private Connection                                                connection;
+    private Factory                                                   create;
+    private String[]                                                  excludes;
+    private String[]                                                  includes;
+    private String[]                                                  recordVersionFields;
+    private String[]                                                  recordTimestampFields;
+    private boolean                                                   supportsUnsignedTypes;
+    private boolean                                                   dateAsTimestamp;
+    private List<Schema>                                              configuredSchemata;
+    private List<MasterDataTable>                                     configuredMasterDataTables;
+    private List<CustomType>                                          configuredCustomTypes;
+    private List<EnumType>                                            configuredEnumTypes;
+    private List<ForcedType>                                          configuredForcedTypes;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
     // -------------------------------------------------------------------------
 
-    private List<String>                    inputSchemata;
-    private List<SchemaDefinition>          schemata;
-    private List<SequenceDefinition>        sequences;
-    private List<TableDefinition>           tables;
+    private List<String>                                              inputSchemata;
+    private List<SchemaDefinition>                                    schemata;
+    private List<SequenceDefinition>                                  sequences;
+    private List<TableDefinition>                                     tables;
     @SuppressWarnings("deprecation")
-    private List<MasterDataTableDefinition> masterDataTables;
-    private List<EnumDefinition>            enums;
-    private List<UDTDefinition>             udts;
-    private List<ArrayDefinition>           arrays;
-    private List<RoutineDefinition>         routines;
-    private List<PackageDefinition>         packages;
-    private Relations                       relations;
+    private List<MasterDataTableDefinition>                           masterDataTables;
+    private List<EnumDefinition>                                      enums;
+    private List<UDTDefinition>                                       udts;
+    private List<ArrayDefinition>                                     arrays;
+    private List<RoutineDefinition>                                   routines;
+    private List<PackageDefinition>                                   packages;
+    private Relations                                                 relations;
 
-
+    private transient Map<SchemaDefinition, List<SequenceDefinition>> sequencesBySchema;
+    private transient Map<SchemaDefinition, List<TableDefinition>>    tablesBySchema;
+    private transient Map<SchemaDefinition, List<EnumDefinition>>     enumsBySchema;
+    private transient Map<SchemaDefinition, List<UDTDefinition>>      udtsBySchema;
+    private transient Map<SchemaDefinition, List<ArrayDefinition>>    arraysBySchema;
+    private transient Map<SchemaDefinition, List<RoutineDefinition>>  routinesBySchema;
+    private transient Map<SchemaDefinition, List<PackageDefinition>>  packagesBySchema;
 
     @Override
     public final SQLDialect getDialect() {
@@ -348,7 +356,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return filterSchema(sequences, schema);
+        if (sequencesBySchema == null) {
+            sequencesBySchema = new LinkedHashMap<SchemaDefinition, List<SequenceDefinition>>();
+        }
+
+        return filterSchema(sequences, schema, sequencesBySchema);
     }
 
     @Override
@@ -366,7 +378,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return filterSchema(tables, schema);
+        if (tablesBySchema == null) {
+            tablesBySchema = new LinkedHashMap<SchemaDefinition, List<TableDefinition>>();
+        }
+
+        return filterSchema(tables, schema, tablesBySchema);
     }
 
     @Override
@@ -494,7 +510,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return filterSchema(arrays, schema);
+        if (arraysBySchema == null) {
+            arraysBySchema = new LinkedHashMap<SchemaDefinition, List<ArrayDefinition>>();
+        }
+
+        return filterSchema(arrays, schema, arraysBySchema);
     }
 
     @Override
@@ -522,7 +542,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return filterSchema(udts, schema);
+        if (udtsBySchema == null) {
+            udtsBySchema = new LinkedHashMap<SchemaDefinition, List<UDTDefinition>>();
+        }
+
+        return filterSchema(udts, schema, udtsBySchema);
     }
 
     @Override
@@ -564,7 +588,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return filterSchema(routines, schema);
+        if (routinesBySchema == null) {
+            routinesBySchema = new LinkedHashMap<SchemaDefinition, List<RoutineDefinition>>();
+        }
+
+        return filterSchema(routines, schema, routinesBySchema);
     }
 
     @Override
@@ -582,7 +610,11 @@ public abstract class AbstractDatabase implements Database {
             }
         }
 
-        return filterSchema(packages, schema);
+        if (packagesBySchema == null) {
+            packagesBySchema = new LinkedHashMap<SchemaDefinition, List<PackageDefinition>>();
+        }
+
+        return filterSchema(packages, schema, packagesBySchema);
     }
 
     static final <D extends Definition> D getDefinition(List<D> definitions, String name, boolean ignoreCase) {
@@ -595,6 +627,17 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return null;
+    }
+
+    private final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema, Map<SchemaDefinition, List<T>> cache) {
+        List<T> result = cache.get(schema);
+
+        if (result == null) {
+            result = filterSchema(definitions, schema);
+            cache.put(schema, result);
+        }
+
+        return result;
     }
 
     private final <T extends Definition> List<T> filterSchema(List<T> definitions, SchemaDefinition schema) {

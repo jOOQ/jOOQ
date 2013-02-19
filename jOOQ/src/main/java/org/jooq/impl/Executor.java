@@ -5329,6 +5329,32 @@ public class Executor implements Configuration {
     }
 
     /**
+     * Execute a {@link Select} query in the context of this executor and return
+     * a <code>COUNT(*)</code> value.
+     * <p>
+     * This wraps a pre-existing <code>SELECT</code> query in another one to
+     * calculate the <code>COUNT(*)</code> value, without modifying the original
+     * <code>SELECT</code>. An example: <code><pre>
+     * -- Original query:
+     * SELECT id, title FROM book WHERE title LIKE '%a%'
+     *
+     * -- Wrapped query:
+     * SELECT count(*) FROM (
+     *   SELECT id, title FROM book WHERE title LIKE '%a%'
+     * )
+     * </pre></code> This is particularly useful for those databases that do not
+     * support the <code>COUNT(*) OVER()</code> window function to calculate
+     * total results in paged queries.
+     *
+     * @param query The wrapped query
+     * @return The <code>COUNT(*)</code> result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    public final int fetchCount(Select<?> query) throws DataAccessException {
+        return selectCount().from(query).fetchOne(0, int.class);
+    }
+
+    /**
      * Execute a {@link Query} in the context of this executor.
      *
      * @param query The query to execute

@@ -455,6 +455,7 @@ public abstract class jOOQAbstractTest<
         log.info("Total", total);
     }
 
+    @SuppressWarnings("unused")
     public final Connection getConnection() {
         if (!connectionInitialised) {
             connectionInitialised = true;

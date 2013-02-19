@@ -59,7 +59,7 @@ public class GenerateLargeSchema {
 
             w.println("CREATE TABLE large.t00000 (id INT,              CONSTRAINT pk_00000 PRIMARY KEY (id))/");
 
-            for (int i = 1; i < 5000; i++) {
+            for (int i = 1; i < 15000; i++) {
                 w.println(String.format(
                     "CREATE TABLE large.t%1$05d (id INT, prev_id INT, CONSTRAINT pk_%1$05d PRIMARY KEY (id), CONSTRAINT fk_%1$05d FOREIGN KEY (prev_id) REFERENCES t%2$05d(id))/",
                     i, i - 1

@@ -153,6 +153,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         return (SelectQuery<R>) getDelegate();
     }
 
+    @Override
+    public final int fetchCount() {
+        return getDelegate().fetchCount();
+    }
+
     /**
      * This method must be able to return both incompatible types
      * SelectSelectStep&lt;Record> and SelectSelectStep&lt;R>

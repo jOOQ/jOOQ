@@ -48,6 +48,7 @@ import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 
 /**
  * A common base class for all <code>SELECT</code> statements.
@@ -60,6 +61,11 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
 
     AbstractSelect(Configuration configuration) {
         super(configuration);
+    }
+
+    @Override
+    public final int fetchCount() throws DataAccessException {
+        return new Executor(getConfiguration()).fetchCount(this);
     }
 
     @Override

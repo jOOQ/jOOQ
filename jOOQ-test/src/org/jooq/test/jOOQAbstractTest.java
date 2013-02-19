@@ -1718,6 +1718,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchCount() throws Exception {
+        new AggregateWindowFunctionTests(this).testFetchCount();
+    }
+
+    @Test
     public void testCountDistinct() throws Exception {
         new AggregateWindowFunctionTests(this).testCountDistinct();
     }

@@ -37,6 +37,8 @@ package org.jooq;
 
 import java.util.List;
 
+import org.jooq.exception.DataAccessException;
+
 /**
  * A {@link Query} that can provide a {@link Result} after execution
  *
@@ -73,4 +75,27 @@ public interface Select<R extends Record> extends ResultQuery<R>, TableLike<R>, 
      * All fields selected in this query
      */
     List<Field<?>> getSelect();
+
+    /**
+     * Execute this query in the context of its attached executor and return
+     * a <code>COUNT(*)</code> value.
+     * <p>
+     * This wraps a pre-existing <code>SELECT</code> query in another one to
+     * calculate the <code>COUNT(*)</code> value, without modifying the original
+     * <code>SELECT</code>. An example: <code><pre>
+     * -- Original query:
+     * SELECT id, title FROM book WHERE title LIKE '%a%'
+     *
+     * -- Wrapped query:
+     * SELECT count(*) FROM (
+     *   SELECT id, title FROM book WHERE title LIKE '%a%'
+     * )
+     * </pre></code> This is particularly useful for those databases that do not
+     * support the <code>COUNT(*) OVER()</code> window function to calculate
+     * total results in paged queries.
+     *
+     * @return The <code>COUNT(*)</code> result
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    int fetchCount() throws DataAccessException;
 }

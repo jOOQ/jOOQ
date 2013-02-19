@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -681131167;
+	private static final long serialVersionUID = 2038109924;
 
 	/**
 	 * The singleton instance of <code>PUBLIC</code>
@@ -25,6 +25,12 @@ public class Public extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getSequences0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
 		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
 			org.jooq.test.h2.generatedclasses.Sequences.S_AUTHOR_ID,
 			org.jooq.test.h2.generatedclasses.Sequences.S_TRIGGERS_SEQUENCE);
@@ -32,6 +38,12 @@ public class Public extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Table<?>> getTables() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getTables0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.h2.generatedclasses.tables.TIdentity.T_IDENTITY,

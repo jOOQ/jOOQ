@@ -30,6 +30,7 @@ DROP FUNCTION f_get_one_cursor(book_ids IN int[])/
 DROP TRIGGER IF EXISTS t_triggers_trigger ON t_triggers/
 DROP FUNCTION p_triggers()/
 
+DROP TABLE IF EXISTS t_exotic_types/
 DROP TABLE IF EXISTS t_dates/
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_arrays/

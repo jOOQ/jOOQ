@@ -32,6 +32,7 @@ DROP TABLE multi_schema.t_book_sale/
 DROP TABLE multi_schema.t_book/
 DROP TABLE multi_schema.t_author/
 
+DROP TABLE t_exotic_types/
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_arrays/

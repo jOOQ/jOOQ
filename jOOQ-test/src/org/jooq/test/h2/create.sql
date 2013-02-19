@@ -17,6 +17,7 @@ DROP ALIAS IF EXISTS f_get_one_cursor/
 DROP TRIGGER IF EXISTS t_triggers_trigger/
 DROP SEQUENCE IF EXISTS s_triggers_sequence/
 
+DROP TABLE IF EXISTS t_exotic_types/
 DROP TABLE IF EXISTS t_dates/
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_arrays/

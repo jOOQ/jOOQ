@@ -16,6 +16,7 @@ DROP VIEW v_book/
 
 DROP TRIGGER t_triggers_trigger/
 
+DROP TABLE t_exotic_types/
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/

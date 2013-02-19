@@ -24,6 +24,7 @@ DROP VIEW IF EXISTS v_library/
 DROP TRIGGER IF EXISTS t_triggers_trigger/
 DROP SEQUENCE s_triggers_sequence/
 
+DROP TABLE IF EXISTS t_exotic_types/
 DROP TABLE IF EXISTS t_dates/
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_arrays/

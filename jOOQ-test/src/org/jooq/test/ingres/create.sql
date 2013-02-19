@@ -6,6 +6,7 @@ DROP VIEW IF EXISTS v_library/
 
 DROP RULE t_triggers_trigger/
 
+DROP TABLE IF EXISTS t_exotic_types/
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_book_to_book_store/
 DROP TABLE IF EXISTS t_book_store/

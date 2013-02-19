@@ -5,6 +5,7 @@ DROP VIEW v_library/
 DROP TRIGGER t_triggers_trigger/
 DROP SEQUENCE s_triggers_sequence/
 
+DROP TABLE t_exotic_types/
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_arrays/

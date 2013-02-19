@@ -14,6 +14,7 @@ DROP FUNCTION IF EXISTS f317/
 
 DROP TRIGGER IF EXISTS t_triggers_trigger/
 
+DROP TABLE IF EXISTS t_exotic_types/
 DROP TABLE IF EXISTS t_dates/
 DROP TABLE IF EXISTS t_triggers/
 DROP TABLE IF EXISTS t_book_to_book_store/

@@ -45,17 +45,18 @@ import java.io.File;
  */
 abstract class AbstractGenerator implements Generator {
 
-    boolean                            generateDeprecated            = true;
-    boolean                            generateRelations             = true;
-    boolean                            generateInstanceFields        = true;
-    boolean                            generateGeneratedAnnotation   = true;
-    boolean                            generateRecords               = true;
-    boolean                            generatePojos                 = false;
-    boolean                            generateImmutablePojos        = false;
-    boolean                            generateInterfaces            = false;
-    boolean                            generateDaos                  = false;
-    boolean                            generateJPAAnnotations        = false;
-    boolean                            generateValidationAnnotations = false;
+    boolean                            generateDeprecated             = true;
+    boolean                            generateRelations              = true;
+    boolean                            generateInstanceFields         = true;
+    boolean                            generateGeneratedAnnotation    = true;
+    boolean                            generateRecords                = true;
+    boolean                            generatePojos                  = false;
+    boolean                            generateImmutablePojos         = false;
+    boolean                            generateInterfaces             = false;
+    boolean                            generateDaos                   = false;
+    boolean                            generateJPAAnnotations         = false;
+    boolean                            generateValidationAnnotations  = false;
+    boolean                            generateGlobalObjectReferences = true;
 
     protected GeneratorStrategyWrapper strategy;
 
@@ -182,6 +183,16 @@ abstract class AbstractGenerator implements Generator {
     @Override
     public void setGenerateValidationAnnotations(boolean generateValidationAnnotations) {
         this.generateValidationAnnotations = generateValidationAnnotations;
+    }
+
+    @Override
+    public boolean generateGlobalObjectReferences() {
+        return generateGlobalObjectReferences;
+    }
+
+    @Override
+    public void setGenerateGlobalObjectReferences(boolean generateGlobalObjectReferences) {
+        this.generateGlobalObjectReferences = generateGlobalObjectReferences;
     }
 
     // ----

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test;
 @java.lang.SuppressWarnings("all")
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -120925387;
+	private static final long serialVersionUID = 310596764;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -25,6 +25,12 @@ public class Test extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getSequences0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
 		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
 			org.jooq.test.oracle.generatedclasses.test.Sequences.S_AUTHOR_ID,
 			org.jooq.test.oracle.generatedclasses.test.Sequences.S_961_BIG_INTEGER,
@@ -36,6 +42,12 @@ public class Test extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Table<?>> getTables() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getTables0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.oracle.generatedclasses.test.tables.MLibrary.M_LIBRARY,
 			org.jooq.test.oracle.generatedclasses.test.tables.TArrays.T_ARRAYS,
@@ -65,6 +77,12 @@ public class Test extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.UDT<?>> getUDTs() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getUDTs0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.UDT<?>> getUDTs0() {
 		return java.util.Arrays.<org.jooq.UDT<?>>asList(
 			org.jooq.test.oracle.generatedclasses.test.udt.OInvalidType.O_INVALID_TYPE,
 			org.jooq.test.oracle.generatedclasses.test.udt.UAddressType.U_ADDRESS_TYPE,

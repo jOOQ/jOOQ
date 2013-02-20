@@ -974,6 +974,9 @@ public class BasicTest extends AbstractTest {
 
     @Test
     public void testPlainSQLComments() throws Exception {
+        assertEquals("SELECT 1 FROM DUAL; -- some comment",
+            r_refI().render(create.resultQuery("SELECT 1 FROM DUAL; -- comment without newline")));
+
         Field<?> f = field(
             "-- comment ? '\n" +
             "/* another comment ? '\n" +

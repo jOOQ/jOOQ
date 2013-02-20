@@ -811,7 +811,7 @@ public class Main {
             conn = DriverManager.getConnection(url, userName, password);
 
             Factory create = new Factory(conn, SQLDialect.MYSQL);
-            Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
+            Result<Record> result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {
                 Long id = r.getValue(POSTS.ID);

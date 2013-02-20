@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-  - Copyright (c) 2009-2013, Lukas Eder, lukas.eder@gmail.com
+  - Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
   - All rights reserved.
   -
   - This software is licensed to you under the Apache License, Version 2.0
@@ -126,6 +126,45 @@
 					<p>
 						SQL was never meant to be abstracted. To be confined in the narrow boundaries of heavy mappers, hiding the beauty and simplicity of relational data. SQL was never meant to be object-oriented. SQL was never meant to be anything other than... SQL!
 					</p>					
+				</content>
+			</section>
+			
+			<section id="copyright">
+				<title>Copyright and License</title>
+				<content>
+<text>Copyright (c) 2009-2012, Lukas Eder, lukas.eder@gmail.com
+All rights reserved.
+
+This software is licensed to you under the Apache License, Version 2.0
+(the "License"); You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+. Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+. Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+. Neither the name "jOOQ" nor the names of its contributors may be
+  used to endorse or promote products derived from this software without
+  specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.</text>
 				</content>
 			</section>
 			
@@ -617,8 +656,6 @@ INFO: Generating classes in    : /Users/jOOQ/workspace/MySQLTest/src/test/genera
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Generating schema        : Guestbook.java
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
-INFO: Generating factory       : GuestbookFactory.java
-Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Schema generated         : Total: 122.18ms
 Nov 1, 2011 7:25:07 PM org.jooq.impl.JooqLogger info
 INFO: Sequences fetched        : 0 (0 included, 0 excluded)
@@ -773,7 +810,7 @@ public class Main {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
-            GuestbookFactory create = new GuestbookFactory(conn);
+            Factory create = new Factory(conn, SQLDialect.MYSQL);
             Result<Record> result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {
@@ -844,6 +881,77 @@ public class Main {
 								</content>
 							</section>
 						</sections>
+					</section>
+					
+					<section id="jooq-and-scala">
+						<title>jOOQ and Scala</title>
+						<content>
+							<p>
+								As any other library, jOOQ can be easily used in Scala, taking advantage of the many Scala language features such as for example:
+							</p>
+							<ul>
+								<li>Optional "." to dereference methods from expressions</li>
+								<li>Optional "(" and ")" to delimit method argument lists</li>
+								<li>Optioanl ";" at the end of a Scala statement</li>
+								<li>Type inference using "var" and "val" keywords</li>
+							</ul>
+						
+							<p>
+								But jOOQ also leverages other useful Scala features, such as
+							</p>
+							<ul>
+								<li>implicit defs for operator overloading</li>
+								<li>Scala Macros (soon to come)</li>
+							</ul>
+							
+							<p>
+								A short example jOOQ application in Scala might look like this:
+							</p>
+							
+<scala><![CDATA[
+import collection.JavaConversions._                                  // Import implicit defs for iteration over org.jooq.Result
+                                                                     //
+import java.sql.DriverManager                                        //
+                                                                     //
+import org.jooq._                                                    //
+import org.jooq.impl._                                               //
+import org.jooq.impl.Factory._                                       //
+import org.jooq.scala.example.h2.Tables._                            //
+import org.jooq.scala.Conversions._                                  // Import implicit defs for overloaded jOOQ/SQL operators
+                                                                     //
+object Test {                                                        //
+  def main(args: Array[String]): Unit = {                            //
+    val c = DriverManager.getConnection("jdbc:h2:~/test", "sa", ""); // Standard JDBC connection
+    val f = new Factory(c, SQLDialect.H2);                           //
+    val x = T_AUTHOR as "x"                                          // SQL-esque table aliasing
+                                                                     //
+    for (r <- f                                                      // Iteration over Result. "r" is an org.jooq.Record
+        select (                                                     //
+          T_BOOK.ID * T_BOOK.AUTHOR_ID,                              // Using the overloaded "*" operator
+          T_BOOK.ID + T_BOOK.AUTHOR_ID * 3 + 4,                      // Using the overloaded "+" operator
+          T_BOOK.TITLE || " abc" || " xy"                            // Using the overloaded "||" operator
+        )                                                            //
+        from T_BOOK                                                  // No need to use parentheses or "." here
+        leftOuterJoin (                                              //
+          f select (x.ID, x.YEAR_OF_BIRTH)                           // Dereference fields from aliased table
+          from x                                                     //
+          limit 1                                                    //
+          asTable x.getName()                                        //
+        )                                                            //
+        on T_BOOK.AUTHOR_ID === x.ID                                 // Using the overloaded "===" operator
+        where (T_BOOK.ID <> 2)                                       // Using the olerloaded "<>" operator
+        or (T_BOOK.TITLE in ("O Alquimista", "Brida"))               // Neat IN predicate expression
+        fetch                                                        //
+    ) {                                                              //
+      println(r)                                                     //
+    }                                                                //
+  }                                                                  //
+}]]></scala>
+
+							<p>
+								For more details about jOOQ's Scala integration, please refer to the manual's section about <reference id="scala-sql-building" title="SQL building with Scala"/>.
+							</p>
+						</content>
 					</section>
 					
 					<section id="dependencies">
@@ -1701,8 +1809,9 @@ AND TITLE = '1984']]></sql>
 <sql>--   SELECT ..
 --     FROM ..
 --    WHERE ..
- CONNECT BY [NOCYCLE] condition [AND condition, ...] [START WITH condition]
--- GROUP BY ..</sql>
+ CONNECT BY [ NOCYCLE ] condition [ AND condition, ... ] [ START WITH condition ]
+-- GROUP BY ..
+-- ORDER [ SIBLINGS ] BY ..</sql>
 
 											<p>
 												An example for an iterative query, iterating through values between 1 and 5 is this:
@@ -1724,7 +1833,7 @@ create.select(level())
   SUBSTR(SYS_CONNECT_BY_PATH(DIRECTORY.NAME, '/'), 2)
 FROM DIRECTORY
 CONNECT BY 
-  PRIOR DIRECTORY.ID = DIRECTORY_PARENT_ID
+  PRIOR DIRECTORY.ID = DIRECTORY.PARENT_ID
 START WITH DIRECTORY.PARENT_ID IS NULL
 ORDER BY 1]]></sql>
 <java><![CDATA[.select(
@@ -1768,6 +1877,27 @@ ORDER BY 1]]></sql>
 											<p>
 												Note that this syntax is also supported in the CUBRID database.
 											</p>
+											
+											<h3>ORDER SIBLINGS</h3>
+											<p>
+												The Oracle database allows for specifying a SIBLINGS keyword in the <reference id="order-by-clause" title="ORDER BY clause"/>. Instead of ordering the overall result, this will only order siblings among each other, keeping the hierarchy intact. An example is given here:
+											</p>
+											
+<code-pair>
+<sql><![CDATA[SELECT DIRECTORY.NAME
+FROM DIRECTORY
+CONNECT BY 
+  PRIOR DIRECTORY.ID = DIRECTORY.PARENT_ID
+START WITH DIRECTORY.PARENT_ID IS NULL
+ORDER SIBLINGS BY 1]]></sql>
+<java><![CDATA[.select(DIRECTORY.NAME)
+.from(DIRECTORY)
+.connectBy(
+   prior(DIRECTORY.ID).equal(DIRECTORY.PARENT_ID))
+.startWith(DIRECTORY.PARENT_ID.isNull())
+.orderSiblingsBy(1);]]></java>
+</code-pair>
+											
 										</content>
 									</section>
 
@@ -1987,6 +2117,12 @@ ORDER BY CASE TITLE
 											<p>
 												The SQL standard defines that a "query expression" can be ordered, and that query expressions can contain <reference id="union-clause" title="UNION, INTERSECT and EXCEPT clauses"/>, whose subqueries cannot be ordered. While this is defined as such in the SQL standard, many databases allowing for the non-standard <reference id="limit-clause" title="LIMIT clause"/> in one way or another, do not adhere to this part of the SQL standard. Hence, jOOQ allows for ordering all SELECT statements, regardless whether they are constructed as a part of a UNION or not. Corner-cases are handled internally by jOOQ, by introducing synthetic subselects to adhere to the correct syntax, where this is needed.
 											</p>
+											
+											
+											<h3>Oracle's ORDER SIBLINGS BY clause</h3>
+											<p>
+												jOOQ also supports Oracle's SIBLINGS keyword to be used with ORDER BY clauses for <reference id="connect-by-clause" title="hierarchical queries using CONNECT BY"/>
+											</p>
 										</content>
 									</section>
 
@@ -2164,7 +2300,7 @@ create.selectFrom(BOOK).where(BOOK.ID.equal(5)));]]></java></code-pair>
 											
 											<h3>INTERSECT [ ALL ] and EXCEPT [ ALL ]</h3>
 											<p>
-												INTERSECT is the operation that produces only those tuples that are returned by both subselects. EXCEPT is the operation that returns only those tuples that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the ALL keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support INTERSECT ALL, EXEPT ALL operations either. 
+												INTERSECT is the operation that produces only those s that are returned by both subselects. EXCEPT is the operation that returns only those s that are returned exclusively in the first subselect. Both operators will remove duplicates from their results. The SQL standard allows to specify the ALL keyword for both of these operators as well, but this is hardly supported in any database. jOOQ does not support INTERSECT ALL, EXEPT ALL operations either. 
 											</p>
 											
 											<h3>jOOQ's set operators and how they're different from standard SQL</h3>
@@ -2552,7 +2688,7 @@ create.select()
 										<li><strong>CROSS JOIN or cartesian product</strong>: The basic JOIN in SQL, producing a relational cross product, combining every record of table A with every record of table B. Note that cartesian products can also be produced by listing comma-separated <reference id="table-expressions" title="table expressions"/> in the <reference id="from-clause" title="FROM clause"/> of a <reference id="select-statement" title="SELECT statement"/></li>
 										<li><strong>NATURAL JOIN</strong>: The basic JOIN in relational algebra, yet a rarely used JOIN in databases with everyday degree of normalisation. This JOIN type unconditionally equi-joins two tables by all columns with the same name (requiring foreign keys and primary keys to share the same name). Note that the JOIN columns will only figure once in the resulting <reference id="table-expressions" title="table expression"/>.</li>
 										<li><strong>INNER JOIN or equi-join</strong>: This JOIN operation performs a cartesian product (CROSS JOIN) with a <reference id="conditional-expressions" title="filtering predicate"/> being applied to the resulting <reference id="table-expressions" title="table expression"/>. Most often, a <reference id="comparison-predicate" title="equal comparison predicate"/> comparing foreign keys and primary keys will be applied as a filter, but any other predicate will work, too.</li>
-										<li><strong>OUTER JOIN</strong>: This JOIN operation performs a cartesian product (CROSS JOIN) with a <reference id="conditional-expressions" title="filtering predicate"/> being applied to the resulting <reference id="table-expressions" title="table expression"/>. Most often, a <reference id="comparison-predicate" title="equal comparison predicate"/> comparing foreign keys and primary keys will be applied as a filter, but any other predicate will work, too. Unlike the INNER JOIN, an OUTER JOIN will add "empty records" to the left (table A) or right (table B) or both tables, in case the conditional expression fails to produce a tuple.</li>										
+										<li><strong>OUTER JOIN</strong>: This JOIN operation performs a cartesian product (CROSS JOIN) with a <reference id="conditional-expressions" title="filtering predicate"/> being applied to the resulting <reference id="table-expressions" title="table expression"/>. Most often, a <reference id="comparison-predicate" title="equal comparison predicate"/> comparing foreign keys and primary keys will be applied as a filter, but any other predicate will work, too. Unlike the INNER JOIN, an OUTER JOIN will add "empty records" to the left (table A) or right (table B) or both tables, in case the conditional expression fails to produce a .</li>										
 										<li><strong>semi-join</strong>: In SQL, this JOIN operation can only be expressed implicitly using <reference id="in-predicate" title="IN predicates"/> or <reference id="exists-predicate" title="EXISTS predicates"/>. The <reference id="table-expressions" title="table expression"/> resulting from a semi-join will only contain the left-hand side table A</li>										
 										<li><strong>anti-join</strong>: In SQL, this JOIN operation can only be expressed implicitly using <reference id="in-predicate" title="NOT IN predicates"/> or <reference id="exists-predicate" title="NOT EXISTS predicates"/>. The <reference id="table-expressions" title="table expression"/> resulting from a semi-join will only contain the left-hand side table A</li>
 										<li><strong>division</strong>: This JOIN operation is hard to express at all, in SQL. See the manual's chapter about <reference id="relational-division" title="relational division"/> for details on how jOOQ simulates this operation.</li>
@@ -2735,7 +2871,7 @@ WHERE NOT EXISTS (
 								<title>Array and cursor unnesting</title>
 								<content>
 									<p>
-										The SQL standard specifies how SQL databases should implement ARRAY and TABLE types, as well as CURSOR types. Put simply, a CURSOR is a pointer to any materialised <reference id="table-expressions" title="table expression"/>. Depending on the cursor's features, this table expression can be scrolled through in both directions, records can be locked, updated, removed, inserted, etc. Often, CURSOR types contain tuples, whereas ARRAY and TABLE types contain simple scalar values, although that is not a requirement
+										The SQL standard specifies how SQL databases should implement ARRAY and TABLE types, as well as CURSOR types. Put simply, a CURSOR is a pointer to any materialised <reference id="table-expressions" title="table expression"/>. Depending on the cursor's features, this table expression can be scrolled through in both directions, records can be locked, updated, removed, inserted, etc. Often, CURSOR types contain s, whereas ARRAY and TABLE types contain simple scalar values, although that is not a requirement
 									</p>
 									
 									<p>
@@ -2815,6 +2951,11 @@ new Factory(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 					<section id="column-expressions">
 						<title>Column expressions</title>
 						<content>
+						    <p>
+						    	Column expressions can be used in various SQL clauses in order to refer to one or several columns. This chapter explains how to form various types of column expressions with jOOQ. A particular type of column expression is given in the section about <reference id="row-value-expressions" title="s or row value expressions"/>, where an expression may have a degree of more than one.
+						    </p>
+						
+						    <h3>Using column expressions in jOOQ</h3>
 							<p>
 								jOOQ allows you to freely create arbitrary column expressions using a fluent expression construction API. Many expressions can be formed as functions from <reference id="factory" title="Factory methods"/>, other expressions can be formed based on a pre-existing column expression. For example:
 							</p>
@@ -3204,32 +3345,43 @@ create.select(concat("A", "B", "C"));
 									</p>
 
 <java><![CDATA[// Every-day, SQL standard aggregate functions
-AggregateFunction<Integer> count();
-AggregateFunction<Integer> count(Field<?> field);
-AggregateFunction<T> max(Field<T> field);
-AggregateFunction<T> min(Field<T> field);
-AggregateFunction<BigDecimal> sum(Field<? extends Number> field);
-AggregateFunction<BigDecimal> avg(Field<? extends Number> field);
+AggregateFunction<Integer>    count();
+AggregateFunction<Integer>    count(Field<?> field);
+AggregateFunction<T>          max  (Field<T> field);
+AggregateFunction<T>          min  (Field<T> field);
+AggregateFunction<BigDecimal> sum  (Field<? extends Number> field);
+AggregateFunction<BigDecimal> avg  (Field<? extends Number> field);
 
 // DISTINCT keyword in aggregate functions
-AggregateFunction<Integer> countDistinct(Field<?> field);
-AggregateFunction<T> maxDistinct(Field<T> field);
-AggregateFunction<T> minDistinct(Field<T> field);
-AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field);
-AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field);
+AggregateFunction<Integer>    countDistinct(Field<?> field);
+AggregateFunction<T>          maxDistinct  (Field<T> field);
+AggregateFunction<T>          minDistinct  (Field<T> field);
+AggregateFunction<BigDecimal> sumDistinct  (Field<? extends Number> field);
+AggregateFunction<BigDecimal> avgDistinct  (Field<? extends Number> field);
 
 // String aggregate functions
-AggregateFunction<String> groupConcat(Field<?> field);
+AggregateFunction<String> groupConcat        (Field<?> field);
 AggregateFunction<String> groupConcatDistinct(Field<?> field);
 OrderedAggregateFunction<String> listAgg(Field<?> field);
 OrderedAggregateFunction<String> listAgg(Field<?> field, String separator);
 
 // Statistical functions
-AggregateFunction<BigDecimal> median(Field<? extends Number> field);
-AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field);
+AggregateFunction<BigDecimal> median    (Field<? extends Number> field);
+AggregateFunction<BigDecimal> stddevPop (Field<? extends Number> field);
 AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field);
-AggregateFunction<BigDecimal> varPop(Field<? extends Number> field);
-AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field);]]></java>
+AggregateFunction<BigDecimal> varPop    (Field<? extends Number> field);
+AggregateFunction<BigDecimal> varSamp   (Field<? extends Number> field);
+
+// Linear regression functions
+AggregateFunction<BigDecimal> regrAvgX     (Field<? extends Number> y, Field<? extends Number> x);
+AggregateFunction<BigDecimal> regrAvgY     (Field<? extends Number> y, Field<? extends Number> x);
+AggregateFunction<BigDecimal> regrCount    (Field<? extends Number> y, Field<? extends Number> x);
+AggregateFunction<BigDecimal> regrIntercept(Field<? extends Number> y, Field<? extends Number> x);
+AggregateFunction<BigDecimal> regrR2       (Field<? extends Number> y, Field<? extends Number> x);
+AggregateFunction<BigDecimal> regrSlope    (Field<? extends Number> y, Field<? extends Number> x);
+AggregateFunction<BigDecimal> regrSXX      (Field<? extends Number> y, Field<? extends Number> x);
+AggregateFunction<BigDecimal> regrSXY      (Field<? extends Number> y, Field<? extends Number> x);
+AggregateFunction<BigDecimal> regrSYY      (Field<? extends Number> y, Field<? extends Number> x);]]></java>
 
 									<p>
 										Here's an example, counting the number of books any author has written:
@@ -3827,6 +3979,36 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 									</ul>
 								</content>
 							</section>
+							
+							<section id="row-value-expressions">
+								<title>Tuples or row value expressions</title>
+								<content>
+									<p>
+										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the VALUES row value constructor allows for providing a row value expression as a source for INSERT data. Row value expressions can appear in various other places, though. They are supported by jOOQ as s / rows. jOOQ's <reference id="factory" title="Factory"/> allows for the construction of type-safe s up to the degree / arity of 8. Higher-degree s are supported as well, but without any type-safety.  types are modelled as follows:
+									</p>
+									
+<java><![CDATA[// The Factory provides overloaded row value expression constructor methods:
+public static <T1> Row1<T1> row(T1 t1) { ... }
+public static <T1, T2> Row2<T1, T2> row(T1 t1, T2 t2) { ... }
+public static <T1, T2, T3> Row3<T1, T2, T3> row(T1 t1, T2 t2, T3 t3) { ... }
+public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(T1 t1, T2 t2, T3 t3, T4 t4) { ... }
+
+// [ ... idem for Row5, Row6, Row7, Row8 ... ]
+
+// Degrees of more than 8 are supported without type-safety
+public static RowN row(Object... values) { ... }]]></java>
+
+									<h3>Using row value expressions in predicates</h3>
+                                	<p>
+                                		Row value expressions are incompatible with most other <reference id="queryparts" title="QueryParts"/>, but they can be used as a basis for constructing various <reference id="conditional-expressions" title="conditional expressions"/>, such as <reference id="comparison-predicate" title="comparison predicates"/>, <reference id="in-predicate" title="IN predicates"/>, or the "degree 2 row value expression only" <reference id="overlaps-predicate" title="OVERLAPS predicate"/>. See the relevant sections for more details about how to use row value expressions in predicates.
+                                	</p>
+                                	
+                                	<h3>Using row value expressions in UPDATE statements</h3>
+                                	<p>
+                                		The <reference id="update-statement" title="UPDATE statement"/> also supports a variant where row value expressions are updated, rather than single columns. See the relevant section for more details
+                                	</p>
+								</content>
+							</section>
 						</sections>
 					</section>
 
@@ -4142,8 +4324,8 @@ END
 <code-pair>
 <sql><![CDATA[PUBLISHED_IN     BETWEEN 1920 AND 1940
 PUBLISHED_IN NOT BETWEEN 1920 AND 1940]]></sql>
-<java><![CDATA[BOOK.PUBLISHED_IN.between(1920, 1940)
-BOOK.PUBLISHED_IN.notBetween(1920, 1940)]]></java>
+<java><![CDATA[BOOK.PUBLISHED_IN.between(1920).and(1940)
+BOOK.PUBLISHED_IN.notBetween(1920).and(1940)]]></java>
 </code-pair>
 
 									<h3>BETWEEN SYMMETRIC</h3>
@@ -4154,8 +4336,8 @@ BOOK.PUBLISHED_IN.notBetween(1920, 1940)]]></java>
 <code-pair>
 <sql><![CDATA[PUBLISHED_IN     BETWEEN SYMMETRIC 1940 AND 1920
 PUBLISHED_IN NOT BETWEEN SYMMETRIC 1940 AND 1920]]></sql>
-<java><![CDATA[BOOK.PUBLISHED_IN.betweenSymmetric(1940, 1920)
-BOOK.PUBLISHED_IN.notBetweenSymmetric(1940, 1920)]]></java>
+<java><![CDATA[BOOK.PUBLISHED_IN.betweenSymmetric(1940).and(1920)
+BOOK.PUBLISHED_IN.notBetweenSymmetric(1940).and(1920)]]></java>
 </code-pair>
 
 									<p>
@@ -4326,6 +4508,52 @@ notExists(create.selectOne().from(BOOK)
 										In theory, the two types of predicates can perform equally well. If your database system ships with a sophisticated cost-based optimiser, it will be able to transform one predicate into the other, if you have all necessary constraints set (e.g. referential constraints, not null constraints). However, in reality, performance between the two might differ substantially. An interesting blog post investigating this topic on the MySQL database can be seen here:<br/>
 										<a href="http://blog.jooq.org/2012/07/27/not-in-vs-not-exists-vs-left-join-is-null-mysql/">http://blog.jooq.org/2012/07/27/not-in-vs-not-exists-vs-left-join-is-null-mysql/</a>
 									</p>
+								</content>
+							</section>
+							
+							<section id="overlaps-predicate">
+								<title>OVERLAPS predicate</title>
+								<content>
+									<p>
+										When comparing dates, the SQL standard allows for using a special OVERLAPS predicate, which checks whether two date ranges overlap each other. The following can be said:
+									</p>
+
+<sql><![CDATA[-- This yields true
+(DATE '2010-01-01', DATE '2010-01-03') OVERLAPS (DATE '2010-01-02' DATE '2010-01-04')
+
+-- INTERVAL data types are also supported. This is equivalent to the above
+(DATE '2010-01-01', CAST('+2 00:00:00' AS INTERVAL DAY TO SECOND)) OVERLAPS 
+(DATE '2010-01-02', CAST('+2 00:00:00' AS INTERVAL DAY TO SECOND))]]></sql>
+
+									<h3>The OVERLAPS predicate in jOOQ</h3>
+									<p>
+									    jOOQ supports the OVERLAPS predicate on <reference id="row-value-expressions" title="row value expressions of degree 2"/>. The following methods are contained in <reference class="org.jooq.Row2"/>:
+									</p>
+
+<java><![CDATA[Condition overlaps(T1 t1, T2 t2);
+Condition overlaps(Field<T1> t1, Field<T2> t2);
+Condition overlaps(Row2<T1, T2> row);]]></java>
+
+									<p>
+										This allows for expressing the above predicates as such:
+									</p>																		
+
+<java><![CDATA[// The date range tuples version
+row(Date.valueOf('2010-01-01'), Date.valueOf('2010-01-03')).overlaps(Date.valueOf('2010-01-02'), Date.valueOf('2010-01-04'))
+
+// The INTERVAL tuples version
+row(Date.valueOf('2010-01-01'), new DayToSecond(2)).overlaps(Date.valueOf('2010-01-02'), new DayToSecond(2))]]></java>
+
+									<h3>jOOQ's extensions to the standard</h3>
+									<p>
+										Unlike the standard (or any database implementing the standard), jOOQ also supports the OVERLAPS predicate for comparing arbitrary <reference id="row-value-expressions" title="row vlaue expressions of degree 2"/>. For instance, (1, 3) OVERLAPS (2, 4) will yield true in jOOQ. This is simulated as such
+									</p>
+									
+<sql><![CDATA[-- This predicate
+(A, B) OVERLAPS (C, D)
+
+-- can be simulated as such
+(C <= B) AND (A <= D)]]></sql>
 								</content>
 							</section>
 						</sections>
@@ -4813,6 +5041,48 @@ public final void toSQL(RenderContext context) {
 								</content>
 							</section>
 
+							<section id="pretty-printing">
+								<title>Pretty printing SQL</title>
+								<content>
+									<p>
+										As mentioned in the previous chapter about <reference id="sql-rendering" title="SQL rendering"/>, there are some elements in the <reference class="org.jooq.RenderContext"/> that are used for formatting / pretty-printing rendered SQL. In order to obtain pretty-printed SQL, just use the following <reference id="custom-settings" title="custom settings"/>: 
+									</p>
+	
+	
+<java><![CDATA[// Create a factory that will render "formatted" SQL
+Factory pretty = new Factory(dialect, new Settings().withRenderFormatted(true));]]></java>
+
+									<p>
+										And then, use the above factory to render pretty-printed SQL:
+									</p>
+									
+<code-pair>
+<java><![CDATA[String sql = pretty.select(
+                       AUTHOR.LAST_NAME, count().as("c"))
+                   .from(BOOK)
+                   .join(AUTHOR)
+                   .on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
+                   .where(BOOK.TITLE.notEqual("1984"))
+                   .groupBy(AUTHOR.LAST_NAME)
+                   .having(count().equal(2))
+                   .getSQL();]]></java>
+<sql><![CDATA[select 
+  "TEST"."AUTHOR"."LAST_NAME", 
+  count(*) "c"
+from "TEST"."BOOK"
+  join "TEST"."AUTHOR"
+  on "TEST"."BOOK"."AUTHOR_ID" = "TEST"."AUTHOR"."ID"
+where "TEST"."BOOK"."TITLE" <> '1984'
+group by "TEST"."AUTHOR"."LAST_NAME"
+having count(*) = 2]]></sql>
+</code-pair>
+
+									<p>
+										The section about <reference id="execute-listeners" title="ExecuteListeners"/> shows an example of how such pretty printing can be used to log readable SQL to the stdout.
+									</p>
+								</content>
+							</section>
+
 						    <section id="variable-binding">
 							    <title>Variable binding</title>
 								<content>
@@ -4993,6 +5263,139 @@ create.attach(select);]]></java>
 							</section>
 						</sections>
 					</section>
+					
+					<section id="scala-sql-building">
+						<title>SQL building in Scala</title>
+						<content>
+							<p>
+								jOOQ-Scala is a maven module used for leveraging some advanced Scala features for those users that wish to use jOOQ with Scala.
+							</p>
+							
+							<h3>Using Scala's implicit defs to allow for operator overloading</h3>
+							<p>
+								The most obvious Scala feature to use in jOOQ are implicit defs for implicit conversions in order to enhance the <reference class="org.jooq.Field"/> type with SQL-esque operators. 
+							</p>
+							<p>
+								The following depicts a trait which wraps all fields:
+							</p>
+							
+<scala><![CDATA[/**
+ * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
+ * operators for common jOOQ operations to arbitrary fields
+ */
+trait SAnyField[T] extends Field[T] {
+
+    // String operations
+    // -----------------
+
+    def ||(value : String)            : Field[String]
+    def ||(value : Field[_])          : Field[String]
+
+    // Comparison predicates
+    // ---------------------
+
+    def ===(value : T)                : Condition
+    def ===(value : Field[T])         : Condition
+
+    def !==(value : T)                : Condition
+    def !==(value : Field[T])         : Condition
+
+    def <>(value : T)                 : Condition
+    def <>(value : Field[T])          : Condition
+
+    def >(value : T)                  : Condition
+    def >(value : Field[T])           : Condition
+
+    def >=(value : T)                 : Condition
+    def >=(value : Field[T])          : Condition
+
+    def <(value : T)                  : Condition
+    def <(value : Field[T])           : Condition
+
+    def <=(value : T)                 : Condition
+    def <=(value : Field[T])          : Condition
+
+    def <=>(value : T)                : Condition
+    def <=>(value : Field[T])         : Condition
+}]]></scala>
+
+							<p>
+								The following depicts a trait which wraps numeric fields:
+							</p>
+							
+<scala><![CDATA[/**
+ * A Scala-esque representation of {@link org.jooq.Field}, adding overloaded
+ * operators for common jOOQ operations to numeric fields
+ */
+trait SNumberField[T <: Number] extends SAnyField[T] {
+
+    // Arithmetic operations
+    // ---------------------
+
+    def unary_-                       : Field[T]
+
+    def +(value : Number)             : Field[T]
+    def +(value : Field[_ <: Number]) : Field[T]
+
+    def -(value : Number)             : Field[T]
+    def -(value : Field[_ <: Number]) : Field[T]
+
+    def *(value : Number)             : Field[T]
+    def *(value : Field[_ <: Number]) : Field[T]
+
+    def /(value : Number)             : Field[T]
+    def /(value : Field[_ <: Number]) : Field[T]
+
+    def %(value : Number)             : Field[T]
+    def %(value : Field[_ <: Number]) : Field[T]
+
+    // Bitwise operations
+    // ------------------
+
+    def unary_~                       : Field[T]
+
+    def &(value : T)                  : Field[T]
+    def &(value : Field[T])           : Field[T]
+
+    def |(value : T)                  : Field[T]
+    def |(value : Field[T])           : Field[T]
+
+    def ^(value : T)                  : Field[T]
+    def ^(value : Field[T])           : Field[T]
+
+    def <<(value : T)                 : Field[T]
+    def <<(value : Field[T])          : Field[T]
+
+    def >>(value : T)                 : Field[T]
+    def >>(value : Field[T])          : Field[T]
+}]]></scala>
+
+							<p>
+								An example query using such overloaded operators would then look like this:
+							</p>
+							
+<scala><![CDATA[select (
+  T_BOOK.ID * T_BOOK.AUTHOR_ID,
+  T_BOOK.ID + T_BOOK.AUTHOR_ID * 3 + 4,
+  T_BOOK.TITLE || " abc" || " xy")
+from T_BOOK
+leftOuterJoin (
+  f select (x.ID, x.YEAR_OF_BIRTH)
+  from x
+  limit 1
+  asTable x.getName()
+)
+on T_BOOK.AUTHOR_ID === x.ID
+where (T_BOOK.ID <> 2)
+or (T_BOOK.TITLE in ("O Alquimista", "Brida"))
+fetch]]></scala>
+
+							<h3>Scala 2.10 Macros</h3>
+							<p>
+								This feature is still being experimented with. With Scala Macros, it might be possible to inline a true SQL dialect into the Scala syntax, backed by the jOOQ API. Stay tuned!
+							</p>
+						</content>
+					</section>
 				</sections>
 			</section>
 
@@ -5048,6 +5451,7 @@ create.attach(select);]]></java>
 								<li><reference class="org.jooq.Result"/>: Unlike its JDBC counter-part, this type implements <reference class="java.util.List"/> and is fully loaded into Java memory, freeing resources as early as possible. Just like statements, this means that users don't have to deal with a "weird" internal result set state.</li>
 								<li><reference class="org.jooq.Cursor"/>: If you want more fine-grained control over how many records are fetched into memory at once, you can still do that using jOOQ's <reference id="lazy-fetching" title="lazy fetching"/> feature</li>
 								<li><reference id="statement-type" title="Statement type"/>: jOOQ does not formally distinguish between static statements and prepared statements. By default, all statements are prepared statements in jOOQ, internally. Executing a statement as a static statement can be done simply using a <reference id="custom-settings" title="custom settings flag"/></li>
+								<li><reference id="reusing-statements" title="Closing Statements"/>: JDBC keeps open resources even if they are already consumed. With JDBC, there is a lot of verbosity around safely closing resources. In jOOQ, resources are closed after consumption, by default. If you want to keep them open after consumption, you have to explicitly say so.</li>
 							</ul>
 						</content>
 					</section>
@@ -5078,7 +5482,8 @@ Result<Record> resultQuery.fetch();]]></java>
 							<ul>
 								<li><reference id="record-vs-tablerecord" title="Untyped vs. typed fetching"/>: Sometimes you care about the returned type of your records, sometimes (with arbitrary projections) you don't.</li>
 								<li><reference id="arrays-maps-and-lists" title="Fetching arrays, maps, or lists"/>: Instead of letting you transform your result sets into any more suitable data type, a library should do that work for you.</li>
-								<li><reference id="recordhandler" title="Fetching through callbacks"/>: This is an entirely different fetching paradigm. With Java 8's lambda expressions, this will become even more powerful.</li>
+								<li><reference id="recordhandler" title="Fetching through handler callbacks"/>: This is an entirely different fetching paradigm. With Java 8's lambda expressions, this will become even more powerful.</li>
+								<li><reference id="recordmapper" title="Fetching through mapper callbacks"/>: This is an entirely different fetching paradigm. With Java 8's lambda expressions, this will become even more powerful.</li>
 								<li><reference id="pojos" title="Fetching custom POJOs"/>: This is what made Hibernate and JPA so strong. Automatic mapping of tables to custom POJOs.</li>
 								<li><reference id="lazy-fetching" title="Lazy vs. eager fetching"/>: It should be easy to distinguish these two fetch modes.</li>
 								<li><reference id="many-fetching" title="Fetching many results"/>: Some databases allow for returning many result sets from a single query. JDBC can handle this but it's very verbose. A list of results should be returned instead.</li>
@@ -5117,6 +5522,9 @@ List<Result<Record>> fetchMany();
 
 // Fetch records into a custom callback
 <H extends RecordHandler<R>> H fetchInto(H handler);
+
+// Map records using a custom callback
+<E> List<E> fetch(RecordMapper<? super R, E> mapper);
 
 // Execute a ResultQuery with jOOQ, but return a JDBC ResultSet, not a jOOQ object
 ResultSet fetchResultSet();]]></java>
@@ -5171,18 +5579,26 @@ ResultSet fetchResultSet();]]></java>
        Object[][] fetchArrays();
        Object[]   fetchOneArray();
        
+// Reduce your Result object into maps
+<K>    Map<K, R>      fetchMap(Field<K> key);
+<K, V> Map<K, V>      fetchMap(Field<K> key, Field<V> value);
+<K, E> Map<K, E>      fetchMap(Field<K> key, Class<E> value);
+       Map<Record, R> fetchMap(Field<?>[] key);
+<E>    Map<Record, E> fetchMap(Field<?>[] key, Class<E> value);       
+
 // Transform your Result object into maps
-<K>    Map<K, R> fetchMap(Field<K> key);
-<K, V> Map<K, V> fetchMap(Field<K> key, Field<V> value);
        List<Map<String, Object>> fetchMaps();
-       Map<String, Object> fetchOneMap();
+       Map<String, Object>       fetchOneMap();
 
 // Transform your Result object into groups
-<K>    Map<K, Result<R>> fetchGroups(Field<K> key);
-<K, V> Map<K, List<V>>   fetchGroups(Field<K> key, Field<V> value);
+<K>    Map<K, Result<R>>      fetchGroups(Field<K> key);
+<K, V> Map<K, List<V>>        fetchGroups(Field<K> key, Field<V> value);
+<K, E> Map<K, List<E>>        fetchGroups(Field<K> key, Class<E> value);
+       Map<Record, Result<R>> fetchGroups(Field<?>[] key);
+<E>    Map<Record, List<E>>   fetchGroups(Field<?>[] key, Class<E> value);
 
 // Transform your Records into custom POJOs
-<E>    List<E> fetchInto(Class<? extends E> type), MappingException;
+<E>    List<E> fetchInto(Class<? extends E> type);
 
 // Transform your records into another table type
 <Z extends Record> Result<Z> fetchInto(Table<Z> table);]]></java>
@@ -5197,7 +5613,7 @@ ResultSet fetchResultSet();]]></java>
 								<title>Record vs. TableRecord</title>
 								<content>
 									<p>
-										jOOQ understands that SQL is much more expressive than Java, when it comes to the declarative typing of <reference id="table-expressions" title="table expressions"/>. As a declarative language, SQL allows for creating ad-hoc tuples (records with indexed columns) and records (records with named columns). In Java, this is not possible to the same extent. Yet, still, sometimes you wish to use strongly typed records, when you know that you're selecting only from a single table
+										jOOQ understands that SQL is much more expressive than Java, when it comes to the declarative typing of <reference id="table-expressions" title="table expressions"/>. As a declarative language, SQL allows for creating ad-hoc row value expressions (records with indexed columns) and records (records with named columns). In Java, this is not possible to the same extent. Yet, still, sometimes you wish to use strongly typed records, when you know that you're selecting only from a single table
 									</p>
 									
 									<h3>Fetching strongly or weakly typed records</h3>
@@ -5221,65 +5637,6 @@ System.out.println("Published in: " + book.getPublishedIn());]]></java>
                    						<li><reference id="group-by-clause" title="The GROUP BY clause"/></li>
                    						<li><reference id="having-clause" title="The HAVING clause"/></li>
                    					</ul>		
-                   												
-									<h3>Scala's tuple classes</h3>
-									<p>
-										With the introduction of generics in Java 5, it is possible in principle, to pre-define a set of tuple types. This is what Scala does. In essence, tuple types look something like this:
-									</p>
-									
-<java><![CDATA[// Tuple with arity 1
-public interface Tuple1<T1> extends Tuple {
-    T1 get1(); void set1(T1 t1);
-}
-
-// Tuple with arity 2
-public interface Tuple2<T1, T2> extends Tuple {
-    T1 get1(); void set1(T1 t1);
-    T2 get2(); void set2(T2 t2);
-}
-
-// Tuple with arity 3
-public interface Tuple3<T1, T2, T3> extends Tuple {
-    T1 get1(); void set1(T1 t1);
-    T2 get2(); void set2(T2 t2);
-    T3 get3(); void set3(T3 t3);
-}
-
-// Fictional sample application with Java:
-for (Tuple<Integer, String, Date>> tuple : create
-        .select(BOOK.ID, BOOK.TITLE, BOOK.PUBLICATION_DATE)
-        .from(BOOK)
-        .orderBy(BOOK.ID)
-        .fetch()) {
-
-    Integer id           = tuple.get1();
-    String title         = tuple.get2();
-    Date publicationDate = tuple.get3();
-}
-
-// Fictional sample application with Scala:
-for (tuple <- create
-              select (BOOK.ID, BOOK.TITLE, BOOK.PUBLICATION_DATE)
-              from BOOK
-              orderBy BOOK.ID
-              fetch) {
-
-    val id              = tuple._1; // Type is Int
-    val title           = tuple._2; // Type is String
-    val publicationDate = tuple._3; // Type is Date
-}]]></java>
-
-									<p>
-										It is worth mentioning that Scala is much stronger in inferring types than Java. Yet still, this becomes quickly impracticable as
-									</p>
-									<ul>
-										<li>We will run out of pre-defined tuple types for large arities</li>
-										<li>Tuples are not as expressive as records (named tuples)</li>
-										<li>With Java's weak type inference (no val/var keywords), tuples quickly become very verbose in Java</li>
-									</ul>
-									<p>
-										For these reasons jOOQ does not support generic tuples.
-									</p>
 								</content>
 							</section>
 
@@ -5346,6 +5703,46 @@ create.selectFrom(BOOK)
       .orderBy(BOOK.ID)
       .fetchInto(book -> { Util.doThingsWithBook(book); }; );
 ]]></java>
+
+									<p>
+										See also the manual's section about the <reference id="recordmapper" title="RecordMapper"/>, which provides similar features
+									</p>
+								</content>
+							</section>
+
+							<section id="recordmapper">
+								<title>RecordMapper</title>
+								<content>
+									<p>
+										In a more functional operating mode, you might want to write callbacks that map records from your select statement results in order to do some processing. This is a common data access pattern in Spring's JdbcTemplate, and it is also available in jOOQ. With jOOQ, you can implement your own <reference class="org.jooq.RecordMapper"/> classes and plug them into jOOQ's <reference class="org.jooq.ResultQuery"/>:
+									</p>
+									
+<java><![CDATA[// Write callbacks to receive records from select statements
+List<Integer> ids =
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch()
+      .map(new RecordMapper<BookRecord, Integer>() {
+          @Override
+          public Integer map(BookRecord book) {
+              return book.getId();
+          }
+      });
+      
+// Or more concisely
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch(new RecordMapper<BookRecord, Integer>() {...});
+      
+// Or even more concisely with Java 8's lambda expressions:
+create.selectFrom(BOOK)
+      .orderBy(BOOK.ID)
+      .fetch(book -> book.getId());
+]]></java>
+
+									<p>
+										See also the manual's section about the <reference id="recordhandler" title="RecordHandler"/>, which provides similar features
+									</p>
 								</content>
 							</section>
 
@@ -5396,9 +5793,18 @@ public class MyBook1 {
 // The various "into()" methods allow for fetching records into your custom POJOs:
 MyBook1 myBook        = create.select().from(BOOK).fetchAny().into(MyBook1.class); 
 List<MyBook1> myBooks = create.select().from(BOOK).fetch().into(MyBook1.class);
-List<MyBook1> myBooks = create.select().from(BOOK).fetchInto(MyBook1.class);	
+List<MyBook1> myBooks = create.select().from(BOOK).fetchInto(MyBook1.class);]]></java>	
+
+									<p>
+										Please refer to the <reference class="org.jooq.Record" anchor="#into(java.lang.Class)" title="Record.into()"/> Javadoc for more details.
+									</p>
 									
-// An "immutable" POJO class
+									<h3>Using "immutable" POJOs</h3>
+									<p>
+										If jOOQ does not find any default constructor, columns are mapped to the "best-matching" constructor. This allows for using "immutable" POJOs with jOOQ. An example illustrates this:
+									</p>
+									
+<java><![CDATA[// An "immutable" POJO class
 public class MyBook2 {
   public final int id;
   public final String title;
@@ -5412,7 +5818,26 @@ public class MyBook2 {
 // With "immutable" POJO classes, there must be an exact match between projected fields and available constructors:
 MyBook2 myBook        = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchAny().into(MyBook2.class); 
 List<MyBook2> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetch().into(MyBook2.class);
-List<MyBook2> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchInto(MyBook2.class);]]></java>	
+List<MyBook2> myBooks = create.select(BOOK.ID, BOOK.TITLE).from(BOOK).fetchInto(MyBook2.class);
+
+// An "immutable" POJO class with a java.beans.ConstructorProperties annotation
+public class MyBook3 {
+  public final String title;
+  public final int id;
+  
+  @ConstructorProperties({ "title", "id"})
+  public MyBook2(String title, int id) {
+    this.title = title;
+    this.id = id;
+  }
+}
+
+// With annotated "immutable" POJO classes, there doesn't need to be an exact match between fields and constructor arguments.
+// In the below cases, only BOOK.ID is really set onto the POJO, BOOK.TITLE remains null and BOOK.AUTHOR_ID is ignored
+MyBook3 myBook        = create.select(BOOK.ID, BOOK.AUTHOR_ID).from(BOOK).fetchAny().into(MyBook3.class); 
+List<MyBook3> myBooks = create.select(BOOK.ID, BOOK.AUTHOR_ID).from(BOOK).fetch().into(MyBook3.class);
+List<MyBook3> myBooks = create.select(BOOK.ID, BOOK.AUTHOR_ID).from(BOOK).fetchInto(MyBook3.class);
+]]></java>	
 									
 									<p>
 										Please refer to the <reference class="org.jooq.Record" anchor="#into(java.lang.Class)" title="Record.into()"/> Javadoc for more details.
@@ -5541,6 +5966,7 @@ finally {
 									<ul>
 										<li><reference id="record-vs-tablerecord" title="Strongly or weakly typed records"/>: Cursors are also typed with the &lt;R&gt; type, allowing to fetch custom, generated <reference class="org.jooq.TableRecord"/> or plain <reference class="org.jooq.Record"/> types.</li>
 										<li><reference id="recordhandler" title="RecordHandler callbacks"/>: You can use your own <reference class="org.jooq.RecordHandler"/> callbacks to receive lazily fetched records.</li>
+										<li><reference id="recordmapper" title="RecordMapper callbacks"/>: You can use your own <reference class="org.jooq.RecordMapper"/> callbacks to map lazily fetched records.</li>
 										<li><reference id="pojos" title="POJOs"/>: You can fetch data into your own custom POJO types.</li>
 									</ul>
 								</content>
@@ -5832,6 +6258,65 @@ inlined.select(val(1)).where(val(1).equal(1)).fetch();]]></java>
 							<h3>Inlining bind values on a per-bind-value basis</h3>
 							<p>
 								Note that you don't have to inline all your bind values at once. If you know that a bind value is not really a variable and should be inlined explicitly, you can do so by using <reference class="org.jooq.impl.Factory" anchor="#inline(Object)" title="Factory.inline()"/>, as documented in the manual's section about <reference id="inlined-parameters" title="inlined parameters"/>
+							</p>
+						</content>
+					</section>
+
+					<section id="reusing-statements">
+						<title>Reusing a Query's PreparedStatement</title>
+						<content>
+							<p>
+								As previously discussed in the chapter about <reference id="comparison-with-jdbc" title="differences between jOOQ and JDBC"/>, reusing PreparedStatements is handled a bit differently in jOOQ from how it is handled in JDBC
+							</p>
+							
+							<h3>Keeping open PreparedStatements with JDBC</h3>
+							<p>
+								With JDBC, you can easily reuse a <reference class="java.sql.PreparedStatement"/> by not closing it between subsequent executions. An example is given here:
+							</p>
+							
+<java><![CDATA[PreparedStatement stmt = null;
+ResultSet rs1 = null;
+ResultSet rs2 = null;
+
+try {
+    // Execute the statement and fetch a first ResultSet
+    stmt = connection.prepareStatement("SELECT 1 FROM DUAL");
+    rs1  = stmt.executeQuery();
+
+    // Without closing the statement, execute it again to fetch another ResultSet
+    rs2  = stmt.executeQuery();
+}
+finally {
+    try { rs1.close();  } catch (Exception ignore) {}
+    try { rs2.close();  } catch (Exception ignore) {}
+    try { stmt.close(); } catch (Exception ignore) {}
+}]]></java>
+
+							<p>
+								The above technique can be quite useful when you want to reuse expensive database resources. This can be the case when your statement is executed very frequently and your database would take non-negligible time to soft-parse the prepared statement and generate a new statement / cursor resource.
+							</p>
+							
+							<h3>Keeping open PreparedStatements with jOOQ</h3>
+							<p>
+								This is also modeled in jOOQ. However, the difference to JDBC is that closing a statement is the default action, whereas keeping it open has to be configured explicitly. This is better than JDBC, because the default action should be the one that is used most often. Keeping open statements is rarely done in average applications. Here's an example of how to keep open PreparedStatements with jOOQ:
+							</p>
+							
+<java><![CDATA[// Create a query which is configured to keep its underlying PreparedStatement open
+ResultQuery<Record> query = create.selectOne().keepStatement(true);
+
+// Execute the query twice, against the same underlying PreparedStatement:
+try {
+    Result<Record> result1 = query.fetch(); // This will lazily create a new PreparedStatement
+    Result<Record> result2 = query.fetch(); // This will reuse the previous PreparedStatement
+}
+
+// ... but now, you must not forget to close the query
+finally {
+    query.close();
+}]]></java>
+
+							<p>
+								The above example shows how a query can be executed twice against the same underlying PreparedStatement. Unlike in other execution scenarios, you must not forget to close this query now
 							</p>
 						</content>
 					</section>
@@ -6136,11 +6621,11 @@ String xml = create.selectFrom(BOOK).fetch().formatXML();</java>
 										The above query will result in an XML document looking like the following one:
 									</p>
 
-<xml><![CDATA[<result xmlns="http://www.jooq.org/xsd/jooq-export-1.6.2.xsd">
+<xml><![CDATA[<result xmlns="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">
   <fields>
-    <field name="ID"/>
-    <field name="AUTHOR_ID"/>
-    <field name="TITLE"/>
+    <field name="ID" type="INTEGER"/>
+    <field name="AUTHOR_ID" type="INTEGER"/>
+    <field name="TITLE" type="VARCHAR"/>
   </fields>
   <records>
     <record>
@@ -6210,8 +6695,16 @@ String json = create.selectFrom(BOOK).fetch().formatJSON();</java>
 										The above query will result in a JSON document looking like the following one:
 									</p>
 
-<text>{fields:["ID","AUTHOR_ID","TITLE"],
- records:[[1,1,"1984"],[2,1,"Animal Farm"]]}</text>
+<text>{"fields":[{"name":"field-1","type":"type-1"},
+           {"name":"field-2","type":"type-2"},
+           ...,
+           {"name":"field-n","type":"type-n"}],
+ "records":[[value-1-1,value-1-2,...,value-1-n],
+            [value-2-1,value-2-2,...,value-2-n]]}</text>
+             
+             						<p>
+             							Note: This format has changed in jOOQ 2.6.0
+             						</p>
 								</content>
 							</section>
 
@@ -6996,6 +7489,49 @@ for (ExecuteType type : ExecuteType.values()) {
 							<p>
 								Please read the <reference class="org.jooq.ExecuteListener" title="ExecuteListener Javadoc"/> for more details
 							</p>
+							
+							<h3>Writing a custom ExecuteListener for logging</h3>
+							<p>
+								The following depicts an example of a custom ExecuteListener, which pretty-prints all queries being executed by jOOQ to stdout:
+							</p>
+
+<java><![CDATA[import org.jooq.ExecuteContext;
+import org.jooq.conf.Settings;
+import org.jooq.impl.DefaultExecuteListener;
+import org.jooq.impl.Factory;
+import org.jooq.tools.StringUtils;
+
+public class PrettyPrinter extends DefaultExecuteListener {
+
+    /**
+     * Hook into the query execution lifecycle before executing queries
+     */
+    @Override
+    public void executeStart(ExecuteContext ctx) {
+
+        // Create a new factory for logging rendering purposes
+        // This factory doesn't need a connection, only the SQLDialect...
+        Factory factory = new Factory(ctx.getDialect(), 
+        
+        // ... and the flag for pretty-printing
+        	new Settings().withRenderFormatted(true));
+
+        // If we're executing a query
+        if (ctx.query() != null) {
+            System.out.println(factory.renderInlined(ctx.query()));
+        }
+        
+        // If we're executing a routine
+        else if (ctx.routine() != null) {
+            System.out.println(factory.renderInlined(ctx.routine()));
+        }
+        
+        // If we're executing anything else (e.g. plain SQL)
+        else if (!StringUtils.isBlank(ctx.sql())) {
+            System.out.println(ctx.sql());
+        }
+    }
+}]]></java>
 							<p>
 								See also the manual's sections about <reference id="logging" title="logging"/> and the <reference id="jooq-console" title="jOOQ Console"/> for more sample implementations of actual ExecuteListeners.
 							</p>
@@ -8311,12 +8847,12 @@ create.selectFrom(AUTHOR)
 							</ul>
 
 							<p>
-								Both modes will require that you set the <reference class="org.jooq.debug.DebugListener"/> in the Factory's settings. When using XML settings:
+								Both modes will require that you set the <reference class="org.jooq.debug.impl.DebugListener"/> in the Factory's settings. When using XML settings:
 							</p>
 
 <xml><![CDATA[<settings>
   <executeListeners>
-    <executeListener>org.jooq.debug.DebugListener</executeListener>
+    <executeListener>org.jooq.debug.impl.DebugListener</executeListener>
   </executeListeners>
 </settings>]]></xml>
 
@@ -8325,7 +8861,7 @@ create.selectFrom(AUTHOR)
 							</p>
 							
 <java><![CDATA[Settings settings = new Settings()
-    .getExecuteListeners().add("org.jooq.debug.DebugListener");
+    .getExecuteListeners().add("org.jooq.debug.impl.DebugListener");
 Factory factory = new Factory(connection, dialect, settings);]]></java>
 
 							<h3>In-process mode</h3>
@@ -8647,7 +9183,7 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 								<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html">JPA</a>: The de-facto standard in the javax.persistence packages, supplied by Oracle. Its annotations are useful to jOOQ as well.</li>
 								<li><a href="http://onewebsql.com">OneWebSQL</a>: A commercial SQL abstraction API with support for DAO source code generation, which was integrated also in jOOQ</li>
 								<li><a href="http://www.querydsl.com">QueryDSL</a>: A "LINQ-port" to Java. It has a similar fluent API, a similar code-generation facility, yet quite a different purpose. While jOOQ is all about SQL, QueryDSL (like LINQ) is mostly about querying.</li>
-								<li><a href="http://www.springsource.org/features/data-access">Spring Data</a>: Spring's JdbcTemplate knows RowMappers, which are reflected by jOOQ's <reference class="org.jooq.RecordHandler"/></li>
+								<li><a href="http://www.springsource.org/features/data-access">Spring Data</a>: Spring's JdbcTemplate knows RowMappers, which are reflected by jOOQ's <reference id="recordhandler"/> or <reference id="recordmapper"/></li>
 							</ul>
 						</content>
 					</section>

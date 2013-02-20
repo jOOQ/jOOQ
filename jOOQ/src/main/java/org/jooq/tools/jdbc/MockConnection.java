@@ -69,7 +69,7 @@ import java.util.Properties;
  *         result.add(executor.newRecord(MY_TABLE));
  *
  *         return new MockResult[] {
- *             new MockResult(1, result);
+ *             new MockResult(1, result)
  *         };
  *     }
  * };

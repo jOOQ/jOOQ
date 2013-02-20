@@ -733,7 +733,7 @@ final class Utils {
             if (peek(sqlChars, i, "--")) {
 
                 // Consume the complete comment
-                for (; sqlChars[i] != '\r' && sqlChars[i] != '\n'; render.sql(sqlChars[i++]));
+                for (; i < sqlChars.length && sqlChars[i] != '\r' && sqlChars[i] != '\n'; render.sql(sqlChars[i++]));
 
                 // Consume the newline character
                 render.sql(sqlChars[i]);
@@ -1739,7 +1739,7 @@ final class Utils {
             return (T) wasNull(rs, Boolean.valueOf(rs.getBoolean(index)));
         }
         else if (type == BigInteger.class) {
-        	// The SQLite JDBC driver doesn't support BigDecimals
+            // The SQLite JDBC driver doesn't support BigDecimals
             if (ctx.getDialect() == SQLDialect.SQLITE) {
                 return Convert.convert(rs.getString(index), (Class<T>) BigInteger.class);
             }

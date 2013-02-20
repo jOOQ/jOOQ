@@ -74,6 +74,11 @@ public interface Database {
     List<SequenceDefinition> getSequences(SchemaDefinition schema);
 
     /**
+     * The identities contained in this database
+     */
+    List<IdentityDefinition> getIdentities(SchemaDefinition schema);
+
+    /**
      * The tables contained in this database
      */
     List<TableDefinition> getTables(SchemaDefinition schema);

@@ -731,7 +731,7 @@ final class Utils {
                 for (; i < sqlChars.length && sqlChars[i] != '\r' && sqlChars[i] != '\n'; render.sql(sqlChars[i++]));
 
                 // Consume the newline character
-                render.sql(sqlChars[i]);
+                if (i < sqlChars.length) render.sql(sqlChars[i]);
             }
 
             // [#1797] Skip content inside of multi-line comments, e.g.

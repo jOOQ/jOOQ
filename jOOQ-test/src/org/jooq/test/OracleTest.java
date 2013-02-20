@@ -1212,23 +1212,23 @@ public class OracleTest extends jOOQAbstractTest<
 
         Select<Record3<String, String, String>> select =
         create().select(
-                    org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.FIRST_NAME,
-                    org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.LAST_NAME,
-                    org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK.TITLE)
-                .from(org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK)
-                .join(org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR)
-                .on(org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK.AUTHOR_ID.eq(
-                    org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.ID))
-                .orderBy(org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK.ID);
+                    org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.FIRST_NAME,
+                    org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.LAST_NAME,
+                    org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.TITLE)
+                .from(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK)
+                .join(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR)
+                .on(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.AUTHOR_ID.eq(
+                    org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.ID))
+                .orderBy(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.ID);
 
         // No reference to the TEST schema should be contained
         assertFalse(select.getSQL().contains("TEST"));
 
         Result<Record3<String, String, String>> result = select.fetch();
         assertEquals(4, result.size());
-        assertEquals(BOOK_FIRST_NAMES, result.getValues(org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.FIRST_NAME));
-        assertEquals(BOOK_LAST_NAMES, result.getValues(org.jooq.test.oracle3.generatedclasses.Tables.T_AUTHOR.LAST_NAME));
-        assertEquals(BOOK_TITLES, result.getValues(org.jooq.test.oracle3.generatedclasses.Tables.T_BOOK.TITLE));
+        assertEquals(BOOK_FIRST_NAMES, result.getValues(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.FIRST_NAME));
+        assertEquals(BOOK_LAST_NAMES, result.getValues(org.jooq.test.oracle3.generatedclasses.tables.T_AUTHOR.T_AUTHOR.LAST_NAME));
+        assertEquals(BOOK_TITLES, result.getValues(org.jooq.test.oracle3.generatedclasses.tables.T_BOOK.T_BOOK.TITLE));
     }
 
     @Test

@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1564730239;
+	private static final long serialVersionUID = 405695255;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -24,18 +24,13 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang
 	}
 
 	@Override
-	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
-		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
-			org.jooq.test.oracle3.generatedclasses.Sequences.S_AUTHOR_ID,
-			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_BIG_INTEGER,
-			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_BYTE,
-			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_INT,
-			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_LONG,
-			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_SHORT);
+	public final java.util.List<org.jooq.Table<?>> getTables() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getTables0());
+		return result;
 	}
 
-	@Override
-	public final java.util.List<org.jooq.Table<?>> getTables() {
+	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.oracle3.generatedclasses.tables.M_LIBRARY.M_LIBRARY,
 			org.jooq.test.oracle3.generatedclasses.tables.T_ARRAYS.T_ARRAYS,
@@ -65,6 +60,12 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang
 
 	@Override
 	public final java.util.List<org.jooq.UDT<?>> getUDTs() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getUDTs0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.UDT<?>> getUDTs0() {
 		return java.util.Arrays.<org.jooq.UDT<?>>asList(
 			org.jooq.test.oracle3.generatedclasses.udt.O_INVALID_TYPE.O_INVALID_TYPE,
 			org.jooq.test.oracle3.generatedclasses.udt.U_ADDRESS_TYPE.U_ADDRESS_TYPE,

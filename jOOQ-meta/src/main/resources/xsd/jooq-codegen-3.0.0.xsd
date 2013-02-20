@@ -349,6 +349,20 @@
         Annotate POJOs and Records with JSR-303 validation annotations
         -->
       <element name="validationAnnotations" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+      
+      <!-- 
+        Allow to turn off the generation of global object references, which include
+        
+        - Tables.java
+        - Sequences.java
+        - UDTs.java
+        
+        Turning off the generation of the above files may be necessary for very
+        large schemas, which exceed the amount of allowed constants in a class's
+        constant pool (64k) or, whose static initialiser would exceed 64k of
+        byte code
+        -->
+      <element name="globalObjectReferences" type="boolean" default="true" minOccurs="0" maxOccurs="1" />
     </all>
   </complexType>
 

@@ -8931,6 +8931,20 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
   <!-- Annotate POJOs and Records with JSR-303 validation annotations
        Defaults to false -->
   <validationAnnotations>false</validationAnnotations>
+  
+  <!-- Allow to turn off the generation of global object references, which include
+  
+       - Tables.java
+       - Sequences.java
+       - UDTs.java
+  
+       Turning off the generation of the above files may be necessary for very
+       large schemas, which exceed the amount of allowed constants in a class's
+       constant pool (64k) or, whose static initialiser would exceed 64k of
+       byte code
+       
+       Defaults to true -->
+  <globalObjectReferences>true</globalObjectReferences>
 </generate>]]></xml>
 						</content>
 					</section>
@@ -9435,6 +9449,7 @@ create.selectFrom(AUTHOR)
 							<ul>
 								<li>Distribute your database objects in several schemas. That is probably a good idea anyway for such large databases</li>
 								<li><reference id="codegen-configuration" title="Configure jOOQ's code generator"/> to exclude excess database objects</li>
+								<li><reference id="codegen-configuraiton" title="Configure jOOQ's code generator"/> to avoid generating <reference id="codegen-globals" title="global objects"/> using <code>&lt;globalObjectReferences/&gt;</code></li>
 								<li>Remove uncompilable classes after code generation</li>
 							</ul>
 						</content>

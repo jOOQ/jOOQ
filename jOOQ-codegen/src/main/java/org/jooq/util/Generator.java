@@ -175,6 +175,16 @@ public interface Generator {
     void setGenerateValidationAnnotations(boolean generateValidationAnnotations);
 
     /**
+     * Whether global object references should be generated
+     */
+    boolean generateGlobalObjectReferences();
+
+    /**
+     * Whether global object references should be generated
+     */
+    void setGenerateGlobalObjectReferences(boolean generateGlobalObjectReferences);
+
+    /**
      * The target directory
      */
     String getTargetDirectory();

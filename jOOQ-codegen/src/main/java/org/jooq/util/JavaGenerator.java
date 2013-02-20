@@ -138,9 +138,9 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  strategy", strategy.delegate.getClass());
         log.info("  deprecated", generateDeprecated());
         log.info("  generated annotation", generateGeneratedAnnotation());
-        log.info("  instance fields", generateInstanceFields());
         log.info("  JPA annotations", generateJPAAnnotations());
         log.info("  validation annotations", generateValidationAnnotations());
+        log.info("  instance fields", generateInstanceFields());
         log.info("  records", generateRecords()
             + ((!generateRecords && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("  pojos", generatePojos()
@@ -150,6 +150,7 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  interfaces", generateInterfaces());
         log.info("  daos", generateDaos());
         log.info("  relations", generateRelations());
+        log.info("  global references", generateGlobalObjectReferences());
         log.info("----------------------------------------------------------");
 
         String targetPackage = getTargetPackage();
@@ -178,7 +179,7 @@ public class JavaGenerator extends AbstractGenerator {
     private final void generate(SchemaDefinition schema) {
         generateSchema(schema);
 
-        if (database.getSequences(schema).size() > 0) {
+        if (generateGlobalObjectReferences() && database.getSequences(schema).size() > 0) {
             generateSequences(schema);
         }
 
@@ -194,7 +195,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateDaos(schema);
         }
 
-        if (database.getTables(schema).size() > 0) {
+        if (generateGlobalObjectReferences() && database.getTables(schema).size() > 0) {
             generateTableReferences(schema);
         }
 
@@ -222,7 +223,7 @@ public class JavaGenerator extends AbstractGenerator {
             generateUDTRoutines(schema);
         }
 
-        if (database.getUDTs(schema).size() > 0) {
+        if (generateGlobalObjectReferences() && database.getUDTs(schema).size() > 0) {
             generateUDTReferences(schema);
         }
 
@@ -1577,7 +1578,11 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("super(\"%s\");", schema.getOutputName());
         out.tab(1).println("}");
 
-        printSchemaReferences(out, database.getSequences(schema), Sequence.class, true);
+        // [#2255] Avoid referencing sequence literals, if they're not generated
+        if (generateGlobalObjectReferences()) {
+            printSchemaReferences(out, database.getSequences(schema), Sequence.class, true);
+        }
+
         printSchemaReferences(out, database.getTables(schema), Table.class, true);
         printSchemaReferences(out, database.getUDTs(schema), UDT.class, true);
 

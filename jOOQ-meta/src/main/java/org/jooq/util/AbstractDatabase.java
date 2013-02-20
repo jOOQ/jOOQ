@@ -93,6 +93,7 @@ public abstract class AbstractDatabase implements Database {
     private List<String>                                              inputSchemata;
     private List<SchemaDefinition>                                    schemata;
     private List<SequenceDefinition>                                  sequences;
+    private List<IdentityDefinition>                                  identities;
     private List<TableDefinition>                                     tables;
     private List<EnumDefinition>                                      enums;
     private List<UDTDefinition>                                       udts;
@@ -102,6 +103,7 @@ public abstract class AbstractDatabase implements Database {
     private Relations                                                 relations;
 
     private transient Map<SchemaDefinition, List<SequenceDefinition>> sequencesBySchema;
+    private transient Map<SchemaDefinition, List<IdentityDefinition>> identitiesBySchema;
     private transient Map<SchemaDefinition, List<TableDefinition>>    tablesBySchema;
     private transient Map<SchemaDefinition, List<EnumDefinition>>     enumsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>      udtsBySchema;
@@ -349,6 +351,29 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return filterSchema(sequences, schema, sequencesBySchema);
+    }
+
+    @Override
+    public final List<IdentityDefinition> getIdentities(SchemaDefinition schema) {
+        if (identities == null) {
+            identities = new ArrayList<IdentityDefinition>();
+
+            for (SchemaDefinition s : getSchemata()) {
+                for (TableDefinition table : getTables(s)) {
+                    IdentityDefinition identity = table.getIdentity();
+
+                    if (identity != null) {
+                        identities.add(identity);
+                    }
+                }
+            }
+        }
+
+        if (identitiesBySchema == null) {
+            identitiesBySchema = new LinkedHashMap<SchemaDefinition, List<IdentityDefinition>>();
+        }
+
+        return filterSchema(identities, schema, identitiesBySchema);
     }
 
     @Override

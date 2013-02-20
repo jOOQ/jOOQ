@@ -9415,6 +9415,30 @@ create.selectFrom(AUTHOR)
 
 						</content>
 					</section>
+					
+					<section id="codegen-large-schemas">
+						<title>Code generation for large schemas</title>
+						<content>
+							<p>
+								Databases can become very large in real-world applications. This is not a problem for jOOQ's code generator, but it can be for the Java compiler. jOOQ generates some classes for <reference id="codegen-globals" title="global access"/>. These classes can hit two sorts of limits of the compiler / JVM:
+							</p>
+							
+							<ul>
+								<li>Methods (including static / instance initialisers) are allowed to contain only 64kb of bytecode.</li>
+								<li>Classes are allowed to contain at most 64k of constant literals</li>
+							</ul>
+							
+							<p>
+								While there exist workarounds for the above two limitations (delegating initialisations to nested classes, inheriting constant literals from implemented interfaces), the preferred approach is either one of these:
+							</p>
+							
+							<ul>
+								<li>Distribute your database objects in several schemas. That is probably a good idea anyway for such large databases</li>
+								<li><reference id="codegen-configuration" title="Configure jOOQ's code generator"/> to exclude excess database objects</li>
+								<li>Remove uncompilable classes after code generation</li>
+							</ul>
+						</content>
+					</section>
 				</sections>
 			</section>
 

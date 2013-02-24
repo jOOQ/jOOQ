@@ -53,6 +53,7 @@ import static org.jooq.impl.Term.ROW_NUMBER;
 import static org.jooq.impl.Utils.combine;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSetMetaData;
 import java.sql.Time;
@@ -62,6 +63,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Generated;
+import javax.sql.DataSource;
 
 import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
@@ -8312,5 +8314,73 @@ public class Factory {
     /**
      * No instances.
      */
-    protected Factory() {}
+    protected Factory() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This constructor is no longer available in jOOQ 3.0.
+     * <p>
+     * <a href="http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/"
+     * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
+     */
+    @SuppressWarnings("unused")
+    private Factory(Connection connection, SQLDialect dialect) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This constructor is no longer available in jOOQ 3.0.
+     * <p>
+     * <a href="http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/"
+     * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
+     */
+    @SuppressWarnings("unused")
+    private Factory(Connection connection, SQLDialect dialect, Settings settings) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This constructor is no longer available in jOOQ 3.0.
+     * <p>
+     * <a href="http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/"
+     * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
+     */
+    @SuppressWarnings("unused")
+    private Factory(DataSource datasource, SQLDialect dialect) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This constructor is no longer available in jOOQ 3.0.
+     * <p>
+     * <a href="http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/"
+     * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
+     */
+    @SuppressWarnings("unused")
+    private Factory(DataSource datasource, SQLDialect dialect, Settings settings) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This constructor is no longer available in jOOQ 3.0.
+     * <p>
+     * <a href="http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/"
+     * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
+     */
+    @SuppressWarnings("unused")
+    private Factory(SQLDialect dialect) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * This constructor is no longer available in jOOQ 3.0.
+     * <p>
+     * <a href="http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/"
+     * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
+     */
+    @SuppressWarnings("unused")
+    private Factory(SQLDialect dialect, Settings settings) {
+        throw new UnsupportedOperationException();
+    }
 }

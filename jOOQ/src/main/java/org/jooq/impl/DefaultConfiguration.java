@@ -82,7 +82,7 @@ class DefaultConfiguration implements Configuration {
         this.connectionProvider = connectionProvider;
         this.dialect = dialect;
         this.settings = settings != null ? settings : SettingsTools.defaultSettings();
-        this.mapping = new org.jooq.SchemaMapping(this.settings);
+        this.mapping = new org.jooq.SchemaMapping(this);
         this.data = data != null ? data : new HashMap<String, Object>();
         this.listeners = new ArrayList<ExecuteListener>();
     }

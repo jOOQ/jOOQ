@@ -796,10 +796,9 @@ public abstract class BaseTest<
         return (Sequence<? extends Number>) cSequences().getField("S_AUTHOR_ID").get(cSequences());
     }
 
-    @SuppressWarnings("deprecation")
     protected final Schema schema() {
         Schema schema = TAuthor().getSchema();
-        Schema mapped = create().getSchemaMapping().map(schema);
+        Schema mapped = create().map(schema);
 
         return mapped != null ? mapped : schema;
     }

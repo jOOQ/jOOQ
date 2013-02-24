@@ -838,7 +838,7 @@ public abstract class jOOQAbstractTest<
 
     @SuppressWarnings("deprecation")
     protected final Schema schema() {
-        return create().getSchemaMapping().map(TAuthor().getSchema());
+        return create().map(TAuthor().getSchema());
     }
 
     protected final Executor create() {

@@ -91,7 +91,6 @@ public class SchemaMapping implements Serializable {
     private static volatile boolean                  loggedDeprecation = false;
 
     private final Configuration                      configuration;
-    private final boolean                            ignoreMapping;
     private volatile transient Map<String, Schema>   schemata;
     private volatile transient Map<String, Table<?>> tables;
 
@@ -99,15 +98,7 @@ public class SchemaMapping implements Serializable {
      * Construct a mapping from a {@link Configuration} object
      */
     public SchemaMapping(Configuration configuration) {
-        this(configuration, false);
-    }
-
-    /**
-     * Auxiliary constructor used for backwards-compatibility.
-     */
-    private SchemaMapping(Configuration configuration, boolean ignore) {
         this.configuration = configuration;
-        this.ignoreMapping = ignore;
     }
 
     private final RenderMapping mapping() {
@@ -137,7 +128,6 @@ public class SchemaMapping implements Serializable {
      * @param schema the default schema
      */
     public void use(Schema schema) {
-        if (ignoreMapping) return;
         use(schema.getName());
     }
 
@@ -151,7 +141,6 @@ public class SchemaMapping implements Serializable {
      * @param schemaName the default schema
      */
     public void use(String schemaName) {
-        if (ignoreMapping) return;
         logDeprecation();
 
         mapping().setDefaultSchema(schemaName);
@@ -164,7 +153,6 @@ public class SchemaMapping implements Serializable {
      * @param outputSchema The schema configured at run time to be mapped
      */
     public void add(String inputSchema, String outputSchema) {
-        if (ignoreMapping) return;
         logDeprecation();
 
         // Find existing mapped schema
@@ -192,7 +180,6 @@ public class SchemaMapping implements Serializable {
      * @param outputSchema The schema configured at run time to be mapped
      */
     public void add(String inputSchema, Schema outputSchema) {
-        if (ignoreMapping) return;
         add(inputSchema, outputSchema.getName());
     }
 
@@ -203,7 +190,6 @@ public class SchemaMapping implements Serializable {
      * @param outputSchema The schema configured at run time to be mapped
      */
     public void add(Schema inputSchema, Schema outputSchema) {
-        if (ignoreMapping) return;
         add(inputSchema.getName(), outputSchema.getName());
     }
 
@@ -214,7 +200,6 @@ public class SchemaMapping implements Serializable {
      * @param outputSchema The schema configured at run time to be mapped
      */
     public void add(Schema inputSchema, String outputSchema) {
-        if (ignoreMapping) return;
         add(inputSchema.getName(), outputSchema);
     }
 
@@ -225,7 +210,6 @@ public class SchemaMapping implements Serializable {
      * @param outputTable The table configured at run time to be mapped
      */
     public void add(Table<?> inputTable, Table<?> outputTable) {
-        if (ignoreMapping) return;
         add(inputTable, outputTable.getName());
     }
 
@@ -236,7 +220,6 @@ public class SchemaMapping implements Serializable {
      * @param outputTable The table configured at run time to be mapped
      */
     public void add(final Table<?> inputTable, final String outputTable) {
-        if (ignoreMapping) return;
         logDeprecation();
 
         // Try to find a pre-existing schema mapping in the settings
@@ -285,7 +268,6 @@ public class SchemaMapping implements Serializable {
         // [#1774] The default Settings render schema flag takes precedence over
         // The DefaultConfiguration's ignoreMapping flag!
         if (!renderSchema()) return null;
-        if (ignoreMapping) return schema;
 
         Schema result = null;
         if (schema != null) {
@@ -344,7 +326,6 @@ public class SchemaMapping implements Serializable {
      */
     @SuppressWarnings("unchecked")
     public <R extends Record> Table<R> map(Table<R> table) {
-        if (ignoreMapping) return table;
         Table<R> result = null;
 
         if (table != null) {
@@ -402,7 +383,6 @@ public class SchemaMapping implements Serializable {
      * Spring
      */
     public void setDefaultSchema(String schema) {
-        if (ignoreMapping) return;
         use(schema);
     }
 
@@ -410,7 +390,6 @@ public class SchemaMapping implements Serializable {
      * Initialise SchemaMapping. Added for better interoperability with Spring
      */
     public void setSchemaMapping(Map<String, String> schemaMap) {
-        if (ignoreMapping) return;
         for (Entry<String, String> entry : schemaMap.entrySet()) {
             add(entry.getKey(), entry.getValue());
         }

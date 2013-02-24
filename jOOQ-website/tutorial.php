@@ -83,7 +83,7 @@ that looks like this:
 </p>
 <pre class="prettyprint lang-xml">
 &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-&lt;configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.0.4.xsd">
+&lt;configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd">
   &lt;!-- Configure the database connection here -->
   &lt;jdbc>
     &lt;driver>com.mysql.jdbc.Driver&lt;/driver>
@@ -114,13 +114,6 @@ that looks like this:
               Excludes match before includes -->
       &lt;excludes>&lt;/excludes>
     &lt;/database>
-
-    &lt;generate>
-      &lt;!-- Primary key / foreign key relations should be generated and used.
-           This will be a prerequisite for various advanced features
-           Defaults to false -->
-      &lt;relations>true&lt;/relations>
-    &lt;/generate>
 
     &lt;target>
       &lt;!-- The destination package of your generated classes (within the destination directory) -->
@@ -269,8 +262,8 @@ This is pretty standard code for establishing a MySQL connection.
 Let's add a simple query:
 </p>
 <pre class="prettyprint lang-java">
-Factory create = new Factory(conn, SQLDialect.MYSQL);
-Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
+Executor create = new Executor(conn, SQLDialect.MYSQL);
+Result&lt;Record> result = Executor.select().from(POSTS).fetch();
 </pre>
 <p>
 First get an instance of <code>Factory</code> so we can write a simple
@@ -309,16 +302,10 @@ package test;
 import static test.generated.Tables.*;
 import static org.jooq.impl.Factory.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
-import org.jooq.Record;
-import org.jooq.Result;
-import org.jooq.impl.Factory;
-
-import test.generated.tables.Posts;
+import org.jooq.*;
+import org.jooq.impl.*;
 
 public class Main {
 
@@ -336,8 +323,8 @@ public class Main {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
-            Factory create = new Factory(conn, SQLDialect.MYSQL);
-            Result&lt;Record&gt; result = create.select().from(POSTS).fetch();
+            Executor create = new Executor(conn, SQLDialect.MYSQL);
+            Result&lt;Record> result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {
                 Long id = r.getValue(POSTS.ID);

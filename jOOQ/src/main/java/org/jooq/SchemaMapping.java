@@ -90,14 +90,6 @@ public class SchemaMapping implements Serializable {
     private static final JooqLogger                  log               = JooqLogger.getLogger(SchemaMapping.class);
     private static volatile boolean                  loggedDeprecation = false;
 
-    /**
-     * The default, unmodifiable mapping that just takes generated schemata
-     *
-     * @deprecated - 2.0.5 - Do not reuse this SchemaMapping!
-     */
-    @Deprecated
-    public static final SchemaMapping                NO_MAPPING        = new SchemaMapping(SettingsTools.defaultSettings(), true);
-
     private final RenderMapping                      mapping;
     private final boolean                            ignoreMapping;
     private final boolean                            renderSchema;

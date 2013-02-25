@@ -10,6 +10,35 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.6.3 - February 25, 2013
+================================================================================
+
+This is a minor patch release with some useful fixes for the 2.6 branch
+
+Bug fixes
+---------
+#1886 - Query.bind() has no effect when Query.keepStatement(true) and 
+        StatementType.STATIC_STATEMENT are combined
+#2165 - Add H2 database definitions to the jOOQ-scala module
+#2167 - Convert.convert("xx", boolean.class) returns null, instead of false
+#2189 - Change all Javadoc <h3/> tags to <h5/>
+#2190 - ClassCastException when using UNION with selectFrom()
+#2214 - "code size too large" in generated SchemaImpl, when the number of tables
+        exceeds 15k
+#2217 - Improve example in the "jOOQ for CRUD" section. Use only columns from 
+        the sample database
+#2223 - SQL injection is possible in org.jooq.impl.Val, if client code doesn't
+        correctly enforce generic typesafety, and bind variables are inlined
+#2227 - Field.in(T...) doesn't convert argument values to the Field's type
+#2238 - Code generation runs extremely slow for large schemas (Inefficient 
+        DefaultRelations.getUniqueKeys() and getForeignKeys() methods) 
+#2239 - Code generation runs extremely slow for large schemas (Inefficient 
+        AbstractDatabase.filterSchema() methods)
+#2252 - ArrayIndexOutOfBoundsException, when rendering plain SQL that is
+        terminated by a comment
+#2261 - RenderMapping has no effect, if not supplied to the Factory constructor
+#2262 - RenderSchema has no effect, if not supplied to the Factory constructor
+
 Version 2.6.2 - February 5, 2013
 ================================================================================
 

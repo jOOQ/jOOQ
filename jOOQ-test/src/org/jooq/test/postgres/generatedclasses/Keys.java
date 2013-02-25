@@ -18,6 +18,7 @@ public class Keys {
 
 	public static final org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = Identities0.IDENTITY_T_IDENTITY;
 	public static final org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
+	public static final org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Integer> IDENTITY_T_PG_EXTENSIONS = Identities0.IDENTITY_T_PG_EXTENSIONS;
 	public static final org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 
 	// -------------------------------------------------------------------------
@@ -36,6 +37,7 @@ public class Keys {
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord> PK_T_EXOTIC_TYPES = UniqueKeys0.PK_T_EXOTIC_TYPES;
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = UniqueKeys0.PK_T_IDENTITY_PK;
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> PK_T_LANGUAGE = UniqueKeys0.PK_T_LANGUAGE;
+	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord> PK_T_PG_EXTENSIONS = UniqueKeys0.PK_T_PG_EXTENSIONS;
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = UniqueKeys0.PK_T_TRIGGERS;
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = UniqueKeys0.PK_X_TEST_CASE_64_69;
 	public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> PK_X_TEST_CASE_71 = UniqueKeys0.PK_X_TEST_CASE_71;
@@ -75,6 +77,7 @@ public class Keys {
 	private static class Identities0 extends org.jooq.impl.AbstractKeys {
 		public static org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY, org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY.ID);
 		public static org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
+		public static org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Integer> IDENTITY_T_PG_EXTENSIONS = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS, org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS.ID);
 		public static org.jooq.Identity<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 	}
 
@@ -91,6 +94,7 @@ public class Keys {
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord> PK_T_EXOTIC_TYPES = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES, org.jooq.test.postgres.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord> PK_T_IDENTITY_PK = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> PK_T_LANGUAGE = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE, org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE.ID);
+		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord> PK_T_PG_EXTENSIONS = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS, org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> PK_T_TRIGGERS = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS.ID_GENERATED);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> PK_X_TEST_CASE_64_69 = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.postgres.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69.ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> PK_X_TEST_CASE_71 = createUniqueKey(org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71, org.jooq.test.postgres.generatedclasses.tables.XTestCase_71.X_TEST_CASE_71.ID);

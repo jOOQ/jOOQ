@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1740566938;
+	private static final long serialVersionUID = -1115139070;
 
 	/**
 	 * The singleton instance of <code>public</code>
@@ -25,12 +25,24 @@ public class Public extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getSequences0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
 		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
 			org.jooq.test.postgres.generatedclasses.Sequences.S_AUTHOR_ID);
 	}
 
 	@Override
 	public final java.util.List<org.jooq.Table<?>> getTables() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getTables0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
 			org.jooq.test.postgres.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE,
 			org.jooq.test.postgres.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST,
@@ -49,6 +61,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.postgres.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.postgres.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE,
+			org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS,
 			org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS,
 			org.jooq.test.postgres.generatedclasses.tables.VAuthor.V_AUTHOR,
 			org.jooq.test.postgres.generatedclasses.tables.VBook.V_BOOK,
@@ -62,6 +75,12 @@ public class Public extends org.jooq.impl.SchemaImpl {
 
 	@Override
 	public final java.util.List<org.jooq.UDT<?>> getUDTs() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getUDTs0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.UDT<?>> getUDTs0() {
 		return java.util.Arrays.<org.jooq.UDT<?>>asList(
 			org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE,
 			org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE);

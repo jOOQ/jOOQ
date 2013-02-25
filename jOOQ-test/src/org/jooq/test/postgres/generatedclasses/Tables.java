@@ -97,6 +97,11 @@ public final class Tables {
 	public static final org.jooq.test.postgres.generatedclasses.tables.TLanguage T_LANGUAGE = org.jooq.test.postgres.generatedclasses.tables.TLanguage.T_LANGUAGE;
 
 	/**
+	 * The table public.t_pg_extensions
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TPgExtensions T_PG_EXTENSIONS = org.jooq.test.postgres.generatedclasses.tables.TPgExtensions.T_PG_EXTENSIONS;
+
+	/**
 	 * The table public.t_triggers
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS;

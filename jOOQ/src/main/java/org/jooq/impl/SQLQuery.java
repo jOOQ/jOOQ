@@ -68,11 +68,11 @@ class SQLQuery extends AbstractQuery {
 
     @Override
     public final void toSQL(RenderContext context) {
-        Util.renderAndBind(context, null, sql, substitutes);
+        Utils.renderAndBind(context, null, sql, substitutes);
     }
 
     @Override
     public final void bind(BindContext context) {
-        Util.renderAndBind(null, context, sql, substitutes);
+        Utils.renderAndBind(null, context, sql, substitutes);
     }
 }

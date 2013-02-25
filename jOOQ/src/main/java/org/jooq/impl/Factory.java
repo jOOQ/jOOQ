@@ -323,9 +323,8 @@ public class Factory implements FactoryOperations {
      * @param settings The runtime settings to apply to objects created from
      *            this factory
      */
-    @SuppressWarnings("deprecation")
     public Factory(Connection connection, SQLDialect dialect, Settings settings) {
-        this(null, connection, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+        this(null, connection, dialect, settings, null, null);
     }
 
     /**
@@ -350,9 +349,8 @@ public class Factory implements FactoryOperations {
      * @param settings The runtime settings to apply to objects created from
      *            this factory
      */
-    @SuppressWarnings("deprecation")
     public Factory(DataSource datasource, SQLDialect dialect, Settings settings) {
-        this(datasource, null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+        this(datasource, null, dialect, settings, null, null);
     }
 
     /**
@@ -365,9 +363,8 @@ public class Factory implements FactoryOperations {
      * @param settings The runtime settings to apply to objects created from
      *            this factory
      */
-    @SuppressWarnings("deprecation")
     public Factory(SQLDialect dialect, Settings settings) {
-        this(null, null, dialect, settings, new org.jooq.SchemaMapping(settings), null);
+        this(null, null, dialect, settings, null, null);
     }
 
     /**
@@ -379,7 +376,7 @@ public class Factory implements FactoryOperations {
         this.datasource = datasource;
         this.dialect = dialect;
         this.settings = settings != null ? settings : SettingsTools.defaultSettings();
-        this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(this.settings);
+        this.mapping = mapping != null ? mapping : new org.jooq.SchemaMapping(this);
         this.data = data != null ? data : new HashMap<String, Object>();
     }
 

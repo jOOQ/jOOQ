@@ -35,12 +35,18 @@
  */
 package org.jooq.test;
 
+import static org.jooq.test.data.Table1.TABLE1;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.jooq.SQLDialect;
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.MappedTable;
+import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.Factory;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -69,6 +75,24 @@ public class SettingsTest {
         assertTrue(settings2.isAttachRecords());
         assertTrue(SettingsTools.defaultSettings().isAttachRecords());
         assertFalse(settings.isAttachRecords());
+    }
+
+    @Test
+    public void testRenderMapping() {
+        Factory create1 = new Factory(SQLDialect.ORACLE, new Settings().withRenderMapping(mapping()));
+        assertEquals("\"TABLEX\"", create1.render(TABLE1));
+
+        Factory create2 = new Factory(SQLDialect.ORACLE);
+        create2.getSettings().setRenderMapping(mapping());
+        assertEquals("\"TABLEX\"", create2.render(TABLE1));
+    }
+
+    private RenderMapping mapping() {
+        return new RenderMapping().withSchemata(
+                   new MappedSchema().withInput("").withTables(
+                       new MappedTable().withInput("TABLE1").withOutput("TABLEX")
+                   )
+               );
     }
 
     @Test

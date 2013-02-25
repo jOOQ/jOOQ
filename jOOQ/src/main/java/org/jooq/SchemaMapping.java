@@ -50,6 +50,7 @@ import org.jooq.conf.MappedTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
+import org.jooq.impl.Factory;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -95,9 +96,9 @@ public class SchemaMapping implements Serializable {
      * @deprecated - 2.0.5 - Do not reuse this SchemaMapping!
      */
     @Deprecated
-    public static final SchemaMapping                NO_MAPPING        = new SchemaMapping(SettingsTools.defaultSettings(), true);
+    public static final SchemaMapping                NO_MAPPING        = new SchemaMapping(new Factory(SQLDialect.SQL99), true);
 
-    private final RenderMapping                      mapping;
+    private final Configuration                      configuration;
     private final boolean                            ignoreMapping;
     private final boolean                            renderSchema;
     private volatile transient Map<String, Schema>   schemata;
@@ -107,34 +108,41 @@ public class SchemaMapping implements Serializable {
      * Construct an empty mapping
      */
     public SchemaMapping() {
-        this(null);
+        this((Settings) null);
     }
 
     /**
      * Construct a mapping from a {@link Settings} object
      */
     public SchemaMapping(Settings settings) {
-        this(settings, false);
+        this(new Factory(SQLDialect.SQL99, settings), false);
+    }
+
+    /**
+     * Construct a mapping from a {@link Configuration} object
+     */
+    public SchemaMapping(Configuration configuration) {
+        this(configuration, false);
     }
 
     /**
      * Auxiliary constructor used for backwards-compatibility.
      */
-    private SchemaMapping(Settings settings, boolean ignore) {
+    private SchemaMapping(Configuration configuration, boolean ignore) {
+        Settings settings = configuration.getSettings();
+
         boolean isRenderSchema = true;
-
-        if (settings == null) {
-            logDeprecation();
-        }
-        else {
-            if (settings.isRenderSchema() != null) {
-                isRenderSchema = settings.isRenderSchema();
-            }
+        if (settings.isRenderSchema() != null) {
+            isRenderSchema = settings.isRenderSchema();
         }
 
+        this.configuration = configuration;
         this.renderSchema = isRenderSchema;
-        this.mapping = SettingsTools.getRenderMapping(settings);
         this.ignoreMapping = ignore;
+    }
+
+    private final RenderMapping mapping() {
+        return SettingsTools.getRenderMapping(configuration.getSettings());
     }
 
     private static void logDeprecation() {
@@ -173,7 +181,7 @@ public class SchemaMapping implements Serializable {
         if (ignoreMapping) return;
         logDeprecation();
 
-        mapping.setDefaultSchema(schemaName);
+        mapping().setDefaultSchema(schemaName);
     }
 
     /**
@@ -188,7 +196,7 @@ public class SchemaMapping implements Serializable {
 
         // Find existing mapped schema
         MappedSchema schema = null;
-        for (MappedSchema s : mapping.getSchemata()) {
+        for (MappedSchema s : mapping().getSchemata()) {
             if (inputSchema.equals(s.getInput())) {
                 schema = s;
                 break;
@@ -197,7 +205,7 @@ public class SchemaMapping implements Serializable {
 
         if (schema == null) {
             schema = new MappedSchema().withInput(inputSchema);
-            mapping.getSchemata().add(schema);
+            mapping().getSchemata().add(schema);
         }
 
         // Add new mapping
@@ -262,7 +270,7 @@ public class SchemaMapping implements Serializable {
         MappedSchema schema = null;
         MappedTable table = null;
 
-        for (MappedSchema s : mapping.getSchemata()) {
+        for (MappedSchema s : mapping().getSchemata()) {
             if (inputTable.getSchema().getName().equals(s.getInput())) {
 
                 // Find existing mapped table
@@ -281,7 +289,7 @@ public class SchemaMapping implements Serializable {
 
         if (schema == null) {
             schema = new MappedSchema().withInput(inputTable.getSchema().getName());
-            mapping.getSchemata().add(schema);
+            mapping().getSchemata().add(schema);
         }
 
         if (table == null) {
@@ -319,7 +327,7 @@ public class SchemaMapping implements Serializable {
                     if (!getSchemata().containsKey(schemaName)) {
                         Schema mapped = schema;
 
-                        for (MappedSchema s : mapping.getSchemata()) {
+                        for (MappedSchema s : mapping().getSchemata()) {
 
                             // A configured mapping was found, add a renamed schema
                             if (schemaName.equals(s.getInput())) {
@@ -343,7 +351,7 @@ public class SchemaMapping implements Serializable {
 
             // The configured default schema is mapped to "null". This prevents
             // it from being rendered to SQL
-            if (result.getName().equals(mapping.getDefaultSchema())) {
+            if (result.getName().equals(mapping().getDefaultSchema())) {
                 result = null;
             }
         }
@@ -380,7 +388,7 @@ public class SchemaMapping implements Serializable {
                         Table<?> mapped = table;
 
                         schemaLoop:
-                        for (MappedSchema s : mapping.getSchemata()) {
+                        for (MappedSchema s : mapping().getSchemata()) {
                             if (schemaName.equals(s.getInput())) {
                                 for (MappedTable t : s.getTables()) {
 
@@ -464,7 +472,7 @@ public class SchemaMapping implements Serializable {
     @Override
     public String toString() {
         StringWriter writer = new StringWriter();
-        JAXB.marshal(mapping, writer);
+        JAXB.marshal(mapping(), writer);
         return writer.toString();
     }
 }

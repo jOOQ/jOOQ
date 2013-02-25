@@ -100,7 +100,6 @@ public class SchemaMapping implements Serializable {
 
     private final Configuration                      configuration;
     private final boolean                            ignoreMapping;
-    private final boolean                            renderSchema;
     private volatile transient Map<String, Schema>   schemata;
     private volatile transient Map<String, Table<?>> tables;
 
@@ -129,20 +128,16 @@ public class SchemaMapping implements Serializable {
      * Auxiliary constructor used for backwards-compatibility.
      */
     private SchemaMapping(Configuration configuration, boolean ignore) {
-        Settings settings = configuration.getSettings();
-
-        boolean isRenderSchema = true;
-        if (settings.isRenderSchema() != null) {
-            isRenderSchema = settings.isRenderSchema();
-        }
-
         this.configuration = configuration;
-        this.renderSchema = isRenderSchema;
         this.ignoreMapping = ignore;
     }
 
     private final RenderMapping mapping() {
         return SettingsTools.getRenderMapping(configuration.getSettings());
+    }
+
+    private final boolean renderSchema() {
+        return Boolean.TRUE.equals(configuration.getSettings().isRenderSchema());
     }
 
     private static void logDeprecation() {
@@ -311,7 +306,7 @@ public class SchemaMapping implements Serializable {
 
         // [#1774] The default Settings render schema flag takes precedence over
         // The DefaultConfiguration's ignoreMapping flag!
-        if (!renderSchema) return null;
+        if (!renderSchema()) return null;
         if (ignoreMapping) return schema;
 
         Schema result = null;

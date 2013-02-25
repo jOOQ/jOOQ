@@ -40,13 +40,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.Schema;
+import org.jooq.Table;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.MappedTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.Factory;
+import org.jooq.impl.SchemaImpl;
+import org.jooq.impl.TableImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,6 +80,22 @@ public class SettingsTest {
         assertTrue(settings2.isAttachRecords());
         assertTrue(SettingsTools.defaultSettings().isAttachRecords());
         assertFalse(settings.isAttachRecords());
+    }
+
+    @Test
+    public void testRenderSchema() {
+        Schema schema = new SchemaImpl("S");
+        Table<?> table = new TableImpl<Record>("T", schema);
+
+        Factory create0 = new Factory(SQLDialect.ORACLE);
+        assertEquals("\"S\".\"T\"", create0.render(table));
+
+        Factory create1 = new Factory(SQLDialect.ORACLE, new Settings().withRenderSchema(false));
+        assertEquals("\"T\"", create1.render(table));
+
+        Factory create2 = new Factory(SQLDialect.ORACLE);
+        create2.getSettings().setRenderSchema(false);
+        assertEquals("\"T\"", create2.render(table));
     }
 
     @Test

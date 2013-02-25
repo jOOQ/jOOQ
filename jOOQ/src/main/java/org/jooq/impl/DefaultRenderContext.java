@@ -59,7 +59,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
      * Generated UID
      */
     private static final long    serialVersionUID   = -8358225526567622252L;
-    private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
     private static final Pattern NEWLINE            = Pattern.compile("[\\n\\r]");
 
     private final StringBuilder      sql;

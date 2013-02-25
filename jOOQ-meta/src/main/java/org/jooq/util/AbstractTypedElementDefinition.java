@@ -47,7 +47,6 @@ import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.jaxb.ForcedType;
 
-@SuppressWarnings("deprecation")
 abstract class AbstractTypedElementDefinition<T extends Definition>
     extends AbstractDefinition
     implements TypedElementDefinition<T> {

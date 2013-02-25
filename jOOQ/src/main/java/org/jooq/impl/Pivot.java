@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.trueCondition;
-import static org.jooq.impl.Factory.vals;
 
 import java.util.Collection;
 

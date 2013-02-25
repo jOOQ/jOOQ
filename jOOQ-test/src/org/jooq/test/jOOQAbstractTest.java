@@ -527,8 +527,6 @@ public abstract class jOOQAbstractTest<
      * Gets the jdbc url.
      *
      * Subclasses can override this method to add special parameters to the url
-     *
-     * @return
      */
     protected String getJdbcURL() {
         return jdbcURL;

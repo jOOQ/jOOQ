@@ -116,6 +116,7 @@ import org.jooq.util.postgres.PostgresDataType;
 import org.junit.Test;
 import org.postgis.PGgeometry;
 import org.postgis.Point;
+import org.postgresql.geometric.PGbox;
 import org.postgresql.util.PGInterval;
 
 
@@ -870,17 +871,21 @@ public class PostgresTest extends jOOQAbstractTest<
         point.setSrid(4326);
         PGgeometry geometry = new PGgeometry(point);
 
+        // [#2267] Non-PostGIS geometry objects should work, too
+        PGbox box = new PGbox(1.0, 1.0, 2.0, 2.0);
         PGInterval interval = new PGInterval(1, 2, 3, 4, 5, 6);
 
         TPgExtensionsRecord r1 = create().newRecord(T_PG_EXTENSIONS);
         r1.setPgGeometry(geometry);
         r1.setPgInterval(interval);
+        r1.setPgBox(box);
         assertEquals(1, r1.store());
         assertEquals(1, (int) create().selectCount().from(T_PG_EXTENSIONS).fetchOne(0, int.class));
 
         TPgExtensionsRecord r2 = create().selectFrom(T_PG_EXTENSIONS).fetchOne();
         assertEquals(r1, r2);
 
+        assertEquals(box, r2.getPgBox());
         assertEquals(geometry, r2.getPgGeometry());
         assertEquals(interval, r2.getPgInterval());
     }

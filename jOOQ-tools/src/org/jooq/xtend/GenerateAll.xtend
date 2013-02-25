@@ -7,6 +7,7 @@ class GenerateAll {
     	Executor::main(args);
     	Factory::main(args);
     	InsertDSL::main(args);
+    	MergeDSL::main(args);
     	Records::main(args);
     	Rows::main(args);
     	UpdateDSL::main(args);

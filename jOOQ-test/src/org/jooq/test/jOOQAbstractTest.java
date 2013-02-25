@@ -836,7 +836,6 @@ public abstract class jOOQAbstractTest<
     protected abstract DataType<?>[] getCastableDataTypes();
     protected abstract Executor create(Settings settings);
 
-    @SuppressWarnings("deprecation")
     protected final Schema schema() {
         return create().map(TAuthor().getSchema());
     }

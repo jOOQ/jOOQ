@@ -6850,11 +6850,11 @@ public class Factory {
      */
     private static <T> DataType<T> mostSpecific(T value, DataType<T> dataType) {
         if (value != null) {
-            Class<?> valueType = value.getClass();
+            Class<T> valueType = (Class<T>) value.getClass();
             Class<T> coercionType = dataType.getType();
 
             if (valueType != coercionType && coercionType.isAssignableFrom(valueType)) {
-                return (DataType<T>) DefaultDataType.getDataType(null, valueType);
+                return DefaultDataType.getDataType(null, valueType, dataType);
             }
         }
 

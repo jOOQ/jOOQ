@@ -51,6 +51,7 @@ import static org.jooq.test.postgres.generatedclasses.Tables.T_DATES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_IDENTITY_PK;
+import static org.jooq.test.postgres.generatedclasses.Tables.T_PG_EXTENSIONS;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_TRIGGERS;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.postgres.generatedclasses.Tables.V_BOOK;
@@ -97,6 +98,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TIdentityRecord;
+import org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.T_725LobTestRecord;
@@ -112,6 +114,8 @@ import org.jooq.types.UShort;
 import org.jooq.util.postgres.PostgresDataType;
 
 import org.junit.Test;
+import org.postgis.PGgeometry;
+import org.postgis.Point;
 
 
 /**
@@ -852,5 +856,25 @@ public class PostgresTest extends jOOQAbstractTest<
         // This doesn't work, as jOOQ doesn't know how to correctly register
         // OUT parameters for the returned cursor
         // Object result = Routines.fSearchBook(create(), "Animal", 1L, 0L);
+    }
+
+    @Test
+    public void testPostgresExtensions() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // [#2267] Try to execute some basic CRUD operations on PostGIS data
+        // types. Even without formal support, jOOQ should allow to pass these
+        // objects through to JDBC
+        Point point = new Point(0, 0);
+        point.setSrid(4326);
+        PGgeometry geometry = new PGgeometry(point);
+
+        TPgExtensionsRecord r1 = create().newRecord(T_PG_EXTENSIONS);
+        r1.setPgGeometry(geometry);
+        assertEquals(1, r1.store());
+        assertEquals(1, (int) create().selectCount().from(T_PG_EXTENSIONS).fetchOne(0, int.class));
+
+        TPgExtensionsRecord r2 = create().selectFrom(T_PG_EXTENSIONS).fetchOne();
+        assertEquals(r1, r2);
     }
 }

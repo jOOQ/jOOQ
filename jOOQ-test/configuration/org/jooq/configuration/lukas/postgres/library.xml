@@ -11,8 +11,8 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.postgres.PostgresDatabase</name>
-            <includes>.*</includes>
-            <excludes>t_book_details|.*?_seq</excludes>
+            <includes>t_.*|x_.*|v_.*|V_.*|p_.*|f_.*|u_.*|(f|p)[0-9]+|s_.*</includes>
+            <excludes>t_book_details|.*?_seq|_.*</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
             <customTypes>

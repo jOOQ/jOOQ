@@ -596,6 +596,10 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type) {
+        return getDataType(dialect, type, null);
+    }
+
+    public static <T> DataType<T> getDataType(SQLDialect dialect, Class<T> type, DataType<T> fallbackDataType) {
 
         // Treat primitive types the same way as their respective wrapper types
         type = (Class<T>) wrapper(type);
@@ -633,6 +637,11 @@ public class DefaultDataType<T> implements DataType<T> {
             if (result == null) {
                 if (SQL_DATATYPES_BY_TYPE.get(type) != null) {
                     return (DataType<T>) SQL_DATATYPES_BY_TYPE.get(type);
+                }
+
+                // If we have a "fallback" data type from an outer context
+                else if (fallbackDataType != null) {
+                    return fallbackDataType;
                 }
 
                 // All other data types are illegal

@@ -450,7 +450,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
         // SQLExceptions originating from rollbacks or commits are always fatal
         // They are propagated, and not swallowed
         catch (SQLException e) {
-            throw Util.translate(null, e);
+            throw Utils.translate(null, e);
         }
         finally {
             reader.close();

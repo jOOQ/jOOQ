@@ -36,14 +36,14 @@
 
 package org.jooq.impl;
 
-import static org.jooq.impl.Util.getAnnotatedGetter;
-import static org.jooq.impl.Util.getAnnotatedMembers;
-import static org.jooq.impl.Util.getAnnotatedSetters;
-import static org.jooq.impl.Util.getMatchingGetter;
-import static org.jooq.impl.Util.getMatchingMembers;
-import static org.jooq.impl.Util.getMatchingSetters;
-import static org.jooq.impl.Util.getPropertyName;
-import static org.jooq.impl.Util.hasColumnAnnotations;
+import static org.jooq.impl.Utils.getAnnotatedGetter;
+import static org.jooq.impl.Utils.getAnnotatedMembers;
+import static org.jooq.impl.Utils.getAnnotatedSetters;
+import static org.jooq.impl.Utils.getMatchingGetter;
+import static org.jooq.impl.Utils.getMatchingMembers;
+import static org.jooq.impl.Utils.getMatchingSetters;
+import static org.jooq.impl.Utils.getPropertyName;
+import static org.jooq.impl.Utils.hasColumnAnnotations;
 import static org.jooq.tools.reflect.Reflect.accessible;
 
 import java.beans.ConstructorProperties;
@@ -606,7 +606,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
      */
     @Override
     public Record original() {
-        AbstractRecord result = Util.newRecord(getClass(), getFieldProvider(), getConfiguration());
+        AbstractRecord result = Utils.newRecord(getClass(), getFieldProvider(), getConfiguration());
         Value<?>[] v = getValues();
 
         for (int i = 0; i < v.length; i++) {
@@ -791,7 +791,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
             // Match the first constructor by parameter length
             if (parameterTypes.length == getFields().size()) {
-                Object[] converted = Util.convert(parameterTypes, intoArray());
+                Object[] converted = Utils.convert(parameterTypes, intoArray());
                 return accessible(constructor).newInstance(converted);
             }
         }
@@ -844,7 +844,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
             }
         }
 
-        Object[] converted = Util.convert(parameterTypes, parameterValues);
+        Object[] converted = Utils.convert(parameterTypes, parameterValues);
         return accessible(constructor).newInstance(converted);
     }
 
@@ -890,13 +890,13 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
     @Override
     public final <R extends Record> R into(Table<R> table) {
         try {
-            R result = Util.newRecord(table, getConfiguration());
+            R result = Utils.newRecord(table, getConfiguration());
 
             for (Field<?> targetField : table.getFields()) {
                 Field<?> sourceField = getField(targetField);
 
                 if (sourceField != null) {
-                    Util.setValue(result, targetField, this, sourceField);
+                    Utils.setValue(result, targetField, this, sourceField);
                 }
             }
 
@@ -960,7 +960,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
                 // Use only the first applicable method or member
                 if (method != null) {
-                    Util.setValue(this, field, method.invoke(source));
+                    Utils.setValue(this, field, method.invoke(source));
                 }
                 else if (members.size() > 0) {
                     from(source, members.get(0), field);
@@ -983,7 +983,7 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
             Field<?> sourceField = source.getField(field);
 
             if (sourceField != null) {
-                Util.setValue(this, field, source, sourceField);
+                Utils.setValue(this, field, source, sourceField);
             }
         }
     }
@@ -1029,32 +1029,32 @@ abstract class AbstractRecord extends AbstractStore<Object> implements Record {
 
         if (mType.isPrimitive()) {
             if (mType == byte.class) {
-                Util.setValue(this, field, member.getByte(source));
+                Utils.setValue(this, field, member.getByte(source));
             }
             else if (mType == short.class) {
-                Util.setValue(this, field, member.getShort(source));
+                Utils.setValue(this, field, member.getShort(source));
             }
             else if (mType == int.class) {
-                Util.setValue(this, field, member.getInt(source));
+                Utils.setValue(this, field, member.getInt(source));
             }
             else if (mType == long.class) {
-                Util.setValue(this, field, member.getLong(source));
+                Utils.setValue(this, field, member.getLong(source));
             }
             else if (mType == float.class) {
-                Util.setValue(this, field, member.getFloat(source));
+                Utils.setValue(this, field, member.getFloat(source));
             }
             else if (mType == double.class) {
-                Util.setValue(this, field, member.getDouble(source));
+                Utils.setValue(this, field, member.getDouble(source));
             }
             else if (mType == boolean.class) {
-                Util.setValue(this, field, member.getBoolean(source));
+                Utils.setValue(this, field, member.getBoolean(source));
             }
             else if (mType == char.class) {
-                Util.setValue(this, field, member.getChar(source));
+                Utils.setValue(this, field, member.getChar(source));
             }
         }
         else {
-            Util.setValue(this, field, member.get(source));
+            Utils.setValue(this, field, member.get(source));
         }
     }
 }

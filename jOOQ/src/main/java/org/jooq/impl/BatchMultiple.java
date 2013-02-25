@@ -98,7 +98,7 @@ class BatchMultiple implements Batch {
             throw ctx.exception();
         }
         finally {
-            Util.safeClose(listener, ctx);
+            Utils.safeClose(listener, ctx);
         }
     }
 }

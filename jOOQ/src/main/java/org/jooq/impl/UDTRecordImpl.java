@@ -78,7 +78,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
         // case the connected user is not the owner of the UDT
         Configuration configuration = DefaultBindContext.LOCAL_CONFIGURATION.get();
         if (configuration != null) {
-            Schema schema = Util.getMappedSchema(configuration, getUDT().getSchema());
+            Schema schema = Utils.getMappedSchema(configuration, getUDT().getSchema());
 
             if (schema != null) {
                 sb.append(schema.getName());

@@ -112,7 +112,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
         }
         else {
             if (context.qualify()) {
-                Schema mappedSchema = Util.getMappedSchema(context, getSchema());
+                Schema mappedSchema = Utils.getMappedSchema(context, getSchema());
 
                 if (mappedSchema != null) {
                     context.sql(mappedSchema);
@@ -120,7 +120,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
                 }
             }
 
-            context.literal(Util.getMappedTable(context, this).getName());
+            context.literal(Utils.getMappedTable(context, this).getName());
         }
     }
 

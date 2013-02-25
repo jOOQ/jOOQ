@@ -607,7 +607,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // additional query
                 if (returning.size() == 1 && returning.get(0).equals(field)) {
                     for (Number id : ids) {
-                        R typed = Util.newRecord(into, configuration);
+                        R typed = Utils.newRecord(into, configuration);
                         ((AbstractRecord) typed).setValue(field, new Value<Number>(id));
                         getReturnedRecords().add(typed);
                     }

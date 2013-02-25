@@ -226,7 +226,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             else {
                 context.formatSeparator()
                        .keyword("using (");
-                Util.fieldNames(context, using);
+                Utils.fieldNames(context, using);
                 context.sql(")");
             }
         }
@@ -304,7 +304,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
     @Override
     public final TableOnStep partitionBy(Field<?>... fields) {
-        return partitionBy(Util.list(fields));
+        return partitionBy(Utils.list(fields));
     }
 
     @Override

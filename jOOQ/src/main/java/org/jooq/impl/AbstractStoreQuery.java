@@ -110,7 +110,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         }
         else {
             try {
-                A record = Util.newArrayRecord(field.getType(), getConfiguration());
+                A record = Utils.newArrayRecord(field.getType(), getConfiguration());
                 record.setList(value);
                 addValue(field, record);
             }

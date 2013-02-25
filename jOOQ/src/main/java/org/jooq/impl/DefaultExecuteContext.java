@@ -113,7 +113,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
         if (blobs != null) {
             for (Blob blob : blobs) {
-                Util.safeFree(blob);
+                Utils.safeFree(blob);
             }
 
             BLOBS.remove();
@@ -121,7 +121,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
         if (clobs != null) {
             for (Clob clob : clobs) {
-                Util.safeFree(clob);
+                Utils.safeFree(clob);
             }
 
             CLOBS.remove();
@@ -357,6 +357,6 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     @Override
     public final void sqlException(SQLException e) {
         this.sqlException = e;
-        exception(Util.translate(sql(), e));
+        exception(Utils.translate(sql(), e));
     }
 }

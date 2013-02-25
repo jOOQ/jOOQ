@@ -59,7 +59,7 @@ class SQLQuery extends AbstractQuery {
         super(configuration);
 
         this.sql = sql;
-        this.substitutes = Util.queryParts(substitutes);
+        this.substitutes = Utils.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------

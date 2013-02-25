@@ -64,7 +64,7 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
         super(configuration);
 
         this.sql = sql;
-        this.substitutes = Util.queryParts(substitutes);
+        this.substitutes = Utils.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------

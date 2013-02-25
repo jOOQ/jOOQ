@@ -53,7 +53,7 @@ class SQLCondition extends AbstractCondition {
 
     SQLCondition(String sql, Object[] substitutes) {
         this.sql = sql;
-        this.substitutes = Util.queryParts(substitutes);
+        this.substitutes = Utils.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------

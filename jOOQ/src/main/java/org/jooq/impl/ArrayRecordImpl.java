@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Util.getDriverConnection;
+import static org.jooq.impl.Utils.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.lang.reflect.Array;

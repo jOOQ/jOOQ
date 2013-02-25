@@ -333,7 +333,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
             throw ctx.exception();
         }
         finally {
-            Util.safeClose(listener, ctx);
+            Utils.safeClose(listener, ctx);
         }
     }
 
@@ -500,7 +500,7 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
     }
 
     private final void toSQLQualifiedName(RenderContext context) {
-        Schema mappedSchema = Util.getMappedSchema(context, getSchema());
+        Schema mappedSchema = Utils.getMappedSchema(context, getSchema());
 
         if (context.qualify()) {
             if (mappedSchema != null) {
@@ -546,12 +546,12 @@ public abstract class AbstractRoutine<T> extends AbstractSchemaProviderQueryPart
                     // also the type name
                     case ORACLE: {
                         if (sqlType == Types.STRUCT) {
-                            UDTRecord<?> record = Util.newRecord((Class<? extends UDTRecord<?>>) parameter.getType());
+                            UDTRecord<?> record = Utils.newRecord((Class<? extends UDTRecord<?>>) parameter.getType());
                             statement.registerOutParameter(index, Types.STRUCT, record.getSQLTypeName());
                         }
 
                         else if (sqlType == Types.ARRAY) {
-                            ArrayRecord<?> record = Util.newArrayRecord(
+                            ArrayRecord<?> record = Utils.newArrayRecord(
                                 (Class<? extends ArrayRecord<?>>) parameter.getType(), c);
                             statement.registerOutParameter(index, Types.ARRAY, record.getName());
                         }

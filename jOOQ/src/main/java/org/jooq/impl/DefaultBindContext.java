@@ -40,7 +40,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Util.getDriverConnection;
+import static org.jooq.impl.Utils.getDriverConnection;
 import static org.jooq.tools.reflect.Reflect.on;
 import static org.jooq.util.postgres.PostgresUtils.toPGInterval;
 
@@ -143,13 +143,13 @@ class DefaultBindContext extends AbstractBindContext {
 
             // Oracle-style ARRAY types need to be bound with their type name
             if (ArrayRecord.class.isAssignableFrom(type)) {
-                String typeName = Util.newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
+                String typeName = Utils.newArrayRecord((Class<ArrayRecord<?>>) type, configuration).getName();
                 stmt.setNull(nextIndex(), sqlType, typeName);
             }
 
             // [#1126] Oracle's UDTs need to be bound with their type name
             else if (UDTRecord.class.isAssignableFrom(type)) {
-                String typeName = Util.newRecord((Class<UDTRecord<?>>) type).getUDT().getName();
+                String typeName = Utils.newRecord((Class<UDTRecord<?>>) type).getUDT().getName();
                 stmt.setNull(nextIndex(), sqlType, typeName);
             }
 

@@ -253,7 +253,7 @@ implements
 
             if (!forUpdateOf.isEmpty()) {
                 context.keyword(" of ");
-                Util.fieldNames(context, forUpdateOf);
+                Utils.fieldNames(context, forUpdateOf);
             }
             else if (!forUpdateOfTables.isEmpty()) {
                 context.keyword(" of ");
@@ -272,7 +272,7 @@ implements
 
                     // Render the OF [table-names] clause
                     default:
-                        Util.tableNames(context, forUpdateOfTables);
+                        Utils.tableNames(context, forUpdateOfTables);
                         break;
                 }
             }
@@ -362,8 +362,8 @@ implements
         toSQLReference0(local);
         String enclosed = local.render();
 
-        String subqueryName = "limit_" + Util.hash(enclosed);
-        String rownumName = "rownum_" + Util.hash(enclosed);
+        String subqueryName = "limit_" + Utils.hash(enclosed);
+        String rownumName = "rownum_" + Utils.hash(enclosed);
 
         context.keyword("select * from (")
                .formatIndentStart()

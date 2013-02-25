@@ -58,7 +58,7 @@ class ExecuteListeners implements ExecuteListener {
     private boolean                     fetchEnd;
 
     ExecuteListeners(ExecuteContext ctx) {
-        listeners = Util.getListeners(ctx);
+        listeners = Utils.getListeners(ctx);
 
         start(ctx);
     }

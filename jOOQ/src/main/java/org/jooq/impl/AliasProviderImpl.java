@@ -113,7 +113,7 @@ class AliasProviderImpl<T extends AliasProvider<T>> extends AbstractNamedQueryPa
                         ArrayTable table = (ArrayTable) o;
 
                         context.sql("(");
-                        Util.fieldNames(context, table.getFields());
+                        Utils.fieldNames(context, table.getFields());
                         context.sql(")");
                     }
 

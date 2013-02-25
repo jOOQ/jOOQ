@@ -97,7 +97,7 @@ class Expression<T> extends AbstractFunction<T> {
     private final ExpressionOperator operator;
 
     Expression(ExpressionOperator operator, Field<T> lhs, Field<?>... rhs) {
-        super(operator.toSQL(), lhs.getDataType(), Util.combine(lhs, rhs));
+        super(operator.toSQL(), lhs.getDataType(), Utils.combine(lhs, rhs));
 
         this.operator = operator;
         this.lhs = lhs;

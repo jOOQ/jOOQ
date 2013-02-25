@@ -208,7 +208,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 statement = null;
             }
             catch (SQLException e) {
-                throw Util.translate(sql, e);
+                throw Utils.translate(sql, e);
             }
         }
     }
@@ -225,7 +225,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 statement.cancel();
             }
             catch (SQLException e) {
-                throw Util.translate(sql, e);
+                throw Utils.translate(sql, e);
             }
         }
     }
@@ -300,7 +300,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
                 // ResultQuery.fetchLazy() needs to keep open resources
                 if (!keepResult()) {
-                    Util.safeClose(listener, ctx, keepStatement());
+                    Utils.safeClose(listener, ctx, keepStatement());
                 }
 
                 if (!keepStatement()) {

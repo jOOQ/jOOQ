@@ -544,12 +544,12 @@ implements
                .formatSeparator();
 
         context.sql("(");
-        Util.fieldNames(context, getH2Fields());
+        Utils.fieldNames(context, getH2Fields());
         context.sql(")");
 
         if (!getH2Keys().isEmpty()) {
             context.keyword(" key (");
-            Util.fieldNames(context, getH2Keys());
+            Utils.fieldNames(context, getH2Keys());
             context.sql(")");
         }
 
@@ -572,7 +572,7 @@ implements
                .keyword("using ")
                .formatIndentStart()
                .formatNewLine()
-               .sql(Util.wrapInParentheses(context.render(using)))
+               .sql(Utils.wrapInParentheses(context.render(using)))
                .formatIndentEnd()
                .declareTables(false);
 
@@ -580,7 +580,7 @@ implements
             case SQLSERVER:
             case SYBASE: {
                 if (using instanceof Select) {
-                    int hash = Util.hash(using);
+                    int hash = Utils.hash(using);
 
                     context.keyword(" as ")
                            .sql("dummy_")
@@ -593,7 +593,7 @@ implements
                         // Some fields are unnamed
                         // [#579] Correct this
                         String name = StringUtils.isBlank(field.getName())
-                            ? "dummy_" + hash + "_" + Util.hash(field)
+                            ? "dummy_" + hash + "_" + Utils.hash(field)
                             : field.getName();
 
                         context.sql(separator).literal(name);
@@ -609,7 +609,7 @@ implements
 
         context.formatSeparator()
                .keyword("on ")
-               .sql(Util.wrapInParentheses(context.render(on)));
+               .sql(Utils.wrapInParentheses(context.render(on)));
 
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {

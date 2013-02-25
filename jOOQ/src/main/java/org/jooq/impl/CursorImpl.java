@@ -223,7 +223,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
     @Override
     public final void close() {
-        Util.safeClose(rs);
+        Utils.safeClose(rs);
         rs = null;
         isClosed = true;
     }
@@ -1260,7 +1260,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                         rs.updateRow();
                     }
 
-                    record = Util.newRecord(type, fields, ctx.configuration());
+                    record = Utils.newRecord(type, fields, ctx.configuration());
 
                     ctx.record(record);
                     listener.recordStart(ctx);

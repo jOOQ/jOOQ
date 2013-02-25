@@ -137,7 +137,7 @@ class BatchSingle implements BatchBindStep {
             throw ctx.exception();
         }
         finally {
-            Util.safeClose(listener, ctx);
+            Utils.safeClose(listener, ctx);
 
             // Restore bind variables to values prior to batch execution
             for (int i = 0; i < params.size(); i++) {

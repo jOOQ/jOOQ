@@ -57,7 +57,7 @@ class SQLTable extends AbstractTable<Record> {
         super("sql");
 
         this.sql = sql;
-        this.substitutes = Util.queryParts(substitutes);
+        this.substitutes = Utils.queryParts(substitutes);
     }
 
     // ------------------------------------------------------------------------

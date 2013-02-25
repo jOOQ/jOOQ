@@ -1433,7 +1433,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             Record key = new RecordImpl(keyList);
 
             for (Field<?> field : keys) {
-                Util.setValue(key, field, record, field);
+                Utils.setValue(key, field, record, field);
             }
 
             if (map.put(key, record) != null) {
@@ -1539,7 +1539,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             Record key = new RecordImpl(keyList);
 
             for (Field<?> field : keys) {
-                Util.setValue(key, field, record, field);
+                Utils.setValue(key, field, record, field);
             }
 
             Result<R> result = map.get(key);
@@ -1588,7 +1588,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             Record key = new RecordImpl(keyList);
 
             for (Field<?> field : keys) {
-                Util.setValue(key, field, record, field);
+                Utils.setValue(key, field, record, field);
             }
 
             List<E> list = map.get(key);

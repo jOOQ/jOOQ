@@ -117,7 +117,7 @@ class MetaDataFieldProvider implements FieldProvider, Serializable {
             }
         }
         catch (SQLException e) {
-            throw Util.translate(null, e);
+            throw Utils.translate(null, e);
         }
 
         meta = null;

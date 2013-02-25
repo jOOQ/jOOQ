@@ -362,27 +362,27 @@ class Val<T> extends AbstractField<T> implements Param<T> {
 
                 if (asList(ASE, SQLSERVER, SYBASE).contains(dialect)) {
                     context.sql("0x")
-                           .sql(Util.convertBytesToHex(binary));
+                           .sql(Utils.convertBytesToHex(binary));
                 }
                 else if (dialect == DB2) {
                     context.keyword("blob")
                            .sql("(X'")
-                           .sql(Util.convertBytesToHex(binary))
+                           .sql(Utils.convertBytesToHex(binary))
                            .sql("')");
                 }
                 else if (asList(DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE).contains(dialect)) {
                     context.sql("X'")
-                           .sql(Util.convertBytesToHex(binary))
+                           .sql(Utils.convertBytesToHex(binary))
                            .sql("'");
                 }
                 else if (asList(ORACLE).contains(dialect)) {
                     context.keyword("hextoraw('")
-                           .sql(Util.convertBytesToHex(binary))
+                           .sql(Utils.convertBytesToHex(binary))
                            .sql("')");
                 }
                 else if (dialect == POSTGRES) {
                     context.sql("E'")
-                           .sql(Util.convertBytesToPostgresOctal(binary))
+                           .sql(Utils.convertBytesToPostgresOctal(binary))
                            .keyword("'::bytea");
                 }
 
@@ -390,7 +390,7 @@ class Val<T> extends AbstractField<T> implements Param<T> {
                 // that do not support inlining binary data
                 else {
                     context.sql("X'")
-                           .sql(Util.convertBytesToHex(binary))
+                           .sql(Utils.convertBytesToHex(binary))
                            .sql("'");
                 }
             }

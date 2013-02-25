@@ -62,6 +62,7 @@ DROP TABLE IF EXISTS t_959/
 DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
+DROP TABLE IF EXISTS t_pg_extensions/
 
 DROP TYPE IF EXISTS u_address_type/
 DROP TYPE IF EXISTS u_street_type/
@@ -98,6 +99,16 @@ CREATE TYPE u_address_type AS (
   f_1323 bytea
 )
 /
+
+CREATE TABLE t_pg_extensions (
+  id serial not null,
+  pg_interval interval,
+  pg_box box,
+  pg_hstore hstore,
+  pg_geometry geometry(Point, 4326, 2),
+
+  CONSTRAINT pk_t_pg_extensions PRIMARY KEY (id)
+)/
 
 CREATE TABLE t_identity_pk (
   id serial not null,

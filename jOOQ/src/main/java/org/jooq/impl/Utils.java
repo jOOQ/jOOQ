@@ -728,7 +728,7 @@ final class Utils {
             if (peek(sqlChars, i, "--")) {
 
                 // Consume the complete comment
-                for (; sqlChars[i] != '\r' && sqlChars[i] != '\n'; render.sql(sqlChars[i++]));
+                for (; i < sqlChars.length && sqlChars[i] != '\r' && sqlChars[i] != '\n'; render.sql(sqlChars[i++]));
 
                 // Consume the newline character
                 render.sql(sqlChars[i]);

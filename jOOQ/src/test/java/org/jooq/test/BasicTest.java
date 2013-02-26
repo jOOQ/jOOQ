@@ -1500,7 +1500,7 @@ public class BasicTest extends AbstractTest {
         q.addValue(FIELD_ID1, 10);
         q.addValue(FIELD_NAME1, "ABC");
         q.addValue(FIELD_DATE1, new Date(0));
-        assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") values (10, 'ABC', date '1970-01-01')", r_refI().render(q));
+        assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") values (10, 'ABC', date '" + zeroDate() + "')", r_refI().render(q));
         assertEquals("insert into \"TABLE1\" (\"ID1\", \"NAME1\", \"DATE1\") values (?, ?, ?)", r_ref().render(q));
         assertEquals(q, create.insertInto(TABLE1, FIELD_ID1, FIELD_NAME1, FIELD_DATE1).values(10, "ABC", new Date(0)));
         assertEquals(q, create.insertInto(TABLE1).set(FIELD_ID1, 10).set(FIELD_NAME1, "ABC").set(FIELD_DATE1, new Date(0)));
@@ -1707,7 +1707,7 @@ public class BasicTest extends AbstractTest {
               .whenNotMatchedThenInsert(FIELD_ID1, FIELD_NAME1, FIELD_DATE1)
               .values(1, "name", new Date(0));
 
-        assertEquals("merge into \"TABLE1\" using (select \"TABLE2\".\"ID2\" from \"TABLE2\") on ((\"TABLE2\".\"ID2\" = \"TABLE1\".\"ID1\" and \"TABLE1\".\"ID1\" = 1) or \"TABLE2\".\"ID2\" = 2) when matched then update set \"TABLE1\".\"NAME1\" = 'name', \"TABLE1\".\"DATE1\" = date '1970-01-01' when not matched then insert (\"ID1\", \"NAME1\", \"DATE1\") values (1, 'name', date '1970-01-01')", r_refI().render(q));
+        assertEquals("merge into \"TABLE1\" using (select \"TABLE2\".\"ID2\" from \"TABLE2\") on ((\"TABLE2\".\"ID2\" = \"TABLE1\".\"ID1\" and \"TABLE1\".\"ID1\" = 1) or \"TABLE2\".\"ID2\" = 2) when matched then update set \"TABLE1\".\"NAME1\" = 'name', \"TABLE1\".\"DATE1\" = date '" + zeroDate() + "' when not matched then insert (\"ID1\", \"NAME1\", \"DATE1\") values (1, 'name', date '" + zeroDate() + "')", r_refI().render(q));
         assertEquals("merge into \"TABLE1\" using (select \"TABLE2\".\"ID2\" from \"TABLE2\") on ((\"TABLE2\".\"ID2\" = \"TABLE1\".\"ID1\" and \"TABLE1\".\"ID1\" = ?) or \"TABLE2\".\"ID2\" = ?) when matched then update set \"TABLE1\".\"NAME1\" = ?, \"TABLE1\".\"DATE1\" = ? when not matched then insert (\"ID1\", \"NAME1\", \"DATE1\") values (?, ?, ?)", r_ref().render(q));
 
         context.checking(new Expectations() {{

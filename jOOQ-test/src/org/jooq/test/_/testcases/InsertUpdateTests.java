@@ -303,12 +303,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().insertInto(TAuthor(),
                     (Field<String>) (Field) TAuthor_ID(),
                     TAuthor_LAST_NAME(),
-                    (Field<Long>) (Field) TAuthor_DATE_OF_BIRTH(),
+                    (Field<String>) (Field) TAuthor_DATE_OF_BIRTH(),
                     (Field<BigDecimal>) (Field) TAuthor_YEAR_OF_BIRTH())
                 .values(
                     "5",
                     "Smith",
-                    0L,
+                    zeroDate(),
                     new BigDecimal("1980"))
                 .execute());
 
@@ -320,7 +320,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1009] Somewhere on the way to the database and back, the CET time
         // zone is added, that's why there is a one-hour shift (except for SQLite)
         if (getDialect() != SQLITE)
-            assertEquals(zeroDate(), author1.getValue(TAuthor_DATE_OF_BIRTH()));
+            assertEquals(Date.valueOf(zeroDate()), author1.getValue(TAuthor_DATE_OF_BIRTH()));
         assertEquals(1980, (int) author1.getValue(TAuthor_YEAR_OF_BIRTH()));
 
         // Implicit field list

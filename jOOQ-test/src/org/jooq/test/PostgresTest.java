@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.impl.Factory.val;
 import static org.jooq.test.postgres.generatedclasses.Routines.fSearchBook;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
@@ -69,6 +70,7 @@ import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
+import org.jooq.Record1;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -107,6 +109,7 @@ import org.jooq.test.postgres.generatedclasses.tables.records.VLibraryRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.test.postgres.generatedclasses.udt.UAddressType;
 import org.jooq.test.postgres.generatedclasses.udt.UStreetType;
+import org.jooq.test.postgres.generatedclasses.udt.records.UUuidsRecord;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
@@ -888,5 +891,24 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(box, r2.getPgBox());
         assertEquals(geometry, r2.getPgGeometry());
         assertEquals(interval, r2.getPgInterval());
+    }
+
+    @Test
+    public void testPostgresUDTTypes() throws Exception {
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
+
+        UUID[] array = new UUID[] { uuid1, uuid2 };
+
+        UUuidsRecord uuids = new UUuidsRecord();
+        uuids.setU1(uuid1);
+        uuids.setU2(array);
+
+        Field<UUuidsRecord> val = val(uuids).as("val");
+        Record1<UUuidsRecord> record = create().select(val).fetchOne();
+        assertEquals(uuids, record.getValue(val));
+        assertEquals(uuid1, record.getValue(val).getU1());
+        assertEquals(uuid1, record.getValue(val).getU2()[0]);
+        assertEquals(uuid2, record.getValue(val).getU2()[1]);
     }
 }

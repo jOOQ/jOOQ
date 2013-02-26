@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses;
 @java.lang.SuppressWarnings("all")
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1115139070;
+	private static final long serialVersionUID = 681210732;
 
 	/**
 	 * The singleton instance of <code>public</code>
@@ -83,6 +83,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 	private final java.util.List<org.jooq.UDT<?>> getUDTs0() {
 		return java.util.Arrays.<org.jooq.UDT<?>>asList(
 			org.jooq.test.postgres.generatedclasses.udt.UAddressType.U_ADDRESS_TYPE,
-			org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE);
+			org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE,
+			org.jooq.test.postgres.generatedclasses.udt.UUuids.U_UUIDS);
 	}
 }

@@ -2003,6 +2003,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testUUIDArrayDataType() throws Exception {
+        new DataTypeTests(this).testUUIDArrayDataType();
+    }
+
+    @Test
     public void testTableWithHint() throws Exception {
         new ExoticTests(this).testTableWithHint();
     }

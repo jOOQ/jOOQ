@@ -69,6 +69,13 @@ DROP TYPE IF EXISTS u_street_type/
 DROP TYPE IF EXISTS u_book_status/
 DROP TYPE IF EXISTS u_country/
 DROP TYPE IF EXISTS u_959/
+DROP TYPE IF EXISTS u_uuids/
+
+CREATE TYPE u_uuids AS (
+  u1 uuid,
+  u2 uuid[]
+)
+/
 
 CREATE TYPE u_959 AS ENUM('abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
 	                 'char', 'class', 'const', 'continue', 'default', 'double', 'do',

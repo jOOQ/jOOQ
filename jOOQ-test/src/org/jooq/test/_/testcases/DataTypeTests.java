@@ -78,6 +78,7 @@ import java.util.UUID;
 
 import org.jooq.Converter;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.InsertSetMoreStep;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -1579,5 +1580,28 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .where(TExoticTypes_UUID().eq(uuid1))
                 .execute());
         assertEquals(uuid2, create().fetchOne(TExoticTypes()).getValue(TExoticTypes_UUID()));
+    }
+
+    @Test
+    public void testUUIDArrayDataType() throws Exception {
+        if (TArrays() == null) {
+            log.info("SKIPPING", "Skipping UUID ARRAY data type tests");
+            return;
+        }
+
+        UUID uuid1 = UUID.randomUUID();
+        UUID uuid2 = UUID.randomUUID();
+
+        UUID[] array = new UUID[] { uuid1, uuid2 };
+        Field<UUID[]> val = val(array).as("array");
+
+        Record1<UUID[]> record = create()
+            .select(val)
+            .fetchOne();
+
+        assertEquals(UUID[].class, record.getValue(val).getClass());
+        assertEquals(2, record.getValue(val).length);
+        assertEquals(uuid1, record.getValue(val)[0]);
+        assertEquals(uuid2, record.getValue(val)[1]);
     }
  }

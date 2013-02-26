@@ -9472,7 +9472,7 @@ create.selectFrom(AUTHOR)
 							<ul>
 								<li>Distribute your database objects in several schemas. That is probably a good idea anyway for such large databases</li>
 								<li><reference id="codegen-configuration" title="Configure jOOQ's code generator"/> to exclude excess database objects</li>
-								<li><reference id="codegen-configuraiton" title="Configure jOOQ's code generator"/> to avoid generating <reference id="codegen-globals" title="global objects"/> using <code>&lt;globalObjectReferences/&gt;</code></li>
+								<li><reference id="codegen-configuration" title="Configure jOOQ's code generator"/> to avoid generating <reference id="codegen-globals" title="global objects"/> using <code>&lt;globalObjectReferences/&gt;</code></li>
 								<li>Remove uncompilable classes after code generation</li>
 							</ul>
 						</content>

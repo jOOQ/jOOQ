@@ -598,9 +598,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals("1", n[0].toString());
             assertEquals("2", n[1].toString());
             assertEquals("3", n[2].toString());
-            assertEquals("1970-01-01", d[0].toString());
-            assertEquals("1970-01-02", d[1].toString());
-            assertEquals("1970-01-03", d[2].toString());
+            assertEquals(zeroDate(), d[0].toString());
+            assertEquals(zeroDatePlusOneDay(), d[1].toString());
+            assertEquals(zeroDatePlusTwoDays(), d[2].toString());
 
 
 
@@ -635,9 +635,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals("3", n[0].toString());
             assertEquals("2", n[1].toString());
             assertEquals("1", n[2].toString());
-            assertEquals("1970-01-03", d[0].toString());
-            assertEquals("1970-01-02", d[1].toString());
-            assertEquals("1970-01-01", d[2].toString());
+            assertEquals(zeroDatePlusTwoDays(), d[0].toString());
+            assertEquals(zeroDatePlusOneDay(), d[1].toString());
+            assertEquals(zeroDate(), d[2].toString());
         }
     }
 

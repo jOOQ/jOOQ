@@ -56,7 +56,7 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
-public class ConvertTest {
+public class ConvertTest extends AbstractTest {
 
     @Test
     public void testToObject() {
@@ -89,9 +89,9 @@ public class ConvertTest {
         testConversion("1.0", 1.0f, String.class);
         testConversion("1", BigInteger.ONE, String.class);
         testConversion("1", BigDecimal.ONE, String.class);
-        testConversion("1970-01-01", new Date(0), String.class);
-        testConversion("01:00:00", new Time(0), String.class);
-        testConversion("1970-01-01 01:00:00.0", new Timestamp(0), String.class);
+        testConversion(zeroDate(), new Date(0), String.class);
+        testConversion(zeroTime(), new Time(0), String.class);
+        testConversion(zeroTimestamp(), new Timestamp(0), String.class);
     }
 
     @Test

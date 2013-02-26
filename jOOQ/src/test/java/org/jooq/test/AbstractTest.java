@@ -39,7 +39,10 @@ import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 import org.jooq.BindContext;
 import org.jooq.RenderContext;
@@ -157,5 +160,17 @@ public abstract class AbstractTest {
 
     protected final RenderContext r_refP() {
         return r_ref().namedParams(true);
+    }
+
+    protected final String zeroDate() {
+        return new Date(0).toString();
+    }
+
+    protected final String zeroTime() {
+        return new Time(0).toString();
+    }
+
+    protected final String zeroTimestamp() {
+        return new Timestamp(0).toString();
     }
 }

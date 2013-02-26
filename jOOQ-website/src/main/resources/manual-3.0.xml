@@ -94,7 +94,7 @@
 			<section id="preface">
 				<title>Preface</title>
 				<content>
-					<h3>jOOQ's reason of being - compared to JPA</h3>
+					<h3>jOOQ's reason for being - compared to JPA</h3>
 					<p>
 						Java and SQL have come a long way. SQL is an "ancient", yet established and well-understood technology. Java is a legacy too, although its platform JVM allows for many new and contemporary languages built on top of it. Yet, after all these years, libraries dealing with the interface between SQL and Java have come and gone, leaving JPA to be a standard that is accepted only with doubts, short of any surviving options.
 					</p>
@@ -105,7 +105,7 @@
 						jOOQ has come to fill this gap.
 					</p>
 
-					<h3>jOOQ's reason of being - compared to LINQ</h3>
+					<h3>jOOQ's reason for being - compared to LINQ</h3>
 					<p>
 						Other platforms incorporate ideas such as LINQ (with LINQ-to-SQL), or Scala's SLICK, or also Java's QueryDSL to better integrate querying as a concept into their respective language. By querying, they understand querying of arbitrary targets, such as SQL, XML, Collections and other heterogeneous data stores. jOOQ claims that this is going the wrong way too.
 					</p>
@@ -121,6 +121,29 @@
 					<p>
 						jOOQ has come to fill this gap.
 					</p>
+					
+					<h3>jOOQ's reason for being - compared to SQL / JDBC</h3>
+					<p>
+						So why not just use SQL?
+					</p> 
+					<p>
+						SQL can be written as plain text and passed through the JDBC API. Over the years, people have become wary of this approach for many reasons:
+					</p>
+					<ul>
+						<li>No typesafety</li>
+						<li>No syntax safety</li>
+						<li>No bind value index safety</li>
+						<li>Verbose SQL String concatenation</li>
+						<li>Boring bind value indexing techniques</li>
+						<li>Verbose resource and exception handling in JDBC</li>
+						<li>A very "stateful", not very object-oriented JDBC API, which is hard to use</li>
+					</ul>
+					<p>
+						For these many reasons, other frameworks have tried to abstract JDBC away in the past in one way or another. Unfortunately, many have completely abstracted SQL away as well
+					</p>
+					<p>
+						jOOQ has come to fill this gap.
+					</p>					
 					
 					<h3>jOOQ is different</h3>
 					<p>

@@ -22,6 +22,11 @@ public final class UDTs {
 	public static org.jooq.test.postgres.generatedclasses.udt.UStreetType U_STREET_TYPE = org.jooq.test.postgres.generatedclasses.udt.UStreetType.U_STREET_TYPE;
 
 	/**
+	 * The type <code>public.u_uuids</code>
+	 */
+	public static org.jooq.test.postgres.generatedclasses.udt.UUuids U_UUIDS = org.jooq.test.postgres.generatedclasses.udt.UUuids.U_UUIDS;
+
+	/**
 	 * No further instances allowed
 	 */
 	private UDTs() {}

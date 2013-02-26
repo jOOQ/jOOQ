@@ -104,14 +104,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testInsertUpdateDelete() throws Exception {
         jOOQAbstractTest.reset = false;
 
-        long timeIn = 0;
-        long timeOut = -3600000;
-
         InsertQuery<A> i = create().insertQuery(TAuthor());
         i.addValue(TAuthor_ID(), 100);
         i.addValue(TAuthor_FIRST_NAME(), "Hermann");
         i.addValue(TAuthor_LAST_NAME(), "Hesse");
-        i.addValue(TAuthor_DATE_OF_BIRTH(), new Date(timeIn));
+        i.addValue(TAuthor_DATE_OF_BIRTH(), Date.valueOf(zeroDate()));
         i.addValue(TAuthor_YEAR_OF_BIRTH(), 2010);
 
         // Check insertion of UDTs and Enums if applicable
@@ -128,7 +125,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1009] Somewhere on the way to the database and back, the CET time
         // zone is added, that's why there is a one-hour shift (except for SQLite)
         if (getDialect() != SQLITE)
-            assertEquals(new Date(timeOut), author.getValue(TAuthor_DATE_OF_BIRTH()));
+            assertEquals(Date.valueOf(zeroDate()), author.getValue(TAuthor_DATE_OF_BIRTH()));
 
         Map<Field<?>, String> map = new HashMap<Field<?>, String>();
         map.put(TAuthor_FIRST_NAME(), "Hermie");

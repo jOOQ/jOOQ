@@ -783,6 +783,26 @@ public abstract class BaseTest<
                        .fetchOne();
     }
 
+    protected final String zeroDate() {
+        return new Date(0).toString();
+    }
+
+    protected final String zeroDatePlusOneDay() {
+        return new Date(1000L * 60L * 60L * 24L).toString();
+    }
+
+    protected final String zeroDatePlusTwoDays() {
+        return new Date(1000L * 60L * 60L * 48L).toString();
+    }
+
+    protected final String zeroTime() {
+        return new Time(0).toString();
+    }
+
+    protected final String zeroTimestamp() {
+        return new Timestamp(0).toString();
+    }
+
     protected final void assertCountAuthors(int count) {
         assertEquals(count, (int) create().selectCount().from(TAuthor()).fetchOne(0, Integer.class));
     }

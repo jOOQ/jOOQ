@@ -298,9 +298,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // enforced. But the inserted values should at least be converted to the
         // right types
 
-        long timeIn = 0;
-        long timeOut = -3600000;
-
         // Explicit field list
         assertEquals(1,
         create().insertInto(TAuthor(),
@@ -311,7 +308,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .values(
                     "5",
                     "Smith",
-                    timeIn,
+                    0L,
                     new BigDecimal("1980"))
                 .execute());
 
@@ -323,7 +320,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1009] Somewhere on the way to the database and back, the CET time
         // zone is added, that's why there is a one-hour shift (except for SQLite)
         if (getDialect() != SQLITE)
-            assertEquals(new Date(timeOut), author1.getValue(TAuthor_DATE_OF_BIRTH()));
+            assertEquals(zeroDate(), author1.getValue(TAuthor_DATE_OF_BIRTH()));
         assertEquals(1980, (int) author1.getValue(TAuthor_YEAR_OF_BIRTH()));
 
         // Implicit field list

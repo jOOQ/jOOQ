@@ -1338,23 +1338,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testDateTime() throws Exception {
-
-        // [#1009] SQL DATE doesn't have a time zone. SQL TIMESTAMP does
-        long tsShift = -3600000;
-
         Record record =
         create().select(
-            val(new Date(0)).as("d"),
-            val(new Time(0)).as("t"),
-            val(new Timestamp(0)).as("ts")
+            val(Date.valueOf(zeroDate())).as("d"),
+            val(Time.valueOf("00:00:00")).as("t"),
+            val(Timestamp.valueOf(zeroTimestamp())).as("ts")
         ).fetchOne();
 
         // ... (except for SQLite)
         if (getDialect() != SQLITE)
-            assertEquals(new Date(tsShift), record.getValue("d"));
+            assertEquals(Date.valueOf(zeroDate()), record.getValue("d"));
 
-        assertEquals(new Time(0), record.getValue("t"));
-        assertEquals(new Timestamp(0), record.getValue("ts"));
+        assertEquals(Time.valueOf("00:00:00"), record.getValue("t"));
+        assertEquals(Timestamp.valueOf(zeroTimestamp()), record.getValue("ts"));
 
         // Interval tests
         // --------------

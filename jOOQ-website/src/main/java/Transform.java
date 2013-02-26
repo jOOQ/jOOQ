@@ -71,7 +71,8 @@ import org.joox.Match;
  */
 public class Transform {
     private static final FopFactory fopFactory = FopFactory.newInstance();
-    private static final String version = "3.0";
+    private static final String minorVersion = "3.0";
+    private static final String version = minorVersion + ".0-RC1";
 
     public static void main(String[] args) throws Exception {
         System.out.println("Transforming multi-page manual");
@@ -90,11 +91,11 @@ public class Transform {
     }
 
     private static String file(String name) {
-        if (version == null || version.equals("")) {
+        if (minorVersion == null || minorVersion.equals("")) {
             return name;
         }
 
-        return name.replaceAll("\\.\\w{3}$", "-" + version + "$0");
+        return name.replaceAll("\\.\\w{3}$", "-" + minorVersion + "$0");
     }
 
     private static String path(String path) {
@@ -102,11 +103,11 @@ public class Transform {
     }
 
     private static String root() {
-        if (version == null || version.equals("")) {
+        if (minorVersion == null || minorVersion.equals("")) {
             return "";
         }
 
-        return "doc/" + version + "/";
+        return "doc/" + minorVersion + "/";
     }
 
     private static String relative(String path) {
@@ -123,8 +124,13 @@ public class Transform {
                 content = content.replaceAll("^<content>((?s:.*))</content>$", "$1");
                 boolean changed = false;
 
+                if (content.contains("{jooq-minor-version}")) {
+                    content = content.replace("{jooq-minor-version}", minorVersion + ".0");
+                    changed = true;
+                }
+
                 if (content.contains("{jooq-version}")) {
-                    content = content.replace("{jooq-version}", version + ".0");
+                    content = content.replace("{jooq-version}", version);
                     changed = true;
                 }
 

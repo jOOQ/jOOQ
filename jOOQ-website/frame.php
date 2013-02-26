@@ -1,7 +1,7 @@
 <?php
   $root = "";
   $minorVersion = "3.0";
-  $version = $minorVersion . ".0";
+  $version = $minorVersion . ".0-RC1";
 
 function manualHeader($isSingle, $forVersion) {
   global $minorVersion;

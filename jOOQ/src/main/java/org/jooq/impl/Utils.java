@@ -2254,6 +2254,9 @@ final class Utils {
         else if (type == ULong.class) {
             return (T) ULong.valueOf(string);
         }
+        else if(type == UUID.class) {
+            return (T) UUID.fromString(string);
+        }
         else if (type.isArray()) {
             return (T) pgNewArray(type, string);
         }

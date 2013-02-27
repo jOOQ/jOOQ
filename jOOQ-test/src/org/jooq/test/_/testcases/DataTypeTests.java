@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.Factory.cast;
 import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.dateAdd;
@@ -90,6 +91,8 @@ import org.jooq.ResultQuery;
 import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.conf.Settings;
+import org.jooq.impl.Executor;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -1589,19 +1592,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             return;
         }
 
-        UUID uuid1 = UUID.randomUUID();
-        UUID uuid2 = UUID.randomUUID();
+        // [#2278] Run the subsequent test twice, once with bind values and once
+        // with inlined bind values
+        for (Executor create : asList(
+            create(),
+            create(new Settings().withStatementType(STATIC_STATEMENT)))) {
 
-        UUID[] array = new UUID[] { uuid1, uuid2 };
-        Field<UUID[]> val = val(array).as("array");
+            UUID uuid1 = UUID.randomUUID();
+            UUID uuid2 = UUID.randomUUID();
 
-        Record1<UUID[]> record = create()
-            .select(val)
-            .fetchOne();
+            UUID[] array = new UUID[] { uuid1, uuid2 };
+            Field<UUID[]> val = val(array).as("array");
 
-        assertEquals(UUID[].class, record.getValue(val).getClass());
-        assertEquals(2, record.getValue(val).length);
-        assertEquals(uuid1, record.getValue(val)[0]);
-        assertEquals(uuid2, record.getValue(val)[1]);
+            Record1<UUID[]> record = create
+                .select(val)
+                .fetchOne();
+
+            assertEquals(UUID[].class, record.getValue(val).getClass());
+            assertEquals(2, record.getValue(val).length);
+            assertEquals(uuid1, record.getValue(val)[0]);
+            assertEquals(uuid2, record.getValue(val)[1]);
+        }
     }
  }

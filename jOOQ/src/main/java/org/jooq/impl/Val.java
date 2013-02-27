@@ -57,7 +57,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Arrays;
 
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
@@ -456,16 +455,33 @@ class Val<T> extends AbstractParam<T> {
                 }
             }
             else if (type.isArray()) {
+                String separator = "";
 
                 // H2 renders arrays as rows
                 if (dialect == H2) {
-                    context.sql(Arrays.toString((Object[]) val).replaceAll("\\[([^]]*)\\]", "($1)"));
+                    context.sql("(");
+
+                    for (Object o : ((Object[]) val)) {
+                        context.sql(separator);
+                        toSQL(context, o, type.getComponentType());
+                        separator = ", ";
+                    }
+
+                    context.sql(")");
                 }
 
                 // By default, render HSQLDB / POSTGRES syntax
                 else {
-                    context.keyword("ARRAY")
-                           .sql(Arrays.toString((Object[]) val));
+                    context.keyword("ARRAY");
+                    context.sql("[");
+
+                    for (Object o : ((Object[]) val)) {
+                        context.sql(separator);
+                        toSQL(context, o, type.getComponentType());
+                        separator = ", ";
+                    }
+
+                    context.sql("]");
                 }
             }
             else if (ArrayRecord.class.isAssignableFrom(type)) {

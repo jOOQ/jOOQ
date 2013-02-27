@@ -1591,6 +1591,82 @@ public class Executor implements Configuration {
     }
 
     /**
+     * Fetch all data from a formatted string.
+     * <p>
+     * The supplied string is supposed to be formatted in the following,
+     * human-readable way: <code><pre>
+     * COL1  COL2   COL3 containing whitespace
+     * ----- ----   --------------------------
+     * val1  1      some text
+     * val2   2      more text
+     * </pre></code> This method will decode the above formatted string
+     * according to the following rules:
+     * <ul>
+     * <li>The number of columns is defined by the number of dash groups in the
+     * second line</li>
+     * <li>The column types are <code>VARCHAR(N)</code> where
+     * <code>N = number of dashes per dash group</code></li>
+     * <li>The column names are defined by the trimmed text contained in the
+     * first row</li>
+     * <li>The data is defined by the trimmed text contained in the subsequent
+     * rows</li>
+     * </ul>
+     * <p>
+     * This is the same as calling {@link #fetchFromTXT(String, String)} with
+     * <code>"{null}"</code> as <code>nullLiteral</code>
+     * <p>
+     * A future version of jOOQ will also support the inverse operation of
+     * {@link Result#format()} through this method
+     *
+     * @param string The formatted string
+     * @return The transformed result
+     * @see #fetchFromTXT(String, String)
+     * @throws DataAccessException If the supplied string does not adhere to the
+     *             above format rules.
+     */
+    @Support
+    public final Result<Record> fetchFromTXT(String string) throws DataAccessException {
+        return fetchFromTXT(string, "{null}");
+    }
+
+    /**
+     * Fetch all data from a formatted string.
+     * <p>
+     * The supplied string is supposed to be formatted in the following,
+     * human-readable way: <code><pre>
+     * COL1  COL2   COL3 containing whitespace
+     * ----- ----   --------------------------
+     * val1  1      some text
+     * val2   2      more text
+     * </pre></code> This method will decode the above formatted string
+     * according to the following rules:
+     * <ul>
+     * <li>The number of columns is defined by the number of dash groups in the
+     * second line</li>
+     * <li>The column types are <code>VARCHAR(N)</code> where
+     * <code>N = number of dashes per dash group</code></li>
+     * <li>The column names are defined by the trimmed text contained in the
+     * first row</li>
+     * <li>The data is defined by the trimmed text contained in the subsequent
+     * rows</li>
+     * </ul>
+     * <p>
+     * A future version of jOOQ will also support the inverse operation of
+     * {@link Result#format()} through this method
+     *
+     * @param string The formatted string
+     * @param nullLiteral The string literal to be used as <code>null</code>
+     *            value.
+     * @return The transformed result
+     * @throws DataAccessException If the supplied string does not adhere to the
+     *             above format rules.
+     */
+    @Support
+    public final Result<Record> fetchFromTXT(String string, String nullLiteral) throws DataAccessException {
+        return fetchFromStringData(Utils.parseTXT(string, nullLiteral));
+    }
+
+    /**
      * Fetch all data from a CSV string.
      * <p>
      * This is the same as calling <code>fetchFromCSV(string, ',')</code> and

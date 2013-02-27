@@ -75,6 +75,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
@@ -130,7 +131,7 @@ import org.jooq.util.postgres.PostgresUtils;
  */
 final class Utils {
 
-    static final JooqLogger      log                        = JooqLogger.getLogger(Utils.class);
+    static final JooqLogger      log                                          = JooqLogger.getLogger(Utils.class);
 
     // ------------------------------------------------------------------------
     // Some constants for use with Configuration.setData()
@@ -141,7 +142,7 @@ final class Utils {
      * clause in {@link Executor#batchStore(UpdatableRecord...)} calls for
      * {@link SQLDialect#POSTGRES}
      */
-    static final String          DATA_OMIT_RETURNING_CLAUSE = "org.jooq.configuration.omit-returning-clause";
+    static final String          DATA_OMIT_RETURNING_CLAUSE                   = "org.jooq.configuration.omit-returning-clause";
 
     /**
      * [#1905] This constant is used internally by jOOQ to indicate to
@@ -161,7 +162,7 @@ final class Utils {
      * The default escape character for <code>[a] LIKE [b] ESCAPE [...]</code>
      * clauses.
      */
-    static final char            ESCAPE                     = '!';
+    static final char            ESCAPE                                       = '!';
 
     /**
      * Indicating whether JPA (<code>javax.persistence</code>) is on the
@@ -170,9 +171,14 @@ final class Utils {
     private static Boolean       isJPAAvailable;
 
     /**
+     * A pattern for the dash line syntax
+     */
+    private static final Pattern DASH_PATTERN                                 = Pattern.compile("(-+)");                                ;
+
+    /**
      * A pattern for the JDBC escape syntax
      */
-    private static final Pattern JDBC_ESCAPE_PATTERN        = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
+    private static final Pattern JDBC_ESCAPE_PATTERN                          = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
 
     // ------------------------------------------------------------------------
     // XXX: Record constructors and related methods
@@ -2395,5 +2401,55 @@ final class Utils {
 
     private static final <T> void pgSetValue(UDTRecord<?> record, Field<T> field, String value) throws SQLException {
         record.setValue(field, pgFromString(field.getType(), value));
+    }
+
+    static List<String[]> parseTXT(String string, String nullLiteral) {
+        String[] strings = string.split("[\\r\\n]+");
+
+        if (strings.length < 2) {
+            throw new DataAccessException("String must contain at least two lines");
+        }
+
+        // Find the set of positions defined by the dashed line number two:
+        // -----  ------- ----
+        // results in
+        // [{0,5} {7,14} {15,19}]
+        List<int[]> positions = new ArrayList<int[]>();
+        Matcher m = DASH_PATTERN.matcher(strings[1]);
+
+        while (m.find()) {
+            positions.add(new int[] { m.start(1), m.end(1) });
+        }
+
+        // Parse header line and data lines into string arrays
+        List<String[]> result = new ArrayList<String[]>();
+        parseTXTLine(positions, result, strings[0], nullLiteral);
+
+        for (int j = 2; j < strings.length; j++) {
+            parseTXTLine(positions, result, strings[j], nullLiteral);
+        }
+
+        return result;
+    }
+
+    private static void parseTXTLine(List<int[]> positions, List<String[]> result, String string, String nullLiteral) {
+        String[] fields = new String[positions.size()];
+        result.add(fields);
+        int length = string.length();
+
+        for (int i = 0; i < fields.length; i++) {
+            int[] position = positions.get(i);
+
+            if (position[0] < length) {
+                fields[i] = string.substring(position[0], Math.min(position[1], length)).trim();
+            }
+            else {
+                fields[i] = null;
+            }
+
+            if (StringUtils.equals(fields[i], nullLiteral)) {
+                fields[i] = null;
+            }
+        }
     }
 }

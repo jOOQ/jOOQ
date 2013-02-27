@@ -54,6 +54,7 @@ import static org.jooq.conf.SettingsTools.getRenderMapping;
 import static org.jooq.impl.Factory.field;
 import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Utils.list;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -1645,14 +1646,15 @@ public class Executor implements Configuration {
      * @return The transformed result
      * @throws DataAccessException If anything went wrong parsing the CSV file
      * @see #fetchFromCSV(String)
+     * @see #fetchFromStringData(List)
      */
     @Support
     public final Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException {
         CSVReader reader = new CSVReader(new StringReader(string), delimiter);
-        List<String[]> all = null;
+        List<String[]> data = null;
 
         try {
-            all = reader.readAll();
+            data = reader.readAll();
         }
         catch (IOException e) {
             throw new DataAccessException("Could not read the CSV string", e);
@@ -1664,20 +1666,61 @@ public class Executor implements Configuration {
             catch (IOException ignore) {}
         }
 
-        if (all.size() == 0) {
+        return fetchFromStringData(data);
+    }
+
+    /**
+     * Fetch all data from a list of strings.
+     * <p>
+     * This is used by methods such as
+     * <ul>
+     * <li> {@link #fetchFromCSV(String)}</li>
+     * <li> {@link #fetchFromTXT(String)}</li>
+     * </ul>
+     * The first element of the argument list should contain column names.
+     * Subsequent elements contain actual data. The degree of all arrays
+     * contained in the argument should be the same, although this is not a
+     * requirement. jOOQ will ignore excess data, and fill missing data with <code>null</code>.
+     *
+     * @param data The data to be transformed into a <code>Result</code>
+     * @return The transformed result
+     * @see #fetchFromStringData(List)
+     */
+    public final Result<Record> fetchFromStringData(String[]... data) {
+        return fetchFromStringData(list(data));
+    }
+
+    /**
+     * Fetch all data from a list of strings.
+     * <p>
+     * This is used by methods such as
+     * <ul>
+     * <li> {@link #fetchFromCSV(String)}</li>
+     * <li> {@link #fetchFromTXT(String)}</li>
+     * </ul>
+     * The first element of the argument list should contain column names.
+     * Subsequent elements contain actual data. The degree of all arrays
+     * contained in the argument should be the same, although this is not a
+     * requirement. jOOQ will ignore excess data, and fill missing data with <code>null</code>.
+     *
+     * @param data The data to be transformed into a <code>Result</code>
+     * @return The transformed result
+     */
+    public final Result<Record> fetchFromStringData(List<String[]> data) {
+        if (data.size() == 0) {
             return new ResultImpl<Record>(this);
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
 
-            for (String name : all.get(0)) {
+            for (String name : data.get(0)) {
                 fields.add(fieldByName(String.class, name));
             }
 
             Result<Record> result = new ResultImpl<Record>(this, fields);
 
-            if (all.size() > 1) {
-                for (String[] values : all.subList(1, all.size())) {
+            if (data.size() > 1) {
+                for (String[] values : data.subList(1, data.size())) {
                     RecordImpl record = new RecordImpl(fields);
 
                     for (int i = 0; i < Math.min(values.length, fields.size()); i++) {

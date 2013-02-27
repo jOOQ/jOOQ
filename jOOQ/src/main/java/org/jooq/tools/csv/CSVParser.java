@@ -227,31 +227,23 @@ public class CSVParser {
                     // the tricky case of an embedded quote in the middle:
                     // a,bc"d"ef,g
                     if (!strictQuotes) {
-                        if (i > 2 // not on the beginning of the line
-                            && nextLine.charAt(i - 1) != this.separator // not
-                                                                        // at
-                                                                        // the
-                                                                        // beginning
-                                                                        // of an
-                                                                        // escape
-                                                                        // sequence
-                            && nextLine.length() > (i + 1) && nextLine.charAt(i + 1) != this.separator // not
-                                                                                                       // at
-                                                                                                       // the
-                                                                                                       // end
-                                                                                                       // of
-                                                                                                       // an
-                                                                                                       // escape
-                                                                                                       // sequence
+                        if (
+                            // not on the beginning of the line
+                            i > 2
+                            // not at the beginning of an escape sequence
+                            && nextLine.charAt(i - 1) != this.separator
+                            // not at the end of an escape sequence
+                            && nextLine.length() > (i + 1) && nextLine.charAt(i + 1) != this.separator
                         ) {
 
+                            // discard white space leading up to quote
                             if (ignoreLeadingWhiteSpace && sb.length() > 0 && isAllWhiteSpace(sb)) {
-                                sb.setLength(0); // discard white space leading
-                                                 // up to quote
+                                sb.setLength(0);
                             }
+
+                            // continue;
                             else {
                                 sb.append(c);
-                                // continue;
                             }
 
                         }
@@ -279,8 +271,8 @@ public class CSVParser {
                 // continuing a quoted section, re-append newline
                 sb.append("\n");
                 pending = sb.toString();
-                sb = null; // this partial content is not to be added to field
-                           // list yet
+                // this partial content is not to be added to field list yet
+                sb = null;
             }
             else {
                 throw new IOException("Un-terminated quoted field at end of CSV line");
@@ -302,10 +294,10 @@ public class CSVParser {
      * @return true if the following character is a quote
      */
     private boolean isNextCharacterEscapedQuote(String nextLine, boolean inQuotes, int i) {
-        return inQuotes // we are in quotes, therefore there can be escaped
-                        // quotes in here.
-            && nextLine.length() > (i + 1) // there is indeed another character
-                                           // to check.
+        return inQuotes
+            // we are in quotes, therefore there can be escaped quotes in here.
+            && nextLine.length() > (i + 1)
+            // there is indeed another character to check.
             && nextLine.charAt(i + 1) == quotechar;
     }
 
@@ -318,10 +310,10 @@ public class CSVParser {
      * @return true if the following character is a quote
      */
     protected boolean isNextCharacterEscapable(String nextLine, boolean inQuotes, int i) {
-        return inQuotes // we are in quotes, therefore there can be escaped
-                        // quotes in here.
-            && nextLine.length() > (i + 1) // there is indeed another character
-                                           // to check.
+        return inQuotes
+            // we are in quotes, therefore there can be escaped quotes in here.
+            && nextLine.length() > (i + 1)
+            // there is indeed another character to check.
             && (nextLine.charAt(i + 1) == quotechar || nextLine.charAt(i + 1) == this.escape);
     }
 

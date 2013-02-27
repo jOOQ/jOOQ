@@ -58,8 +58,56 @@ import org.jooq.tools.JooqLogger;
 /**
  * A file-based {@link MockDataProvider}.
  * <p>
- * This data provider reads a database model from a text file. This
- * implementation is still very experimental and not officially supported!
+ * This data provider reads a database model from a text file, as documented in
+ * the below sample file: <code><pre>
+ * # Comments start off with a hash
+ *
+ * # Statement strings have no prefix and should be ended with a semi-colon
+ * select 'A' from dual;
+ * # Statements may be followed by results, using >
+ * > A
+ * > -
+ * > A
+ * # Statements should be followed by "&#64; rows: [N]" indicating the update count
+ * &#64; rows: 1
+ *
+ * # New statements can be listed int his file
+ * select 'A', 'B' from dual;
+ * > A B
+ * > - -
+ * > A B
+ * &#64; rows: 1
+ *
+ * # Beware of the exact syntax (e.g. using quotes)
+ * select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1";
+ * > ID1 NAME1
+ * > --- -----
+ * > 1   X
+ * > 2   Y
+ * &#64; rows: 2
+ *
+ * # Statements can return several results
+ * > F1  F2  F3 is a bit more complex
+ * > --- --  ----------------------------
+ * > 1   2   and a string containing data
+ * > 1.1 x   another string
+ * &#64; rows: 2
+ *
+ * > A B "C D"
+ * > - - -----
+ * > x y z
+ * &#64; rows: 1
+ * </pre></code>
+ * <p>
+ * Results can be loaded using several techniques:
+ * <ul>
+ * <li>When results are prefixed with <code>></code>, then
+ * {@link Executor#fetchFromTXT(String)} is used</li>
+ * <li>In the future, other types of result sources will be supported, such as
+ * CSV, XML, JSON</li>
+ * </ul>
+ * <p>
+ * This implementation is still very experimental and not officially supported!
  *
  * @author Lukas Eder
  */
@@ -98,7 +146,7 @@ public class MockFileDatabase implements MockDataProvider {
             private StringBuilder    currentResult = new StringBuilder();
             private String           previousSQL   = null;
 
-            public void load() throws FileNotFoundException, IOException {
+            private void load() throws FileNotFoundException, IOException {
                 try {
                     while (true) {
                         String line = readLine();

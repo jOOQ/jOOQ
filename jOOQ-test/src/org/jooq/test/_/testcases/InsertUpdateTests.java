@@ -745,8 +745,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                         .fetch();
 
                 assertEquals(2, result2.size());
-                assertEquals(asList(1, 2), result2.getValues(TBook_ID()));
-                assertEquals(asList("ABC", "Animal Farm"), result2.getValues(TBook_TITLE()));
+
+                // The order is not guaranteed in UPDATE .. RETURNING clauses
+                assertSame(asList(1, 2), result2.getValues(TBook_ID()));
+                assertSame(asList("ABC", "Animal Farm"), result2.getValues(TBook_TITLE()));
             }
         }
     }

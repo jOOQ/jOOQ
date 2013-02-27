@@ -88,21 +88,16 @@ public class MockFileDatabase implements MockDataProvider {
         load();
     }
 
-    private interface Loader {
-        void load() throws FileNotFoundException, IOException;
-    }
-
     private void load() throws FileNotFoundException, IOException {
 
         // Wrap the below code in a local scope
-        new Loader() {
+        new Object() {
             private InputStream      is            = new FileInputStream(file);
             private LineNumberReader in            = new LineNumberReader(new InputStreamReader(is, encoding));
             private StringBuilder    currentSQL    = new StringBuilder();
             private StringBuilder    currentResult = new StringBuilder();
             private String           previousSQL   = null;
 
-            @Override
             public void load() throws FileNotFoundException, IOException {
                 try {
                     while (true) {

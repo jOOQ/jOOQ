@@ -128,12 +128,8 @@ public class MockFileDatabase implements MockDataProvider {
 
                         // A line of result data
                         else if (line.startsWith(">")) {
-
-                            // But ignore visual delimiter
-                            if (!line.startsWith("> -")) {
-                                currentResult.append(line.substring(2));
-                                currentResult.append("\n");
-                            }
+                            currentResult.append(line.substring(2));
+                            currentResult.append("\n");
                         }
 
                         // A result data termination literal
@@ -219,7 +215,7 @@ public class MockFileDatabase implements MockDataProvider {
                     rows = Integer.parseInt(rowString.substring(7).trim());
                 }
 
-                return new MockResult(rows, create.fetchFromCSV(currentResult.toString(), ' '));
+                return new MockResult(rows, create.fetchFromTXT(currentResult.toString()));
             }
 
             private String readLine() throws IOException {

@@ -333,5 +333,53 @@ public class MockTest extends AbstractTest {
     @Test
     public void testFileDatabase_SELECT_ID1_NAME1_FROM_TABLE1() throws Exception {
         Result<Record2<Integer, String>> r = MOCK.select(FIELD_ID1, FIELD_NAME1).from(TABLE1).fetch();
+
+        assertEquals(2, r.size());
+        assertEquals("ID1", r.field(0).getName());
+        assertEquals("NAME1", r.field(1).getName());
+        assertEquals(asList(1, 2), r.getValues(0));
+        assertEquals(asList("X", "Y"), r.getValues(1));
+    }
+
+    @Test
+    public void testFileDatabase_SELECT_COMPLEX_DATA() throws Exception {
+        List<Result<Record>> results = MOCK.fetchMany("select complex_data");
+        assertEquals(2, results.size());
+
+        Result<Record> r1 = results.get(0);
+        Result<Record> r2 = results.get(1);
+
+        // Result 1
+        // --------
+        assertEquals(2, r1.size());
+
+        // Header
+        assertEquals(3, r1.fields().length);
+        assertEquals("F1", r1.field(0).getName());
+        assertEquals("F2", r1.field(1).getName());
+        assertEquals("F3 is a bit more complex", r1.field(2).getName());
+
+        // Data
+        assertEquals("1", r1.getValue(0, 0));
+        assertEquals("2", r1.getValue(0, 1));
+        assertEquals("and a string containing data", r1.getValue(0, 2));
+        assertEquals("1.1", r1.getValue(1, 0));
+        assertEquals("x", r1.getValue(1, 1));
+        assertEquals("another string", r1.getValue(1, 2));
+
+        // Result 1
+        // --------
+        assertEquals(1, r2.size());
+
+        // Header
+        assertEquals(3, r2.fields().length);
+        assertEquals("A", r2.field(0).getName());
+        assertEquals("B", r2.field(1).getName());
+        assertEquals("\"C D\"", r2.field(2).getName());
+
+        // Data
+        assertEquals("x", r2.getValue(0, 0));
+        assertEquals("y", r2.getValue(0, 1));
+        assertEquals("z", r2.getValue(0, 2));
     }
 }

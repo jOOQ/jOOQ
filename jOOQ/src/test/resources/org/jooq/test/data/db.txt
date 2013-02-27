@@ -15,6 +15,19 @@ select 'A', 'B' from dual;
 select "TABLE1"."ID1", "TABLE1"."NAME1" from "TABLE1";
 > ID1 NAME1
 > --- -----
-> 1 X
-> 2 Y
+> 1   X
+> 2   Y
 @ rows: 2
+
+# [#2280] Check if "advanced" CSV content can be handled, too
+select complex_data;
+> F1  F2  F3 is a bit more complex
+> --- --  ----------------------------
+> 1   2   and a string containing data
+> 1.1 x   another string
+@ rows: 2
+
+> A B "C D"
+> - - -----
+> x y z
+@ rows: 1

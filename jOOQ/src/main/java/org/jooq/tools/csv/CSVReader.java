@@ -183,7 +183,6 @@ public class CSVReader implements Closeable {
      * @throws IOException if bad things happen during the read
      */
     public String[] readNext() throws IOException {
-
         String[] result = null;
         do {
             String nextLine = getNextLine();

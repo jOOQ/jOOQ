@@ -132,7 +132,7 @@ class Val<T> extends AbstractParam<T> {
         }
     }
 
-    private boolean shouldCast(RenderContext context) {
+    private final boolean shouldCast(RenderContext context) {
 
         // In default mode, casting is only done when parameters are NOT inlined
         if (!isInline(context)) {
@@ -181,7 +181,7 @@ class Val<T> extends AbstractParam<T> {
     /**
      * Render the bind variable including a cast, if necessary
      */
-    private void toSQLCast(RenderContext context) {
+    private final void toSQLCast(RenderContext context) {
         DataType<T> dataType = getDataType(context);
         DataType<T> type = dataType.getSQLDataType();
         SQLDialect dialect = context.getDialect();
@@ -242,7 +242,7 @@ class Val<T> extends AbstractParam<T> {
         }
     }
 
-    private int getValueLength() {
+    private final int getValueLength() {
         String string = (String) value;
         if (string == null) {
             return 1;
@@ -264,7 +264,7 @@ class Val<T> extends AbstractParam<T> {
         }
     }
 
-    private void toSQLCast(RenderContext context, DataType<?> type, int length, int precision, int scale) {
+    private final void toSQLCast(RenderContext context, DataType<?> type, int length, int precision, int scale) {
         context.keyword("cast(");
         toSQL(context, value, getType());
         context.keyword(" as ")
@@ -295,7 +295,7 @@ class Val<T> extends AbstractParam<T> {
     /**
      * Inlining abstraction
      */
-    private void toSQL(RenderContext context, Object val) {
+    private final void toSQL(RenderContext context, Object val) {
         if (val == null) {
             toSQL(context, val, Object.class);
         }
@@ -308,7 +308,7 @@ class Val<T> extends AbstractParam<T> {
      * Inlining abstraction
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    private void toSQL(RenderContext context, Object val, Class<?> type) {
+    private final void toSQL(RenderContext context, Object val, Class<?> type) {
         SQLDialect dialect = context.getDialect();
 
         // [#650] Check first, if we have a converter for the supplied type
@@ -525,7 +525,7 @@ class Val<T> extends AbstractParam<T> {
     /**
      * Escape a string literal by replacing <code>'</code> by <code>''</code>
      */
-    private String escape(Object val) {
+    private final String escape(Object val) {
         return val.toString().replace("'", "''");
     }
 

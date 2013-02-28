@@ -99,7 +99,7 @@ import org.jooq.util.GeneratorStrategy.Mode;
  */
 public class JavaGenerator extends AbstractGenerator {
 
-    private static final JooqLogger log   = JooqLogger.getLogger(JavaGenerator.class);
+    private static final JooqLogger log                          = JooqLogger.getLogger(JavaGenerator.class);
 
     /**
      * The Javadoc to be used for private constructors
@@ -114,7 +114,7 @@ public class JavaGenerator extends AbstractGenerator {
     /**
      * An overall stop watch to measure the speed of source code generation
      */
-    private final StopWatch         watch = new StopWatch();
+    private final StopWatch         watch                        = new StopWatch();
 
     /**
      * The underlying database of this generator

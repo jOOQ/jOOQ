@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 572857905;
+	private static final long serialVersionUID = 190372487;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_85</code>
@@ -51,7 +51,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.Keys.PK_X_TEST_CASE_85;
+		return org.jooq.test.h2.generatedclasses.UniqueKeys.XTestCase_85.PK_X_TEST_CASE_85;
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_X_TEST_CASE_85);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record>>asList(org.jooq.test.h2.generatedclasses.UniqueKeys.XTestCase_85.PK_X_TEST_CASE_85);
 	}
 
 	/**
@@ -67,6 +67,6 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_X_TEST_CASE_85);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.h2.generatedclasses.ForeignKeys.XTestCase_85.FK_X_TEST_CASE_85);
 	}
 }

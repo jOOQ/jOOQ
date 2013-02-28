@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1772163386;
+	private static final long serialVersionUID = -1628819545;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>
@@ -116,7 +116,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.Keys.PK_X_UNUSED;
+		return org.jooq.test.h2.generatedclasses.UniqueKeys.XUnused.PK_X_UNUSED;
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_X_UNUSED, org.jooq.test.h2.generatedclasses.Keys.UK_X_UNUSED_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.h2.generatedclasses.UniqueKeys.XUnused.PK_X_UNUSED, org.jooq.test.h2.generatedclasses.UniqueKeys.XUnused.UK_X_UNUSED_ID);
 	}
 
 	/**
@@ -132,6 +132,6 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.g
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_X_UNUSED_SELF);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.h2.generatedclasses.ForeignKeys.XUnused.FK_X_UNUSED_SELF);
 	}
 }

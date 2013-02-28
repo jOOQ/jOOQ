@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings("all")
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -2041415933;
+	private static final long serialVersionUID = -1228745429;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_TRIGGERS</code>
@@ -51,7 +51,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2
 	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.test.h2.generatedclasses.Keys.IDENTITY_T_TRIGGERS;
+		return org.jooq.test.h2.generatedclasses.Identities.IDENTITY_T_TRIGGERS;
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.Keys.PK_T_TRIGGERS;
+		return org.jooq.test.h2.generatedclasses.UniqueKeys.TTriggers.PK_T_TRIGGERS;
 	}
 
 	/**
@@ -67,6 +67,6 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_TRIGGERS);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.h2.generatedclasses.UniqueKeys.TTriggers.PK_T_TRIGGERS);
 	}
 }

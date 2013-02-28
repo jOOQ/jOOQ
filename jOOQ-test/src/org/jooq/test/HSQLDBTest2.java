@@ -80,7 +80,7 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.h2.generatedclasses.Keys;
+import org.jooq.test.h2.generatedclasses.ForeignKeys;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.Sequences;
 import org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord;
@@ -525,12 +525,12 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
-        return Keys.FK_T_BOOK_AUTHOR_ID;
+        return ForeignKeys.TBook.FK_T_BOOK_AUTHOR_ID;
     }
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
-        return Keys.FK_T_BOOK_CO_AUTHOR_ID;
+        return ForeignKeys.TBook.FK_T_BOOK_CO_AUTHOR_ID;
     }
 
     @Override

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1032902171;
+	private static final long serialVersionUID = 1484398025;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_85</code>
@@ -58,7 +58,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_X_TEST_CASE_85;
+		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.XTestCase_85.PK_X_TEST_CASE_85;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_X_TEST_CASE_85);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.XTestCase_85.PK_X_TEST_CASE_85);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.FK_X_TEST_CASE_85);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_85Record, ?>>asList(org.jooq.test.oracle.generatedclasses.test.ForeignKeys.XTestCase_85.FK_X_TEST_CASE_85);
 	}
 
 	/**

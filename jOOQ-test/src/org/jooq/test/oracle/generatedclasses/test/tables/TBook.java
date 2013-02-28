@@ -11,7 +11,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -78914757;
+	private static final long serialVersionUID = 1823095960;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK</code>
@@ -90,7 +90,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_BOOK;
+		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TBook.PK_T_BOOK;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_BOOK);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TBook.PK_T_BOOK);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.test.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.test.Keys.FK_T_BOOK_LANGUAGE_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.ForeignKeys.TBook.FK_T_BOOK_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.test.ForeignKeys.TBook.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.oracle.generatedclasses.test.ForeignKeys.TBook.FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	/**

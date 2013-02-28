@@ -150,11 +150,11 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
 
         // [#1808] TODO: Restrict this field list, in case a restricting fetch()
         // method was called to get here
-    	List<Field<?>> fields = getSelect();
+        List<Field<?>> fields = getSelect();
 
-    	// If no projection was specified explicitly, create fields from result
-    	// set meta data instead. This is typically the case for SELECT * ...
-    	if (fields.isEmpty()) {
+        // If no projection was specified explicitly, create fields from result
+        // set meta data instead. This is typically the case for SELECT * ...
+        if (fields.isEmpty()) {
             Configuration configuration = getConfiguration();
             return new MetaDataFieldProvider(configuration, meta).getFields();
         }

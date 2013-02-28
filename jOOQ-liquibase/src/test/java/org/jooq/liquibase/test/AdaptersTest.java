@@ -37,6 +37,7 @@ package org.jooq.liquibase.test;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.liquibase.Adapters.sequence;
 import static org.jooq.liquibase.Adapters.table;
 import static org.jooq.maven.example.h2.Tables.T_BOOK;
 import static org.jooq.maven.example.h2.Tables.V_LIBRARY;
@@ -50,8 +51,10 @@ import liquibase.snapshot.DatabaseSnapshot;
 import liquibase.snapshot.DatabaseSnapshotGeneratorFactory;
 
 import org.jooq.SQLDialect;
+import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.Executor;
+import org.jooq.maven.example.h2.Sequences;
 
 import org.junit.After;
 import org.junit.Before;
@@ -93,6 +96,15 @@ public class AdaptersTest {
         Table<?> table = table(snapshot.getView("V_LIBRARY"));
 
         testEqualTables(V_LIBRARY, table);
+    }
+
+    @Test
+    public void testSequences() {
+        Sequence<?> sequence = sequence(snapshot.getSequence("S_AUTHOR_ID"));
+
+        assertEquals(
+            create.nextval(Sequences.S_AUTHOR_ID) + 1,
+            create.nextval(sequence));
     }
 
     /**

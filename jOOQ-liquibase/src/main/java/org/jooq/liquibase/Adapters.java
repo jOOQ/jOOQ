@@ -49,10 +49,14 @@ import liquibase.database.core.SQLiteDatabase;
 import liquibase.database.core.SybaseASADatabase;
 import liquibase.database.core.SybaseDatabase;
 import liquibase.database.structure.Column;
+import liquibase.database.structure.Sequence;
 import liquibase.database.structure.Table;
 import liquibase.database.structure.View;
 
+import org.jooq.DataType;
 import org.jooq.SQLDialect;
+import org.jooq.impl.DefaultDataType;
+import org.jooq.impl.SQLDataType;
 
 /**
  * A set of adapters to wrap Liquibase types in jOOQ types.
@@ -65,7 +69,29 @@ import org.jooq.SQLDialect;
 public class Adapters {
 
     /**
-     * Extract the jOOQ {@link SQLDialect} from a Liquibase column.
+     * Extract the jOOQ {@link DataType} from a Liquibase {@link Column}.
+     */
+    public static DataType<?> dataType(Column column) {
+        return DefaultDataType.getDataType(
+            dialect(column),
+            column.getTypeName(),
+            column.getColumnSize(),
+            column.getDecimalDigits());
+    }
+
+    /**
+     * Extract the jOOQ {@link DataType} from a Liquibase {@link Sequence}.
+     * <p>
+     * Note: Liquibase sequences do not expose their data types. The best match
+     * for this in jOOQ is {@link SQLDataType#BIGINT}
+     */
+    @SuppressWarnings("unused")
+    public static DataType<?> dataType(Sequence sequence) {
+        return SQLDataType.BIGINT;
+    }
+
+    /**
+     * Extract the jOOQ {@link SQLDialect} from a Liquibase {@link Column}.
      */
     public static SQLDialect dialect(Column column) {
         View view = column.getView();
@@ -78,21 +104,21 @@ public class Adapters {
     }
 
     /**
-     * Extract the jOOQ {@link SQLDialect} from a Liquibase view.
+     * Extract the jOOQ {@link SQLDialect} from a Liquibase {@link View}.
      */
     public static SQLDialect dialect(View view) {
         return dialect(view.getDatabase());
     }
 
     /**
-     * Extract the jOOQ {@link SQLDialect} from a Liquibase table.
+     * Extract the jOOQ {@link SQLDialect} from a Liquibase {@link Table}.
      */
     public static SQLDialect dialect(Table table) {
         return dialect(table.getDatabase());
     }
 
     /**
-     * Extract the jOOQ {@link SQLDialect} from a Liquibase.
+     * Extract the jOOQ {@link SQLDialect} from a Liquibase {@link Database}.
      */
     @SuppressWarnings("deprecation")
     public static SQLDialect dialect(Database database) {
@@ -127,16 +153,23 @@ public class Adapters {
     }
 
     /**
-     * Extract the jOOQ {@link Table} from a Liquibase table.
+     * Extract the jOOQ {@link org.jooq.Table} from a Liquibase {@link Table}.
      */
     public static org.jooq.Table<?> table(Table table) {
         return new LiquibaseTable(table);
     }
 
     /**
-     * Extract the jOOQ {@link Table} from a Liquibase view.
+     * Extract the jOOQ {@link org.jooq.Table} from a Liquibase {@link View}.
      */
     public static org.jooq.Table<?> table(View view) {
         return new LiquibaseTable(view);
+    }
+
+    /**
+     * Extract the jOOQ {@link org.jooq.Sequence} from a Liquibase {@link Sequence}.
+     */
+    public static org.jooq.Sequence<?> sequence(Sequence sequence) {
+        return new LiquibaseSequence(sequence);
     }
 }

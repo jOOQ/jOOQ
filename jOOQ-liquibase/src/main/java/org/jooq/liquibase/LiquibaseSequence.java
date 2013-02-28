@@ -35,48 +35,22 @@
  */
 package org.jooq.liquibase;
 
-import static org.jooq.impl.Factory.tableByName;
-import static org.jooq.liquibase.Adapters.dataType;
+import liquibase.database.structure.Sequence;
 
-import java.util.List;
-
-import liquibase.database.structure.Column;
-import liquibase.database.structure.Table;
-import liquibase.database.structure.View;
-
-import org.jooq.impl.CustomTable;
+import org.jooq.impl.SequenceImpl;
 
 /**
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class LiquibaseTable extends CustomTable {
+class LiquibaseSequence extends SequenceImpl {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -280756564537037447L;
+    private static final long serialVersionUID = -5000543581139890516L;
 
-    LiquibaseTable(Table table) {
-        super(table.getName(), new LiquibaseSchema(table.getSchema()));
-        init(table.getColumns());
-    }
-
-    LiquibaseTable(View view) {
-        super(view.getName(), new LiquibaseSchema(view.getSchema()));
-        init(view.getColumns());
-    }
-
-    private void init(List<Column> columns) {
-        for (Column column : columns) {
-            createField(column.getName(), dataType(column), this);
-        }
-    }
-
-    @Override
-    public Class getRecordType() {
-
-        // Trick access to RecordImpl
-        return tableByName("dummy").getRecordType();
+    LiquibaseSequence(Sequence sequence) {
+        super(sequence.getName(), new LiquibaseSchema(sequence.getSchema()), Adapters.dataType(sequence));
     }
 }

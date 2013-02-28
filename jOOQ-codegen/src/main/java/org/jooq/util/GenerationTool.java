@@ -137,8 +137,9 @@ public class GenerationTool {
 
     @SuppressWarnings("unchecked")
     public static void main(Configuration configuration) throws Exception {
-        Jdbc j = defaultIfNull(configuration.getJdbc(), new Jdbc());
+        Jdbc j = configuration.getJdbc();
         org.jooq.util.jaxb.Generator g = configuration.getGenerator();
+        errorIfNull(g, "The <generator/> tag is mandatory.");
 
         // Some default values for optional elements to avoid NPE's
         if (g.getStrategy() == null)
@@ -151,6 +152,7 @@ public class GenerationTool {
             // Initialise connection
             // ---------------------
             if (connection == null) {
+                errorIfNull(j, "The <jdbc/> tag is mandatory.");
                 loadClass(j.getDriver());
 
                 Properties properties = new Properties();
@@ -164,6 +166,9 @@ public class GenerationTool {
                     properties.put("password", defaultString(j.getPassword()));
 
                 connection = DriverManager.getConnection(defaultString(j.getUrl()), properties);
+            }
+            else {
+                j = defaultIfNull(j, new Jdbc());
             }
 
 
@@ -181,21 +186,24 @@ public class GenerationTool {
 
             generator.setStrategy(strategy);
 
-            Class<Database> databaseClass = (Class<Database>) loadClass(trim(g.getDatabase().getName()));
+            org.jooq.util.jaxb.Database d = g.getDatabase();
+            errorIfNull(d, "The <database/> tag is mandatory.");
+
+            Class<Database> databaseClass = (Class<Database>) loadClass(trim(d.getName()));
             Database database = databaseClass.newInstance();
 
-            List<Schema> schemata = g.getDatabase().getSchemata();
+            List<Schema> schemata = d.getSchemata();
             if (schemata.isEmpty()) {
                 Schema schema = new Schema();
-                schema.setInputSchema(trim(g.getDatabase().getInputSchema()));
-                schema.setOutputSchema(trim(g.getDatabase().getOutputSchema()));
+                schema.setInputSchema(trim(d.getInputSchema()));
+                schema.setOutputSchema(trim(d.getOutputSchema()));
                 schemata.add(schema);
             }
             else {
-                if (!StringUtils.isBlank(g.getDatabase().getInputSchema())) {
+                if (!StringUtils.isBlank(d.getInputSchema())) {
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/inputSchema and /configuration/generator/database/schemata");
                 }
-                if (!StringUtils.isBlank(g.getDatabase().getOutputSchema())) {
+                if (!StringUtils.isBlank(d.getOutputSchema())) {
                     log.warn("WARNING: Cannot combine configuration properties /configuration/generator/database/outputSchema and /configuration/generator/database/schemata");
                 }
             }
@@ -222,22 +230,22 @@ public class GenerationTool {
 
             database.setConnection(connection);
             database.setConfiguredSchemata(schemata);
-            database.setIncludes(new String[] { defaultString(g.getDatabase().getIncludes()) });
-            database.setExcludes(new String[] { defaultString(g.getDatabase().getExcludes()) });
-            database.setRecordVersionFields(new String[] { defaultString(g.getDatabase().getRecordVersionFields()) });
-            database.setRecordTimestampFields(new String[] { defaultString(g.getDatabase().getRecordTimestampFields()) });
-            database.setConfiguredCustomTypes(g.getDatabase().getCustomTypes());
-            database.setConfiguredEnumTypes(g.getDatabase().getEnumTypes());
-            database.setConfiguredForcedTypes(g.getDatabase().getForcedTypes());
+            database.setIncludes(new String[] { defaultString(d.getIncludes()) });
+            database.setExcludes(new String[] { defaultString(d.getExcludes()) });
+            database.setRecordVersionFields(new String[] { defaultString(d.getRecordVersionFields()) });
+            database.setRecordTimestampFields(new String[] { defaultString(d.getRecordTimestampFields()) });
+            database.setConfiguredCustomTypes(d.getCustomTypes());
+            database.setConfiguredEnumTypes(d.getEnumTypes());
+            database.setConfiguredForcedTypes(d.getForcedTypes());
 
-            if (g.getDatabase().getEnumTypes().size() > 0) {
+            if (d.getEnumTypes().size() > 0) {
                 log.warn("WARNING: The configuration property /configuration/generator/database/enumTypes is experimental and deprecated and will be removed in the future.");
             }
 
-            if (g.getDatabase().isDateAsTimestamp() != null)
-                database.setDateAsTimestamp(g.getDatabase().isDateAsTimestamp());
-            if (g.getDatabase().isUnsignedTypes() != null)
-                database.setSupportsUnsignedTypes(g.getDatabase().isUnsignedTypes());
+            if (d.isDateAsTimestamp() != null)
+                database.setDateAsTimestamp(d.isDateAsTimestamp());
+            if (d.isUnsignedTypes() != null)
+                database.setSupportsUnsignedTypes(d.isUnsignedTypes());
 
             if (StringUtils.isBlank(g.getTarget().getPackageName()))
                 g.getTarget().setPackageName("org.jooq.generated");
@@ -311,6 +319,13 @@ public class GenerationTool {
 
     private static String trim(String string) {
         return (string == null ? null : string.trim());
+    }
+
+    private static void errorIfNull(Object o, String message) {
+        if (o == null) {
+            log.error(message + " For details, see http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd");
+            System.exit(-1);
+        }
     }
 
     private static void error() {

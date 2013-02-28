@@ -209,8 +209,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 // syntax for functions. Select functions from DUAL instead
                 case HSQLDB:
 
-                	// [#692] HSQLDB cannot SELECT f() FROM [...] when f()
-                	// returns a cursor. Instead, SELECT * FROM table(f()) works
+                    // [#692] HSQLDB cannot SELECT f() FROM [...] when f()
+                    // returns a cursor. Instead, SELECT * FROM table(f()) works
                     if (SQLDataType.RESULT.equals(type.getSQLDataType())) {
                         return executeSelectFrom();
                     }

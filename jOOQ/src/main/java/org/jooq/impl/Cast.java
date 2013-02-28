@@ -75,7 +75,7 @@ class Cast<T> extends AbstractField<T> {
     @SuppressWarnings("unchecked")
     @Override
     public final void toSQL(RenderContext context) {
-    	// Avoid casting bind values inside an explicit cast...
+        // Avoid casting bind values inside an explicit cast...
         CastMode castMode = context.castMode();
 
         if (context.getDialect() == SQLDialect.DERBY) {

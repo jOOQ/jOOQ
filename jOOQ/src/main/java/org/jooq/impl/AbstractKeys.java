@@ -58,9 +58,9 @@ public abstract class AbstractKeys {
         return new IdentityImpl<R, T>(table, field);
     }
 
-	/**
-	 * Factory method for unique keys
-	 */
+    /**
+     * Factory method for unique keys
+     */
     protected static <R extends Record> UniqueKey<R> createUniqueKey(Table<R> table, TableField<R, ?>... fields) {
         return new UniqueKeyImpl<R>(table, fields);
     }

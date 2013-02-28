@@ -82,6 +82,28 @@ public class GenerationTool {
 
     private static final JooqLogger log = JooqLogger.getLogger(GenerationTool.class);
 
+    private static ClassLoader      loader;
+    private static Connection       connection;
+
+    /**
+     * The class loader to use with this generation tool.
+     * <p>
+     * If set, all classes are loaded with this class loader
+     */
+    public static void setClassLoader(ClassLoader loader) {
+        GenerationTool.loader = loader;
+    }
+
+    /**
+     * The JDBC connection to use with this generation tool.
+     * <p>
+     * If set, the configuration XML's <code>&lt;jdbc/></code> configuration is
+     * ignored, and this connection is used for meta data inspection, instead.
+     */
+    public static void setConnection(Connection connection) {
+        GenerationTool.connection = connection;
+    }
+
 	public static void main(String[] args) throws Exception {
 		if (args.length < 1) {
 			error();
@@ -112,12 +134,8 @@ public class GenerationTool {
         }
 	}
 
+	@SuppressWarnings("unchecked")
     public static void main(Configuration configuration) throws Exception {
-        main(configuration, null);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static void main(Configuration configuration, ClassLoader loader) throws Exception {
 	    Jdbc j = configuration.getJdbc();
 	    org.jooq.util.jaxb.Generator g = configuration.getGenerator();
 
@@ -127,24 +145,26 @@ public class GenerationTool {
 	    if (g.getTarget() == null)
 	        g.setTarget(new Target());
 
-        loadClass(j.getDriver(), loader);
-        Connection connection = null;
-
         try {
 
             // Initialise connection
             // ---------------------
-            Properties properties = new Properties();
-            for (Property p : j.getProperties()) {
-                properties.put(p.getKey(), p.getValue());
+            if (connection == null) {
+                loadClass(j.getDriver(), loader);
+
+                Properties properties = new Properties();
+                for (Property p : j.getProperties()) {
+                    properties.put(p.getKey(), p.getValue());
+                }
+
+                if (!properties.containsKey("user"))
+                    properties.put("user", defaultString(j.getUser()));
+                if (!properties.containsKey("password"))
+                    properties.put("password", defaultString(j.getPassword()));
+
+                connection = DriverManager.getConnection(defaultString(j.getUrl()), properties);
             }
 
-            if (!properties.containsKey("user"))
-                properties.put("user", defaultString(j.getUser()));
-            if (!properties.containsKey("password"))
-                properties.put("password", defaultString(j.getPassword()));
-
-            connection = DriverManager.getConnection(defaultString(j.getUrl()), properties);
 
             // Initialise generator
             // --------------------

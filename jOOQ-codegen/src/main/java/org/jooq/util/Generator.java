@@ -45,14 +45,14 @@ import javax.annotation.Generated;
  */
 public interface Generator {
 
-	/**
-	 * Do the code generation
-	 */
-	void generate(Database database);
+    /**
+     * Do the code generation
+     */
+    void generate(Database database);
 
-	/**
-	 * Set a naming strategy to this generator
-	 */
+    /**
+     * Set a naming strategy to this generator
+     */
     void setStrategy(GeneratorStrategy strategy);
 
     /**

@@ -151,7 +151,7 @@ public class GenerationTool {
             // Initialise connection
             // ---------------------
             if (connection == null) {
-                loadClass(j.getDriver(), loader);
+                loadClass(j.getDriver());
 
                 Properties properties = new Properties();
                 for (Property p : j.getProperties()) {
@@ -170,18 +170,18 @@ public class GenerationTool {
             // Initialise generator
             // --------------------
             Class<Generator> generatorClass = (Class<Generator>) (!isBlank(g.getName())
-                ? loadClass(trim(g.getName()), loader)
+                ? loadClass(trim(g.getName()))
                 : JavaGenerator.class);
             Generator generator = generatorClass.newInstance();
 
             Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (!isBlank(g.getStrategy().getName())
-                ? loadClass(trim(g.getStrategy().getName()), loader)
+                ? loadClass(trim(g.getStrategy().getName()))
                 : DefaultGeneratorStrategy.class);
             GeneratorStrategy strategy = strategyClass.newInstance();
 
             generator.setStrategy(strategy);
 
-            Class<Database> databaseClass = (Class<Database>) loadClass(trim(g.getDatabase().getName()), loader);
+            Class<Database> databaseClass = (Class<Database>) loadClass(trim(g.getDatabase().getName()));
             Database database = databaseClass.newInstance();
 
             List<Schema> schemata = g.getDatabase().getSchemata();
@@ -290,7 +290,7 @@ public class GenerationTool {
         }
     }
 
-    private static Class<?> loadClass(String className, ClassLoader loader) throws ClassNotFoundException {
+    private static Class<?> loadClass(String className) throws ClassNotFoundException {
 
         // [#2283] If no explicit class loader was provided try loading the class
         // with "default" techniques

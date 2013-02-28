@@ -79,6 +79,16 @@ public interface Database {
     List<IdentityDefinition> getIdentities(SchemaDefinition schema);
 
     /**
+     * The unique keys contained in this database
+     */
+    List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema);
+
+    /**
+     * The unique keys contained in this database
+     */
+    List<ForeignKeyDefinition> getForeignKeys(SchemaDefinition schema);
+
+    /**
      * The tables contained in this database
      */
     List<TableDefinition> getTables(SchemaDefinition schema);

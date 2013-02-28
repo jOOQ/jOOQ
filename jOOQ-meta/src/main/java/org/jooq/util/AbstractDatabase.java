@@ -66,50 +66,54 @@ import org.jooq.util.oracle.OracleDatabase;
  */
 public abstract class AbstractDatabase implements Database {
 
-    private static final JooqLogger                                   log = JooqLogger.getLogger(AbstractDatabase.class);
+    private static final JooqLogger                                     log = JooqLogger.getLogger(AbstractDatabase.class);
 
     // -------------------------------------------------------------------------
     // Configuration elements
     // -------------------------------------------------------------------------
 
-    private SQLDialect                                                dialect;
-    private Connection                                                connection;
-    private Executor                                                  create;
-    private String[]                                                  excludes;
-    private String[]                                                  includes;
-    private String[]                                                  recordVersionFields;
-    private String[]                                                  recordTimestampFields;
-    private boolean                                                   supportsUnsignedTypes;
-    private boolean                                                   dateAsTimestamp;
-    private List<Schema>                                              configuredSchemata;
-    private List<CustomType>                                          configuredCustomTypes;
-    private List<EnumType>                                            configuredEnumTypes;
-    private List<ForcedType>                                          configuredForcedTypes;
+    private SQLDialect                                                  dialect;
+    private Connection                                                  connection;
+    private Executor                                                    create;
+    private String[]                                                    excludes;
+    private String[]                                                    includes;
+    private String[]                                                    recordVersionFields;
+    private String[]                                                    recordTimestampFields;
+    private boolean                                                     supportsUnsignedTypes;
+    private boolean                                                     dateAsTimestamp;
+    private List<Schema>                                                configuredSchemata;
+    private List<CustomType>                                            configuredCustomTypes;
+    private List<EnumType>                                              configuredEnumTypes;
+    private List<ForcedType>                                            configuredForcedTypes;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
     // -------------------------------------------------------------------------
 
-    private List<String>                                              inputSchemata;
-    private List<SchemaDefinition>                                    schemata;
-    private List<SequenceDefinition>                                  sequences;
-    private List<IdentityDefinition>                                  identities;
-    private List<TableDefinition>                                     tables;
-    private List<EnumDefinition>                                      enums;
-    private List<UDTDefinition>                                       udts;
-    private List<ArrayDefinition>                                     arrays;
-    private List<RoutineDefinition>                                   routines;
-    private List<PackageDefinition>                                   packages;
-    private Relations                                                 relations;
+    private List<String>                                                inputSchemata;
+    private List<SchemaDefinition>                                      schemata;
+    private List<SequenceDefinition>                                    sequences;
+    private List<IdentityDefinition>                                    identities;
+    private List<UniqueKeyDefinition>                                   uniqueKeys;
+    private List<ForeignKeyDefinition>                                  foreignKeys;
+    private List<TableDefinition>                                       tables;
+    private List<EnumDefinition>                                        enums;
+    private List<UDTDefinition>                                         udts;
+    private List<ArrayDefinition>                                       arrays;
+    private List<RoutineDefinition>                                     routines;
+    private List<PackageDefinition>                                     packages;
+    private Relations                                                   relations;
 
-    private transient Map<SchemaDefinition, List<SequenceDefinition>> sequencesBySchema;
-    private transient Map<SchemaDefinition, List<IdentityDefinition>> identitiesBySchema;
-    private transient Map<SchemaDefinition, List<TableDefinition>>    tablesBySchema;
-    private transient Map<SchemaDefinition, List<EnumDefinition>>     enumsBySchema;
-    private transient Map<SchemaDefinition, List<UDTDefinition>>      udtsBySchema;
-    private transient Map<SchemaDefinition, List<ArrayDefinition>>    arraysBySchema;
-    private transient Map<SchemaDefinition, List<RoutineDefinition>>  routinesBySchema;
-    private transient Map<SchemaDefinition, List<PackageDefinition>>  packagesBySchema;
+    private transient Map<SchemaDefinition, List<SequenceDefinition>>   sequencesBySchema;
+    private transient Map<SchemaDefinition, List<IdentityDefinition>>   identitiesBySchema;
+    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>  uniqueKeysBySchema;
+    private transient Map<SchemaDefinition, List<ForeignKeyDefinition>> foreignKeysBySchema;
+    private transient Map<SchemaDefinition, List<TableDefinition>>      tablesBySchema;
+    private transient Map<SchemaDefinition, List<EnumDefinition>>       enumsBySchema;
+    private transient Map<SchemaDefinition, List<UDTDefinition>>        udtsBySchema;
+    private transient Map<SchemaDefinition, List<ArrayDefinition>>      arraysBySchema;
+    private transient Map<SchemaDefinition, List<RoutineDefinition>>    routinesBySchema;
+    private transient Map<SchemaDefinition, List<PackageDefinition>>    packagesBySchema;
 
     @Override
     public final SQLDialect getDialect() {
@@ -374,6 +378,50 @@ public abstract class AbstractDatabase implements Database {
         }
 
         return filterSchema(identities, schema, identitiesBySchema);
+    }
+
+
+
+    @Override
+    public final List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema) {
+        if (uniqueKeys == null) {
+            uniqueKeys = new ArrayList<UniqueKeyDefinition>();
+
+            for (SchemaDefinition s : getSchemata()) {
+                for (TableDefinition table : getTables(s)) {
+                    for (UniqueKeyDefinition uniqueKey : table.getUniqueKeys()) {
+                        uniqueKeys.add(uniqueKey);
+                    }
+                }
+            }
+        }
+
+        if (uniqueKeysBySchema == null) {
+            uniqueKeysBySchema = new LinkedHashMap<SchemaDefinition, List<UniqueKeyDefinition>>();
+        }
+
+        return filterSchema(uniqueKeys, schema, uniqueKeysBySchema);
+    }
+
+    @Override
+    public final List<ForeignKeyDefinition> getForeignKeys(SchemaDefinition schema) {
+        if (foreignKeys == null) {
+            foreignKeys = new ArrayList<ForeignKeyDefinition>();
+
+            for (SchemaDefinition s : getSchemata()) {
+                for (TableDefinition table : getTables(s)) {
+                    for (ForeignKeyDefinition foreignKey : table.getForeignKeys()) {
+                        foreignKeys.add(foreignKey);
+                    }
+                }
+            }
+        }
+
+        if (foreignKeysBySchema == null) {
+            foreignKeysBySchema = new LinkedHashMap<SchemaDefinition, List<ForeignKeyDefinition>>();
+        }
+
+        return filterSchema(foreignKeys, schema, foreignKeysBySchema);
     }
 
     @Override

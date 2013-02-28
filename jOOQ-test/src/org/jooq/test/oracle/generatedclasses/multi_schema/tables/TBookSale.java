@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings("all")
 public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = 1881078258;
+	private static final long serialVersionUID = -921878946;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
@@ -68,7 +68,7 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.multi_schema.Keys.PK_T_BOOK_SALE;
+		return org.jooq.test.oracle.generatedclasses.multi_schema.UniqueKeys.TBookSale.PK_T_BOOK_SALE;
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.Keys.PK_T_BOOK_SALE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.UniqueKeys.TBookSale.PK_T_BOOK_SALE);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class TBookSale extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.or
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.Keys.FK_T_BOOK_TO_BOOK_STORE);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.multi_schema.ForeignKeys.TBookSale.FK_T_BOOK_TO_BOOK_STORE);
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = 1892502399;
+	private static final long serialVersionUID = 1386755056;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DIRECTORY</code>
@@ -63,7 +63,7 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_DIRECTORY;
+		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TDirectory.PK_T_DIRECTORY;
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_DIRECTORY);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TDirectory.PK_T_DIRECTORY);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class TDirectory extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_DIRECTORY_SELF);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.ForeignKeys.TDirectory.PK_T_DIRECTORY_SELF);
 	}
 
 	/**

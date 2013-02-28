@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TExoticTypes extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 723618702;
+	private static final long serialVersionUID = 1020828408;
 
 	/**
 	 * The singleton instance of <code>TEST.T_EXOTIC_TYPES</code>
@@ -53,7 +53,7 @@ public class TExoticTypes extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_EXOTIC_TYPES;
+		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TExoticTypes.PK_T_EXOTIC_TYPES;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class TExoticTypes extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_EXOTIC_TYPES);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TExoticTypes.PK_T_EXOTIC_TYPES);
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings("all")
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 242774810;
+	private static final long serialVersionUID = 195955326;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DATES</code>
@@ -83,7 +83,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracl
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_DATES;
+		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TDates.PK_T_DATES;
 	}
 
 	/**
@@ -91,7 +91,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracl
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_DATES);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TDates.PK_T_DATES);
 	}
 
 	/**

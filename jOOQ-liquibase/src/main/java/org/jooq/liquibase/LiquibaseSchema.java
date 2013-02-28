@@ -37,6 +37,9 @@ package org.jooq.liquibase;
 
 import org.jooq.impl.SchemaImpl;
 
+/**
+ * @author Lukas Eder
+ */
 class LiquibaseSchema extends SchemaImpl {
 
     /**

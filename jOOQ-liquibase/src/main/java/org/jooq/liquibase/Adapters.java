@@ -153,6 +153,19 @@ public class Adapters {
     }
 
     /**
+     * Extract the jOOQ {@link org.jooq.Field} from a Liquibase {@link Column}.
+     */
+    public static org.jooq.Field<?> field(Column column) {
+        View view = column.getView();
+
+        if (view != null) {
+            return table(view).field(column.getName());
+        }
+
+        return table(column.getTable()).field(column.getName());
+    }
+
+    /**
      * Extract the jOOQ {@link org.jooq.Table} from a Liquibase {@link Table}.
      */
     public static org.jooq.Table<?> table(Table table) {

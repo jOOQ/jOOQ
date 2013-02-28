@@ -37,6 +37,7 @@ package org.jooq.liquibase.test;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static org.jooq.liquibase.Adapters.field;
 import static org.jooq.liquibase.Adapters.sequence;
 import static org.jooq.liquibase.Adapters.table;
 import static org.jooq.maven.example.h2.Tables.T_BOOK;
@@ -44,15 +45,19 @@ import static org.jooq.maven.example.h2.Tables.V_LIBRARY;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.List;
 
 import liquibase.database.core.H2Database;
 import liquibase.database.jvm.JdbcConnection;
+import liquibase.database.structure.Column;
+import liquibase.database.structure.Table;
+import liquibase.database.structure.View;
 import liquibase.snapshot.DatabaseSnapshot;
 import liquibase.snapshot.DatabaseSnapshotGeneratorFactory;
 
+import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Sequence;
-import org.jooq.Table;
 import org.jooq.impl.Executor;
 import org.jooq.maven.example.h2.Sequences;
 
@@ -86,16 +91,14 @@ public class AdaptersTest {
 
     @Test
     public void testTable() {
-        Table<?> table = table(snapshot.getTable("T_BOOK"));
-
-        testEqualTables(T_BOOK, table);
+        org.jooq.Table<?> table = table(snapshot.getTable("T_BOOK"));
+        assertEqualTables(T_BOOK, table);
     }
 
     @Test
     public void testView() {
-        Table<?> table = table(snapshot.getView("V_LIBRARY"));
-
-        testEqualTables(V_LIBRARY, table);
+        org.jooq.Table<?> table = table(snapshot.getView("V_LIBRARY"));
+        assertEqualTables(V_LIBRARY, table);
     }
 
     @Test
@@ -107,10 +110,33 @@ public class AdaptersTest {
             create.nextval(sequence));
     }
 
+    @Test
+    public void testColumns() {
+        Table table = snapshot.getTable("T_BOOK");
+        assertEqualColumns(table.getColumns(), table(table).fields());
+
+        View view = snapshot.getView("V_LIBRARY");
+        assertEqualColumns(view.getColumns(), table(view).fields());
+    }
+
+    /**
+     * A couple of tests, checking if a set of columns are really equal
+     */
+    private void assertEqualColumns(List<Column> c1, Field<?>[] c2) {
+        for (int i = 0; i < c1.size(); i++) {
+            Field<?> f1 = field(c1.get(i));
+            Field<?> f2 = c2[i];
+
+            assertEquals(f2, f1);
+            assertEquals(f2.getName(), f1.getName());
+            assertEquals(f2.getType(), f1.getType());
+        }
+    }
+
     /**
      * A couple of tests, checking if tables are really equal
      */
-    private void testEqualTables(Table<?> t1, Table<?> t2) {
+    private void assertEqualTables(org.jooq.Table<?> t1, org.jooq.Table<?> t2) {
         assertEquals(t1.getName(), t2.getName());
         assertEquals(asList(t1.fields()), asList(t2.fields()));
         assertEquals(asList(t1.fieldsRow().types()), asList(t2.fieldsRow().types()));

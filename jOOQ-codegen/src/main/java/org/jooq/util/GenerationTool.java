@@ -112,8 +112,12 @@ public class GenerationTool {
         }
 	}
 
-	@SuppressWarnings("unchecked")
     public static void main(Configuration configuration) throws Exception {
+        main(configuration, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void main(Configuration configuration, ClassLoader loader) throws Exception {
 	    Jdbc j = configuration.getJdbc();
 	    org.jooq.util.jaxb.Generator g = configuration.getGenerator();
 
@@ -123,7 +127,7 @@ public class GenerationTool {
 	    if (g.getTarget() == null)
 	        g.setTarget(new Target());
 
-        Class.forName(j.getDriver());
+        loadClass(j.getDriver(), loader);
         Connection connection = null;
 
         try {
@@ -145,18 +149,18 @@ public class GenerationTool {
             // Initialise generator
             // --------------------
             Class<Generator> generatorClass = (Class<Generator>) (!isBlank(g.getName())
-                ? Class.forName(trim(g.getName()))
+                ? loadClass(trim(g.getName()), loader)
                 : JavaGenerator.class);
             Generator generator = generatorClass.newInstance();
 
             Class<GeneratorStrategy> strategyClass = (Class<GeneratorStrategy>) (!isBlank(g.getStrategy().getName())
-                ? Class.forName(trim(g.getStrategy().getName()))
+                ? loadClass(trim(g.getStrategy().getName()), loader)
                 : DefaultGeneratorStrategy.class);
             GeneratorStrategy strategy = strategyClass.newInstance();
 
             generator.setStrategy(strategy);
 
-            Class<Database> databaseClass = (Class<Database>) Class.forName(trim(g.getDatabase().getName()));
+            Class<Database> databaseClass = (Class<Database>) loadClass(trim(g.getDatabase().getName()), loader);
             Database database = databaseClass.newInstance();
 
             List<Schema> schemata = g.getDatabase().getSchemata();
@@ -263,6 +267,25 @@ public class GenerationTool {
                 connection.close();
             }
         }
+	}
+
+	private static Class<?> loadClass(String className, ClassLoader loader) throws ClassNotFoundException {
+
+	    // [#2283] If no explicit class loader was provided try loading the class
+	    // with "default" techniques
+	    if (loader == null) {
+	        try {
+	            return Class.forName(className);
+	        }
+	        catch (ClassNotFoundException e) {
+	            return Thread.currentThread().getContextClassLoader().loadClass(className);
+	        }
+	    }
+
+	    // Prefer the explicit class loader if available
+	    else {
+	        return loader.loadClass(className);
+	    }
 	}
 
 	private static String trim(String string) {

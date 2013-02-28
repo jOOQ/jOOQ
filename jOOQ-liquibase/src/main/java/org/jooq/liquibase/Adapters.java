@@ -35,8 +35,6 @@
  */
 package org.jooq.liquibase;
 
-
-
 import liquibase.database.Database;
 import liquibase.database.core.DB2Database;
 import liquibase.database.core.DerbyDatabase;
@@ -56,12 +54,19 @@ import liquibase.database.structure.View;
 
 import org.jooq.SQLDialect;
 
-
 /**
+ * A set of adapters to wrap Liquibase types in jOOQ types.
+ * <p>
+ * This class provides a set of adapter methods that take Liquibase type
+ * arguments wrapping them in the most appropriate jOOQ type.
+ *
  * @author Lukas Eder
  */
 public class Adapters {
 
+    /**
+     * Extract the jOOQ {@link SQLDialect} from a Liquibase column.
+     */
     public static SQLDialect dialect(Column column) {
         View view = column.getView();
 
@@ -72,38 +77,65 @@ public class Adapters {
         return dialect(column.getTable());
     }
 
+    /**
+     * Extract the jOOQ {@link SQLDialect} from a Liquibase view.
+     */
     public static SQLDialect dialect(View view) {
         return dialect(view.getDatabase());
     }
 
+    /**
+     * Extract the jOOQ {@link SQLDialect} from a Liquibase table.
+     */
     public static SQLDialect dialect(Table table) {
         return dialect(table.getDatabase());
     }
 
+    /**
+     * Extract the jOOQ {@link SQLDialect} from a Liquibase.
+     */
     @SuppressWarnings("deprecation")
     public static SQLDialect dialect(Database database) {
-        if (database instanceof DB2Database) return SQLDialect.DB2;
-        if (database instanceof DerbyDatabase) return SQLDialect.DERBY;
-        if (database instanceof FirebirdDatabase) return SQLDialect.FIREBIRD;
-        if (database instanceof H2Database) return SQLDialect.H2;
-        if (database instanceof HsqlDatabase) return SQLDialect.HSQLDB;
-//      if (database instanceof InformixDatabase) return SQLDialect.INFORMIX;
-//      if (database instanceof MaxDBDatabase) return SQLDialect.MAXDB;
-        if (database instanceof MSSQLDatabase) return SQLDialect.SQLSERVER;
-        if (database instanceof MySQLDatabase) return SQLDialect.MYSQL;
-        if (database instanceof OracleDatabase) return SQLDialect.ORACLE;
-        if (database instanceof PostgresDatabase) return SQLDialect.POSTGRES;
-        if (database instanceof SQLiteDatabase) return SQLDialect.SQLITE;
-        if (database instanceof SybaseASADatabase) return SQLDialect.ASE;
-        if (database instanceof SybaseDatabase) return SQLDialect.SYBASE;
+        if (database instanceof DB2Database)
+            return SQLDialect.DB2;
+        if (database instanceof DerbyDatabase)
+            return SQLDialect.DERBY;
+        if (database instanceof FirebirdDatabase)
+            return SQLDialect.FIREBIRD;
+        if (database instanceof H2Database)
+            return SQLDialect.H2;
+        if (database instanceof HsqlDatabase)
+            return SQLDialect.HSQLDB;
+        // if (database instanceof InformixDatabase) return SQLDialect.INFORMIX;
+        // if (database instanceof MaxDBDatabase) return SQLDialect.MAXDB;
+        if (database instanceof MSSQLDatabase)
+            return SQLDialect.SQLSERVER;
+        if (database instanceof MySQLDatabase)
+            return SQLDialect.MYSQL;
+        if (database instanceof OracleDatabase)
+            return SQLDialect.ORACLE;
+        if (database instanceof PostgresDatabase)
+            return SQLDialect.POSTGRES;
+        if (database instanceof SQLiteDatabase)
+            return SQLDialect.SQLITE;
+        if (database instanceof SybaseASADatabase)
+            return SQLDialect.ASE;
+        if (database instanceof SybaseDatabase)
+            return SQLDialect.SYBASE;
 
         return SQLDialect.SQL99;
     }
 
+    /**
+     * Extract the jOOQ {@link Table} from a Liquibase table.
+     */
     public static org.jooq.Table<?> table(Table table) {
         return new LiquibaseTable(table);
     }
 
+    /**
+     * Extract the jOOQ {@link Table} from a Liquibase view.
+     */
     public static org.jooq.Table<?> table(View view) {
         return new LiquibaseTable(view);
     }

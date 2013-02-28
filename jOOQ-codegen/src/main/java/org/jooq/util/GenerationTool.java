@@ -105,26 +105,26 @@ public class GenerationTool {
         GenerationTool.connection = connection;
     }
 
-	public static void main(String[] args) throws Exception {
-		if (args.length < 1) {
-			error();
-		}
+    public static void main(String[] args) throws Exception {
+        if (args.length < 1) {
+            error();
+        }
 
-		InputStream in = GenerationTool.class.getResourceAsStream(args[0]);
+        InputStream in = GenerationTool.class.getResourceAsStream(args[0]);
 
-		if (in == null) {
-			log.error("Cannot find " + args[0]);
-			log.error("-----------");
-			log.error("Please be sure it is located on the classpath and qualified as a classpath location.");
-			log.error("If it is located at the current working directory, try adding a '/' to the path");
-			error();
-		}
+        if (in == null) {
+            log.error("Cannot find " + args[0]);
+            log.error("-----------");
+            log.error("Please be sure it is located on the classpath and qualified as a classpath location.");
+            log.error("If it is located at the current working directory, try adding a '/' to the path");
+            error();
+        }
 
-		log.info("Initialising properties", args[0]);
+        log.info("Initialising properties", args[0]);
 
-		try {
-		    main(load(in));
-		} catch (Exception e) {
+        try {
+            main(load(in));
+        } catch (Exception e) {
             log.error("Cannot read " + args[0] + ". Error : " + e.getMessage());
             e.printStackTrace();
             error();
@@ -133,18 +133,18 @@ public class GenerationTool {
                 in.close();
             }
         }
-	}
+    }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public static void main(Configuration configuration) throws Exception {
-	    Jdbc j = defaultIfNull(configuration.getJdbc(), new Jdbc());
-	    org.jooq.util.jaxb.Generator g = configuration.getGenerator();
+        Jdbc j = defaultIfNull(configuration.getJdbc(), new Jdbc());
+        org.jooq.util.jaxb.Generator g = configuration.getGenerator();
 
-	    // Some default values for optional elements to avoid NPE's
-	    if (g.getStrategy() == null)
-	        g.setStrategy(new Strategy());
-	    if (g.getTarget() == null)
-	        g.setTarget(new Target());
+        // Some default values for optional elements to avoid NPE's
+        if (g.getStrategy() == null)
+            g.setStrategy(new Strategy());
+        if (g.getTarget() == null)
+            g.setTarget(new Target());
 
         try {
 
@@ -288,35 +288,35 @@ public class GenerationTool {
                 connection.close();
             }
         }
-	}
+    }
 
-	private static Class<?> loadClass(String className, ClassLoader loader) throws ClassNotFoundException {
+    private static Class<?> loadClass(String className, ClassLoader loader) throws ClassNotFoundException {
 
-	    // [#2283] If no explicit class loader was provided try loading the class
-	    // with "default" techniques
-	    if (loader == null) {
-	        try {
-	            return Class.forName(className);
-	        }
-	        catch (ClassNotFoundException e) {
-	            return Thread.currentThread().getContextClassLoader().loadClass(className);
-	        }
-	    }
+        // [#2283] If no explicit class loader was provided try loading the class
+        // with "default" techniques
+        if (loader == null) {
+            try {
+                return Class.forName(className);
+            }
+            catch (ClassNotFoundException e) {
+                return Thread.currentThread().getContextClassLoader().loadClass(className);
+            }
+        }
 
-	    // Prefer the explicit class loader if available
-	    else {
-	        return loader.loadClass(className);
-	    }
-	}
+        // Prefer the explicit class loader if available
+        else {
+            return loader.loadClass(className);
+        }
+    }
 
-	private static String trim(String string) {
-	    return (string == null ? null : string.trim());
-	}
+    private static String trim(String string) {
+        return (string == null ? null : string.trim());
+    }
 
-	private static void error() {
-		log.error("Usage : GenerationTool <configuration-file>");
-		System.exit(-1);
-	}
+    private static void error() {
+        log.error("Usage : GenerationTool <configuration-file>");
+        System.exit(-1);
+    }
 
     /**
      * Copy bytes from a large (over 2GB) <code>InputStream</code> to an

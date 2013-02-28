@@ -979,19 +979,41 @@ object Test {                                                        //
 						<title>Dependencies</title>
 						<content>
 							<p>
-								jOOQ has no dependencies on any third-party libraries. This rule has some exceptions:
+								Dependencies are a big hassle in modern software. Many libraries depend on other, non-JDK library parts that come in different, incompatible versions, potentially causing trouble in your runtime environment. jOOQ has no external dependencies on any third-party libraries.
+							</p>
+							<p>
+								However, the above rule has some exceptions:
 							</p>
 							<ul>
-								<li><reference id="logging" title="logging APIs"/> are referenced as "optional dependencies". jOOQ tries to find slf4j or log4j on the classpath. If it fails, it will use the <reference class="java.util.logging.Logger"/></li>
+								<li><reference id="logging" title="logging APIs"/> are referenced as "optional dependencies". jOOQ tries to find <a href="http://www.slf4j.org/">slf4j</a> or <a href="http://logging.apache.org/log4j">log4j</a> on the classpath. If it fails, it will use the <reference class="java.util.logging.Logger"/></li>
 								<li>Oracle ojdbc types used for array creation are loaded using reflection. The same applies to Postgres PG* types.</li>
-								<li>Small libraries with compatible licenses are incorporated into jOOQ. These include <a href="https://github.com/jOOQ/jOOR">jOOR</a>, <a href="https://github.com/jOOQ/jOOU">jOOU</a>, <a href="http://opencsv.sourceforge.net/">OpenCSV</a>, <a href="http://code.google.com/p/json-simple/">json simple</a>, <a href="http://commons.apache.org/lang/">commons-lang</a></li>
-								<li>javax.persistence and javax.validation will be needed if you activate the relevant <reference id="code-generation" title="code generation flags"/></li>
+								<li>Small libraries with compatible licenses are incorporated into jOOQ. These include <a href="https://github.com/jOOQ/jOOR">jOOR</a>, <a href="https://github.com/jOOQ/jOOU">jOOU</a>, parts of <a href="http://opencsv.sourceforge.net/">OpenCSV</a>, <a href="http://code.google.com/p/json-simple/">json simple</a>, parts of <a href="http://commons.apache.org/lang/">commons-lang</a></li>
+								<li><a href="http://docs.oracle.com/javaee/6/api/javax/persistence/package-summary.html">javax.persistence</a> and <a href="http://docs.oracle.com/javaee/6/api/javax/validation/package-summary.html">javax.validation</a> will be needed if you activate the relevant <reference id="code-generation" title="code generation flags"/></li>
 							</ul>
-							
-							<h3>Build your own</h3>
+						</content>
+					</section>
+					
+					<section id="build-your-own">
+						<title>Build your own</title>
+						<content>
 							<p>
-								In order to build jOOQ, please download the sources from <a href="https://github.com/jOOQ/jOOQ">https://github.com/jOOQ/jOOQ</a> and use Maven to build jOOQ, preferably in Eclipse. jOOQ requires Java 6 to compile and run.
+								In order to build jOOQ yourself, please download the sources from <a href="https://github.com/jOOQ/jOOQ">https://github.com/jOOQ/jOOQ</a> and use Maven to build jOOQ, preferably in Eclipse. jOOQ requires Java 6+ to compile and run.
 							</p>
+							<p>
+								Some useful hints to build jOOQ yourself:
+							</p>
+							<ul>
+								<li>Get the latest version of <a href="http://git-scm.com">Git</a> or <a href="http://www.eclipse.org/egit">EGit</a></li>
+								<li>Get the latest version of <a href="http://maven.apache.org">Maven</a> or <a href="http://eclipse.org/m2e">M2E</a></li>
+								<li>Check out the jOOQ sources from <a href="https://github.com/jOOQ/jOOQ">https://github.com/jOOQ/jOOQ</a></li>
+								<li>Build the <code>jooq-parent</code> artefact by using any of these commands:
+									<ul>
+										<li><code>mvn clean package</code><br/>create .jar files in <code>${project.build.directory}</code></li>
+										<li><code>mvn clean install</code><br/>install the .jar files in your local repository (e.g. <code>~/.m2</code>)</li>
+										<li><code>mvn clean {goal} -Dmaven.test.skip=true</code><br/>don't run unit tests when building artefacts</li>
+									</ul>
+								</li>
+							</ul>
 						</content>
 					</section>
 					

@@ -36,6 +36,7 @@
 
 package org.jooq.util;
 
+import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isBlank;
 
@@ -136,7 +137,7 @@ public class GenerationTool {
 
 	@SuppressWarnings("unchecked")
     public static void main(Configuration configuration) throws Exception {
-	    Jdbc j = configuration.getJdbc();
+	    Jdbc j = defaultIfNull(configuration.getJdbc(), new Jdbc());
 	    org.jooq.util.jaxb.Generator g = configuration.getGenerator();
 
 	    // Some default values for optional elements to avoid NPE's

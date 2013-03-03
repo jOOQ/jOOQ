@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>PUBLIC</code> 
  * schema
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public final class ForeignKeys {
 
 	public static final class TBook extends org.jooq.impl.AbstractKeys {

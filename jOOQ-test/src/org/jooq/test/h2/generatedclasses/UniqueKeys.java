@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses;
  *
  * A class modelling unique keys of tables of the <code>PUBLIC</code> schema
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public final class UniqueKeys {
 
 	public static final class TIdentityPk extends org.jooq.impl.AbstractKeys {

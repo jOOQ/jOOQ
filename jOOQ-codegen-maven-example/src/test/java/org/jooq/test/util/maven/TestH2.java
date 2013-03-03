@@ -35,6 +35,7 @@
  */
 package org.jooq.test.util.maven;
 
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.impl.Factory.countDistinct;
 import static org.jooq.maven.example.h2.Tables.T_AUTHOR;
@@ -53,7 +54,10 @@ import org.jooq.maven.example.h2.tables.TAuthor;
 import org.jooq.maven.example.h2.tables.TBook;
 import org.jooq.maven.example.h2.tables.TBookStore;
 import org.jooq.maven.example.h2.tables.TBookToBookStore;
+import org.jooq.maven.example.h2.tables.records.TBookRecord;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -61,12 +65,23 @@ import org.junit.Test;
  */
 public class TestH2 {
 
+    private static Executor create;
+    private static Connection connection;
+
+    @BeforeClass
+    public static void start() throws Exception {
+        Class.forName("org.h2.Driver");
+        connection = DriverManager.getConnection("jdbc:h2:~/maven-test", "sa", "");
+        create = new Executor(connection, SQLDialect.H2);
+    }
+
+    @AfterClass
+    public static void stop() throws Exception {
+        connection.close();
+    }
+
     @Test
     public void testInstanceModel() throws Exception {
-        Class.forName("org.h2.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:h2:~/maven-test", "sa", "");
-        Executor create = new Executor(connection, SQLDialect.H2);
-
         TBook b = T_BOOK.as("b");
         TAuthor a = T_AUTHOR.as("a");
         TBookStore s = T_BOOK_STORE.as("s");
@@ -91,5 +106,13 @@ public class TestH2 {
 
         assertEquals(Integer.valueOf(3), result.getValue(0, countDistinct(s.NAME)));
         assertEquals(Integer.valueOf(2), result.getValue(1, countDistinct(s.NAME)));
+    }
+
+    @Test
+    public void testTypedRecords() throws Exception {
+        Result<TBookRecord> result = create.selectFrom(T_BOOK).orderBy(T_BOOK.ID).fetch();
+
+        assertEquals(4, result.size());
+        assertEquals(asList(1, 2, 3, 4), result.getValues(0));
     }
 }

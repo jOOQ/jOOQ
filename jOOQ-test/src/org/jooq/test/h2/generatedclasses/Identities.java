@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses;
  *
  * A class modelling identity columns of the <code>PUBLIC</code> schema
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public final class Identities {
 
 	public static final org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;

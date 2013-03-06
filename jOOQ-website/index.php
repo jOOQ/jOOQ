@@ -109,11 +109,10 @@ create.select(FIRST_NAME, LAST_NAME, count())
 <h2 id="When-not-to-use-jOOQ"><a href="#When-not-to-use-jOOQ" name="When-not-to-use-jOOQ">#</a> When not to use jOOQ</h2>
     <p>On the other hand, many people like the ease of use of Hibernate or other products, when it comes to simply persisting any domain model in any database. You should not use jOOQ...</p>
     <ul>
-    <li>When you don't care about your database (or "persistence" as you would probably call it).</li>
-    <li>When you don't really need SQL.</li>
     <li>When you want to map your object-oriented domain model to a database and not vice versa.</li>
     <li>When your schema changes more frequently than you can re-deploy jOOQ-generated source code.</li>
     <li>When you need to write DDL statements. jOOQ only supports DML statements.</li>
+    <li>When you don't really need SQL, only "persistence".</li>
     </ul>
 
 <h2 id="What-databases-are-supported"><a href="#What-databases-are-supported" name="What-databases-are-supported">#</a> What databases are supported</h2>

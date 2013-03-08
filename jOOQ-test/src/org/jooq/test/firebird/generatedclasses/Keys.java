@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code></code> 
  * schema
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class Keys {
 
 	// -------------------------------------------------------------------------
@@ -55,11 +55,6 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_71Record, org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_64_69Record> FK_X_TEST_CASE_71 = ForeignKeys0.FK_X_TEST_CASE_71;
 	public static final org.jooq.ForeignKey<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record, org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_85 = ForeignKeys0.FK_X_TEST_CASE_85;
 	public static final org.jooq.ForeignKey<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> FK_X_UNUSED_SELF = ForeignKeys0.FK_X_UNUSED_SELF;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Keys() {}
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb

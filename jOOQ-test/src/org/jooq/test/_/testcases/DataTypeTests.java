@@ -1587,7 +1587,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUUIDArrayDataType() throws Exception {
-        if (TArrays() == null) {
+        if (TArrays_STRING() == null) {
             log.info("SKIPPING", "Skipping UUID ARRAY data type tests");
             return;
         }

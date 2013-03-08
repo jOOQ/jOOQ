@@ -8923,12 +8923,6 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to true -->
   <relations>true</relations>
 
-  <!-- Generate navigation methods to navigate foreign key relationships
-       directly from Record classes. This is only relevant if relations
-       is set to true, too.
-       Defaults to true -->
-  <navigationMethods>true</navigationMethods>
-
   <!-- Generate deprecated code for backwards compatibility
        Defaults to true -->
   <deprecated>true</deprecated>
@@ -8991,6 +8985,18 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
        Defaults to true -->
   <globalObjectReferences>true</globalObjectReferences>
 </generate>]]></xml>
+
+							<h3>Property interdependencies</h3>
+							<p>
+								Some of the above properties depend on other properties to work correctly. For instance, when generating immutable pojos, pojos must be generated. jOOQ will enforce such properties even if you tell it otherwise. Here is a list of property interdependencies:
+							</p>
+							
+							<ul>
+								<li>When <code>daos = true</code>, then jOOQ will set <code>relations = true</code></li>
+								<li>When <code>daos = true</code>, then jOOQ will set <code>records = true</code></li>
+								<li>When <code>daos = true</code>, then jOOQ will set <code>pojos = true</code></li>
+								<li>When <code>immutablePojos = true</code>, then jOOQ will set <code>pojos = true</code></li>
+							</ul>
 						</content>
 					</section>
 

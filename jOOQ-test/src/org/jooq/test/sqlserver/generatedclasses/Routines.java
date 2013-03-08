@@ -8,8 +8,8 @@ package org.jooq.test.sqlserver.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in dbo
  */
-@java.lang.SuppressWarnings("all")
-public final class Routines {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Routines {
 
 	/**
 	 * Call <code>dbo.f_author_exists</code>
@@ -218,9 +218,4 @@ public final class Routines {
 		p.execute(configuration);
 		return p;
 	}
-
-	/**
-	 * No further instances allowed
-	 */
-	private Routines() {}
 }

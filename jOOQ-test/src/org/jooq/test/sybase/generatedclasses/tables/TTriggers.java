@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 660950714;
+	private static final long serialVersionUID = -812925470;
 
 	/**
 	 * The singleton instance of <code>DBA.t_triggers</code>
@@ -58,7 +58,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.test.sybase.generatedclasses.Identities.IDENTITY_T_TRIGGERS;
+		return org.jooq.test.sybase.generatedclasses.Keys.IDENTITY_T_TRIGGERS;
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord> getPrimaryKey() {
-		return org.jooq.test.sybase.generatedclasses.UniqueKeys.TTriggers.T_TRIGGERS__PK_T_TRIGGERS;
+		return org.jooq.test.sybase.generatedclasses.Keys.T_TRIGGERS__PK_T_TRIGGERS;
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class TTriggers extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.sybase.generatedclasses.UniqueKeys.TTriggers.T_TRIGGERS__PK_T_TRIGGERS);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_TRIGGERS__PK_T_TRIGGERS);
 	}
 
 	/**

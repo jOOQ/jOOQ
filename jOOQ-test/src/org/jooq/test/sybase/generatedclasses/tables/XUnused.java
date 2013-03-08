@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -353902472;
+	private static final long serialVersionUID = -1834938235;
 
 	/**
 	 * The singleton instance of <code>DBA.x_unused</code>
@@ -113,7 +113,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> getPrimaryKey() {
-		return org.jooq.test.sybase.generatedclasses.UniqueKeys.XUnused.X_UNUSED__PK_X_UNUSED;
+		return org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__PK_X_UNUSED;
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.sybase.generatedclasses.UniqueKeys.XUnused.X_UNUSED__PK_X_UNUSED, org.jooq.test.sybase.generatedclasses.UniqueKeys.XUnused.X_UNUSED__UK_X_UNUSED_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__PK_X_UNUSED, org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__UK_X_UNUSED_ID);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.syba
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.sybase.generatedclasses.ForeignKeys.XUnused.X_UNUSED__FK_X_UNUSED_SELF);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.X_UNUSED__FK_X_UNUSED_SELF);
 	}
 
 	/**

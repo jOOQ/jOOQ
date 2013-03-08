@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1284810563;
+	private static final long serialVersionUID = -771080171;
 
 	/**
 	 * The singleton instance of <code>DBA.t_identity</code>
@@ -53,7 +53,7 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.sybase.gene
 	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.test.sybase.generatedclasses.Identities.IDENTITY_T_IDENTITY;
+		return org.jooq.test.sybase.generatedclasses.Keys.IDENTITY_T_IDENTITY;
 	}
 
 	/**

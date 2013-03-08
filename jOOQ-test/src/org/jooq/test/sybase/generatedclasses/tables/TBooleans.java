@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1805271949;
+	private static final long serialVersionUID = -1972639565;
 
 	/**
 	 * The singleton instance of <code>DBA.t_booleans</code>
@@ -98,7 +98,7 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord> getPrimaryKey() {
-		return org.jooq.test.sybase.generatedclasses.UniqueKeys.TBooleans.T_BOOLEANS__PK_T_BOOLEANS;
+		return org.jooq.test.sybase.generatedclasses.Keys.T_BOOLEANS__PK_T_BOOLEANS;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class TBooleans extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.sybase.generatedclasses.UniqueKeys.TBooleans.T_BOOLEANS__PK_T_BOOLEANS);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOLEANS__PK_T_BOOLEANS);
 	}
 
 	/**

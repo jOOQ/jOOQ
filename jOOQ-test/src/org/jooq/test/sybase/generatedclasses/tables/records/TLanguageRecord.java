@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 504974074;
+	private static final long serialVersionUID = -1824723468;
 
 	/**
 	 * Setter for <code>DBA.t_language.cd</code>. 

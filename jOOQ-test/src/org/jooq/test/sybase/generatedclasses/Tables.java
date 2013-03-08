@@ -8,8 +8,8 @@ package org.jooq.test.sybase.generatedclasses;
  *
  * Convenience access to all tables in DBA
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table DBA.t_identity_pk
@@ -130,9 +130,4 @@ public final class Tables {
 	 * The table DBA.v_book
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.VBook V_BOOK = org.jooq.test.sybase.generatedclasses.tables.VBook.V_BOOK;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

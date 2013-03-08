@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -981346453;
+	private static final long serialVersionUID = 719510681;
 
 	/**
 	 * The singleton instance of <code>DBA.t_book_to_book_store</code>
@@ -60,7 +60,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS;
+		return org.jooq.test.sybase.generatedclasses.UniqueKeys.TBookToBookStore.T_BOOK_TO_BOOK_STORE__PK_B2BS;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__PK_B2BS);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.sybase.generatedclasses.UniqueKeys.TBookToBookStore.T_BOOK_TO_BOOK_STORE__PK_B2BS);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME, org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.sybase.generatedclasses.ForeignKeys.TBookToBookStore.T_BOOK_TO_BOOK_STORE__FK_B2BS_BS_NAME, org.jooq.test.sybase.generatedclasses.ForeignKeys.TBookToBookStore.T_BOOK_TO_BOOK_STORE__FK_B2BS_B_ID);
 	}
 
 	/**

@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1567205621;
+	private static final long serialVersionUID = -537126351;
 
 	/**
 	 * The singleton instance of <code>DBA.t_book_store</code>
@@ -50,7 +50,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.sybase.generatedclasses.UniqueKeys.TBookStore.T_BOOK_STORE__UK_T_BOOK_STORE_NAME;
+		return org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_STORE__UK_T_BOOK_STORE_NAME;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.s
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.sybase.generatedclasses.UniqueKeys.TBookStore.T_BOOK_STORE__UK_T_BOOK_STORE_NAME);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TBookStoreRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_BOOK_STORE__UK_T_BOOK_STORE_NAME);
 	}
 
 	/**

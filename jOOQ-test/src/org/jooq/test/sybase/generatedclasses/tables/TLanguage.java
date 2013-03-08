@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1698877144;
+	private static final long serialVersionUID = -6340088;
 
 	/**
 	 * The singleton instance of <code>DBA.t_language</code>
@@ -65,7 +65,7 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> getPrimaryKey() {
-		return org.jooq.test.sybase.generatedclasses.UniqueKeys.TLanguage.T_LANGUAGE__PK_T_LANGUAGE;
+		return org.jooq.test.sybase.generatedclasses.Keys.T_LANGUAGE__PK_T_LANGUAGE;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sy
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.sybase.generatedclasses.UniqueKeys.TLanguage.T_LANGUAGE__PK_T_LANGUAGE);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_LANGUAGE__PK_T_LANGUAGE);
 	}
 
 	/**

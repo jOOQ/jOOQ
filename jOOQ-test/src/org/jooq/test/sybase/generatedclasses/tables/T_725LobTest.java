@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 2020679294;
+	private static final long serialVersionUID = 271743878;
 
 	/**
 	 * The singleton instance of <code>DBA.t_725_lob_test</code>
@@ -53,7 +53,7 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord> getPrimaryKey() {
-		return org.jooq.test.sybase.generatedclasses.UniqueKeys.T_725LobTest.T_725_LOB_TEST__PK_T_725_LOB_TEST;
+		return org.jooq.test.sybase.generatedclasses.Keys.T_725_LOB_TEST__PK_T_725_LOB_TEST;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class T_725LobTest extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.sybase.generatedclasses.UniqueKeys.T_725LobTest.T_725_LOB_TEST__PK_T_725_LOB_TEST);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.sybase.generatedclasses.tables.records.T_725LobTestRecord>>asList(org.jooq.test.sybase.generatedclasses.Keys.T_725_LOB_TEST__PK_T_725_LOB_TEST);
 	}
 
 	/**

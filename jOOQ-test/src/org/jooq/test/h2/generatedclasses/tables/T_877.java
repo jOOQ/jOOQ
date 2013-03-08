@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class T_877 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.T_877Record> {
 
-	private static final long serialVersionUID = -375422012;
+	private static final long serialVersionUID = -921284516;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_877</code>
@@ -41,6 +41,6 @@ public class T_877 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedcla
 	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.T_877Record, java.lang.Integer> getIdentity() {
-		return org.jooq.test.h2.generatedclasses.Identities.IDENTITY_T_877;
+		return org.jooq.test.h2.generatedclasses.Keys.IDENTITY_T_877;
 	}
 }

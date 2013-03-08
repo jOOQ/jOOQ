@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 658300099;
+	private static final long serialVersionUID = 1339186555;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_2025</code>
@@ -46,6 +46,6 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.h2.gen
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.h2.generatedclasses.ForeignKeys.XTestCase_2025.FK_X_TEST_CASE_2025_1, org.jooq.test.h2.generatedclasses.ForeignKeys.XTestCase_2025.FK_X_TEST_CASE_2025_2, org.jooq.test.h2.generatedclasses.ForeignKeys.XTestCase_2025.FK_X_TEST_CASE_2025_3);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_2025Record, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_X_TEST_CASE_2025_1, org.jooq.test.h2.generatedclasses.Keys.FK_X_TEST_CASE_2025_2, org.jooq.test.h2.generatedclasses.Keys.FK_X_TEST_CASE_2025_3);
 	}
 }

@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1047331469;
+	private static final long serialVersionUID = 1371840803;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK_TO_BOOK_STORE</code>
@@ -53,7 +53,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.UniqueKeys.TBookToBookStore.PK_B2BS;
+		return org.jooq.test.h2.generatedclasses.Keys.PK_B2BS;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.h2.generatedclasses.UniqueKeys.TBookToBookStore.PK_B2BS);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_B2BS);
 	}
 
 	/**
@@ -69,6 +69,6 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.h2.generatedclasses.ForeignKeys.TBookToBookStore.FK_B2BS_BS_NAME, org.jooq.test.h2.generatedclasses.ForeignKeys.TBookToBookStore.FK_B2BS_B_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_B2BS_BS_NAME, org.jooq.test.h2.generatedclasses.Keys.FK_B2BS_B_ID);
 	}
 }

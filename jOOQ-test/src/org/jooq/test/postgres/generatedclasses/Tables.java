@@ -8,8 +8,8 @@ package org.jooq.test.postgres.generatedclasses;
  *
  * Convenience access to all tables in public
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table public.t_639_numbers_table
@@ -145,9 +145,4 @@ public final class Tables {
 	 * The table public.x_unused
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.postgres.generatedclasses.tables.XUnused.X_UNUSED;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

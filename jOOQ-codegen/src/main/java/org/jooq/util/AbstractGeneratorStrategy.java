@@ -105,21 +105,19 @@ public abstract class AbstractGeneratorStrategy implements GeneratorStrategy {
         // Identities
         else if (definition instanceof IdentityDefinition) {
             sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".Identities");
+            sb.append(".Keys");
         }
 
         // Unique Keys
         else if (definition instanceof UniqueKeyDefinition) {
             sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".UniqueKeys.");
-            sb.append(getJavaClassName(((UniqueKeyDefinition) definition).getTable()));
+            sb.append(".Keys");
         }
 
         // Foreign Keys
         else if (definition instanceof ForeignKeyDefinition) {
             sb.append(getJavaPackageName(definition.getSchema()));
-            sb.append(".ForeignKeys.");
-            sb.append(getJavaClassName(((ForeignKeyDefinition) definition).getKeyTable()));
+            sb.append(".Keys");
         }
 
         // Table, UDT, Schema, etc

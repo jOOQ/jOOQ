@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Table;
@@ -66,5 +67,26 @@ class UniqueKeyImpl<R extends Record> extends AbstractKey<R> implements UniqueKe
     @Override
     public final List<ForeignKey<?, R>> getReferences() {
         return Collections.unmodifiableList(references);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("UNIQUE KEY (");
+
+        String s1 = "";
+        for (Field<?> field : getFields()) {
+            sb.append(s1);
+            sb.append(field);
+
+            s1 = ", ";
+        }
+
+        sb.append(")");
+        return sb.toString();
     }
 }

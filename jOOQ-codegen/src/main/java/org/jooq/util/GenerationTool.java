@@ -66,19 +66,14 @@ import org.jooq.util.jaxb.Strategy;
 import org.jooq.util.jaxb.Target;
 
 /**
- * The GenerationTool takes care of generating Java code from a database schema. It
- * takes its configuration parameters from a standard Java properties file,
- * using this format:
- *
- * <ul>
- *
- * <li>jdbcDriver = [the JDBC driver to connect with. Make sure it is on the
- * classpath]</li>
- * <li>jdbcURL = [the JDBC URL to connect with]</li>
- * <li>jdbcUser = [the JDBC user to connect with]</li>
- * <li>jdbcPassword = [the JDBC password to connect with]</li>
- *
- * </ul>
+ * The GenerationTool takes care of generating Java code from a database schema.
+ * <p>
+ * It takes its configuration parameters from an XML file passed in either as a
+ * JAXB-annotated {@link Configuration} object, or from the file system when
+ * passed as an argument to {@link #main(String[])}.
+ * <p>
+ * See <a href="http://www.jooq.org/xsd/">http://www.jooq.org/xsd/</a> for the
+ * latest XSD specification.
  *
  * @author Lukas Eder
  */

@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -537563027;
+	private static final long serialVersionUID = -92429552;
 
 	/**
 	 * The singleton instance of <code></code>
@@ -21,6 +21,23 @@ public class DefaultSchema extends org.jooq.impl.SchemaImpl implements java.lang
 	 */
 	private DefaultSchema() {
 		super("");
+	}
+
+	@Override
+	public final java.util.List<org.jooq.Sequence<?>> getSequences() {
+		java.util.List result = new java.util.ArrayList();
+		result.addAll(getSequences0());
+		return result;
+	}
+
+	private final java.util.List<org.jooq.Sequence<?>> getSequences0() {
+		return java.util.Arrays.<org.jooq.Sequence<?>>asList(
+			org.jooq.test.oracle3.generatedclasses.Sequences.S_AUTHOR_ID,
+			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_BIG_INTEGER,
+			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_BYTE,
+			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_INT,
+			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_LONG,
+			org.jooq.test.oracle3.generatedclasses.Sequences.S_961_SHORT);
 	}
 
 	@Override

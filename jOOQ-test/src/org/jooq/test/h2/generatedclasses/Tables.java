@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses;
  * Convenience access to all tables in PUBLIC
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public final class Tables {
+public class Tables {
 
 	/**
 	 * The table PUBLIC.T_IDENTITY_PK
@@ -130,9 +130,4 @@ public final class Tables {
 	 * The table PUBLIC.V_BOOK
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.VBook V_BOOK = org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

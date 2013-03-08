@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses;
  * A class modelling identity columns of the <code>PUBLIC</code> schema
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public final class Identities {
+public class Identities {
 
 	public static final org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> IDENTITY_T_IDENTITY_PK = Identities0.IDENTITY_T_IDENTITY_PK;
 	public static final org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> IDENTITY_T_IDENTITY = Identities0.IDENTITY_T_IDENTITY;
@@ -26,9 +26,4 @@ public final class Identities {
 		static org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.h2.generatedclasses.tables.TTriggers.ID_GENERATED);
 		static org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.T_877Record, java.lang.Integer> IDENTITY_T_877 = createIdentity(org.jooq.test.h2.generatedclasses.tables.T_877.T_877, org.jooq.test.h2.generatedclasses.tables.T_877.ID);
 	}
-
-	/**
-	 * No further instances allowed
-	 */
-	private Identities() {}
 }

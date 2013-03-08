@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.0.0 (RC1) - February 16, 2013
+Version 3.0.0 (RC2) - March 8, 2013
 ================================================================================
 
 This major release is a great move towards better integration of SQL as a
@@ -117,11 +117,78 @@ For those users among you, migrating from jOOQ 2.x to 3.0, here are a couple of
 useful hints:
 http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/
 
-Note, that for technical reasons, jOOQ 3.0.0-RC1 could not yet be integration
+Note, that for technical reasons, jOOQ 3.0.0-RC2 could not yet be integration
 tested with DB2, Ingres, and Sybase ASE.
 
 Note, that further code generation and model API improvements were postponed to
 a later release
+
+Features and improvements
+-------------------------
+#2200 - Add Executor.fetchCount(Select<?>) and Select.fetchCount() to replace 
+        the projection by a COUNT(*) query
+#2244 - Add section to the manual indicating that the jOOQ generator can only
+        handle schemas of a certain size
+#2255 - Add code generation option to avoid the generation of "global object
+        references"
+#2257 - Add List<IdentityDefinition> Database.getIdentities(SchemaDefinition)
+        for convenience to jooq-meta
+#2258 - Restore private and deprecated versions of the Factory constructors,
+        adding some Javadoc about the changes between jOOQ 2.x and 3.0
+#2270 - Add section to the manual indicating how to build jOOQ with Maven
+#2272 - Add a paragraph to the manual's preface, explaining "why not just use
+        SQL"?
+#2281 - Add Result<Record> Executor.fetchFromStringData(List<String[]>) in order
+        to reuse logic from fetchFromCSV
+#2285 - Add more verbosity to the code generator, when configured badly
+#2290 - Add Database.getUniqueKeys() and getForeignKeys to jOOQ-meta
+#2297 - Add section to the manual indicating how the various generator flags
+        depend on each other
+#2308 - Do not generate "final" Tables.java, UniqueKeys.java, etc.
+
+Bug fixes
+---------
+#2212 - "code size too large" in generated SchemaImpl, when the number of tables
+        exceeds 15k
+#2238 - Code generation runs extremely slow for large schemas (Inefficient 
+        DefaultRelations.getUniqueKeys() and getForeignKeys() methods)
+#2239 - Code generation runs extremely slow for large schemas (Inefficient 
+        AbstractDatabase.filterSchema() methods)
+#2248 - Javac's max constant pool of 64k can be exceeded in generated Keys.java
+        or Tables.java
+#2252 - ArrayIndexOutOfBoundsException, when rendering plain SQL that is 
+        terminated by a comment
+#2259 - RenderMapping has no effect, if not supplied to the Executor constructor
+#2262 - RenderSchema has no effect, if not supplied to the Executor constructor
+#2267 - SQLDialectNotSupportedException: Type class org.postgis.PGgeometry is
+        not supported in dialect null, when binding PG* objects
+#2271 - jOOQ Unit tests fail when not run in CET / CEST
+#2273 - Tutorial bug, referencing wrong Maven dependency. jOOQ 3.0.0 is not yet
+        released, only RC1
+#2276 - Wrong MockDataProvider manual example
+#2278 - Postgres (UUID and other) ARRAY types aren't correctly inlined as string
+        literals
+#2279 - UUIDs aren't correctly deserialised from Postgres UDTs
+#2280 - Improve supported formats for MockFileDatabase
+#2283 - Class loading issues in GenerationTool when called by Gradle
+#2294 - Compilation errors when code generator is configured with
+        <daos>true</daos> and <relations>false</relations>
+#2298 - Suppress warnings in generated code (@SuppressWarnings("all") doesn't
+        work with javac)
+#2312 - Annotate org.jooq.Support with java.lang.annotation.Documented to make
+        it part of the public API (in Javadoc)
+#2314 - Outdated GenerationTool Javadoc
+
+Version 3.0.0 (RC1) - February 16, 2013
+================================================================================
+
+This major release is a great move towards better integration of SQL as a
+language in Java. Unlike any other database abstraction framework, jOOQ now
+formally supports the notion of "row value expressions". The jOOQ API uses
+Xtend-generated API types from Row1 .. Row22, as well as Record1 .. Record22 to 
+bring you even more compile-time typesafety on a record-level.
+
+See subsequent release candidates or release 3.0.0 for more information.
 
 Features and improvements
 -------------------------

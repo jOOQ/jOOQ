@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses;
  * Convenience access to all stored procedures and functions in PUBLIC
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public final class Routines {
+public class Routines {
 
 	/**
 	 * Call <code>PUBLIC.F1256</code>
@@ -306,9 +306,4 @@ public final class Routines {
 
 		p.execute(configuration);
 	}
-
-	/**
-	 * No further instances allowed
-	 */
-	private Routines() {}
 }

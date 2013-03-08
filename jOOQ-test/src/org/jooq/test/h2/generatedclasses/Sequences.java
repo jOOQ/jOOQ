@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses;
  * Convenience access to all sequences in PUBLIC
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public final class Sequences {
+public class Sequences {
 
 	/**
 	 * The sequence <code>PUBLIC.S_AUTHOR_ID</code>
@@ -20,9 +20,4 @@ public final class Sequences {
 	 * The sequence <code>PUBLIC.S_TRIGGERS_SEQUENCE</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Long> S_TRIGGERS_SEQUENCE = new org.jooq.impl.SequenceImpl<java.lang.Long>("S_TRIGGERS_SEQUENCE", org.jooq.test.h2.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
-
-	/**
-	 * No further instances allowed
-	 */
-	private Sequences() {}
 }

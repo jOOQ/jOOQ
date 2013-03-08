@@ -8,8 +8,8 @@ package org.jooq.test.sqlserver.generatedclasses;
  *
  * Convenience access to all tables in dbo
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table dbo.t_639_numbers_table
@@ -120,9 +120,4 @@ public final class Tables {
 	 * The table dbo.x_unused
 	 */
 	public static final org.jooq.test.sqlserver.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.sqlserver.generatedclasses.tables.XUnused.X_UNUSED;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

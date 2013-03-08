@@ -8,8 +8,8 @@ package org.jooq.test.hsqldb.generatedclasses;
  *
  * Convenience access to all tables in PUBLIC
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table PUBLIC.BIG_DECIMAL
@@ -175,9 +175,4 @@ public final class Tables {
 	 * The table PUBLIC.X_UNUSED
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.hsqldb.generatedclasses.tables.XUnused.X_UNUSED;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

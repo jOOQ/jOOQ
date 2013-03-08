@@ -8,8 +8,8 @@ package org.jooq.test.postgres.generatedclasses;
  *
  * Convenience access to all UDTs in public
  */
-@java.lang.SuppressWarnings("all")
-public final class UDTs {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class UDTs {
 
 	/**
 	 * The type <code>public.u_address_type</code>
@@ -25,9 +25,4 @@ public final class UDTs {
 	 * The type <code>public.u_uuids</code>
 	 */
 	public static org.jooq.test.postgres.generatedclasses.udt.UUuids U_UUIDS = org.jooq.test.postgres.generatedclasses.udt.UUuids.U_UUIDS;
-
-	/**
-	 * No further instances allowed
-	 */
-	private UDTs() {}
 }

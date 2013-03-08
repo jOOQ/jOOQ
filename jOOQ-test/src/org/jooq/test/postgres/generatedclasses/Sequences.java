@@ -8,16 +8,11 @@ package org.jooq.test.postgres.generatedclasses;
  *
  * Convenience access to all sequences in public
  */
-@java.lang.SuppressWarnings("all")
-public final class Sequences {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Sequences {
 
 	/**
 	 * The sequence <code>public.s_author_id</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Long> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Long>("s_author_id", org.jooq.test.postgres.generatedclasses.Public.PUBLIC, org.jooq.impl.SQLDataType.BIGINT);
-
-	/**
-	 * No further instances allowed
-	 */
-	private Sequences() {}
 }

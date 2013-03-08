@@ -8,8 +8,8 @@ package org.jooq.test.postgres.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in public
  */
-@java.lang.SuppressWarnings("all")
-public final class Routines {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Routines {
 
 	/**
 	 * Call <code>public.f_arrays</code>
@@ -454,9 +454,4 @@ public final class Routines {
 		p.execute(configuration);
 		return p;
 	}
-
-	/**
-	 * No further instances allowed
-	 */
-	private Routines() {}
 }

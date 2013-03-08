@@ -262,7 +262,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassJavadoc(out,
             "A class modelling identity columns of the <code>" + schema.getOutputName() + "</code> schema");
 
-        out.println("public final class Identities {");
+        out.println("public class Identities {");
         out.println();
 
         for (int i = 0; i < identities.size(); i++) {
@@ -315,9 +315,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("\t}");
         }
 
-        out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-        out.tab(1).println("private Identities() {}");
-
         out.println("}");
         out.close();
 
@@ -336,7 +333,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassJavadoc(out,
             "A class modelling unique keys of tables of the <code>" + schema.getOutputName() + "</code> schema");
 
-        out.println("public final class UniqueKeys {");
+        out.println("public class UniqueKeys {");
 
         for (TableDefinition table : database.getTables(schema)) {
             final List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
@@ -344,7 +341,7 @@ public class JavaGenerator extends AbstractGenerator {
             try {
                 if (uniqueKeys.size() > 0) {
                     out.println();
-                    out.tab(1).println("public static final class %s extends %s {", getStrategy().getJavaClassName(table), AbstractKeys.class);
+                    out.tab(1).println("public static class %s extends %s {", getStrategy().getJavaClassName(table), AbstractKeys.class);
 
                     for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
                         out.tab(2).println("public static final %s<%s> %s = createUniqueKey(%s, [[%s]]);",
@@ -362,9 +359,6 @@ public class JavaGenerator extends AbstractGenerator {
                 log.error("Error while generating unique key " + table, e);
             }
         }
-
-        out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-        out.tab(1).println("private UniqueKeys() {}");
 
         out.println("}");
         out.close();
@@ -384,7 +378,7 @@ public class JavaGenerator extends AbstractGenerator {
         printClassJavadoc(out,
             "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema");
 
-        out.println("public final class ForeignKeys {");
+        out.println("public class ForeignKeys {");
 
         for (TableDefinition table : database.getTables(schema)) {
             final List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
@@ -392,7 +386,7 @@ public class JavaGenerator extends AbstractGenerator {
             try {
                 if (foreignKeys.size() > 0) {
                     out.println();
-                    out.tab(1).println("public static final class %s extends %s {", getStrategy().getJavaClassName(table), AbstractKeys.class);
+                    out.tab(1).println("public static class %s extends %s {", getStrategy().getJavaClassName(table), AbstractKeys.class);
 
                     for (ForeignKeyDefinition foreignKey : foreignKeys) {
                         out.tab(2).println("public static final %s<%s, %s> %s = createForeignKey(%s, %s, [[%s]]);",
@@ -412,9 +406,6 @@ public class JavaGenerator extends AbstractGenerator {
                 log.error("Error while generating unique key " + table, e);
             }
         }
-
-        out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-        out.tab(1).println("private ForeignKeys() {}");
 
         out.println("}");
         out.close();
@@ -844,7 +835,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "UDTs.java"));
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all UDTs in " + schema.getOutputName());
-        out.println("public final class UDTs {");
+        out.println("public class UDTs {");
 
         for (UDTDefinition udt : database.getUDTs(schema)) {
             final String className = getStrategy().getFullJavaClassName(udt);
@@ -855,8 +846,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static %s %s = %s;", className, id, fullId);
         }
 
-        out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-        out.tab(1).println("private UDTs() {}");
         out.println("}");
         out.close();
 
@@ -980,7 +969,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(outR, schema);
         printClassJavadoc(outR, "Convenience access to all stored procedures and functions in " + schema.getOutputName());
 
-        outR.println("public final class Routines {");
+        outR.println("public class Routines {");
         for (RoutineDefinition routine : database.getRoutines(schema)) {
             printRoutine(outR, routine);
 
@@ -991,8 +980,6 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        outR.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-        outR.tab(1).println("private Routines() {}");
         outR.println("}");
         outR.close();
 
@@ -1045,7 +1032,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(out, pkg);
         printClassJavadoc(out, "Convenience access to all stored procedures and functions in " + pkg.getName());
 
-        out.println("public final class %s extends %s[[before= implements ][%s]] {", className, PackageImpl.class, interfaces);
+        out.println("public class %s extends %s[[before= implements ][%s]] {", className, PackageImpl.class, interfaces);
         out.printSerial();
         printSingletonInstance(out, pkg);
 
@@ -1077,7 +1064,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Tables.java"));
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all tables in " + schema.getOutputName());
-        out.println("public final class Tables {");
+        out.println("public class Tables {");
 
         for (TableDefinition table : database.getTables(schema)) {
             final String className = getStrategy().getFullJavaClassName(table);
@@ -1091,8 +1078,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static final %s %s = %s;", className, id, fullId);
         }
 
-        out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-        out.tab(1).println("private Tables() {}");
         out.println("}");
         out.close();
 
@@ -1509,7 +1494,7 @@ public class JavaGenerator extends AbstractGenerator {
         JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Sequences.java"));
         printPackage(out, schema);
         printClassJavadoc(out, "Convenience access to all sequences in " + schema.getOutputName());
-        out.println("public final class Sequences {");
+        out.println("public class Sequences {");
 
         for (SequenceDefinition sequence : database.getSequences(schema)) {
             final String seqType = getJavaType(sequence.getType());
@@ -1522,8 +1507,6 @@ public class JavaGenerator extends AbstractGenerator {
             out.tab(1).println("public static final %s<%s> %s = new %s<%s>(\"%s\", %s, %s);", Sequence.class, seqType, seqId, SequenceImpl.class, seqType, seqName, schemaId, typeRef);
         }
 
-        out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-        out.tab(1).println("private Sequences() {}");
         out.println("}");
         out.close();
 

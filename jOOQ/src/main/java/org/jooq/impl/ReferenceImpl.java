@@ -194,4 +194,37 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
             throw new DetachedException("Supply at least one attachable record");
         }
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Object API
+    // -------------------------------------------------------------------------
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("FOREIGN KEY (");
+
+        String s1 = "";
+        for (Field<?> field : getFields()) {
+            sb.append(s1);
+            sb.append(field);
+
+            s1 = ", ";
+        }
+
+        sb.append(") REFERENCES ");
+        sb.append(key.getTable());
+        sb.append("(");
+
+        String s2 = "";
+        for (Field<?> field : getFields()) {
+            sb.append(s2);
+            sb.append(field);
+
+            s2 = ", ";
+        }
+
+        sb.append(")");
+        return sb.toString();
+    }
 }

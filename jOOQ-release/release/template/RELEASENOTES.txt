@@ -154,8 +154,6 @@ Bug fixes
         DefaultRelations.getUniqueKeys() and getForeignKeys() methods)
 #2239 - Code generation runs extremely slow for large schemas (Inefficient 
         AbstractDatabase.filterSchema() methods)
-#2248 - Javac's max constant pool of 64k can be exceeded in generated Keys.java
-        or Tables.java
 #2252 - ArrayIndexOutOfBoundsException, when rendering plain SQL that is 
         terminated by a comment
 #2259 - RenderMapping has no effect, if not supplied to the Executor constructor

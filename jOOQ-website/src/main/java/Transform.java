@@ -72,7 +72,7 @@ import org.joox.Match;
 public class Transform {
     private static final FopFactory fopFactory = FopFactory.newInstance();
     private static final String minorVersion = "3.0";
-    private static final String version = minorVersion + ".0-RC1";
+    private static final String version = minorVersion + ".0-RC2";
 
     public static void main(String[] args) throws Exception {
         System.out.println("Transforming multi-page manual");

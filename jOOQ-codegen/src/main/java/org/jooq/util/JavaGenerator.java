@@ -329,9 +329,6 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
-        out.tab(1).println("private Keys() {}");
-
         // [#1459] Print nested classes for actual static field initialisations
         // keeping top-level initialiser small
         int identityCounter = 0;

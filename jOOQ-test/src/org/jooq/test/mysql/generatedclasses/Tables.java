@@ -8,8 +8,8 @@ package org.jooq.test.mysql.generatedclasses;
  *
  * Convenience access to all tables in test
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table test.t_639_numbers_table
@@ -125,9 +125,4 @@ public final class Tables {
 	 * An unused table in the same schema.
 	 */
 	public static final org.jooq.test.mysql.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.mysql.generatedclasses.tables.XUnused.X_UNUSED;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

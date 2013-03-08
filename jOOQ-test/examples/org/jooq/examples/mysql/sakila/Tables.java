@@ -8,8 +8,8 @@ package org.jooq.examples.mysql.sakila;
  *
  * Convenience access to all tables in sakila
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table sakila.actor
@@ -125,9 +125,4 @@ public final class Tables {
 	 * The table sakila.store
 	 */
 	public static final org.jooq.examples.mysql.sakila.tables.Store STORE = org.jooq.examples.mysql.sakila.tables.Store.STORE;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

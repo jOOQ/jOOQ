@@ -8,14 +8,14 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_book_to_book_store", schema = "test2", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"book_store_name", "book_id"})
 })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1830629911;
+	private static final long serialVersionUID = -1705942469;
 
 	/**
 	 * Setter for <code>test2.t_book_to_book_store.book_store_name</code>. The book store name

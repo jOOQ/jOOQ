@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.enums;
  *
  * The book's stock status
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public enum TBookStatus implements org.jooq.EnumType {
 
 	SOLD_OUT("SOLD OUT"),

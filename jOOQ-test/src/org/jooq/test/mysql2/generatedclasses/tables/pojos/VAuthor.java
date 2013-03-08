@@ -8,12 +8,12 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "v_author", schema = "test2")
 public class VAuthor implements java.io.Serializable {
 
-	private static final long serialVersionUID = -884266267;
+	private static final long serialVersionUID = 908768719;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;

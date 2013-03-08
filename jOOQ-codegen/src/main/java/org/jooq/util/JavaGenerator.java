@@ -201,9 +201,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         if (generateRelations() && database.getTables(schema).size() > 0) {
-            generateIdentities(schema);
-            generateUniqueKeys(schema);
-            generateForeignKeys(schema);
+            generateRelations(schema);
         }
 
         if (generateRecords() && database.getTables(schema).size() > 0) {
@@ -250,65 +248,103 @@ public class JavaGenerator extends AbstractGenerator {
         watch.splitInfo("GENERATION FINISHED!");
     }
 
-    protected void generateIdentities(SchemaDefinition schema) {
-        log.info("Generating Identities");
+    protected void generateRelations(SchemaDefinition schema) {
+        log.info("Generating Keys");
 
-        List<IdentityDefinition> identities = database.getIdentities(schema);
-        if (identities.size() == 0) {
-            return;
-        }
-
-        JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Identities.java"));
+        JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "Keys.java"));
         printPackage(out, schema);
         printClassJavadoc(out,
-            "A class modelling identity columns of the <code>" + schema.getOutputName() + "</code> schema");
+            "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema");
 
-        out.println("public class Identities {");
+        out.println("public class Keys {");
+        out.tab(1).header("IDENTITY definitions");
         out.println();
 
-        for (int i = 0; i < identities.size(); i++) {
-            final IdentityDefinition identity = identities.get(i);
+        List<IdentityDefinition> allIdentities = new ArrayList<IdentityDefinition>();
+        List<UniqueKeyDefinition> allUniqueKeys = new ArrayList<UniqueKeyDefinition>();
+        List<ForeignKeyDefinition> allForeignKeys = new ArrayList<ForeignKeyDefinition>();
 
+        for (TableDefinition table : database.getTables(schema)) {
             try {
-                final String identityType = getStrategy().getFullJavaClassName(identity.getColumn().getContainer(), Mode.RECORD);
-                final String columnType = getJavaType(identity.getColumn().getType());
-                final String identityId = getStrategy().getJavaIdentifier(identity.getColumn().getContainer());
-                final int block = i / INITIALISER_SIZE;
+                IdentityDefinition identity = table.getIdentity();
 
-                out.tab(1).println("public static final %s<%s, %s> IDENTITY_%s = Identities%s.IDENTITY_%s;",
-                    Identity.class, identityType, columnType, identityId, block, identityId);
+                if (identity != null) {
+                    final String identityType = getStrategy().getFullJavaClassName(identity.getColumn().getContainer(), Mode.RECORD);
+                    final String columnType = getJavaType(identity.getColumn().getType());
+                    final String identityId = getStrategy().getJavaIdentifier(identity.getColumn().getContainer());
+                    final int block = allIdentities.size() / INITIALISER_SIZE;
+
+                    out.tab(1).println("public static final %s<%s, %s> IDENTITY_%s = Identities%s.IDENTITY_%s;",
+                        Identity.class, identityType, columnType, identityId, block, identityId);
+                    allIdentities.add(identity);
+                }
             }
             catch (Exception e) {
-                log.error("Error while generating identity" + identity, e);
+                log.error("Error while generating table " + table, e);
             }
         }
+
+        // Unique keys
+        out.tab(1).header("UNIQUE and PRIMARY KEY definitions");
+        out.println();
+
+        for (TableDefinition table : database.getTables(schema)) {
+            try {
+                List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
+
+                for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
+                    final String keyType = getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD);
+                    final String keyId = getStrategy().getJavaIdentifier(uniqueKey);
+                    final int block = allUniqueKeys.size() / INITIALISER_SIZE;
+
+                    out.tab(1).println("public static final %s<%s> %s = UniqueKeys%s.%s;", UniqueKey.class, keyType, keyId, block, keyId);
+                    allUniqueKeys.add(uniqueKey);
+                }
+            }
+            catch (Exception e) {
+                log.error("Error while generating table " + table, e);
+            }
+        }
+
+        // Foreign keys
+        out.tab(1).header("FOREIGN KEY definitions");
+        out.println();
+
+        for (TableDefinition table : database.getTables(schema)) {
+            try {
+                List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
+
+                for (ForeignKeyDefinition foreignKey : foreignKeys) {
+                    final String keyType = getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD);
+                    final String referencedType = getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD);
+                    final String keyId = getStrategy().getJavaIdentifier(foreignKey);
+                    final int block = allForeignKeys.size() / INITIALISER_SIZE;
+
+                    out.tab(1).println("public static final %s<%s, %s> %s = ForeignKeys%s.%s;", ForeignKey.class, keyType, referencedType, keyId, block, keyId);
+                    allForeignKeys.add(foreignKey);
+                }
+            }
+            catch (Exception e) {
+                log.error("Error while generating reference " + table, e);
+            }
+        }
+
+        out.tab(1).javadoc(NO_FURTHER_INSTANCES_ALLOWED);
+        out.tab(1).println("private Keys() {}");
 
         // [#1459] Print nested classes for actual static field initialisations
         // keeping top-level initialiser small
         int identityCounter = 0;
+        int uniqueKeyCounter = 0;
+        int foreignKeyCounter = 0;
+
         out.tab(1).header("[#1459] distribute members to avoid static initialisers > 64kb");
 
-        for (IdentityDefinition identity : identities) {
-            final int block = identityCounter / INITIALISER_SIZE;
+        // Identities
+        // ----------
 
-            // Print new nested class
-            if (identityCounter % INITIALISER_SIZE == 0) {
-                if (identityCounter > 0) {
-                    out.tab(1).println("}");
-                }
-
-                out.println();
-                out.tab(1).println("private static class Identities%s extends %s {", block, AbstractKeys.class);
-            }
-
-            out.tab(2).println("static %s<%s, %s> %s = createIdentity(%s, %s);",
-                Identity.class,
-                getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD),
-                getJavaType(identity.getColumn().getType()),
-                getStrategy().getJavaIdentifier(identity),
-                getStrategy().getFullJavaIdentifier(identity.getColumn().getContainer()),
-                getStrategy().getFullJavaIdentifier(identity.getColumn()));
-
+        for (IdentityDefinition identity : allIdentities) {
+            printIdentity(out, identityCounter, identity);
             identityCounter++;
         }
 
@@ -316,102 +352,100 @@ public class JavaGenerator extends AbstractGenerator {
             out.println("\t}");
         }
 
+        // UniqueKeys
+        // ----------
+
+        for (UniqueKeyDefinition uniqueKey : allUniqueKeys) {
+            printUniqueKey(out, uniqueKeyCounter, uniqueKey);
+            uniqueKeyCounter++;
+        }
+
+        if (uniqueKeyCounter > 0) {
+            out.println("\t}");
+        }
+
+        // ForeignKeys
+        // -----------
+
+        for (ForeignKeyDefinition foreignKey : allForeignKeys) {
+            printForeignKey(out, foreignKeyCounter, foreignKey);
+            foreignKeyCounter++;
+        }
+
+        if (foreignKeyCounter > 0) {
+            out.println("\t}");
+        }
+
         out.println("}");
         out.close();
 
-        watch.splitInfo("Identities generated");
+        watch.splitInfo("Keys generated");
     }
 
-    protected void generateUniqueKeys(SchemaDefinition schema) {
-        log.info("Generating UniqueKeys");
+    protected void printIdentity(JavaWriter out, int identityCounter, IdentityDefinition identity) {
+        final int block = identityCounter / INITIALISER_SIZE;
 
-        if (database.getUniqueKeys(schema).size() == 0) {
-            return;
+        // Print new nested class
+        if (identityCounter % INITIALISER_SIZE == 0) {
+            if (identityCounter > 0) {
+                out.tab(1).println("}");
+            }
+
+            out.println();
+            out.tab(1).println("private static class Identities%s extends %s {", block, AbstractKeys.class);
         }
 
-        JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "UniqueKeys.java"));
-        printPackage(out, schema);
-        printClassJavadoc(out,
-            "A class modelling unique keys of tables of the <code>" + schema.getOutputName() + "</code> schema");
-
-        out.println("public class UniqueKeys {");
-
-        for (TableDefinition table : database.getTables(schema)) {
-            final List<UniqueKeyDefinition> uniqueKeys = table.getUniqueKeys();
-
-            try {
-                if (uniqueKeys.size() > 0) {
-                    out.println();
-                    out.tab(1).println("public static class %s extends %s {", getStrategy().getJavaClassName(table), AbstractKeys.class);
-
-                    for (UniqueKeyDefinition uniqueKey : uniqueKeys) {
-                        out.tab(2).println("public static final %s<%s> %s = createUniqueKey(%s, [[%s]]);",
-                            UniqueKey.class,
-                            getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD),
-                            getStrategy().getJavaIdentifier(uniqueKey),
-                            getStrategy().getFullJavaIdentifier(uniqueKey.getTable()),
-                            getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()));
-                    }
-
-                    out.tab(1).println("}");
-                }
-            }
-            catch (Exception e) {
-                log.error("Error while generating unique key " + table, e);
-            }
-        }
-
-        out.println("}");
-        out.close();
-
-        watch.splitInfo("UniqueKeys generated");
+        out.tab(2).println("public static %s<%s, %s> %s = createIdentity(%s, %s);",
+            Identity.class,
+            getStrategy().getFullJavaClassName(identity.getTable(), Mode.RECORD),
+            getJavaType(identity.getColumn().getType()),
+            getStrategy().getJavaIdentifier(identity),
+            getStrategy().getFullJavaIdentifier(identity.getColumn().getContainer()),
+            getStrategy().getFullJavaIdentifier(identity.getColumn()));
     }
 
-    protected void generateForeignKeys(SchemaDefinition schema) {
-        log.info("Generating ForeignKeys");
+    protected void printUniqueKey(JavaWriter out, int uniqueKeyCounter, UniqueKeyDefinition uniqueKey) {
+        final int block = uniqueKeyCounter / INITIALISER_SIZE;
 
-        if (database.getForeignKeys(schema).size() == 0) {
-            return;
+        // Print new nested class
+        if (uniqueKeyCounter % INITIALISER_SIZE == 0) {
+            if (uniqueKeyCounter > 0) {
+                out.tab(1).println("}");
+            }
+
+            out.println();
+            out.tab(1).println("private static class UniqueKeys%s extends %s {", block, AbstractKeys.class);
         }
 
-        JavaWriter out = new JavaWriter(new File(getStrategy().getFile(schema).getParentFile(), "ForeignKeys.java"));
-        printPackage(out, schema);
-        printClassJavadoc(out,
-            "A class modelling foreign key relationships between tables of the <code>" + schema.getOutputName() + "</code> schema");
+        out.tab(2).println("public static final %s<%s> %s = createUniqueKey(%s, [[%s]]);",
+            UniqueKey.class,
+            getStrategy().getFullJavaClassName(uniqueKey.getTable(), Mode.RECORD),
+            getStrategy().getJavaIdentifier(uniqueKey),
+            getStrategy().getFullJavaIdentifier(uniqueKey.getTable()),
+            getStrategy().getFullJavaIdentifiers(uniqueKey.getKeyColumns()));
+    }
 
-        out.println("public class ForeignKeys {");
+    protected void printForeignKey(JavaWriter out, int foreignKeyCounter, ForeignKeyDefinition foreignKey) {
+        final int block = foreignKeyCounter / INITIALISER_SIZE;
 
-        for (TableDefinition table : database.getTables(schema)) {
-            final List<ForeignKeyDefinition> foreignKeys = table.getForeignKeys();
-
-            try {
-                if (foreignKeys.size() > 0) {
-                    out.println();
-                    out.tab(1).println("public static class %s extends %s {", getStrategy().getJavaClassName(table), AbstractKeys.class);
-
-                    for (ForeignKeyDefinition foreignKey : foreignKeys) {
-                        out.tab(2).println("public static final %s<%s, %s> %s = createForeignKey(%s, %s, [[%s]]);",
-                            ForeignKey.class,
-                            getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD),
-                            getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD),
-                            getStrategy().getJavaIdentifier(foreignKey),
-                            getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()),
-                            getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()),
-                            getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()));
-                    }
-
-                    out.tab(1).println("}");
-                }
+        // Print new nested class
+        if (foreignKeyCounter % INITIALISER_SIZE == 0) {
+            if (foreignKeyCounter > 0) {
+                out.tab(1).println("}");
             }
-            catch (Exception e) {
-                log.error("Error while generating unique key " + table, e);
-            }
+
+            out.println();
+            out.tab(1).println("private static class ForeignKeys%s extends %s {", block, AbstractKeys.class);
         }
 
-        out.println("}");
-        out.close();
-
-        watch.splitInfo("ForeignKeys generated");
+        out.tab(2).println("public static final %s<%s, %s> %s = createForeignKey(%s, %s, [[%s]]);",
+            ForeignKey.class,
+            getStrategy().getFullJavaClassName(foreignKey.getKeyTable(), Mode.RECORD),
+            getStrategy().getFullJavaClassName(foreignKey.getReferencedTable(), Mode.RECORD),
+            getStrategy().getJavaIdentifier(foreignKey),
+            getStrategy().getFullJavaIdentifier(foreignKey.getReferencedKey()),
+            getStrategy().getFullJavaIdentifier(foreignKey.getKeyTable()),
+            getStrategy().getFullJavaIdentifiers(foreignKey.getKeyColumns()));
     }
 
     protected void generateRecords(SchemaDefinition schema) {

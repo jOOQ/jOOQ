@@ -67,6 +67,7 @@ import org.jooq.EnumType;
 import org.jooq.SQLDialect;
 import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.types.DayToSecond;
 import org.jooq.types.UNumber;
@@ -297,12 +298,24 @@ class DefaultBindContext extends AbstractBindContext {
                     stmt.setString(nextIndex(), toPGArrayString((Object[]) value));
                     break;
                 }
-                case HSQLDB:
-                    stmt.setArray(nextIndex(), new DefaultArray(dialect, (Object[]) value, type));
+                case HSQLDB: {
+                    Object[] a = (Object[]) value;
+                    Class<?> t = type;
+
+                    // [#2325] Some array types are not natively supported by HSQLDB
+                    // More integration tests are probably needed...
+                    if (type == UUID[].class) {
+                        a = Convert.convertArray(a, String[].class);
+                        t = String[].class;
+                    }
+
+                    stmt.setArray(nextIndex(), new DefaultArray(dialect, a, t));
                     break;
-                case H2:
+                }
+                case H2: {
                     stmt.setObject(nextIndex(), value);
                     break;
+                }
                 default:
                     throw new SQLDialectNotSupportedException("Cannot bind ARRAY types in dialect " + dialect);
             }

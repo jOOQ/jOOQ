@@ -182,7 +182,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(7, schema.getUDTs().size());
             }
             else {
-                assertEquals(2, schema.getUDTs().size());
+                assertEquals(3, schema.getUDTs().size());
             }
         }
 

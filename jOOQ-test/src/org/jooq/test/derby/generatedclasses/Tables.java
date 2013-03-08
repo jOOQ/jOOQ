@@ -8,8 +8,8 @@ package org.jooq.test.derby.generatedclasses;
  *
  * Convenience access to all tables in TEST
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table TEST.T_639_NUMBERS_TABLE
@@ -120,9 +120,4 @@ public final class Tables {
 	 * The table TEST.X_UNUSED
 	 */
 	public static final org.jooq.test.derby.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.derby.generatedclasses.tables.XUnused.X_UNUSED;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

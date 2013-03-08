@@ -8,8 +8,8 @@ package org.jooq.test.cubrid.generatedclasses;
  *
  * Convenience access to all tables in 
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table t_639_numbers_table
@@ -140,9 +140,4 @@ public final class Tables {
 	 * The table x_unused
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.cubrid.generatedclasses.tables.XUnused.X_UNUSED;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

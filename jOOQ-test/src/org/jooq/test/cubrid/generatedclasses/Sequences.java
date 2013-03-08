@@ -8,8 +8,8 @@ package org.jooq.test.cubrid.generatedclasses;
  *
  * Convenience access to all sequences in 
  */
-@java.lang.SuppressWarnings("all")
-public final class Sequences {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Sequences {
 
 	/**
 	 * The sequence <code>t_identity_pk_ai_id</code>
@@ -30,9 +30,4 @@ public final class Sequences {
 	 * The sequence <code>s_author_id</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Integer> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Integer>("s_author_id", org.jooq.test.cubrid.generatedclasses.DefaultSchema.DEFAULT_SCHEMA, org.jooq.impl.SQLDataType.INTEGER);
-
-	/**
-	 * No further instances allowed
-	 */
-	private Sequences() {}
 }

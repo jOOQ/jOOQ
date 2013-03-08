@@ -8,14 +8,14 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "x_unused", schema = "test2", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ID", "NAME"})
 })
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = -260237329;
+	private static final long serialVersionUID = -1437939585;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;

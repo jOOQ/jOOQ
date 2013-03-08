@@ -8,8 +8,8 @@ package org.jooq.examples.mysql.sakila;
  *
  * Convenience access to all stored procedures and functions in sakila
  */
-@java.lang.SuppressWarnings("all")
-public final class Routines {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Routines {
 
 	/**
 	 * Call <code>sakila.film_in_stock</code>
@@ -142,9 +142,4 @@ public final class Routines {
 		p.execute(configuration);
 		return p.getCountRewardees();
 	}
-
-	/**
-	 * No further instances allowed
-	 */
-	private Routines() {}
 }

@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  *
  * A book store
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = -440080874;
+	private static final long serialVersionUID = 2052115848;
 
 	private final java.lang.String name;
 

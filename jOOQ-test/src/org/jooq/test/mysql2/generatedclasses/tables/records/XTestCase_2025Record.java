@@ -8,12 +8,12 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "x_test_case_2025", schema = "test2")
 public class XTestCase_2025Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_2025Record> implements org.jooq.Record2<java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 1389204207;
+	private static final long serialVersionUID = -2015358715;
 
 	/**
 	 * Setter for <code>test2.x_test_case_2025.ref_id</code>. 

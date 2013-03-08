@@ -8,12 +8,12 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "v_book", schema = "test2")
 public class VBookRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> implements org.jooq.Record10<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[], org.jooq.test.mysql2.generatedclasses.enums.VBookStatus> {
 
-	private static final long serialVersionUID = -1387178915;
+	private static final long serialVersionUID = 1027878401;
 
 	/**
 	 * Setter for <code>test2.v_book.ID</code>. The book ID

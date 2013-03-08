@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XTestCase_85 implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1644923039;
+	private static final long serialVersionUID = 1360321837;
 
 	private final java.lang.Integer id;
 	private final java.lang.Integer xUnusedId;

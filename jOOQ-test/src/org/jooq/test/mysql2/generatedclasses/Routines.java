@@ -8,8 +8,8 @@ package org.jooq.test.mysql2.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in test2
  */
-@java.lang.SuppressWarnings("all")
-public final class Routines {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Routines {
 
 	/**
 	 * Call <code>test2.f317</code>
@@ -197,9 +197,4 @@ public final class Routines {
 
 		p.execute(configuration);
 	}
-
-	/**
-	 * No further instances allowed
-	 */
-	private Routines() {}
 }

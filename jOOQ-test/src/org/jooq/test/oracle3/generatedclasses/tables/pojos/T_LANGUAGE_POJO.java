@@ -8,12 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_LANGUAGE")
 public class T_LANGUAGE_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = 1297868764;
+	private static final long serialVersionUID = -1426697832;
 
 	private java.lang.String  CD;
 	private java.lang.String  DESCRIPTION;

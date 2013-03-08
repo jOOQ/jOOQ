@@ -8,12 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  *
  * An entity holding books
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK")
 public class T_BOOK extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable, org.jooq.Record9<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.String, byte[]>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = 678029114;
+	private static final long serialVersionUID = -1269141956;
 
 	/**
 	 * Setter for <code>T_BOOK.ID</code>. The book ID

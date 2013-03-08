@@ -8,8 +8,8 @@ package org.jooq.test.oracle3.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in 
  */
-@java.lang.SuppressWarnings("all")
-public final class Routines {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Routines {
 
 	/**
 	 * Call <code>F_ARRAYS1</code>
@@ -807,9 +807,4 @@ public final class Routines {
 
 		return f.asAggregateFunction();
 	}
-
-	/**
-	 * No further instances allowed
-	 */
-	private Routines() {}
 }

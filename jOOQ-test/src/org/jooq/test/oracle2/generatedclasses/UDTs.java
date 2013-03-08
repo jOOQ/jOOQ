@@ -8,16 +8,11 @@ package org.jooq.test.oracle2.generatedclasses;
  *
  * Convenience access to all UDTs in TEST
  */
-@java.lang.SuppressWarnings("all")
-public final class UDTs {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class UDTs {
 
 	/**
 	 * The type <code>TEST.T_976_OBJECT_TYPE</code>
 	 */
 	public static org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE = org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE;
-
-	/**
-	 * No further instances allowed
-	 */
-	private UDTs() {}
 }

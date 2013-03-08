@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 901419623;
+	private static final long serialVersionUID = -1223504957;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_TO_BOOK_STORE</code>
@@ -60,7 +60,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TBookToBookStore.PK_B2BS;
+		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_B2BS;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TBookToBookStore.PK_B2BS);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_B2BS);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.ForeignKeys.TBookToBookStore.FK_B2BS_BS_NAME, org.jooq.test.oracle.generatedclasses.test.ForeignKeys.TBookToBookStore.FK_B2BS_B_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.FK_B2BS_BS_NAME, org.jooq.test.oracle.generatedclasses.test.Keys.FK_B2BS_B_ID);
 	}
 
 	/**

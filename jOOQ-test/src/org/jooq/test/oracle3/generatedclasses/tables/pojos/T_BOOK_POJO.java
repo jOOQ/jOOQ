@@ -8,12 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  *
  * An entity holding books
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK")
 public class T_BOOK_POJO extends java.lang.Object implements java.io.Serializable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_INTERFACE {
 
-	private static final long serialVersionUID = -356191834;
+	private static final long serialVersionUID = 1510834926;
 
 	private java.lang.Integer ID;
 	private java.lang.Integer AUTHOR_ID;

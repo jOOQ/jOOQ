@@ -8,16 +8,11 @@ package org.jooq.examples.oracle.sys;
  *
  * Convenience access to all UDTs in SYS
  */
-@java.lang.SuppressWarnings("all")
-public final class UDTs {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class UDTs {
 
 	/**
 	 * The type <code>SYS.DBMS_XPLAN_TYPE</code>
 	 */
 	public static org.jooq.examples.oracle.sys.udt.DbmsXplanType DBMS_XPLAN_TYPE = org.jooq.examples.oracle.sys.udt.DbmsXplanType.DBMS_XPLAN_TYPE;
-
-	/**
-	 * No further instances allowed
-	 */
-	private UDTs() {}
 }

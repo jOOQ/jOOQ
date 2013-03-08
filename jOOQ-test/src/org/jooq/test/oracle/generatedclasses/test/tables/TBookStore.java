@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  *
  * A book store
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1821367901;
+	private static final long serialVersionUID = -1020850247;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_STORE</code>
@@ -50,7 +50,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TBookStore.UK_T_BOOK_STORE_NAME;
+		return org.jooq.test.oracle.generatedclasses.test.Keys.UK_T_BOOK_STORE_NAME;
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.o
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TBookStore.UK_T_BOOK_STORE_NAME);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookStoreRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.UK_T_BOOK_STORE_NAME);
 	}
 
 	/**

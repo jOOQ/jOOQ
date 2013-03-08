@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  *
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class MLibrary extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.MLibraryRecord> {
 
-	private static final long serialVersionUID = -1212312203;
+	private static final long serialVersionUID = 364282663;
 
 	/**
 	 * The singleton instance of <code>TEST.M_LIBRARY</code>

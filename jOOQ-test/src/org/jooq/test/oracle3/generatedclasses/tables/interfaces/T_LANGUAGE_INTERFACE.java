@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_LANGUAGE")
 public interface T_LANGUAGE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {

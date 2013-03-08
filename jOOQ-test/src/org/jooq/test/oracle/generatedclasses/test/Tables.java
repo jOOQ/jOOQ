@@ -8,8 +8,8 @@ package org.jooq.test.oracle.generatedclasses.test;
  *
  * Convenience access to all tables in TEST
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * snapshot table for snapshot TEST.M_LIBRARY
@@ -130,9 +130,4 @@ public final class Tables {
 	 * An unused table in the same schema.
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.XUnused X_UNUSED = org.jooq.test.oracle.generatedclasses.test.tables.XUnused.X_UNUSED;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

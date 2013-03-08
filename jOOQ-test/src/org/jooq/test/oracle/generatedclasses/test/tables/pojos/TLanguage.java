@@ -8,12 +8,12 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_LANGUAGE", schema = "TEST")
 public class TLanguage implements java.io.Serializable {
 
-	private static final long serialVersionUID = -2089291636;
+	private static final long serialVersionUID = -615948478;
 
 	private java.lang.String  cd;
 	private java.lang.String  description;

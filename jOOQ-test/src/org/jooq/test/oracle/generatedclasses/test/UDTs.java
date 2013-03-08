@@ -8,8 +8,8 @@ package org.jooq.test.oracle.generatedclasses.test;
  *
  * Convenience access to all UDTs in TEST
  */
-@java.lang.SuppressWarnings("all")
-public final class UDTs {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class UDTs {
 
 	/**
 	 * The type <code>TEST.O_INVALID_TYPE</code>
@@ -45,9 +45,4 @@ public final class UDTs {
 	 * The type <code>TEST.U_STREET_TYPE</code>
 	 */
 	public static org.jooq.test.oracle.generatedclasses.test.udt.UStreetType U_STREET_TYPE = org.jooq.test.oracle.generatedclasses.test.udt.UStreetType.U_STREET_TYPE;
-
-	/**
-	 * No further instances allowed
-	 */
-	private UDTs() {}
 }

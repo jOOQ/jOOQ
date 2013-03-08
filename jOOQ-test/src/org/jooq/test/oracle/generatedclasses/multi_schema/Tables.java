@@ -8,8 +8,8 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
  *
  * Convenience access to all tables in MULTI_SCHEMA
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table MULTI_SCHEMA.T_AUTHOR
@@ -25,9 +25,4 @@ public final class Tables {
 	 * The table MULTI_SCHEMA.T_BOOK_SALE
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale T_BOOK_SALE = org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBookSale.T_BOOK_SALE;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

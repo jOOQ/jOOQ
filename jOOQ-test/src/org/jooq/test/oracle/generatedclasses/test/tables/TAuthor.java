@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  *
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 292609913;
+	private static final long serialVersionUID = 2015469011;
 
 	/**
 	 * The singleton instance of <code>TEST.T_AUTHOR</code>
@@ -75,7 +75,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TAuthor.PK_T_AUTHOR;
+		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_AUTHOR;
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.TAuthor.PK_T_AUTHOR);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_T_AUTHOR);
 	}
 
 	/**

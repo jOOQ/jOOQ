@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class X_UNUSED extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1083011619;
+	private static final long serialVersionUID = 850970485;
 
 	/**
 	 * The singleton instance of <code>X_UNUSED</code>

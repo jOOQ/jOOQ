@@ -8,10 +8,10 @@ package org.jooq.test.oracle2.generatedclasses.packages;
  *
  * Convenience access to all stored procedures and functions in PKG_976
  */
-@java.lang.SuppressWarnings("all")
-public final class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class DateAsTimestampPkg_976 extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = 2031523763;
+	private static final long serialVersionUID = -1753174149;
 
 	/**
 	 * The singleton instance of <code>TEST.PKG_976</code>

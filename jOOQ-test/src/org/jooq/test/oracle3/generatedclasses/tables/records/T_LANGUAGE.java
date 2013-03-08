@@ -8,12 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_LANGUAGE")
 public class T_LANGUAGE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable, org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_LANGUAGE_INTERFACE {
 
-	private static final long serialVersionUID = -1284830633;
+	private static final long serialVersionUID = 1392427033;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. The language ISO code

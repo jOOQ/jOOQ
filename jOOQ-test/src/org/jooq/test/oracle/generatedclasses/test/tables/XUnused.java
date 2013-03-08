@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 74129395;
+	private static final long serialVersionUID = 2098886618;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>
@@ -125,7 +125,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord> getPrimaryKey() {
-		return org.jooq.test.oracle.generatedclasses.test.UniqueKeys.XUnused.PK_X_UNUSED;
+		return org.jooq.test.oracle.generatedclasses.test.Keys.PK_X_UNUSED;
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord>>asList(org.jooq.test.oracle.generatedclasses.test.UniqueKeys.XUnused.PK_X_UNUSED, org.jooq.test.oracle.generatedclasses.test.UniqueKeys.XUnused.UK_X_UNUSED_ID);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.PK_X_UNUSED, org.jooq.test.oracle.generatedclasses.test.Keys.UK_X_UNUSED_ID);
 	}
 
 	/**
@@ -141,7 +141,7 @@ public class XUnused extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.orac
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.ForeignKeys.XUnused.FK_X_UNUSED_SELF);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.test.tables.records.XUnusedRecord, ?>>asList(org.jooq.test.oracle.generatedclasses.test.Keys.FK_X_UNUSED_SELF);
 	}
 
 	/**

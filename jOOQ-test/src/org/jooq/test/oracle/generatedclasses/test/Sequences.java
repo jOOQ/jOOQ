@@ -8,8 +8,8 @@ package org.jooq.test.oracle.generatedclasses.test;
  *
  * Convenience access to all sequences in TEST
  */
-@java.lang.SuppressWarnings("all")
-public final class Sequences {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Sequences {
 
 	/**
 	 * The sequence <code>TEST.S_AUTHOR_ID</code>
@@ -40,9 +40,4 @@ public final class Sequences {
 	 * The sequence <code>TEST.S_961_SHORT</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Short> S_961_SHORT = new org.jooq.impl.SequenceImpl<java.lang.Short>("S_961_SHORT", org.jooq.test.oracle.generatedclasses.test.Test.TEST, org.jooq.impl.SQLDataType.SMALLINT);
-
-	/**
-	 * No further instances allowed
-	 */
-	private Sequences() {}
 }

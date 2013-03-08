@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.packages;
  *
  * Convenience access to all stored procedures and functions in PKG_1358
  */
-@java.lang.SuppressWarnings("all")
-public final class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Cloneable {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class PKG_1358 extends org.jooq.impl.PackageImpl implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -1078307358;
+	private static final long serialVersionUID = -1846435526;
 
 	/**
 	 * The singleton instance of <code>PKG_1358</code>

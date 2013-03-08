@@ -8,16 +8,11 @@ package org.jooq.test.oracle2.generatedclasses;
  *
  * Convenience access to all tables in TEST
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked" })
+public class Tables {
 
 	/**
 	 * The table TEST.T_976
 	 */
 	public static final org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976 DATE_AS_TIMESTAMP_T_976 = org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

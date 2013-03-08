@@ -8,12 +8,12 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
  *
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "M_LIBRARY", schema = "TEST")
 public class MLibrary implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1072609763;
+	private static final long serialVersionUID = -1607144467;
 
 	private java.lang.String author;
 	private java.lang.String title;

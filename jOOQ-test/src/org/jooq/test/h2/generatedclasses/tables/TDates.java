@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 762343884;
+	private static final long serialVersionUID = -1890517092;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_DATES</code>
@@ -66,7 +66,7 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.ge
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.UniqueKeys.TDates.PK_T_DATES;
+		return org.jooq.test.h2.generatedclasses.Keys.PK_T_DATES;
 	}
 
 	/**
@@ -74,6 +74,6 @@ public class TDates extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.ge
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.h2.generatedclasses.UniqueKeys.TDates.PK_T_DATES);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_DATES);
 	}
 }

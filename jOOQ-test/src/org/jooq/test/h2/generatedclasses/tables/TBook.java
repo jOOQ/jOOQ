@@ -11,7 +11,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 528149442;
+	private static final long serialVersionUID = -107810741;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_BOOK</code>
@@ -93,7 +93,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.UniqueKeys.TBook.PK_T_BOOK;
+		return org.jooq.test.h2.generatedclasses.Keys.PK_T_BOOK;
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.h2.generatedclasses.UniqueKeys.TBook.PK_T_BOOK);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_BOOK);
 	}
 
 	/**
@@ -109,7 +109,7 @@ public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.gen
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.h2.generatedclasses.ForeignKeys.TBook.FK_T_BOOK_AUTHOR_ID, org.jooq.test.h2.generatedclasses.ForeignKeys.TBook.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.h2.generatedclasses.ForeignKeys.TBook.FK_T_BOOK_LANGUAGE_ID);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.TBookRecord, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID, org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_CO_AUTHOR_ID, org.jooq.test.h2.generatedclasses.Keys.FK_T_BOOK_LANGUAGE_ID);
 	}
 
 	/**

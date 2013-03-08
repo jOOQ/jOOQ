@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = 1247819141;
+	private static final long serialVersionUID = 1773004685;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_IDENTITY_PK</code>
@@ -46,7 +46,7 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Identity<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> getIdentity() {
-		return org.jooq.test.h2.generatedclasses.Identities.IDENTITY_T_IDENTITY_PK;
+		return org.jooq.test.h2.generatedclasses.Keys.IDENTITY_T_IDENTITY_PK;
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.UniqueKeys.TIdentityPk.PK_T_IDENTITY_PK;
+		return org.jooq.test.h2.generatedclasses.Keys.PK_T_IDENTITY_PK;
 	}
 
 	/**
@@ -62,6 +62,6 @@ public class TIdentityPk extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.h2.generatedclasses.UniqueKeys.TIdentityPk.PK_T_IDENTITY_PK);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.TIdentityPkRecord>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_T_IDENTITY_PK);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1865182283;
+	private static final long serialVersionUID = 108639504;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_71</code>
@@ -46,7 +46,7 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record> getPrimaryKey() {
-		return org.jooq.test.h2.generatedclasses.UniqueKeys.XTestCase_71.PK_X_TEST_CASE_71;
+		return org.jooq.test.h2.generatedclasses.Keys.PK_X_TEST_CASE_71;
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record>> getKeys() {
-		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record>>asList(org.jooq.test.h2.generatedclasses.UniqueKeys.XTestCase_71.PK_X_TEST_CASE_71);
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record>>asList(org.jooq.test.h2.generatedclasses.Keys.PK_X_TEST_CASE_71);
 	}
 
 	/**
@@ -62,6 +62,6 @@ public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test
 	 */
 	@Override
 	public java.util.List<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record, ?>> getReferences() {
-		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.h2.generatedclasses.ForeignKeys.XTestCase_71.FK_X_TEST_CASE_71);
+		return java.util.Arrays.<org.jooq.ForeignKey<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_71Record, ?>>asList(org.jooq.test.h2.generatedclasses.Keys.FK_X_TEST_CASE_71);
 	}
 }

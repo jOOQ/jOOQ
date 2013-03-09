@@ -773,7 +773,7 @@ public class Main {
 											</p>
 											
 <java><![CDATA[Executor create = new Executor(conn, SQLDialect.MYSQL);
-Result<Record> result = Executor.select().from(POSTS).fetch();]]></java>
+Result<Record> result = create.select().from(POSTS).fetch();]]></java>
 
 											<p>
 												First get an instance of <code>Executor</code> so we can write a simple <code>SELECT</code> query. We pass an instance of the MySQL connection to <code>Executor</code>. Note that the executor doesn't close the connection. We'll have to do that ourselves.

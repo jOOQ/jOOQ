@@ -263,7 +263,7 @@ Let's add a simple query:
 </p>
 <pre class="prettyprint lang-java">
 Executor create = new Executor(conn, SQLDialect.MYSQL);
-Result&lt;Record> result = Executor.select().from(POSTS).fetch();
+Result&lt;Record> result = create.select().from(POSTS).fetch();
 </pre>
 <p>
 First get an instance of <code>Factory</code> so we can write a simple

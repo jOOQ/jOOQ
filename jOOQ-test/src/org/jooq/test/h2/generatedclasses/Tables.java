@@ -12,6 +12,11 @@ package org.jooq.test.h2.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table PUBLIC.T_2327_UK_ONLY
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly T_2327_UK_ONLY = org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY;
+
+	/**
 	 * The table PUBLIC.T_IDENTITY_PK
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TIdentityPk T_IDENTITY_PK = org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK;

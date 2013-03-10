@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class Public extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -782542780;
+	private static final long serialVersionUID = 111658176;
 
 	/**
 	 * The singleton instance of <code>PUBLIC</code>
@@ -45,6 +45,7 @@ public class Public extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.h2.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY,
 			org.jooq.test.h2.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK,
 			org.jooq.test.h2.generatedclasses.tables.TIdentity.T_IDENTITY,
 			org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES,

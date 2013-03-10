@@ -59,6 +59,7 @@ import org.jooq.TableLike;
 import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
+import org.jooq.UniqueKey;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -160,6 +161,24 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public Identity<R, ? extends Number> getIdentity() {
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses should override this method
+     */
+    @Override
+    public List<UniqueKey<R>> getKeys() {
+        return Collections.emptyList();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other) {
+        return other.getReferencesTo(this);
     }
 
     /**

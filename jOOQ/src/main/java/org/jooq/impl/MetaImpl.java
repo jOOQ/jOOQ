@@ -41,14 +41,12 @@ import static org.jooq.impl.Factory.fieldByName;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.jooq.Catalog;
 import org.jooq.DataType;
-import org.jooq.ForeignKey;
 import org.jooq.Meta;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -315,16 +313,6 @@ class MetaImpl implements Meta {
         @Override
         public final UniqueKey<Record> getPrimaryKey() {
             return null;
-        }
-
-        @Override
-        public final List<UniqueKey<Record>> getKeys() {
-            return Collections.emptyList();
-        }
-
-        @Override
-        public final <O extends Record> List<ForeignKey<O, Record>> getReferencesFrom(Table<O> other) {
-            return other.getReferencesTo(this);
         }
 
         @Override

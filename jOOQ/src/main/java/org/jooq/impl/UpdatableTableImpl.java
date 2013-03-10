@@ -35,10 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.jooq.ForeignKey;
 import org.jooq.Record;
 import org.jooq.Schema;
 import org.jooq.Table;
@@ -85,16 +81,6 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
     /**
      * {@inheritDoc}
      * <p>
-     * Subclasses should override this method
-     */
-    @Override
-    public List<UniqueKey<R>> getKeys() {
-        return Collections.emptyList();
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
      * Subclasses may override this method
      */
     @Override
@@ -110,10 +96,5 @@ public class UpdatableTableImpl<R extends Record> extends TableImpl<R> implement
     @Override
     public TableField<R, ? extends java.util.Date> getRecordTimestamp() {
         return null;
-    }
-
-    @Override
-    public final <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other) {
-        return other.getReferencesTo(this);
     }
 }

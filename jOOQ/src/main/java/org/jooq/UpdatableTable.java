@@ -35,8 +35,6 @@
  */
 package org.jooq;
 
-import java.util.List;
-
 import org.jooq.conf.Settings;
 
 /**
@@ -56,27 +54,6 @@ public interface UpdatableTable<R extends Record> extends Table<R> {
      *         table.
      */
     UniqueKey<R> getPrimaryKey();
-
-    /**
-     * Retrieve all of the table's unique keys.
-     *
-     * @return All keys. This is never <code>null</code> or empty, because
-     *         {@link UpdatableTable}'s always have at least a primary key. This
-     *         method returns an unmodifiable list.
-     */
-    List<UniqueKey<R>> getKeys();
-
-    /**
-     * Get a list of <code>FOREIGN KEY</code>'s of a specific table, referencing
-     * a this table.
-     *
-     * @param <O> The other table's record type
-     * @param other The other table of the foreign key relationship
-     * @return Some other table's <code>FOREIGN KEY</code>'s towards an this
-     *         table. This is never <code>null</code>. This method returns an
-     *         unmodifiable list.
-     */
-    <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other);
 
     /**
      * A "version" field holding record version information used for optimistic

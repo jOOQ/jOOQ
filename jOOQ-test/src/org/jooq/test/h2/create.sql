@@ -46,6 +46,14 @@ DROP TABLE IF EXISTS t_877/
 DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
+DROP TABLE IF EXISTS t_2327_uk_only/
+
+CREATE TABLE t_2327_uk_only (
+  id INTEGER,
+  
+  CONSTRAINT uk_t_2327_uk_only UNIQUE (id)
+)
+/
 
 CREATE TABLE t_identity_pk (
   id INTEGER AUTO_INCREMENT,

@@ -168,6 +168,27 @@ public interface Table<R extends Record> extends TableLike<R> {
     Identity<R, ? extends Number> getIdentity();
 
     /**
+     * Retrieve all of the table's unique keys.
+     *
+     * @return All keys. This is never <code>null</code>. This is never empty
+     *         for {@link UpdatableTable}s because an updatable table always has
+     *         at least a primary key. This method returns an unmodifiable list.
+     */
+    List<UniqueKey<R>> getKeys();
+
+    /**
+     * Get a list of <code>FOREIGN KEY</code>'s of a specific table, referencing
+     * a this table.
+     *
+     * @param <O> The other table's record type
+     * @param other The other table of the foreign key relationship
+     * @return Some other table's <code>FOREIGN KEY</code>'s towards an this
+     *         table. This is never <code>null</code>. This method returns an
+     *         unmodifiable list.
+     */
+    <O extends Record> List<ForeignKey<O, R>> getReferencesFrom(Table<O> other);
+
+    /**
      * Get the list of <code>FOREIGN KEY</code>'s of this table
      *
      * @return This table's <code>FOREIGN KEY</code>'s. This is never

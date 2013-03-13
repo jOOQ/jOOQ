@@ -3611,7 +3611,7 @@ GROUP BY FIRST_NAME, LAST_NAME;</sql>
 									</p>
 									
 <java>Record record = create.select(
-         concat(AUTHOR.FIRST_NAME, " ", AUTHOR.LAST_NAME).as("author"),
+         concat(AUTHOR.FIRST_NAME, val(" "), AUTHOR.LAST_NAME).as("author"),
          count().as("books"))
       .from(AUTHOR)
       .join(BOOK).on(AUTHOR.ID.equal(BOOK.AUTHOR_ID))

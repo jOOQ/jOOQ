@@ -35,12 +35,12 @@
  */
 package org.jooq.tools;
 
+import java.util.logging.Level;
+
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
 import org.jooq.impl.DefaultExecuteListener;
-
-import org.apache.log4j.Level;
 
 /**
  * A default {@link ExecuteListener} that just logs events to java.util.logging,
@@ -88,19 +88,19 @@ public class LoggerListener extends DefaultExecuteListener {
     @Override
     public void recordEnd(ExecuteContext ctx) {
         if (log.isTraceEnabled() && ctx.record() != null)
-            logMultiline("Record fetched", ctx.record().toString(), Level.TRACE);
+            logMultiline("Record fetched", ctx.record().toString(), Level.FINER);
     }
 
     @Override
     public void resultEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled() && ctx.result() != null) {
-            logMultiline("Fetched result", ctx.result().format(5), Level.DEBUG);
+            logMultiline("Fetched result", ctx.result().format(5), Level.FINE);
         }
     }
 
     private void logMultiline(String comment, String message, Level level) {
         for (String line : message.split("\n")) {
-            if (level == Level.DEBUG) {
+            if (level == Level.FINE) {
                 log.debug(comment, line);
             }
             else {

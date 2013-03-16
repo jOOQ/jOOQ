@@ -544,14 +544,27 @@ for (AuthorRecord author : create.fetch(AUTHOR)) {
 											</p>
 											
 											<p>
-												Alternatively, you can create a Maven dependency:
+												Alternatively, you can create a Maven dependency to download jOOQ artefacts:
 											</p>
 <xml><![CDATA[<dependency>
   <groupId>org.jooq</groupId>
-  <!-- artefacts are jooq, jooq-meta, jooq-codegen -->
   <artifactId>jooq</artifactId>
   <version>{jooq-version}</version>
+</dependency>
+<dependency>
+  <groupId>org.jooq</groupId>
+  <artifactId>jooq-meta</artifactId>
+  <version>{jooq-version}</version>
+</dependency>
+<dependency>
+  <groupId>org.jooq</groupId>
+  <artifactId>jooq-codegen</artifactId>
+  <version>{jooq-version}</version>
 </dependency>]]></xml>
+
+											<p>
+												Please refer to the manual's section about <reference id="codegen-configuration" title="Code generation configuration"/> to learn how to use jOOQ's code generator with Maven.
+											</p>
 
 											<p>
 												For this example, we'll be using MySQL. If you haven't already downloaded MySQL Connector/J, download it here:<br/>

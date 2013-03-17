@@ -40,31 +40,31 @@ create.selectFrom(BOOK)
 <table width="100%" cellpadding="0" cellspacing="0">
 <tr>
 		<td width="50%" class="left"><pre class="prettyprint lang-sql">
-  SELECT FIRST_NAME, LAST_NAME, COUNT(*)
+  SELECT AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, COUNT(*)
     FROM AUTHOR
     JOIN BOOK ON AUTHOR.ID = BOOK.AUTHOR_ID
-   WHERE LANGUAGE = 'DE'
-     AND PUBLISHED &gt; '2008-01-01'
-GROUP BY FIRST_NAME, LAST_NAME
+   WHERE BOOK.LANGUAGE = 'DE'
+     AND BOOK.PUBLISHED &gt; DATE '2008-01-01'
+GROUP BY AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME
   HAVING COUNT(*) &gt; 5
-ORDER BY LAST_NAME ASC NULLS FIRST
+ORDER BY AUTHOR.LAST_NAME ASC NULLS FIRST
    LIMIT 2
   OFFSET 1
      FOR UPDATE
-      OF FIRST_NAME, LAST_NAME</pre></td>
+      OF AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME</pre></td>
 		<td width="50%" class="right"><pre class="prettyprint lang-java">
-create.select(FIRST_NAME, LAST_NAME, count())
+create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
       .from(AUTHOR)
-      .join(BOOK).on(Author.ID.equal(Book.AUTHOR_ID))
-      .where(LANGUAGE.equal("DE"))
-      .and(PUBLISHED.greaterThan(parseDate("2008-01-01")))
-      .groupBy(FIRST_NAME, LAST_NAME)
-      .having(count().greaterThan(5))
-      .orderBy(LAST_NAME.asc().nullsFirst())
+      .join(BOOK).on(AUTHOR.ID.equal(BOOK.AUTHOR_ID))
+      .where(BOOK.LANGUAGE.eq("DE"))
+      .and(BOOK.PUBLISHED.gt(date("2008-01-01")))
+      .groupBy(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
+      .having(count().gt(5))
+      .orderBy(AUTHOR.LAST_NAME.asc().nullsFirst())
       .limit(2)
       .offset(1)
       .forUpdate()
-      .of(FIRST_NAME, LAST_NAME)</pre></td>
+      .of(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)</pre></td>
 	</tr>
 </table>
 

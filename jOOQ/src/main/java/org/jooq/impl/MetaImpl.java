@@ -38,6 +38,7 @@ package org.jooq.impl;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.fieldByName;
 
+import java.io.Serializable;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -59,12 +60,22 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
+ * An implementation of the public {@link Meta} type.
+ * <p>
+ * This implementation implements {@link Serializable}, without taking care of
+ * properly deserialising the referenced executor.
+ *
  * @author Lukas Eder
  */
-class MetaImpl implements Meta {
+class MetaImpl implements Meta, Serializable {
 
-    private final Executor             executor;
-    private transient DatabaseMetaData meta;
+    /**
+     * Generated UID
+     */
+    private static final long                   serialVersionUID = 3582980783173033809L;
+
+    private final Executor                      executor;
+    private transient volatile DatabaseMetaData meta;
 
     MetaImpl(Executor executor) {
         this.executor = executor;
@@ -166,10 +177,10 @@ class MetaImpl implements Meta {
         /**
          * Generated UID
          */
-        private static final long                     serialVersionUID = -2621899850912554198L;
+        private static final long                              serialVersionUID = -2621899850912554198L;
 
-        private transient List<Table<?>>              tableCache;
-        private transient Map<String, Result<Record>> columnCache;
+        private transient volatile List<Table<?>>              tableCache;
+        private transient volatile Map<String, Result<Record>> columnCache;
 
         MetaSchema(String name) {
             super(name);

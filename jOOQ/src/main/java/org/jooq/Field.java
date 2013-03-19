@@ -635,7 +635,7 @@ public interface Field<T> extends GroupField {
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#HSQLDB}</td>
-     * <td><code>REGEXP_MATCHES([search], [pattern])</td>
+     * <td><code>REGEXP_MATCHES([search], [pattern])</code></td>
      * <td>Java</td>
      * <td><a
      * href="http://hsqldb.org/doc/guide/builtinfunctions-chapt.html#N13577"
@@ -653,7 +653,7 @@ public interface Field<T> extends GroupField {
      * <td>POSIX</td>
      * <td><a href=
      * "http://dev.mysql.com/doc/refman/5.6/en/regexp.html">http://dev
-     * .mysql.com/doc/refman/5.6/en/regexp.html</a ></td>
+     * .mysql.com/doc/refman/5.6/en/regexp.html</a></td>
      * </tr>
      * <tr>
      * <td>{@link SQLDialect#ORACLE}</td>

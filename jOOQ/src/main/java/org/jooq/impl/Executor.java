@@ -409,17 +409,17 @@ public class Executor implements Configuration {
     }
 
     @Override
-    public final Map<String, Object> getData() {
+    public final Map<Object, Object> getData() {
         return configuration.getData();
     }
 
     @Override
-    public final Object getData(String key) {
+    public final Object getData(Object key) {
         return configuration.getData(key);
     }
 
     @Override
-    public final Object setData(String key, Object value) {
+    public final Object setData(Object key, Object value) {
         return configuration.setData(key, value);
     }
 

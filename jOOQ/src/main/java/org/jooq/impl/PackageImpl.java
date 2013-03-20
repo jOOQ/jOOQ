@@ -99,6 +99,9 @@ public class PackageImpl extends AbstractQueryPart implements Package {
 
     @Override
     public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
 
         // [#1626] PackageImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

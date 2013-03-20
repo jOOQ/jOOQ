@@ -155,6 +155,9 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
 
     @Override
     public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
 
         // [#2144] SchemaImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

@@ -110,6 +110,9 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
 
     @Override
     public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
 
         // [#1626] CatalogImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

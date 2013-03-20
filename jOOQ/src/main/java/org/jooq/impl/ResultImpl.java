@@ -1191,6 +1191,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
         if (obj instanceof ResultImpl) {
             ResultImpl<R> other = (ResultImpl<R>) obj;
             return records.equals(other.records);

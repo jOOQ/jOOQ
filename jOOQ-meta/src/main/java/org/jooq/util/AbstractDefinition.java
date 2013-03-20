@@ -191,6 +191,9 @@ public abstract class AbstractDefinition implements Definition {
 
     @Override
     public final boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
         if (obj instanceof Definition) {
             Definition that = (Definition) obj;
             return that.getQualifiedName().equals(getQualifiedName());

@@ -89,7 +89,7 @@ public interface Configuration extends Serializable {
      * Get all custom data from this <code>Configuration</code>
      * <p>
      * This is custom data that was previously set to the configuration using
-     * {@link #setData(String, Object)}. Use custom data if you want to pass
+     * {@link #setData(Object, Object)}. Use custom data if you want to pass
      * data to your custom {@link QueryPart} or {@link ExecuteListener} objects
      * to be made available at render, bind, execution, fetch time.
      * <p>
@@ -98,13 +98,13 @@ public interface Configuration extends Serializable {
      * @return The custom data. This is never <code>null</code>
      * @see ExecuteListener
      */
-    Map<String, Object> getData();
+    Map<Object, Object> getData();
 
     /**
      * Get some custom data from this <code>Configuration</code>
      * <p>
      * This is custom data that was previously set to the configuration using
-     * {@link #setData(String, Object)}. Use custom data if you want to pass
+     * {@link #setData(Object, Object)}. Use custom data if you want to pass
      * data to your custom {@link QueryPart} or {@link ExecuteListener} objects
      * to be made available at render, bind, execution, fetch time.
      * <p>
@@ -115,7 +115,7 @@ public interface Configuration extends Serializable {
      *         in this <code>Configuration</code>
      * @see ExecuteListener
      */
-    Object getData(String key);
+    Object getData(Object key);
 
     /**
      * Set some custom data to this <code>Configuration</code>
@@ -137,7 +137,7 @@ public interface Configuration extends Serializable {
      *         was previously set for the given key
      * @see ExecuteListener
      */
-    Object setData(String key, Object value);
+    Object setData(Object key, Object value);
 
     List<ExecuteListener> getExecuteListeners();
 

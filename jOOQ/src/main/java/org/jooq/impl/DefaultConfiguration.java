@@ -69,7 +69,7 @@ class DefaultConfiguration implements Configuration {
     @SuppressWarnings("deprecation")
     private final org.jooq.SchemaMapping mapping;
     private final Settings               settings;
-    private final Map<String, Object>    data;
+    private final Map<Object, Object>    data;
     private List<ExecuteListener>        listeners;
 
     @SuppressWarnings("deprecation")
@@ -78,12 +78,12 @@ class DefaultConfiguration implements Configuration {
     }
 
     @SuppressWarnings("deprecation")
-    DefaultConfiguration(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings, Map<String, Object> data) {
+    DefaultConfiguration(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings, Map<Object, Object> data) {
         this.connectionProvider = connectionProvider;
         this.dialect = dialect;
         this.settings = settings != null ? settings : SettingsTools.defaultSettings();
         this.mapping = new org.jooq.SchemaMapping(this);
-        this.data = data != null ? data : new HashMap<String, Object>();
+        this.data = data != null ? data : new HashMap<Object, Object>();
         this.listeners = new ArrayList<ExecuteListener>();
     }
 
@@ -124,7 +124,7 @@ class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Map<String, Object> getData() {
+    public final Map<Object, Object> getData() {
         return data;
     }
 
@@ -132,7 +132,7 @@ class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Object getData(String key) {
+    public final Object getData(Object key) {
         return data.get(key);
     }
 
@@ -140,7 +140,7 @@ class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Object setData(String key, Object value) {
+    public final Object setData(Object key, Object value) {
         return data.put(key, value);
     }
 

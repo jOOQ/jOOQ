@@ -69,7 +69,7 @@ class Value<T> implements Serializable {
 
     @SuppressWarnings("unchecked")
     final void intern() {
-        
+
         // [#2177] Future versions of jOOQ may optimise this type check by
         // performing type-decisions outside of Value
         if (value instanceof String) {
@@ -135,6 +135,10 @@ class Value<T> implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
         if (obj instanceof Value<?>) {
             Value<?> other = (Value<?>) obj;
 

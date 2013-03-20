@@ -445,6 +445,9 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
     @Override
     public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
 
         // [#2144] Non-equality can be decided early, without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

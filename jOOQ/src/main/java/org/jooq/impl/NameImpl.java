@@ -88,6 +88,9 @@ class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
 
         // [#1626] NameImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

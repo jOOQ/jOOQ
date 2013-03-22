@@ -61,8 +61,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -264,11 +262,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             s = create().select(SAuthorID().nextval(), SAuthorID().currval());
             s = runSerialisation(s);
         }
-    }
-
-    @Test
-    public void testSerialisationOfSingletons() throws Exception {
-        Assert.assertSame(TBook(), runSerialisation(TBook()));
     }
 
     public static class ConnectionProviderListener extends DefaultExecuteListener {

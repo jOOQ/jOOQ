@@ -1019,6 +1019,11 @@ object Test {                                                        //
 								<li>Get the latest version of <a href="http://git-scm.com">Git</a> or <a href="http://www.eclipse.org/egit">EGit</a></li>
 								<li>Get the latest version of <a href="http://maven.apache.org">Maven</a> or <a href="http://eclipse.org/m2e">M2E</a></li>
 								<li>Check out the jOOQ sources from <a href="https://github.com/jOOQ/jOOQ">https://github.com/jOOQ/jOOQ</a></li>
+								<li>Optionally, import Maven artefacts into an Eclipse workspace using the following command (see the <a href="http://maven.apache.org/plugins/maven-eclipse-plugin/">maven-eclipse-plugin</a> documentation for details):
+									<ul>
+										<li><code>mvn eclipse:eclipse</code></li>
+									</ul>
+								</li>
 								<li>Build the <code>jooq-parent</code> artefact by using any of these commands:
 									<ul>
 										<li><code>mvn clean package</code><br/>create .jar files in <code>${project.build.directory}</code></li>

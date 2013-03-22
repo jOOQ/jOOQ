@@ -241,12 +241,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             ExecuteContext ctx = new DefaultExecuteContext(c, this);
             ExecuteListener listener = new ExecuteListeners(ctx);
 
-            if (ctx.connection() == null) {
-                throw new DetachedException("Cannot execute query. No Connection configured");
-            }
-
             int result = 0;
             try {
+                if (ctx.connection() == null) {
+                    throw new DetachedException("Cannot execute query. No Connection configured");
+                }
 
                 // [#385] If a statement was previously kept open
                 if (keepStatement() && statement != null) {

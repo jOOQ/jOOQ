@@ -83,6 +83,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
     // Transient attributes (created afresh per execution)
     private transient ConnectionProvider         connectionProvider;
+    private transient Connection                 connection;
     private transient PreparedStatement          statement;
     private transient ResultSet                  resultSet;
     private transient Record                     record;
@@ -151,6 +152,7 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
         }
 
         LOCAL_CONFIGURATION.remove();
+        LOCAL_CONNECTION.remove();
     }
 
     /**
@@ -174,21 +176,31 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     private static final ThreadLocal<Configuration> LOCAL_CONFIGURATION = new ThreadLocal<Configuration>();
 
     /**
-     * Register a configuration for later cleanup with {@link #clean()}
-     */
-    static final void register(Configuration configuration) {
-        LOCAL_CONFIGURATION.set(configuration);
-    }
-
-    /**
      * Get the registered configuration
      * <p>
      * It can be safely assumed that such a configuration is available once the
      * {@link ExecuteContext} has been established, until the statement is
      * closed.
      */
-    static final Configuration registeredConfiguration() {
+    static final Configuration localConfiguration() {
         return LOCAL_CONFIGURATION.get();
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Static utility methods for handling Configuration lifecycle
+    // ------------------------------------------------------------------------
+
+    private static final ThreadLocal<Connection> LOCAL_CONNECTION = new ThreadLocal<Connection>();
+
+    /**
+     * Get the registered connection
+     * <p>
+     * It can be safely assumed that such a connection is available once the
+     * {@link ExecuteContext} has been established, until the statement is
+     * closed.
+     */
+    static final Connection localConnection() {
+        return LOCAL_CONNECTION.get();
     }
 
     // ------------------------------------------------------------------------
@@ -383,15 +395,16 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
 
         ConnectionProvider provider = connectionProvider != null ? connectionProvider : getConnectionProvider();
 
-        if (provider != null) {
-            Connection connection = provider.acquire();
+        if (connection == null && provider != null) {
+            Connection c = provider.acquire();
 
-            if (connection != null) {
-                return new SettingsEnabledConnection(new ProviderEnabledConnection(provider, connection), getSettings());
+            if (c != null) {
+                LOCAL_CONNECTION.set(c);
+                connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), getSettings());
             }
         }
 
-        return null;
+        return connection;
     }
 
     @Override

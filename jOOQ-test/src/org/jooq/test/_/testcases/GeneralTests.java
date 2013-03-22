@@ -249,6 +249,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result.get(1).store();
         }
         finally {
+            create().getConnectionProvider().release(ConnectionProviderListener.c);
             ConnectionProviderListener.c = null;
         }
 

@@ -39,6 +39,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.Factory.fieldByName;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Catalog;
+import org.jooq.ConnectionProvider;
 import org.jooq.DataType;
 import org.jooq.Meta;
 import org.jooq.Record;
@@ -83,11 +85,18 @@ class MetaImpl implements Meta, Serializable {
 
     private final DatabaseMetaData meta() {
         if (meta == null) {
+            ConnectionProvider provider = executor.getConnectionProvider();
+            Connection connection = null;
+
             try {
-                meta = executor.getConnectionProvider().acquire().getMetaData();
+                connection = provider.acquire();
+                meta = connection.getMetaData();
             }
             catch (SQLException e) {
                 throw new DataAccessException("Error while accessing DatabaseMetaData", e);
+            }
+            finally {
+                provider.release(connection);
             }
         }
 

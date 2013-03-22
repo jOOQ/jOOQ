@@ -38,6 +38,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.Factory.escape;
 import static org.jooq.impl.Factory.getDataType;
 import static org.jooq.impl.Factory.nullSafe;
@@ -1705,9 +1706,8 @@ final class Utils {
 
             // [#1544] We can safely assume that localConfiguration has been
             // set on DefaultBindContext, prior to serialising arrays to SQLOut
-            Connection connection = DefaultExecuteContext.registeredConfiguration().getConnectionProvider().acquire();
             ArrayRecord<?> arrayRecord = (ArrayRecord<?>) value;
-            stream.writeArray(on(connection).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
+            stream.writeArray(on(localConnection()).call("createARRAY", arrayRecord.getName(), arrayRecord.get()).<Array>get());
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             stream.writeString(((EnumType) value).getLiteral());

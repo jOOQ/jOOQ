@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DefaultExecuteContext.localConfiguration;
+
 import java.sql.SQLException;
 import java.sql.SQLInput;
 import java.sql.SQLOutput;
@@ -95,7 +97,7 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
         // [#1693] This needs to return the fully qualified SQL type name, in
         // case the connected user is not the owner of the UDT
-        Configuration configuration = DefaultExecuteContext.registeredConfiguration();
+        Configuration configuration = localConfiguration();
         if (configuration != null) {
             Schema schema = Utils.getMappedSchema(configuration, getUDT().getSchema());
 
@@ -111,8 +113,10 @@ public class UDTRecordImpl<R extends UDTRecord<R>> extends AbstractRecord implem
 
     @Override
     public final void readSQL(SQLInput stream, String typeName) throws SQLException {
+        Configuration configuration = localConfiguration();
+
         for (Field<?> field : getUDT().fields()) {
-            setValue(DefaultExecuteContext.registeredConfiguration(), stream, field);
+            setValue(configuration, stream, field);
         }
     }
 

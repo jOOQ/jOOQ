@@ -139,8 +139,38 @@ public interface Configuration extends Serializable {
      */
     Object setData(Object key, Object value);
 
+    /**
+     * Get the configured <code>ExecuteListeners</code> from this configuration.
+     * <p>
+     * This method allows for retrieving the configured
+     * <code>ExecuteListener</code> instances from this configuration. These
+     * instances receive execution lifecycle notification events every time jOOQ
+     * executes queries. jOOQ makes no assumptions about the internal state of
+     * these listeners, i.e. listener instances may
+     * <ul>
+     * <li>share this <code>Configuration</code>'s lifecycle (i.e. that of a
+     * JDBC <code>Connection</code>, or that of a transaction)</li>
+     * <li>share the lifecycle of an <code>ExecuteContext</code> (i.e. that of a
+     * single query execution)</li>
+     * <li>follow an entirely different lifecycle.</li>
+     * </ul>
+     * <p>
+     * Note, depending on your {@link Settings#isExecuteLogging()}, some
+     * additional listeners may be prepended to this list, internally. Those
+     * listeners will never be exposed through this method, though.
+     *
+     * @return The configured set of execute listeners.
+     * @see ExecuteListener
+     * @see ExecuteContext
+     */
     List<ExecuteListener> getExecuteListeners();
 
+    /**
+     * Set new <code>ExecuteListeners</code> onto this configuration.
+     *
+     * @param listeners The new set of execute listeners.
+     * @see #getExecuteListeners()
+     */
     void setExecuteListeners(List<ExecuteListener> listeners);
 
 }

@@ -1838,11 +1838,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testSerialisationOfSingletons() throws Exception {
-        new GeneralTests(this).testSerialisationOfSingletons();
-    }
-
-    @Test
     public void testARRAYType() throws Exception {
         new RoutineAndUDTTests(this).testARRAYType();
     }

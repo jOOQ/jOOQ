@@ -63,17 +63,17 @@ import org.jooq.impl.Executor;
 public interface Configuration extends Serializable {
 
     /**
-     * Retrieve the configured dialect
+     * Retrieve the configured dialect.
      */
     SQLDialect getDialect();
 
     /**
-     * Get this configuration's underlying connection provider
+     * Get this configuration's underlying connection provider.
      */
     ConnectionProvider getConnectionProvider();
 
     /**
-     * Retrieve the configured schema mapping
+     * Retrieve the configured schema mapping.
      *
      * @deprecated - 2.0.5 - Use {@link #getSettings()} instead
      */
@@ -81,12 +81,12 @@ public interface Configuration extends Serializable {
     SchemaMapping getSchemaMapping();
 
     /**
-     * Retrieve the runtime configuration settings
+     * Retrieve the runtime configuration settings.
      */
     Settings getSettings();
 
     /**
-     * Get all custom data from this <code>Configuration</code>
+     * Get all custom data from this <code>Configuration</code>.
      * <p>
      * This is custom data that was previously set to the configuration using
      * {@link #setData(Object, Object)}. Use custom data if you want to pass
@@ -101,7 +101,7 @@ public interface Configuration extends Serializable {
     Map<Object, Object> getData();
 
     /**
-     * Get some custom data from this <code>Configuration</code>
+     * Get some custom data from this <code>Configuration</code>.
      * <p>
      * This is custom data that was previously set to the configuration using
      * {@link #setData(Object, Object)}. Use custom data if you want to pass
@@ -118,7 +118,7 @@ public interface Configuration extends Serializable {
     Object getData(Object key);
 
     /**
-     * Set some custom data to this <code>Configuration</code>
+     * Set some custom data to this <code>Configuration</code>.
      * <p>
      * Use custom data if you want to pass data to your custom {@link QueryPart}
      * or {@link ExecuteListener} objects to be made available at render, bind,

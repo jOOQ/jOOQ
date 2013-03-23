@@ -78,16 +78,17 @@ public class GenerationTool {
 
     private static final JooqLogger log = JooqLogger.getLogger(GenerationTool.class);
 
-    private static ClassLoader      loader;
-    private static Connection       connection;
+    private ClassLoader             loader;
+    private Connection              connection;
+    private boolean                 close;
 
     /**
      * The class loader to use with this generation tool.
      * <p>
      * If set, all classes are loaded with this class loader
      */
-    public static void setClassLoader(ClassLoader loader) {
-        GenerationTool.loader = loader;
+    public void setClassLoader(ClassLoader loader) {
+        this.loader = loader;
     }
 
     /**
@@ -96,8 +97,8 @@ public class GenerationTool {
      * If set, the configuration XML's <code>&lt;jdbc/></code> configuration is
      * ignored, and this connection is used for meta data inspection, instead.
      */
-    public static void setConnection(Connection connection) {
-        GenerationTool.connection = connection;
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
 
     public static void main(String[] args) throws Exception {
@@ -130,8 +131,12 @@ public class GenerationTool {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static void main(Configuration configuration) throws Exception {
+        new GenerationTool().run(configuration);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void run(Configuration configuration) throws Exception {
         Jdbc j = configuration.getJdbc();
         org.jooq.util.jaxb.Generator g = configuration.getGenerator();
         errorIfNull(g, "The <generator/> tag is mandatory.");
@@ -161,6 +166,7 @@ public class GenerationTool {
                     properties.put("password", defaultString(j.getPassword()));
 
                 connection = DriverManager.getConnection(defaultString(j.getUrl()), properties);
+                close = true;
             }
             else {
                 j = defaultIfNull(j, new Jdbc());
@@ -287,13 +293,15 @@ public class GenerationTool {
             e.printStackTrace();
             throw e;
         } finally {
-            if (connection != null) {
+
+            // Close connection only if it was created by the GenerationTool
+            if (close && connection != null) {
                 connection.close();
             }
         }
     }
 
-    private static Class<?> loadClass(String className) throws ClassNotFoundException {
+    private Class<?> loadClass(String className) throws ClassNotFoundException {
 
         // [#2283] If no explicit class loader was provided try loading the class
         // with "default" techniques

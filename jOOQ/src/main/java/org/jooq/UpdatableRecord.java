@@ -84,7 +84,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * returned record will affect values in this record.
      * <p>
      * The returned record consists exactly of those fields as returned by the
-     * table's main key: {@link UniqueKey#getFields()}.
+     * table's primary key: {@link UniqueKey#getFields()}.
      * <p>
      * Generated subtypes may covariantly override this method to add more
      * record type information. For instance, they may return {@link Record1},
@@ -306,11 +306,11 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * key or main unique key.
      * <p>
      * This is in fact the same as calling
-     * <code>refresh(getFields().toArray(new Field[0])</code>
+     * <code>refresh(getFields().toArray(new Field[0]))</code>
      * <p>
      * The executed statement is <code><pre>
      * SELECT * FROM [table]
-     * WHERE [main key fields = main key values]</pre></code>
+     * WHERE [primary key fields = primary key values]</pre></code>
      *
      * @throws DataAccessException This exception is thrown if
      *             <ul>
@@ -326,7 +326,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * The executed statement is <code><pre>
      * SELECT [fields] FROM [table]
-     * WHERE [main key fields = main key values]</pre></code>
+     * WHERE [primary key fields = primary key values]</pre></code>
      *
      * @throws DataAccessException This exception is thrown if
      *             <ul>

@@ -274,14 +274,14 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             val.setValue(value);
         }
 
-        // The main key's changed flag might've been set previously
+        // The primary key's changed flag might've been set previously
         else if (val.isChanged()) {
             val.setValue(value);
         }
 
-        // [#979] If the main key is being changed, all other fields' flags need
-        // to be set to true for in case this record is stored again, an INSERT
-        // statement will thus be issued
+        // [#979] If the primary key is being changed, all other fields' flags
+        // need to be set to true for in case this record is stored again, an
+        // INSERT statement will thus be issued
         else {
             val.setValue(value, true);
 

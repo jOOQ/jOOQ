@@ -59,7 +59,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * unique key's value is already in the database. This is only supported if
      * {@link InsertQuery#onDuplicateKeyUpdate(boolean)} is supported, too.
      * <p>
-     * If the loaded table does not have a main key, then all records are
+     * If the loaded table does not have a primary key, then all records are
      * inserted and this clause behaves like {@link #onDuplicateKeyIgnore()}
      * <p>
      * If you don't specify a behaviour, {@link #onDuplicateKeyError()} will be
@@ -73,7 +73,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * Instruct the <code>Loader</code> to skip duplicate records if the main
      * unique key's value is already in the database.
      * <p>
-     * If the loaded table does not have a main key, then all records are
+     * If the loaded table does not have a primary key, then all records are
      * inserted. This may influence the JDBC driver's outcome on
      * {@link Connection#getWarnings()}, depending on your JDBC driver's
      * implementation

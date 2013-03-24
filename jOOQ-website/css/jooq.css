@@ -23,10 +23,10 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Special Elite', cursive;
-       font-weight: normal;
-       color: #000000;
-       margin-top: 0.5em;
-       margin-bottom: 0.5em;
+    font-weight: normal;
+    color: #000000;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 h1 {
@@ -193,7 +193,8 @@ h2 a:hover {
 
     background: #e8e8e8;
     background: -webkit-linear-gradient(left, #e8e8e8, #ffffff);
-    background: -moz-linear-gradient(left, #e8e8e8, #ffffff);
+    /* [#2354] Firefox seems to have a bug here, for large pages */
+    /* background: -moz-linear-gradient(left, #e8e8e8, #ffffff); */
     background: gradient(linear, left, right, from(#e8e8e8), to(#ffffff));
     filter: progid:DXImageTransform.Microsoft.Gradient(
                 StartColorStr='#e8e8e8', EndColorStr='#ffffff', GradientType=1);

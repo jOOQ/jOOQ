@@ -40,7 +40,7 @@ import java.sql.Connection;
 import org.jooq.exception.DataAccessException;
 
 /**
- * A connection lifecycle handler API
+ * A connection lifecycle handler API.
  * <p>
  * The <code>ConnectionProvider</code> allows for abstracting the handling of
  * custom <code>Connection</code> lifecycles outside of jOOQ, injecting

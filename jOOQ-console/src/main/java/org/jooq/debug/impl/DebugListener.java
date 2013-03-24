@@ -47,19 +47,20 @@ public class DebugListener extends DefaultExecuteListener {
     @Override
     public void start(ExecuteContext ctx) {
         DebugProcessor debugProcessor = new DebugProcessor();
-        ctx.setData("org.jooq.debug.DebugProcessor", debugProcessor);
+        ctx.data("org.jooq.debug.DebugProcessor", debugProcessor);
 //        debugProcessor.start(ctx);
     }
 
     @Override
     public void end(ExecuteContext ctx) {
 //        DebugProcessor debugProcessor = getDebugProcessor(ctx);
-        ctx.setData("org.jooq.debug.DebugProcessor", null);
+        // Because stored data is only for a single run, this cleanup is just to be pedantic.
+        ctx.data().remove("org.jooq.debug.DebugProcessor");
 //        debugProcessor.end(ctx);
     }
 
     private DebugProcessor getDebugProcessor(ExecuteContext ctx) {
-        return (DebugProcessor)ctx.getData("org.jooq.debug.DebugProcessor");
+        return (DebugProcessor)ctx.data("org.jooq.debug.DebugProcessor");
     }
 
     @Override

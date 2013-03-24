@@ -183,7 +183,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
         // Just in case, always set Sybase ASE statement mode to return
         // Generated keys if client code wants to SELECT @@identity afterwards
-        if (ctx.getDialect() == SQLDialect.ASE) {
+        if (ctx.configuration().getDialect() == SQLDialect.ASE) {
             ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
             return;
         }
@@ -196,7 +196,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
         // Values should be returned from the INSERT
         else {
-            switch (ctx.getDialect()) {
+            switch (ctx.configuration().getDialect()) {
 
                 // Postgres uses the RETURNING clause in SQL
                 case FIREBIRD:
@@ -247,7 +247,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         else {
             int result = 1;
             ResultSet rs;
-            switch (ctx.getDialect()) {
+            switch (ctx.configuration().getDialect()) {
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
@@ -255,7 +255,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    Executor create = new Executor(ctx.connection(), SQLDialect.SQLITE, ctx.getSettings());
+                    Executor create = new Executor(ctx.connection(), SQLDialect.SQLITE, ctx.configuration().getSettings());
                     returned =
                     create.select(returning)
                           .from(getInto())
@@ -275,7 +275,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    selectReturning(ctx.configuration(), create(ctx).lastID());
+                    selectReturning(ctx.configuration(), create(ctx.configuration()).lastID());
                     return result;
                 }
 
@@ -305,7 +305,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                             }
                         }
 
-                        selectReturning(ctx, list.toArray());
+                        selectReturning(ctx.configuration(), list.toArray());
                         return result;
                     }
                     finally {

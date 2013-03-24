@@ -37,6 +37,7 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
@@ -95,6 +96,116 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public ExecuteListenerTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
+    }
+
+    @Test
+    public void testExecuteListenerWithData() throws Exception {
+        Executor create = create();
+        create.getExecuteListeners().add(new DataListener());
+
+        create.selectOne().fetch();
+    }
+
+    public static class DataListener extends DefaultExecuteListener {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = 7399239846062763212L;
+
+        @Override
+        public void start(ExecuteContext ctx) {
+            assertTrue(ctx.data().isEmpty());
+            assertNull(ctx.data("X"));
+            assertNull(ctx.data("X", "start"));
+        }
+
+        private void assertThings(ExecuteContext ctx, String oldValue, String newValue) {
+            assertFalse(ctx.data().isEmpty());
+            assertEquals(1, ctx.data().size());
+            assertEquals(oldValue, ctx.data("X"));
+            assertEquals(oldValue, ctx.data("X", newValue));
+        }
+
+        @Override
+        public void renderStart(ExecuteContext ctx) {
+            assertThings(ctx, "start", "renderStart");
+        }
+
+        @Override
+        public void renderEnd(ExecuteContext ctx) {
+            assertThings(ctx, "renderStart", "renderEnd");
+        }
+
+        @Override
+        public void prepareStart(ExecuteContext ctx) {
+            assertThings(ctx, "renderEnd", "prepareStart");
+        }
+
+        @Override
+        public void prepareEnd(ExecuteContext ctx) {
+            assertThings(ctx, "prepareStart", "prepareEnd");
+        }
+
+        @Override
+        public void bindStart(ExecuteContext ctx) {
+            assertThings(ctx, "prepareEnd", "bindStart");
+        }
+
+        @Override
+        public void bindEnd(ExecuteContext ctx) {
+            assertThings(ctx, "bindStart", "bindEnd");
+        }
+
+        @Override
+        public void executeStart(ExecuteContext ctx) {
+            assertThings(ctx, "bindEnd", "executeStart");
+        }
+
+        @Override
+        public void executeEnd(ExecuteContext ctx) {
+            assertThings(ctx, "executeStart", "executeEnd");
+        }
+
+        @Override
+        public void fetchStart(ExecuteContext ctx) {
+            assertThings(ctx, "executeEnd", "fetchStart");
+        }
+
+        @Override
+        public void resultStart(ExecuteContext ctx) {
+            assertThings(ctx, "fetchStart", "resultStart");
+        }
+
+        @Override
+        public void recordStart(ExecuteContext ctx) {
+            assertThings(ctx, "resultStart", "recordStart");
+        }
+
+        @Override
+        public void recordEnd(ExecuteContext ctx) {
+            assertThings(ctx, "recordStart", "recordEnd");
+        }
+
+        @Override
+        public void resultEnd(ExecuteContext ctx) {
+            assertThings(ctx, "recordEnd", "resultEnd");
+        }
+
+        @Override
+        public void fetchEnd(ExecuteContext ctx) {
+            assertThings(ctx, "resultEnd", "fetchEnd");
+        }
+
+        @Override
+        public void end(ExecuteContext ctx) {
+            assertThings(ctx, "fetchEnd", "end");
+        }
+
+        @Override
+        public void exception(ExecuteContext ctx) {
+            fail();
+        }
     }
 
     @Test
@@ -200,12 +311,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(ctx.query(), ctx.batchQueries()[0]);
             assertEquals(1, ctx.batchSQL().length);
 
-            assertEquals("Bar", ctx.getData("Foo"));
-            assertEquals("Baz", ctx.getData("Bar"));
+            assertEquals("Bar", ctx.configuration().getData("Foo"));
+            assertEquals("Baz", ctx.configuration().getData("Bar"));
             assertEquals(new HashMap<String, String>() {{
                 put("Foo", "Bar");
                 put("Bar", "Baz");
-            }}, ctx.getData());
+            }}, ctx.configuration().getData());
 
             assertNull(ctx.routine());
             assertEquals(ExecuteType.READ, ctx.type());
@@ -503,23 +614,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /**
          * Generated UID
          */
-        private static final long serialVersionUID = 7399239846062763212L;
+        private static final long   serialVersionUID = 7399239846062763212L;
 
         // A counter that is incremented in callback methods
-        private static int           callbackCount = 0;
+        private static int          callbackCount    = 0;
 
         // Fields that are used to check whether callback methods were called
         // in the expected order
-        public static int            start;
-        public static int            renderStart;
-        public static int            renderEnd;
-        public static int            prepareStart;
-        public static int            prepareEnd;
-        public static List<Integer>  bindStart     = new ArrayList<Integer>();
-        public static List<Integer>  bindEnd       = new ArrayList<Integer>();
-        public static int            executeStart;
-        public static int            executeEnd;
-        public static int            end;
+        public static int           start;
+        public static int           renderStart;
+        public static int           renderEnd;
+        public static int           prepareStart;
+        public static int           prepareEnd;
+        public static List<Integer> bindStart        = new ArrayList<Integer>();
+        public static List<Integer> bindEnd          = new ArrayList<Integer>();
+        public static int           executeStart;
+        public static int           executeEnd;
+        public static int           end;
 
         @SuppressWarnings("serial")
         private void checkBase(ExecuteContext ctx) {
@@ -528,12 +639,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertTrue(ctx.batchQueries()[0].toString().toLowerCase().contains("insert"));
             assertEquals(1, ctx.batchSQL().length);
 
-            assertEquals("Bar", ctx.getData("Foo"));
-            assertEquals("Baz", ctx.getData("Bar"));
+            assertEquals("Bar", ctx.configuration().getData("Foo"));
+            assertEquals("Baz", ctx.configuration().getData("Bar"));
             assertEquals(new HashMap<String, String>() {{
                 put("Foo", "Bar");
                 put("Bar", "Baz");
-            }}, ctx.getData());
+            }}, ctx.configuration().getData());
 
             assertNull(ctx.routine());
             assertNull(ctx.resultSet());
@@ -760,12 +871,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertTrue(ctx.batchQueries()[3].toString().toLowerCase().contains("insert"));
             assertEquals(4, ctx.batchSQL().length);
 
-            assertEquals("Bar", ctx.getData("Foo"));
-            assertEquals("Baz", ctx.getData("Bar"));
+            assertEquals("Bar", ctx.configuration().getData("Foo"));
+            assertEquals("Baz", ctx.configuration().getData("Bar"));
             assertEquals(new HashMap<String, String>() {{
                 put("Foo", "Bar");
                 put("Bar", "Baz");
-            }}, ctx.getData());
+            }}, ctx.configuration().getData());
 
             assertNull(ctx.routine());
             assertNull(ctx.resultSet());

@@ -2042,6 +2042,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testExecuteListenerWithData() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerWithData();
+    }
+
+    @Test
     public void testExecuteListenerCustomException() throws Exception {
         new ExecuteListenerTests(this).testExecuteListenerCustomException();
     }

@@ -138,7 +138,7 @@ class Val<T> extends AbstractParam<T> {
 
             // Generated enums should not be cast...
             if (!(value instanceof EnumType)) {
-                switch (context.getDialect()) {
+                switch (context.configuration().getDialect()) {
 
                     // These dialects can hardly detect the type of a bound constant.
                     case DB2:
@@ -167,7 +167,7 @@ class Val<T> extends AbstractParam<T> {
         // the safe side, always cast these types in those dialects that support
         // them
         if (getDataType().isInterval()) {
-            switch (context.getDialect()) {
+            switch (context.configuration().getDialect()) {
                 case ORACLE:
                 case POSTGRES:
                     return true;
@@ -181,9 +181,9 @@ class Val<T> extends AbstractParam<T> {
      * Render the bind variable including a cast, if necessary
      */
     private final void toSQLCast(RenderContext context) {
-        DataType<T> dataType = getDataType(context);
+        DataType<T> dataType = getDataType(context.configuration());
         DataType<T> type = dataType.getSQLDataType();
-        SQLDialect dialect = context.getDialect();
+        SQLDialect dialect = context.configuration().getDialect();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
         if (value != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, FIREBIRD, HSQLDB).contains(dialect)) {
@@ -267,7 +267,7 @@ class Val<T> extends AbstractParam<T> {
         context.keyword("cast(");
         toSQL(context, value, getType());
         context.keyword(" as ")
-               .sql(type.length(length).precision(precision, scale).getCastTypeName(context))
+               .sql(type.length(length).precision(precision, scale).getCastTypeName(context.configuration()))
                .sql(")");
     }
 
@@ -308,7 +308,7 @@ class Val<T> extends AbstractParam<T> {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private final void toSQL(RenderContext context, Object val, Class<?> type) {
-        SQLDialect dialect = context.getDialect();
+        SQLDialect dialect = context.configuration().getDialect();
 
         // [#650] Check first, if we have a converter for the supplied type
         Converter<?, ?> converter = DataTypes.converter(type);
@@ -513,7 +513,7 @@ class Val<T> extends AbstractParam<T> {
             if (type.isArray() && byte[].class != type) {
                 context.sql(getBindVariable(context));
                 context.sql("::");
-                context.keyword(DefaultDataType.getDataType(dialect, type).getCastTypeName(context));
+                context.keyword(DefaultDataType.getDataType(dialect, type).getCastTypeName(context.configuration()));
             }
 
             // ... and also for enum types

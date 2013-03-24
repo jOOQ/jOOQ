@@ -539,7 +539,7 @@ class Expression<T> extends AbstractFunction<T> {
         public final void toSQL(RenderContext context) {
             String op = operator.toSQL();
 
-            if (operator == BIT_XOR && context.getDialect() == POSTGRES) {
+            if (operator == BIT_XOR && context.configuration().getDialect() == POSTGRES) {
                 op = "#";
             }
 

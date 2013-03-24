@@ -151,7 +151,7 @@ class Function<T> extends AbstractField<T> implements
     @Override
     public final void bind(BindContext context) {
 
-        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.getDialect())) {
+        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.configuration().getDialect())) {
             context.bind(arguments.get(0));
             context.bind((QueryPart) withinGroupOrderBy);
 
@@ -170,13 +170,13 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.getDialect())) {
+        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.configuration().getDialect())) {
             toSQLGroupConcat(context);
         }
-        else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(context.getDialect())) {
+        else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(context.configuration().getDialect())) {
             toSQLStringAgg(context);
         }
-        else if (term == LIST_AGG && asList(DB2).contains(context.getDialect())) {
+        else if (term == LIST_AGG && asList(DB2).contains(context.configuration().getDialect())) {
             toSQLXMLAGG(context);
         }
         else {
@@ -238,7 +238,7 @@ class Function<T> extends AbstractField<T> implements
      * [#1275] <code>LIST_AGG</code> simulation for Postgres, Sybase
      */
     private void toSQLStringAgg(RenderContext context) {
-        context.sql(getFNName(context.getDialect()));
+        context.sql(getFNName(context.configuration().getDialect()));
         context.sql("(");
 
         if (distinct) {
@@ -269,7 +269,7 @@ class Function<T> extends AbstractField<T> implements
      * [#1273] <code>LIST_AGG</code> simulation for MySQL and CUBRID
      */
     private final void toSQLGroupConcat(RenderContext context) {
-        context.sql(getFNName(context.getDialect()));
+        context.sql(getFNName(context.configuration().getDialect()));
         context.sql("(");
 
         if (distinct) {
@@ -299,7 +299,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         // [#1524] Don't render this clause where it is not supported
-        if (over && term == ROW_NUMBER && context.getDialect() == HSQLDB) {
+        if (over && term == ROW_NUMBER && context.configuration().getDialect() == HSQLDB) {
             return;
         }
 
@@ -309,7 +309,7 @@ class Function<T> extends AbstractField<T> implements
 
             // Ignore PARTITION BY 1 clause. These databases erroneously map the
             // 1 literal onto the column index
-            if (partitionByOne && asList(CUBRID, SYBASE).contains(context.getDialect())) {
+            if (partitionByOne && asList(CUBRID, SYBASE).contains(context.configuration().getDialect())) {
             }
             else {
                 context.sql(glue)
@@ -377,7 +377,7 @@ class Function<T> extends AbstractField<T> implements
      * Render function arguments and argument modifiers
      */
     private final void toSQLArguments(RenderContext context) {
-        context.sql(getFNName(context.getDialect()));
+        context.sql(getFNName(context.configuration().getDialect()));
         context.sql("(");
 
         if (distinct) {
@@ -389,7 +389,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (ignoreNulls) {
-            if (context.getDialect() == SQLDialect.DB2) {
+            if (context.configuration().getDialect() == SQLDialect.DB2) {
                 context.sql(", 'IGNORE NULLS'");
             }
             else {
@@ -397,7 +397,7 @@ class Function<T> extends AbstractField<T> implements
             }
         }
         else if (respectNulls) {
-            if (context.getDialect() == SQLDialect.DB2) {
+            if (context.configuration().getDialect() == SQLDialect.DB2) {
                 context.sql(", 'RESPECT NULLS'");
             }
             else {

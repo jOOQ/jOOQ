@@ -78,10 +78,6 @@ import org.jooq.types.YearToMonth;
  */
 class DefaultBindContext extends AbstractBindContext {
 
-    /**
-     * Generated UID
-     */
-    private static final long       serialVersionUID = -5457385919209241505L;
     private static final JooqLogger log              = JooqLogger.getLogger(DefaultBindContext.class);
 
     private final PreparedStatement stmt;
@@ -93,7 +89,7 @@ class DefaultBindContext extends AbstractBindContext {
     }
 
     DefaultBindContext(BindContext context) {
-        this(context, context.statement());
+        this(context.configuration(), context.statement());
 
         declareFields(context.declareFields());
         declareTables(context.declareTables());

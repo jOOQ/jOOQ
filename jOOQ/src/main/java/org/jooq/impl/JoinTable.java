@@ -189,19 +189,19 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     private final boolean simulateCrossJoin(RenderContext context) {
-        return type == CROSS_JOIN && context.getDialect() == ASE;
+        return type == CROSS_JOIN && context.configuration().getDialect() == ASE;
     }
 
     private final boolean simulateNaturalJoin(RenderContext context) {
-        return type == NATURAL_JOIN && asList(ASE, CUBRID, DB2, INGRES, SQLSERVER).contains(context.getDialect());
+        return type == NATURAL_JOIN && asList(ASE, CUBRID, DB2, INGRES, SQLSERVER).contains(context.configuration().getDialect());
     }
 
     private final boolean simulateNaturalLeftOuterJoin(RenderContext context) {
-        return type == NATURAL_LEFT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.getDialect());
+        return type == NATURAL_LEFT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().getDialect());
     }
 
     private final boolean simulateNaturalRightOuterJoin(RenderContext context) {
-        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.getDialect());
+        return type == NATURAL_RIGHT_OUTER_JOIN && asList(ASE, CUBRID, DB2, H2, INGRES, SQLSERVER).contains(context.configuration().getDialect());
     }
 
     private final void toSQLJoinCondition(RenderContext context) {
@@ -209,7 +209,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be simulated with JOIN .. ON
-            if (asList(ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.getDialect())) {
+            if (asList(ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.configuration().getDialect())) {
                 String glue = "on ";
                 for (Field<?> field : using) {
                     context.formatSeparator()

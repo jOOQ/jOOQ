@@ -39,6 +39,7 @@ package org.jooq.impl;
 import java.sql.SQLException;
 
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.exception.DataAccessException;
@@ -135,6 +136,13 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      */
     protected final Executor create(Configuration configuration) {
         return new Executor(configuration);
+    }
+
+    /**
+     * Internal convenience method
+     */
+    protected final Executor create(Context<?> ctx) {
+        return new Executor(ctx.configuration());
     }
 
     /**

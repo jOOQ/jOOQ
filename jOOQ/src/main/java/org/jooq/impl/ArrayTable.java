@@ -42,7 +42,7 @@ import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Record;
@@ -173,8 +173,8 @@ class ArrayTable extends AbstractTable<Record> {
         context.bind(table(context));
     }
 
-    private final Table<Record> table(Configuration configuration) {
-        switch (configuration.getDialect()) {
+    private final Table<Record> table(Context<?> ctx) {
+        switch (ctx.configuration().getDialect()) {
             case ORACLE: {
                 if (array.getDataType().getType().isArray()) {
                     return simulate().as(alias);
@@ -202,7 +202,7 @@ class ArrayTable extends AbstractTable<Record> {
                 }
 
                 else {
-                    throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + configuration.getDialect());
+                    throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + ctx.configuration().getDialect());
                 }
             }
         }

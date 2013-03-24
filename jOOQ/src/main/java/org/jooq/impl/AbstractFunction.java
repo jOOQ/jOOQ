@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPart;
@@ -63,21 +64,25 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(getFunction(context));
+    public final void toSQL(RenderContext ctx) {
+        ctx.sql(getFunction(ctx));
     }
 
     @Override
-    public final void bind(BindContext context) {
-        context.bind(getFunction(context));
+    public final void bind(BindContext ctx) {
+        ctx.bind(getFunction(ctx));
     }
 
-    final QueryPart getFunction(Configuration configuration) {
-        return getFunction0(configuration);
+    final QueryPart getFunction(Context<?> ctx) {
+        return getFunction0(ctx);
     }
 
     final Field<?>[] getArguments() {
         return arguments;
+    }
+
+    final QueryPart getFunction0(Context<?> ctx) {
+        return getFunction0(ctx.configuration());
     }
 
     abstract QueryPart getFunction0(Configuration configuration);

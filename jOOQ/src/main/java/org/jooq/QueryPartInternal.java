@@ -55,19 +55,19 @@ public interface QueryPartInternal extends QueryPart {
      * declaration or reference, whether this <code>QueryPart</code>'s contained
      * bind variables should be inlined or replaced by <code>'?'</code>, etc.
      */
-    void toSQL(RenderContext context);
+    void toSQL(RenderContext ctx);
 
     /**
      * Bind all parameters of this {@link QueryPart} to a PreparedStatement
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
      *
-     * @param context The context holding the next bind index and other
-     *            information for variable binding
+     * @param ctx The context holding the next bind index and other information
+     *            for variable binding
      * @throws DataAccessException If something went wrong while binding a
      *             variable
      */
-    void bind(BindContext context) throws DataAccessException;
+    void bind(BindContext ctx) throws DataAccessException;
 
     /**
      * Check whether this {@link QueryPart} is able to declare fields in a

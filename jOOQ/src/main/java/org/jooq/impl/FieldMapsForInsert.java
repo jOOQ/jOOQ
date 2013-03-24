@@ -77,7 +77,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
         // True SQL92 multi-record inserts aren't always supported
         else {
-            switch (context.getDialect()) {
+            switch (context.configuration().getDialect()) {
 
                 // Some dialects don't support multi-record inserts
                 case ASE:
@@ -102,7 +102,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
         Select<Record> select = null;
         for (FieldMapForInsert map : insertMaps) {
             if (map != null) {
-                Select<Record> iteration = new Executor(context).select(map.values());
+                Select<Record> iteration = new Executor(context.configuration()).select(map.values());
 
                 if (select == null) {
                     select = iteration;

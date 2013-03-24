@@ -98,7 +98,7 @@ implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(pivot(context));
+        context.sql(pivot(context.configuration()));
     }
 
     private Table<?> pivot(Configuration configuration) {
@@ -308,7 +308,7 @@ implements
 
     @Override
     public final void bind(BindContext context) throws DataAccessException {
-        context.bind(pivot(context));
+        context.bind(pivot(context.configuration()));
     }
 
     @Override

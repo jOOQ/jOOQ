@@ -85,12 +85,12 @@ class IsDistinctFrom<T> extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        delegate(context).toSQL(context);
+        delegate(context.configuration()).toSQL(context);
     }
 
     @Override
     public final void bind(BindContext context) {
-        delegate(context).bind(context);
+        delegate(context.configuration()).bind(context);
     }
 
     /**

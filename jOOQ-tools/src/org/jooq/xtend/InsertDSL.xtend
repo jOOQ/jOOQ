@@ -315,7 +315,7 @@ class InsertDSL extends Generators {
 
             @Override
             public final InsertImpl set(Record record) {
-            	return set(Utils.map(record));
+                return set(Utils.map(record));
             }
 
             @Override

@@ -1258,12 +1258,12 @@ class Rows extends Generators {
 
             @Override
             public final Class<?> type(int fieldIndex) {
-            	return fieldIndex >= 0 && fieldIndex < size() ? fields.field(fieldIndex).getType() : null;
+                return fieldIndex >= 0 && fieldIndex < size() ? fields.field(fieldIndex).getType() : null;
             }
 
             @Override
             public final Class<?> type(String fieldName) {
-            	return type(indexOf(fieldName));
+                return type(indexOf(fieldName));
             }
 
             @Override
@@ -1280,12 +1280,12 @@ class Rows extends Generators {
 
             @Override
             public final DataType<?> dataType(int fieldIndex) {
-            	return fieldIndex >= 0 && fieldIndex < size() ? fields.field(fieldIndex).getDataType() : null;
+                return fieldIndex >= 0 && fieldIndex < size() ? fields.field(fieldIndex).getDataType() : null;
             }
 
             @Override
             public final DataType<?> dataType(String fieldName) {
-            	return dataType(indexOf(fieldName));
+                return dataType(indexOf(fieldName));
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 

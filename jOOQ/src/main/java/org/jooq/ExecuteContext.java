@@ -108,12 +108,12 @@ public interface ExecuteContext {
     Object data(Object key, Object value);
 
     /**
-     * The configuration wrapped by this context
+     * The configuration wrapped by this context.
      */
     Configuration configuration();
 
     /**
-     * The connection to be used in this execute context
+     * The connection to be used in this execute context.
      * <p>
      * This returns a proxy to the {@link Configuration#getConnectionProvider()}
      * 's supplied connection. This proxy takes care of two things:
@@ -128,7 +128,7 @@ public interface ExecuteContext {
     Connection connection();
 
     /**
-     * The type of database interaction that is being executed
+     * The type of database interaction that is being executed.
      *
      * @see ExecuteType
      */
@@ -137,7 +137,7 @@ public interface ExecuteContext {
     /**
      * The jOOQ {@link Query} that is being executed or <code>null</code> if the
      * query is unknown, if it is a batch query, or if there was no jOOQ
-     * <code>Query</code>
+     * <code>Query</code>.
      *
      * @see #routine()
      * @see #batchQueries()
@@ -146,7 +146,7 @@ public interface ExecuteContext {
 
     /**
      * The jOOQ {@link Query} objects that are being executed in batch mode, or
-     * empty if the query is unknown or if there was no jOOQ <code>Query</code>
+     * empty if the query is unknown or if there was no jOOQ <code>Query</code>.
      * <p>
      * If a single <code>Query</code> is executed in non-batch mode, this will
      * return an array of length <code>1</code>, containing that
@@ -161,7 +161,7 @@ public interface ExecuteContext {
 
     /**
      * The jOOQ {@link Routine} that is being executed or <code>null</code> if
-     * the query is unknown or if there was no jOOQ <code>Routine</code>
+     * the query is unknown or if there was no jOOQ <code>Routine</code>.
      *
      * @see #routine()
      */
@@ -169,7 +169,7 @@ public interface ExecuteContext {
 
     /**
      * The SQL that is being executed or <code>null</code> if the SQL statement
-     * is unknown or if there was no SQL statement
+     * is unknown or if there was no SQL statement.
      */
     String sql();
 
@@ -185,7 +185,7 @@ public interface ExecuteContext {
 
     /**
      * The generated SQL statements that are being executed in batch mode, or
-     * empty if the query is unknown or if there was no SQL statement
+     * empty if the query is unknown or if there was no SQL statement.
      * <p>
      * If a single <code>Query</code> is executed in non-batch mode, this will
      * return an array of length <code>1</code>, containing that
@@ -258,7 +258,7 @@ public interface ExecuteContext {
     Record record();
 
     /**
-     * Calling this has no effect. It is being used by jOOQ internally.
+     * Calling this has no effect. It is used by jOOQ internally.
      */
     void record(Record record);
 
@@ -269,7 +269,7 @@ public interface ExecuteContext {
     Result<?> result();
 
     /**
-     * Calling this has no effect. It is being used by jOOQ internally.
+     * Calling this has no effect. It is used by jOOQ internally.
      */
     void result(Result<?> result);
 

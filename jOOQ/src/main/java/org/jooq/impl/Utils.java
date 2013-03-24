@@ -1074,15 +1074,15 @@ final class Utils {
      * Get a list of ExecuteListener instances (including defaults) from a
      * configuration
      */
-    static final List<ExecuteListener> getListeners(Configuration configuration) {
+    static final List<ExecuteListener> getListeners(ExecuteContext ctx) {
         List<ExecuteListener> result = new ArrayList<ExecuteListener>();
 
-        if (!FALSE.equals(configuration.getSettings().isExecuteLogging())) {
+        if (!FALSE.equals(ctx.configuration().getSettings().isExecuteLogging())) {
             result.add(new StopWatchListener());
             result.add(new LoggerListener());
         }
 
-        result.addAll(configuration.getExecuteListeners());
+        result.addAll(ctx.configuration().getExecuteListeners());
         return result;
     }
 
@@ -1745,7 +1745,7 @@ final class Utils {
         }
         else if (type == BigInteger.class) {
             // The SQLite JDBC driver doesn't support BigDecimals
-            if (ctx.getDialect() == SQLDialect.SQLITE) {
+            if (ctx.configuration().getDialect() == SQLDialect.SQLITE) {
                 return Convert.convert(rs.getString(index), (Class<T>) BigInteger.class);
             }
             else {
@@ -1755,7 +1755,7 @@ final class Utils {
         }
         else if (type == BigDecimal.class) {
             // The SQLite JDBC driver doesn't support BigDecimals
-            if (ctx.getDialect() == SQLDialect.SQLITE) {
+            if (ctx.configuration().getDialect() == SQLDialect.SQLITE) {
                 return Convert.convert(rs.getString(index), (Class<T>) BigDecimal.class);
             }
             else {
@@ -1772,7 +1772,7 @@ final class Utils {
             return (T) rs.getClob(index);
         }
         else if (type == Date.class) {
-            return (T) getDate(ctx.getDialect(), rs, index);
+            return (T) getDate(ctx.configuration().getDialect(), rs, index);
         }
         else if (type == Double.class) {
             return (T) wasNull(rs, Double.valueOf(rs.getDouble(index)));
@@ -1793,13 +1793,13 @@ final class Utils {
             return (T) rs.getString(index);
         }
         else if (type == Time.class) {
-            return (T) getTime(ctx.getDialect(), rs, index);
+            return (T) getTime(ctx.configuration().getDialect(), rs, index);
         }
         else if (type == Timestamp.class) {
-            return (T) getTimestamp(ctx.getDialect(), rs, index);
+            return (T) getTimestamp(ctx.configuration().getDialect(), rs, index);
         }
         else if (type == YearToMonth.class) {
-            if (ctx.getDialect() == POSTGRES) {
+            if (ctx.configuration().getDialect() == POSTGRES) {
                 Object object = rs.getObject(index);
                 return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
@@ -1809,7 +1809,7 @@ final class Utils {
             }
         }
         else if (type == DayToSecond.class) {
-            if (ctx.getDialect() == POSTGRES) {
+            if (ctx.configuration().getDialect() == POSTGRES) {
                 Object object = rs.getObject(index);
                 return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
@@ -1835,7 +1835,7 @@ final class Utils {
             return (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
-            switch (ctx.getDialect()) {
+            switch (ctx.configuration().getDialect()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
@@ -1859,7 +1859,7 @@ final class Utils {
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
-            switch (ctx.getDialect()) {
+            switch (ctx.configuration().getDialect()) {
                 case POSTGRES: {
                     return pgGetArray(ctx, type, index);
                 }
@@ -1871,13 +1871,13 @@ final class Utils {
             }
         }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            return (T) getArrayRecord(ctx, rs.getArray(index), (Class<? extends ArrayRecord<?>>) type);
+            return (T) getArrayRecord(ctx.configuration(), rs.getArray(index), (Class<? extends ArrayRecord<?>>) type);
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, rs.getString(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            switch (ctx.getDialect()) {
+            switch (ctx.configuration().getDialect()) {
                 case POSTGRES:
                     return (T) pgNewUDTRecord(type, rs.getObject(index));
             }
@@ -1886,7 +1886,7 @@ final class Utils {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) rs.getObject(index);
-            return (T) new Executor(ctx).fetch(nested);
+            return (T) new Executor(ctx.configuration()).fetch(nested);
         }
         else {
             return (T) rs.getObject(index);
@@ -2100,7 +2100,7 @@ final class Utils {
             return (T) stmt.getTimestamp(index);
         }
         else if (type == YearToMonth.class) {
-            if (ctx.getDialect() == POSTGRES) {
+            if (ctx.configuration().getDialect() == POSTGRES) {
                 Object object = stmt.getObject(index);
                 return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
@@ -2110,7 +2110,7 @@ final class Utils {
             }
         }
         else if (type == DayToSecond.class) {
-            if (ctx.getDialect() == POSTGRES) {
+            if (ctx.configuration().getDialect() == POSTGRES) {
                 Object object = stmt.getObject(index);
                 return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
@@ -2136,7 +2136,7 @@ final class Utils {
             return (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
-            switch (ctx.getDialect()) {
+            switch (ctx.configuration().getDialect()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
@@ -2163,13 +2163,13 @@ final class Utils {
             return (T) convertArray(stmt.getObject(index), (Class<? extends Object[]>)type);
         }
         else if (ArrayRecord.class.isAssignableFrom(type)) {
-            return (T) getArrayRecord(ctx, stmt.getArray(index), (Class<? extends ArrayRecord<?>>) type);
+            return (T) getArrayRecord(ctx.configuration(), stmt.getArray(index), (Class<? extends ArrayRecord<?>>) type);
         }
         else if (EnumType.class.isAssignableFrom(type)) {
             return getEnumType(type, stmt.getString(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            switch (ctx.getDialect()) {
+            switch (ctx.configuration().getDialect()) {
                 case POSTGRES:
                     return (T) pgNewUDTRecord(type, stmt.getObject(index));
             }
@@ -2178,7 +2178,7 @@ final class Utils {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) stmt.getObject(index);
-            return (T) new Executor(ctx).fetch(nested);
+            return (T) new Executor(ctx.configuration()).fetch(nested);
         }
         else {
             return (T) stmt.getObject(index);

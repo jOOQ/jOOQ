@@ -43,7 +43,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
@@ -66,14 +68,11 @@ import org.jooq.tools.jdbc.JDBCUtils;
  *
  * @author Lukas Eder
  */
-class DefaultExecuteContext extends AbstractConfiguration implements ExecuteContext {
-
-    /**
-     * Generated UID
-     */
-    private static final long                    serialVersionUID = -6653474082935089963L;
+class DefaultExecuteContext implements ExecuteContext {
 
     // Persistent attributes (repeatable)
+    private final Configuration                  configuration;
+    private final Map<Object, Object>            data;
     private final Query                          query;
     private final Routine<?>                     routine;
     private String                               sql;
@@ -224,8 +223,8 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
     }
 
     private DefaultExecuteContext(Configuration configuration, Query query, Query[] batchQueries, Routine<?> routine) {
-        super(configuration);
-
+        this.configuration = configuration;
+        this.data = new HashMap<Object, Object>();
         this.query = query;
         this.batchQueries = (batchQueries == null ? new Query[0] : batchQueries);
         this.routine = routine;
@@ -244,6 +243,21 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
         BLOBS.set(new ArrayList<Blob>());
         CLOBS.set(new ArrayList<Clob>());
         LOCAL_CONFIGURATION.set(configuration);
+    }
+
+    @Override
+    public final Map<Object, Object> data() {
+        return data;
+    }
+
+    @Override
+    public final Object data(Object key) {
+        return data.get(key);
+    }
+
+    @Override
+    public final Object data(Object key, Object value) {
+        return data.put(key, value);
     }
 
     @Override
@@ -393,14 +407,14 @@ class DefaultExecuteContext extends AbstractConfiguration implements ExecuteCont
         // wrapped by a ConnectionProxy, transparently, in order to implement
         // Settings.getStatementType() correctly.
 
-        ConnectionProvider provider = connectionProvider != null ? connectionProvider : getConnectionProvider();
+        ConnectionProvider provider = connectionProvider != null ? connectionProvider : configuration.getConnectionProvider();
 
         if (connection == null && provider != null) {
             Connection c = provider.acquire();
 
             if (c != null) {
                 LOCAL_CONNECTION.set(c);
-                connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), getSettings());
+                connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.getSettings());
             }
         }
 

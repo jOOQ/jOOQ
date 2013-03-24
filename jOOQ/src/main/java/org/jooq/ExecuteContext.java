@@ -39,6 +39,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
@@ -53,7 +54,58 @@ import org.jooq.exception.DataAccessException;
  * @author Lukas Eder
  * @see ExecuteListener
  */
-public interface ExecuteContext extends Configuration {
+public interface ExecuteContext {
+
+    /**
+     * Get all custom data from this <code>ExecuteContext</code>.
+     * <p>
+     * This is custom data that was previously set to the execute context using
+     * {@link #data(Object, Object)}. Use custom data if you want to pass data
+     * between events received by an {@link ExecuteListener}.
+     * <p>
+     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * matches that of a single query execution.
+     *
+     * @return The custom data. This is never <code>null</code>
+     * @see ExecuteListener
+     */
+    Map<Object, Object> data();
+
+    /**
+     * Get some custom data from this <code>ExecuteContext</code>.
+     * <p>
+     * This is custom data that was previously set to the execute context using
+     * {@link #data(Object, Object)}. Use custom data if you want to pass
+     * data between events received by an {@link ExecuteListener}.
+     * <p>
+     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * matches that of a single query execution.
+     *
+     * @param key A key to identify the custom data
+     * @return The custom data or <code>null</code> if no such data is contained
+     *         in this <code>ExecuteContext</code>
+     * @see ExecuteListener
+     */
+    Object data(Object key);
+
+    /**
+     * Set some custom data to this <code>ExecuteContext</code>.
+     * <p>
+     * This is custom data that was previously set to the execute context using
+     * {@link #data(Object, Object)}. Use custom data if you want to pass
+     * data between events received by an {@link ExecuteListener}.
+     * <p>
+     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * matches that of a single query execution.
+     *
+     * @param key A key to identify the custom data
+     * @param value The custom data or <code>null</code> to unset the custom
+     *            data
+     * @return The previously set custom data or <code>null</code> if no data
+     *         was previously set for the given key
+     * @see ExecuteListener
+     */
+    Object data(Object key, Object value);
 
     /**
      * The configuration wrapped by this context
@@ -63,8 +115,8 @@ public interface ExecuteContext extends Configuration {
     /**
      * The connection to be used in this execute context
      * <p>
-     * This returns a proxy to the {@link #getConnectionProvider()}'s supplied
-     * connection. This proxy takes care of two things:
+     * This returns a proxy to the {@link Configuration#getConnectionProvider()}
+     * 's supplied connection. This proxy takes care of two things:
      * <ul>
      * <li>It takes care of properly implementing
      * {@link Settings#getStatementType()}</li>

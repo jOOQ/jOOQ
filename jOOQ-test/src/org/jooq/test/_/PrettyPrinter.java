@@ -65,12 +65,12 @@ public class PrettyPrinter extends DefaultExecuteListener {
 
         // Create a new factory for logging rendering purposes
         // This factory doesn't need a connection, only the SQLDialect...
-        Executor pretty = new Executor(ctx.getDialect(),
+        Executor pretty = new Executor(ctx.configuration().getDialect(),
 
         // ... and the flag for pretty-printing
-            SettingsTools.clone(ctx.getSettings()).withRenderFormatted(true));
+            SettingsTools.clone(ctx.configuration().getSettings()).withRenderFormatted(true));
 
-        Executor normal = new Executor(ctx.getDialect());
+        Executor normal = new Executor(ctx.configuration().getDialect());
 
         String n = "" + count.incrementAndGet();
 

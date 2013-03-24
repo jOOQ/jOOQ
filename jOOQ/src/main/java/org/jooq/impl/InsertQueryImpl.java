@@ -53,7 +53,6 @@ import org.jooq.MergeOnConditionStep;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
-import org.jooq.UpdatableTable;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
 /**
@@ -330,9 +329,9 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @SuppressWarnings("unchecked")
     private final Merge<R> toMerge(Configuration configuration) {
-        if (getInto() instanceof UpdatableTable) {
-            UpdatableTable<R> into = (UpdatableTable<R>) getInto();
+        Table<R> into = getInto();
 
+        if (into.getPrimaryKey() != null) {
             Condition condition = null;
             List<Field<?>> key = new ArrayList<Field<?>>();
 

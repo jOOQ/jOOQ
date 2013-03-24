@@ -9059,7 +9059,7 @@ create.insertInto(com.example.generated.Tables.MY_TABLE)
 								Every table in your database will generate a <reference class="org.jooq.Table"/> implementation that looks like this:
 							</p>
 							
-<java><![CDATA[public class Book extends UpdatableTableImpl<BookRecord> {
+<java><![CDATA[public class Book extends TableImpl<BookRecord> {
 
     // The singleton instance
     public static final Book BOOK = new Book();
@@ -9458,7 +9458,7 @@ public class Book implements java.io.Serializable
                             	The above configuration will lead to AUTHOR.DATE_OF_BIRTH being generated like this:
                             </p>
 
-<java><![CDATA[public class TAuthor extends UpdatableTableImpl<TAuthorRecord> {
+<java><![CDATA[public class TAuthor extends TableImpl<TAuthorRecord> {
 
     // [...]
     public final TableField<TAuthorRecord, GregorianCalendar> DATE_OF_BIRTH =    // [...]
@@ -10297,7 +10297,8 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 								<li>The code generation configuration can no longer be loaded from .properties files. Only XML configurations are supported.</li>
 								<li>The master data type feature is no longer supported. This feature was unlikely to behave exactly as users expected. It is better if users write their own code generators to generate master enum data types from their database tables. jOOQ's enum mapping and converter features sufficiently cover interacting with such user-defined types.</li>
 								<li>The Factory subtypes are no longer instanciable. As Factory now only contains static methods, subclassing is no longer useful. There are still dialect-specific Factories providing static methods for dialect-specific functions. But the code-generator no longer generates a schema-specific Factory</li>
-								<li>The concept of a "main key" is no longer supported. The code generator produces UpdatableTables and UpdatableRecords only if the underlying table has a PRIMARY KEY. The reason for this removal is the fact that "main keys" are not reliable enough. They were chosen arbitrarily among UNIQUE KEYs.</li>
+								<li>The concept of a "main key" is no longer supported. The code generator produces UpdatableRecords only if the underlying table has a PRIMARY KEY. The reason for this removal is the fact that "main keys" are not reliable enough. They were chosen arbitrarily among UNIQUE KEYs.</li>
+								<li>The UpdatableTable type has been removed. While adding significant complexity to the type hierarchy, this type adds not much value over a simple <code>Table.getPrimaryKey() != null</code> check.</li>
 							</ul>
 						</content>
 					</section>

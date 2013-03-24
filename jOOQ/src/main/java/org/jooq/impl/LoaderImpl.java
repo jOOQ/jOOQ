@@ -61,7 +61,6 @@ import org.jooq.LoaderXMLStep;
 import org.jooq.SelectQuery;
 import org.jooq.Table;
 import org.jooq.TableRecord;
-import org.jooq.UpdatableTable;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 import org.jooq.tools.csv.CSVParser;
@@ -99,9 +98,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     // Configuration data
     // ------------------
-    private final Executor           create;
+    private final Executor          create;
     private final Table<R>          table;
-    private final UpdatableTable<R> updatable;
     private int                     onDuplicate             = ON_DUPLICATE_KEY_ERROR;
     private int                     onError                 = ON_ERROR_ABORT;
     private int                     commit                  = COMMIT_NONE;
@@ -129,13 +127,6 @@ class LoaderImpl<R extends TableRecord<R>> implements
         this.create = create;
         this.table = table;
         this.errors = new ArrayList<LoaderError>();
-
-        if (table instanceof UpdatableTable) {
-            this.updatable = (UpdatableTable<R>) table;
-        }
-        else {
-            this.updatable = null;
-        }
     }
 
     // -------------------------------------------------------------------------
@@ -150,8 +141,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     @Override
     public final LoaderImpl<R> onDuplicateKeyIgnore() {
-        if (updatable == null) {
-            throw new IllegalStateException("ON DUPLICATE KEY IGNORE only works on UpdatableTable. Table is not updatable : " + table);
+        if (table.getPrimaryKey() == null) {
+            throw new IllegalStateException("ON DUPLICATE KEY IGNORE only works on tables with explicit primary keys. Table is not updatable : " + table);
         }
 
         onDuplicate = ON_DUPLICATE_KEY_IGNORE;
@@ -160,8 +151,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     @Override
     public final LoaderImpl<R> onDuplicateKeyUpdate() {
-        if (updatable == null) {
-            throw new IllegalStateException("ON DUPLICATE KEY UPDATE only works on UpdatableTable. Table is not updatable : " + table);
+        if (table.getPrimaryKey() == null) {
+            throw new IllegalStateException("ON DUPLICATE KEY UPDATE only works on tables with explicit primary keys. Table is not updatable : " + table);
         }
 
         onDuplicate = ON_DUPLICATE_KEY_UPDATE;
@@ -272,10 +263,10 @@ class LoaderImpl<R extends TableRecord<R>> implements
         this.fields = f;
         this.primaryKey = new boolean[f.length];
 
-        if (updatable != null) {
+        if (table.getPrimaryKey() != null) {
             for (int i = 0; i < fields.length; i++) {
                 if (fields[i] != null) {
-                    if (updatable.getPrimaryKey().getFields().contains(fields[i])) {
+                    if (table.getPrimaryKey().getFields().contains(fields[i])) {
                         primaryKey[i] = true;
                     }
                 }

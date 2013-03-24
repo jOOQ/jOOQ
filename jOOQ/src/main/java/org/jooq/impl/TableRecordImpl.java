@@ -62,11 +62,8 @@ public class TableRecordImpl<R extends TableRecord<R>> extends AbstractRecord im
         this.table = table;
     }
 
-    /*
-     * Subclasses may override this method
-     */
     @Override
-    public Table<R> getTable() {
+    public final Table<R> getTable() {
         return table;
     }
 

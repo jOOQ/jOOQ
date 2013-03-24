@@ -166,6 +166,36 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     /**
      * {@inheritDoc}
      * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public UniqueKey<R> getPrimaryKey() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public TableField<R, ? extends Number> getRecordVersion() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this method
+     */
+    @Override
+    public TableField<R, ? extends java.util.Date> getRecordTimestamp() {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
      * Subclasses should override this method
      */
     @Override

@@ -76,8 +76,8 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * simulate this clause using a <code>MERGE</code> statement on some other
      * databases. The conditions for a RDBMS to simulate this clause are:
      * <ul>
-     * <li>The <code>INSERT</code> statement's table is an
-     * {@link UpdatableTable}</li>
+     * <li>The <code>INSERT</code> statement's table is a
+     * {@link Table} with a {@link Table#getPrimaryKey()}</li>
      * <li>The RDBMS supports the <code>MERGE</code> clause (see
      * {@link Executor#mergeInto(Table)}).</li>
      * </ul>

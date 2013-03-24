@@ -77,7 +77,6 @@ import org.jooq.impl.TableRecordImpl;
 import org.jooq.impl.UDTImpl;
 import org.jooq.impl.UDTRecordImpl;
 import org.jooq.impl.UpdatableRecordImpl;
-import org.jooq.impl.UpdatableTableImpl;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -1347,6 +1346,7 @@ public class JavaGenerator extends AbstractGenerator {
     protected void generateTable(SchemaDefinition schema, TableDefinition table) {
         UniqueKeyDefinition primaryKey = table.getPrimaryKey();
 
+        final boolean updatable = generateRelations() && primaryKey != null;
         final String className = getStrategy().getJavaClassName(table);
         final String fullClassName = getStrategy().getFullJavaClassName(table);
         final String fullTableId = getStrategy().getFullJavaIdentifier(table);
@@ -1363,14 +1363,7 @@ public class JavaGenerator extends AbstractGenerator {
         printPackage(out, table);
         printClassJavadoc(out, table);
 
-        Class<?> baseClass;
-        if (generateRelations() && primaryKey != null) {
-            baseClass = UpdatableTableImpl.class;
-        } else {
-            baseClass = TableImpl.class;
-        }
-
-        out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, baseClass, recordType, interfaces);
+        out.println("public class %s extends %s<%s>[[before= implements ][%s]] {", className, TableImpl.class, recordType, interfaces);
         out.printSerial();
         printSingletonInstance(out, table);
         printRecordTypeMethod(out, table);
@@ -1465,9 +1458,9 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        // [#1596] UpdatableTables can provide fields for optimistic locking
+        // [#1596] Updatable tables can provide fields for optimistic locking
         // if properly configured
-        if (baseClass == UpdatableTableImpl.class) {
+        if (updatable) {
             patternLoop: for (String pattern : database.getRecordVersionFields()) {
                 for (ColumnDefinition column : table.getColumns()) {
                     if ((column.getName().matches(pattern.trim()) ||

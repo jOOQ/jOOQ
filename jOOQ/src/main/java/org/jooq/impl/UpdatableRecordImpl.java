@@ -54,11 +54,11 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
 import org.jooq.StoreQuery;
+import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
-import org.jooq.UpdatableTable;
 import org.jooq.UpdateQuery;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
@@ -78,7 +78,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
      */
     private static final long serialVersionUID      = -1012420583600561579L;
 
-    public UpdatableRecordImpl(UpdatableTable<R> table) {
+    public UpdatableRecordImpl(Table<R> table) {
         super(table);
     }
 
@@ -103,11 +103,6 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     @Override
     public final <O extends TableRecord<O>> Result<O> fetchChildren(ForeignKey<O, R> key) {
         return key.fetchChildren((R) this);
-    }
-
-    @Override
-    public final UpdatableTable<R> getTable() {
-        return (UpdatableTable<R>) super.getTable();
     }
 
     @Override
@@ -423,9 +418,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     private final boolean isTimestampOrVersionAvailable() {
-        UpdatableTable<R> table = getTable();
-
-        return table.getRecordTimestamp() != null || table.getRecordVersion() != null;
+        return getTable().getRecordTimestamp() != null || getTable().getRecordVersion() != null;
     }
 
     /**

@@ -43,7 +43,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +54,6 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Schema;
 import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.UpdatableTable;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -216,12 +212,7 @@ class MetaImpl implements Meta, Serializable {
 //                  Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
 //                                                     .sortAsc("KEY_SEQ");
 //
-//                  if (pkColumns.size() == 0) {
-//                      result.add(new MetaTable(name, this, columnCache.get(name)));
-//                  }
-//                  else {
-//                      result.add(new MetaUpdatableTable(name, this, columnCache.get(name)));
-//                  }
+//                  result.add(new MetaTable(name, this, columnCache.get(name)));
                 }
 
                 return result;
@@ -315,34 +306,6 @@ class MetaImpl implements Meta, Serializable {
 
                 createField(columnName, type, this);
             }
-        }
-    }
-
-    @SuppressWarnings("unused")
-    private class MetaUpdatableTable extends MetaTable implements UpdatableTable<Record> {
-
-        /**
-         * Generated UID
-         */
-        private static final long serialVersionUID = -4555457095396846609L;
-
-        MetaUpdatableTable(String name, Schema schema, Result<Record> columns) {
-            super(name, schema, columns);
-        }
-
-        @Override
-        public final UniqueKey<Record> getPrimaryKey() {
-            return null;
-        }
-
-        @Override
-        public final TableField<Record, ? extends Number> getRecordVersion() {
-            return null;
-        }
-
-        @Override
-        public final TableField<Record, ? extends Date> getRecordTimestamp() {
-            return null;
         }
     }
 }

@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  * An m:n relation between books and book stores
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public class TBookToBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> {
+public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1223504957;
+	private static final long serialVersionUID = -1607925017;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_TO_BOOK_STORE</code>

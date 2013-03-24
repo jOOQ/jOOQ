@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  * An entity holding language master data
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> {
+public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -399278169;
+	private static final long serialVersionUID = -645463111;
 
 	/**
 	 * The singleton instance of <code>TEST.T_LANGUAGE</code>

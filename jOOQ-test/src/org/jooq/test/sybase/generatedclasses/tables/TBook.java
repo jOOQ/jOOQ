@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
  * An entity holding books
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
+public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
 	private static final long serialVersionUID = 788795956;
 

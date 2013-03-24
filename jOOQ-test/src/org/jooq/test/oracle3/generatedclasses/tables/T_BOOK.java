@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  * An entity holding books
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public class T_BOOK extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable {
+public class T_BOOK extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK> implements java.lang.Cloneable {
 
 	private static final long serialVersionUID = -653557634;
 

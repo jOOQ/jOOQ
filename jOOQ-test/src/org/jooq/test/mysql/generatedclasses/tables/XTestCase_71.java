@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
  * An unused table in the same schema.
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public class XTestCase_71 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> {
+public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_71Record> {
 
 	private static final long serialVersionUID = 333534633;
 

@@ -81,7 +81,6 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.UpdatableTable;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -722,7 +721,7 @@ public abstract class jOOQAbstractTest<
         }
     }
 
-    protected abstract UpdatableTable<A> TAuthor();
+    protected abstract Table<A> TAuthor();
     protected abstract TableField<A, String> TAuthor_LAST_NAME();
     protected abstract TableField<A, String> TAuthor_FIRST_NAME();
     protected abstract TableField<A, Date> TAuthor_DATE_OF_BIRTH();
@@ -732,7 +731,7 @@ public abstract class jOOQAbstractTest<
 
     protected abstract Class<? extends UDTRecord<?>> cUAddressType();
     protected abstract Class<? extends UDTRecord<?>> cUStreetType();
-    protected abstract UpdatableTable<B> TBook();
+    protected abstract Table<B> TBook();
 
     protected abstract TableField<B, Integer> TBook_ID();
     protected abstract TableField<B, Integer> TBook_AUTHOR_ID();
@@ -751,7 +750,7 @@ public abstract class jOOQAbstractTest<
     protected abstract ForeignKey<B, A> FK_T_BOOK_AUTHOR_ID();
     protected abstract ForeignKey<B, A> FK_T_BOOK_CO_AUTHOR_ID();
 
-    protected abstract UpdatableTable<S> TBookStore();
+    protected abstract Table<S> TBookStore();
     protected abstract TableField<S, String> TBookStore_NAME();
     protected abstract Table<L> VLibrary();
     protected abstract Table<?> VAuthor();
@@ -759,12 +758,12 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<L, String> VLibrary_TITLE();
     protected abstract TableField<L, String> VLibrary_AUTHOR();
 
-    protected abstract UpdatableTable<B2S> TBookToBookStore();
+    protected abstract Table<B2S> TBookToBookStore();
     protected abstract TableField<B2S, Integer> TBookToBookStore_BOOK_ID();
     protected abstract TableField<B2S, String> TBookToBookStore_BOOK_STORE_NAME();
     protected abstract TableField<B2S, Integer> TBookToBookStore_STOCK();
 
-    protected abstract UpdatableTable<BS> TBookSale();
+    protected abstract Table<BS> TBookSale();
     protected final TableField<BS, Integer> TBookSale_ID() {
         return (TableField<BS, Integer>) TBookSale().field("ID");
     }
@@ -781,7 +780,7 @@ public abstract class jOOQAbstractTest<
         return (TableField<BS, BigDecimal>) TBookSale().field("SOLD_FOR");
     }
 
-    protected abstract UpdatableTable<BOOL> TBooleans();
+    protected abstract Table<BOOL> TBooleans();
     protected abstract TableField<BOOL, Integer> TBooleans_ID();
     protected abstract TableField<BOOL, Boolean_10> TBooleans_BOOLEAN_10();
     protected abstract TableField<BOOL, Boolean_TF_LC> TBooleans_Boolean_TF_LC();
@@ -794,13 +793,13 @@ public abstract class jOOQAbstractTest<
     protected abstract TableField<BOOL, Boolean> TBooleans_C();
     protected abstract TableField<BOOL, Boolean> TBooleans_N();
 
-    protected abstract UpdatableTable<D> TDirectory();
+    protected abstract Table<D> TDirectory();
     protected abstract TableField<D, Integer> TDirectory_ID();
     protected abstract TableField<D, Integer> TDirectory_PARENT_ID();
     protected abstract TableField<D, Integer> TDirectory_IS_DIRECTORY();
     protected abstract TableField<D, String> TDirectory_NAME();
 
-    protected abstract UpdatableTable<T> TTriggers();
+    protected abstract Table<T> TTriggers();
     protected abstract TableField<T, Integer> TTriggers_ID_GENERATED();
     protected abstract TableField<T, Integer> TTriggers_ID();
     protected abstract TableField<T, Integer> TTriggers_COUNTER();
@@ -808,7 +807,7 @@ public abstract class jOOQAbstractTest<
     protected abstract Table<I> TIdentity();
     protected abstract TableField<I, Integer> TIdentity_ID();
     protected abstract TableField<I, Integer> TIdentity_VAL();
-    protected abstract UpdatableTable<IPK> TIdentityPK();
+    protected abstract Table<IPK> TIdentityPK();
     protected abstract TableField<IPK, Integer> TIdentityPK_ID();
     protected abstract TableField<IPK, Integer> TIdentityPK_VAL();
 

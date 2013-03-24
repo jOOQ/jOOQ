@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  * An entity holding language master data
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public class TLanguage extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord> {
+public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord> {
 
 	private static final long serialVersionUID = 1876107987;
 

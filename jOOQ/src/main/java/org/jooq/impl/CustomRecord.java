@@ -70,13 +70,4 @@ public abstract class CustomRecord<R extends TableRecord<R>> extends TableRecord
     protected CustomRecord(Table<R> table) {
         super(table);
     }
-
-    // -------------------------------------------------------------------------
-    // No further overrides allowed
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final Table<R> getTable() {
-        return super.getTable();
-    }
 }

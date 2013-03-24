@@ -116,7 +116,6 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.UniqueKey;
-import org.jooq.UpdatableTable;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.StringUtils;
 
@@ -923,8 +922,9 @@ implements
                 Set<Field<?>> onFields = new HashSet<Field<?>>();
                 Condition condition = null;
                 if (getH2Keys().isEmpty()) {
-                    if (table instanceof UpdatableTable) {
-                        UniqueKey<?> key = ((UpdatableTable<?>) table).getPrimaryKey();
+                    UniqueKey<?> key = table.getPrimaryKey();
+
+                    if (key != null) {
                         onFields.addAll(key.getFields());
 
                         for (int i = 0; i < key.getFields().size(); i++) {

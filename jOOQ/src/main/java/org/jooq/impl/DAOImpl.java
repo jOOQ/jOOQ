@@ -49,7 +49,6 @@ import org.jooq.RecordMapper;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
-import org.jooq.UpdatableTable;
 
 /**
  * A common base implementation for generated DAO's.
@@ -266,10 +265,9 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     private final Field<?> pk() {
-        if (table instanceof UpdatableTable) {
-            UpdatableTable<?> updatable = (UpdatableTable<?>) table;
-            UniqueKey<?> key = updatable.getPrimaryKey();
+        UniqueKey<?> key = table.getPrimaryKey();
 
+        if (key != null) {
             if (key.getFields().size() == 1) {
                 return key.getFields().get(0);
             }

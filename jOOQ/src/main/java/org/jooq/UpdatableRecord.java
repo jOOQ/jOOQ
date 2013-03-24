@@ -78,13 +78,7 @@ import org.jooq.impl.Executor;
 public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableRecord<R> {
 
     /**
-     * The table from which this record was read
-     */
-    @Override
-    UpdatableTable<R> getTable();
-
-    /**
-     * A view holding values for the {@link UpdatableTable#getPrimaryKey()}
+     * A view holding values for the {@link Table#getPrimaryKey()}
      * <p>
      * This method returns a "view" of this record itself. Modifications to the
      * returned record will affect values in this record.
@@ -145,8 +139,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * jOOQ can auto-generate "version" and "timestamp" values that can be used
      * for optimistic locking. If this is an {@link UpdatableRecord} and if this
      * record returns fields for either
-     * {@link UpdatableTable#getRecordVersion()} or
-     * {@link UpdatableTable#getRecordTimestamp()}, then these values are set
+     * {@link Table#getRecordVersion()} or
+     * {@link Table#getRecordTimestamp()}, then these values are set
      * onto the <code>INSERT</code> or <code>UPDATE</code> statement being
      * executed. On execution success, the generated values are set to this
      * record. Use the code-generation configuration to specify naming patterns
@@ -170,8 +164,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * This is the preferred way of using optimistic locking in jOOQ. If this is
      * an {@link UpdatableRecord} and if this record returns fields for either
-     * {@link UpdatableTable#getRecordVersion()} or
-     * {@link UpdatableTable#getRecordTimestamp()}, then these values are
+     * {@link Table#getRecordVersion()} or
+     * {@link Table#getRecordTimestamp()}, then these values are
      * compared to the corresponding value in the database in the
      * <code>WHERE</code> clause of the executed <code>DELETE</code> statement.</li>
      * <li><strong>Without any specific column configurations</strong>
@@ -266,8 +260,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * This is the preferred way of using optimistic locking in jOOQ. If this is
      * an {@link UpdatableRecord} and if this record returns fields for either
-     * {@link UpdatableTable#getRecordVersion()} or
-     * {@link UpdatableTable#getRecordTimestamp()}, then these values are
+     * {@link Table#getRecordVersion()} or
+     * {@link Table#getRecordTimestamp()}, then these values are
      * compared to the corresponding value in the database in the
      * <code>WHERE</code> clause of the executed <code>DELETE</code> statement.</li>
      * <li><strong>Without any specific column configurations</strong>

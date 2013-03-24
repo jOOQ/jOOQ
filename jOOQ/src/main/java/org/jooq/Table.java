@@ -166,13 +166,70 @@ public interface Table<R extends Record> extends TableLike<R> {
      *         <code>null</code>, if no such information is available.
      */
     Identity<R, ? extends Number> getIdentity();
+    /**
+     * Retrieve the table's primary key
+     *
+     * @return The primary key. This is never <code>null</code> for an updatable
+     *         table.
+     */
+    UniqueKey<R> getPrimaryKey();
+
+    /**
+     * A "version" field holding record version information used for optimistic
+     * locking
+     * <p>
+     * jOOQ supports optimistic locking in {@link UpdatableRecord#store()} and
+     * {@link UpdatableRecord#delete()} if
+     * {@link Settings#isExecuteWithOptimisticLocking()} is enabled. Optimistic
+     * locking is performed in a single <code>UPDATE</code> or
+     * <code>DELETE</code> statement if tables provide a "version" or
+     * "timestamp" field, or in two steps using an additional
+     * <code>SELECT .. FOR UPDATE</code> statement otherwise.
+     * <p>
+     * This method is overridden in generated subclasses if their corresponding
+     * tables have been configured accordingly. A table may have both a
+     * "version" and a "timestamp" field.
+     *
+     * @return The "version" field, or <code>null</code>, if this table has no
+     *         "version" field.
+     * @see #getRecordTimestamp()
+     * @see UpdatableRecord#store()
+     * @see UpdatableRecord#delete()
+     * @see Settings#isExecuteWithOptimisticLocking()
+     */
+    TableField<R, ? extends Number> getRecordVersion();
+
+    /**
+     * A "timestamp" field holding record timestamp information used for
+     * optimistic locking
+     * <p>
+     * jOOQ supports optimistic locking in {@link UpdatableRecord#store()} and
+     * {@link UpdatableRecord#delete()} if
+     * {@link Settings#isExecuteWithOptimisticLocking()} is enabled. Optimistic
+     * locking is performed in a single <code>UPDATE</code> or
+     * <code>DELETE</code> statement if tables provide a "version" or
+     * "timestamp" field, or in two steps using an additional
+     * <code>SELECT .. FOR UPDATE</code> statement otherwise.
+     * <p>
+     * This method is overridden in generated subclasses if their corresponding
+     * tables have been configured accordingly. A table may have both a
+     * "version" and a "timestamp" field.
+     *
+     * @return The "timestamp" field, or <code>null</code>, if this table has no
+     *         "timestamp" field.
+     * @see #getRecordVersion()
+     * @see UpdatableRecord#store()
+     * @see UpdatableRecord#delete()
+     * @see Settings#isExecuteWithOptimisticLocking()
+     */
+    TableField<R, ? extends java.util.Date> getRecordTimestamp();
 
     /**
      * Retrieve all of the table's unique keys.
      *
      * @return All keys. This is never <code>null</code>. This is never empty
-     *         for {@link UpdatableTable}s because an updatable table always has
-     *         at least a primary key. This method returns an unmodifiable list.
+     *         for a {@link Table} with a {@link Table#getPrimaryKey()}. This
+     *         method returns an unmodifiable list.
      */
     List<UniqueKey<R>> getKeys();
 

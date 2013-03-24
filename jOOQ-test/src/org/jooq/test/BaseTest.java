@@ -73,7 +73,6 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Executor;
 import org.jooq.test._.TestStatisticsListener;
@@ -305,7 +304,7 @@ public abstract class BaseTest<
         return (TableField<DATE, Timestamp>) getField(TDates(), "TS");
     }
 
-    public UpdatableTable<BOOL> TBooleans() {
+    public Table<BOOL> TBooleans() {
         return delegate.TBooleans();
     }
 
@@ -409,7 +408,7 @@ public abstract class BaseTest<
         return delegate.TBooleansPojo();
     }
 
-    protected UpdatableTable<A> TAuthor() {
+    protected Table<A> TAuthor() {
         return delegate.TAuthor();
     }
 
@@ -445,7 +444,7 @@ public abstract class BaseTest<
         return delegate.cUStreetType();
     }
 
-    protected UpdatableTable<B> TBook() {
+    protected Table<B> TBook() {
         return delegate.TBook();
     }
 
@@ -497,7 +496,7 @@ public abstract class BaseTest<
         return delegate.FK_T_BOOK_CO_AUTHOR_ID();
     }
 
-    protected UpdatableTable<S> TBookStore() {
+    protected Table<S> TBookStore() {
         return delegate.TBookStore();
     }
 
@@ -525,7 +524,7 @@ public abstract class BaseTest<
         return delegate.VLibrary_AUTHOR();
     }
 
-    protected UpdatableTable<B2S> TBookToBookStore() {
+    protected Table<B2S> TBookToBookStore() {
         return delegate.TBookToBookStore();
     }
 
@@ -541,7 +540,7 @@ public abstract class BaseTest<
         return delegate.TBookToBookStore_STOCK();
     }
 
-    protected UpdatableTable<BS> TBookSale() {
+    protected Table<BS> TBookSale() {
         return delegate.TBookSale();
     }
 
@@ -565,7 +564,7 @@ public abstract class BaseTest<
         return delegate.TBookSale_SOLD_FOR();
     }
 
-    protected UpdatableTable<D> TDirectory() {
+    protected Table<D> TDirectory() {
         return delegate.TDirectory();
     }
 
@@ -585,7 +584,7 @@ public abstract class BaseTest<
         return delegate.TDirectory_NAME();
     }
 
-    protected UpdatableTable<T> TTriggers() {
+    protected Table<T> TTriggers() {
         return delegate.TTriggers();
     }
 
@@ -613,7 +612,7 @@ public abstract class BaseTest<
         return delegate.TIdentity_VAL();
     }
 
-    protected UpdatableTable<IPK> TIdentityPK() {
+    protected Table<IPK> TIdentityPK() {
         return delegate.TIdentityPK();
     }
 

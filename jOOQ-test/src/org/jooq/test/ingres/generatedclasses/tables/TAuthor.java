@@ -9,7 +9,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
  * An entity holding authors of books
  */
 @java.lang.SuppressWarnings("all")
-public class TAuthor extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TAuthorRecord> {
+public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TAuthorRecord> {
 
 	private static final long serialVersionUID = 1636372592;
 

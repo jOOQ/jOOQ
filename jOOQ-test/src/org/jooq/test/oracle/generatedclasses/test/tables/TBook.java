@@ -9,9 +9,9 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  * An entity holding books
  */
 @java.lang.SuppressWarnings({ "all", "unchecked" })
-public class TBook extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
+public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1901159383;
+	private static final long serialVersionUID = 1311835635;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK</code>

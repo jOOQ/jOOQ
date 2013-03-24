@@ -105,7 +105,6 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
-import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Executor;
 import org.jooq.test._.converters.Boolean_10;
@@ -224,7 +223,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<TAuthorRecord> TAuthor() {
+    protected Table<TAuthorRecord> TAuthor() {
         return T_AUTHOR;
     }
 
@@ -259,7 +258,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<TBookRecord> TBook() {
+    protected Table<TBookRecord> TBook() {
         return T_BOOK;
     }
 
@@ -279,7 +278,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<TBookStoreRecord> TBookStore() {
+    protected Table<TBookStoreRecord> TBookStore() {
         return T_BOOK_STORE;
     }
 
@@ -289,12 +288,12 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<TBookToBookStoreRecord> TBookToBookStore() {
+    protected Table<TBookToBookStoreRecord> TBookToBookStore() {
         return T_BOOK_TO_BOOK_STORE;
     }
 
     @Override
-    protected UpdatableTable<TBookSaleRecord> TBookSale() {
+    protected Table<TBookSaleRecord> TBookSale() {
         return T_BOOK_SALE;
     }
 
@@ -394,7 +393,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<TBooleansRecord> TBooleans() {
+    protected Table<TBooleansRecord> TBooleans() {
         return T_BOOLEANS;
     }
 
@@ -634,7 +633,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<TDirectoryRecord> TDirectory() {
+    protected Table<TDirectoryRecord> TDirectory() {
         return T_DIRECTORY;
     }
 
@@ -659,7 +658,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<TTriggersRecord> TTriggers() {
+    protected Table<TTriggersRecord> TTriggers() {
         return T_TRIGGERS;
     }
 
@@ -694,7 +693,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected UpdatableTable<XUnusedRecord> TIdentityPK() {
+    protected Table<XUnusedRecord> TIdentityPK() {
         return null;
     }
 

@@ -59,11 +59,11 @@ import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.SQLDialect;
 import org.jooq.StoreQuery;
+import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.UpdatableTable;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
@@ -692,7 +692,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     private <R extends UpdatableRecord<R>> void testStoreWithOptimisticLock0(
-        UpdatableTable<R> table, TableField<R, Integer> id, TableField<R, String> string) throws Exception {
+        Table<R> table, TableField<R, Integer> id, TableField<R, String> string) throws Exception {
 
         Executor create = create(new Settings().withExecuteWithOptimisticLocking(true));
 

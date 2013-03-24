@@ -34,11 +34,6 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> FK_T_BOOK_LANGUAGE_ID = ForeignKeys0.FK_T_BOOK_LANGUAGE_ID;
 	public static final org.jooq.ForeignKey<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, org.jooq.test.oracle.generatedclasses.test.tables.records.TBookToBookStoreRecord> FK_T_BOOK_TO_BOOK_STORE = ForeignKeys0.FK_T_BOOK_TO_BOOK_STORE;
 
-	/**
-	 * No further instances allowed
-	 */
-	private Keys() {}
-
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------

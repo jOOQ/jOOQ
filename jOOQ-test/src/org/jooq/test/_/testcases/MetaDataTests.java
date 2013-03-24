@@ -37,7 +37,6 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
@@ -68,7 +67,6 @@ import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UDT;
 import org.jooq.UpdatableRecord;
-import org.jooq.UpdatableTable;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -242,17 +240,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(TBook().getReferencesTo(TAuthor()), b.getReferencesTo(TAuthor()));
 
             // Only with a non-static meta model
-            if (a instanceof UpdatableTable && b instanceof UpdatableTable) {
-                UpdatableTable<A> ua = (UpdatableTable<A>) a;
-                UpdatableTable<B> ub = (UpdatableTable<B>) b;
-
-                assertEquals(2, ua.getPrimaryKey().getReferences().size());
-                assertEquals(TBook(), ua.getPrimaryKey().getReferences().get(0).getTable());
-                assertEquals(TBook(), ua.getPrimaryKey().getReferences().get(1).getTable());
-                assertTrue(b.getReferences().containsAll(ua.getReferencesFrom(b)));
-                assertTrue(b.getReferences().containsAll(ub.getReferencesFrom(a)));
-                assertEquals(b.getReferencesTo(a), ua.getReferencesFrom(b));
-                assertEquals(TBook().getReferencesTo(a), ua.getReferencesFrom(b));
+            if (a.getPrimaryKey() != null && b.getPrimaryKey() != null) {
+                assertEquals(2, a.getPrimaryKey().getReferences().size());
+                assertEquals(TBook(), a.getPrimaryKey().getReferences().get(0).getTable());
+                assertEquals(TBook(), a.getPrimaryKey().getReferences().get(1).getTable());
+                assertTrue(b.getReferences().containsAll(a.getReferencesFrom(b)));
+                assertTrue(b.getReferences().containsAll(b.getReferencesFrom(a)));
+                assertEquals(b.getReferencesTo(a), a.getReferencesFrom(b));
+                assertEquals(TBook().getReferencesTo(a), a.getReferencesFrom(b));
                 assertEquals(b.getReferencesTo(a), TAuthor().getReferencesFrom(b));
             }
         }
@@ -464,16 +459,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                     // Check if relations are correctly loaded (and typed) as well
                     // [#1977] Fix this, once the "main key" concept has been removed
-                    if (generatedTable instanceof UpdatableTable && metaTable instanceof UpdatableTable) {
-                        UpdatableTable<?> generatedUTable = (UpdatableTable<?>) generatedTable;
-                        UpdatableTable<?> metaUTable = (UpdatableTable<?>) metaTable;
-
+                    if (generatedTable.getPrimaryKey() != null && metaTable.getPrimaryKey() != null) {
                         // [#1977] TODO: Add key checks
                     }
 
                     // Only truly updatable tables should be "Updatable"
                     else {
-                        assertFalse(metaTable instanceof UpdatableTable);
+                        assertNull(metaTable.getPrimaryKey());
                     }
                 }
             }

@@ -234,12 +234,12 @@ class BetweenAndSteps extends Generators {
             
             @Override
             public final void bind(BindContext context) {
-                delegate(context).bind(context);
+                delegate(context.configuration()).bind(context);
             }
         
             @Override
             public final void toSQL(RenderContext context) {
-                delegate(context).toSQL(context);
+                delegate(context.configuration()).toSQL(context);
             }
         
             private final QueryPartInternal delegate(Configuration configuration) {

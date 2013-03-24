@@ -67,7 +67,7 @@ class RowSubqueryCondition extends AbstractCondition {
     public final void toSQL(RenderContext context) {
 
         // Some databases need extra parentheses around the RHS
-        boolean extraParentheses = asList(ORACLE).contains(context.getDialect());
+        boolean extraParentheses = asList(ORACLE).contains(context.configuration().getDialect());
         boolean subquery = context.subquery();
 
         context.sql(left)
@@ -75,11 +75,11 @@ class RowSubqueryCondition extends AbstractCondition {
                .keyword(operator.toSQL())
                .sql(" (")
                .sql(extraParentheses ? "(" : "");
-        context.setData(Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
+        context.data(Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
         context.subquery(true)
                .sql(right)
                .subquery(subquery);
-        context.setData(Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+        context.data(Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
         context.sql(extraParentheses ? ")" : "")
                .sql(")");
     }

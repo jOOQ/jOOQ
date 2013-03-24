@@ -728,7 +728,7 @@ final class Utils {
         char[] sqlChars = sql.toCharArray();
 
         // [#1593] Create a dummy renderer if we're in bind mode
-        if (render == null) render = new DefaultRenderContext(bind);
+        if (render == null) render = new DefaultRenderContext(bind.configuration());
 
         for (int i = 0; i < sqlChars.length; i++) {
 

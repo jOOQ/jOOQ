@@ -51,11 +51,6 @@ import org.jooq.QueryPartInternal;
  */
 abstract class AbstractBindContext extends AbstractContext<BindContext> implements BindContext {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = -319766597723101571L;
-
     AbstractBindContext(Configuration configuration) {
         super(configuration);
     }

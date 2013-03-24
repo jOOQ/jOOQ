@@ -177,7 +177,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // If a limit applies
         if (getLimit().isApplicable()) {
-            switch (context.getDialect()) {
+            switch (context.configuration().getDialect()) {
 
                 // Oracle knows the ROWNUM pseudo-column. That makes things simple
                 case ORACLE:
@@ -250,7 +250,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
-        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.getDialect())) {
+        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.configuration().getDialect())) {
             context.formatSeparator()
                    .keyword("for update");
 
@@ -261,7 +261,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             else if (!forUpdateOfTables.isEmpty()) {
                 context.keyword(" of ");
 
-                switch (context.getDialect()) {
+                switch (context.configuration().getDialect()) {
 
                     // Some dialects don't allow for an OF [table-names] clause
                     // It can be simulated by listing the table's fields, though
@@ -291,7 +291,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             }
         }
         else if (forShare) {
-            switch (context.getDialect()) {
+            switch (context.configuration().getDialect()) {
 
                 // MySQL has a non-standard implementation for the "FOR SHARE" clause
                 case MYSQL:
@@ -410,7 +410,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This part is common to any type of limited query
      */
     private final void toSQLReference0(RenderContext context, QueryPart limitOffsetRownumber) {
-        SQLDialect dialect = context.getDialect();
+        SQLDialect dialect = context.configuration().getDialect();
 
         // SELECT clause
         // -------------
@@ -465,17 +465,17 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // [#1905] H2 only knows arrays, no row value expressions. Subqueries
         // in the context of a row value expression predicate have to render
         // arrays explicitly, as the subquery doesn't form an implicit RVE
-        if (context.subquery() && dialect == H2 && context.getData(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY) != null) {
-            Object data = context.getData(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
+        if (context.subquery() && dialect == H2 && context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY) != null) {
+            Object data = context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY);
 
             try {
-                context.setData(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
+                context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
                 context.sql("(")
                        .sql(getSelect1())
                        .sql(")");
             }
             finally {
-                context.setData(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, data);
+                context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, data);
             }
         }
 

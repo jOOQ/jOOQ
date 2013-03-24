@@ -362,7 +362,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 Field<?> value = getInValues().get(parameter);
 
                 // Disambiguate overloaded procedure signatures
-                if (SQLDialect.POSTGRES == context.getDialect() && isOverloaded()) {
+                if (SQLDialect.POSTGRES == context.configuration().getDialect() && isOverloaded()) {
                     value = value.cast(parameter.getType());
                 }
 
@@ -378,7 +378,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLEnd(RenderContext context) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case ORACLE:
                 context.sql(";")
                        .formatIndentEnd()
@@ -393,7 +393,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLBegin(RenderContext context) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case ORACLE:
                 context.keyword("begin")
                        .formatIndentStart()
@@ -407,7 +407,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLAssign(RenderContext context) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case ORACLE:
                 context.sql("? := ");
                 break;
@@ -419,7 +419,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLCall(RenderContext context) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case ORACLE:
                 break;
 
@@ -432,7 +432,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case ORACLE:
                 context.sql(parameter);
                 context.sql(" => ");
@@ -446,7 +446,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case ORACLE:
                 context.sql(parameter);
                 context.sql(" => ");
@@ -460,7 +460,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLQualifiedName(RenderContext context) {
-        Schema mappedSchema = Utils.getMappedSchema(context, getSchema());
+        Schema mappedSchema = Utils.getMappedSchema(context.configuration(), getSchema());
 
         if (context.qualify()) {
             if (mappedSchema != null) {

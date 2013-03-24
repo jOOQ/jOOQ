@@ -101,26 +101,26 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
     }
 
     @Override
-    public final void bind(BindContext context) {
-        switch (context.getDialect()) {
+    public final void bind(BindContext ctx) {
+        switch (ctx.configuration().getDialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {
                 for (int i = 0; i < compareValues.size(); i++) {
-                    context.bind(value);
-                    context.bind(compareValues.get(i));
-                    context.bind(results.get(i));
+                    ctx.bind(value);
+                    ctx.bind(compareValues.get(i));
+                    ctx.bind(results.get(i));
                 }
 
                 break;
             }
 
             default: {
-                context.bind(value);
+                ctx.bind(value);
 
                 for (int i = 0; i < compareValues.size(); i++) {
-                    context.bind(compareValues.get(i));
-                    context.bind(results.get(i));
+                    ctx.bind(compareValues.get(i));
+                    ctx.bind(results.get(i));
                 }
 
                 break;
@@ -128,50 +128,50 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
 
         if (otherwise != null) {
-            context.bind(otherwise);
+            ctx.bind(otherwise);
         }
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.formatIndentLockStart()
-               .keyword("case");
+    public final void toSQL(RenderContext ctx) {
+        ctx.formatIndentLockStart()
+           .keyword("case");
 
         int size = compareValues.size();
-        switch (context.getDialect()) {
+        switch (ctx.configuration().getDialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {
-                context.formatIndentLockStart();
+                ctx.formatIndentLockStart();
 
                 for (int i = 0; i < size; i++) {
                     if (i > 0) {
-                        context.formatNewLine();
+                        ctx.formatNewLine();
                     }
 
-                    context.keyword(" when ");
-                    context.sql(value.equal(compareValues.get(i)));
-                    context.keyword(" then ");
-                    context.sql(results.get(i));
+                    ctx.keyword(" when ");
+                    ctx.sql(value.equal(compareValues.get(i)));
+                    ctx.keyword(" then ");
+                    ctx.sql(results.get(i));
                 }
 
                 break;
             }
 
             default: {
-                context.sql(" ")
-                       .sql(value)
-                       .formatIndentLockStart();
+                ctx.sql(" ")
+                   .sql(value)
+                   .formatIndentLockStart();
 
                 for (int i = 0; i < size; i++) {
                     if (i > 0) {
-                        context.formatNewLine();
+                        ctx.formatNewLine();
                     }
 
-                    context.keyword(" when ");
-                    context.sql(compareValues.get(i));
-                    context.keyword(" then ");
-                    context.sql(results.get(i));
+                    ctx.keyword(" when ");
+                    ctx.sql(compareValues.get(i));
+                    ctx.keyword(" then ");
+                    ctx.sql(results.get(i));
                 }
 
                 break;
@@ -179,21 +179,21 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
 
         if (otherwise != null) {
-            context.formatNewLine()
-                   .keyword(" else ")
-                   .sql(otherwise);
+            ctx.formatNewLine()
+               .keyword(" else ")
+               .sql(otherwise);
         }
 
-        context.formatIndentLockEnd();
+        ctx.formatIndentLockEnd();
 
         if (size > 1 || otherwise != null) {
-            context.formatSeparator();
+            ctx.formatSeparator();
         }
         else {
-            context.sql(" ");
+            ctx.sql(" ");
         }
 
-        context.keyword("end")
-               .formatIndentLockEnd();
+        ctx.keyword("end")
+           .formatIndentLockEnd();
     }
 }

@@ -63,7 +63,7 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements Truncate<R
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
 
             // These dialects don't implement the TRUNCATE statement
             case FIREBIRD:
@@ -78,7 +78,7 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements Truncate<R
                 context.keyword("truncate table ");
                 context.sql(table);
 
-                if (context.getDialect() == SQLDialect.DB2) {
+                if (context.configuration().getDialect() == SQLDialect.DB2) {
                     context.keyword(" immediate");
                 }
 

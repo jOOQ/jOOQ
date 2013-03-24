@@ -55,11 +55,6 @@ import org.jooq.tools.StringUtils;
  */
 class ParamCollector extends AbstractBindContext {
 
-    /**
-     * Generated UID
-     */
-    private static final long   serialVersionUID = -3741599479523459297L;
-
     final Map<String, Param<?>> result           = new LinkedHashMap<String, Param<?>>();
 
     ParamCollector(Configuration configuration) {

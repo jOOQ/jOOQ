@@ -994,11 +994,11 @@ implements
     @Override
     public final void toSQL(RenderContext context) {
         if (h2Style) {
-            if (context.getDialect() == H2) {
+            if (context.configuration().getDialect() == H2) {
                 toSQLH2(context);
             }
             else {
-                context.sql(getStandardMerge(context));
+                context.sql(getStandardMerge(context.configuration()));
             }
         }
         else {
@@ -1045,7 +1045,7 @@ implements
                .formatIndentEnd()
                .declareTables(false);
 
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case SQLSERVER:
             case SYBASE: {
                 if (using instanceof Select) {
@@ -1115,7 +1115,7 @@ implements
                    .sql(notMatchedWhere);
         }
 
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case SQLSERVER:
                 context.sql(";");
                 break;
@@ -1125,11 +1125,11 @@ implements
     @Override
     public final void bind(BindContext context) {
         if (h2Style) {
-            if (context.getDialect() == H2) {
+            if (context.configuration().getDialect() == H2) {
                 bindH2(context);
             }
             else {
-                context.bind(getStandardMerge(context));
+                context.bind(getStandardMerge(context.configuration()));
             }
         }
         else {

@@ -55,10 +55,6 @@ import org.jooq.tools.StringUtils;
  */
 class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
 
-    /**
-     * Generated UID
-     */
-    private static final long    serialVersionUID   = -8358225526567622252L;
     private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
     private static final Pattern NEWLINE            = Pattern.compile("[\\n\\r]");
 
@@ -90,7 +86,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     DefaultRenderContext(RenderContext context) {
-        this((Configuration) context);
+        this(context.configuration());
 
         inline(context.inline());
         namedParams(context.namedParams());
@@ -407,7 +403,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             case NEVER:
                 return false;
             case SOME:
-                return asList(castDialects).contains(getDialect());
+                return asList(castDialects).contains(configuration.getDialect());
         }
 
         return null;

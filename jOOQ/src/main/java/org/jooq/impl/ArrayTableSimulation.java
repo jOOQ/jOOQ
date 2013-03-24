@@ -40,7 +40,7 @@ import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.one;
 
 import org.jooq.BindContext;
-import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -130,7 +130,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         return field;
     }
 
-    private final Table<Record> table(Configuration configuration) {
+    private final Table<Record> table(Context<?> ctx) {
         if (table == null) {
             Select<Record> select = null;
 
@@ -138,7 +138,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
 
                 // [#1081] Be sure to get the correct cast type also for null
                 Field<?> val = Factory.val(element, field.fields[0].getDataType());
-                Select<Record> subselect = create(configuration).select(val.as("COLUMN_VALUE")).select();
+                Select<Record> subselect = create(ctx).select(val.as("COLUMN_VALUE")).select();
 
                 if (select == null) {
                     select = subselect;
@@ -150,7 +150,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
 
             // Empty arrays should result in empty tables
             if (select == null) {
-                select = create(configuration).select(one().as("COLUMN_VALUE")).select().where(falseCondition());
+                select = create(ctx).select(one().as("COLUMN_VALUE")).select().where(falseCondition());
             }
 
             table = select.asTable(alias);

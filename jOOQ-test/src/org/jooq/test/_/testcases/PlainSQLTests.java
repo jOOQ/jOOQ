@@ -516,7 +516,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             @Override
             public void toSQL(RenderContext context) {
-                context.setData("Foo-Field", "Baz");
+                context.configuration().setData("Foo-Field", "Baz");
 
                 if (context.inline()) {
                     context.sql(TBook_ID().getName() + " * 2");
@@ -524,7 +524,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Firebird is the only dialect that cannot handle type inferral
                 // When multiplying an INT by a bind value
-                else if (context.getDialect() == FIREBIRD) {
+                else if (context.configuration().getDialect() == FIREBIRD) {
                     context.sql(TBook_ID().getName() + " * cast (? as int)");
                 }
                 else {
@@ -548,7 +548,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             @Override
             public void toSQL(RenderContext context) {
-                context.setData("Foo-Condition", "Baz");
+                context.configuration().setData("Foo-Condition", "Baz");
 
                 context.sql(IDx2);
                 context.sql(" > ");

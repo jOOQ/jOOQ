@@ -78,7 +78,7 @@ class Cast<T> extends AbstractField<T> {
         // Avoid casting bind values inside an explicit cast...
         CastMode castMode = context.castMode();
 
-        if (context.getDialect() == SQLDialect.DERBY) {
+        if (context.configuration().getDialect() == SQLDialect.DERBY) {
 
             // [#857] Interestingly, Derby does not allow for casting numeric
             // types directly to VARCHAR. An intermediary cast to CHAR is needed
@@ -92,7 +92,7 @@ class Cast<T> extends AbstractField<T> {
                        .castMode(castMode)
                        .keyword(" as char(38))")
                        .keyword(" as ")
-                       .keyword(getDataType(context).getCastTypeName(context))
+                       .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
                        .sql("))");
 
                 return;
@@ -109,7 +109,7 @@ class Cast<T> extends AbstractField<T> {
                        .castMode(castMode)
                        .keyword(" as decimal)")
                        .keyword(" as ")
-                       .keyword(getDataType(context).getCastTypeName(context))
+                       .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
                        .sql(")");
 
                 return;
@@ -138,7 +138,7 @@ class Cast<T> extends AbstractField<T> {
                .sql(field)
                .castMode(castMode)
                .keyword(" as ")
-               .keyword(getDataType(context).getCastTypeName(context))
+               .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
                .sql(")");
     }
 
@@ -166,7 +166,7 @@ class Cast<T> extends AbstractField<T> {
 
     @Override
     public final void bind(BindContext context) {
-        if (context.getDialect() == SQLDialect.DERBY) {
+        if (context.configuration().getDialect() == SQLDialect.DERBY) {
 
             // [#859] casting numeric types to BOOLEAN
             if (field.getDataType().isNumeric() &&

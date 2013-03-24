@@ -59,7 +59,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
 
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
@@ -122,7 +122,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     private String getInlineConstructor(RenderContext context) {
         // TODO [#884] Fix this with a local render context (using ctx.literal)
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case POSTGRES:
                 return "ROW";
 
@@ -132,7 +132,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Assume default behaviour if dialect is not available
             default: {
                 UDT<?> udt = value.getUDT();
-                Schema mappedSchema = Utils.getMappedSchema(context, udt.getSchema());
+                Schema mappedSchema = Utils.getMappedSchema(context.configuration(), udt.getSchema());
 
                 if (mappedSchema != null) {
                     return mappedSchema + "." + udt.getName();
@@ -146,7 +146,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     @Override
     public final void bind(BindContext context) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
 
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
@@ -168,7 +168,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             }
 
             default:
-                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.getDialect());
+                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.configuration().getDialect());
         }
     }
 }

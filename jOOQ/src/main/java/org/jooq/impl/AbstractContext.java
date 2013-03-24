@@ -35,31 +35,52 @@
  */
 package org.jooq.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jooq.Configuration;
 import org.jooq.Context;
 
 /**
  * @author Lukas Eder
  */
-abstract class AbstractContext<C extends Context<C>> extends AbstractConfiguration implements Context<C> {
+abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 4796952332163571043L;
-
+    final Configuration       configuration;
+    final Map<Object, Object> data;
     boolean                   declareFields;
     boolean                   declareTables;
     boolean                   subquery;
     int                       index;
 
     AbstractContext(Configuration configuration) {
-        super(configuration);
+        this.configuration = configuration;
+        this.data = new HashMap<Object, Object>();
     }
 
     // ------------------------------------------------------------------------
     // XXX Context API
     // ------------------------------------------------------------------------
+
+    @Override
+    public final Configuration configuration() {
+        return configuration;
+    }
+
+    @Override
+    public final Map<Object, Object> data() {
+        return data;
+    }
+
+    @Override
+    public final Object data(Object key) {
+        return data.get(key);
+    }
+
+    @Override
+    public final Object data(Object key, Object value) {
+        return data.put(key, value);
+    }
 
     @Override
     public final boolean declareFields() {

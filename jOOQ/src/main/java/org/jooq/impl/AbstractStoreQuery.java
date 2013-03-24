@@ -149,7 +149,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
     final void toSQLReturning(RenderContext context) {
         if (!returning.isEmpty()) {
-            switch (context.getDialect()) {
+            switch (context.configuration().getDialect()) {
                 case FIREBIRD:
                 case POSTGRES:
                     context.formatSeparator()
@@ -165,7 +165,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     }
 
     final void bindReturning(BindContext context) {
-        switch (context.getDialect()) {
+        switch (context.configuration().getDialect()) {
             case FIREBIRD:
             case POSTGRES:
                 context.bind((QueryPart) returning);

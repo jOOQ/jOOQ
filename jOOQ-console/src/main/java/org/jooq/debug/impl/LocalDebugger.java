@@ -308,7 +308,7 @@ class LocalDebugger implements Debugger {
             }
             @Override
             public SQLDialect getSQLDialect() {
-                return ctx.getDialect();
+                return ctx.configuration().getDialect();
             }
             @Override
             public String[] getTableNames() {

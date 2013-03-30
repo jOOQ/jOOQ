@@ -220,12 +220,36 @@ import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
 
 /**
- * TODO: Write this Javadoc
+ * A factory providing "attached" implementations to the <code>org.jooq</code>
+ * interfaces.
  * <p>
- * An <code>Executor</code> holds a reference to a JDBC {@link Connection} and
- * operates upon that connection. This means, that an <code>Executor</code> is
- * <i>not</i> thread-safe, since a JDBC Connection is not thread-safe either.
+ * Apart from the {@link Factory}, this executor is the main entry point for
+ * client code, to access jOOQ classes and functionality that are related to
+ * {@link Query} execution. Unlike objects created through the
+ * <code>Factory</code>, objects created from an <code>Executor</code> will be
+ * "attached" to the <code>Executor</code>'s {@link #configuration()}, such that
+ * they can be executed immediately in a fluent style. An example is given here:
+ * <p>
+ * <code><pre>
+ * Executor create = new Executor(connection, dialect);
  *
+ * // Immediately fetch results after constructing a query
+ * create.selectFrom(MY_TABLE).where(MY_TABLE.ID.eq(1)).fetch();
+ *
+ * // The above is equivalent to this "non-fluent" style
+ * create.fetch(Factory.selectFrom(MY_TABLE).where(MY_TABLE.ID.eq(1)));
+ * </pre></code>
+ * <p>
+ * The <code>Executor</code> provides convenient constructors to create a
+ * {@link Configuration}, which will be shared among all <code>Query</code>
+ * objects thus created. Optionally, you can pass a reusable
+ * <code>Configuration</code> to the {@link #Executor(Configuration)}
+ * constructor. Please consider thread-safety concerns documented in
+ * {@link Configuration}, should you want to reuse the same
+ * <code>Configuration</code> instance in various threads and / or transactions.
+ *
+ * @see Factory
+ * @see Configuration
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

@@ -143,12 +143,13 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 
 /**
- * A factory providing implementations to the org.jooq interfaces.
+ * A factory providing implementations to the <code>org.jooq</code> interfaces.
  * <p>
- * This factory is the main entry point for client code, to access jOOQ classes
- * and functionality. Here, you can instanciate all of those objects that cannot
- * be accessed through other objects. For example, to create a {@link Field}
- * representing a constant value, you can write:
+ * Apart from the {@link Executor}, this factory is the main entry point for
+ * client code, to access jOOQ classes and functionality. Here, you can
+ * instanciate all of those objects that cannot be accessed through other
+ * objects. For example, to create a {@link Field} representing a constant
+ * value, you can write:
  * <p>
  * <code><pre>
  * Field&lt;String&gt; field = Factory.val("Hello World")
@@ -177,6 +178,7 @@ import org.jooq.types.DayToSecond;
  * }
  * </pre></code>
  *
+ * @see Executor
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })

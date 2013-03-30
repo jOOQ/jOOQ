@@ -167,7 +167,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         // [#1002] Consider also identity columns of non-updatable records
         // [#1537] Avoid refreshing identity columns on batch inserts
         Collection<Field<?>> key = null;
-        if (!TRUE.equals(create.getData(Utils.DATA_OMIT_RETURNING_CLAUSE))) {
+        if (!TRUE.equals(create.configuration().getData(Utils.DATA_OMIT_RETURNING_CLAUSE))) {
             key = getReturning();
             insert.setReturning(key);
         }
@@ -431,7 +431,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // [#1547] SQLite doesn't support FOR UPDATE. CUBRID and SQL Server
         // can simulate it, though!
-        if (create().getDialect() != SQLDialect.SQLITE) {
+        if (create().configuration().getDialect() != SQLDialect.SQLITE) {
             select.setForUpdate(true);
         }
 

@@ -100,6 +100,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     // Configuration data
     // ------------------
     private final Executor          create;
+    private final Configuration     configuration;
     private final Table<R>          table;
     private int                     onDuplicate             = ON_DUPLICATE_KEY_ERROR;
     private int                     onError                 = ON_ERROR_ABORT;
@@ -126,6 +127,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     LoaderImpl(Configuration configuration, Table<R> table) {
         this.create = new Executor(configuration);
+        this.configuration = configuration;
         this.table = table;
         this.errors = new ArrayList<LoaderError>();
     }
@@ -401,7 +403,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
                     if (commit == COMMIT_AFTER) {
                         if (processed % commitAfter == 0) {
-                            create.getConnectionProvider().acquire().commit();
+                            configuration.getConnectionProvider().acquire().commit();
                         }
                     }
                 }
@@ -420,17 +422,17 @@ class LoaderImpl<R extends TableRecord<R>> implements
                 if (commit == COMMIT_ALL) {
                     if (!errors.isEmpty()) {
                         stored = 0;
-                        create.getConnectionProvider().acquire().rollback();
+                        configuration.getConnectionProvider().acquire().rollback();
                     }
                     else {
-                        create.getConnectionProvider().acquire().commit();
+                        configuration.getConnectionProvider().acquire().commit();
                     }
                 }
 
                 // Commit remaining elements in COMMIT_AFTER mode
                 else if (commit == COMMIT_AFTER) {
                     if (processed % commitAfter != 0) {
-                        create.getConnectionProvider().acquire().commit();
+                        configuration.getConnectionProvider().acquire().commit();
                     }
                 }
             }

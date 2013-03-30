@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BatchBindStep;
+import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
@@ -59,11 +60,13 @@ class BatchSingle implements BatchBindStep {
     private static final long    serialVersionUID = 3793967258181493207L;
 
     private final Executor       create;
+    private final Configuration  configuration;
     private final Query          query;
     private final List<Object[]> allBindValues;
 
-    public BatchSingle(Executor create, Query query) {
-        this.create = create;
+    public BatchSingle(Configuration configuration, Query query) {
+        this.create = new Executor(configuration);
+        this.configuration = configuration;
         this.query = query;
         this.allBindValues = new ArrayList<Object[]>();
     }
@@ -102,7 +105,7 @@ class BatchSingle implements BatchBindStep {
     }
 
     private final int[] executePrepared() {
-        ExecuteContext ctx = new DefaultExecuteContext(create, new Query[] { query });
+        ExecuteContext ctx = new DefaultExecuteContext(configuration, new Query[] { query });
         ExecuteListener listener = new ExecuteListeners(ctx);
         Connection connection = ctx.connection();
 
@@ -132,7 +135,7 @@ class BatchSingle implements BatchBindStep {
                 for (int i = 0; i < params.size(); i++) {
                     params.get(i).setConverted(bindValues[i]);
                 }
-                new DefaultBindContext(create, ctx.statement()).bind(params);
+                new DefaultBindContext(configuration, ctx.statement()).bind(params);
 
                 listener.bindEnd(ctx);
                 ctx.statement().addBatch();

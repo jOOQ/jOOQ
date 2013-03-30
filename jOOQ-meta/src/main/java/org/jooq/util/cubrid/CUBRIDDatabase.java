@@ -125,7 +125,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
 
     @Override
     protected void loadForeignKeys(DefaultRelations relations) throws SQLException {
-        ConnectionProvider provider = create().getConnectionProvider();
+        ConnectionProvider provider = create().configuration().getConnectionProvider();
         Connection connection = null;
 
         try {

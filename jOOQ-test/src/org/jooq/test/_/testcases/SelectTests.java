@@ -374,8 +374,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         final Executor create1 = create();
         final Executor create2 = create();
 
-        ((DefaultConnectionProvider) create2.getConnectionProvider()).setConnection(getNewConnection());
-        create2.getConnectionProvider().acquire().setAutoCommit(false);
+        ((DefaultConnectionProvider) create2.configuration().getConnectionProvider()).setConnection(getNewConnection());
+        create2.configuration().getConnectionProvider().acquire().setAutoCommit(false);
 
         final Vector<String> execOrder = new Vector<String>();
 
@@ -417,8 +417,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     execOrder.add("t1-fail-or-t2-commit");
 
                     try {
-                        create2.getConnectionProvider().acquire().commit();
-                        create2.getConnectionProvider().acquire().close();
+                        create2.configuration().getConnectionProvider().acquire().commit();
+                        create2.configuration().getConnectionProvider().acquire().close();
                     }
                     catch (Exception e) {}
                 }
@@ -442,7 +442,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
         finally {
             try {
-                create2.getConnectionProvider().acquire().close();
+                create2.configuration().getConnectionProvider().acquire().close();
             }
             catch (Exception e) {}
         }

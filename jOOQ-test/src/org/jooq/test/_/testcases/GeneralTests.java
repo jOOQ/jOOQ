@@ -230,10 +230,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .getValue(TAuthor_FIRST_NAME()));
 
         // [#1191] Check execution capabilities with new features in ExecuteListener
-        ConnectionProviderListener.c = create().getConnectionProvider().acquire();
+        ConnectionProviderListener.c = create().configuration().getConnectionProvider().acquire();
         try {
             Executor create = create();
-            create.getExecuteListeners().add(new ConnectionProviderListener());
+            create.configuration().getExecuteListeners().add(new ConnectionProviderListener());
             q = create
                     .selectFrom(TAuthor())
                     .orderBy(TAuthor_LAST_NAME());
@@ -249,7 +249,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result.get(1).store();
         }
         finally {
-            create().getConnectionProvider().release(ConnectionProviderListener.c);
+            create().configuration().getConnectionProvider().release(ConnectionProviderListener.c);
             ConnectionProviderListener.c = null;
         }
 
@@ -308,7 +308,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         store2.attach(null);
         failStoreRefreshDelete(store2);
 
-        store2.attach(create);
+        store2.attach(create.configuration());
         store2.refresh();
         assertEquals(1, store2.delete());
         assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble")));
@@ -319,7 +319,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         S store3 = create.newRecord(TBookStore());
         store3.setValue(TBookStore_NAME(), "Barnes and Noble");
         failStoreRefreshDelete(store3);
-        store3.attach(create);
+        store3.attach(create.configuration());
         assertEquals(1, store3.store());
 
         S store4 = create.newRecord(TBookStore());
@@ -329,7 +329,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         store4.setValue(TBookStore_NAME(), "ABC");
         failStoreRefreshDelete(store4);
         store4 = create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble"));
-        store4.attach(create);
+        store4.attach(create.configuration());
         assertEquals(1, store4.delete());
         assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("Barnes and Noble")));
         assertNull(create.fetchOne(TBookStore(), TBookStore_NAME().equal("ABC")));

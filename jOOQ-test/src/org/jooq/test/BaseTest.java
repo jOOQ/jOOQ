@@ -707,7 +707,7 @@ public abstract class BaseTest<
 
     protected Executor create(Settings settings) {
         Executor create = delegate.create(settings);
-        create.getExecuteListeners().add(new TestStatisticsListener());
+        create.configuration().getExecuteListeners().add(new TestStatisticsListener());
         return create;
     }
 

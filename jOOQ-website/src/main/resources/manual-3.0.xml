@@ -10239,6 +10239,20 @@ Condition condition1 = BOOK.TITLE.equal(possiblyNull);
 Condition condition2 = BOOK.TITLE.equal(possiblyNull).or(BOOK.TITLE.isNull().and(val(possiblyNull).isNull()));
 Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 							
+							<h3>Configuration</h3>
+							<p>
+								<code>Executor</code>, <code>ExecuteContext</code>, <code>RenderContext</code>, <code>BindContext</code> no longer extend <code>Configuration</code> for "convenience". From jOOQ 3.0 onwards, composition is chosen over inheritance as these objects are not really configurations. Most importantly
+							</p>
+							<ul>
+								<li><code>Executor</code> is only a DSL entry point for constructing "attached" QueryParts</li>
+								<li><code>ExecuteContext</code> has a well-defined lifecycle, tied to that of a single query execution</li>
+								<li><code>RenderContext</code> has a well-defined lifecycle, tied to that of a single rendering operation</li>
+								<li><code>BindContext</code> has a well-defined lifecycle, tied to that of a single variable binding operation</li>
+							</ul>
+							<p>
+								In order to resolve confusion that used to arise because of different lifecycle durations, these types are now no longer formally connected through inheritance.
+							</p>
+							
 							<h3>ConnectionProvider</h3>
 							<p>
 							    In order to allow for simpler connection / data source management, jOOQ externalised connection handling in a new ConnectionProvider type. The previous two connection modes are maintained backwards-compatibly (JDBC standalone connection mode, pooled DataSource mode). Other connection modes can be injected using:

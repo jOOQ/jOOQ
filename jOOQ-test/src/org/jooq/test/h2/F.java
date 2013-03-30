@@ -61,7 +61,7 @@ import org.jooq.test.h2.generatedclasses.tables.TBook;
 public class F {
 
     public static void pCreateAuthor(Connection connection) {
-        Routines.pCreateAuthorByName(create(connection), "William", "Shakespeare");
+        Routines.pCreateAuthorByName(create(connection).configuration(), "William", "Shakespeare");
     }
 
     public static void pCreateAuthorByName(Connection connection, String firstName, String lastName) {

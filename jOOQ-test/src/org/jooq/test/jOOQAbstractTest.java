@@ -849,13 +849,13 @@ public abstract class jOOQAbstractTest<
                 .withDefaultSchema(defaultSchema));
 
         Executor create = create(settings);
-        create.getExecuteListeners().add(new TestStatisticsListener());
-        create.getExecuteListeners().add(new PrettyPrinter());
+        create.configuration().getExecuteListeners().add(new TestStatisticsListener());
+        create.configuration().getExecuteListeners().add(new PrettyPrinter());
         return create;
     }
 
     protected final SQLDialect getDialect() {
-        return create().getDialect();
+        return create().configuration().getDialect();
     }
 
     protected String getSchemaSuffix() {

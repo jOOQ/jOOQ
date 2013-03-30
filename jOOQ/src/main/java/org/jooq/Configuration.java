@@ -43,20 +43,28 @@ import org.jooq.conf.Settings;
 import org.jooq.impl.Executor;
 
 /**
- * The Configuration holds data about sql dialects, connections / data sources,
- * and custom settings as well as custom data.
+ * A <code>Configuration</code> configures an {@link Executor}, providing it
+ * with information for query construction, rendering and execution.
  * <p>
- * Essentially, the lifecycle of all objects in {@link Configuration} is the
- * same. It corresponds to the lifecycle of a single {@link Query} and its
- * rendering, variable binding, execution, and data fetching phases. This is
- * also reflected in the fact that {@link ExecuteListener} objects are
- * re-created every time a <code>Query</code> is executed
+ * A <code>Configuration</code> wraps all information elements that are
+ * needed...
+ * <ul>
+ * <li>by an {@link Executor} to construct {@link Query} objects</li>
+ * <li>by a {@link RenderContext} to render {@link Query} objects and
+ * {@link QueryPart}s</li>
+ * <li>by a {@link BindContext} to bind values to {@link Query} objects and
+ * {@link QueryPart}s</li>
+ * <li>by a {@link Query} or {@link Routine} object to execute itself</li>
+ * </ul>
  * <p>
- * However, {@link Configuration} / {@link Executor} may be reused for several
- * consecutive queries in a single thread, if the supplied
- * <code>Connection</code> / <code>DataSource</code> allows this and if client
- * code can live with the possibility of stale state in
- * {@link Configuration#getData()} between executions
+ * The simplest usage of a <code>Configuration</code> instance is to use it
+ * exactly for a single <code>Query</code> execution, disposing it immediately.
+ * This will make it very simple to implement thread-safe behaviour.
+ * <p>
+ * At the same time, jOOQ does not require <code>Configuration</code> instances
+ * to be that short-lived. Thread-safety will then be delegated to component
+ * objects, such as the {@link ConnectionProvider}, the {@link ExecuteListener}
+ * list, etc.
  *
  * @author Lukas Eder
  */

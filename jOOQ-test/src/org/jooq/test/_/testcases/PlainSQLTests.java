@@ -576,8 +576,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1169] Some additional checks to see if custom data is correctly
         // passed on to custom QueryParts
         Executor create = create();
-        create.setData("Foo-Field", "Bar");
-        create.setData("Foo-Condition", "Bar");
+        create.configuration().setData("Foo-Field", "Bar");
+        create.configuration().setData("Foo-Condition", "Bar");
 
         Result<Record2<Integer, Integer>> result = create
             .select(TBook_ID(), IDx2)
@@ -596,7 +596,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(8), result.getValue(2, IDx2));
 
         // [#1169] Check again
-        assertEquals("Baz", create.getData("Foo-Field"));
-        assertEquals("Baz", create.getData("Foo-Condition"));
+        assertEquals("Baz", create.configuration().getData("Foo-Field"));
+        assertEquals("Baz", create.configuration().getData("Foo-Condition"));
     }
 }

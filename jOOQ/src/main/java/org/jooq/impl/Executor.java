@@ -57,6 +57,7 @@ import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Utils.list;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.StringReader;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -228,7 +229,7 @@ import org.jooq.tools.csv.CSVReader;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-public class Executor implements Configuration {
+public class Executor implements Serializable {
 
     /**
      * Generated UID
@@ -392,50 +393,8 @@ public class Executor implements Configuration {
     // XXX Configuration API
     // -------------------------------------------------------------------------
 
-    @Override
-    public final SQLDialect getDialect() {
-        return configuration.getDialect();
-    }
-
-    @Override
-    @Deprecated
-    public final org.jooq.SchemaMapping getSchemaMapping() {
-        return configuration.getSchemaMapping();
-    }
-
-    @Override
-    public final Settings getSettings() {
-        return configuration.getSettings();
-    }
-
-    @Override
-    public final Map<Object, Object> getData() {
-        return configuration.getData();
-    }
-
-    @Override
-    public final Object getData(Object key) {
-        return configuration.getData(key);
-    }
-
-    @Override
-    public final Object setData(Object key, Object value) {
-        return configuration.setData(key, value);
-    }
-
-    @Override
-    public final ConnectionProvider getConnectionProvider() {
-        return configuration.getConnectionProvider();
-    }
-
-    @Override
-    public final List<ExecuteListener> getExecuteListeners() {
-        return configuration.getExecuteListeners();
-    }
-
-    @Override
-    public final void setExecuteListeners(List<ExecuteListener> listeners) {
-        configuration.setExecuteListeners(listeners);
+    public final Configuration configuration() {
+        return configuration;
     }
 
     /**
@@ -449,7 +408,7 @@ public class Executor implements Configuration {
      * @return The mapped schema
      */
     public final Schema map(Schema schema) {
-        return Utils.getMappedSchema(this, schema);
+        return Utils.getMappedSchema(configuration, schema);
     }
 
     /**
@@ -463,7 +422,7 @@ public class Executor implements Configuration {
      * @return The mapped table
      */
     public final <R extends Record> Table<R> map(Table<R> table) {
-        return Utils.getMappedTable(this, table);
+        return Utils.getMappedTable(configuration, table);
     }
 
     // -------------------------------------------------------------------------
@@ -477,7 +436,7 @@ public class Executor implements Configuration {
      * connection's database meta data.
      */
     public final Meta meta() {
-        return new MetaImpl(this);
+        return new MetaImpl(configuration);
     }
 
     // -------------------------------------------------------------------------
@@ -502,7 +461,7 @@ public class Executor implements Configuration {
      * </ul>
      */
     public final RenderContext renderContext() {
-        return new DefaultRenderContext(this);
+        return new DefaultRenderContext(configuration);
     }
 
     /**
@@ -576,7 +535,7 @@ public class Executor implements Configuration {
      * @see Factory#param(String, Object)
      */
     public final Map<String, Param<?>> extractParams(QueryPart part) {
-        ParamCollector collector = new ParamCollector(this);
+        ParamCollector collector = new ParamCollector(configuration);
         collector.bind(part);
         return Collections.unmodifiableMap(collector.result);
     }
@@ -606,7 +565,7 @@ public class Executor implements Configuration {
      * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
      */
     public final BindContext bindContext(PreparedStatement stmt) {
-        return new DefaultBindContext(this, stmt);
+        return new DefaultBindContext(configuration, stmt);
     }
 
     /**
@@ -640,7 +599,7 @@ public class Executor implements Configuration {
      */
     public final void attach(Collection<? extends Attachable> attachables) {
         for (Attachable attachable : attachables) {
-            attachable.attach(this);
+            attachable.attach(configuration);
         }
     }
 
@@ -654,7 +613,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
-        return new LoaderImpl<R>(this, table);
+        return new LoaderImpl<R>(configuration, table);
     }
 
     /**
@@ -699,7 +658,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Query query(String sql, Object... bindings) {
-        return new SQLQuery(this, sql, bindings);
+        return new SQLQuery(configuration, sql, bindings);
     }
 
     /**
@@ -730,7 +689,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Query query(String sql, QueryPart... parts) {
-        return new SQLQuery(this, sql, parts);
+        return new SQLQuery(configuration, sql, parts);
     }
 
     /**
@@ -1287,7 +1246,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final ResultQuery<Record> resultQuery(String sql, Object... bindings) {
-        return new SQLResultQuery(this, sql, bindings);
+        return new SQLResultQuery(configuration, sql, bindings);
     }
 
     /**
@@ -1318,7 +1277,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
-        return new SQLResultQuery(this, sql, parts);
+        return new SQLResultQuery(configuration, sql, parts);
     }
 
     // -------------------------------------------------------------------------
@@ -1509,7 +1468,7 @@ public class Executor implements Configuration {
     @Support
     public final Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException {
         try {
-            return fetchLazy(rs, new MetaDataFieldProvider(this, rs.getMetaData()).getFields());
+            return fetchLazy(rs, new MetaDataFieldProvider(configuration, rs.getMetaData()).getFields());
         }
         catch (SQLException e) {
             throw new DataAccessException("Error while accessing ResultSet meta data", e);
@@ -1532,7 +1491,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) throws DataAccessException {
-        ExecuteContext ctx = new DefaultExecuteContext(this);
+        ExecuteContext ctx = new DefaultExecuteContext(configuration);
         ExecuteListener listener = new ExecuteListeners(ctx);
 
         ctx.resultSet(rs);
@@ -1784,7 +1743,7 @@ public class Executor implements Configuration {
      */
     public final Result<Record> fetchFromStringData(List<String[]> data) {
         if (data.size() == 0) {
-            return new ResultImpl<Record>(this);
+            return new ResultImpl<Record>(configuration);
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
@@ -1793,7 +1752,7 @@ public class Executor implements Configuration {
                 fields.add(fieldByName(String.class, name));
             }
 
-            Result<Record> result = new ResultImpl<Record>(this, fields);
+            Result<Record> result = new ResultImpl<Record>(configuration, fields);
 
             if (data.size() > 1) {
                 for (String[] values : data.subList(1, data.size())) {
@@ -1825,7 +1784,7 @@ public class Executor implements Configuration {
     @Support
     public final <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
         SelectWhereStep<R> result = Factory.selectFrom(table);
-        result.attach(this);
+        result.attach(configuration);
         return result;
     }
 
@@ -1853,7 +1812,7 @@ public class Executor implements Configuration {
     @Support
     public final SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
         SelectSelectStep<Record> result = Factory.select(fields);
-        result.attach(this);
+        result.attach(configuration);
         return result;
     }
 
@@ -1882,7 +1841,7 @@ public class Executor implements Configuration {
     @Support
     public final SelectSelectStep<Record> select(Field<?>... fields) {
         SelectSelectStep<Record> result = Factory.select(fields);
-        result.attach(this);
+        result.attach(configuration);
         return result;
     }
 
@@ -2640,7 +2599,7 @@ public class Executor implements Configuration {
     @Support
     public final SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
         SelectSelectStep<Record> result = Factory.selectDistinct(fields);
-        result.attach(this);
+        result.attach(configuration);
         return result;
     }
 
@@ -2668,7 +2627,7 @@ public class Executor implements Configuration {
     @Support
     public final SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
         SelectSelectStep<Record> result = Factory.selectDistinct(fields);
-        result.attach(this);
+        result.attach(configuration);
         return result;
     }
 
@@ -3427,7 +3386,7 @@ public class Executor implements Configuration {
     @Support
     public final SelectSelectStep<Record1<Integer>> selectZero() {
         SelectSelectStep<Record1<Integer>> result = Factory.selectZero();
-        result.attach(this);
+        result.attach(configuration);
         return result;
     }
 
@@ -3456,7 +3415,7 @@ public class Executor implements Configuration {
     @Support
     public final SelectSelectStep<Record1<Integer>> selectOne() {
         SelectSelectStep<Record1<Integer>> result = Factory.selectOne();
-        result.attach(this);
+        result.attach(configuration);
         return result;
     }
 
@@ -3484,7 +3443,7 @@ public class Executor implements Configuration {
     @Support
     public final SelectSelectStep<Record1<Integer>> selectCount() {
         SelectSelectStep<Record1<Integer>> result = Factory.selectCount();
-        result.attach(this);
+        result.attach(configuration);
         return result;
     }
 
@@ -3493,7 +3452,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final SelectQuery<Record> selectQuery() {
-        return new SelectQueryImpl(this);
+        return new SelectQueryImpl(configuration);
     }
 
     /**
@@ -3504,7 +3463,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> SelectQuery<R> selectQuery(TableLike<R> table) {
-        return new SelectQueryImpl<R>(this, table);
+        return new SelectQueryImpl<R>(configuration, table);
     }
 
     /**
@@ -3515,7 +3474,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
-        return new InsertQueryImpl<R>(this, into);
+        return new InsertQueryImpl<R>(configuration, into);
     }
 
     /**
@@ -3540,7 +3499,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> InsertSetStep<R> insertInto(Table<R> into) {
-        return new InsertImpl(this, into, Collections.<Field<?>>emptyList());
+        return new InsertImpl(configuration, into, Collections.<Field<?>>emptyList());
     }
 
 // [jooq-tools] START [insert]
@@ -3563,7 +3522,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1 }));
     }
 
     /**
@@ -3584,7 +3543,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2> InsertValuesStep2<R, T1, T2> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2 }));
     }
 
     /**
@@ -3605,7 +3564,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3 }));
     }
 
     /**
@@ -3626,7 +3585,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4 }));
     }
 
     /**
@@ -3647,7 +3606,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5 }));
     }
 
     /**
@@ -3668,7 +3627,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6 }));
     }
 
     /**
@@ -3689,7 +3648,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7 }));
     }
 
     /**
@@ -3710,7 +3669,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 }));
     }
 
     /**
@@ -3731,7 +3690,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 }));
     }
 
     /**
@@ -3752,7 +3711,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 }));
     }
 
     /**
@@ -3773,7 +3732,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 }));
     }
 
     /**
@@ -3794,7 +3753,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 }));
     }
 
     /**
@@ -3815,7 +3774,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 }));
     }
 
     /**
@@ -3836,7 +3795,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 }));
     }
 
     /**
@@ -3857,7 +3816,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 }));
     }
 
     /**
@@ -3878,7 +3837,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 }));
     }
 
     /**
@@ -3899,7 +3858,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 }));
     }
 
     /**
@@ -3920,7 +3879,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 }));
     }
 
     /**
@@ -3941,7 +3900,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 }));
     }
 
     /**
@@ -3962,7 +3921,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 }));
     }
 
     /**
@@ -3983,7 +3942,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 }));
     }
 
     /**
@@ -4004,7 +3963,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
-        return new InsertImpl(this, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 }));
+        return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 }));
     }
 
 // [jooq-tools] END [insert]
@@ -4026,7 +3985,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
-        return new InsertImpl(this, into, Arrays.asList(fields));
+        return new InsertImpl(configuration, into, Arrays.asList(fields));
     }
 
     /**
@@ -4046,7 +4005,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
-        return new InsertImpl(this, into, fields);
+        return new InsertImpl(configuration, into, fields);
     }
 
     /**
@@ -4057,7 +4016,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
-        return new UpdateQueryImpl<R>(this, table);
+        return new UpdateQueryImpl<R>(configuration, table);
     }
 
     /**
@@ -4085,7 +4044,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
-        return new UpdateImpl<R>(this, table);
+        return new UpdateImpl<R>(configuration, table);
     }
 
     /**
@@ -4164,7 +4123,7 @@ public class Executor implements Configuration {
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
-        return new MergeImpl(this, table);
+        return new MergeImpl(configuration, table);
     }
 
 // [jooq-tools] START [merge]
@@ -4192,7 +4151,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
-        return new MergeImpl(this, table, Arrays.asList(field1));
+        return new MergeImpl(configuration, table, Arrays.asList(field1));
     }
 
     /**
@@ -4218,7 +4177,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2));
     }
 
     /**
@@ -4244,7 +4203,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3));
     }
 
     /**
@@ -4270,7 +4229,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4));
     }
 
     /**
@@ -4296,7 +4255,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5));
     }
 
     /**
@@ -4322,7 +4281,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6));
     }
 
     /**
@@ -4348,7 +4307,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7));
     }
 
     /**
@@ -4374,7 +4333,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8));
     }
 
     /**
@@ -4400,7 +4359,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9));
     }
 
     /**
@@ -4426,7 +4385,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
     }
 
     /**
@@ -4452,7 +4411,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
     }
 
     /**
@@ -4478,7 +4437,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
     }
 
     /**
@@ -4504,7 +4463,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
     }
 
     /**
@@ -4530,7 +4489,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
     }
 
     /**
@@ -4556,7 +4515,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
     }
 
     /**
@@ -4582,7 +4541,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
     }
 
     /**
@@ -4608,7 +4567,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
     }
 
     /**
@@ -4634,7 +4593,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
     }
 
     /**
@@ -4660,7 +4619,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
     }
 
     /**
@@ -4686,7 +4645,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
     }
 
     /**
@@ -4712,7 +4671,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
     }
 
     /**
@@ -4738,7 +4697,7 @@ public class Executor implements Configuration {
     @Generated("This method was generated using jOOQ-tools")
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
-        return new MergeImpl(this, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
+        return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
 // [jooq-tools] END [merge]
@@ -4775,7 +4734,7 @@ public class Executor implements Configuration {
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public final <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
-        return new MergeImpl(this, table, fields);
+        return new MergeImpl(configuration, table, fields);
     }
 
     /**
@@ -4786,7 +4745,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
-        return new DeleteQueryImpl<R>(this, table);
+        return new DeleteQueryImpl<R>(configuration, table);
     }
 
     /**
@@ -4802,7 +4761,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
-        return new DeleteImpl<R>(this, table);
+        return new DeleteImpl<R>(configuration, table);
     }
 
     // -------------------------------------------------------------------------
@@ -4826,7 +4785,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Batch batch(Query... queries) {
-        return new BatchMultiple(this, queries);
+        return new BatchMultiple(configuration, queries);
     }
 
     /**
@@ -4881,7 +4840,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final BatchBindStep batch(Query query) {
-        return new BatchSingle(this, query);
+        return new BatchSingle(configuration, query);
     }
 
     /**
@@ -4927,7 +4886,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Batch batchStore(UpdatableRecord<?>... records) {
-        return new BatchCRUD(this, Action.STORE, records);
+        return new BatchCRUD(configuration, Action.STORE, records);
     }
 
     /**
@@ -4951,7 +4910,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Batch batchInsert(UpdatableRecord<?>... records) {
-        return new BatchCRUD(this, Action.INSERT, records);
+        return new BatchCRUD(configuration, Action.INSERT, records);
     }
 
     /**
@@ -4975,7 +4934,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Batch batchUpdate(UpdatableRecord<?>... records) {
-        return new BatchCRUD(this, Action.UPDATE, records);
+        return new BatchCRUD(configuration, Action.UPDATE, records);
     }
 
     /**
@@ -5033,7 +4992,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final Batch batchDelete(UpdatableRecord<?>... records) {
-        return new BatchCRUD(this, Action.DELETE, records);
+        return new BatchCRUD(configuration, Action.DELETE, records);
     }
 
     /**
@@ -5075,7 +5034,7 @@ public class Executor implements Configuration {
      */
     @Support
     public final <R extends Record> Truncate<R> truncate(Table<R> table) {
-        return new TruncateImpl<R>(this, table);
+        return new TruncateImpl<R>(configuration, table);
     }
 
     // -------------------------------------------------------------------------
@@ -5261,7 +5220,7 @@ public class Executor implements Configuration {
         }
         finally {
             getRenderMapping(getSettings()).setDefaultSchema(schema.getName());
-            getSchemaMapping().use(schema);
+            configuration.getSchemaMapping().use(schema);
         }
 
         return result;
@@ -5294,7 +5253,7 @@ public class Executor implements Configuration {
      * @return The new record
      */
     public final <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
-        return Utils.newRecord(type, this);
+        return Utils.newRecord(type, configuration);
     }
 
     /**
@@ -5310,7 +5269,7 @@ public class Executor implements Configuration {
      * @return The new record
      */
     public final <R extends Record> R newRecord(Table<R> table) {
-        return Utils.newRecord(table, this);
+        return Utils.newRecord(table, configuration);
     }
 
     /**
@@ -5355,7 +5314,7 @@ public class Executor implements Configuration {
      * @return The new result
      */
     public final <R extends Record> Result<R> newResult(Table<R> table) {
-        return new ResultImpl<R>(this, table.fields());
+        return new ResultImpl<R>(configuration, table.fields());
     }
 
     // -------------------------------------------------------------------------
@@ -5375,7 +5334,7 @@ public class Executor implements Configuration {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
-            query.attach(this);
+            query.attach(configuration);
             return query.fetch();
         }
         finally {
@@ -5396,7 +5355,7 @@ public class Executor implements Configuration {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
-            query.attach(this);
+            query.attach(configuration);
             return query.fetchLazy();
         }
         finally {
@@ -5417,7 +5376,7 @@ public class Executor implements Configuration {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
-            query.attach(this);
+            query.attach(configuration);
             return query.fetchMany();
         }
         finally {
@@ -5439,7 +5398,7 @@ public class Executor implements Configuration {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
-            query.attach(this);
+            query.attach(configuration);
             return query.fetchOne();
         }
         finally {
@@ -5485,7 +5444,7 @@ public class Executor implements Configuration {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
-            query.attach(this);
+            query.attach(configuration);
             return query.execute();
         }
         finally {

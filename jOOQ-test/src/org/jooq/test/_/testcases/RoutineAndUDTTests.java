@@ -106,10 +106,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        assertEquals("1", "" + invoke(cLibrary(), "pkgPAuthorExists1", create(), "Paulo"));
-        assertEquals("0", "" + invoke(cLibrary(), "pkgPAuthorExists1", create(), "Shakespeare"));
-        assertEquals("1", "" + invoke(cLibrary(), "pkgFAuthorExists1", create(), "Paulo"));
-        assertEquals("0", "" + invoke(cLibrary(), "pkgFAuthorExists1", create(), "Shakespeare"));
+        assertEquals("1", "" + invoke(cLibrary(), "pkgPAuthorExists1", create().configuration(), "Paulo"));
+        assertEquals("0", "" + invoke(cLibrary(), "pkgPAuthorExists1", create().configuration(), "Shakespeare"));
+        assertEquals("1", "" + invoke(cLibrary(), "pkgFAuthorExists1", create().configuration(), "Paulo"));
+        assertEquals("0", "" + invoke(cLibrary(), "pkgFAuthorExists1", create().configuration(), "Shakespeare"));
     }
 
     @Test
@@ -124,9 +124,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // P_AUTHOR_EXISTS
         // ---------------------------------------------------------------------
         if (supportsOUTParameters()) {
-            assertEquals("0", "" + invoke(cRoutines(), "pAuthorExists", create(), null, DUMMY_OUT_INT));
-            assertEquals("1", "" + invoke(cRoutines(), "pAuthorExists", create(), "Paulo", DUMMY_OUT_INT));
-            assertEquals("0", "" + invoke(cRoutines(), "pAuthorExists", create(), "Shakespeare", DUMMY_OUT_INT));
+            assertEquals("0", "" + invoke(cRoutines(), "pAuthorExists", create().configuration(), null, DUMMY_OUT_INT));
+            assertEquals("1", "" + invoke(cRoutines(), "pAuthorExists", create().configuration(), "Paulo", DUMMY_OUT_INT));
+            assertEquals("0", "" + invoke(cRoutines(), "pAuthorExists", create().configuration(), "Shakespeare", DUMMY_OUT_INT));
         } else {
             log.info("SKIPPING", "procedure test for OUT parameters");
         }
@@ -136,7 +136,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, create().fetchOne(
             TAuthor(),
             TAuthor_FIRST_NAME().equal("William")));
-        invoke(cRoutines(), "pCreateAuthor", create());
+        invoke(cRoutines(), "pCreateAuthor", create().configuration());
         assertEquals("Shakespeare", create().fetchOne(
             TAuthor(),
             TAuthor_FIRST_NAME().equal("William")).getValue(TAuthor_LAST_NAME()));
@@ -144,7 +144,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, create().fetchOne(
             TAuthor(),
             TAuthor_FIRST_NAME().equal("Hermann")));
-        invoke(cRoutines(), "pCreateAuthorByName", create(), "Hermann", "Hesse");
+        invoke(cRoutines(), "pCreateAuthorByName", create().configuration(), "Hermann", "Hesse");
         assertEquals("Hesse", create().fetchOne(
             TAuthor(),
             TAuthor_FIRST_NAME().equal("Hermann")).getValue(TAuthor_LAST_NAME()));
@@ -152,7 +152,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(null, create().fetchOne(
             TAuthor(),
             TAuthor_LAST_NAME().equal("Kaestner")));
-        invoke(cRoutines(), "pCreateAuthorByName", create(), null, "Kaestner");
+        invoke(cRoutines(), "pCreateAuthorByName", create().configuration(), null, "Kaestner");
         assertEquals("Kaestner", create().fetchOne(
             TAuthor(),
             TAuthor_LAST_NAME().equal("Kaestner")).getValue(TAuthor_LAST_NAME()));
@@ -165,7 +165,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // TODO: [#396] MySQL seems to have a bug when passing null to IN/OUT
             // parameters. Check back on this, when this is fixed.
             if (getDialect() != SQLDialect.MYSQL) {
-                Object p391a = invoke(cRoutines(), "p391", create(), null, null, DUMMY_OUT_INT, DUMMY_OUT_INT, null, null);
+                Object p391a = invoke(cRoutines(), "p391", create().configuration(), null, null, DUMMY_OUT_INT, DUMMY_OUT_INT, null, null);
                 assertEquals(null, invoke(p391a, "getIo1"));
                 assertEquals(null, invoke(p391a, "getO1"));
                 assertEquals(null, invoke(p391a, "getIo2"));
@@ -175,13 +175,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // TODO: [#459] Sybase messes up IN/OUT parameter orders.
             // Check back on this, when this is fixed.
             if (getDialect() != SQLDialect.SYBASE) {
-                Object p391b = invoke(cRoutines(), "p391", create(), null, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, null);
+                Object p391b = invoke(cRoutines(), "p391", create().configuration(), null, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, null);
                 assertEquals(null, invoke(p391b, "getIo1"));
                 assertEquals("2", "" + invoke(p391b, "getO1"));
                 assertEquals(null, invoke(p391b, "getIo2"));
                 assertEquals("3", "" + invoke(p391b, "getO2"));
 
-                Object p391c = invoke(cRoutines(), "p391", create(), 1, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, 4);
+                Object p391c = invoke(cRoutines(), "p391", create().configuration(), 1, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, 4);
                 assertEquals("1", "" + invoke(p391c, "getIo1"));
                 assertEquals("2", "" + invoke(p391c, "getO1"));
                 assertEquals("4", "" + invoke(p391c, "getIo2"));
@@ -195,32 +195,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Currently, this is only supported for oracle
             case ORACLE:
-                Object result1a = invoke(cRoutines(), "f378", create(), null, null);
+                Object result1a = invoke(cRoutines(), "f378", create().configuration(), null, null);
                 assertEquals(null, invoke(result1a, "getIo"));
                 assertEquals(null, invoke(result1a, "getO"));
                 assertEquals(null, invoke(result1a, "getReturnValue"));
 
-                Object result2a = invoke(cRoutines(), "f378", create(), null, 2);
+                Object result2a = invoke(cRoutines(), "f378", create().configuration(), null, 2);
                 assertEquals(null, invoke(result2a, "getIo"));
                 assertEquals("2", "" + invoke(result2a, "getO"));
                 assertEquals(null, invoke(result2a, "getReturnValue"));
 
-                Object result3a = invoke(cRoutines(), "f378", create(), 1, 2);
+                Object result3a = invoke(cRoutines(), "f378", create().configuration(), 1, 2);
                 assertEquals("1", "" + invoke(result3a, "getIo"));
                 assertEquals("2", "" + invoke(result3a, "getO"));
                 assertEquals("3", "" + invoke(result3a, "getReturnValue"));
 
-                Object result1b = invoke(cLibrary(), "pkgF378", create(), null, null);
+                Object result1b = invoke(cLibrary(), "pkgF378", create().configuration(), null, null);
                 assertEquals(null, invoke(result1b, "getIo"));
                 assertEquals(null, invoke(result1b, "getO"));
                 assertEquals(null, invoke(result1b, "getReturnValue"));
 
-                Object result2b = invoke(cLibrary(), "pkgF378", create(), null, 2);
+                Object result2b = invoke(cLibrary(), "pkgF378", create().configuration(), null, 2);
                 assertEquals(null, invoke(result2b, "getIo"));
                 assertEquals("2", "" + invoke(result2b, "getO"));
                 assertEquals(null, invoke(result2b, "getReturnValue"));
 
-                Object result3b = invoke(cLibrary(), "pkgF378", create(), 1, 2);
+                Object result3b = invoke(cLibrary(), "pkgF378", create().configuration(), 1, 2);
                 assertEquals("1", "" + invoke(result3b, "getIo"));
                 assertEquals("2", "" + invoke(result3b, "getO"));
                 assertEquals("3", "" + invoke(result3b, "getReturnValue"));
@@ -250,7 +250,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         Reflect executedWithDefaults = pdefault.create();
-        executedWithDefaults.call("execute", create());
+        executedWithDefaults.call("execute", create().configuration());
         assertEquals(0, executedWithDefaults.call("getPOutNumber").<Number>get().intValue());
         assertEquals("0", executedWithDefaults.call("getPOutVarchar").get());
         assertEquals(Date.valueOf("1981-07-10"), executedWithDefaults.call("getPOutDate").get());
@@ -259,7 +259,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         executedWithoutDefault.call("setPInNumber", 123);
         executedWithoutDefault.call("setPInVarchar", "abc");
         executedWithoutDefault.call("setPInDate", Date.valueOf("2012-01-01"));
-        executedWithoutDefault.call("execute", create());
+        executedWithoutDefault.call("execute", create().configuration());
         assertEquals(123, executedWithoutDefault.call("getPOutNumber").<Number>get().intValue());
         assertEquals("abc", executedWithoutDefault.call("getPOutVarchar").get());
         assertEquals(Date.valueOf("2012-01-01"), executedWithoutDefault.call("getPOutDate").get());
@@ -277,18 +277,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // ---------------------------------------------------------------------
         // Standalone calls
         // ---------------------------------------------------------------------
-        assertEquals("0", "" + invoke(cRoutines(), "fAuthorExists", create(), null));
-        assertEquals("1", "" + invoke(cRoutines(), "fAuthorExists", create(), "Paulo"));
-        assertEquals("0", "" + invoke(cRoutines(), "fAuthorExists", create(), "Shakespeare"));
-        assertEquals("1", "" + invoke(cRoutines(), "fOne", create()));
-        assertEquals("1", "" + invoke(cRoutines(), "fNumber", create(), 1));
-        assertEquals(null, invoke(cRoutines(), "fNumber", create(), null));
-        assertEquals("1204", "" + invoke(cRoutines(), "f317", create(), 1, 2, 3, 4));
-        assertEquals("1204", "" + invoke(cRoutines(), "f317", create(), 1, 2, null, 4));
-        assertEquals("4301", "" + invoke(cRoutines(), "f317", create(), 4, 3, 2, 1));
-        assertEquals("4301", "" + invoke(cRoutines(), "f317", create(), 4, 3, null, 1));
-        assertEquals("1101", "" + invoke(cRoutines(), "f317", create(), 1, 1, 1, 1));
-        assertEquals("1101", "" + invoke(cRoutines(), "f317", create(), 1, 1, null, 1));
+        assertEquals("0", "" + invoke(cRoutines(), "fAuthorExists", create().configuration(), null));
+        assertEquals("1", "" + invoke(cRoutines(), "fAuthorExists", create().configuration(), "Paulo"));
+        assertEquals("0", "" + invoke(cRoutines(), "fAuthorExists", create().configuration(), "Shakespeare"));
+        assertEquals("1", "" + invoke(cRoutines(), "fOne", create().configuration()));
+        assertEquals("1", "" + invoke(cRoutines(), "fNumber", create().configuration(), 1));
+        assertEquals(null, invoke(cRoutines(), "fNumber", create().configuration(), null));
+        assertEquals("1204", "" + invoke(cRoutines(), "f317", create().configuration(), 1, 2, 3, 4));
+        assertEquals("1204", "" + invoke(cRoutines(), "f317", create().configuration(), 1, 2, null, 4));
+        assertEquals("4301", "" + invoke(cRoutines(), "f317", create().configuration(), 4, 3, 2, 1));
+        assertEquals("4301", "" + invoke(cRoutines(), "f317", create().configuration(), 4, 3, null, 1));
+        assertEquals("1101", "" + invoke(cRoutines(), "f317", create().configuration(), 1, 1, 1, 1));
+        assertEquals("1101", "" + invoke(cRoutines(), "f317", create().configuration(), 1, 1, null, 1));
 
         // ---------------------------------------------------------------------
         // Embedded calls
@@ -417,11 +417,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             InsertQuery<?> insert = create().insertQuery(TArrays());
             insert.addValue(TArrays_ID(), 5);
             insert.addValue((Field) TArrays_NUMBER_R(),
-                on(TArrays_NUMBER_R().getType()).create(create(), new Integer[] { 1, 2, 3 }).get());
+                on(TArrays_NUMBER_R().getType()).create(create().configuration(), new Integer[] { 1, 2, 3 }).get());
             insert.addValue((Field) TArrays_STRING_R(),
-                on(TArrays_STRING_R().getType()).create(create(), new String[] { "a", "b", "c", "d\"\\d" }).get());
+                on(TArrays_STRING_R().getType()).create(create().configuration(), new String[] { "a", "b", "c", "d\"\\d" }).get());
             insert.addValue((Field) TArrays_DATE_R(),
-                on(TArrays_DATE_R().getType()).create(create(), new Date[] { new Date(0), new Date(84600 * 1000), new Date(84600 * 2000) }).get());
+                on(TArrays_DATE_R().getType()).create(create().configuration(), new Date[] { new Date(0), new Date(84600 * 1000), new Date(84600 * 2000) }).get());
             insert.execute();
 
             Record array = create().select(
@@ -440,11 +440,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             UpdateQuery<X> update = create().updateQuery(TArrays());
             update.addValue((Field) TArrays_NUMBER_R(),
-                on(TArrays_NUMBER_R().getType()).create(create(), new Integer[] { 3, 2, 1 }).get());
+                on(TArrays_NUMBER_R().getType()).create(create().configuration(), new Integer[] { 3, 2, 1 }).get());
             update.addValue((Field) TArrays_STRING_R(),
-                on(TArrays_STRING_R().getType()).create(create(), new String[] { "d\"\\d", "c", "b", "a" }).get());
+                on(TArrays_STRING_R().getType()).create(create().configuration(), new String[] { "d\"\\d", "c", "b", "a" }).get());
             update.addValue((Field) TArrays_DATE_R(),
-                on(TArrays_DATE_R().getType()).create(create(), new Date[] { new Date(84600 * 2000), new Date(84600 * 1000), new Date(0) }).get());
+                on(TArrays_DATE_R().getType()).create(create().configuration(), new Date[] { new Date(84600 * 2000), new Date(84600 * 1000), new Date(0) }).get());
             update.addConditions(TArrays_ID().equal(5));
             update.execute();
 
@@ -660,12 +660,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             ArrayRecord<Long> l;
             ArrayRecord<String> s;
 
-            assertEquals(null, invoke(cRoutines(), "pArrays1", create(), null));
-            assertEquals(null, invoke(cRoutines(), "pArrays2", create(), null));
-            assertEquals(null, invoke(cRoutines(), "pArrays3", create(), null));
-            assertEquals(null, invoke(cRoutines(), "fArrays1", create(), null));
-            assertEquals(null, invoke(cRoutines(), "fArrays2", create(), null));
-            assertEquals(null, invoke(cRoutines(), "fArrays3", create(), null));
+            assertEquals(null, invoke(cRoutines(), "pArrays1", create().configuration(), null));
+            assertEquals(null, invoke(cRoutines(), "pArrays2", create().configuration(), null));
+            assertEquals(null, invoke(cRoutines(), "pArrays3", create().configuration(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays1", create().configuration(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays2", create().configuration(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays3", create().configuration(), null));
 
             i = newNUMBER_R();
             l = newNUMBER_LONG_R();
@@ -673,22 +673,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             assertEquals(
                 Arrays.asList(new Integer[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
             assertEquals(
                 Arrays.asList(new Long[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
             assertEquals(
                 Arrays.asList(new String[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
             assertEquals(
                 Arrays.asList(new Integer[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
             assertEquals(
                 Arrays.asList(new Long[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
             assertEquals(
                 Arrays.asList(new String[0]),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
 
             i = newNUMBER_R();
             l = newNUMBER_LONG_R();
@@ -700,22 +700,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             assertEquals(
                 Arrays.asList((Integer) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
             assertEquals(
                 Arrays.asList((Long) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
             assertEquals(
                 Arrays.asList((String) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
             assertEquals(
                 Arrays.asList((Integer) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
             assertEquals(
                 Arrays.asList((Long) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
             assertEquals(
                 Arrays.asList((String) null),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
 
             i = newNUMBER_R();
             l = newNUMBER_LONG_R();
@@ -727,115 +727,115 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             assertEquals(
                 Arrays.asList(1, 2),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays1", create().configuration(), i)).get()));
             assertEquals(
                 Arrays.asList(1L, 2L),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays2", create().configuration(), l)).get()));
             assertEquals(
                 Arrays.asList("1", "2"),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "pArrays3", create().configuration(), s)).get()));
             assertEquals(
                 Arrays.asList(1, 2),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create(), i)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays1", create().configuration(), i)).get()));
             assertEquals(
                 Arrays.asList(1L, 2L),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create(), l)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays2", create().configuration(), l)).get()));
             assertEquals(
                 Arrays.asList("1", "2"),
-                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create(), s)).get()));
+                Arrays.asList(((ArrayRecord<?>) invoke(cRoutines(), "fArrays3", create().configuration(), s)).get()));
         }
 
         if (TArrays_STRING() != null) {
             if (supportsOUTParameters()) {
-                assertEquals(null, invoke(cRoutines(), "pArrays1", create(), null));
-                assertEquals(null, invoke(cRoutines(), "pArrays2", create(), null));
-                assertEquals(null, invoke(cRoutines(), "pArrays3", create(), null));
+                assertEquals(null, invoke(cRoutines(), "pArrays1", create().configuration(), null));
+                assertEquals(null, invoke(cRoutines(), "pArrays2", create().configuration(), null));
+                assertEquals(null, invoke(cRoutines(), "pArrays3", create().configuration(), null));
             }
 
-            assertEquals(null, invoke(cRoutines(), "fArrays1", create(), null));
-            assertEquals(null, invoke(cRoutines(), "fArrays2", create(), null));
-            assertEquals(null, invoke(cRoutines(), "fArrays3", create(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays1", create().configuration(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays2", create().configuration(), null));
+            assertEquals(null, invoke(cRoutines(), "fArrays3", create().configuration(), null));
 
             if (supportsOUTParameters()) {
                 assertEquals(
                     Arrays.asList(new Integer[0]),
-                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create(), new Integer[0])));
+                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create().configuration(), new Integer[0])));
                 assertEquals(
                     Arrays.asList(new Long[0]),
-                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create(), new Long[0])));
+                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create().configuration(), new Long[0])));
                 assertEquals(
                     Arrays.asList(new String[0]),
-                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create(), new String[0])));
+                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create().configuration(), new String[0])));
             }
 
             assertEquals(
                 Arrays.asList(new Integer[0]),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create(), new Integer[0])));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create().configuration(), new Integer[0])));
             assertEquals(
                 Arrays.asList(new Long[0]),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create(), new Long[0])));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create().configuration(), new Long[0])));
             assertEquals(
                 Arrays.asList(new String[0]),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create(), new String[0])));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create().configuration(), new String[0])));
 
             if (supportsOUTParameters()) {
                 assertEquals(
                     Arrays.asList((Integer) null),
-                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create(), new Integer[] { null })));
+                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create().configuration(), new Integer[] { null })));
                 assertEquals(
                     Arrays.asList((Long) null),
-                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create(), new Long[] { null })));
+                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create().configuration(), new Long[] { null })));
                 assertEquals(
                     Arrays.asList((String) null),
-                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create(), new String[] { null })));
+                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create().configuration(), new String[] { null })));
             }
 
             assertEquals(
                 Arrays.asList((Integer) null),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create(), new Integer[] { null })));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create().configuration(), new Integer[] { null })));
             assertEquals(
                 Arrays.asList((Long) null),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create(), new Long[] { null })));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create().configuration(), new Long[] { null })));
             assertEquals(
                 Arrays.asList((String) null),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create(), new String[] { null })));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create().configuration(), new String[] { null })));
 
             if (supportsOUTParameters()) {
                 assertEquals(
                     Arrays.asList(1, 2),
-                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create(), new Integer[] {1, 2})));
+                    Arrays.asList((Integer[]) invoke(cRoutines(), "pArrays1", create().configuration(), new Integer[] {1, 2})));
                 assertEquals(
                     Arrays.asList(1L, 2L),
-                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create(), new Long[] {1L, 2L})));
+                    Arrays.asList((Long[]) invoke(cRoutines(), "pArrays2", create().configuration(), new Long[] {1L, 2L})));
                 assertEquals(
                     Arrays.asList("1", "2"),
-                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create(), new String[] {"1", "2"})));
+                    Arrays.asList((String[]) invoke(cRoutines(), "pArrays3", create().configuration(), new String[] {"1", "2"})));
             }
 
             assertEquals(
                 Arrays.asList(1, 2),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create(), new Integer[] {1, 2})));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays1", create().configuration(), new Integer[] {1, 2})));
             assertEquals(
                 Arrays.asList(1L, 2L),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create(), new Long[] {1L, 2L})));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays2", create().configuration(), new Long[] {1L, 2L})));
             assertEquals(
                 Arrays.asList("1", "2"),
-                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create(), new String[] {"1", "2"})));
+                Arrays.asList((Object[]) invoke(cRoutines(), "fArrays3", create().configuration(), new String[] {"1", "2"})));
         }
     }
 
     private ArrayRecord<Integer> newNUMBER_R() throws Exception {
-        ArrayRecord<Integer> result = TArrays_NUMBER_R().getType().getConstructor(Configuration.class).newInstance(create());
+        ArrayRecord<Integer> result = TArrays_NUMBER_R().getType().getConstructor(Configuration.class).newInstance(create().configuration());
         return result;
     }
 
     private ArrayRecord<Long> newNUMBER_LONG_R() throws Exception {
-        ArrayRecord<Long> result = TArrays_NUMBER_LONG_R().getType().getConstructor(Configuration.class).newInstance(create());
+        ArrayRecord<Long> result = TArrays_NUMBER_LONG_R().getType().getConstructor(Configuration.class).newInstance(create().configuration());
         return result;
     }
 
     private ArrayRecord<String> newSTRING_R() throws Exception {
-        ArrayRecord<String> result = TArrays_STRING_R().getType().getConstructor(Configuration.class).newInstance(create());
+        ArrayRecord<String> result = TArrays_STRING_R().getType().getConstructor(Configuration.class).newInstance(create().configuration());
         return result;
     }
 
@@ -912,11 +912,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         invoke(address, "setStreet", street);
 
         // First procedure
-        Object result = invoke(cRoutines(), "pEnhanceAddress1", create(), address);
+        Object result = invoke(cRoutines(), "pEnhanceAddress1", create().configuration(), address);
         assertEquals("35", result);
 
         // Second procedure
-        address = invoke(cRoutines(), "pEnhanceAddress2", create());
+        address = invoke(cRoutines(), "pEnhanceAddress2", create().configuration());
         street = invoke(address, "getStreet");
         assertEquals("Parliament Hill", invoke(street, "getStreet"));
         assertEquals("77", invoke(street, "getNo"));
@@ -929,7 +929,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // Third procedure
-        address = (UDTRecord<?>) invoke(cRoutines(), "pEnhanceAddress3", create(), address);
+        address = (UDTRecord<?>) invoke(cRoutines(), "pEnhanceAddress3", create().configuration(), address);
         street = (UDTRecord<?>) invoke(address, "getStreet");
         assertEquals("Zwinglistrasse", invoke(street, "getStreet"));
         assertEquals("17", invoke(street, "getNo"));
@@ -1215,7 +1215,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Get an empty cursor
             // -------------------
-            Result<Record> bFromCursor = invoke(cRoutines(), "fGetOneCursor", create(), integerArray);
+            Result<Record> bFromCursor = invoke(cRoutines(), "fGetOneCursor", create().configuration(), integerArray);
 
             assertNotNull(bFromCursor);
             assertTrue(bFromCursor.isEmpty());
@@ -1232,7 +1232,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 integerArray = new Integer[] { 1, 2, 4, 6 };
             }
 
-            bFromCursor = invoke(cRoutines(), "fGetOneCursor", create(), integerArray);
+            bFromCursor = invoke(cRoutines(), "fGetOneCursor", create().configuration(), integerArray);
 
             Result<B> bFromTable = create()
                 .selectFrom(TBook())
@@ -1309,7 +1309,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Get an empty cursor
             // -------------------
-            Object result = invoke(cRoutines(), "pGetOneCursor", create(), integerArray);
+            Object result = invoke(cRoutines(), "pGetOneCursor", create().configuration(), integerArray);
 
             assertNotNull(result);
             assertEquals("0", "" + invoke(result, "getTotal"));
@@ -1329,7 +1329,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 integerArray = new Integer[] { 1, 2, 4, 6 };
             }
 
-            result = invoke(cRoutines(), "pGetOneCursor", create(), integerArray);
+            result = invoke(cRoutines(), "pGetOneCursor", create().configuration(), integerArray);
 
             assertEquals("3", "" + invoke(result, "getTotal"));
             bFromCursor = invoke(result, "getBooks");

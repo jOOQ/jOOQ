@@ -129,8 +129,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
 
         Executor create = create();
-        create.getSettings().setExecuteLogging(false);
-        create.setExecuteListeners(Collections.<ExecuteListener>emptyList());
+        create.configuration().getSettings().setExecuteLogging(false);
+        create.configuration().setExecuteListeners(Collections.<ExecuteListener>emptyList());
 
         // Dry-run to avoid side-effects
         testBenchmarkFullExecution(create, 1);

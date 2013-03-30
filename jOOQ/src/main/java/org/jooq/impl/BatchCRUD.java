@@ -63,11 +63,13 @@ class BatchCRUD implements Batch {
     private static final long          serialVersionUID = -2935544935267715011L;
 
     private final Executor             create;
+    private final Configuration        configuration;
     private final UpdatableRecord<?>[] records;
     private final Action               action;
 
-    BatchCRUD(Executor create, Action action, UpdatableRecord<?>[] records) {
-        this.create = create;
+    BatchCRUD(Configuration configuration, Action action, UpdatableRecord<?>[] records) {
+        this.create = new Executor(configuration);
+        this.configuration = configuration;
         this.action = action;
         this.records = records;
     }
@@ -82,7 +84,7 @@ class BatchCRUD implements Batch {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
         // should be used...
-        if (executeStaticStatements(create.getSettings())) {
+        if (executeStaticStatements(configuration.getSettings())) {
             return executeStatic();
         }
         else {
@@ -93,24 +95,24 @@ class BatchCRUD implements Batch {
     private final int[] executePrepared() {
         Map<String, List<Query>> queries = new LinkedHashMap<String, List<Query>>();
 
-        Boolean executeLogging = create.getSettings().isExecuteLogging();
+        Boolean executeLogging = configuration.getSettings().isExecuteLogging();
         QueryCollector collector = new QueryCollector();
 
         try {
             // [#1537] Communicate with UpdatableRecordImpl
-            create.setData(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
+            configuration.setData(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
 
             // Add the QueryCollector to intercept query execution after rendering
-            create.getExecuteListeners().add(collector);
+            configuration.getExecuteListeners().add(collector);
 
             // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
-            create.getSettings().setExecuteLogging(false);
+            configuration.getSettings().setExecuteLogging(false);
 
             for (int i = 0; i < records.length; i++) {
                 Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
 
                 try {
-                    records[i].attach(create);
+                    records[i].attach(configuration);
                     executeAction(i);
                 }
                 catch (QueryCollectorException e) {
@@ -137,10 +139,10 @@ class BatchCRUD implements Batch {
 
         // Restore the original factory
         finally {
-            create.getData().remove(Utils.DATA_OMIT_RETURNING_CLAUSE);
+            configuration.getData().remove(Utils.DATA_OMIT_RETURNING_CLAUSE);
 
-            create.getExecuteListeners().remove(collector);
-            create.getSettings().setExecuteLogging(executeLogging);
+            configuration.getExecuteListeners().remove(collector);
+            configuration.getSettings().setExecuteLogging(executeLogging);
         }
 
         // Execute one batch statement for each identical SQL statement. Every
@@ -174,13 +176,13 @@ class BatchCRUD implements Batch {
         QueryCollector collector = new QueryCollector();
 
         try {
-            create.getExecuteListeners().add(collector);
+            configuration.getExecuteListeners().add(collector);
 
             for (int i = 0; i < records.length; i++) {
                 Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
 
                 try {
-                    records[i].attach(create);
+                    records[i].attach(configuration);
                     executeAction(i);
                 }
                 catch (QueryCollectorException e) {
@@ -198,7 +200,7 @@ class BatchCRUD implements Batch {
 
         // Restore the original factory
         finally {
-            create.getExecuteListeners().remove(collector);
+            configuration.getExecuteListeners().remove(collector);
         }
 
         // Resulting statements can be batch executed in their requested order

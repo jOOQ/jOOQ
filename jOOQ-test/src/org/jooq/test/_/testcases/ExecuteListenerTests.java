@@ -101,7 +101,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testExecuteListenerWithData() throws Exception {
         Executor create = create();
-        create.getExecuteListeners().add(new DataListener());
+        create.configuration().getExecuteListeners().add(new DataListener());
 
         create.selectOne().fetch();
     }
@@ -211,7 +211,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testExecuteListenerCustomException() throws Exception {
         Executor create = create();
-        create.getExecuteListeners().add(new CustomExceptionListener());
+        create.configuration().getExecuteListeners().add(new CustomExceptionListener());
 
         try {
             create.fetch("invalid sql");
@@ -237,10 +237,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
         Executor create = create();
-        create.getExecuteListeners().add(new ResultQueryListener());
+        create.configuration().getExecuteListeners().add(new ResultQueryListener());
 
-        create.setData("Foo", "Bar");
-        create.setData("Bar", "Baz");
+        create.configuration().setData("Foo", "Bar");
+        create.configuration().setData("Bar", "Baz");
 
         Result<?> result =
         create.select(TBook_ID(), val("Hello"))
@@ -249,7 +249,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
               .fetch();
 
         // [#1145] When inlining variables, no bind events are triggered
-        int plus = (SettingsTools.executePreparedStatements(create.getSettings()) ? 2 : 0);
+        int plus = (SettingsTools.executePreparedStatements(create.configuration().getSettings()) ? 2 : 0);
 
         // Check correct order of listener method invocation
         assertEquals(1, ResultQueryListener.start);
@@ -573,7 +573,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerOnBatchSingle() {
-        if (!executePreparedStatements(create().getSettings())) {
+        if (!executePreparedStatements(create().configuration().getSettings())) {
             log.info("SKIPPINT", "Single batch tests with statement type = STATEMENT");
             return;
         }
@@ -581,10 +581,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         Executor create = create();
-        create.getExecuteListeners().add(new BatchSingleListener());
+        create.configuration().getExecuteListeners().add(new BatchSingleListener());
 
-        create.setData("Foo", "Bar");
-        create.setData("Bar", "Baz");
+        create.configuration().setData("Foo", "Bar");
+        create.configuration().setData("Bar", "Baz");
 
         int[] result = create.batch(create().insertInto(TAuthor())
                                             .set(TAuthor_ID(), param("id", Integer.class))
@@ -795,10 +795,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         Executor create = create();
-        create.getExecuteListeners().add(new BatchMultipleListener());
+        create.configuration().getExecuteListeners().add(new BatchMultipleListener());
 
-        create.setData("Foo", "Bar");
-        create.setData("Bar", "Baz");
+        create.configuration().setData("Foo", "Bar");
+        create.configuration().setData("Bar", "Baz");
 
         int[] result = create.batch(
             create().insertInto(TAuthor())
@@ -1021,7 +1021,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testExecuteListenerFetchLazyTest() throws Exception {
         Executor create = create();
-        create.getExecuteListeners().add(new FetchLazyListener());
+        create.configuration().getExecuteListeners().add(new FetchLazyListener());
         FetchLazyListener.reset();
 
         create.selectFrom(TAuthor()).fetch();

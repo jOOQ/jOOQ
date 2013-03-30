@@ -39,6 +39,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.jooq.Batch;
+import org.jooq.Configuration;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Query;
@@ -51,13 +52,13 @@ class BatchMultiple implements Batch {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -7337667281292354043L;
+    private static final long   serialVersionUID = -7337667281292354043L;
 
-    private final Executor    create;
-    private final Query[]     queries;
+    private final Configuration configuration;
+    private final Query[]       queries;
 
-    public BatchMultiple(Executor create, Query... queries) {
-        this.create = create;
+    public BatchMultiple(Configuration configuration, Query... queries) {
+        this.configuration = configuration;
         this.queries = queries;
     }
 
@@ -68,7 +69,7 @@ class BatchMultiple implements Batch {
 
     @Override
     public final int[] execute() {
-        ExecuteContext ctx = new DefaultExecuteContext(create, queries);
+        ExecuteContext ctx = new DefaultExecuteContext(configuration, queries);
         ExecuteListener listener = new ExecuteListeners(ctx);
         Connection connection = ctx.connection();
 
@@ -78,7 +79,7 @@ class BatchMultiple implements Batch {
             String[] batchSQL = ctx.batchSQL();
             for (int i = 0; i < queries.length; i++) {
                 listener.renderStart(ctx);
-                batchSQL[i] = create.renderInlined(queries[i]);
+                batchSQL[i] = new Executor(configuration).renderInlined(queries[i]);
                 listener.renderEnd(ctx);
             }
 

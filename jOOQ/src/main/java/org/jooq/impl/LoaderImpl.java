@@ -50,6 +50,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
 import org.jooq.Loader;
@@ -123,8 +124,8 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private int                     stored;
     private final List<LoaderError> errors;
 
-    LoaderImpl(Executor create, Table<R> table) {
-        this.create = create;
+    LoaderImpl(Configuration configuration, Table<R> table) {
+        this.create = new Executor(configuration);
         this.table = table;
         this.errors = new ArrayList<LoaderError>();
     }

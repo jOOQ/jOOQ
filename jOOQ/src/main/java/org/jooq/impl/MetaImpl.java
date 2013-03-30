@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.Catalog;
+import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.DataType;
 import org.jooq.Meta;
@@ -72,16 +73,18 @@ class MetaImpl implements Meta, Serializable {
      */
     private static final long                   serialVersionUID = 3582980783173033809L;
 
-    private final Executor                      executor;
+    private final Executor                      create;
+    private final Configuration                 configuration;
     private transient volatile DatabaseMetaData meta;
 
-    MetaImpl(Executor executor) {
-        this.executor = executor;
+    MetaImpl(Configuration configuration) {
+        this.create = new Executor(configuration);
+        this.configuration = configuration;
     }
 
     private final DatabaseMetaData meta() {
         if (meta == null) {
-            ConnectionProvider provider = executor.getConnectionProvider();
+            ConnectionProvider provider = configuration.getConnectionProvider();
             Connection connection = null;
 
             try {
@@ -103,7 +106,7 @@ class MetaImpl implements Meta, Serializable {
     public final List<Catalog> getCatalogs() {
         try {
             List<Catalog> result = new ArrayList<Catalog>();
-            Result<Record> catalogs = executor.fetch(meta().getCatalogs());
+            Result<Record> catalogs = create.fetch(meta().getCatalogs());
 
             for (String name : catalogs.getValues(0, String.class)) {
                 result.add(new MetaCatalog(name));
@@ -158,7 +161,7 @@ class MetaImpl implements Meta, Serializable {
         public final List<Schema> getSchemas() {
             try {
                 List<Schema> result = new ArrayList<Schema>();
-                Result<Record> schemas = executor.fetch(meta().getSchemas());
+                Result<Record> schemas = create.fetch(meta().getSchemas());
 
                 for (String name : schemas.getValues(0, String.class)) {
                     result.add(new MetaSchema(name));
@@ -199,7 +202,7 @@ class MetaImpl implements Meta, Serializable {
 
             try {
                 List<Table<?>> result = new ArrayList<Table<?>>();
-                Result<Record> tables = executor.fetch(meta().getTables(null, getName(), "%", null));
+                Result<Record> tables = create.fetch(meta().getTables(null, getName(), "%", null));
 
                 for (Record table : tables) {
 //                  String catalog = table.getValue(0, String.class);
@@ -226,7 +229,7 @@ class MetaImpl implements Meta, Serializable {
 
             // SQLite JDBC's DatabaseMetaData.getColumns() can only return a single
             // table's columns
-            if (columnCache == null && executor.getDialect() != SQLITE) {
+            if (columnCache == null && configuration.getDialect() != SQLITE) {
                 columnCache = getColumns0("%").intoGroups(fieldByName(String.class, "TABLE_NAME"));
             }
 
@@ -239,7 +242,7 @@ class MetaImpl implements Meta, Serializable {
         }
 
         private final Result<Record> getColumns0(String tableName) throws SQLException {
-            return executor.fetch(
+            return create.fetch(
                 meta().getColumns(null, null, tableName, "%"),
 
                 // Work around a bug in the SQL Server JDBC driver by
@@ -286,7 +289,7 @@ class MetaImpl implements Meta, Serializable {
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType<?> type = null;
                 try {
-                    type = DefaultDataType.getDataType(executor.getDialect(), typeName, precision, scale);
+                    type = DefaultDataType.getDataType(configuration.getDialect(), typeName, precision, scale);
 
                     if (type.hasPrecision()) {
                         type = type.precision(precision);

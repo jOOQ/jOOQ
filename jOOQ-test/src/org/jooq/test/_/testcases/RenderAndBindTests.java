@@ -120,7 +120,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         PreparedStatement stmt = jOOQAbstractTest.connection.prepareStatement(select.getSQL());
 
         // [#1145] Don't set bind values if not needed
-        if (executePreparedStatements(create().getSettings())) {
+        if (executePreparedStatements(create().configuration().getSettings())) {
             int i = 0;
             for (Object value : select.getBindValues()) {
                 stmt.setObject(++i, value);

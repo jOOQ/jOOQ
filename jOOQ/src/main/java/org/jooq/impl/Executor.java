@@ -5059,7 +5059,7 @@ public class Executor implements Serializable {
      */
     @Support({ ASE, CUBRID, DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE, SQLSERVER, SYBASE })
     public final BigInteger lastID() throws DataAccessException {
-        switch (getDialect()) {
+        switch (configuration.getDialect()) {
             case DERBY: {
                 Field<BigInteger> field = field("identity_val_local()", BigInteger.class);
                 return select(field).fetchOne(field);
@@ -5095,7 +5095,7 @@ public class Executor implements Serializable {
             }
 
             default:
-                throw new SQLDialectNotSupportedException("identity functionality not supported by " + getDialect());
+                throw new SQLDialectNotSupportedException("identity functionality not supported by " + configuration.getDialect());
         }
     }
 
@@ -5185,7 +5185,7 @@ public class Executor implements Serializable {
         try {
             String schemaName = render(schema);
 
-            switch (getDialect()) {
+            switch (configuration.getDialect()) {
                 case DB2:
                 case DERBY:
                 case H2:
@@ -5219,7 +5219,7 @@ public class Executor implements Serializable {
             }
         }
         finally {
-            getRenderMapping(getSettings()).setDefaultSchema(schema.getName());
+            getRenderMapping(configuration.getSettings()).setDefaultSchema(schema.getName());
             configuration.getSchemaMapping().use(schema);
         }
 

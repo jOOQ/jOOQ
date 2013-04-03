@@ -8867,6 +8867,14 @@ public class AsInDatabaseStrategy extends DefaultGeneratorStrategy {
     }
 }]]></java>
 
+                            <p>
+                                More examples can be found here:
+                            </p>
+                            <ul>
+                                <li><a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen/src/main/java/org/jooq/util/example/JPrefixGeneratorStrategy.java">org.jooq.util.example.JPrefixGeneratorStrategy</a></li>
+                                <li><a href="https://github.com/jOOQ/jOOQ/blob/master/jOOQ-codegen/src/main/java/org/jooq/util/example/JVMArgsGeneratorStrategy.java">org.jooq.util.example.JVMArgsGeneratorStrategy</a></li>
+                            </ul>
+
                             <h3>jooq-meta configuration</h3>
 							<p>
 								Within the &lt;generator/&gt; element, there are other configuration elements:

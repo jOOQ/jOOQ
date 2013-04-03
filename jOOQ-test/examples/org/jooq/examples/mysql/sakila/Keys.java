@@ -80,11 +80,6 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, org.jooq.examples.mysql.sakila.tables.records.StaffRecord> FK_STORE_STAFF = ForeignKeys0.FK_STORE_STAFF;
 	public static final org.jooq.ForeignKey<org.jooq.examples.mysql.sakila.tables.records.StoreRecord, org.jooq.examples.mysql.sakila.tables.records.AddressRecord> FK_STORE_ADDRESS = ForeignKeys0.FK_STORE_ADDRESS;
 
-	/**
-	 * No further instances allowed
-	 */
-	private Keys() {}
-
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------

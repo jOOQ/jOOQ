@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class Store extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.StoreRecord> {
 
-	private static final long serialVersionUID = 1964530156;
+	private static final long serialVersionUID = -173199488;
 
 	/**
 	 * The singleton instance of <code>sakila.store</code>

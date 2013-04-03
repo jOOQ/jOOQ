@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class Address extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.AddressRecord> {
 
-	private static final long serialVersionUID = 1315952825;
+	private static final long serialVersionUID = -1281345977;
 
 	/**
 	 * The singleton instance of <code>sakila.address</code>

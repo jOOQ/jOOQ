@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class Language extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.LanguageRecord> {
 
-	private static final long serialVersionUID = -769490296;
+	private static final long serialVersionUID = -1119068614;
 
 	/**
 	 * The singleton instance of <code>sakila.language</code>

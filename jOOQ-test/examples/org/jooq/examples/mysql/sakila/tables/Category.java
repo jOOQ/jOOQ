@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class Category extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.CategoryRecord> {
 
-	private static final long serialVersionUID = 512104530;
+	private static final long serialVersionUID = 1682858836;
 
 	/**
 	 * The singleton instance of <code>sakila.category</code>

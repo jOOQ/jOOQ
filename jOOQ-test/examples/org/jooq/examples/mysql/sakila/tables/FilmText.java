@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class FilmText extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.FilmTextRecord> {
 
-	private static final long serialVersionUID = 1887884152;
+	private static final long serialVersionUID = -452830212;
 
 	/**
 	 * The singleton instance of <code>sakila.film_text</code>

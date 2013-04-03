@@ -9,6 +9,9 @@
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>
+        <strategy>
+            <name>org.jooq.util.example.JVMArgsGeneratorStrategy</name>
+        </strategy>
         <database>
             <name>org.jooq.util.mysql.MySQLDatabase</name>
             <includes>.*</includes>

@@ -42,6 +42,7 @@ import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -88,6 +89,7 @@ import org.jooq.debug.Debugger;
 import org.jooq.debug.console.Console;
 import org.jooq.debug.impl.DebuggerFactory;
 import org.jooq.impl.Executor;
+import org.jooq.test._.LifecycleWatcherListener;
 import org.jooq.test._.PrettyPrinter;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
@@ -452,6 +454,23 @@ public abstract class jOOQAbstractTest<
 
         log.info("---------------");
         log.info("Total", total);
+
+        log.info("");
+        log.info("EXECUTE LIFECYCLE STATS");
+        log.info("-----------------------");
+
+        for (Method m : LifecycleWatcherListener.START_COUNT.keySet()) {
+            Integer starts = LifecycleWatcherListener.START_COUNT.get(m);
+            Integer ends = LifecycleWatcherListener.END_COUNT.get(m);
+
+            if (!StringUtils.equals(starts, ends)) {
+                log.info(
+                    "Unbalanced", String.format("(start, end): (%1$3s, %2$3s) at %3$s",
+                        starts,
+                        ends == null ? 0 : ends,
+                        m.toString().replace("public void ", "").replaceAll("( throws.*)?", "")));
+            }
+        }
     }
 
     @SuppressWarnings("unused")
@@ -851,6 +870,7 @@ public abstract class jOOQAbstractTest<
         Executor create = create(settings);
         create.configuration().getExecuteListeners().add(new TestStatisticsListener());
         create.configuration().getExecuteListeners().add(new PrettyPrinter());
+        create.configuration().getExecuteListeners().add(new LifecycleWatcherListener());
         return create;
     }
 

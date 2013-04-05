@@ -46,6 +46,7 @@ import org.jooq.ResultQuery;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableRecord;
+import org.jooq.UniqueKey;
 
 /**
  * A base class for custom {@link Table} implementations in client code.
@@ -98,18 +99,32 @@ public abstract class CustomTable<R extends TableRecord<R>> extends TableImpl<R>
     public abstract Class<? extends R> getRecordType();
 
     // -------------------------------------------------------------------------
-    // No further overrides allowed
+    // Further overrides allowed
     // -------------------------------------------------------------------------
 
     @Override
-    public final Identity<R, ? extends Number> getIdentity() {
+    public Identity<R, ? extends Number> getIdentity() {
         return super.getIdentity();
     }
 
     @Override
-    public final List<ForeignKey<R, ?>> getReferences() {
+    public UniqueKey<R> getPrimaryKey() {
+        return super.getPrimaryKey();
+    }
+
+    @Override
+    public List<UniqueKey<R>> getKeys() {
+        return super.getKeys();
+    }
+
+    @Override
+    public List<ForeignKey<R, ?>> getReferences() {
         return super.getReferences();
     }
+
+    // -------------------------------------------------------------------------
+    // No further overrides allowed
+    // -------------------------------------------------------------------------
 
     @Override
     public final boolean declaresFields() {

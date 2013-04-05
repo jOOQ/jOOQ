@@ -360,6 +360,22 @@ public interface Field<T> extends GroupField {
     Field<T> add(Field<?> value);
 
     /**
+     * An alias for {@link #add(Number)}.
+     *
+     * @see #add(Number)
+     */
+    @Support
+    Field<T> plus(Number value);
+
+    /**
+     * An alias for {@link #add(Field)}.
+     *
+     * @see #add(Field)
+     */
+    @Support
+    Field<T> plus(Field<?> value);
+
+    /**
      * An arithmetic expression subtracting value from this.
      *
      * @see #sub(Field)
@@ -409,6 +425,38 @@ public interface Field<T> extends GroupField {
     Field<T> sub(Field<?> value);
 
     /**
+     * An alias for {@link #sub(Number)}.
+     *
+     * @see #sub(Number)
+     */
+    @Support
+    Field<T> subtract(Number value);
+
+    /**
+     * An alias for {@link #sub(Field)}.
+     *
+     * @see #sub(Field)
+     */
+    @Support
+    Field<T> subtract(Field<?> value);
+
+    /**
+     * An alias for {@link #sub(Number)}.
+     *
+     * @see #sub(Number)
+     */
+    @Support
+    Field<T> minus(Number value);
+
+    /**
+     * An alias for {@link #sub(Field)}.
+     *
+     * @see #sub(Field)
+     */
+    @Support
+    Field<T> minus(Field<?> value);
+
+    /**
      * An arithmetic expression multiplying this with value
      * <p>
      * <ul>
@@ -433,6 +481,22 @@ public interface Field<T> extends GroupField {
      */
     @Support
     Field<T> mul(Field<? extends Number> value);
+
+    /**
+     * An alias for {@link #mul(Number)}.
+     *
+     * @see #mul(Number)
+     */
+    @Support
+    Field<T> multiply(Number value);
+
+    /**
+     * An alias for {@link #mul(Field)}.
+     *
+     * @see #mul(Field)
+     */
+    @Support
+    Field<T> multiply(Field<? extends Number> value);
 
     /**
      * An arithmetic expression dividing this by value
@@ -461,6 +525,22 @@ public interface Field<T> extends GroupField {
     Field<T> div(Field<? extends Number> value);
 
     /**
+     * An alias for {@link #div(Number)}.
+     *
+     * @see #div(Number)
+     */
+    @Support
+    Field<T> divide(Number value);
+
+    /**
+     * An alias for {@link #div(Field)}.
+     *
+     * @see #div(Field)
+     */
+    @Support
+    Field<T> divide(Field<? extends Number> value);
+
+    /**
      * An arithmetic expression getting the modulo of this divided by value
      * <p>
      * This renders the modulo operation where available:
@@ -479,6 +559,22 @@ public interface Field<T> extends GroupField {
      */
     @Support
     Field<T> mod(Field<? extends Number> value);
+
+    /**
+     * An alias for {@link #mod(Number)}.
+     *
+     * @see #mod(Number)
+     */
+    @Support
+    Field<T> modulo(Number value);
+
+    /**
+     * An alias for {@link #mod(Field)}.
+     *
+     * @see #mod(Field)
+     */
+    @Support
+    Field<T> modulo(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
     // NULL predicates
@@ -1838,6 +1934,14 @@ public interface Field<T> extends GroupField {
      * equivalent methods from {@link Executor}
      *
      * @see Factory#power(Field, Number)
+     */
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    Field<BigDecimal> pow(Number exponent);
+
+    /**
+     * An alias for {@link #power(Number)}.
+     *
+     * @see #power(Number)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> power(Number exponent);

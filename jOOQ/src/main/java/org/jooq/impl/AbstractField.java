@@ -304,6 +304,70 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     // ------------------------------------------------------------------------
+    // XXX: Arithmetic operation aliases
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Field<T> plus(Number value) {
+        return add(value);
+    }
+
+    @Override
+    public final Field<T> plus(Field<?> value) {
+        return add(value);
+    }
+
+    @Override
+    public final Field<T> subtract(Number value) {
+        return sub(value);
+    }
+
+    @Override
+    public final Field<T> subtract(Field<?> value) {
+        return sub(value);
+    }
+
+    @Override
+    public final Field<T> minus(Number value) {
+        return sub(value);
+    }
+
+    @Override
+    public final Field<T> minus(Field<?> value) {
+        return sub(value);
+    }
+
+    @Override
+    public final Field<T> multiply(Number value) {
+        return mul(value);
+    }
+
+    @Override
+    public final Field<T> multiply(Field<? extends Number> value) {
+        return mul(value);
+    }
+
+    @Override
+    public final Field<T> divide(Number value) {
+        return div(value);
+    }
+
+    @Override
+    public final Field<T> divide(Field<? extends Number> value) {
+        return div(value);
+    }
+
+    @Override
+    public final Field<T> modulo(Number value) {
+        return mod(value);
+    }
+
+    @Override
+    public final Field<T> modulo(Field<? extends Number> value) {
+        return mod(value);
+    }
+
+    // ------------------------------------------------------------------------
     // XXX: Conditions created from this field
     // ------------------------------------------------------------------------
 
@@ -1030,9 +1094,14 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     @Override
+    public final Field<BigDecimal> pow(Number exponent) {
+        return Factory.power(numeric(), exponent);
+    }
+
+    @Override
     @Deprecated
     public final Field<BigDecimal> power(Number exponent) {
-        return Factory.power(numeric(), exponent);
+        return pow(exponent);
     }
 
     @Override

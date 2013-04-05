@@ -1519,7 +1519,7 @@ public class Executor implements Serializable {
         ExecuteListener listener = new ExecuteListeners(ctx);
 
         ctx.resultSet(rs);
-        return new CursorImpl<Record>(ctx, listener, fields, null, false);
+        return new CursorImpl<Record>(ctx, listener, fields, null, true, false);
     }
 
     /**

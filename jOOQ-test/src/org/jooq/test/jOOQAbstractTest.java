@@ -459,11 +459,14 @@ public abstract class jOOQAbstractTest<
         log.info("EXECUTE LIFECYCLE STATS");
         log.info("-----------------------");
 
+        int unbalanced = 0;
         for (Method m : LifecycleWatcherListener.START_COUNT.keySet()) {
             Integer starts = LifecycleWatcherListener.START_COUNT.get(m);
             Integer ends = LifecycleWatcherListener.END_COUNT.get(m);
 
             if (!StringUtils.equals(starts, ends)) {
+                unbalanced++;
+
                 log.info(
                     "Unbalanced", String.format("(start, end): (%1$3s, %2$3s) at %3$s",
                         starts,
@@ -472,7 +475,7 @@ public abstract class jOOQAbstractTest<
             }
         }
 
-        log.info("Unbalanced test: ", LifecycleWatcherListener.START_COUNT.size());
+        log.info("Unbalanced test: ", unbalanced);
     }
 
     @SuppressWarnings("unused")

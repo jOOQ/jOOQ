@@ -238,7 +238,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             if (!many) {
                 if (ctx.resultSet() != null) {
                     Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                    cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), getRecordType(), keepStatement());
+                    cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), lazy, keepStatement(), getRecordType());
 
                     if (!lazy) {
                         result = cursor.fetch();
@@ -259,7 +259,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                     anyResults = true;
 
                     Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), true);
+                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), false, true);
                     results.add(c.fetch());
 
                     if (ctx.statement().getMoreResults()) {

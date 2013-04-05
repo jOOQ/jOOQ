@@ -44,7 +44,7 @@ import org.jooq.impl.Executor;
 import org.jooq.tools.StringUtils;
 
 /**
- * An execute listener that does pretty printing of every executed statement
+ * An execute listener that does pretty printing of every executed statement.
  *
  * @author Lukas Eder
  */

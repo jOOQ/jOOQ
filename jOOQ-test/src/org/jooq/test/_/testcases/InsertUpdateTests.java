@@ -57,11 +57,13 @@ import static org.jooq.impl.Factory.castNull;
 import static org.jooq.impl.Factory.count;
 import static org.jooq.impl.Factory.decode;
 import static org.jooq.impl.Factory.falseCondition;
+import static org.jooq.impl.Factory.fieldByName;
 import static org.jooq.impl.Factory.inline;
 import static org.jooq.impl.Factory.max;
 import static org.jooq.impl.Factory.row;
 import static org.jooq.impl.Factory.select;
 import static org.jooq.impl.Factory.selectOne;
+import static org.jooq.impl.Factory.tableByName;
 import static org.jooq.impl.Factory.trueCondition;
 import static org.jooq.impl.Factory.val;
 
@@ -74,6 +76,7 @@ import org.jooq.Field;
 import org.jooq.Insert;
 import org.jooq.InsertQuery;
 import org.jooq.MergeFinalStep;
+import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -566,26 +569,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Non-DSL querying
         // ----------------
 
-        InsertQuery<T> query;
+        // Create a dummy record, generating the original ID
+        int ID = testInsertReturningCreateDummyRecord();
 
-        int ID = 0;
-
-        // Without RETURNING clause
-        query = create().insertQuery(TTriggers());
-        query.addValue(TTriggers_ID(), null);
-        query.addValue(TTriggers_COUNTER(), 0);
-        assertEquals(1, query.execute());
-        assertNull(query.getReturnedRecord());
-
-        // Check if the trigger works correctly
-        assertEquals(1, create().selectFrom(TTriggers()).fetch().size());
-
-        // Other test cases may have influenced this value
-        ID = create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED());
         assertEquals(  ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_ID()));
         assertEquals(2*ID, (int) create().selectFrom(TTriggers()).fetchOne(TTriggers_COUNTER()));
 
         // Returning all fields
+        InsertQuery<T> query;
         query = create().insertQuery(TTriggers());
         query.addValue(TTriggers_COUNTER(), null);
         query.addValue(TTriggers_COUNTER(), 0);
@@ -696,6 +687,45 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         triggered.refresh();
         assertEquals(  ID, (int) triggered.getValue(TTriggers_ID()));
         assertEquals(2*ID, (int) triggered.getValue(TTriggers_COUNTER()));
+    }
+
+    private int testInsertReturningCreateDummyRecord() {
+        InsertQuery<T> query;
+
+        // Without RETURNING clause
+        query = create().insertQuery(TTriggers());
+        query.addValue(TTriggers_ID(), null);
+        query.addValue(TTriggers_COUNTER(), 0);
+        assertEquals(1, query.execute());
+        assertNull(query.getReturnedRecord());
+
+        // Check if the trigger works correctly
+        assertEquals(1, create().selectFrom(TTriggers()).fetch().size());
+
+        // Other test cases may have influenced this value
+        return create().selectFrom(TTriggers()).fetchOne(TTriggers_ID_GENERATED());
+    }
+
+    @Test
+    public void testInsertReturningWithPlainSQL() throws Exception {
+        if (TTriggers() == null) {
+            log.info("SKIPPING", "INSERT RETURNING tests");
+            return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        // Create a dummy record, generating the original ID
+        int ID = testInsertReturningCreateDummyRecord();
+
+        Record returned = create()
+            .insertInto(tableByName(TTriggers().getName()))
+            .set(fieldByName(TTriggers_COUNTER().getName()), 0)
+            .returning(fieldByName(TTriggers_ID_GENERATED().getName()))
+            .fetchOne();
+
+        assertNotNull(returned);
+        assertEquals(++ID, (int) returned.getValue(0, int.class));
     }
 
     @Test

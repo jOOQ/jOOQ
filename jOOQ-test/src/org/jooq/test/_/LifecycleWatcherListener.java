@@ -103,7 +103,7 @@ public class LifecycleWatcherListener extends DefaultExecuteListener {
         for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
             try {
                 for (Method m : Class.forName(e.getClassName()).getMethods()) {
-                    if (m.getAnnotation(Test.class) != null) {
+                    if (m.getName().equals(e.getMethodName()) && m.getAnnotation(Test.class) != null) {
                         return m;
                     }
                 }

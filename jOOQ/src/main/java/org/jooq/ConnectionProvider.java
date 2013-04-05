@@ -82,7 +82,7 @@ public interface ConnectionProvider {
      * jOOQ will guarantee that every acquired connection is released exactly
      * once.
      *
-     * @param A connection that was previously obtained from {@link #acquire()}
+     * @param connection A connection that was previously obtained from {@link #acquire()}
      * @throws DataAccessException If anything went wrong while releasing a
      *             connection
      */

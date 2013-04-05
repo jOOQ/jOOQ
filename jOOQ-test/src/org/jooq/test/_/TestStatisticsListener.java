@@ -42,14 +42,20 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteType;
 import org.jooq.impl.DefaultExecuteListener;
 
+/**
+ * An <code>ExecuteListener</code> that counts the number of executions in all
+ * integration tests.
+ *
+ * @author Lukas Eder
+ */
 public class TestStatisticsListener extends DefaultExecuteListener {
 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 7399239846062763212L;
+    private static final long               serialVersionUID = 7399239846062763212L;
 
-    public static Map<ExecuteType, Integer> STATISTICS = new HashMap<ExecuteType, Integer>();
+    public static Map<ExecuteType, Integer> STATISTICS       = new HashMap<ExecuteType, Integer>();
 
     @Override
     public synchronized void start(ExecuteContext ctx) {

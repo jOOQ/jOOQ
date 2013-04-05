@@ -471,6 +471,8 @@ public abstract class jOOQAbstractTest<
                         m.toString().replace("public void ", "").replaceAll("( throws.*)?", "")));
             }
         }
+
+        log.info("Unbalanced test: ", LifecycleWatcherListener.START_COUNT.size());
     }
 
     @SuppressWarnings("unused")

@@ -343,7 +343,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
             ExecuteListener listener2 = new ExecuteListeners(ctx2);
 
             ctx2.resultSet(rs);
-            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, false).fetch().into(getInto());
+            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, true, false).fetch().into(getInto());
             return result;
         }
     }

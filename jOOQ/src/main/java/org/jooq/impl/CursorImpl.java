@@ -81,6 +81,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private final ExecuteListener     listener;
     private final Field<?>[]          fields;
     private final boolean[]           intern;
+    private final boolean             keepResult;
+    private final boolean             keepStatement;
     private final Class<? extends R>  type;
     private boolean                   isClosed;
 
@@ -88,16 +90,18 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient Iterator<R>     iterator;
 
     @SuppressWarnings("unchecked")
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement) {
-        this(ctx, listener, fields, internIndexes, (Class<? extends R>) RecordImpl.class, keepStatement);
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepResult, boolean keepStatement) {
+        this(ctx, listener, fields, internIndexes, keepResult, keepStatement, (Class<? extends R>) RecordImpl.class);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, Class<? extends R> type, boolean keepStatement) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepResult, boolean keepStatement, Class<? extends R> type) {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.fields = fields;
         this.type = type;
-        this.rs = new CursorResultSet(keepStatement);
+        this.keepResult = keepResult;
+        this.keepStatement = keepStatement;
+        this.rs = new CursorResultSet();
         this.intern = new boolean[fields.length];
 
         if (internIndexes != null) {
@@ -254,12 +258,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
      */
     private final class CursorResultSet extends JDBC41ResultSet implements ResultSet {
 
-        private final boolean keepStatement;
-
-        CursorResultSet(boolean keepStatement) {
-            this.keepStatement = keepStatement;
-        }
-
         @Override
         public final <T> T unwrap(Class<T> iface) throws SQLException {
             return ctx.resultSet().unwrap(iface);
@@ -277,13 +275,12 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
         @Override
         public final void close() throws SQLException {
-            ctx.resultSet().close();
-
-            if (!keepStatement) {
-                ctx.statement().close();
-            }
-
             listener.fetchEnd(ctx);
+
+            // [#1868] If this Result / Cursor was "kept" through a lazy
+            // execution, we must assure that the ExecuteListener lifecycle is
+            // correctly terminated.
+            Utils.safeClose(listener, ctx, keepStatement, keepResult);
         }
 
         @Override

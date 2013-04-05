@@ -706,11 +706,11 @@ final class Utils {
     static final <R extends Record> R fetchOne(Cursor<R> cursor) throws InvalidResultException {
         try {
             R record = cursor.fetchOne();
-    
+
             if (cursor.hasNext()) {
                 throw new InvalidResultException("Cursor returned more than one result");
             }
-    
+
             return record;
         }
         finally {
@@ -1023,12 +1023,22 @@ final class Utils {
      * Safely close a statement
      */
     static final void safeClose(ExecuteListener listener, ExecuteContext ctx, boolean keepStatement) {
+        safeClose(listener, ctx, keepStatement, true);
+    }
+
+    /**
+     * Safely close a statement
+     */
+    static final void safeClose(ExecuteListener listener, ExecuteContext ctx, boolean keepStatement, boolean end) {
         JDBCUtils.safeClose(ctx.resultSet());
+
+        // [#385] Close statements only if not requested to keep open
         if (!keepStatement)
             JDBCUtils.safeClose(ctx.statement());
 
-        // [#1868] TODO: This needs to be called in fetchLazy(), too
-        listener.end(ctx);
+        // [#1868] [#2373] Terminate ExecuteListener lifecycle, if needed
+        if (end)
+            listener.end(ctx);
 
         // [#1326] Clean up any potentially remaining temporary lobs
         DefaultExecuteContext.clean();

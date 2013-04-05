@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Utils.field;
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.util.sqlite.SQLiteFactory.rowid;
 
@@ -384,21 +383,6 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                                          .where(field.in(ids))
                                          .fetchInto(into);
                 }
-
-            // We don't have an identity, maybe because the table has been dynamically created
-            // with Factory#tableByName(). In that case return an "anonymous" result which contains
-            // the generated ids.
-            } else {
-                final Field<Object> idField = field(null);
-                final ResultImpl<R> result = new ResultImpl<R>(configuration, idField);
-
-                for (final Object value : values) {
-                    final Record record = Utils.newRecord(RecordImpl.class, new Field[] {idField});
-                    record.setValue(idField, value);
-                    result.addRecord((R) record);
-                }
-
-                returned = result;
             }
         }
     }

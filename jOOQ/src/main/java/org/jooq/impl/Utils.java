@@ -693,7 +693,10 @@ final class Utils {
 
     /**
      * Get the only element from a cursor or <code>null</code>, or throw an
-     * exception
+     * exception.
+     * <p>
+     * [#2373] This method will always close the argument cursor, as it is
+     * supposed to be completely consumed by this method.
      *
      * @param cursor The cursor
      * @return The only element from the cursor or <code>null</code>
@@ -701,13 +704,18 @@ final class Utils {
      *             element
      */
     static final <R extends Record> R fetchOne(Cursor<R> cursor) throws InvalidResultException {
-        R record = cursor.fetchOne();
-
-        if (cursor.hasNext()) {
-            throw new InvalidResultException("Cursor returned more than one result");
+        try {
+            R record = cursor.fetchOne();
+    
+            if (cursor.hasNext()) {
+                throw new InvalidResultException("Cursor returned more than one result");
+            }
+    
+            return record;
         }
-
-        return record;
+        finally {
+            cursor.close();
+        }
     }
 
     /**

@@ -94,7 +94,7 @@ abstract class AbstractStore implements AttachableInternal {
      * This method is used in generated code!
      */
     protected final DSLContext create() {
-        return Factory.using(getConfiguration());
+        return DSL.using(getConfiguration());
     }
 
     // -------------------------------------------------------------------------

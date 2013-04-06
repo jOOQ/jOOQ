@@ -140,7 +140,7 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	@Override
 	public org.jooq.Row7<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
 	}
 
 	/**
@@ -148,7 +148,7 @@ public class CurrencyRate extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exa
 	 */
 	@Override
 	public org.jooq.Row7<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
 	}
 
 	/**

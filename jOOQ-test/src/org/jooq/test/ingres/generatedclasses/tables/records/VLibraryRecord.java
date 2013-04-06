@@ -52,7 +52,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2());
+		return org.jooq.impl.DSL.row(field1(), field2());
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class VLibraryRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.
 	 */
 	@Override
 	public org.jooq.Row2<java.lang.String, java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2());
+		return org.jooq.impl.DSL.row(value1(), value2());
 	}
 
 	/**

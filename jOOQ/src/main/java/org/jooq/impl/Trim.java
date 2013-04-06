@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.DSL.function;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -64,7 +64,7 @@ class Trim extends AbstractFunction<String> {
             case ASE:
             case INGRES:
             case SQLSERVER:
-                return Factory.ltrim(Factory.rtrim(argument));
+                return DSL.ltrim(DSL.rtrim(argument));
 
             default:
                 return function("trim", SQLDataType.VARCHAR, argument);

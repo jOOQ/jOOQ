@@ -36,8 +36,8 @@
 package org.jooq.impl;
 
 import static org.jooq.RenderContext.CastMode.NEVER;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
 import org.jooq.Field;

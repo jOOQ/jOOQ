@@ -44,7 +44,7 @@ import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 
 /**
@@ -81,6 +81,6 @@ public class MySQLTestSchemaMapping extends MySQLTest {
                 .withOutput(TAuthor().getSchema().getName() + getSchemaSuffix());
         }
 
-        return Factory.using(getConnection(), SQLDialect.MYSQL, settings);
+        return DSL.using(getConnection(), SQLDialect.MYSQL, settings);
     }
 }

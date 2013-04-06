@@ -45,7 +45,7 @@ import java.sql.DriverManager;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 public class Sakila {
 
@@ -53,7 +53,7 @@ public class Sakila {
         Class.forName("com.mysql.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/sakila", "root", "");
 
-        DSLContext create = Factory.using(connection, SQLDialect.MYSQL);
+        DSLContext create = DSL.using(connection, SQLDialect.MYSQL);
 
         System.out.println(create
               .select()

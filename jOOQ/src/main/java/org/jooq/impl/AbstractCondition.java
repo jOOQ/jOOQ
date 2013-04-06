@@ -35,9 +35,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.condition;
-import static org.jooq.impl.Factory.exists;
-import static org.jooq.impl.Factory.notExists;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.notExists;
 
 import java.util.Arrays;
 

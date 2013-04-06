@@ -55,7 +55,7 @@ import org.jooq.conf.SettingsTools;
 
 /**
  * A default implementation for configurations within a {@link DSLContext}, if no
- * custom configuration was supplied to {@link Factory#using(Configuration)}
+ * custom configuration was supplied to {@link DSL#using(Configuration)}
  */
 class DefaultConfiguration implements Configuration {
 

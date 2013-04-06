@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 
 /**
@@ -98,7 +98,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support
     SelectOnConditionStep<R> and(String sql);
@@ -112,7 +112,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support
     SelectOnConditionStep<R> and(String sql, Object... bindings);
@@ -126,7 +126,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support
     SelectOnConditionStep<R> and(String sql, QueryPart... parts);
@@ -168,7 +168,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support
     SelectOnConditionStep<R> or(String sql);
@@ -182,7 +182,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support
     SelectOnConditionStep<R> or(String sql, Object... bindings);
@@ -196,7 +196,7 @@ public interface SelectOnConditionStep<R extends Record> extends SelectJoinStep<
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support
     SelectOnConditionStep<R> or(String sql, QueryPart... parts);

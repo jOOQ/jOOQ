@@ -42,7 +42,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * This type is used for the {@link Merge}'s DSL API.
@@ -79,7 +79,7 @@ public interface MergeOnStep<R extends Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> on(String sql);
@@ -92,7 +92,7 @@ public interface MergeOnStep<R extends Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> on(String sql, Object... bindings);
@@ -105,7 +105,7 @@ public interface MergeOnStep<R extends Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> on(String sql, QueryPart... parts);

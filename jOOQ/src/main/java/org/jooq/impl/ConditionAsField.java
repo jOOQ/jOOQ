@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.DSL.inline;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -70,7 +70,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             case ORACLE:
             case SQLSERVER:
             case SYBASE:
-                return Factory.decode().when(condition, inline(true)).otherwise(inline(false));
+                return DSL.decode().when(condition, inline(true)).otherwise(inline(false));
 
             // These databases can inline predicates in column expression contexts
             case DERBY:

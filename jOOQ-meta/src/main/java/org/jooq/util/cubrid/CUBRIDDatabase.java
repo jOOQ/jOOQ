@@ -36,9 +36,9 @@
 
 package org.jooq.util.cubrid;
 
-import static org.jooq.impl.Factory.concat;
-import static org.jooq.impl.Factory.fieldByName;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.util.cubrid.dba.Tables.DB_CLASS;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX;
 import static org.jooq.util.cubrid.dba.Tables.DB_INDEX_KEY;
@@ -58,7 +58,7 @@ import org.jooq.Record;
 import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -270,6 +270,6 @@ public class CUBRIDDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.CUBRID);
+        return DSL.using(getConnection(), SQLDialect.CUBRID);
     }
 }

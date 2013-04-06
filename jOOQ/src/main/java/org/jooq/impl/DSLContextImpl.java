@@ -51,9 +51,9 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.SettingsTools.getRenderMapping;
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.fieldByName;
-import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.Utils.list;
 
 import java.io.IOException;
@@ -670,7 +670,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support
     public final <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
-        SelectWhereStep<R> result = Factory.selectFrom(table);
+        SelectWhereStep<R> result = DSL.selectFrom(table);
         result.attach(configuration);
         return result;
     }
@@ -678,7 +678,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support
     public final SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
-        SelectSelectStep<Record> result = Factory.select(fields);
+        SelectSelectStep<Record> result = DSL.select(fields);
         result.attach(configuration);
         return result;
     }
@@ -686,7 +686,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support
     public final SelectSelectStep<Record> select(Field<?>... fields) {
-        SelectSelectStep<Record> result = Factory.select(fields);
+        SelectSelectStep<Record> result = DSL.select(fields);
         result.attach(configuration);
         return result;
     }
@@ -830,7 +830,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support
     public final SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
-        SelectSelectStep<Record> result = Factory.selectDistinct(fields);
+        SelectSelectStep<Record> result = DSL.selectDistinct(fields);
         result.attach(configuration);
         return result;
     }
@@ -838,7 +838,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support
     public final SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
-        SelectSelectStep<Record> result = Factory.selectDistinct(fields);
+        SelectSelectStep<Record> result = DSL.selectDistinct(fields);
         result.attach(configuration);
         return result;
     }
@@ -982,7 +982,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support
     public final SelectSelectStep<Record1<Integer>> selectZero() {
-        SelectSelectStep<Record1<Integer>> result = Factory.selectZero();
+        SelectSelectStep<Record1<Integer>> result = DSL.selectZero();
         result.attach(configuration);
         return result;
     }
@@ -990,7 +990,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support
     public final SelectSelectStep<Record1<Integer>> selectOne() {
-        SelectSelectStep<Record1<Integer>> result = Factory.selectOne();
+        SelectSelectStep<Record1<Integer>> result = DSL.selectOne();
         result.attach(configuration);
         return result;
     }
@@ -998,7 +998,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support
     public final SelectSelectStep<Record1<Integer>> selectCount() {
-        SelectSelectStep<Record1<Integer>> result = Factory.selectCount();
+        SelectSelectStep<Record1<Integer>> result = DSL.selectCount();
         result.attach(configuration);
         return result;
     }

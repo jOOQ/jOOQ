@@ -38,31 +38,31 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
-import static org.jooq.impl.Factory.any;
-import static org.jooq.impl.Factory.avg;
-import static org.jooq.impl.Factory.condition;
-import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.countDistinct;
-import static org.jooq.impl.Factory.decode;
-import static org.jooq.impl.Factory.exists;
-import static org.jooq.impl.Factory.falseCondition;
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.fieldByName;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.max;
-import static org.jooq.impl.Factory.min;
-import static org.jooq.impl.Factory.not;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.param;
-import static org.jooq.impl.Factory.replace;
-import static org.jooq.impl.Factory.round;
-import static org.jooq.impl.Factory.row;
-import static org.jooq.impl.Factory.select;
-import static org.jooq.impl.Factory.selectOne;
-import static org.jooq.impl.Factory.sum;
-import static org.jooq.impl.Factory.tableByName;
-import static org.jooq.impl.Factory.trueCondition;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.any;
+import static org.jooq.impl.DSL.avg;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.countDistinct;
+import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.min;
+import static org.jooq.impl.DSL.not;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.param;
+import static org.jooq.impl.DSL.replace;
+import static org.jooq.impl.DSL.round;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.sum;
+import static org.jooq.impl.DSL.tableByName;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.test.data.Table1.FIELD_DATE1;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
@@ -120,7 +120,7 @@ import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.data.Table1Record;
 
@@ -199,329 +199,329 @@ public class BasicTest extends AbstractTest {
         // Standalone functions created from the factory
         // ---------------------------------------------
         assertEquals(
-            Factory.abs((Integer) null),
-            Factory.abs((Field<Integer>) null));
+            DSL.abs((Integer) null),
+            DSL.abs((Field<Integer>) null));
         assertEquals(
-            Factory.acos((Integer) null),
-            Factory.acos((Field<Integer>) null));
+            DSL.acos((Integer) null),
+            DSL.acos((Field<Integer>) null));
         assertEquals(
-            Factory.asin((Integer) null),
-            Factory.asin((Field<Integer>) null));
+            DSL.asin((Integer) null),
+            DSL.asin((Field<Integer>) null));
         assertEquals(
-            Factory.atan((Integer) null),
-            Factory.atan((Field<Integer>) null));
+            DSL.atan((Integer) null),
+            DSL.atan((Field<Integer>) null));
         assertEquals(
-            Factory.atan2((Integer) null, (Integer) null),
-            Factory.atan2((Field<Integer>) null, (Field<Integer>) null));
+            DSL.atan2((Integer) null, (Integer) null),
+            DSL.atan2((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.atan2((Integer) null, (Integer) null),
-            Factory.atan2((Field<Integer>) null, (Integer) null));
+            DSL.atan2((Integer) null, (Integer) null),
+            DSL.atan2((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.atan2((Integer) null, (Integer) null),
-            Factory.atan2((Integer) null, (Field<Integer>) null));
+            DSL.atan2((Integer) null, (Integer) null),
+            DSL.atan2((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitAnd((Integer) null, (Integer) null),
-            Factory.bitAnd((Integer) null, (Field<Integer>) null));
+            DSL.bitAnd((Integer) null, (Integer) null),
+            DSL.bitAnd((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitAnd((Integer) null, (Integer) null),
-            Factory.bitAnd((Field<Integer>) null, (Integer) null));
+            DSL.bitAnd((Integer) null, (Integer) null),
+            DSL.bitAnd((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.bitAnd((Integer) null, (Integer) null),
-            Factory.bitAnd((Field<Integer>) null, (Field<Integer>) null));
+            DSL.bitAnd((Integer) null, (Integer) null),
+            DSL.bitAnd((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitCount((Integer) null),
-            Factory.bitCount((Field<Integer>) null));
+            DSL.bitCount((Integer) null),
+            DSL.bitCount((Field<Integer>) null));
         assertEquals(
-            Factory.bitLength((String) null),
-            Factory.bitLength((Field<String>) null));
+            DSL.bitLength((String) null),
+            DSL.bitLength((Field<String>) null));
         assertEquals(
-            Factory.bitNand((Integer) null, (Integer) null),
-            Factory.bitNand((Integer) null, (Field<Integer>) null));
+            DSL.bitNand((Integer) null, (Integer) null),
+            DSL.bitNand((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitNand((Integer) null, (Integer) null),
-            Factory.bitNand((Field<Integer>) null, (Integer) null));
+            DSL.bitNand((Integer) null, (Integer) null),
+            DSL.bitNand((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.bitNand((Integer) null, (Integer) null),
-            Factory.bitNand((Field<Integer>) null, (Field<Integer>) null));
+            DSL.bitNand((Integer) null, (Integer) null),
+            DSL.bitNand((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitNor((Integer) null, (Integer) null),
-            Factory.bitNor((Integer) null, (Field<Integer>) null));
+            DSL.bitNor((Integer) null, (Integer) null),
+            DSL.bitNor((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitNor((Integer) null, (Integer) null),
-            Factory.bitNor((Field<Integer>) null, (Integer) null));
+            DSL.bitNor((Integer) null, (Integer) null),
+            DSL.bitNor((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.bitNor((Integer) null, (Integer) null),
-            Factory.bitNor((Field<Integer>) null, (Field<Integer>) null));
+            DSL.bitNor((Integer) null, (Integer) null),
+            DSL.bitNor((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitOr((Integer) null, (Integer) null),
-            Factory.bitOr((Integer) null, (Field<Integer>) null));
+            DSL.bitOr((Integer) null, (Integer) null),
+            DSL.bitOr((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitOr((Integer) null, (Integer) null),
-            Factory.bitOr((Field<Integer>) null, (Integer) null));
+            DSL.bitOr((Integer) null, (Integer) null),
+            DSL.bitOr((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.bitOr((Integer) null, (Integer) null),
-            Factory.bitOr((Field<Integer>) null, (Field<Integer>) null));
+            DSL.bitOr((Integer) null, (Integer) null),
+            DSL.bitOr((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitXNor((Integer) null, (Integer) null),
-            Factory.bitXNor((Integer) null, (Field<Integer>) null));
+            DSL.bitXNor((Integer) null, (Integer) null),
+            DSL.bitXNor((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitXNor((Integer) null, (Integer) null),
-            Factory.bitXNor((Field<Integer>) null, (Integer) null));
+            DSL.bitXNor((Integer) null, (Integer) null),
+            DSL.bitXNor((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.bitXNor((Integer) null, (Integer) null),
-            Factory.bitXNor((Field<Integer>) null, (Field<Integer>) null));
+            DSL.bitXNor((Integer) null, (Integer) null),
+            DSL.bitXNor((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitXor((Integer) null, (Integer) null),
-            Factory.bitXor((Integer) null, (Field<Integer>) null));
+            DSL.bitXor((Integer) null, (Integer) null),
+            DSL.bitXor((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.bitXor((Integer) null, (Integer) null),
-            Factory.bitXor((Field<Integer>) null, (Integer) null));
+            DSL.bitXor((Integer) null, (Integer) null),
+            DSL.bitXor((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.bitXor((Integer) null, (Integer) null),
-            Factory.bitXor((Field<Integer>) null, (Field<Integer>) null));
+            DSL.bitXor((Integer) null, (Integer) null),
+            DSL.bitXor((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.ceil((Integer) null),
-            Factory.ceil((Field<Integer>) null));
+            DSL.ceil((Integer) null),
+            DSL.ceil((Field<Integer>) null));
         assertEquals(
-            Factory.charLength((String) null),
-            Factory.charLength((Field<String>) null));
+            DSL.charLength((String) null),
+            DSL.charLength((Field<String>) null));
         assertEquals(
-            Factory.coalesce((Integer) null, (Integer) null),
-            Factory.coalesce((Field<Integer>) null, (Field<Integer>) null));
+            DSL.coalesce((Integer) null, (Integer) null),
+            DSL.coalesce((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.coalesce((Integer) null, (Integer) null, (Integer) null),
-            Factory.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
+            DSL.coalesce((Integer) null, (Integer) null, (Integer) null),
+            DSL.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.coalesce((Integer) null, (Integer) null, (Integer[]) null),
-            Factory.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<?>[]) null));
+            DSL.coalesce((Integer) null, (Integer) null, (Integer[]) null),
+            DSL.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<?>[]) null));
         assertEquals(
-            Factory.coalesce((Integer) null, (Integer) null, (Integer) null, (Integer) null),
-            Factory.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
+            DSL.coalesce((Integer) null, (Integer) null, (Integer) null, (Integer) null),
+            DSL.coalesce((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.concat((String) null, (String) null),
-            Factory.concat((Field<String>) null, (Field<String>) null));
+            DSL.concat((String) null, (String) null),
+            DSL.concat((Field<String>) null, (Field<String>) null));
         assertEquals(
-            Factory.cos((Integer) null),
-            Factory.cos((Field<Integer>) null));
+            DSL.cos((Integer) null),
+            DSL.cos((Field<Integer>) null));
         assertEquals(
-            Factory.cosh((Integer) null),
-            Factory.cosh((Field<Integer>) null));
+            DSL.cosh((Integer) null),
+            DSL.cosh((Field<Integer>) null));
         assertEquals(
-            Factory.cot((Integer) null),
-            Factory.cot((Field<Integer>) null));
+            DSL.cot((Integer) null),
+            DSL.cot((Field<Integer>) null));
         assertEquals(
-            Factory.coth((Integer) null),
-            Factory.coth((Field<Integer>) null));
+            DSL.coth((Integer) null),
+            DSL.coth((Field<Integer>) null));
         assertEquals(
-            Factory.dateAdd((Date) null, (Integer) null),
-            Factory.dateAdd((Field<Date>) null, (Field<Integer>) null));
+            DSL.dateAdd((Date) null, (Integer) null),
+            DSL.dateAdd((Field<Date>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.dateDiff((Date) null, (Date) null),
-            Factory.dateDiff((Field<Date>) null, (Field<Date>) null));
+            DSL.dateDiff((Date) null, (Date) null),
+            DSL.dateDiff((Field<Date>) null, (Field<Date>) null));
         assertEquals(
-            Factory.day((java.util.Date) null),
-            Factory.day((Field<java.util.Date>) null));
+            DSL.day((java.util.Date) null),
+            DSL.day((Field<java.util.Date>) null));
         assertEquals(
-            Factory.decode((Integer) null, null, null),
-            Factory.decode((Field<Integer>) null, null, null));
+            DSL.decode((Integer) null, null, null),
+            DSL.decode((Field<Integer>) null, null, null));
         assertEquals(
-            Factory.decode((Integer) null, null, null),
-            Factory.decode((Field<Integer>) null, null, null));
+            DSL.decode((Integer) null, null, null),
+            DSL.decode((Field<Integer>) null, null, null));
         assertEquals(
-            Factory.deg((Integer) null),
-            Factory.deg((Field<Integer>) null));
+            DSL.deg((Integer) null),
+            DSL.deg((Field<Integer>) null));
         assertEquals(
-            Factory.exp((Integer) null),
-            Factory.exp((Field<Integer>) null));
+            DSL.exp((Integer) null),
+            DSL.exp((Field<Integer>) null));
         assertEquals(
-            Factory.extract((java.util.Date) null, DatePart.DAY),
-            Factory.extract((Field<java.util.Date>) null, DatePart.DAY));
+            DSL.extract((java.util.Date) null, DatePart.DAY),
+            DSL.extract((Field<java.util.Date>) null, DatePart.DAY));
         assertEquals(
-            Factory.floor((Integer) null),
-            Factory.floor((Field<Integer>) null));
+            DSL.floor((Integer) null),
+            DSL.floor((Field<Integer>) null));
         assertEquals(
-            Factory.greatest((Integer) null),
-            Factory.greatest((Field<Integer>) null));
+            DSL.greatest((Integer) null),
+            DSL.greatest((Field<Integer>) null));
         assertEquals(
-            Factory.greatest((Integer) null, (Integer[]) null),
-            Factory.greatest((Field<Integer>) null, (Field[]) null));
+            DSL.greatest((Integer) null, (Integer[]) null),
+            DSL.greatest((Field<Integer>) null, (Field[]) null));
         assertEquals(
-            Factory.greatest((Integer) null, (Integer) null, (Integer) null),
-            Factory.greatest((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
+            DSL.greatest((Integer) null, (Integer) null, (Integer) null),
+            DSL.greatest((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.greatest((Integer) null, (Integer) null),
-            Factory.greatest((Field<Integer>) null, (Field<Integer>) null));
+            DSL.greatest((Integer) null, (Integer) null),
+            DSL.greatest((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.hour((java.util.Date) null),
-            Factory.hour((Field<java.util.Date>) null));
+            DSL.hour((java.util.Date) null),
+            DSL.hour((Field<java.util.Date>) null));
         assertEquals(
-            Factory.lag((Field<Integer>) null, 1, (Integer) null),
-            Factory.lag((Field<Integer>) null, 1, (Field<Integer>) null));
+            DSL.lag((Field<Integer>) null, 1, (Integer) null),
+            DSL.lag((Field<Integer>) null, 1, (Field<Integer>) null));
         assertEquals(
-            Factory.lead((Field<Integer>) null, 1, (Integer) null),
-            Factory.lead((Field<Integer>) null, 1, (Field<Integer>) null));
+            DSL.lead((Field<Integer>) null, 1, (Integer) null),
+            DSL.lead((Field<Integer>) null, 1, (Field<Integer>) null));
         assertEquals(
-            Factory.least((Integer) null),
-            Factory.least((Field<Integer>) null));
+            DSL.least((Integer) null),
+            DSL.least((Field<Integer>) null));
         assertEquals(
-            Factory.least((Integer) null, (Integer) null),
-            Factory.least((Field<Integer>) null, (Field<Integer>) null));
+            DSL.least((Integer) null, (Integer) null),
+            DSL.least((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.least((Integer) null, (Integer[]) null),
-            Factory.least((Field<Integer>) null, (Field[]) null));
+            DSL.least((Integer) null, (Integer[]) null),
+            DSL.least((Field<Integer>) null, (Field[]) null));
         assertEquals(
-            Factory.least((Integer) null, (Integer) null, (Integer) null),
-            Factory.least((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
+            DSL.least((Integer) null, (Integer) null, (Integer) null),
+            DSL.least((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.length((String) null),
-            Factory.length((Field<String>) null));
+            DSL.length((String) null),
+            DSL.length((Field<String>) null));
         assertEquals(
-            Factory.ln((Integer) null),
-            Factory.ln((Field<Integer>) null));
+            DSL.ln((Integer) null),
+            DSL.ln((Field<Integer>) null));
         assertEquals(
-            Factory.log((Integer) null, 2),
-            Factory.log((Field<Integer>) null, 2));
+            DSL.log((Integer) null, 2),
+            DSL.log((Field<Integer>) null, 2));
         assertEquals(
-            Factory.lower((String) null),
-            Factory.lower((Field<String>) null));
+            DSL.lower((String) null),
+            DSL.lower((Field<String>) null));
         assertEquals(
-            Factory.ltrim((String) null),
-            Factory.ltrim((Field<String>) null));
+            DSL.ltrim((String) null),
+            DSL.ltrim((Field<String>) null));
         assertEquals(
-            Factory.minute((java.util.Date) null),
-            Factory.minute((Field<java.util.Date>) null));
+            DSL.minute((java.util.Date) null),
+            DSL.minute((Field<java.util.Date>) null));
         assertEquals(
-            Factory.month((java.util.Date) null),
-            Factory.month((Field<java.util.Date>) null));
+            DSL.month((java.util.Date) null),
+            DSL.month((Field<java.util.Date>) null));
         assertEquals(
-            Factory.nullif((Integer) null, (Integer) null),
-            Factory.nullif((Field<Integer>) null, (Integer) null));
+            DSL.nullif((Integer) null, (Integer) null),
+            DSL.nullif((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.nullif((Integer) null, (Integer) null),
-            Factory.nullif((Integer) null, (Field<Integer>) null));
+            DSL.nullif((Integer) null, (Integer) null),
+            DSL.nullif((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.nullif((Integer) null, (Integer) null),
-            Factory.nullif((Field<Integer>) null, (Field<Integer>) null));
+            DSL.nullif((Integer) null, (Integer) null),
+            DSL.nullif((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.nvl((Integer) null, (Integer) null),
-            Factory.nvl((Integer) null, (Field<Integer>) null));
+            DSL.nvl((Integer) null, (Integer) null),
+            DSL.nvl((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.nvl((Integer) null, (Integer) null),
-            Factory.nvl((Field<Integer>) null, (Integer) null));
+            DSL.nvl((Integer) null, (Integer) null),
+            DSL.nvl((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.nvl((Integer) null, (Integer) null),
-            Factory.nvl((Field<Integer>) null, (Field<Integer>) null));
+            DSL.nvl((Integer) null, (Integer) null),
+            DSL.nvl((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
-            Factory.nvl2((Field<Integer>) null, (Field<Integer>) null, (Integer) null));
+            DSL.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
+            DSL.nvl2((Field<Integer>) null, (Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
-            Factory.nvl2((Field<Integer>) null, (Integer) null, (Field<Integer>) null));
+            DSL.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
+            DSL.nvl2((Field<Integer>) null, (Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
-            Factory.nvl2((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
+            DSL.nvl2((Field<Integer>) null, (Integer) null, (Integer) null),
+            DSL.nvl2((Field<Integer>) null, (Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.octetLength((String) null),
-            Factory.octetLength((Field<String>) null));
+            DSL.octetLength((String) null),
+            DSL.octetLength((Field<String>) null));
         assertEquals(
-            Factory.position((String) null, (String) null),
-            Factory.position((String) null, (Field<String>) null));
+            DSL.position((String) null, (String) null),
+            DSL.position((String) null, (Field<String>) null));
         assertEquals(
-            Factory.position((String) null, (String) null),
-            Factory.position((Field<String>) null, (String) null));
+            DSL.position((String) null, (String) null),
+            DSL.position((Field<String>) null, (String) null));
         assertEquals(
-            Factory.position((String) null, (String) null),
-            Factory.position((Field<String>) null, (Field<String>) null));
+            DSL.position((String) null, (String) null),
+            DSL.position((Field<String>) null, (Field<String>) null));
         assertEquals(
-            Factory.power((Integer) null, (Integer) null),
-            Factory.power((Field<Integer>) null, (Field<Integer>) null));
+            DSL.power((Integer) null, (Integer) null),
+            DSL.power((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.power((Integer) null, (Integer) null),
-            Factory.power((Field<Integer>) null, (Integer) null));
+            DSL.power((Integer) null, (Integer) null),
+            DSL.power((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.power((Integer) null, (Integer) null),
-            Factory.power((Integer) null, (Field<Integer>) null));
+            DSL.power((Integer) null, (Integer) null),
+            DSL.power((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.rad((Integer) null),
-            Factory.rad((Field<Integer>) null));
+            DSL.rad((Integer) null),
+            DSL.rad((Field<Integer>) null));
         assertEquals(
-            Factory.repeat((String) null, (Field<Integer>) null),
-            Factory.repeat((Field<String>) null, (Field<Integer>) null));
+            DSL.repeat((String) null, (Field<Integer>) null),
+            DSL.repeat((Field<String>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.replace((Field<String>) null, (String) null),
-            Factory.replace((Field<String>) null, (Field<String>) null));
+            DSL.replace((Field<String>) null, (String) null),
+            DSL.replace((Field<String>) null, (Field<String>) null));
         assertEquals(
-            Factory.replace((Field<String>) null, (String) null, (String) null),
-            Factory.replace((Field<String>) null, (Field<String>) null, (Field<String>) null));
+            DSL.replace((Field<String>) null, (String) null, (String) null),
+            DSL.replace((Field<String>) null, (Field<String>) null, (Field<String>) null));
         assertEquals(
-            Factory.round((Integer) null),
-            Factory.round((Field<Integer>) null));
+            DSL.round((Integer) null),
+            DSL.round((Field<Integer>) null));
         assertEquals(
-            Factory.round((Integer) null, 1),
-            Factory.round((Field<Integer>) null, 1));
+            DSL.round((Integer) null, 1),
+            DSL.round((Field<Integer>) null, 1));
         assertEquals(
-            Factory.rtrim((String) null),
-            Factory.rtrim((Field<String>) null));
+            DSL.rtrim((String) null),
+            DSL.rtrim((Field<String>) null));
         assertEquals(
-            Factory.second((java.util.Date) null),
-            Factory.second((Field<java.util.Date>) null));
+            DSL.second((java.util.Date) null),
+            DSL.second((Field<java.util.Date>) null));
         assertEquals(
-            Factory.shl((Integer) null, (Integer) null),
-            Factory.shl((Integer) null, (Field<Integer>) null));
+            DSL.shl((Integer) null, (Integer) null),
+            DSL.shl((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.shl((Integer) null, (Integer) null),
-            Factory.shl((Field<Integer>) null, (Integer) null));
+            DSL.shl((Integer) null, (Integer) null),
+            DSL.shl((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.shl((Integer) null, (Integer) null),
-            Factory.shl((Field<Integer>) null, (Field<Integer>) null));
+            DSL.shl((Integer) null, (Integer) null),
+            DSL.shl((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.shr((Integer) null, (Integer) null),
-            Factory.shr((Integer) null, (Field<Integer>) null));
+            DSL.shr((Integer) null, (Integer) null),
+            DSL.shr((Integer) null, (Field<Integer>) null));
         assertEquals(
-            Factory.shr((Integer) null, (Integer) null),
-            Factory.shr((Field<Integer>) null, (Integer) null));
+            DSL.shr((Integer) null, (Integer) null),
+            DSL.shr((Field<Integer>) null, (Integer) null));
         assertEquals(
-            Factory.shr((Integer) null, (Integer) null),
-            Factory.shr((Field<Integer>) null, (Field<Integer>) null));
+            DSL.shr((Integer) null, (Integer) null),
+            DSL.shr((Field<Integer>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.sign((Integer) null),
-            Factory.sign((Field<Integer>) null));
+            DSL.sign((Integer) null),
+            DSL.sign((Field<Integer>) null));
         assertEquals(
-            Factory.sin((Integer) null),
-            Factory.sin((Field<Integer>) null));
+            DSL.sin((Integer) null),
+            DSL.sin((Field<Integer>) null));
         assertEquals(
-            Factory.sinh((Integer) null),
-            Factory.sinh((Field<Integer>) null));
+            DSL.sinh((Integer) null),
+            DSL.sinh((Field<Integer>) null));
         assertEquals(
-            Factory.sqrt((Integer) null),
-            Factory.sqrt((Field<Integer>) null));
+            DSL.sqrt((Integer) null),
+            DSL.sqrt((Field<Integer>) null));
         assertEquals(
-            Factory.tan((Integer) null),
-            Factory.tan((Field<Integer>) null));
+            DSL.tan((Integer) null),
+            DSL.tan((Field<Integer>) null));
         assertEquals(
-            Factory.tanh((Integer) null),
-            Factory.tanh((Field<Integer>) null));
+            DSL.tanh((Integer) null),
+            DSL.tanh((Field<Integer>) null));
         assertEquals(
-            Factory.timestampAdd((Timestamp) null, (Integer) null),
-            Factory.timestampAdd((Field<Timestamp>) null, (Field<Integer>) null));
+            DSL.timestampAdd((Timestamp) null, (Integer) null),
+            DSL.timestampAdd((Field<Timestamp>) null, (Field<Integer>) null));
         assertEquals(
-            Factory.timestampDiff((Timestamp) null, (Timestamp) null),
-            Factory.timestampDiff((Field<Timestamp>) null, (Field<Timestamp>) null));
+            DSL.timestampDiff((Timestamp) null, (Timestamp) null),
+            DSL.timestampDiff((Field<Timestamp>) null, (Field<Timestamp>) null));
 //        assertEquals(
 //            SQL.trunc((Timestamp) null, null),
 //            SQL.trunc((Field<Timestamp>) null, null));
         assertEquals(
-            Factory.trunc((Integer) null, null),
-            Factory.trunc((Field<Integer>) null, null));
+            DSL.trunc((Integer) null, null),
+            DSL.trunc((Field<Integer>) null, null));
         assertEquals(
-            Factory.trim((String) null),
-            Factory.trim((Field<String>) null));
+            DSL.trim((String) null),
+            DSL.trim((Field<String>) null));
         assertEquals(
-            Factory.upper((String) null),
-            Factory.upper((Field<String>) null));
+            DSL.upper((String) null),
+            DSL.upper((Field<String>) null));
         assertEquals(
-            Factory.year((java.util.Date) null),
-            Factory.year((Field<java.util.Date>) null));
+            DSL.year((java.util.Date) null),
+            DSL.year((Field<java.util.Date>) null));
     }
 
     @Test

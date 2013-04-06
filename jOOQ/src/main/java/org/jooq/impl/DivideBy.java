@@ -35,11 +35,11 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.condition;
-import static org.jooq.impl.Factory.exists;
-import static org.jooq.impl.Factory.notExists;
-import static org.jooq.impl.Factory.selectDistinct;
-import static org.jooq.impl.Factory.selectOne;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.selectDistinct;
+import static org.jooq.impl.DSL.selectOne;
 
 import java.util.ArrayList;
 import java.util.Arrays;

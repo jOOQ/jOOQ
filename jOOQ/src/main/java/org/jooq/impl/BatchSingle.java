@@ -66,7 +66,7 @@ class BatchSingle implements BatchBindStep {
     private final List<Object[]> allBindValues;
 
     public BatchSingle(Configuration configuration, Query query) {
-        this.create = Factory.using(configuration);
+        this.create = DSL.using(configuration);
         this.configuration = configuration;
         this.query = query;
         this.allBindValues = new ArrayList<Object[]>();

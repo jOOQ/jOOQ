@@ -54,7 +54,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A table to be used in queries
@@ -381,7 +381,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * Depending on the <code>JoinType</code>, a subsequent
      * {@link TableOnStep#on(Condition...)} or
      * {@link TableOnStep#using(Field...)} clause is required. If it is required
-     * but omitted, a {@link Factory#trueCondition()}, i.e. <code>1 = 1</code>
+     * but omitted, a {@link DSL#trueCondition()}, i.e. <code>1 = 1</code>
      * condition will be rendered
      */
     @Support
@@ -401,7 +401,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support
     TableOnStep join(String sql);
@@ -414,7 +414,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support
     TableOnStep join(String sql, Object... bindings);
@@ -427,7 +427,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support
     TableOnStep join(String sql, QueryPart... parts);
@@ -446,7 +446,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support
     TablePartitionByStep leftOuterJoin(String sql);
@@ -459,7 +459,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support
     TablePartitionByStep leftOuterJoin(String sql, Object... bindings);
@@ -472,7 +472,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support
     TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts);
@@ -495,7 +495,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TablePartitionByStep rightOuterJoin(String sql);
@@ -510,7 +510,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
@@ -525,7 +525,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts);
@@ -548,7 +548,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(String sql);
@@ -563,7 +563,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(String sql, Object... bindings);
@@ -578,7 +578,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     TableOnStep fullOuterJoin(String sql, QueryPart... parts);
@@ -611,7 +611,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support
     Table<Record> crossJoin(String sql);
@@ -631,7 +631,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support
     Table<Record> crossJoin(String sql, Object... bindings);
@@ -651,7 +651,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support
     Table<Record> crossJoin(String sql, QueryPart... parts);
@@ -676,7 +676,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support
     Table<Record> naturalJoin(String sql);
@@ -692,7 +692,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support
     Table<Record> naturalJoin(String sql, Object... bindings);
@@ -708,7 +708,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support
     Table<Record> naturalJoin(String sql, QueryPart... parts);
@@ -733,7 +733,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support
     Table<Record> naturalLeftOuterJoin(String sql);
@@ -749,7 +749,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support
     Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
@@ -765,7 +765,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support
     Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts);
@@ -790,7 +790,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql);
@@ -806,7 +806,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
@@ -822,7 +822,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);

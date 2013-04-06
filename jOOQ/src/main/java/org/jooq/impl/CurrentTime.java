@@ -35,8 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.function;
 
 import java.sql.Time;
 

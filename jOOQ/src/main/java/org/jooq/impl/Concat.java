@@ -37,8 +37,8 @@ package org.jooq.impl;
 
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.CONCAT;
-import static org.jooq.impl.Factory.castAll;
-import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.DSL.castAll;
+import static org.jooq.impl.DSL.function;
 
 import org.jooq.Configuration;
 import org.jooq.Field;

@@ -41,10 +41,10 @@ import static java.util.Collections.emptyList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
-import static org.jooq.impl.Factory.currentUser;
-import static org.jooq.impl.Factory.sum;
-import static org.jooq.impl.Factory.table;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.currentUser;
+import static org.jooq.impl.DSL.sum;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.test.oracle.generatedclasses.multi_schema.Tables.T_BOOK_SALE;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.f691cursorIn;
 import static org.jooq.test.oracle.generatedclasses.test.Routines.f691cursorOut;
@@ -92,8 +92,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.DSLContext;
 import org.jooq.DAO;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -107,7 +107,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -215,7 +215,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Override
     protected DSLContext create(Settings settings) {
-        return Factory.using(getConnection(), SQLDialect.ORACLE, settings);
+        return DSL.using(getConnection(), SQLDialect.ORACLE, settings);
     }
 
     @Override
@@ -1333,7 +1333,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleMultiSchemaFactories() throws Exception {
-        DSLContext create = Factory.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
+        DSLContext create = DSL.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
 
         UAddressTypeRecord address = new UAddressTypeRecord();
         address.setStreet(new UStreetTypeRecord());

@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.fieldByName;
+import static org.jooq.impl.DSL.fieldByName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +135,7 @@ class ArrayTable extends AbstractTable<Record> {
 
         // Simple array types have a synthetic field called "COLUMN_VALUE"
         else {
-            result.add(fieldByName(Factory.getDataType(arrayType), alias, "COLUMN_VALUE"));
+            result.add(fieldByName(DSL.getDataType(arrayType), alias, "COLUMN_VALUE"));
         }
 
         return new Fields(result);

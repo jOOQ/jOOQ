@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.DSL.function;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -66,14 +66,14 @@ class Repeat extends AbstractFunction<String> {
             case FIREBIRD:
             case INGRES:
             case ORACLE:
-                return Factory.rpad(string, Factory.length(string).mul(count), string);
+                return DSL.rpad(string, DSL.length(string).mul(count), string);
 
             // Simulation of REPEAT() for SQLite currently cannot be achieved
             // using RPAD() above, as RPAD() expects characters, not strings
             // Another option is documented here, though:
             // http://stackoverflow.com/questions/11568496/how-to-simulate-repeat-in-sqlite
             case SQLITE:
-                return Factory.field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {0}), '0', {1})", String.class, count, string);
+                return DSL.field("replace(substr(quote(zeroblob(({0} + 1) / 2)), 3, {0}), '0', {1})", String.class, count, string);
 
             case ASE:
             case SQLSERVER:

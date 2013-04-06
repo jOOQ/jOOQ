@@ -35,8 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
@@ -94,10 +94,10 @@ class Contains<T> extends AbstractCondition {
             Field<String> concat;
 
             if (rhs == null) {
-                concat = Factory.concat(inline("%"), Utils.escapeForLike(value), inline("%"));
+                concat = DSL.concat(inline("%"), Utils.escapeForLike(value), inline("%"));
             }
             else {
-                concat = Factory.concat(inline("%"), Utils.escapeForLike(rhs), inline("%"));
+                concat = DSL.concat(inline("%"), Utils.escapeForLike(rhs), inline("%"));
             }
 
             return lhs.like(concat, Utils.ESCAPE);

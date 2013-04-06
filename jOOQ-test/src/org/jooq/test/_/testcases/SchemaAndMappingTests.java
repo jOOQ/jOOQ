@@ -40,8 +40,8 @@ import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.sum;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.sum;
 
 import java.math.BigDecimal;
 import java.sql.Date;

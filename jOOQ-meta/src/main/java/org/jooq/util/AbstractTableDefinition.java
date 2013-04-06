@@ -36,7 +36,7 @@
 
 package org.jooq.util;
 
-import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.DSL.table;
 
 import java.sql.SQLException;
 import java.util.List;

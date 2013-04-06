@@ -35,9 +35,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -74,13 +74,13 @@ class Rpad extends AbstractFunction<String> {
             case ASE:
             case SQLSERVER:
             case SYBASE: {
-                return Factory.concat(field, Factory.repeat(character, length.sub(Factory.length(field))));
+                return DSL.concat(field, DSL.repeat(character, length.sub(DSL.length(field))));
             }
 
             // This beautiful expression was contributed by "Ludo", here:
             // http://stackoverflow.com/questions/6576343/how-to-simulate-lpad-rpad-with-sqlite
             case SQLITE: {
-                return Factory.field(
+                return DSL.field(
                     "{0} || substr(" +
                              "replace(" +
                                "replace(" +

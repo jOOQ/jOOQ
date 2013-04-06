@@ -36,14 +36,14 @@
 package org.jooq.util.firebird;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#FIREBIRD} specific factory
  *
  * @author Lukas Eder
  */
-public class FirebirdFactory extends Factory {
+public class FirebirdFactory extends DSL {
 
     /**
      * No instances

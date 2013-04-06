@@ -52,8 +52,8 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.DSLContext;
 import org.jooq.DAO;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -64,7 +64,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -141,7 +141,7 @@ public class H2Test extends jOOQAbstractTest<
 
     @Override
     protected DSLContext create(Settings settings) {
-        return Factory.using(getConnection(), SQLDialect.H2, settings);
+        return DSL.using(getConnection(), SQLDialect.H2, settings);
     }
 
     @Override

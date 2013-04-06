@@ -36,13 +36,13 @@
 
 package org.jooq.util.postgres;
 
-import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.decode;
-import static org.jooq.impl.Factory.exists;
-import static org.jooq.impl.Factory.select;
-import static org.jooq.impl.Factory.selectOne;
-import static org.jooq.impl.Factory.upper;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.upper;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
 import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
@@ -65,7 +65,7 @@ import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -391,6 +391,6 @@ public class PostgresDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.POSTGRES);
+        return DSL.using(getConnection(), SQLDialect.POSTGRES);
     }
 }

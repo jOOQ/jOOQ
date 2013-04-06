@@ -37,14 +37,14 @@ package org.jooq.util.sqlite;
 
 import org.jooq.Field;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#SQLITE} specific factory
  *
  * @author Lukas Eder
  */
-public class SQLiteFactory extends Factory {
+public class SQLiteFactory extends DSL {
 
     /**
      * No instances

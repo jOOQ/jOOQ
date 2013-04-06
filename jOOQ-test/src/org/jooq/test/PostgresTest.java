@@ -36,7 +36,7 @@
 
 package org.jooq.test;
 
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.test.postgres.generatedclasses.Routines.fSearchBook;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.postgres.generatedclasses.Tables.T_725_LOB_TEST;
@@ -78,7 +78,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -149,7 +149,7 @@ public class PostgresTest extends jOOQAbstractTest<
 
     @Override
     protected DSLContext create(Settings settings) {
-        return Factory.using(getConnection(), SQLDialect.POSTGRES, settings);
+        return DSL.using(getConnection(), SQLDialect.POSTGRES, settings);
     }
 
     @Override

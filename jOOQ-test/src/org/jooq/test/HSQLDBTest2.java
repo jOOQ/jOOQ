@@ -72,7 +72,7 @@ import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -145,7 +145,7 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
                 .withOutput(Public.PUBLIC.getName());
         }
 
-        return Factory.using(getConnection(), SQLDialect.HSQLDB, settings);
+        return DSL.using(getConnection(), SQLDialect.HSQLDB, settings);
     }
 
 	@Override

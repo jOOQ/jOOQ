@@ -155,7 +155,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	@Override
 	public org.jooq.Row8<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8());
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class DatabaseLog extends org.jooq.impl.UpdatableRecordImpl<org.jooq.exam
 	 */
 	@Override
 	public org.jooq.Row8<java.lang.Integer, java.sql.Timestamp, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Object> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8());
 	}
 
 	/**

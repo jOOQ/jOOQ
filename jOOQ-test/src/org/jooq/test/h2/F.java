@@ -35,9 +35,9 @@
  */
 package org.jooq.test.h2;
 
-import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.max;
-import static org.jooq.impl.Factory.sign;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.max;
+import static org.jooq.impl.DSL.sign;
 import static org.jooq.impl.SQLDataType.INTEGER;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR;
 import static org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK;
@@ -49,7 +49,7 @@ import java.sql.SQLException;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
 import org.jooq.test.h2.generatedclasses.tables.TBook;
@@ -139,6 +139,6 @@ public class F {
     }
 
     private static DSLContext create(Connection connection) {
-        return Factory.using(connection, SQLDialect.H2);
+        return DSL.using(connection, SQLDialect.H2);
     }
 }

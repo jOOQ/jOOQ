@@ -36,7 +36,7 @@
 
 package org.jooq.util.derby;
 
-import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.derby.sys.tables.Syscolumns.SYSCOLUMNS;
 
 import java.sql.SQLException;

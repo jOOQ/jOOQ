@@ -36,7 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.Factory.fieldByName;
+import static org.jooq.impl.DSL.fieldByName;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -79,7 +79,7 @@ class MetaImpl implements Meta, Serializable {
     private transient volatile DatabaseMetaData meta;
 
     MetaImpl(Configuration configuration) {
-        this.create = Factory.using(configuration);
+        this.create = DSL.using(configuration);
         this.configuration = configuration;
     }
 

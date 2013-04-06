@@ -110,7 +110,7 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	 */
 	@Override
 	public org.jooq.Row5<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5());
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class Shift extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	 */
 	@Override
 	public org.jooq.Row5<java.lang.Byte, java.lang.String, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5());
 	}
 
 	/**

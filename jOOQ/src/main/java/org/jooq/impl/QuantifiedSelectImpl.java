@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.DSL.table;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;

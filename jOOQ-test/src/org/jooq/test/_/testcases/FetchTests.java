@@ -45,9 +45,9 @@ import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.math.BigDecimal;

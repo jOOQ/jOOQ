@@ -37,7 +37,7 @@ package org.jooq;
 
 import java.util.Collection;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -103,7 +103,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      */
     @Support
     SelectJoinStep<R> from(String sql);
@@ -116,7 +116,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      */
     @Support
     SelectJoinStep<R> from(String sql, Object... bindings);
@@ -129,7 +129,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      */
     @Support
     SelectJoinStep<R> from(String sql, QueryPart... parts);

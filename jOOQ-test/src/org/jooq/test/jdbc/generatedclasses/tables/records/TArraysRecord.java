@@ -88,7 +88,7 @@ public class TArraysRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.j
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Object, java.lang.Object, java.lang.Object> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4());
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class TArraysRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.j
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Object, java.lang.Object, java.lang.Object> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4());
 	}
 
 	/**

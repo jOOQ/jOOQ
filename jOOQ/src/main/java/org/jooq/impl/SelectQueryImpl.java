@@ -47,10 +47,10 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.name;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.rowNumber;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import java.util.Arrays;

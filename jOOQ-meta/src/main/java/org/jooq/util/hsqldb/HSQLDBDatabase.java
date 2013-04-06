@@ -36,7 +36,7 @@
 
 package org.jooq.util.hsqldb;
 
-import static org.jooq.impl.Factory.nvl;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.util.hsqldb.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.hsqldb.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
@@ -55,7 +55,7 @@ import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -80,7 +80,7 @@ public class HSQLDBDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.HSQLDB);
+        return DSL.using(getConnection(), SQLDialect.HSQLDB);
     }
 
     @Override

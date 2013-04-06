@@ -127,7 +127,7 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	 */
 	@Override
 	public org.jooq.Row7<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6(), field7());
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class vSalesPersonSalesByFiscalYears extends org.jooq.impl.TableRecordImp
 	 */
 	@Override
 	public org.jooq.Row7<java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6(), value7());
 	}
 
 	/**

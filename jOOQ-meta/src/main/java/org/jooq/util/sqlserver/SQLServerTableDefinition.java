@@ -36,7 +36,7 @@
 
 package org.jooq.util.sqlserver;
 
-import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.util.sqlserver.information_schema.Tables.COLUMNS;
 
 import java.sql.SQLException;

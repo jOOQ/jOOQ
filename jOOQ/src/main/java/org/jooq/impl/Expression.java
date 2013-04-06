@@ -58,15 +58,15 @@ import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.SHL;
 import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
-import static org.jooq.impl.Factory.bitAnd;
-import static org.jooq.impl.Factory.bitNot;
-import static org.jooq.impl.Factory.bitOr;
-import static org.jooq.impl.Factory.bitXor;
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.two;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.bitAnd;
+import static org.jooq.impl.DSL.bitNot;
+import static org.jooq.impl.DSL.bitOr;
+import static org.jooq.impl.DSL.bitXor;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.DSL.val;
 
 import java.sql.Timestamp;
 
@@ -166,10 +166,10 @@ class Expression<T> extends AbstractFunction<T> {
 
         // Many dialects don't support shifts. Use multiplication/division instead
         else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
-            return lhs.mul(Factory.power(two(), rhsAsNumber()));
+            return lhs.mul(DSL.power(two(), rhsAsNumber()));
         }
         else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
-            return lhs.div(Factory.power(two(), rhsAsNumber()));
+            return lhs.div(DSL.power(two(), rhsAsNumber()));
         }
 
         // Some dialects support shifts as functions

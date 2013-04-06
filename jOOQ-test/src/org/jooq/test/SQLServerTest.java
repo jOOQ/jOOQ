@@ -70,7 +70,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -127,7 +127,7 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Override
     protected DSLContext create(Settings settings) {
-        return Factory.using(getConnection(), SQLDialect.SQLSERVER, settings);
+        return DSL.using(getConnection(), SQLDialect.SQLSERVER, settings);
     }
 
     @Override

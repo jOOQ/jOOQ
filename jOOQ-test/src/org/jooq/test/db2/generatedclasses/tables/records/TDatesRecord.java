@@ -116,7 +116,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6());
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class TDatesRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.tes
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.sql.Date, java.sql.Time, java.sql.Timestamp, java.lang.Integer, java.lang.Long> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6());
 	}
 
 	/**

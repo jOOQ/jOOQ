@@ -49,7 +49,7 @@ import org.jooq.DSLContext;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test.data.Table1Record;
 import org.jooq.util.oracle.OracleDataType;
 
@@ -84,7 +84,7 @@ public abstract class AbstractTest {
     public void setUp() throws Exception {
         context = new Mockery();
         statement = context.mock(PreparedStatement.class);
-        create = Factory.using(SQLDialect.ORACLE);
+        create = DSL.using(SQLDialect.ORACLE);
 
         resultEmpty = create.newResult(TABLE1);
 

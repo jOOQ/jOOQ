@@ -232,7 +232,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.TableRecordImpl<org.j
 	 */
 	@Override
 	public org.jooq.Row13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13());
 	}
 
 	/**
@@ -240,7 +240,7 @@ public class T_639NumbersTableRecord extends org.jooq.impl.TableRecordImpl<org.j
 	 */
 	@Override
 	public org.jooq.Row13<java.lang.Integer, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Byte, java.lang.Short, java.lang.Integer, java.lang.Long, java.math.BigInteger, java.math.BigDecimal, java.lang.Float, java.lang.Double> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13());
 	}
 
 	/**

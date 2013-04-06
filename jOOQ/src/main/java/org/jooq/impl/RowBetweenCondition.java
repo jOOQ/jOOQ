@@ -47,7 +47,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.row;
+import static org.jooq.impl.DSL.row;
 
 import javax.annotation.Generated;
 

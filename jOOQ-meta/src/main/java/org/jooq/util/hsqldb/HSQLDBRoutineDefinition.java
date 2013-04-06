@@ -35,7 +35,7 @@
  */
 package org.jooq.util.hsqldb;
 
-import static org.jooq.impl.Factory.nvl;
+import static org.jooq.impl.DSL.nvl;
 import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 import static org.jooq.util.hsqldb.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.hsqldb.information_schema.Tables.ROUTINES;

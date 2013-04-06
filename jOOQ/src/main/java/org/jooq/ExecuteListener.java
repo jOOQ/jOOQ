@@ -45,7 +45,7 @@ import java.util.EventListener;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 
@@ -57,7 +57,7 @@ import org.jooq.tools.StopWatchListener;
  * profilers, data collectors that can be hooked into a jOOQ {@link DSLContext}
  * using the {@link Configuration#getExecuteListeners()} property, passing
  * <code>Settings</code> to
- * {@link Factory#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ
+ * {@link DSL#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ
  * will use that configuration at the beginning of a query execution event to
  * instanciate all the provided listeners. In other words, listeners have the
  * same lifetime as a single query execution, and can thus be used to store

@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.val;
 
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;

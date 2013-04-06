@@ -41,14 +41,14 @@ import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.E
 import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EmployeeAddress;
 import static org.jooq.examples.sqlserver.adventureworks.humanresources.Tables.EmployeeDepartmentHistory;
 import static org.jooq.examples.sqlserver.adventureworks.person.Tables.Contact;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.val;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 public class AdventureWorks {
 
@@ -56,7 +56,7 @@ public class AdventureWorks {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Connection connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true");
 
-        DSLContext create = Factory.using(connection, SQLDialect.SQLSERVER);
+        DSLContext create = DSL.using(connection, SQLDialect.SQLSERVER);
 
         System.out.println(create
               .select(Employee.fields())

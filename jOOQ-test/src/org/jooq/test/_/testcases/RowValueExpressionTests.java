@@ -47,15 +47,15 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.currentDate;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.not;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.row;
-import static org.jooq.impl.Factory.select;
-import static org.jooq.impl.Factory.trueCondition;
-import static org.jooq.impl.Factory.val;
-import static org.jooq.impl.Factory.zero;
+import static org.jooq.impl.DSL.currentDate;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.not;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.zero;
 
 import java.sql.Date;
 

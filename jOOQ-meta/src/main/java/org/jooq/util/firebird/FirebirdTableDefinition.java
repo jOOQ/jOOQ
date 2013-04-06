@@ -35,7 +35,7 @@
  */
 package org.jooq.util.firebird;
 
-import static org.jooq.impl.Factory.decode;
+import static org.jooq.impl.DSL.decode;
 import static org.jooq.util.firebird.rdb.Tables.RDB$FIELDS;
 import static org.jooq.util.firebird.rdb.Tables.RDB$RELATION_FIELDS;
 

@@ -39,10 +39,10 @@ import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.DIVIDE;
 import static org.jooq.impl.ExpressionOperator.MULTIPLY;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
-import static org.jooq.impl.Factory.falseCondition;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.nullSafe;
-import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.trueCondition;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -216,7 +216,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final <Z> SortField<Z> sort(Map<T, Z> sortMap) {
-        CaseValueStep<T> decode = Factory.decode().value(this);
+        CaseValueStep<T> decode = DSL.decode().value(this);
         CaseWhenStep<T, Z> result = null;
 
         for (Entry<T, Z> entry : sortMap.entrySet()) {
@@ -551,25 +551,25 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition startsWith(T value) {
-        Field<String> concat = Factory.concat(Utils.escapeForLike(value), inline("%"));
+        Field<String> concat = DSL.concat(Utils.escapeForLike(value), inline("%"));
         return like(concat, Utils.ESCAPE);
     }
 
     @Override
     public final Condition startsWith(Field<T> value) {
-        Field<String> concat = Factory.concat(Utils.escapeForLike(value), inline("%"));
+        Field<String> concat = DSL.concat(Utils.escapeForLike(value), inline("%"));
         return like(concat, Utils.ESCAPE);
     }
 
     @Override
     public final Condition endsWith(T value) {
-        Field<String> concat = Factory.concat(inline("%"), Utils.escapeForLike(value));
+        Field<String> concat = DSL.concat(inline("%"), Utils.escapeForLike(value));
         return like(concat, Utils.ESCAPE);
     }
 
     @Override
     public final Condition endsWith(Field<T> value) {
-        Field<String> concat = Factory.concat(inline("%"), Utils.escapeForLike(value));
+        Field<String> concat = DSL.concat(inline("%"), Utils.escapeForLike(value));
         return like(concat, Utils.ESCAPE);
     }
 
@@ -852,7 +852,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition equalIgnoreCase(Field<String> value) {
-        return Factory.lower(cast(String.class)).equal(Factory.lower(value));
+        return DSL.lower(cast(String.class)).equal(DSL.lower(value));
     }
 
     @Override
@@ -882,7 +882,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notEqualIgnoreCase(Field<String> value) {
-        return Factory.lower(cast(String.class)).notEqual(Factory.lower(value));
+        return DSL.lower(cast(String.class)).notEqual(DSL.lower(value));
     }
 
     @Override
@@ -1031,71 +1031,71 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     @Deprecated
     public final Field<Integer> sign() {
-        return Factory.sign(numeric());
+        return DSL.sign(numeric());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @Deprecated
     public final Field<T> abs() {
-        return (Field<T>) Factory.abs(numeric());
+        return (Field<T>) DSL.abs(numeric());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @Deprecated
     public final Field<T> round() {
-        return (Field<T>) Factory.round(numeric());
+        return (Field<T>) DSL.round(numeric());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @Deprecated
     public final Field<T> round(int decimals) {
-        return (Field<T>) Factory.round(numeric(), decimals);
+        return (Field<T>) DSL.round(numeric(), decimals);
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @Deprecated
     public final Field<T> floor() {
-        return (Field<T>) Factory.floor(numeric());
+        return (Field<T>) DSL.floor(numeric());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     @Deprecated
     public final Field<T> ceil() {
-        return (Field<T>) Factory.ceil(numeric());
+        return (Field<T>) DSL.ceil(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> sqrt() {
-        return Factory.sqrt(numeric());
+        return DSL.sqrt(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> exp() {
-        return Factory.exp(numeric());
+        return DSL.exp(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> ln() {
-        return Factory.ln(numeric());
+        return DSL.ln(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> log(int base) {
-        return Factory.log(numeric(), base);
+        return DSL.log(numeric(), base);
     }
 
     @Override
     public final Field<BigDecimal> pow(Number exponent) {
-        return Factory.power(numeric(), exponent);
+        return DSL.power(numeric(), exponent);
     }
 
     @Override
@@ -1107,565 +1107,565 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     @Override
     @Deprecated
     public final Field<BigDecimal> acos() {
-        return Factory.acos(numeric());
+        return DSL.acos(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> asin() {
-        return Factory.asin(numeric());
+        return DSL.asin(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> atan() {
-        return Factory.atan(numeric());
+        return DSL.atan(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> atan2(Number y) {
-        return Factory.atan2(numeric(), y);
+        return DSL.atan2(numeric(), y);
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> atan2(Field<? extends Number> y) {
-        return Factory.atan2(numeric(), y);
+        return DSL.atan2(numeric(), y);
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> cos() {
-        return Factory.cos(numeric());
+        return DSL.cos(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> sin() {
-        return Factory.sin(numeric());
+        return DSL.sin(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> tan() {
-        return Factory.tan(numeric());
+        return DSL.tan(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> cot() {
-        return Factory.cot(numeric());
+        return DSL.cot(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> sinh() {
-        return Factory.sinh(numeric());
+        return DSL.sinh(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> cosh() {
-        return Factory.cosh(numeric());
+        return DSL.cosh(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> tanh() {
-        return Factory.tanh(numeric());
+        return DSL.tanh(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> coth() {
-        return Factory.coth(numeric());
+        return DSL.coth(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> deg() {
-        return Factory.deg(numeric());
+        return DSL.deg(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> rad() {
-        return Factory.rad(numeric());
+        return DSL.rad(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<Integer> count() {
-        return Factory.count(this);
+        return DSL.count(this);
     }
 
     @Override
     @Deprecated
     public final Field<Integer> countDistinct() {
-        return Factory.countDistinct(this);
+        return DSL.countDistinct(this);
     }
 
     @Override
     @Deprecated
     public final Field<T> max() {
-        return Factory.max(this);
+        return DSL.max(this);
     }
 
     @Override
     @Deprecated
     public final Field<T> min() {
-        return Factory.min(this);
+        return DSL.min(this);
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> sum() {
-        return Factory.sum(numeric());
+        return DSL.sum(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> avg() {
-        return Factory.avg(numeric());
+        return DSL.avg(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> median() {
-        return Factory.median(numeric());
+        return DSL.median(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> stddevPop() {
-        return Factory.stddevPop(numeric());
+        return DSL.stddevPop(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> stddevSamp() {
-        return Factory.stddevSamp(numeric());
+        return DSL.stddevSamp(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> varPop() {
-        return Factory.varPop(numeric());
+        return DSL.varPop(numeric());
     }
 
     @Override
     @Deprecated
     public final Field<BigDecimal> varSamp() {
-        return Factory.varSamp(numeric());
+        return DSL.varSamp(numeric());
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<Integer> countOver() {
-        return Factory.count(this).over();
+        return DSL.count(this).over();
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<T> maxOver() {
-        return Factory.max(this).over();
+        return DSL.max(this).over();
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<T> minOver() {
-        return Factory.min(this).over();
+        return DSL.min(this).over();
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<BigDecimal> sumOver() {
-        return Factory.sum(numeric()).over();
+        return DSL.sum(numeric()).over();
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<BigDecimal> avgOver() {
-        return Factory.avg(numeric()).over();
+        return DSL.avg(numeric()).over();
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> firstValue() {
-        return Factory.firstValue(this);
+        return DSL.firstValue(this);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lastValue() {
-        return Factory.lastValue(this);
+        return DSL.lastValue(this);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lead() {
-        return Factory.lead(this);
+        return DSL.lead(this);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lead(int offset) {
-        return Factory.lead(this, offset);
+        return DSL.lead(this, offset);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lead(int offset, T defaultValue) {
-        return Factory.lead(this, offset, defaultValue);
+        return DSL.lead(this, offset, defaultValue);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue) {
-        return Factory.lead(this, offset, defaultValue);
+        return DSL.lead(this, offset, defaultValue);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lag() {
-        return Factory.lag(this);
+        return DSL.lag(this);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lag(int offset) {
-        return Factory.lag(this, offset);
+        return DSL.lag(this, offset);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lag(int offset, T defaultValue) {
-        return Factory.lag(this, offset, defaultValue);
+        return DSL.lag(this, offset, defaultValue);
     }
 
     @Override
     @Deprecated
     public final WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue) {
-        return Factory.lag(this, offset, defaultValue);
+        return DSL.lag(this, offset, defaultValue);
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<BigDecimal> stddevPopOver() {
-        return Factory.stddevPop(numeric()).over();
+        return DSL.stddevPop(numeric()).over();
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<BigDecimal> stddevSampOver() {
-        return Factory.stddevSamp(numeric()).over();
+        return DSL.stddevSamp(numeric()).over();
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<BigDecimal> varPopOver() {
-        return Factory.varPop(numeric()).over();
+        return DSL.varPop(numeric()).over();
     }
 
     @Override
     @Deprecated
     public final WindowPartitionByStep<BigDecimal> varSampOver() {
-        return Factory.varSamp(numeric()).over();
+        return DSL.varSamp(numeric()).over();
     }
 
     @Override
     @Deprecated
     public final Field<String> upper() {
-        return Factory.upper(varchar());
+        return DSL.upper(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<String> lower() {
-        return Factory.lower(varchar());
+        return DSL.lower(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<String> trim() {
-        return Factory.trim(varchar());
+        return DSL.trim(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<String> rtrim() {
-        return Factory.rtrim(varchar());
+        return DSL.rtrim(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<String> ltrim() {
-        return Factory.ltrim(varchar());
+        return DSL.ltrim(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<String> rpad(Field<? extends Number> length) {
-        return Factory.rpad(varchar(), length);
+        return DSL.rpad(varchar(), length);
     }
 
     @Override
     @Deprecated
     public final Field<String> rpad(int length) {
-        return Factory.rpad(varchar(), length);
+        return DSL.rpad(varchar(), length);
     }
 
     @Override
     @Deprecated
     public final Field<String> rpad(Field<? extends Number> length, Field<String> character) {
-        return Factory.rpad(varchar(), length, character);
+        return DSL.rpad(varchar(), length, character);
     }
 
     @Override
     @Deprecated
     public final Field<String> rpad(int length, char character) {
-        return Factory.rpad(varchar(), length, character);
+        return DSL.rpad(varchar(), length, character);
     }
 
     @Override
     @Deprecated
     public final Field<String> lpad(Field<? extends Number> length) {
-        return Factory.lpad(varchar(), length);
+        return DSL.lpad(varchar(), length);
     }
 
     @Override
     @Deprecated
     public final Field<String> lpad(int length) {
-        return Factory.lpad(varchar(), length);
+        return DSL.lpad(varchar(), length);
     }
 
     @Override
     @Deprecated
     public final Field<String> lpad(Field<? extends Number> length, Field<String> character) {
-        return Factory.lpad(varchar(), length, character);
+        return DSL.lpad(varchar(), length, character);
     }
 
     @Override
     @Deprecated
     public final Field<String> lpad(int length, char character) {
-        return Factory.lpad(varchar(), length, character);
+        return DSL.lpad(varchar(), length, character);
     }
 
     @Override
     @Deprecated
     public final Field<String> repeat(Number count) {
-        return Factory.repeat(varchar(), count == null ? 0 : count.intValue());
+        return DSL.repeat(varchar(), count == null ? 0 : count.intValue());
     }
 
     @Override
     @Deprecated
     public final Field<String> repeat(Field<? extends Number> count) {
-        return Factory.repeat(varchar(), count);
+        return DSL.repeat(varchar(), count);
     }
 
     @Override
     @Deprecated
     public final Field<String> replace(Field<String> search) {
-        return Factory.replace(varchar(), search);
+        return DSL.replace(varchar(), search);
     }
 
     @Override
     @Deprecated
     public final Field<String> replace(String search) {
-        return Factory.replace(varchar(), search);
+        return DSL.replace(varchar(), search);
     }
 
     @Override
     @Deprecated
     public final Field<String> replace(Field<String> search, Field<String> replace) {
-        return Factory.replace(varchar(), search, replace);
+        return DSL.replace(varchar(), search, replace);
     }
 
     @Override
     @Deprecated
     public final Field<String> replace(String search, String replace) {
-        return Factory.replace(varchar(), search, replace);
+        return DSL.replace(varchar(), search, replace);
     }
 
     @Override
     @Deprecated
     public final Field<Integer> position(String search) {
-        return Factory.position(varchar(), search);
+        return DSL.position(varchar(), search);
     }
 
     @Override
     @Deprecated
     public final Field<Integer> position(Field<String> search) {
-        return Factory.position(varchar(), search);
+        return DSL.position(varchar(), search);
     }
 
     @Override
     @Deprecated
     public final Field<Integer> ascii() {
-        return Factory.ascii(varchar());
+        return DSL.ascii(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<String> concat(Field<?>... fields) {
-        return Factory.concat(Utils.combine(this, fields));
+        return DSL.concat(Utils.combine(this, fields));
     }
 
     @Override
     @Deprecated
     public final Field<String> concat(String... values) {
-        return Factory.concat(Utils.combine(this, Utils.fields(values).toArray(new Field[0])));
+        return DSL.concat(Utils.combine(this, Utils.fields(values).toArray(new Field[0])));
     }
 
     @Override
     @Deprecated
     public final Field<String> substring(int startingPosition) {
-        return Factory.substring(varchar(), startingPosition);
+        return DSL.substring(varchar(), startingPosition);
     }
 
     @Override
     @Deprecated
     public final Field<String> substring(Field<? extends Number> startingPosition) {
-        return Factory.substring(varchar(), startingPosition);
+        return DSL.substring(varchar(), startingPosition);
     }
 
     @Override
     @Deprecated
     public final Field<String> substring(int startingPosition, int length) {
-        return Factory.substring(varchar(), startingPosition, length);
+        return DSL.substring(varchar(), startingPosition, length);
     }
 
     @Override
     @Deprecated
     public final Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length) {
-        return Factory.substring(varchar(), startingPosition, length);
+        return DSL.substring(varchar(), startingPosition, length);
     }
 
     @Override
     @Deprecated
     public final Field<Integer> length() {
-        return Factory.length(varchar());
+        return DSL.length(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<Integer> charLength() {
-        return Factory.charLength(varchar());
+        return DSL.charLength(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<Integer> bitLength() {
-        return Factory.bitLength(varchar());
+        return DSL.bitLength(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<Integer> octetLength() {
-        return Factory.octetLength(varchar());
+        return DSL.octetLength(varchar());
     }
 
     @Override
     @Deprecated
     public final Field<Integer> extract(DatePart datePart) {
-        return Factory.extract(date(), datePart);
+        return DSL.extract(date(), datePart);
     }
 
     @Override
     @Deprecated
     public final Field<T> greatest(T... others) {
-        return Factory.greatest(this, Utils.fields(others).toArray(new Field[0]));
+        return DSL.greatest(this, Utils.fields(others).toArray(new Field[0]));
     }
 
     @Override
     @Deprecated
     public final Field<T> greatest(Field<?>... others) {
-        return Factory.greatest(this, others);
+        return DSL.greatest(this, others);
     }
 
     @Override
     @Deprecated
     public final Field<T> least(T... others) {
-        return Factory.least(this, Utils.fields(others).toArray(new Field[0]));
+        return DSL.least(this, Utils.fields(others).toArray(new Field[0]));
     }
 
     @Override
     @Deprecated
     public final Field<T> least(Field<?>... others) {
-        return Factory.least(this, others);
+        return DSL.least(this, others);
     }
 
     @Override
     @Deprecated
     public final Field<T> nvl(T defaultValue) {
-        return Factory.nvl(this, defaultValue);
+        return DSL.nvl(this, defaultValue);
     }
 
     @Override
     @Deprecated
     public final Field<T> nvl(Field<T> defaultValue) {
-        return Factory.nvl(this, defaultValue);
+        return DSL.nvl(this, defaultValue);
     }
 
     @Override
     @Deprecated
     public final <Z> Field<Z> nvl2(Z valueIfNotNull, Z valueIfNull) {
-        return Factory.nvl2(this, valueIfNotNull, valueIfNull);
+        return DSL.nvl2(this, valueIfNotNull, valueIfNull);
     }
 
     @Override
     @Deprecated
     public final <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
-        return Factory.nvl2(this, valueIfNotNull, valueIfNull);
+        return DSL.nvl2(this, valueIfNotNull, valueIfNull);
     }
 
     @Override
     @Deprecated
     public final Field<T> nullif(T other) {
-        return Factory.nullif(this, other);
+        return DSL.nullif(this, other);
     }
 
     @Override
     @Deprecated
     public final Field<T> nullif(Field<T> other) {
-        return Factory.nullif(this, other);
+        return DSL.nullif(this, other);
     }
 
     @Override
     @Deprecated
     public final <Z> Field<Z> decode(T search, Z result) {
-        return Factory.decode(this, search, result);
+        return DSL.decode(this, search, result);
     }
 
     @Override
     @Deprecated
     public final <Z> Field<Z> decode(T search, Z result, Object... more) {
-        return Factory.decode(this, search, result, more);
+        return DSL.decode(this, search, result, more);
     }
 
     @Override
     @Deprecated
     public final <Z> Field<Z> decode(Field<T> search, Field<Z> result) {
-        return Factory.decode(this, search, result);
+        return DSL.decode(this, search, result);
     }
 
     @Override
     @Deprecated
     public final <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more) {
-        return Factory.decode(this, search, result, more);
+        return DSL.decode(this, search, result, more);
     }
 
     @Override
     @Deprecated
     public final Field<T> coalesce(T option, T... options) {
-        return Factory.coalesce(this, Utils.combine(Utils.field(option), Utils.fields(options).toArray(new Field[0])));
+        return DSL.coalesce(this, Utils.combine(Utils.field(option), Utils.fields(options).toArray(new Field[0])));
     }
 
     @Override
     @Deprecated
     public final Field<T> coalesce(Field<T> option, Field<?>... options) {
-        return Factory.coalesce(this, Utils.combine(option, options));
+        return DSL.coalesce(this, Utils.combine(option, options));
     }
 
     // ------------------------------------------------------------------------

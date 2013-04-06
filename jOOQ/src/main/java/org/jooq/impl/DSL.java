@@ -146,46 +146,56 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 
 /**
- * A factory providing implementations to the <code>org.jooq</code> interfaces.
+ * A DSL "entry point" providing implementations to the <code>org.jooq</code>
+ * interfaces.
  * <p>
- * Apart from the {@link DSLContext}, this factory is the main entry point for
+ * The {@link DSLContext} and this <code>DSL</code> are the main entry point for
  * client code, to access jOOQ classes and functionality. Here, you can
  * instanciate all of those objects that cannot be accessed through other
  * objects. For example, to create a {@link Field} representing a constant
  * value, you can write:
  * <p>
  * <code><pre>
- * Field&lt;String&gt; field = Factory.val("Hello World")
+ * Field&lt;String&gt; field = DSL.val("Hello World")
  * </pre></code>
  * <p>
- * Also, some SQL clauses cannot be expressed easily with DSL, for instance the
- * EXISTS clause, as it is not applied on a concrete object (yet). Hence you
- * should write
+ * Another example is the <code>EXISTS</code> clause, which you can apply to any
+ * <code>SELECT</code> to form a {@link Condition}:
  * <p>
  * <code><pre>
- * Condition condition = Factory.exists(Factory.select(...));
+ * Condition condition = DSL.exists(DSL.select(...));
  * </pre></code>
  * <p>
- * <h5>Factory and static imports</h5>
+ * <h5>DSL and static imports</h5>
  * <p>
  * For increased fluency and readability of your jOOQ client code, it is
- * recommended that you static import all methods from the <code>Factory</code>.
- * For example: <code><pre>
- * import static org.jooq.impl.Factory.*;
+ * recommended that you static import all methods from the <code>DSL</code>. For
+ * example: <code><pre>
+ * import static org.jooq.impl.DSL.*;
  *
  * public class Main {
  *   public static void main(String[] args) {
- *     Factory.select(val("Hello"), inline("World"));
- *     // Factory.val ^^^           ^^^^^^ Factory.inline
+ *     DSL.select(val("Hello"), inline("World"));
+ *     // DSL.val ^^^           ^^^^^^ Factory.inline
  *   }
  * }
+ * </pre></code>
+ * <p>
+ * In order to use the "contextual DSL", call one of the various overloaded
+ * {@link #using(Configuration)} methods:
+ * <p>
+ * <code><pre>
+ * // Create and immediately execute a SELECT statement:
+ * DSL.using(connection, dialect)
+ *    .selectOne()
+ *    .fetch();
  * </pre></code>
  *
  * @see DSLContext
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
-public class Factory {
+public class DSL {
 
     // -------------------------------------------------------------------------
     // XXX Contextual factory methods
@@ -349,7 +359,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -380,7 +390,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -438,7 +448,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -476,7 +486,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -514,7 +524,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -552,7 +562,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -590,7 +600,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -628,7 +638,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -666,7 +676,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -704,7 +714,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -742,7 +752,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -780,7 +790,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -818,7 +828,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -856,7 +866,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -894,7 +904,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -932,7 +942,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -970,7 +980,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1008,7 +1018,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1046,7 +1056,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1084,7 +1094,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1122,7 +1132,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1160,7 +1170,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1198,7 +1208,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1236,7 +1246,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1271,7 +1281,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1302,7 +1312,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1339,7 +1349,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1377,7 +1387,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1415,7 +1425,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1453,7 +1463,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1491,7 +1501,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1529,7 +1539,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1567,7 +1577,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1605,7 +1615,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1643,7 +1653,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1681,7 +1691,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1719,7 +1729,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1757,7 +1767,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1795,7 +1805,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1833,7 +1843,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1871,7 +1881,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1909,7 +1919,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1947,7 +1957,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -1985,7 +1995,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -2023,7 +2033,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -2061,7 +2071,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -2099,7 +2109,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -2137,7 +2147,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -2172,7 +2182,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -2183,7 +2193,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#zero()
+     * @see DSL#zero()
      * @see DSLContext#selectZero()
      */
     @Support
@@ -2204,7 +2214,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -2215,7 +2225,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#one()
+     * @see DSL#one()
      * @see DSLContext#selectOne()
      */
     @Support
@@ -2236,7 +2246,7 @@ public class Factory {
      * </ul>
      * <p>
      * Example: <code><pre>
-     * import static org.jooq.impl.Factory.*;
+     * import static org.jooq.impl.DSL.*;
      *
      * // [...]
      *
@@ -2247,7 +2257,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#count()
+     * @see DSL#count()
      * @see DSLContext#selectCount()
      */
     @Support
@@ -8464,7 +8474,7 @@ public class Factory {
     /**
      * No instances.
      */
-    protected Factory() {
+    protected DSL() {
         throw new UnsupportedOperationException();
     }
 
@@ -8475,7 +8485,7 @@ public class Factory {
      * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
      */
     @SuppressWarnings("unused")
-    private Factory(Connection connection, SQLDialect dialect) {
+    private DSL(Connection connection, SQLDialect dialect) {
         throw new UnsupportedOperationException();
     }
 
@@ -8486,7 +8496,7 @@ public class Factory {
      * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
      */
     @SuppressWarnings("unused")
-    private Factory(Connection connection, SQLDialect dialect, Settings settings) {
+    private DSL(Connection connection, SQLDialect dialect, Settings settings) {
         throw new UnsupportedOperationException();
     }
 
@@ -8497,7 +8507,7 @@ public class Factory {
      * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
      */
     @SuppressWarnings("unused")
-    private Factory(DataSource datasource, SQLDialect dialect) {
+    private DSL(DataSource datasource, SQLDialect dialect) {
         throw new UnsupportedOperationException();
     }
 
@@ -8508,7 +8518,7 @@ public class Factory {
      * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
      */
     @SuppressWarnings("unused")
-    private Factory(DataSource datasource, SQLDialect dialect, Settings settings) {
+    private DSL(DataSource datasource, SQLDialect dialect, Settings settings) {
         throw new UnsupportedOperationException();
     }
 
@@ -8519,7 +8529,7 @@ public class Factory {
      * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
      */
     @SuppressWarnings("unused")
-    private Factory(SQLDialect dialect) {
+    private DSL(SQLDialect dialect) {
         throw new UnsupportedOperationException();
     }
 
@@ -8530,7 +8540,7 @@ public class Factory {
      * >See the jOOQ manual's section about migrating to jOOQ 3.0</a>
      */
     @SuppressWarnings("unused")
-    private Factory(SQLDialect dialect, Settings settings) {
+    private DSL(SQLDialect dialect, Settings settings) {
         throw new UnsupportedOperationException();
     }
 }

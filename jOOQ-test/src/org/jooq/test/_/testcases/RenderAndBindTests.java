@@ -43,10 +43,10 @@ import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.param;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.param;
+import static org.jooq.impl.DSL.val;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

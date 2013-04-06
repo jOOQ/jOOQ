@@ -37,7 +37,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.jooq.impl.Factory.using;
+import static org.jooq.impl.DSL.using;
 
 import java.util.ArrayList;
 import java.util.Collection;

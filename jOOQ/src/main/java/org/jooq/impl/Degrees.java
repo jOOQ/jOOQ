@@ -35,9 +35,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.pi;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.pi;
 
 import java.math.BigDecimal;
 

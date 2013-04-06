@@ -36,7 +36,7 @@
 
 package org.jooq.util.derby;
 
-import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.DSL.field;
 import static org.jooq.util.derby.sys.tables.Sysconglomerates.SYSCONGLOMERATES;
 import static org.jooq.util.derby.sys.tables.Sysconstraints.SYSCONSTRAINTS;
 import static org.jooq.util.derby.sys.tables.Syskeys.SYSKEYS;
@@ -56,7 +56,7 @@ import org.jooq.Record;
 import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -323,6 +323,6 @@ public class DerbyDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.DERBY);
+        return DSL.using(getConnection(), SQLDialect.DERBY);
     }
 }

@@ -40,7 +40,7 @@ public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdb
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return org.jooq.impl.DSL.row(field1());
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.jdb
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return org.jooq.impl.DSL.row(value1());
 	}
 
 	/**

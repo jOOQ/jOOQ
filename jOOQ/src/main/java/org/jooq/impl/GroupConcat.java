@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.DSL.inline;
 
 import java.util.Arrays;
 import java.util.Collection;

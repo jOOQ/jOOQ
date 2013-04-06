@@ -260,7 +260,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 */
 	@Override
 	public org.jooq.Row15<java.lang.Integer, java.lang.Boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.Object, java.lang.String, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14(), field15());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14(), field15());
 	}
 
 	/**
@@ -268,7 +268,7 @@ public class Contact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples
 	 */
 	@Override
 	public org.jooq.Row15<java.lang.Integer, java.lang.Boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String, java.lang.String, java.lang.Object, java.lang.String, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14(), value15());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14(), value15());
 	}
 
 	/**

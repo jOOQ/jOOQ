@@ -39,7 +39,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.impl.Factory.select;
+import static org.jooq.impl.DSL.select;
 
 import java.util.Collection;
 import java.util.Map;

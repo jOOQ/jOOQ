@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.row;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.Utils.filterOne;
 import static org.jooq.impl.Utils.first;
 import static org.jooq.impl.Utils.list;
@@ -189,7 +189,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         R first = first(records);
 
         if (first instanceof AttachableInternal) {
-            return Factory.using(((AttachableInternal) first).getConfiguration());
+            return DSL.using(((AttachableInternal) first).getConfiguration());
         }
         else {
             throw new DetachedException("Supply at least one attachable record");

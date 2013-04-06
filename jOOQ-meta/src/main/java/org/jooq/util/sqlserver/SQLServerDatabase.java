@@ -53,7 +53,7 @@ import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -78,7 +78,7 @@ public class SQLServerDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.SQLSERVER);
+        return DSL.using(getConnection(), SQLDialect.SQLSERVER);
     }
 
     @Override

@@ -32,14 +32,14 @@ package org.jooq.util.cubrid;
 
 import org.jooq.Field;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#CUBRID} specific factory
  *
  * @author Lukas Eder
  */
-public class CUBRIDFactory extends Factory {
+public class CUBRIDFactory extends DSL {
 
     /**
      * No instances

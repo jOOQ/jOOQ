@@ -35,8 +35,8 @@
  */
 package org.jooq.examples;
 
-import static org.jooq.impl.Factory.select;
-import static org.jooq.impl.Factory.selectDistinct;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectDistinct;
 import static org.jooq.test.mysql.generatedclasses.Keys.FK_T_BOOK_AUTHOR_ID;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_LANGUAGE;
 import static org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR;
@@ -51,7 +51,7 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
 import org.jooq.SelectQuery;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test.mysql.generatedclasses.enums.TBookStatus;
 import org.jooq.test.mysql.generatedclasses.tables.TAuthor;
 import org.jooq.test.mysql.generatedclasses.tables.TBook;
@@ -62,7 +62,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 public class Library {
 
     private static DSLContext create() throws Exception {
-        return Factory.using(getConnection(), SQLDialect.MYSQL);
+        return DSL.using(getConnection(), SQLDialect.MYSQL);
     }
 
 	public static void main(String[] args) throws Exception {

@@ -78,7 +78,7 @@ class Factory extends Generators {
                  * </ul>
                  * <p>
                  * Example: <code><pre>
-                 * import static org.jooq.impl.Factory.*;
+                 * import static org.jooq.impl.DSL.*;
                  *
                  * // [...]
                  *
@@ -133,7 +133,7 @@ class Factory extends Generators {
                  * </ul>
                  * <p>
                  * Example: <code><pre>
-                 * import static org.jooq.impl.Factory.*;
+                 * import static org.jooq.impl.DSL.*;
                  *
                  * // [...]
                  *

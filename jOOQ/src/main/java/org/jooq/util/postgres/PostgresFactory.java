@@ -36,14 +36,14 @@
 package org.jooq.util.postgres;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#POSTGRES} specific factory
  *
  * @author Lukas Eder
  */
-public class PostgresFactory extends Factory {
+public class PostgresFactory extends DSL {
 
     /**
      * No instances

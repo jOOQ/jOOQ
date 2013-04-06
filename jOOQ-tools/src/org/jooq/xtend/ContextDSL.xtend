@@ -41,18 +41,19 @@ package org.jooq.xtend
  */
 import org.jooq.Constants
 
-class Executor extends Generators {
+class ContextDSL extends Generators {
     
     def static void main(String[] args) {
-        val executor = new Executor();
-        executor.generateSelect();
-        executor.generateSelectDistinct();
-        executor.generateInsert();
-        executor.generateMerge();
+        val contextDSL = new ContextDSL();
+        contextDSL.generateSelect();
+        contextDSL.generateSelectDistinct();
+        contextDSL.generateInsert();
+        contextDSL.generateMerge();
     }
     
     def generateSelect() {
-        val out = new StringBuilder();
+        val outImpl = new StringBuilder();
+        val outAPI = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
             var fieldOrRow = "Row" + degree;
@@ -61,7 +62,7 @@ class Executor extends Generators {
                 fieldOrRow = "Field";
             }
             
-            out.append('''
+            outAPI.append('''
             
                 /**
                  * Create a new DSL select statement.
@@ -92,17 +93,26 @@ class Executor extends Generators {
                  */
                 «generatedMethod»
                 @Support
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)»);
+            ''');
+            
+            outImpl.append('''
+            
+                «generatedMethod»
+                @Override
                 public final <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)») {
                     return (SelectSelectStep) select(new Field[] { «fieldn(degree)» });
                 }
             ''');
         }
 
-        insert("org.jooq.impl.Executor", out, "select");
+        insert("org.jooq.ContextDSL", outAPI, "select");
+        insert("org.jooq.impl.Executor", outImpl, "select");
     }
     
     def generateSelectDistinct() {
-        val out = new StringBuilder();
+        val outImpl = new StringBuilder();
+        val outAPI = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
             var fieldOrRow = "Row" + degree;
@@ -111,7 +121,7 @@ class Executor extends Generators {
                 fieldOrRow = "Field";
             }
             
-            out.append('''
+            outAPI.append('''
             
                 /**
                  * Create a new DSL select statement.
@@ -142,20 +152,29 @@ class Executor extends Generators {
                  */
                 «generatedMethod»
                 @Support
+                <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)»);
+            ''');
+            
+            outImpl.append('''
+            
+                «generatedMethod»
+                @Override
                 public final <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)») {
                     return (SelectSelectStep) selectDistinct(new Field[] { «fieldn(degree)» });
                 }
             ''');
         }
 
-        insert("org.jooq.impl.Executor", out, "selectDistinct");
+        insert("org.jooq.ContextDSL", outAPI, "selectDistinct");
+        insert("org.jooq.impl.Executor", outImpl, "selectDistinct");
     }
 
     def generateInsert() {
-        val out = new StringBuilder();
+        val outImpl = new StringBuilder();
+        val outAPI = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
-            out.append('''
+            outAPI.append('''
             
                 /**
                  * Create a new DSL insert statement.
@@ -174,20 +193,29 @@ class Executor extends Generators {
                  */
                 «generatedMethod»
                 @Support
+                <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)»);
+            ''');
+
+            outImpl.append('''
+            
+                «generatedMethod»
+                @Override
                 public final <R extends Record, «TN(degree)»> InsertValuesStep«degree»<R, «TN(degree)»> insertInto(Table<R> into, «Field_TN_fieldn(degree)») {
-                    return new InsertImpl(this, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
+                    return new InsertImpl(configuration, into, Arrays.asList(new Field[] { «fieldn(degree)» }));
                 }
             ''');
         }
 
-        insert("org.jooq.impl.Executor", out, "insert");
+        insert("org.jooq.ContextDSL", outAPI, "insert");
+        insert("org.jooq.impl.Executor", outImpl, "insert");
     }
 
     def generateMerge() {
-        val out = new StringBuilder();
+        val outImpl = new StringBuilder();
+        val outAPI = new StringBuilder();
         
         for (degree : (1..Constants::MAX_ROW_DEGREE)) {
-            out.append('''
+            outAPI.append('''
             
                 /**
                  * Create a new DSL merge statement (H2-specific syntax)
@@ -211,12 +239,20 @@ class Executor extends Generators {
                  */
                 «generatedMethod»
                 @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+                <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)»);
+            ''');
+            
+            outImpl.append('''
+            
+                «generatedMethod»
+                @Override
                 public final <R extends Record, «TN(degree)»> MergeKeyStep«degree»<R, «TN(degree)»> mergeInto(Table<R> table, «Field_TN_fieldn(degree)») {
-                    return new MergeImpl(this, table, Arrays.asList(«fieldn(degree)»));
+                    return new MergeImpl(configuration, table, Arrays.asList(«fieldn(degree)»));
                 }
             ''');
         }
 
-        insert("org.jooq.impl.Executor", out, "merge");
+        insert("org.jooq.ContextDSL", outAPI, "merge");
+        insert("org.jooq.impl.Executor", outImpl, "merge");
     }
 }

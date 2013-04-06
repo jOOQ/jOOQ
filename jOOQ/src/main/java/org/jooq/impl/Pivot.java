@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Factory.trueCondition;
+import static org.jooq.impl.Factory.using;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,7 +45,6 @@ import java.util.List;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.PivotForStep;
 import org.jooq.PivotInStep;
@@ -128,20 +128,20 @@ implements
         private static final long serialVersionUID = -5930286639571867314L;
 
         @Override
-        public void toSQL(RenderContext context) {
-            context.declareTables(true)
-                   .sql(select(context))
-                   .declareTables(false);
+        public void toSQL(RenderContext ctx) {
+            ctx.declareTables(true)
+               .sql(select(ctx.configuration()))
+               .declareTables(false);
         }
 
         @Override
-        public void bind(BindContext context) throws DataAccessException {
-            context.declareTables(true)
-                   .bind(select(context))
-                   .declareTables(false);
+        public void bind(BindContext ctx) throws DataAccessException {
+            ctx.declareTables(true)
+               .bind(select(ctx.configuration()))
+               .declareTables(false);
         }
 
-        private Table<Record> select(Context<?> context) {
+        private Table<Record> select(Configuration configuration) {
             List<Field<?>> groupingFields = new ArrayList<Field<?>>();
             List<Field<?>> aliasedGroupingFields = new ArrayList<Field<?>>();
             List<Field<?>> aggregatedFields = new ArrayList<Field<?>>();
@@ -184,11 +184,11 @@ implements
                     }
 
                     @SuppressWarnings("unchecked")
-                    Select<?> aggregateSelect = create(context)
-                        .select(aggregateFunction)
-                        .from(table)
-                        .where(on.equal((Field<T>) inField))
-                        .and(join);
+                    Select<?> aggregateSelect = using(configuration)
+                            .select(aggregateFunction)
+                            .from(table)
+                            .where(on.equal((Field<T>) inField))
+                            .and(join);
 
                     aggregationSelects.add(aggregateSelect.asField(inField.getName() + "_" + aggregateFunction.getName()));
                 }
@@ -196,12 +196,14 @@ implements
 
             // This is the complete select
             Table<Record> select =
-            create(context).select(aliasedGroupingFields)
-                           .select(aggregationSelects)
-                           .from(pivot)
-                           .where(pivot.field(on).in(in.toArray(new Field[0])))
-                           .groupBy(aliasedGroupingFields)
-                           .asTable();
+            using(configuration)
+                    .select(aliasedGroupingFields)
+                    .select(aggregationSelects)
+                    .from(pivot)
+                    .where(pivot.field(on).in(in.toArray(new Field[0])))
+                    .groupBy(aliasedGroupingFields)
+                    .asTable();
+
             return select;
         }
     }

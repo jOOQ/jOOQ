@@ -53,7 +53,7 @@ import static org.jooq.impl.Factory.val;
 import org.jooq.BetweenAndStep;
 import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.Context;
+import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -90,17 +90,17 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
     }
 
     @Override
-    public final void bind(BindContext context) {
-        delegate(context).bind(context);
+    public final void bind(BindContext ctx) {
+        delegate(ctx.configuration()).bind(ctx);
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        delegate(context).toSQL(context);
+    public final void toSQL(RenderContext ctx) {
+        delegate(ctx.configuration()).toSQL(ctx);
     }
 
-    private final QueryPartInternal delegate(Context<?> ctx) {
-        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(ctx.configuration().getDialect())) {
+    private final QueryPartInternal delegate(Configuration configuration) {
+        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
             if (not) {
                 return (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue));
             }

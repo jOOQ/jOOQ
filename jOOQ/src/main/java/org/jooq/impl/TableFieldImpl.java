@@ -59,11 +59,6 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
         super(name, type);
 
         this.table = table;
-
-        // [#1199] The public API of Table returns immutable field lists
-        if (table instanceof TableImpl) {
-            ((TableImpl<?>) table).fields0().add(this);
-        }
     }
 
     @Override

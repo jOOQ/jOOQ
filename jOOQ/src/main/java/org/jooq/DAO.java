@@ -54,6 +54,14 @@ import org.jooq.exception.DataAccessException;
 public interface DAO<R extends TableRecord<R>, P, T> {
 
     /**
+     * Expose the configuration in whose context this <code>DAO</code> is
+     * operating.
+     *
+     * @return the <code>DAO</code>'s underlying <code>Configuration</code>
+     */
+    Configuration configuration();
+
+    /**
      * Performs an <code>INSERT</code> statement for a given POJO
      *
      * @param object The POJO to be inserted

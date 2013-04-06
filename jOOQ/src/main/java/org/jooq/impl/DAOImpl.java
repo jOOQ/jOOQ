@@ -80,10 +80,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     }
 
     /**
-     * Inject an attached factory
+     * Inject a configuration.
+     * <p>
+     * This method is maintained to be able to configure a <code>DAO</code>
+     * using Spring. It is not exposed in the public API.
      */
     public final void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
+    }
+
+    @Override
+    public final Configuration configuration() {
+        return configuration;
     }
 
     // -------------------------------------------------------------------------

@@ -146,7 +146,7 @@ class MergeDSL extends Generators {
             import static org.jooq.SQLDialect.SYBASE;
             
             import java.util.Collection;
-                    
+
             import javax.annotation.Generated;
             
             /**
@@ -279,15 +279,12 @@ class MergeDSL extends Generators {
             
             import javax.annotation.Generated;
             
-            import org.jooq.impl.Executor;
-            
             /**
              * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
              * <p>
              * Example: <code><pre>
-             * Factory create = new Factory();
-             *
-             * create.mergeInto(table, «field1_field2_fieldn(degree)»)
+             * using(configuration)
+             *       .mergeInto(table, «field1_field2_fieldn(degree)»)
              *       .key(id)
              *       .values(«XXX1_XXX2_XXXn(degree, "value")»)
              *       .execute();
@@ -323,7 +320,7 @@ class MergeDSL extends Generators {
                  * This variant of the <code>MERGE .. SELECT</code> statement expects a
                  * select returning exactly as many fields as specified previously in the
                  * <code>INTO</code> clause:
-                 * {@link Executor#mergeInto(Table, «(1..degree).join(', ', [e | 'Field'])»)}
+                 * {@link ContextDSL#mergeInto(Table, «(1..degree).join(', ', [e | 'Field'])»)}
                  */
                 @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
                 Merge<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);

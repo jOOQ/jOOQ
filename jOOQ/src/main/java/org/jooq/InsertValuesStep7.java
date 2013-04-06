@@ -43,9 +43,8 @@ import javax.annotation.Generated;
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Executor create = Factory.using();
- *
- * create.insertInto(table, field1, field2, field3, .., field6, field7)
+ * using(configuration)
+ *       .insertInto(table, field1, field2, field3, .., field6, field7)
  *       .values(valueA1, valueA2, valueA3, .., valueA6, valueA7)
  *       .values(valueB1, valueB2, valueB3, .., valueB6, valueB7)
  *       .onDuplicateKeyUpdate()

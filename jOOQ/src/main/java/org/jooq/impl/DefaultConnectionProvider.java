@@ -77,7 +77,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     public final void release(Connection released) {}
 
     // -------------------------------------------------------------------------
-    // XXX: Original Executor/Factory API (JDBC utility methods)
+    // XXX: Original ContextDSL/Factory API (JDBC utility methods)
     // -------------------------------------------------------------------------
 
     public final void setConnection(Connection connection) {

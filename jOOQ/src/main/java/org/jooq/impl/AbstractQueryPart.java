@@ -38,11 +38,12 @@ package org.jooq.impl;
 
 import java.sql.SQLException;
 
+import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.Context;
 import org.jooq.ContextDSL;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
+import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -142,7 +143,14 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     /**
      * Internal convenience method
      */
-    protected final ContextDSL create(Context<?> ctx) {
+    protected final ContextDSL create(RenderContext ctx) {
+        return Factory.using(ctx.configuration());
+    }
+
+    /**
+     * Internal convenience method
+     */
+    protected final ContextDSL create(BindContext ctx) {
         return Factory.using(ctx.configuration());
     }
 

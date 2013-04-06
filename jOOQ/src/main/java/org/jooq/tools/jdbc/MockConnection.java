@@ -74,7 +74,7 @@ import java.util.Properties;
  *     }
  * };
  * Connection connection = new MockConnection(provider);
- * Executor create = new Executor(connection, dialect);
+ * Executor create = Factory.using(connection, dialect);
  * assertEquals(1, create.selectOne().fetch().size());
  * <p>
  * While this <code>MockConnection</code> can be used independently of jOOQ, it

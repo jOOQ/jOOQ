@@ -48,6 +48,7 @@ import java.sql.DriverManager;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 
 public class AdventureWorks {
 
@@ -55,7 +56,7 @@ public class AdventureWorks {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Connection connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true");
 
-        Executor create = new Executor(connection, SQLDialect.SQLSERVER);
+        Executor create = Factory.using(connection, SQLDialect.SQLSERVER);
 
         System.out.println(create
               .select(Employee.fields())

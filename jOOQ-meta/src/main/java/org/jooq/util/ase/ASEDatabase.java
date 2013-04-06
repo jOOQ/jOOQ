@@ -52,6 +52,7 @@ import org.jooq.Record10;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -79,7 +80,7 @@ public class ASEDatabase extends AbstractDatabase {
 
     @Override
     protected Executor create0() {
-        return new Executor(getConnection(), SQLDialect.ASE);
+        return Factory.using(getConnection(), SQLDialect.ASE);
     }
 
     private SchemaDefinition getSchema() {

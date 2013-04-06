@@ -78,7 +78,7 @@ class MetaImpl implements Meta, Serializable {
     private transient volatile DatabaseMetaData meta;
 
     MetaImpl(Configuration configuration) {
-        this.create = new Executor(configuration);
+        this.create = Factory.using(configuration);
         this.configuration = configuration;
     }
 

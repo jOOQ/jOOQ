@@ -68,7 +68,7 @@ class BatchCRUD implements Batch {
     private final Action               action;
 
     BatchCRUD(Configuration configuration, Action action, UpdatableRecord<?>[] records) {
-        this.create = new Executor(configuration);
+        this.create = Factory.using(configuration);
         this.configuration = configuration;
         this.action = action;
         this.records = records;

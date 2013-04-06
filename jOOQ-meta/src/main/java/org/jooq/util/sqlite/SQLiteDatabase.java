@@ -46,6 +46,7 @@ import java.util.Map;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -82,7 +83,7 @@ public class SQLiteDatabase extends AbstractDatabase {
 
     @Override
     protected Executor create0() {
-        return new Executor(getConnection(), SQLDialect.SQLITE);
+        return Factory.using(getConnection(), SQLDialect.SQLITE);
     }
 
     @Override

@@ -188,7 +188,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         R first = first(records);
 
         if (first instanceof AttachableInternal) {
-            return new Executor(((AttachableInternal) first).getConfiguration());
+            return Factory.using(((AttachableInternal) first).getConfiguration());
         }
         else {
             throw new DetachedException("Supply at least one attachable record");

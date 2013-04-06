@@ -50,6 +50,7 @@ import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.impl.SchemaImpl;
 import org.jooq.impl.TableImpl;
 
@@ -87,23 +88,23 @@ public class SettingsTest {
         Schema schema = new SchemaImpl("S");
         Table<?> table = new TableImpl<Record>("T", schema);
 
-        Executor create0 = new Executor(SQLDialect.ORACLE);
+        Executor create0 = Factory.using(SQLDialect.ORACLE);
         assertEquals("\"S\".\"T\"", create0.render(table));
 
-        Executor create1 = new Executor(SQLDialect.ORACLE, new Settings().withRenderSchema(false));
+        Executor create1 = Factory.using(SQLDialect.ORACLE, new Settings().withRenderSchema(false));
         assertEquals("\"T\"", create1.render(table));
 
-        Executor create2 = new Executor(SQLDialect.ORACLE);
+        Executor create2 = Factory.using(SQLDialect.ORACLE);
         create2.configuration().getSettings().setRenderSchema(false);
         assertEquals("\"T\"", create2.render(table));
     }
 
     @Test
     public void testRenderMapping() {
-        Executor create1 = new Executor(SQLDialect.ORACLE, new Settings().withRenderMapping(mapping()));
+        Executor create1 = Factory.using(SQLDialect.ORACLE, new Settings().withRenderMapping(mapping()));
         assertEquals("\"TABLEX\"", create1.render(TABLE1));
 
-        Executor create2 = new Executor(SQLDialect.ORACLE);
+        Executor create2 = Factory.using(SQLDialect.ORACLE);
         create2.configuration().getSettings().setRenderMapping(mapping());
         assertEquals("\"TABLEX\"", create2.render(TABLE1));
     }

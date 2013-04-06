@@ -93,7 +93,7 @@ abstract class AbstractStore implements AttachableInternal {
      * This method is used in generated code!
      */
     protected final Executor create() {
-        return new Executor(getConfiguration());
+        return Factory.using(getConfiguration());
     }
 
     // -------------------------------------------------------------------------

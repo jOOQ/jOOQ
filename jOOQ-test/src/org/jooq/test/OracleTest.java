@@ -107,6 +107,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -214,7 +215,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Override
     protected Executor create(Settings settings) {
-        return new Executor(getConnection(), SQLDialect.ORACLE, settings);
+        return Factory.using(getConnection(), SQLDialect.ORACLE, settings);
     }
 
     @Override
@@ -1332,7 +1333,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleMultiSchemaFactories() throws Exception {
-        Executor create = new Executor(getConnectionMultiSchema(), SQLDialect.ORACLE);
+        Executor create = Factory.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
 
         UAddressTypeRecord address = new UAddressTypeRecord();
         address.setStreet(new UStreetTypeRecord());

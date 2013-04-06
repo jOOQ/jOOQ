@@ -255,7 +255,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    Executor create = new Executor(ctx.connection(), SQLDialect.SQLITE, ctx.configuration().getSettings());
+                    Executor create = Factory.using(ctx.connection(), SQLDialect.SQLITE, ctx.configuration().getSettings());
                     returned =
                     create.select(returning)
                           .from(getInto())

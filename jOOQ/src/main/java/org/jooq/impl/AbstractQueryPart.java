@@ -135,14 +135,14 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      * Internal convenience method
      */
     protected final Executor create(Configuration configuration) {
-        return new Executor(configuration);
+        return Factory.using(configuration);
     }
 
     /**
      * Internal convenience method
      */
     protected final Executor create(Context<?> ctx) {
-        return new Executor(ctx.configuration());
+        return Factory.using(ctx.configuration());
     }
 
     /**

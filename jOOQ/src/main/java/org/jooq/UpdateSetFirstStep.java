@@ -48,7 +48,7 @@ import javax.annotation.Generated;
  * This type is used for the {@link Update}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Executor create = new Executor(connection, dialect);
+ * Executor create = Factory.using(connection, dialect);
  *
  * create.update(table)
  *       .set(field1, value1)

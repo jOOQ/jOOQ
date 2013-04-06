@@ -40,6 +40,7 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 
 
 /**
@@ -52,6 +53,6 @@ public class OracleTestInline extends OracleTest {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
         settings.withRenderFormatted(true);
-        return new Executor(getConnection(), SQLDialect.ORACLE, settings);
+        return Factory.using(getConnection(), SQLDialect.ORACLE, settings);
     }
 }

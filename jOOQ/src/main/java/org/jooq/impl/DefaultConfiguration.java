@@ -54,7 +54,7 @@ import org.jooq.conf.SettingsTools;
 
 /**
  * A default implementation for configurations within an Executor, if no
- * custom configuration was supplied to {@link Executor#Executor(Configuration)}
+ * custom configuration was supplied to {@link Factory#using(Configuration)}
  */
 class DefaultConfiguration implements Configuration {
 

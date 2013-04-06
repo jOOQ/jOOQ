@@ -89,6 +89,7 @@ import org.jooq.debug.Debugger;
 import org.jooq.debug.console.Console;
 import org.jooq.debug.impl.DebuggerFactory;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.test._.LifecycleWatcherListener;
 import org.jooq.test._.PrettyPrinter;
 import org.jooq.test._.TestStatisticsListener;
@@ -491,7 +492,7 @@ public abstract class jOOQAbstractTest<
 
                 @Override
                 public MockResult[] execute(MockExecuteContext context) throws SQLException {
-                    Executor executor = new Executor(c, getDialect());
+                    Executor executor = Factory.using(c, getDialect());
 
                     if (context.batchSingle()) {
                         Query query = executor.query(context.sql(), new Object[context.batchBindings()[0].length]);

@@ -1904,7 +1904,7 @@ final class Utils {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) rs.getObject(index);
-            return (T) new Executor(ctx.configuration()).fetch(nested);
+            return (T) Factory.using(ctx.configuration()).fetch(nested);
         }
         else {
             return (T) rs.getObject(index);
@@ -2196,7 +2196,7 @@ final class Utils {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) stmt.getObject(index);
-            return (T) new Executor(ctx.configuration()).fetch(nested);
+            return (T) Factory.using(ctx.configuration()).fetch(nested);
         }
         else {
             return (T) stmt.getObject(index);

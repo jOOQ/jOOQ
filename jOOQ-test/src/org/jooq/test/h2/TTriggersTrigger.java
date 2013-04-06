@@ -40,6 +40,7 @@ import java.sql.SQLException;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.test.h2.generatedclasses.Sequences;
 
 import org.h2.api.Trigger;
@@ -57,7 +58,7 @@ public class TTriggersTrigger implements Trigger {
 
     @Override
     public void fire(Connection conn, Object[] oldRow, Object[] newRow) throws SQLException {
-        Executor create = new Executor(conn, SQLDialect.H2);
+        Executor create = Factory.using(conn, SQLDialect.H2);
         int maxID = create.nextval(Sequences.S_TRIGGERS_SEQUENCE).intValue();
         newRow[0] = maxID;
         newRow[1] = maxID;

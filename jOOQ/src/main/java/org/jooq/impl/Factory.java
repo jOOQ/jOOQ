@@ -69,6 +69,8 @@ import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
 import org.jooq.Case;
 import org.jooq.Condition;
+import org.jooq.Configuration;
+import org.jooq.ConnectionProvider;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -183,6 +185,151 @@ import org.jooq.types.DayToSecond;
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class Factory {
+
+    // -------------------------------------------------------------------------
+    // XXX Contextual factory methods
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create an executor with a dialect configured.
+     * <p>
+     * Without a connection or data source, this executor cannot execute
+     * queries. Use it to render SQL only.
+     *
+     * @param dialect The dialect to use with objects created from this executor
+     */
+    public static Executor using(SQLDialect dialect) {
+        return new Executor(dialect, null);
+    }
+
+    /**
+     * Create an executor with a dialect and settings configured.
+     * <p>
+     * Without a connection or data source, this executor cannot execute
+     * queries. Use it to render SQL only.
+     *
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     */
+    public static Executor using(SQLDialect dialect, Settings settings) {
+        return new Executor(dialect, settings);
+    }
+
+    /**
+     * Create an executor with a connection and a dialect configured.
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Executor, jOOQ will use that
+     * connection directly for creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #using(ConnectionProvider, SQLDialect, Settings)} using a
+     * {@link DefaultConnectionProvider}
+     *
+     * @param connection The connection to use with objects created from this
+     *            executor
+     * @param dialect The dialect to use with objects created from this executor
+     * @see DefaultConnectionProvider
+     */
+    public static Executor using(Connection connection, SQLDialect dialect) {
+        return new Executor(connection, dialect, null);
+    }
+
+    /**
+     * Create an executor with a connection, a dialect and settings configured.
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Executor, jOOQ will use that
+     * connection directly for creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #using(ConnectionProvider, SQLDialect, Settings)} using a
+     * {@link DefaultConnectionProvider}
+     *
+     * @param connection The connection to use with objects created from this
+     *            executor
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     * @see DefaultConnectionProvider
+     */
+    public static Executor using(Connection connection, SQLDialect dialect, Settings settings) {
+        return new Executor(connection, dialect, settings);
+    }
+
+    /**
+     * Create an executor with a data source and a dialect configured.
+     * <p>
+     * If you provide a JDBC data source to a jOOQ Executor, jOOQ will use that
+     * data source for initialising connections, and creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #using(ConnectionProvider, SQLDialect)} using a
+     * {@link DataSourceConnectionProvider}
+     *
+     * @param datasource The data source to use with objects created from this
+     *            executor
+     * @param dialect The dialect to use with objects created from this executor
+     * @see DataSourceConnectionProvider
+     */
+    public static Executor using(DataSource datasource, SQLDialect dialect) {
+        return new Executor(datasource, dialect);
+    }
+
+    /**
+     * Create an executor with a data source, a dialect and settings configured.
+     * <p>
+     * If you provide a JDBC data source to a jOOQ Executor, jOOQ will use that
+     * data source for initialising connections, and creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #using(ConnectionProvider, SQLDialect, Settings)} using a
+     * {@link DataSourceConnectionProvider}
+     *
+     * @param datasource The data source to use with objects created from this
+     *            executor
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     * @see DataSourceConnectionProvider
+     */
+    public static Executor using(DataSource datasource, SQLDialect dialect, Settings settings) {
+        return new Executor(datasource, dialect, settings);
+    }
+
+    /**
+     * Create an executor with a custom connection provider and a dialect
+     * configured.
+     *
+     * @param connectionProvider The connection provider providing jOOQ with
+     *            JDBC connections
+     * @param dialect The dialect to use with objects created from this executor
+     */
+    public static Executor using(ConnectionProvider connectionProvider, SQLDialect dialect) {
+        return new Executor(connectionProvider, dialect);
+    }
+
+    /**
+     * Create an executor with a custom connection provider, a dialect and settings
+     * configured.
+     *
+     * @param connectionProvider The connection provider providing jOOQ with
+     *            JDBC connections
+     * @param dialect The dialect to use with objects created from this executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     */
+    public static Executor using(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
+        return new Executor(connectionProvider, dialect, settings);
+    }
+
+    /**
+     * Create an executor from a custom configuration.
+     *
+     * @param configuration The configuration
+     */
+    public static Executor using(Configuration configuration) {
+        return new Executor(configuration);
+    }
 
     // -------------------------------------------------------------------------
     // XXX Static subselect factory methods

@@ -265,7 +265,14 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * @param type The data type of the field
      */
     protected static final <R extends Record, T> TableField<R, T> createField(String name, DataType<T> type, Table<R> table) {
-        return new TableFieldImpl<R, T>(name, type, table);
+        final TableFieldImpl<R, T> tableField = new TableFieldImpl<R, T>(name, type, table);
+
+        // [#1199] The public API of Table returns immutable field lists
+        if (table instanceof TableImpl) {
+            ((TableImpl<?>) table).fields0().add(tableField);
+        }
+
+        return tableField;
     }
 
     // ------------------------------------------------------------------------

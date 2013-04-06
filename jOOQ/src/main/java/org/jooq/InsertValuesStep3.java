@@ -83,7 +83,7 @@ public interface InsertValuesStep3<R extends Record, T1, T2, T3> extends InsertO
      * This variant of the <code>INSERT .. SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
-     * {@link ContextDSL#insertInto(Table, Field, Field, Field)}
+     * {@link DSLContext#insertInto(Table, Field, Field, Field)}
      */
     @Support
     Insert<R> select(Select<? extends Record3<T1, T2, T3>> select);

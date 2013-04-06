@@ -56,7 +56,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
@@ -93,7 +93,7 @@ import org.jooq.util.db2.syscat.tables.Tables;
 public class DB2Database extends AbstractDatabase {
 
     @Override
-    protected ContextDSL create0() {
+    protected DSLContext create0() {
         return Factory.using(getConnection(), SQLDialect.DB2);
     }
 

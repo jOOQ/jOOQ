@@ -44,7 +44,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.jooq.Configuration;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.DeleteQuery;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -153,7 +153,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     private final int storeInsert() {
-        ContextDSL create = create();
+        DSLContext create = create();
         InsertQuery<R> insert = create.insertQuery(getTable());
         addChangedValues(insert);
 

@@ -86,8 +86,8 @@ public interface MergeValuesStepN<R extends Record> {
      * This variant of the <code>MERGE .. SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
-     * {@link ContextDSL#mergeInto(Table, Field...)} or
-     * {@link ContextDSL#mergeInto(Table, Collection)}
+     * {@link DSLContext#mergeInto(Table, Field...)} or
+     * {@link DSLContext#mergeInto(Table, Collection)}
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> select(Select<?> select);

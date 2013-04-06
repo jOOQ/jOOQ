@@ -61,7 +61,7 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -130,7 +130,7 @@ public class HSQLDBTest extends jOOQAbstractTest<
         T_785Record> {
 
 	@Override
-    protected ContextDSL create(Settings settings) {
+    protected DSLContext create(Settings settings) {
         return Factory.using(getConnection(), SQLDialect.HSQLDB, settings);
     }
 

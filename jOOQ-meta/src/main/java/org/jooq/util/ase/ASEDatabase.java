@@ -46,7 +46,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record10;
@@ -79,7 +79,7 @@ public class ASEDatabase extends AbstractDatabase {
     private static final JooqLogger log = JooqLogger.getLogger(ASEDatabase.class);
 
     @Override
-    protected ContextDSL create0() {
+    protected DSLContext create0() {
         return Factory.using(getConnection(), SQLDialect.ASE);
     }
 

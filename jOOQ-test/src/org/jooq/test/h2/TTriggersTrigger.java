@@ -38,7 +38,7 @@ package org.jooq.test.h2;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.test.h2.generatedclasses.Sequences;
@@ -58,7 +58,7 @@ public class TTriggersTrigger implements Trigger {
 
     @Override
     public void fire(Connection conn, Object[] oldRow, Object[] newRow) throws SQLException {
-        ContextDSL create = Factory.using(conn, SQLDialect.H2);
+        DSLContext create = Factory.using(conn, SQLDialect.H2);
         int maxID = create.nextval(Sequences.S_TRIGGERS_SEQUENCE).intValue();
         newRow[0] = maxID;
         newRow[1] = maxID;

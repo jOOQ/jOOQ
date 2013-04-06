@@ -47,14 +47,14 @@ import javax.xml.bind.JAXB;
 
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteListener;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 
 /**
- * A default implementation for configurations within a {@link ContextDSL}, if no
+ * A default implementation for configurations within a {@link DSLContext}, if no
  * custom configuration was supplied to {@link Factory#using(Configuration)}
  */
 class DefaultConfiguration implements Configuration {

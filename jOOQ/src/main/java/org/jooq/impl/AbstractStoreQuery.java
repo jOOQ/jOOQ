@@ -50,7 +50,7 @@ import java.util.Map;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
@@ -256,7 +256,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    ContextDSL create = Factory.using(ctx.connection(), SQLDialect.SQLITE, ctx.configuration().getSettings());
+                    DSLContext create = Factory.using(ctx.connection(), SQLDialect.SQLITE, ctx.configuration().getSettings());
                     returned =
                     create.select(returning)
                           .from(getInto())

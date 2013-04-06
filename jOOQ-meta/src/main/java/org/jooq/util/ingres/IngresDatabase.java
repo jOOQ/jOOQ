@@ -50,7 +50,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
@@ -86,7 +86,7 @@ import org.jooq.util.ingres.ingres.tables.Iitables;
 public class IngresDatabase extends AbstractDatabase {
 
     @Override
-    protected ContextDSL create0() {
+    protected DSLContext create0() {
         return Factory.using(getConnection(), SQLDialect.INGRES);
     }
 

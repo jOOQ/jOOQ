@@ -147,8 +147,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * Should you want to circumvent jOOQ-generated updates to these columns,
      * you can render an <code>INSERT</code> or <code>UPDATE</code> statement
-     * manually using the various {@link ContextDSL#insertInto(Table)},
-     * {@link ContextDSL#update(Table)} methods.</li>
+     * manually using the various {@link DSLContext#insertInto(Table)},
+     * {@link DSLContext#update(Table)} methods.</li>
      * </ul>
      * <p>
      * <h5>Optimistic locking</h5>

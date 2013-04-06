@@ -40,7 +40,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -71,7 +71,7 @@ public class JDBCDatabase extends AbstractDatabase {
 
     @SuppressWarnings("deprecation")
     @Override
-    protected ContextDSL create0() {
+    protected DSLContext create0() {
         return Factory.using(getConnection(), SQLDialect.SQL99);
     }
 

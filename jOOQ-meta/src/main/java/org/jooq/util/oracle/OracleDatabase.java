@@ -53,7 +53,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
@@ -406,7 +406,7 @@ public class OracleDatabase extends AbstractDatabase {
      * {@inheritDoc}
      */
     @Override
-    protected ContextDSL create0() {
+    protected DSLContext create0() {
         return Factory.using(getConnection(), SQLDialect.ORACLE);
     }
 }

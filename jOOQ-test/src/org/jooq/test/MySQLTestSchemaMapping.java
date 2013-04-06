@@ -38,7 +38,7 @@ package org.jooq.test;
 
 import java.util.List;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
@@ -65,7 +65,7 @@ public class MySQLTestSchemaMapping extends MySQLTest {
     }
 
     @Override
-    protected ContextDSL create(Settings settings) {
+    protected DSLContext create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         RenderMapping mapping = SettingsTools.getRenderMapping(settings);
         List<MappedSchema> schemata = mapping.getSchemata();

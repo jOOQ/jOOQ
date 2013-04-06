@@ -59,7 +59,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Record3;
 import org.jooq.Record4;
@@ -390,7 +390,7 @@ public class PostgresDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected ContextDSL create0() {
+    protected DSLContext create0() {
         return Factory.using(getConnection(), SQLDialect.POSTGRES);
     }
 }

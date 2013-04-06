@@ -88,7 +88,7 @@ public interface MergeValuesStep4<R extends Record, T1, T2, T3, T4> {
      * This variant of the <code>MERGE .. SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
-     * {@link ContextDSL#mergeInto(Table, Field, Field, Field, Field)}
+     * {@link DSLContext#mergeInto(Table, Field, Field, Field, Field)}
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> select(Select<? extends Record4<T1, T2, T3, T4>> select);

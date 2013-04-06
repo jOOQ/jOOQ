@@ -47,7 +47,7 @@ import org.jooq.AttachableInternal;
 import org.jooq.Batch;
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Query;
 import org.jooq.UpdatableRecord;
@@ -63,7 +63,7 @@ class BatchCRUD implements Batch {
      */
     private static final long          serialVersionUID = -2935544935267715011L;
 
-    private final ContextDSL             create;
+    private final DSLContext             create;
     private final Configuration        configuration;
     private final UpdatableRecord<?>[] records;
     private final Action               action;

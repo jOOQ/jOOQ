@@ -40,7 +40,7 @@ import java.sql.SQLException;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -129,28 +129,28 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     /**
      * Internal convenience method
      */
-    protected final ContextDSL create() {
+    protected final DSLContext create() {
         return create(getConfiguration());
     }
 
     /**
      * Internal convenience method
      */
-    protected final ContextDSL create(Configuration configuration) {
+    protected final DSLContext create(Configuration configuration) {
         return Factory.using(configuration);
     }
 
     /**
      * Internal convenience method
      */
-    protected final ContextDSL create(RenderContext ctx) {
+    protected final DSLContext create(RenderContext ctx) {
         return Factory.using(ctx.configuration());
     }
 
     /**
      * Internal convenience method
      */
-    protected final ContextDSL create(BindContext ctx) {
+    protected final DSLContext create(BindContext ctx) {
         return Factory.using(ctx.configuration());
     }
 

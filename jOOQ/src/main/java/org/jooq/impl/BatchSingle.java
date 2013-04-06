@@ -44,7 +44,7 @@ import java.util.List;
 
 import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
@@ -60,7 +60,7 @@ class BatchSingle implements BatchBindStep {
      */
     private static final long    serialVersionUID = 3793967258181493207L;
 
-    private final ContextDSL       create;
+    private final DSLContext       create;
     private final Configuration  configuration;
     private final Query          query;
     private final List<Object[]> allBindValues;

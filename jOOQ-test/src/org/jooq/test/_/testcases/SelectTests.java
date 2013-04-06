@@ -50,7 +50,7 @@ import static org.jooq.impl.Factory.val;
 import java.sql.Date;
 import java.util.Vector;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -371,8 +371,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Checking for syntax correctness and locking behaviour
         // -----------------------------------------------------
-        final ContextDSL create1 = create();
-        final ContextDSL create2 = create();
+        final DSLContext create1 = create();
+        final DSLContext create2 = create();
 
         ((DefaultConnectionProvider) create2.configuration().getConnectionProvider()).setConnection(getNewConnection());
         create2.configuration().getConnectionProvider().acquire().setAutoCommit(false);

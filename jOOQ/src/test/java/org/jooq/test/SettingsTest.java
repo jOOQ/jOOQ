@@ -40,7 +40,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -88,23 +88,23 @@ public class SettingsTest {
         Schema schema = new SchemaImpl("S");
         Table<?> table = new TableImpl<Record>("T", schema);
 
-        ContextDSL create0 = Factory.using(SQLDialect.ORACLE);
+        DSLContext create0 = Factory.using(SQLDialect.ORACLE);
         assertEquals("\"S\".\"T\"", create0.render(table));
 
-        ContextDSL create1 = Factory.using(SQLDialect.ORACLE, new Settings().withRenderSchema(false));
+        DSLContext create1 = Factory.using(SQLDialect.ORACLE, new Settings().withRenderSchema(false));
         assertEquals("\"T\"", create1.render(table));
 
-        ContextDSL create2 = Factory.using(SQLDialect.ORACLE);
+        DSLContext create2 = Factory.using(SQLDialect.ORACLE);
         create2.configuration().getSettings().setRenderSchema(false);
         assertEquals("\"T\"", create2.render(table));
     }
 
     @Test
     public void testRenderMapping() {
-        ContextDSL create1 = Factory.using(SQLDialect.ORACLE, new Settings().withRenderMapping(mapping()));
+        DSLContext create1 = Factory.using(SQLDialect.ORACLE, new Settings().withRenderMapping(mapping()));
         assertEquals("\"TABLEX\"", create1.render(TABLE1));
 
-        ContextDSL create2 = Factory.using(SQLDialect.ORACLE);
+        DSLContext create2 = Factory.using(SQLDialect.ORACLE);
         create2.configuration().getSettings().setRenderMapping(mapping());
         assertEquals("\"TABLEX\"", create2.render(TABLE1));
     }

@@ -38,7 +38,7 @@ package org.jooq.util;
 
 import java.sql.Connection;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 
 /**
@@ -211,7 +211,7 @@ public abstract class AbstractDefinition implements Definition {
         return hashCode;
     }
 
-    protected final ContextDSL create() {
+    protected final DSLContext create() {
         return database.create();
     }
 

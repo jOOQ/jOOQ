@@ -77,7 +77,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -1594,7 +1594,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#2278] Run the subsequent test twice, once with bind values and once
         // with inlined bind values
-        for (ContextDSL create : asList(
+        for (DSLContext create : asList(
             create(),
             create(new Settings().withStatementType(STATIC_STATEMENT)))) {
 

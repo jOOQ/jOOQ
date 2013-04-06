@@ -42,7 +42,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.Configuration;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Record;
 
 /**
@@ -93,7 +93,7 @@ abstract class AbstractStore implements AttachableInternal {
     /**
      * This method is used in generated code!
      */
-    protected final ContextDSL create() {
+    protected final DSLContext create() {
         return Factory.using(getConfiguration());
     }
 

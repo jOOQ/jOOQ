@@ -39,7 +39,7 @@ package org.jooq.util;
 import java.sql.Connection;
 import java.util.List;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
@@ -289,7 +289,7 @@ public interface Database {
     /**
      * Create the factory for this database
      */
-    ContextDSL create();
+    DSLContext create();
 
     /**
      * Check whether a type is an array type

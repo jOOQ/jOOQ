@@ -45,7 +45,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.AttachableInternal;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
@@ -184,7 +184,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     /**
      * Extract a configuration from the first record of a collection of records
      */
-    private static <R extends Record> ContextDSL extractExecutor(Collection<? extends R> records)
+    private static <R extends Record> DSLContext extractExecutor(Collection<? extends R> records)
         throws DetachedException {
         R first = first(records);
 

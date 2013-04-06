@@ -53,7 +53,7 @@ public interface QueryPart extends Serializable {
      * For improved debugging, this renders a SQL string of this
      * <code>QueryPart</code> with inlined bind variables. If you wish to gain
      * more control over the concrete SQL rendering of this
-     * <code>QueryPart</code>, use {@link ContextDSL#renderContext()} to obtain a
+     * <code>QueryPart</code>, use {@link DSLContext#renderContext()} to obtain a
      * configurable render context for SQL rendering.
      *
      * @return A SQL string representation of this <code>QueryPart</code>

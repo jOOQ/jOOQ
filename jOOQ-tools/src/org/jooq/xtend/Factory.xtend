@@ -68,7 +68,7 @@ class Factory extends Generators {
                  * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
                  * building methods taking subselect arguments.
                  * <p>
-                 * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
+                 * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
                  * creates an unattached, and thus not directly renderable or executable
                  * <code>SELECT</code> statement. You can use this statement in two ways:
                  * <ul>
@@ -89,7 +89,7 @@ class Factory extends Generators {
                  *  .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see ContextDSL#select(Field...)
+                 * @see DSLContext#select(Field...)
                  * @see #select(Field...)
                  */
                 «generatedMethod»
@@ -123,7 +123,7 @@ class Factory extends Generators {
                  * {@link «fieldOrRow»#in(Select)}, {@link «fieldOrRow»#equal(Select)} and other predicate
                  * building methods taking subselect arguments.
                  * <p>
-                 * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
+                 * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
                  * creates an unattached, and thus not directly renderable or executable
                  * <code>SELECT</code> statement. You can use this statement in two ways:
                  * <ul>
@@ -144,7 +144,7 @@ class Factory extends Generators {
                  *  .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see ContextDSL#selectDistinct(Field...)
+                 * @see DSLContext#selectDistinct(Field...)
                  * @see #selectDistinct(Field...)
                  */
                 «generatedMethod»

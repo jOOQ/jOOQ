@@ -79,7 +79,7 @@ class BatchMultiple implements Batch {
             String[] batchSQL = ctx.batchSQL();
             for (int i = 0; i < queries.length; i++) {
                 listener.renderStart(ctx);
-                batchSQL[i] = new Executor(configuration).renderInlined(queries[i]);
+                batchSQL[i] = Factory.using(configuration).renderInlined(queries[i]);
                 listener.renderEnd(ctx);
             }
 

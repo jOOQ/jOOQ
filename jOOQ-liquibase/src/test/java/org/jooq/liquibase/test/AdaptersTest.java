@@ -59,6 +59,7 @@ import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Sequence;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.maven.example.h2.Sequences;
 
 import org.junit.After;
@@ -80,7 +81,7 @@ public class AdaptersTest {
         database = new H2Database();
         database.setConnection(new JdbcConnection(connection));
         snapshot = DatabaseSnapshotGeneratorFactory.getInstance().createSnapshot(database, "PUBLIC", null);
-        create = new Executor(connection, SQLDialect.H2);
+        create = Factory.using(connection, SQLDialect.H2);
     }
 
     @Before

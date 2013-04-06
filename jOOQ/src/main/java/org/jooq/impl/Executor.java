@@ -231,7 +231,7 @@ import org.jooq.tools.csv.CSVReader;
  * they can be executed immediately in a fluent style. An example is given here:
  * <p>
  * <code><pre>
- * Executor create = new Executor(connection, dialect);
+ * Executor create = Factory.using(connection, dialect);
  *
  * // Immediately fetch results after constructing a query
  * create.selectFrom(MY_TABLE).where(MY_TABLE.ID.eq(1)).fetch();
@@ -243,7 +243,7 @@ import org.jooq.tools.csv.CSVReader;
  * The <code>Executor</code> provides convenient constructors to create a
  * {@link Configuration}, which will be shared among all <code>Query</code>
  * objects thus created. Optionally, you can pass a reusable
- * <code>Configuration</code> to the {@link #Executor(Configuration)}
+ * <code>Configuration</code> to the {@link Factory#using(Configuration)}
  * constructor. Please consider thread-safety concerns documented in
  * {@link Configuration}, should you want to reuse the same
  * <code>Configuration</code> instance in various threads and / or transactions.
@@ -273,7 +273,7 @@ public class Executor implements Serializable {
      *
      * @param dialect The dialect to use with objects created from this executor
      */
-    public Executor(SQLDialect dialect) {
+    Executor(SQLDialect dialect) {
         this(dialect, null);
     }
 
@@ -287,7 +287,7 @@ public class Executor implements Serializable {
      * @param settings The runtime settings to apply to objects created from
      *            this executor
      */
-    public Executor(SQLDialect dialect, Settings settings) {
+    Executor(SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new NoConnectionProvider(), dialect, settings, null));
     }
 
@@ -306,7 +306,7 @@ public class Executor implements Serializable {
      * @param dialect The dialect to use with objects created from this executor
      * @see DefaultConnectionProvider
      */
-    public Executor(Connection connection, SQLDialect dialect) {
+    Executor(Connection connection, SQLDialect dialect) {
         this(connection, dialect, null);
     }
 
@@ -327,7 +327,7 @@ public class Executor implements Serializable {
      *            this executor
      * @see DefaultConnectionProvider
      */
-    public Executor(Connection connection, SQLDialect dialect, Settings settings) {
+    Executor(Connection connection, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new DefaultConnectionProvider(connection), dialect, settings, null));
     }
 
@@ -346,7 +346,7 @@ public class Executor implements Serializable {
      * @param dialect The dialect to use with objects created from this executor
      * @see DataSourceConnectionProvider
      */
-    public Executor(DataSource datasource, SQLDialect dialect) {
+    Executor(DataSource datasource, SQLDialect dialect) {
         this(datasource, dialect, null);
     }
 
@@ -367,7 +367,7 @@ public class Executor implements Serializable {
      *            this executor
      * @see DataSourceConnectionProvider
      */
-    public Executor(DataSource datasource, SQLDialect dialect, Settings settings) {
+    Executor(DataSource datasource, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), dialect, settings, null));
     }
 
@@ -379,7 +379,7 @@ public class Executor implements Serializable {
      *            JDBC connections
      * @param dialect The dialect to use with objects created from this executor
      */
-    public Executor(ConnectionProvider connectionProvider, SQLDialect dialect) {
+    Executor(ConnectionProvider connectionProvider, SQLDialect dialect) {
         this(connectionProvider, dialect, null);
     }
 
@@ -393,7 +393,7 @@ public class Executor implements Serializable {
      * @param settings The runtime settings to apply to objects created from
      *            this executor
      */
-    public Executor(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
+    Executor(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(connectionProvider, dialect, settings, null));
     }
 
@@ -402,7 +402,7 @@ public class Executor implements Serializable {
      *
      * @param configuration The configuration
      */
-    public Executor(Configuration configuration) {
+    Executor(Configuration configuration) {
 
         // The Configuration can be null when unattached Query objects are
         // executed or when unattached Records are stored...
@@ -1822,7 +1822,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Collection)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(fields)
      *       .from(table1)
@@ -1850,7 +1850,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field...)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2)
      *       .from(table1)
@@ -1886,7 +1886,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1)
      *       .from(table1)
@@ -1919,7 +1919,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2)
      *       .from(table1)
@@ -1952,7 +1952,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3)
      *       .from(table1)
@@ -1985,7 +1985,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, field4)
      *       .from(table1)
@@ -2018,7 +2018,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, field4, field5)
      *       .from(table1)
@@ -2051,7 +2051,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field5, field6)
      *       .from(table1)
@@ -2084,7 +2084,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field6, field7)
      *       .from(table1)
@@ -2117,7 +2117,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field7, field8)
      *       .from(table1)
@@ -2150,7 +2150,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field8, field9)
      *       .from(table1)
@@ -2183,7 +2183,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field9, field10)
      *       .from(table1)
@@ -2216,7 +2216,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field10, field11)
      *       .from(table1)
@@ -2249,7 +2249,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field11, field12)
      *       .from(table1)
@@ -2282,7 +2282,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field12, field13)
      *       .from(table1)
@@ -2315,7 +2315,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field13, field14)
      *       .from(table1)
@@ -2348,7 +2348,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field14, field15)
      *       .from(table1)
@@ -2381,7 +2381,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field15, field16)
      *       .from(table1)
@@ -2414,7 +2414,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field16, field17)
      *       .from(table1)
@@ -2447,7 +2447,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field17, field18)
      *       .from(table1)
@@ -2480,7 +2480,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field18, field19)
      *       .from(table1)
@@ -2513,7 +2513,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field19, field20)
      *       .from(table1)
@@ -2546,7 +2546,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field20, field21)
      *       .from(table1)
@@ -2579,7 +2579,7 @@ public class Executor implements Serializable {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.select(field1, field2, field3, .., field21, field22)
      *       .from(table1)
@@ -2609,7 +2609,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Collection)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(fields)
      *       .from(table1)
@@ -2637,7 +2637,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field...)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2)
      *       .from(table1)
@@ -2672,7 +2672,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1)
      *       .from(table1)
@@ -2705,7 +2705,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2)
      *       .from(table1)
@@ -2738,7 +2738,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3)
      *       .from(table1)
@@ -2771,7 +2771,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, field4)
      *       .from(table1)
@@ -2804,7 +2804,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, field4, field5)
      *       .from(table1)
@@ -2837,7 +2837,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field5, field6)
      *       .from(table1)
@@ -2870,7 +2870,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field6, field7)
      *       .from(table1)
@@ -2903,7 +2903,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field7, field8)
      *       .from(table1)
@@ -2936,7 +2936,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field8, field9)
      *       .from(table1)
@@ -2969,7 +2969,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field9, field10)
      *       .from(table1)
@@ -3002,7 +3002,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field10, field11)
      *       .from(table1)
@@ -3035,7 +3035,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field11, field12)
      *       .from(table1)
@@ -3068,7 +3068,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field12, field13)
      *       .from(table1)
@@ -3101,7 +3101,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field13, field14)
      *       .from(table1)
@@ -3134,7 +3134,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field14, field15)
      *       .from(table1)
@@ -3167,7 +3167,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field15, field16)
      *       .from(table1)
@@ -3200,7 +3200,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field16, field17)
      *       .from(table1)
@@ -3233,7 +3233,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field17, field18)
      *       .from(table1)
@@ -3266,7 +3266,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field18, field19)
      *       .from(table1)
@@ -3299,7 +3299,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field19, field20)
      *       .from(table1)
@@ -3332,7 +3332,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field20, field21)
      *       .from(table1)
@@ -3365,7 +3365,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectDistinct(field1, field2, field3, .., field21, field22)
      *       .from(table1)
@@ -3395,7 +3395,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectZero()} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectZero()
      *       .from(table1)
@@ -3424,7 +3424,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectOne()} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectOne()
      *       .from(table1)
@@ -3453,7 +3453,7 @@ public class Executor implements Serializable {
      * {@link Factory#selectCount()} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.selectCount()
      *       .from(table1)
@@ -3507,7 +3507,7 @@ public class Executor implements Serializable {
      * <code>SET a = b</code> syntax.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table)
      *       .set(field1, value1)
@@ -3532,7 +3532,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1)
      *       .values(field1)
@@ -3553,7 +3553,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2)
      *       .values(field1, field2)
@@ -3574,7 +3574,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3)
      *       .values(field1, field2, field3)
@@ -3595,7 +3595,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, field4)
      *       .values(field1, field2, field3, field4)
@@ -3616,7 +3616,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, field4, field5)
      *       .values(field1, field2, field3, field4, field5)
@@ -3637,7 +3637,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field5, field6)
      *       .values(valueA1, valueA2, valueA3, .., valueA5, valueA6)
@@ -3658,7 +3658,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field6, field7)
      *       .values(valueA1, valueA2, valueA3, .., valueA6, valueA7)
@@ -3679,7 +3679,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field7, field8)
      *       .values(valueA1, valueA2, valueA3, .., valueA7, valueA8)
@@ -3700,7 +3700,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field8, field9)
      *       .values(valueA1, valueA2, valueA3, .., valueA8, valueA9)
@@ -3721,7 +3721,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field9, field10)
      *       .values(valueA1, valueA2, valueA3, .., valueA9, valueA10)
@@ -3742,7 +3742,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field10, field11)
      *       .values(valueA1, valueA2, valueA3, .., valueA10, valueA11)
@@ -3763,7 +3763,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field11, field12)
      *       .values(valueA1, valueA2, valueA3, .., valueA11, valueA12)
@@ -3784,7 +3784,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field12, field13)
      *       .values(valueA1, valueA2, valueA3, .., valueA12, valueA13)
@@ -3805,7 +3805,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field13, field14)
      *       .values(valueA1, valueA2, valueA3, .., valueA13, valueA14)
@@ -3826,7 +3826,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field14, field15)
      *       .values(valueA1, valueA2, valueA3, .., valueA14, valueA15)
@@ -3847,7 +3847,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field15, field16)
      *       .values(valueA1, valueA2, valueA3, .., valueA15, valueA16)
@@ -3868,7 +3868,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field16, field17)
      *       .values(valueA1, valueA2, valueA3, .., valueA16, valueA17)
@@ -3889,7 +3889,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field17, field18)
      *       .values(valueA1, valueA2, valueA3, .., valueA17, valueA18)
@@ -3910,7 +3910,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field18, field19)
      *       .values(valueA1, valueA2, valueA3, .., valueA18, valueA19)
@@ -3931,7 +3931,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field19, field20)
      *       .values(valueA1, valueA2, valueA3, .., valueA19, valueA20)
@@ -3952,7 +3952,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field20, field21)
      *       .values(valueA1, valueA2, valueA3, .., valueA20, valueA21)
@@ -3973,7 +3973,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2, field3, .., field21, field22)
      *       .values(valueA1, valueA2, valueA3, .., valueA21, valueA22)
@@ -3996,7 +3996,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2)
      *       .values(value1, value2)
@@ -4016,7 +4016,7 @@ public class Executor implements Serializable {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.insertInto(table, field1, field2)
      *       .values(value1, value2)
@@ -4047,7 +4047,7 @@ public class Executor implements Serializable {
      * Create a new DSL update statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.update(table)
      *       .set(field1, value1)
@@ -4128,7 +4128,7 @@ public class Executor implements Serializable {
      * </table>
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.mergeInto(table)
      *       .using(select)
@@ -4776,7 +4776,7 @@ public class Executor implements Serializable {
      * Create a new DSL delete statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.delete(table)
      *       .where(field1.greaterThan(100))
@@ -5038,7 +5038,7 @@ public class Executor implements Serializable {
      * Create a new DSL truncate statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
+     * Executor create = Factory.using();
      *
      * create.truncate(table)
      *       .execute();

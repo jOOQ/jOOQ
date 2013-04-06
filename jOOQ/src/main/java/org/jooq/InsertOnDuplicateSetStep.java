@@ -49,7 +49,7 @@ import java.util.Map;
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Executor create = new Executor(config);
+ * Executor create = Factory.using(config);
  *
  * create.insertInto(table, field1, field2)
  *       .values(value1, value2)

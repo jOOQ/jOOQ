@@ -49,6 +49,7 @@ import java.sql.SQLException;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.test.h2.generatedclasses.Routines;
 import org.jooq.test.h2.generatedclasses.tables.TAuthor;
 import org.jooq.test.h2.generatedclasses.tables.TBook;
@@ -138,6 +139,6 @@ public class F {
     }
 
     private static Executor create(Connection connection) {
-        return new Executor(connection, SQLDialect.H2);
+        return Factory.using(connection, SQLDialect.H2);
     }
 }

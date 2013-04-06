@@ -53,6 +53,7 @@ import java.util.regex.Pattern;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.tools.JooqLogger;
 
 /**
@@ -131,7 +132,7 @@ public class MockFileDatabase implements MockDataProvider {
         this.encoding = encoding;
         this.matchExactly = new LinkedHashMap<String, List<MockResult>>();
         this.matchPattern = new LinkedHashMap<Pattern, List<MockResult>>();
-        this.create = new Executor(SQLDialect.SQL99);
+        this.create = Factory.using(SQLDialect.SQL99);
 
         load();
     }

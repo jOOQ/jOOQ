@@ -72,6 +72,7 @@ import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -130,7 +131,7 @@ public class HSQLDBTest extends jOOQAbstractTest<
 
 	@Override
     protected Executor create(Settings settings) {
-        return new Executor(getConnection(), SQLDialect.HSQLDB, settings);
+        return Factory.using(getConnection(), SQLDialect.HSQLDB, settings);
     }
 
 	@Override

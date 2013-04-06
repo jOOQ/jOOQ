@@ -45,7 +45,7 @@ import org.jooq.Field;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.types.UNumber;
 
 /**
@@ -169,7 +169,7 @@ public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
                     Schema mapped = null;
 
                     if (configuration != null) {
-                        mapped = new Executor(configuration).map(schema);
+                        mapped = Factory.using(configuration).map(schema);
                     }
 
                     if (mapped != null) {

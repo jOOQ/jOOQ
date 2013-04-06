@@ -41,7 +41,7 @@ import java.util.Collection;
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Executor create = new Executor(config);
+ * Executor create = Factory.using(config);
  *
  * TableRecord<?> record =
  * create.insertInto(table, field1, field2)

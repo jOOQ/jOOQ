@@ -46,7 +46,7 @@ import org.jooq.impl.Executor;
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Executor create = new Executor();
+ * Executor create = Factory.using();
  *
  * create.insertInto(table, field1, field2, field3, .., field16, field17)
  *       .values(valueA1, valueA2, valueA3, .., valueA16, valueA17)

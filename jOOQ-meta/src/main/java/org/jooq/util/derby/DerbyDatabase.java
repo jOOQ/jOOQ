@@ -56,6 +56,7 @@ import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Executor;
+import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -322,6 +323,6 @@ public class DerbyDatabase extends AbstractDatabase {
 
     @Override
     protected Executor create0() {
-        return new Executor(getConnection(), SQLDialect.DERBY);
+        return Factory.using(getConnection(), SQLDialect.DERBY);
     }
 }

@@ -92,7 +92,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -214,7 +214,7 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected ContextDSL create(Settings settings) {
+    protected DSLContext create(Settings settings) {
         return Factory.using(getConnection(), SQLDialect.ORACLE, settings);
     }
 
@@ -1333,7 +1333,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleMultiSchemaFactories() throws Exception {
-        ContextDSL create = Factory.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
+        DSLContext create = Factory.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
 
         UAddressTypeRecord address = new UAddressTypeRecord();
         address.setStreet(new UStreetTypeRecord());

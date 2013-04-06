@@ -55,7 +55,7 @@ import java.util.UUID;
 import junit.framework.Assert;
 
 import org.jooq.ArrayRecord;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -705,8 +705,8 @@ public abstract class BaseTest<
         return delegate.getCastableDataTypes();
     }
 
-    protected ContextDSL create(Settings settings) {
-        ContextDSL create = delegate.create(settings);
+    protected DSLContext create(Settings settings) {
+        DSLContext create = delegate.create(settings);
         create.configuration().getExecuteListeners().add(new TestStatisticsListener());
         return create;
     }
@@ -723,7 +723,7 @@ public abstract class BaseTest<
         return delegate.getConnection0(null, null);
     }
 
-    protected final ContextDSL create() {
+    protected final DSLContext create() {
         return delegate.create();
     }
 

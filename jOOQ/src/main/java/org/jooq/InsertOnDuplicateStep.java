@@ -77,7 +77,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * <li>The <code>INSERT</code> statement's table is a
      * {@link Table} with a {@link Table#getPrimaryKey()}</li>
      * <li>The RDBMS supports the <code>MERGE</code> clause (see
-     * {@link ContextDSL#mergeInto(Table)}).</li>
+     * {@link DSLContext#mergeInto(Table)}).</li>
      * </ul>
      * <p>
      * These are the dialects that fulfill the above requirements:

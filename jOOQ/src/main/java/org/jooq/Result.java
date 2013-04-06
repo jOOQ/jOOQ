@@ -832,7 +832,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * or {@link ResultSet#previous()}, etc.</li>
      * </ul>
      * <p>
-     * You may use {@link ContextDSL#fetch(ResultSet)} to unwind this wrapper
+     * You may use {@link DSLContext#fetch(ResultSet)} to unwind this wrapper
      * again.
      *
      * @return A wrapper JDBC <code>ResultSet</code>

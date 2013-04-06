@@ -82,7 +82,7 @@ import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Cursor;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
@@ -198,7 +198,7 @@ import org.jooq.tools.csv.CSVReader;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class ContextDSLImpl implements ContextDSL, Serializable {
+class DSLContextImpl implements DSLContext, Serializable {
 
     /**
      * Generated UID
@@ -210,39 +210,39 @@ class ContextDSLImpl implements ContextDSL, Serializable {
     // XXX Constructors
     // -------------------------------------------------------------------------
 
-    ContextDSLImpl(SQLDialect dialect) {
+    DSLContextImpl(SQLDialect dialect) {
         this(dialect, null);
     }
 
-    ContextDSLImpl(SQLDialect dialect, Settings settings) {
+    DSLContextImpl(SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new NoConnectionProvider(), dialect, settings, null));
     }
 
-    ContextDSLImpl(Connection connection, SQLDialect dialect) {
+    DSLContextImpl(Connection connection, SQLDialect dialect) {
         this(connection, dialect, null);
     }
 
-    ContextDSLImpl(Connection connection, SQLDialect dialect, Settings settings) {
+    DSLContextImpl(Connection connection, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new DefaultConnectionProvider(connection), dialect, settings, null));
     }
 
-    ContextDSLImpl(DataSource datasource, SQLDialect dialect) {
+    DSLContextImpl(DataSource datasource, SQLDialect dialect) {
         this(datasource, dialect, null);
     }
 
-    ContextDSLImpl(DataSource datasource, SQLDialect dialect, Settings settings) {
+    DSLContextImpl(DataSource datasource, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), dialect, settings, null));
     }
 
-    ContextDSLImpl(ConnectionProvider connectionProvider, SQLDialect dialect) {
+    DSLContextImpl(ConnectionProvider connectionProvider, SQLDialect dialect) {
         this(connectionProvider, dialect, null);
     }
 
-    ContextDSLImpl(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
+    DSLContextImpl(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(connectionProvider, dialect, settings, null));
     }
 
-    ContextDSLImpl(Configuration configuration) {
+    DSLContextImpl(Configuration configuration) {
 
         // The Configuration can be null when unattached Query objects are
         // executed or when unattached Records are stored...

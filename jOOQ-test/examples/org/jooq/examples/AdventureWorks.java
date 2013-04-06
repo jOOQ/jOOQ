@@ -46,7 +46,7 @@ import static org.jooq.impl.Factory.val;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 
@@ -56,7 +56,7 @@ public class AdventureWorks {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Connection connection = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;integratedSecurity=true");
 
-        ContextDSL create = Factory.using(connection, SQLDialect.SQLSERVER);
+        DSLContext create = Factory.using(connection, SQLDialect.SQLSERVER);
 
         System.out.println(create
               .select(Employee.fields())

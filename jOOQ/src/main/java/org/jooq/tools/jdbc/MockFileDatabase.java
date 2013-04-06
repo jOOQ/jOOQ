@@ -51,7 +51,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.tools.JooqLogger;
@@ -103,7 +103,7 @@ import org.jooq.tools.JooqLogger;
  * Results can be loaded using several techniques:
  * <ul>
  * <li>When results are prefixed with <code>></code>, then
- * {@link ContextDSL#fetchFromTXT(String)} is used</li>
+ * {@link DSLContext#fetchFromTXT(String)} is used</li>
  * <li>In the future, other types of result sources will be supported, such as
  * CSV, XML, JSON</li>
  * </ul>
@@ -120,7 +120,7 @@ public class MockFileDatabase implements MockDataProvider {
     private final String                         encoding;
     private final Map<String, List<MockResult>>  matchExactly;
     private final Map<Pattern, List<MockResult>> matchPattern;
-    private final ContextDSL                       create;
+    private final DSLContext                       create;
 
     public MockFileDatabase(File file) throws IOException {
         this(file, "UTF-8");

@@ -85,7 +85,7 @@ public interface Query extends QueryPart, Attachable {
      * Retrieve the SQL code rendered by this Query
      * <p>
      * This method can be expected to work correctly for any SQL dialect, as a
-     * query is usually "attached" when created from a {@link ContextDSL}.
+     * query is usually "attached" when created from a {@link DSLContext}.
      * <p>
      * Use this method, when you want to use jOOQ for object oriented query
      * creation, but execute the query with some other technology, such as
@@ -97,7 +97,7 @@ public interface Query extends QueryPart, Attachable {
      * </ul>
      * <p>
      * Note, this is the same as calling {@link #getSQL(boolean)}. The boolean
-     * parameter will depend on your {@link ContextDSL}'s {@link Settings}:
+     * parameter will depend on your {@link DSLContext}'s {@link Settings}:
      * <table border="1">
      * <tr>
      * <th><code>StatementType</code></th>
@@ -139,7 +139,7 @@ public interface Query extends QueryPart, Attachable {
      * <code>List</code> cannot be modified. To modify bind values, use
      * {@link #getParams()} instead.
      *
-     * @see ContextDSL#extractBindValues(QueryPart)
+     * @see DSLContext#extractBindValues(QueryPart)
      */
     List<Object> getBindValues();
 
@@ -153,7 +153,7 @@ public interface Query extends QueryPart, Attachable {
      *
      * @see Param
      * @see Factory#param(String, Object)
-     * @see ContextDSL#extractParams(QueryPart)
+     * @see DSLContext#extractParams(QueryPart)
      */
     Map<String, Param<?>> getParams();
 
@@ -165,7 +165,7 @@ public interface Query extends QueryPart, Attachable {
      *
      * @see Param
      * @see Factory#param(String, Object)
-     * @see ContextDSL#extractParam(QueryPart, String)
+     * @see DSLContext#extractParam(QueryPart, String)
      */
     Param<?> getParam(String name);
 

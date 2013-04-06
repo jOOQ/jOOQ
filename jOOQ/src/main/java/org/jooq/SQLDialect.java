@@ -168,7 +168,7 @@ public enum SQLDialect {
     }
 
     /**
-     * A {@link ContextDSL} class whose instances are pre-configured with this
+     * A {@link DSLContext} class whose instances are pre-configured with this
      * dialect.
      */
     public final Class<? extends Factory> getFactory() {

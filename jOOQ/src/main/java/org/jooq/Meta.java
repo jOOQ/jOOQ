@@ -45,7 +45,7 @@ import org.jooq.exception.DataAccessException;
 /**
  * A wrapping object for {@link DatabaseMetaData}
  * <p>
- * This object can be obtained through {@link ContextDSL#meta()} in order to
+ * This object can be obtained through {@link DSLContext#meta()} in order to
  * provide convenient access to your database meta data. This abstraction has
  * two purposes:
  * <p>

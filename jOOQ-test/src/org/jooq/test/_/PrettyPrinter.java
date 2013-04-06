@@ -37,7 +37,7 @@ package org.jooq.test._;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DefaultExecuteListener;
@@ -66,12 +66,12 @@ public class PrettyPrinter extends DefaultExecuteListener {
 
         // Create a new factory for logging rendering purposes
         // This factory doesn't need a connection, only the SQLDialect...
-        ContextDSL pretty = Factory.using(ctx.configuration().getDialect(),
+        DSLContext pretty = Factory.using(ctx.configuration().getDialect(),
 
         // ... and the flag for pretty-printing
             SettingsTools.clone(ctx.configuration().getSettings()).withRenderFormatted(true));
 
-        ContextDSL normal = Factory.using(ctx.configuration().getDialect());
+        DSLContext normal = Factory.using(ctx.configuration().getDialect());
 
         String n = "" + count.incrementAndGet();
 

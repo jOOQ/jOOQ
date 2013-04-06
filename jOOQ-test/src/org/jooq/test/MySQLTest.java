@@ -69,7 +69,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -158,7 +158,7 @@ public class MySQLTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected ContextDSL create(Settings settings) {
+    protected DSLContext create(Settings settings) {
         return Factory.using(getConnection(), SQLDialect.MYSQL, settings);
     }
 

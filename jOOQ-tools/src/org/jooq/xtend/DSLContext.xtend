@@ -41,14 +41,14 @@ package org.jooq.xtend
  */
 import org.jooq.Constants
 
-class ContextDSL extends Generators {
+class DSLContext extends Generators {
     
     def static void main(String[] args) {
-        val contextDSL = new ContextDSL();
-        contextDSL.generateSelect();
-        contextDSL.generateSelectDistinct();
-        contextDSL.generateInsert();
-        contextDSL.generateMerge();
+        val ctx = new DSLContext();
+        ctx.generateSelect();
+        ctx.generateSelectDistinct();
+        ctx.generateInsert();
+        ctx.generateMerge();
     }
     
     def generateSelect() {
@@ -73,7 +73,7 @@ class ContextDSL extends Generators {
                  * building methods taking subselect arguments.
                  * <p>
                  * This creates an attached, renderable and executable <code>SELECT</code>
-                 * statement from this {@link ContextDSL}. If you don't need to render or
+                 * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
                  * {@link Factory#select(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
@@ -105,8 +105,8 @@ class ContextDSL extends Generators {
             ''');
         }
 
-        insert("org.jooq.ContextDSL", outAPI, "select");
-        insert("org.jooq.impl.ContextDSLImpl", outImpl, "select");
+        insert("org.jooq.DSLContext", outAPI, "select");
+        insert("org.jooq.impl.DSLContextImpl", outImpl, "select");
     }
     
     def generateSelectDistinct() {
@@ -131,7 +131,7 @@ class ContextDSL extends Generators {
                  * building methods taking subselect arguments.
                  * <p>
                  * This creates an attached, renderable and executable <code>SELECT</code>
-                 * statement from this {@link ContextDSL}. If you don't need to render or
+                 * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
                  * {@link Factory#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
@@ -163,8 +163,8 @@ class ContextDSL extends Generators {
             ''');
         }
 
-        insert("org.jooq.ContextDSL", outAPI, "selectDistinct");
-        insert("org.jooq.impl.ContextDSLImpl", outImpl, "selectDistinct");
+        insert("org.jooq.DSLContext", outAPI, "selectDistinct");
+        insert("org.jooq.impl.DSLContextImpl", outImpl, "selectDistinct");
     }
 
     def generateInsert() {
@@ -203,8 +203,8 @@ class ContextDSL extends Generators {
             ''');
         }
 
-        insert("org.jooq.ContextDSL", outAPI, "insert");
-        insert("org.jooq.impl.ContextDSLImpl", outImpl, "insert");
+        insert("org.jooq.DSLContext", outAPI, "insert");
+        insert("org.jooq.impl.DSLContextImpl", outImpl, "insert");
     }
 
     def generateMerge() {
@@ -249,7 +249,7 @@ class ContextDSL extends Generators {
             ''');
         }
 
-        insert("org.jooq.ContextDSL", outAPI, "merge");
-        insert("org.jooq.impl.ContextDSLImpl", outImpl, "merge");
+        insert("org.jooq.DSLContext", outAPI, "merge");
+        insert("org.jooq.impl.DSLContextImpl", outImpl, "merge");
     }
 }

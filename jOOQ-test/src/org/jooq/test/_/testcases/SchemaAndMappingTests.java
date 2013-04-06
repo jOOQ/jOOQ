@@ -47,7 +47,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Arrays;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -106,7 +106,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        ContextDSL factory = create();
+        DSLContext factory = create();
         factory.use(schema().getName());
 
         Result<?> result =

@@ -37,7 +37,7 @@ package org.jooq.tools.jdbc;
 
 import java.sql.Statement;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Query;
 
 /**
@@ -130,7 +130,7 @@ public class MockExecuteContext {
      *
      * @return Whether this execution context is from a "single batch"
      *         statement.
-     * @see ContextDSL#batch(Query)
+     * @see DSLContext#batch(Query)
      */
     public boolean batchSingle() {
         return bindings.length > 1;
@@ -140,7 +140,7 @@ public class MockExecuteContext {
      * Whether this execution context is from a "multi batch" statement.
      *
      * @return Whether this execution context is from a "multi batch" statement.
-     * @see ContextDSL#batch(Query...)
+     * @see DSLContext#batch(Query...)
      */
     public boolean batchMultiple() {
         return sql.length > 1;

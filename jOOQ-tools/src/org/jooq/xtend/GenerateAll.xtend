@@ -4,7 +4,7 @@ class GenerateAll {
     def static void main(String[] args) {
     	BetweenAndSteps::main(args);
     	Conversions::main(args);
-    	ContextDSL::main(args);
+    	DSLContext::main(args);
     	Factory::main(args);
     	InsertDSL::main(args);
     	MergeDSL::main(args);

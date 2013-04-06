@@ -49,7 +49,7 @@ import java.util.Map;
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Meta;
 import org.jooq.Record;
@@ -74,7 +74,7 @@ class MetaImpl implements Meta, Serializable {
      */
     private static final long                   serialVersionUID = 3582980783173033809L;
 
-    private final ContextDSL                      create;
+    private final DSLContext                      create;
     private final Configuration                 configuration;
     private transient volatile DatabaseMetaData meta;
 

@@ -60,7 +60,7 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FutureResult;
@@ -575,7 +575,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1169] Some additional checks to see if custom data is correctly
         // passed on to custom QueryParts
-        ContextDSL create = create();
+        DSLContext create = create();
         create.configuration().setData("Foo-Field", "Bar");
         create.configuration().setData("Foo-Condition", "Bar");
 

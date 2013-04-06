@@ -47,7 +47,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.Factory;
 import org.jooq.test.h2.generatedclasses.Routines;
@@ -66,7 +66,7 @@ public class F {
     }
 
     public static void pCreateAuthorByName(Connection connection, String firstName, String lastName) {
-        ContextDSL create = create(connection);
+        DSLContext create = create(connection);
 
         create.insertInto(T_AUTHOR)
               .set(TAuthor.ID, create.select(max(TAuthor.ID).add(1)).from(T_AUTHOR).<Integer>asField())
@@ -97,7 +97,7 @@ public class F {
     }
 
     public static Integer fAuthorExists(Connection connection, String authorName) {
-        ContextDSL create = create(connection);
+        DSLContext create = create(connection);
 
         Integer result =
         create.select(sign(count()))
@@ -138,7 +138,7 @@ public class F {
         return 1;
     }
 
-    private static ContextDSL create(Connection connection) {
+    private static DSLContext create(Connection connection) {
         return Factory.using(connection, SQLDialect.H2);
     }
 }

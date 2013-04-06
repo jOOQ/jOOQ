@@ -105,7 +105,7 @@ class InsertDSL extends Generators {
                  * This variant of the <code>INSERT .. SELECT</code> statement expects a
                  * select returning exactly as many fields as specified previously in the
                  * <code>INTO</code> clause:
-                 * {@link ContextDSL#insertInto(Table, «(1..degree).join(", ", [e | 'Field'])»)}
+                 * {@link DSLContext#insertInto(Table, «(1..degree).join(", ", [e | 'Field'])»)}
                  */
                 @Support
                 Insert<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);

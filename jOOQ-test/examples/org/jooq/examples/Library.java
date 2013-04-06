@@ -45,7 +45,7 @@ import static org.jooq.test.mysql.generatedclasses.tables.TBook.T_BOOK;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -61,7 +61,7 @@ import org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord;
 
 public class Library {
 
-    private static ContextDSL create() throws Exception {
+    private static DSLContext create() throws Exception {
         return Factory.using(getConnection(), SQLDialect.MYSQL);
     }
 

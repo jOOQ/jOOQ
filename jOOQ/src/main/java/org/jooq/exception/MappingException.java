@@ -35,7 +35,7 @@
  */
 package org.jooq.exception;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Cursor;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -52,7 +52,7 @@ import org.jooq.ResultQuery;
  * </ul>
  * ... or when copying data into a {@link Record} with any of these methods
  * <ul>
- * <li> {@link ContextDSL#newRecord(org.jooq.Table, Object)}</li>
+ * <li> {@link DSLContext#newRecord(org.jooq.Table, Object)}</li>
  * <li> {@link Record#from(Object)}</li>
  * </ul>
  *

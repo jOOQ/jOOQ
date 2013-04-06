@@ -63,7 +63,7 @@ import java.util.UUID;
 import javax.swing.UIManager;
 
 import org.jooq.ArrayRecord;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
@@ -492,7 +492,7 @@ public abstract class jOOQAbstractTest<
 
                 @Override
                 public MockResult[] execute(MockExecuteContext context) throws SQLException {
-                    ContextDSL executor = Factory.using(c, getDialect());
+                    DSLContext executor = Factory.using(c, getDialect());
 
                     if (context.batchSingle()) {
                         Query query = executor.query(context.sql(), new Object[context.batchBindings()[0].length]);
@@ -858,13 +858,13 @@ public abstract class jOOQAbstractTest<
     protected abstract Class<?> cLibrary();
     protected abstract Class<?> cSequences();
     protected abstract DataType<?>[] getCastableDataTypes();
-    protected abstract ContextDSL create(Settings settings);
+    protected abstract DSLContext create(Settings settings);
 
     protected final Schema schema() {
         return create().map(TAuthor().getSchema());
     }
 
-    protected final ContextDSL create() {
+    protected final DSLContext create() {
         String defaultSchema = System.getProperty("org.jooq.settings.defaultSchema", "");
         Boolean renderSchema = Boolean.valueOf(System.getProperty("org.jooq.settings.renderSchema", "true"));
 
@@ -873,7 +873,7 @@ public abstract class jOOQAbstractTest<
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema));
 
-        ContextDSL create = create(settings);
+        DSLContext create = create(settings);
         create.configuration().getExecuteListeners().add(new TestStatisticsListener());
         create.configuration().getExecuteListeners().add(new PrettyPrinter());
         create.configuration().getExecuteListeners().add(new LifecycleWatcherListener());

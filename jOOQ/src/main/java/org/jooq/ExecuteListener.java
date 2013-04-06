@@ -54,7 +54,7 @@ import org.jooq.tools.StopWatchListener;
  * render, prepare, bind, execute, fetch steps.
  * <p>
  * <code>ExecuteListener</code> is a base type for loggers, debuggers,
- * profilers, data collectors that can be hooked into a jOOQ {@link ContextDSL}
+ * profilers, data collectors that can be hooked into a jOOQ {@link DSLContext}
  * using the {@link Configuration#getExecuteListeners()} property, passing
  * <code>Settings</code> to
  * {@link Factory#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ
@@ -248,10 +248,10 @@ import org.jooq.tools.StopWatchListener;
  * {@link StatementType#PREPARED_STATEMENT}</li>
  * <li>Used with {@link ResultQuery} of statement type
  * {@link StatementType#STATIC_STATEMENT}</li>
- * <li>Used with {@link ContextDSL#fetch(ResultSet)} or with
+ * <li>Used with {@link DSLContext#fetch(ResultSet)} or with
  * {@link InsertResultStep#fetch()}</li>
- * <li>Used with {@link ContextDSL#batch(Query)}</li>
- * <li>Used with {@link ContextDSL#batch(Query[])}</li>
+ * <li>Used with {@link DSLContext#batch(Query)}</li>
+ * <li>Used with {@link DSLContext#batch(Query[])}</li>
  * <li>Used with a {@link Routine} standalone call</li>
  * </ol>
  * <p>

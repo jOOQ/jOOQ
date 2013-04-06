@@ -82,8 +82,8 @@ public interface InsertValuesStepN<R extends Record> extends InsertOnDuplicateSt
      * This variant of the <code>INSERT .. SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
-     * {@link ContextDSL#insertInto(Table, Field...)} or
-     * {@link ContextDSL#insertInto(Table, Collection)}
+     * {@link DSLContext#insertInto(Table, Field...)} or
+     * {@link DSLContext#insertInto(Table, Collection)}
      */
     @Support
     Insert<R> select(Select<?> select);

@@ -55,7 +55,7 @@ import liquibase.database.structure.View;
 import liquibase.snapshot.DatabaseSnapshot;
 import liquibase.snapshot.DatabaseSnapshotGeneratorFactory;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Sequence;
@@ -72,7 +72,7 @@ public class AdaptersTest {
     private static Connection       connection;
     private static H2Database       database;
     private static DatabaseSnapshot snapshot;
-    private static ContextDSL       create;
+    private static DSLContext       create;
 
     @BeforeClass
     public static void before() throws Exception {

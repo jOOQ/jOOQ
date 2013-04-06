@@ -1830,7 +1830,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#sign(Field)
      */
@@ -1840,7 +1840,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#abs(Field)
      */
@@ -1850,7 +1850,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#round(Field)
      */
@@ -1860,7 +1860,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#round(Field, int)
      */
@@ -1870,7 +1870,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#floor(Field)
      */
@@ -1880,7 +1880,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#ceil(Field)
      */
@@ -1890,7 +1890,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#sqrt(Field)
      */
@@ -1900,7 +1900,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#exp(Field)
      */
@@ -1910,7 +1910,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#ln(Field)
      */
@@ -1920,7 +1920,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#log(Field, int)
      */
@@ -1930,7 +1930,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#power(Field, Number)
      */
@@ -1948,7 +1948,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#acos(Field)
      */
@@ -1958,7 +1958,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#asin(Field)
      */
@@ -1968,7 +1968,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#atan(Field)
      */
@@ -1978,7 +1978,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#atan2(Field, Number)
      */
@@ -1988,7 +1988,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#atan2(Field, Field)
      */
@@ -1998,7 +1998,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#cos(Field)
      */
@@ -2008,7 +2008,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#sin(Field)
      */
@@ -2018,7 +2018,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#tan(Field)
      */
@@ -2028,7 +2028,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#cot(Field)
      */
@@ -2038,7 +2038,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#sinh(Field)
      */
@@ -2048,7 +2048,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#cosh(Field)
      */
@@ -2058,7 +2058,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#tanh(Field)
      */
@@ -2068,7 +2068,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#coth(Field)
      */
@@ -2078,7 +2078,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#deg(Field)
      */
@@ -2088,7 +2088,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#rad(Field)
      */
@@ -2098,7 +2098,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#count(Field)
      */
@@ -2108,7 +2108,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#countDistinct(Field)
      */
@@ -2118,7 +2118,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#max(Field)
      */
@@ -2128,7 +2128,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#min(Field)
      */
@@ -2138,7 +2138,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#sum(Field)
      */
@@ -2148,7 +2148,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#avg(Field)
      */
@@ -2158,7 +2158,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#median(Field)
      */
@@ -2168,7 +2168,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#stddevPop(Field)
      */
@@ -2178,7 +2178,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#stddevSamp(Field)
      */
@@ -2188,7 +2188,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#varPop(Field)
      */
@@ -2198,7 +2198,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#varSamp(Field)
      */
@@ -2208,7 +2208,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#count(Field)
      * @see AggregateFunction#over()
@@ -2219,7 +2219,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#max(Field)
      * @see AggregateFunction#over()
@@ -2230,7 +2230,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#min(Field)
      * @see AggregateFunction#over()
@@ -2241,7 +2241,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#sum(Field)
      * @see AggregateFunction#over()
@@ -2252,7 +2252,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#avg(Field)
      * @see AggregateFunction#over()
@@ -2263,7 +2263,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#firstValue(Field)
      * @see AggregateFunction#over()
@@ -2274,7 +2274,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lastValue(Field)
      * @see AggregateFunction#over()
@@ -2285,7 +2285,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lead(Field)
      * @see AggregateFunction#over()
@@ -2296,7 +2296,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lead(Field, int)
      * @see AggregateFunction#over()
@@ -2307,7 +2307,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lead(Field, int, Object)
      * @see AggregateFunction#over()
@@ -2318,7 +2318,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lead(Field, int, Field)
      * @see AggregateFunction#over()
@@ -2329,7 +2329,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lag(Field)
      * @see AggregateFunction#over()
@@ -2340,7 +2340,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lag(Field, int)
      * @see AggregateFunction#over()
@@ -2351,7 +2351,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lag(Field, int, Object)
      * @see AggregateFunction#over()
@@ -2362,7 +2362,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lag(Field, int, Field)
      * @see AggregateFunction#over()
@@ -2373,7 +2373,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#stddevPop(Field)
      * @see AggregateFunction#over()
@@ -2384,7 +2384,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#stddevSamp(Field)
      * @see AggregateFunction#over()
@@ -2395,7 +2395,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#varPop(Field)
      * @see AggregateFunction#over()
@@ -2406,7 +2406,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#varSamp(Field)
      * @see AggregateFunction#over()
@@ -2417,7 +2417,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#upper(Field)
      */
@@ -2427,7 +2427,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lower(Field)
      */
@@ -2437,7 +2437,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#trim(Field)
      */
@@ -2447,7 +2447,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#rtrim(Field)
      */
@@ -2457,7 +2457,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#ltrim(Field)
      */
@@ -2467,7 +2467,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#rpad(Field, Field)
      */
@@ -2477,7 +2477,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#rpad(Field, int)
      */
@@ -2487,7 +2487,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#rpad(Field, Field, Field)
      */
@@ -2497,7 +2497,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#rpad(Field, int, char)
      */
@@ -2507,7 +2507,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lpad(Field, Field)
      */
@@ -2517,7 +2517,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lpad(Field, int)
      */
@@ -2527,7 +2527,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lpad(Field, Field, Field)
      */
@@ -2537,7 +2537,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#lpad(Field, int, char)
      */
@@ -2547,7 +2547,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#repeat(Field, int)
      */
@@ -2557,7 +2557,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#repeat(Field, Field)
      */
@@ -2567,7 +2567,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#replace(Field, Field)
      */
@@ -2577,7 +2577,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#replace(Field, String)
      */
@@ -2587,7 +2587,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#replace(Field, Field, Field)
      */
@@ -2597,7 +2597,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#replace(Field, String, String)
      */
@@ -2607,7 +2607,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#position(Field, String)
      */
@@ -2617,7 +2617,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#position(Field, Field)
      */
@@ -2627,7 +2627,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#ascii(Field)
      */
@@ -2637,7 +2637,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#concat(Field...)
      */
@@ -2647,7 +2647,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#concat(String...)
      */
@@ -2657,7 +2657,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#substring(Field, int)
      */
@@ -2667,7 +2667,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#substring(Field, Field)
      */
@@ -2677,7 +2677,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#substring(Field, int, int)
      */
@@ -2687,7 +2687,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#substring(Field, Field, Field)
      */
@@ -2697,7 +2697,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#length(Field)
      */
@@ -2707,7 +2707,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#charLength(Field)
      */
@@ -2717,7 +2717,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#bitLength(Field)
      */
@@ -2727,7 +2727,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#octetLength(Field)
      */
@@ -2737,7 +2737,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#extract(Field, DatePart)
      */
@@ -2747,7 +2747,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#greatest(Field, Field...)
      */
@@ -2757,7 +2757,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#greatest(Field, Field...)
      */
@@ -2767,7 +2767,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#least(Field, Field...)
      */
@@ -2777,7 +2777,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#least(Field, Field...)
      */
@@ -2787,7 +2787,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#nvl(Field, Object)
      */
@@ -2797,7 +2797,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#nvl(Field, Field)
      */
@@ -2807,7 +2807,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#nvl2(Field, Object, Object)
      */
@@ -2817,7 +2817,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#nvl2(Field, Field, Field)
      */
@@ -2827,7 +2827,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#nullif(Field, Object)
      */
@@ -2837,7 +2837,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#nullif(Field, Field)
      */
@@ -2847,7 +2847,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#decode(Object, Object, Object)
      */
@@ -2857,7 +2857,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#decode(Object, Object, Object, Object...)
      */
@@ -2867,7 +2867,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#decode(Field, Field, Field)
      */
@@ -2877,7 +2877,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#decode(Field, Field, Field, Field...)
      */
@@ -2887,7 +2887,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#coalesce(Object, Object...)
      */
@@ -2897,7 +2897,7 @@ public interface Field<T> extends GroupField {
     /**
      * This method is part of the pre-2.0 API. This API is maintained for
      * backwards-compatibility. It may be removed in the future. Consider using
-     * equivalent methods from {@link ContextDSL}
+     * equivalent methods from {@link DSLContext}
      *
      * @see Factory#coalesce(Field, Field...)
      */

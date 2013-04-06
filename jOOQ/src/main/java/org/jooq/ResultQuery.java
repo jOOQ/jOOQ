@@ -98,7 +98,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * execution, but not for result fetching.
      * <p>
      * The returned <code>ResultSet</code> can be used with
-     * {@link ContextDSL#fetch(ResultSet)}
+     * {@link DSLContext#fetch(ResultSet)}
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query

@@ -53,7 +53,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -100,7 +100,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerWithData() throws Exception {
-        ContextDSL create = create();
+        DSLContext create = create();
         create.configuration().getExecuteListeners().add(new DataListener());
 
         create.selectOne().fetch();
@@ -210,7 +210,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerCustomException() throws Exception {
-        ContextDSL create = create();
+        DSLContext create = create();
         create.configuration().getExecuteListeners().add(new CustomExceptionListener());
 
         try {
@@ -236,7 +236,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
-        ContextDSL create = create();
+        DSLContext create = create();
         create.configuration().getExecuteListeners().add(new ResultQueryListener());
 
         create.configuration().setData("Foo", "Bar");
@@ -580,7 +580,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        ContextDSL create = create();
+        DSLContext create = create();
         create.configuration().getExecuteListeners().add(new BatchSingleListener());
 
         create.configuration().setData("Foo", "Bar");
@@ -794,7 +794,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testExecuteListenerOnBatchMultiple() {
         jOOQAbstractTest.reset = false;
 
-        ContextDSL create = create();
+        DSLContext create = create();
         create.configuration().getExecuteListeners().add(new BatchMultipleListener());
 
         create.configuration().setData("Foo", "Bar");
@@ -1020,7 +1020,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerFetchLazyTest() throws Exception {
-        ContextDSL create = create();
+        DSLContext create = create();
         create.configuration().getExecuteListeners().add(new FetchLazyListener());
         FetchLazyListener.reset();
 

@@ -45,7 +45,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 import org.jooq.BindContext;
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -67,7 +67,7 @@ public abstract class AbstractTest {
 
     protected Mockery              context;
     protected PreparedStatement    statement;
-    protected ContextDSL             create;
+    protected DSLContext             create;
     protected Result<Table1Record> resultEmpty;
     protected Result<Table1Record> resultOne;
     protected Result<Table1Record> resultTwo;

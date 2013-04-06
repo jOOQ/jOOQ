@@ -39,7 +39,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.jooq.ContextDSL;
+import org.jooq.DSLContext;
 import org.jooq.Query;
 import org.jooq.ResultQuery;
 
@@ -91,10 +91,10 @@ public interface MockDataProvider {
      * <ul>
      * <li>A {@link MockExecuteContext#batchSQL()} with more than one SQL
      * string is a strong indicator for a "multi-batch statement", as understood
-     * by jOOQ's {@link ContextDSL#batch(Query...)}.</li>
+     * by jOOQ's {@link DSLContext#batch(Query...)}.</li>
      * <li>A {@link MockExecuteContext#batchBindings()} with more than one
      * bind variable array is a strong indicator for a "single-batch statement",
-     * as understood by jOOQ's {@link ContextDSL#batch(Query)}.</li>
+     * as understood by jOOQ's {@link DSLContext#batch(Query)}.</li>
      * </ul>
      * </li>
      * <li>It is recommended to return as many <code>MockResult</code> objects

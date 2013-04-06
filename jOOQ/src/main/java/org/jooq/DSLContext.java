@@ -75,13 +75,13 @@ import org.jooq.impl.Factory;
  * Apart from the {@link Factory}, this contextual DSL is the main entry point
  * for client code, to access jOOQ classes and functionality that are related to
  * {@link Query} execution. Unlike objects created through the
- * <code>Factory</code>, objects created from a <code>ContextDSL</code> will be
- * "attached" to the <code>ContextDSL</code>'s {@link #configuration()}, such
+ * <code>Factory</code>, objects created from a <code>DSLContext</code> will be
+ * "attached" to the <code>DSLContext</code>'s {@link #configuration()}, such
  * that they can be executed immediately in a fluent style. An example is given
  * here:
  * <p>
  * <code><pre>
- * ContextDSL create = Factory.using(connection, dialect);
+ * DSLContext create = Factory.using(connection, dialect);
  *
  * // Immediately fetch results after constructing a query
  * create.selectFrom(MY_TABLE).where(MY_TABLE.ID.eq(1)).fetch();
@@ -102,7 +102,7 @@ import org.jooq.impl.Factory;
  * @see Configuration
  * @author Lukas Eder
  */
-public interface ContextDSL {
+public interface DSLContext {
 
     // -------------------------------------------------------------------------
     // XXX Configuration API
@@ -110,7 +110,7 @@ public interface ContextDSL {
 
     /**
      * The <code>Configuration</code> referenced from this
-     * <code>ContextDSL</code>.
+     * <code>DSLContext</code>.
      */
     Configuration configuration();
 
@@ -1323,7 +1323,7 @@ public interface ContextDSL {
      * Create a new DSL select statement.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Collection)} instead.
@@ -1347,7 +1347,7 @@ public interface ContextDSL {
      * Create a new DSL select statement.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field...)} instead.
@@ -1378,7 +1378,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field)} instead.
@@ -1408,7 +1408,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field)} instead.
@@ -1438,7 +1438,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field)} instead.
@@ -1468,7 +1468,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field)} instead.
@@ -1498,7 +1498,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field)} instead.
@@ -1528,7 +1528,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field)} instead.
@@ -1558,7 +1558,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1588,7 +1588,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1618,7 +1618,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1648,7 +1648,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1678,7 +1678,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1708,7 +1708,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1738,7 +1738,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1768,7 +1768,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1798,7 +1798,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1828,7 +1828,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1858,7 +1858,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1888,7 +1888,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1918,7 +1918,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1948,7 +1948,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -1978,7 +1978,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2008,7 +2008,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2035,7 +2035,7 @@ public interface ContextDSL {
      * Create a new DSL select statement.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Collection)} instead.
@@ -2059,7 +2059,7 @@ public interface ContextDSL {
      * Create a new DSL select statement.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field...)} instead.
@@ -2089,7 +2089,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field)} instead.
@@ -2119,7 +2119,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field)} instead.
@@ -2149,7 +2149,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field)} instead.
@@ -2179,7 +2179,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field)} instead.
@@ -2209,7 +2209,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field)} instead.
@@ -2239,7 +2239,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field)} instead.
@@ -2269,7 +2269,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2299,7 +2299,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2329,7 +2329,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2359,7 +2359,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2389,7 +2389,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2419,7 +2419,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2449,7 +2449,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2479,7 +2479,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2509,7 +2509,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2539,7 +2539,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2569,7 +2569,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2599,7 +2599,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2629,7 +2629,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2659,7 +2659,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2689,7 +2689,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2719,7 +2719,7 @@ public interface ContextDSL {
      * building methods taking subselect arguments.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
@@ -2746,7 +2746,7 @@ public interface ContextDSL {
      * Create a new DSL select statement for constant <code>0</code> literal
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectZero()} instead.
@@ -2771,7 +2771,7 @@ public interface ContextDSL {
      * Create a new DSL select statement for constant <code>1</code> literal
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectOne()} instead.
@@ -2796,7 +2796,7 @@ public interface ContextDSL {
      * Create a new DSL select statement for <code>COUNT(*)</code>
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
-     * statement from this {@link ContextDSL}. If you don't need to render or
+     * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
      * {@link Factory#selectCount()} instead.
@@ -4269,7 +4269,7 @@ public interface ContextDSL {
 
     /**
      * Convenience method to fetch the NEXTVAL for a sequence directly from this
-     * {@link ContextDSL}'s underlying JDBC {@link Connection}
+     * {@link DSLContext}'s underlying JDBC {@link Connection}
      *
      * @throws DataAccessException if something went wrong executing the query
      */
@@ -4278,7 +4278,7 @@ public interface ContextDSL {
 
     /**
      * Convenience method to fetch the CURRVAL for a sequence directly from this
-     * {@link ContextDSL}'s underlying JDBC {@link Connection}
+     * {@link DSLContext}'s underlying JDBC {@link Connection}
      *
      * @throws DataAccessException if something went wrong executing the query
      */

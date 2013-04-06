@@ -1359,7 +1359,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             log.info("SKIPPING", "UDT/Enum types returned in refcursor (see [#707])");
         }
         else if (supportsOUTParameters()) {
-            Object result = invoke(cRoutines(), "pGetTwoCursors", create());
+            Object result = invoke(cRoutines(), "pGetTwoCursors", create().configuration());
             assertNotNull(result);
 
             Result<A> aFromTable = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();

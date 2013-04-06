@@ -36,14 +36,14 @@
 package org.jooq.util.hsqldb;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#HSQLDB} specific factory
  *
  * @author Lukas Eder
  */
-public class HSQLDBFactory extends Factory {
+public class HSQLDBFactory extends DSL {
 
     /**
      * No instances

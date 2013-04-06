@@ -41,8 +41,8 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
-import static org.jooq.impl.Factory.table;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Date;

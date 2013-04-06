@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.DSL.function;
 
 import java.math.BigDecimal;
 
@@ -64,7 +64,7 @@ class Sqrt extends AbstractFunction<BigDecimal> {
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         switch (configuration.getDialect()) {
             case SQLITE:
-                return Factory.power(argument, 0.5);
+                return DSL.power(argument, 0.5);
 
             default:
                 return function("sqrt", SQLDataType.NUMERIC, argument);

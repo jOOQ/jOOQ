@@ -277,7 +277,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12(), field13(), field14());
 	}
 
 	/**
@@ -285,7 +285,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12(), value13(), value14());
 	}
 
 	/**

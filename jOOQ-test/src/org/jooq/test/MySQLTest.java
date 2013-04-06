@@ -37,8 +37,8 @@
 package org.jooq.test;
 
 import static junit.framework.Assert.assertNull;
-import static org.jooq.impl.Factory.md5;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.md5;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_DATES;
@@ -69,8 +69,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
-import org.jooq.DSLContext;
 import org.jooq.DAO;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -81,7 +81,7 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -159,7 +159,7 @@ public class MySQLTest extends jOOQAbstractTest<
 
     @Override
     protected DSLContext create(Settings settings) {
-        return Factory.using(getConnection(), SQLDialect.MYSQL, settings);
+        return DSL.using(getConnection(), SQLDialect.MYSQL, settings);
     }
 
     @Override

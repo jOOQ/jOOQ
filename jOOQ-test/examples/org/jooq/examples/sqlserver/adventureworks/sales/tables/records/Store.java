@@ -125,7 +125,7 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Object, java.lang.String, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6());
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Store extends org.jooq.impl.UpdatableRecordImpl<org.jooq.examples.s
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Object, java.lang.String, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6());
 	}
 
 	/**

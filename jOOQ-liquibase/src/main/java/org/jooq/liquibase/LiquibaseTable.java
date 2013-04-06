@@ -35,7 +35,7 @@
  */
 package org.jooq.liquibase;
 
-import static org.jooq.impl.Factory.tableByName;
+import static org.jooq.impl.DSL.tableByName;
 import static org.jooq.liquibase.Adapters.dataType;
 
 import java.util.List;

@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.DSL.field;
 
 import org.jooq.Configuration;
 import org.jooq.Field;

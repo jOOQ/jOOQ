@@ -31,14 +31,14 @@
 package org.jooq.util.sybase;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#SYBASE} specific factory
  *
  * @author Espen Stromsnes
  */
-public class SybaseFactory extends Factory {
+public class SybaseFactory extends DSL {
 
     /**
      * No instances

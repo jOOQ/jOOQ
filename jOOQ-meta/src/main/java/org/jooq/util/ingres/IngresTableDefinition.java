@@ -35,7 +35,7 @@
  */
 package org.jooq.util.ingres;
 
-import static org.jooq.impl.Factory.trim;
+import static org.jooq.impl.DSL.trim;
 import static org.jooq.util.ingres.ingres.tables.Iicolumns.IICOLUMNS;
 import static org.jooq.util.ingres.ingres.tables.IidbSubcomments.IIDB_SUBCOMMENTS;
 

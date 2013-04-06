@@ -38,7 +38,7 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static org.jooq.impl.Factory.fieldByName;
+import static org.jooq.impl.DSL.fieldByName;
 
 import java.sql.Timestamp;
 

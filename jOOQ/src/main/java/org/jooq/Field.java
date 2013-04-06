@@ -56,7 +56,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.types.Interval;
 import org.jooq.util.oracle.OracleFactory;
 
@@ -416,8 +416,8 @@ public interface Field<T> extends GroupField {
      * In order to subtract one date time field from another, use any of these
      * methods:
      * <ul>
-     * <li> {@link Factory#dateDiff(Field, Field)}</li>
-     * <li> {@link Factory#timestampDiff(Field, Field)}</li>
+     * <li> {@link DSL#dateDiff(Field, Field)}</li>
+     * <li> {@link DSL#timestampDiff(Field, Field)}</li>
      * </ul>
      */
     @Support
@@ -1004,7 +1004,7 @@ public interface Field<T> extends GroupField {
      * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
      * function. Refer to {@link OracleFactory#contains(Field, String)} instead.
      *
-     * @see Factory#escape(String, char)
+     * @see DSL#escape(String, char)
      * @see #like(String, char)
      */
     @Support
@@ -1031,7 +1031,7 @@ public interface Field<T> extends GroupField {
      * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
      * function. Refer to {@link OracleFactory#contains(Field, String)} instead.
      *
-     * @see Factory#escape(Field, char)
+     * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
@@ -1046,7 +1046,7 @@ public interface Field<T> extends GroupField {
      * Note: This also works with numbers, for instance
      * <code>val(1133).startsWith(11)</code>
      *
-     * @see Factory#escape(String, char)
+     * @see DSL#escape(String, char)
      * @see #like(String, char)
      */
     @Support
@@ -1061,7 +1061,7 @@ public interface Field<T> extends GroupField {
      * Note: This also works with numbers, for instance
      * <code>val(1133).startsWith(11)</code>
      *
-     * @see Factory#escape(Field, char)
+     * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
@@ -1076,7 +1076,7 @@ public interface Field<T> extends GroupField {
      * Note: This also works with numbers, for instance
      * <code>val(1133).endsWith(33)</code>
      *
-     * @see Factory#escape(String, char)
+     * @see DSL#escape(String, char)
      * @see #like(String, char)
      */
     @Support
@@ -1091,7 +1091,7 @@ public interface Field<T> extends GroupField {
      * Note: This also works with numbers, for instance
      * <code>val(1133).endsWith(33)</code>
      *
-     * @see Factory#escape(Field, char)
+     * @see DSL#escape(Field, char)
      * @see #like(Field, char)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
@@ -1390,12 +1390,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this = [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
@@ -1427,12 +1427,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this = [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
@@ -1458,12 +1458,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this != [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
@@ -1495,12 +1495,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this != [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
@@ -1526,12 +1526,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this < [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
@@ -1563,12 +1563,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this < [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
@@ -1594,12 +1594,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this <= [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
@@ -1631,12 +1631,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this <= [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition le(QuantifiedSelect<? extends Record1<T>> query);
@@ -1662,12 +1662,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this > [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
@@ -1699,12 +1699,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this > [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition gt(QuantifiedSelect<? extends Record1<T>> query);
@@ -1730,12 +1730,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this >= [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
@@ -1767,12 +1767,12 @@ public interface Field<T> extends GroupField {
     /**
      * <code>this >= [quantifier] (Select<?> ...)</code>
      *
-     * @see Factory#all(Field)
-     * @see Factory#all(Select)
-     * @see Factory#all(Object...)
-     * @see Factory#any(Field)
-     * @see Factory#any(Select)
-     * @see Factory#any(Object...)
+     * @see DSL#all(Field)
+     * @see DSL#all(Select)
+     * @see DSL#all(Object...)
+     * @see DSL#any(Field)
+     * @see DSL#any(Select)
+     * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Condition ge(QuantifiedSelect<? extends Record1<T>> query);
@@ -1832,7 +1832,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#sign(Field)
+     * @see DSL#sign(Field)
      */
     @Support
     Field<Integer> sign();
@@ -1842,7 +1842,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#abs(Field)
+     * @see DSL#abs(Field)
      */
     @Support
     Field<T> abs();
@@ -1852,7 +1852,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#round(Field)
+     * @see DSL#round(Field)
      */
     @Support
     Field<T> round();
@@ -1862,7 +1862,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#round(Field, int)
+     * @see DSL#round(Field, int)
      */
     @Support
     Field<T> round(int decimals);
@@ -1872,7 +1872,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#floor(Field)
+     * @see DSL#floor(Field)
      */
     @Support
     Field<T> floor();
@@ -1882,7 +1882,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#ceil(Field)
+     * @see DSL#ceil(Field)
      */
     @Support
     Field<T> ceil();
@@ -1892,7 +1892,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#sqrt(Field)
+     * @see DSL#sqrt(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sqrt();
@@ -1902,7 +1902,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#exp(Field)
+     * @see DSL#exp(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> exp();
@@ -1912,7 +1912,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#ln(Field)
+     * @see DSL#ln(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> ln();
@@ -1922,7 +1922,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#log(Field, int)
+     * @see DSL#log(Field, int)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> log(int base);
@@ -1932,7 +1932,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#power(Field, Number)
+     * @see DSL#power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> pow(Number exponent);
@@ -1950,7 +1950,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#acos(Field)
+     * @see DSL#acos(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> acos();
@@ -1960,7 +1960,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#asin(Field)
+     * @see DSL#asin(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> asin();
@@ -1970,7 +1970,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#atan(Field)
+     * @see DSL#atan(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan();
@@ -1980,7 +1980,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#atan2(Field, Number)
+     * @see DSL#atan2(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan2(Number y);
@@ -1990,7 +1990,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#atan2(Field, Field)
+     * @see DSL#atan2(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> atan2(Field<? extends Number> y);
@@ -2000,7 +2000,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#cos(Field)
+     * @see DSL#cos(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cos();
@@ -2010,7 +2010,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#sin(Field)
+     * @see DSL#sin(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sin();
@@ -2020,7 +2020,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#tan(Field)
+     * @see DSL#tan(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> tan();
@@ -2030,7 +2030,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#cot(Field)
+     * @see DSL#cot(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cot();
@@ -2040,7 +2040,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#sinh(Field)
+     * @see DSL#sinh(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> sinh();
@@ -2050,7 +2050,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#cosh(Field)
+     * @see DSL#cosh(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> cosh();
@@ -2060,7 +2060,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#tanh(Field)
+     * @see DSL#tanh(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> tanh();
@@ -2070,7 +2070,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#coth(Field)
+     * @see DSL#coth(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> coth();
@@ -2080,7 +2080,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#deg(Field)
+     * @see DSL#deg(Field)
      */
     @Support
     Field<BigDecimal> deg();
@@ -2090,7 +2090,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#rad(Field)
+     * @see DSL#rad(Field)
      */
     @Support
     Field<BigDecimal> rad();
@@ -2100,7 +2100,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#count(Field)
+     * @see DSL#count(Field)
      */
     @Support
     Field<Integer> count();
@@ -2110,7 +2110,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#countDistinct(Field)
+     * @see DSL#countDistinct(Field)
      */
     @Support
     Field<Integer> countDistinct();
@@ -2120,7 +2120,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#max(Field)
+     * @see DSL#max(Field)
      */
     @Support
     Field<T> max();
@@ -2130,7 +2130,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#min(Field)
+     * @see DSL#min(Field)
      */
     @Support
     Field<T> min();
@@ -2140,7 +2140,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#sum(Field)
+     * @see DSL#sum(Field)
      */
     @Support
     Field<BigDecimal> sum();
@@ -2150,7 +2150,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#avg(Field)
+     * @see DSL#avg(Field)
      */
     @Support
     Field<BigDecimal> avg();
@@ -2160,7 +2160,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#median(Field)
+     * @see DSL#median(Field)
      */
     @Support({ HSQLDB, ORACLE, SYBASE })
     Field<BigDecimal> median();
@@ -2170,7 +2170,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#stddevPop(Field)
+     * @see DSL#stddevPop(Field)
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> stddevPop();
@@ -2180,7 +2180,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#stddevSamp(Field)
+     * @see DSL#stddevSamp(Field)
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> stddevSamp();
@@ -2190,7 +2190,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#varPop(Field)
+     * @see DSL#varPop(Field)
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> varPop();
@@ -2200,7 +2200,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#varSamp(Field)
+     * @see DSL#varSamp(Field)
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<BigDecimal> varSamp();
@@ -2210,7 +2210,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#count(Field)
+     * @see DSL#count(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2221,7 +2221,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#max(Field)
+     * @see DSL#max(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2232,7 +2232,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#min(Field)
+     * @see DSL#min(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2243,7 +2243,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#sum(Field)
+     * @see DSL#sum(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2254,7 +2254,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#avg(Field)
+     * @see DSL#avg(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2265,7 +2265,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#firstValue(Field)
+     * @see DSL#firstValue(Field)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
@@ -2276,7 +2276,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lastValue(Field)
+     * @see DSL#lastValue(Field)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
@@ -2287,7 +2287,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lead(Field)
+     * @see DSL#lead(Field)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE })
@@ -2298,7 +2298,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lead(Field, int)
+     * @see DSL#lead(Field, int)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE })
@@ -2309,7 +2309,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lead(Field, int, Object)
+     * @see DSL#lead(Field, int, Object)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE })
@@ -2320,7 +2320,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lead(Field, int, Field)
+     * @see DSL#lead(Field, int, Field)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE })
@@ -2331,7 +2331,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lag(Field)
+     * @see DSL#lag(Field)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE })
@@ -2342,7 +2342,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lag(Field, int)
+     * @see DSL#lag(Field, int)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE })
@@ -2353,7 +2353,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lag(Field, int, Object)
+     * @see DSL#lag(Field, int, Object)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE })
@@ -2364,7 +2364,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lag(Field, int, Field)
+     * @see DSL#lag(Field, int, Field)
      * @see AggregateFunction#over()
      */
     @Support({ DB2, POSTGRES, ORACLE })
@@ -2375,7 +2375,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#stddevPop(Field)
+     * @see DSL#stddevPop(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2386,7 +2386,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#stddevSamp(Field)
+     * @see DSL#stddevSamp(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2397,7 +2397,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#varPop(Field)
+     * @see DSL#varPop(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2408,7 +2408,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#varSamp(Field)
+     * @see DSL#varSamp(Field)
      * @see AggregateFunction#over()
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
@@ -2419,7 +2419,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#upper(Field)
+     * @see DSL#upper(Field)
      */
     @Support
     Field<String> upper();
@@ -2429,7 +2429,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lower(Field)
+     * @see DSL#lower(Field)
      */
     @Support
     Field<String> lower();
@@ -2439,7 +2439,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#trim(Field)
+     * @see DSL#trim(Field)
      */
     @Support
     Field<String> trim();
@@ -2449,7 +2449,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#rtrim(Field)
+     * @see DSL#rtrim(Field)
      */
     @Support
     Field<String> rtrim();
@@ -2459,7 +2459,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#ltrim(Field)
+     * @see DSL#ltrim(Field)
      */
     @Support
     Field<String> ltrim();
@@ -2469,7 +2469,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#rpad(Field, Field)
+     * @see DSL#rpad(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(Field<? extends Number> length);
@@ -2479,7 +2479,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#rpad(Field, int)
+     * @see DSL#rpad(Field, int)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(int length);
@@ -2489,7 +2489,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#rpad(Field, Field, Field)
+     * @see DSL#rpad(Field, Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(Field<? extends Number> length, Field<String> character);
@@ -2499,7 +2499,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#rpad(Field, int, char)
+     * @see DSL#rpad(Field, int, char)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> rpad(int length, char character);
@@ -2509,7 +2509,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lpad(Field, Field)
+     * @see DSL#lpad(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(Field<? extends Number> length);
@@ -2519,7 +2519,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lpad(Field, int)
+     * @see DSL#lpad(Field, int)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(int length);
@@ -2529,7 +2529,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lpad(Field, Field, Field)
+     * @see DSL#lpad(Field, Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(Field<? extends Number> length, Field<String> character);
@@ -2539,7 +2539,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#lpad(Field, int, char)
+     * @see DSL#lpad(Field, int, char)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> lpad(int length, char character);
@@ -2549,7 +2549,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#repeat(Field, int)
+     * @see DSL#repeat(Field, int)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> repeat(Number count);
@@ -2559,7 +2559,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#repeat(Field, Field)
+     * @see DSL#repeat(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<String> repeat(Field<? extends Number> count);
@@ -2569,7 +2569,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#replace(Field, Field)
+     * @see DSL#replace(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(Field<String> search);
@@ -2579,7 +2579,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#replace(Field, String)
+     * @see DSL#replace(Field, String)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(String search);
@@ -2589,7 +2589,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#replace(Field, Field, Field)
+     * @see DSL#replace(Field, Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(Field<String> search, Field<String> replace);
@@ -2599,7 +2599,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#replace(Field, String, String)
+     * @see DSL#replace(Field, String, String)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
     Field<String> replace(String search, String replace);
@@ -2609,7 +2609,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#position(Field, String)
+     * @see DSL#position(Field, String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> position(String search);
@@ -2619,7 +2619,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#position(Field, Field)
+     * @see DSL#position(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> position(Field<String> search);
@@ -2629,7 +2629,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#ascii(Field)
+     * @see DSL#ascii(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     Field<Integer> ascii();
@@ -2639,7 +2639,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#concat(Field...)
+     * @see DSL#concat(Field...)
      */
     @Support
     Field<String> concat(Field<?>... fields);
@@ -2649,7 +2649,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#concat(String...)
+     * @see DSL#concat(String...)
      */
     @Support
     Field<String> concat(String... values);
@@ -2659,7 +2659,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#substring(Field, int)
+     * @see DSL#substring(Field, int)
      */
     @Support
     Field<String> substring(int startingPosition);
@@ -2669,7 +2669,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#substring(Field, Field)
+     * @see DSL#substring(Field, Field)
      */
     @Support
     Field<String> substring(Field<? extends Number> startingPosition);
@@ -2679,7 +2679,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#substring(Field, int, int)
+     * @see DSL#substring(Field, int, int)
      */
     @Support
     Field<String> substring(int startingPosition, int length);
@@ -2689,7 +2689,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#substring(Field, Field, Field)
+     * @see DSL#substring(Field, Field, Field)
      */
     @Support
     Field<String> substring(Field<? extends Number> startingPosition, Field<? extends Number> length);
@@ -2699,7 +2699,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#length(Field)
+     * @see DSL#length(Field)
      */
     @Support
     Field<Integer> length();
@@ -2709,7 +2709,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#charLength(Field)
+     * @see DSL#charLength(Field)
      */
     @Support
     Field<Integer> charLength();
@@ -2719,7 +2719,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#bitLength(Field)
+     * @see DSL#bitLength(Field)
      */
     @Support
     Field<Integer> bitLength();
@@ -2729,7 +2729,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#octetLength(Field)
+     * @see DSL#octetLength(Field)
      */
     @Support
     Field<Integer> octetLength();
@@ -2739,7 +2739,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#extract(Field, DatePart)
+     * @see DSL#extract(Field, DatePart)
      */
     @Support
     Field<Integer> extract(DatePart datePart);
@@ -2749,7 +2749,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#greatest(Field, Field...)
+     * @see DSL#greatest(Field, Field...)
      */
     @Support
     Field<T> greatest(T... others);
@@ -2759,7 +2759,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#greatest(Field, Field...)
+     * @see DSL#greatest(Field, Field...)
      */
     @Support
     Field<T> greatest(Field<?>... others);
@@ -2769,7 +2769,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#least(Field, Field...)
+     * @see DSL#least(Field, Field...)
      */
     @Support
     Field<T> least(T... others);
@@ -2779,7 +2779,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#least(Field, Field...)
+     * @see DSL#least(Field, Field...)
      */
     @Support
     Field<T> least(Field<?>... others);
@@ -2789,7 +2789,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#nvl(Field, Object)
+     * @see DSL#nvl(Field, Object)
      */
     @Support
     Field<T> nvl(T defaultValue);
@@ -2799,7 +2799,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#nvl(Field, Field)
+     * @see DSL#nvl(Field, Field)
      */
     @Support
     Field<T> nvl(Field<T> defaultValue);
@@ -2809,7 +2809,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#nvl2(Field, Object, Object)
+     * @see DSL#nvl2(Field, Object, Object)
      */
     @Support
     <Z> Field<Z> nvl2(Z valueIfNotNull, Z valueIfNull);
@@ -2819,7 +2819,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#nvl2(Field, Field, Field)
+     * @see DSL#nvl2(Field, Field, Field)
      */
     @Support
     <Z> Field<Z> nvl2(Field<Z> valueIfNotNull, Field<Z> valueIfNull);
@@ -2829,7 +2829,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#nullif(Field, Object)
+     * @see DSL#nullif(Field, Object)
      */
     @Support
     Field<T> nullif(T other);
@@ -2839,7 +2839,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#nullif(Field, Field)
+     * @see DSL#nullif(Field, Field)
      */
     @Support
     Field<T> nullif(Field<T> other);
@@ -2849,7 +2849,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#decode(Object, Object, Object)
+     * @see DSL#decode(Object, Object, Object)
      */
     @Support
     <Z> Field<Z> decode(T search, Z result);
@@ -2859,7 +2859,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#decode(Object, Object, Object, Object...)
+     * @see DSL#decode(Object, Object, Object, Object...)
      */
     @Support
     <Z> Field<Z> decode(T search, Z result, Object... more);
@@ -2869,7 +2869,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#decode(Field, Field, Field)
+     * @see DSL#decode(Field, Field, Field)
      */
     @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result);
@@ -2879,7 +2879,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#decode(Field, Field, Field, Field...)
+     * @see DSL#decode(Field, Field, Field, Field...)
      */
     @Support
     <Z> Field<Z> decode(Field<T> search, Field<Z> result, Field<?>... more);
@@ -2889,7 +2889,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#coalesce(Object, Object...)
+     * @see DSL#coalesce(Object, Object...)
      */
     @Support
     Field<T> coalesce(T option, T... options);
@@ -2899,7 +2899,7 @@ public interface Field<T> extends GroupField {
      * backwards-compatibility. It may be removed in the future. Consider using
      * equivalent methods from {@link DSLContext}
      *
-     * @see Factory#coalesce(Field, Field...)
+     * @see DSL#coalesce(Field, Field...)
      */
     @Support
     Field<T> coalesce(Field<T> option, Field<?>... options);

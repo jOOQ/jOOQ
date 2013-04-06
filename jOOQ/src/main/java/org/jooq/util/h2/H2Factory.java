@@ -36,14 +36,14 @@
 package org.jooq.util.h2;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#H2} specific factory
  *
  * @author Lukas Eder
  */
-public class H2Factory extends Factory {
+public class H2Factory extends DSL {
 
     /**
      * No instances

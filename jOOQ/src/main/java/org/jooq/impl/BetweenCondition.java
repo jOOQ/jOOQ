@@ -48,7 +48,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.val;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.BindContext;

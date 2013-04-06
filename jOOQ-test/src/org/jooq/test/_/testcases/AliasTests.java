@@ -37,12 +37,12 @@ package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
-import static org.jooq.impl.Factory.select;
-import static org.jooq.impl.Factory.selectOne;
-import static org.jooq.impl.Factory.selectZero;
-import static org.jooq.impl.Factory.table;
-import static org.jooq.impl.Factory.two;
-import static org.jooq.impl.Factory.zero;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectOne;
+import static org.jooq.impl.DSL.selectZero;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.DSL.zero;
 
 import java.sql.Date;
 import java.util.List;

@@ -42,8 +42,8 @@ import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.table;
 
 import java.sql.Date;
 import java.sql.Timestamp;

@@ -45,7 +45,7 @@ import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -72,7 +72,7 @@ public class JDBCDatabase extends AbstractDatabase {
     @SuppressWarnings("deprecation")
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.SQL99);
+        return DSL.using(getConnection(), SQLDialect.SQL99);
     }
 
     @Override

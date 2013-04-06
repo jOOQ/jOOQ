@@ -36,14 +36,14 @@
 package org.jooq.util.sqlserver;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#SQLSERVER} specific factory
  *
  * @author Lukas Eder
  */
-public class SQLServerFactory extends Factory {
+public class SQLServerFactory extends DSL {
 
     /**
      * No instances

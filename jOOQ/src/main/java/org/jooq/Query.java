@@ -45,7 +45,7 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * Any query
@@ -148,11 +148,11 @@ public interface Query extends QueryPart, Attachable {
      * cannot be modified, but the {@link Param} elements allow for modifying
      * bind values on an existing {@link Query}.
      * <p>
-     * Bind values created with {@link Factory#val(Object)} will have their bind
+     * Bind values created with {@link DSL#val(Object)} will have their bind
      * index as name.
      *
      * @see Param
-     * @see Factory#param(String, Object)
+     * @see DSL#param(String, Object)
      * @see DSLContext#extractParams(QueryPart)
      */
     Map<String, Param<?>> getParams();
@@ -160,11 +160,11 @@ public interface Query extends QueryPart, Attachable {
     /**
      * Get a named parameter from the {@link Query}, provided its name.
      * <p>
-     * Bind values created with {@link Factory#val(Object)} will have their bind
+     * Bind values created with {@link DSL#val(Object)} will have their bind
      * index as name.
      *
      * @see Param
-     * @see Factory#param(String, Object)
+     * @see DSL#param(String, Object)
      * @see DSLContext#extractParam(QueryPart, String)
      */
     Param<?> getParam(String name);

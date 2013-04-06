@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 
 /**
@@ -64,7 +64,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support
     TableOnConditionStep and(String sql);
@@ -78,7 +78,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support
     TableOnConditionStep and(String sql, Object... bindings);
@@ -92,7 +92,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support
     TableOnConditionStep and(String sql, QueryPart... parts);
@@ -134,7 +134,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support
     TableOnConditionStep or(String sql);
@@ -148,7 +148,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support
     TableOnConditionStep or(String sql, Object... bindings);
@@ -162,7 +162,7 @@ public interface TableOnConditionStep extends Table<Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support
     TableOnConditionStep or(String sql, QueryPart... parts);

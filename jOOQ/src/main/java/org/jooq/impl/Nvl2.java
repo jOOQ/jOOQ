@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.DSL.function;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -72,7 +72,7 @@ class Nvl2<T> extends AbstractFunction<T> {
                 return function("nvl2", getDataType(), getArguments());
 
             default:
-                return Factory.decode().when(arg1.isNotNull(), arg2).otherwise(arg3);
+                return DSL.decode().when(arg1.isNotNull(), arg2).otherwise(arg3);
         }
     }
 }

@@ -36,8 +36,8 @@
 package org.jooq.test._.testcases;
 
 import static junit.framework.Assert.assertEquals;
-import static org.jooq.impl.Factory.row;
-import static org.jooq.impl.Factory.values;
+import static org.jooq.impl.DSL.row;
+import static org.jooq.impl.DSL.values;
 
 import java.sql.Date;
 

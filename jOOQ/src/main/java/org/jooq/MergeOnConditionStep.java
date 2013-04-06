@@ -42,7 +42,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * This type is used for the {@link Merge}'s DSL API.
@@ -81,7 +81,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> and(String sql);
@@ -95,7 +95,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> and(String sql, Object... bindings);
@@ -109,7 +109,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> and(String sql, QueryPart... parts);
@@ -151,7 +151,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> or(String sql);
@@ -165,7 +165,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> or(String sql, Object... bindings);
@@ -179,7 +179,7 @@ public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     MergeOnConditionStep<R> or(String sql, QueryPart... parts);

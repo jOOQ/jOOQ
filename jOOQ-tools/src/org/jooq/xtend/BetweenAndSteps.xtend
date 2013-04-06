@@ -108,7 +108,7 @@ class BetweenAndSteps extends Generators {
         package org.jooq.impl;
         
         import static java.util.Arrays.asList;
-        import static org.jooq.impl.Factory.row;
+        import static org.jooq.impl.DSL.row;
         import static org.jooq.SQLDialect.ASE;
         import static org.jooq.SQLDialect.CUBRID;
         import static org.jooq.SQLDialect.DB2;

@@ -137,21 +137,21 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      * Internal convenience method
      */
     protected final DSLContext create(Configuration configuration) {
-        return Factory.using(configuration);
+        return DSL.using(configuration);
     }
 
     /**
      * Internal convenience method
      */
     protected final DSLContext create(RenderContext ctx) {
-        return Factory.using(ctx.configuration());
+        return DSL.using(ctx.configuration());
     }
 
     /**
      * Internal convenience method
      */
     protected final DSLContext create(BindContext ctx) {
-        return Factory.using(ctx.configuration());
+        return DSL.using(ctx.configuration());
     }
 
     /**

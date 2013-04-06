@@ -127,7 +127,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
     private final List<LoaderError> errors;
 
     LoaderImpl(Configuration configuration, Table<R> table) {
-        this.create = Factory.using(configuration);
+        this.create = DSL.using(configuration);
         this.configuration = configuration;
         this.table = table;
         this.errors = new ArrayList<LoaderError>();

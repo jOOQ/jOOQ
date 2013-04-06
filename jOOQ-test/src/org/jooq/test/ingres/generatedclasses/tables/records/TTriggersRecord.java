@@ -78,7 +78,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3());
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class TTriggersRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.Integer, java.lang.Integer, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3());
 	}
 
 	/**

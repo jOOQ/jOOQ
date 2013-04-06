@@ -36,14 +36,14 @@
 package org.jooq.util.ingres;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#INGRES} specific factory
  *
  * @author Lukas Eder
  */
-public class IngresFactory extends Factory {
+public class IngresFactory extends DSL {
 
     /**
      * No instances

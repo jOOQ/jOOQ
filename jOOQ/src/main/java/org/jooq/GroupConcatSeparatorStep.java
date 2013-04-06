@@ -44,13 +44,13 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * MySQL's <code>GROUP_CONCAT</code> function.
  *
  * @author Lukas Eder
- * @see Factory#listAgg(Field)
+ * @see DSL#listAgg(Field)
  */
 public interface GroupConcatSeparatorStep extends AggregateFunction<String> {
 

@@ -39,7 +39,7 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.fail;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
@@ -57,7 +57,7 @@ import org.jooq.Record2;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test.data.Table1;
 import org.jooq.test.data.Table1Record;
 import org.jooq.tools.jdbc.MockConnection;
@@ -81,12 +81,12 @@ public class MockTest extends AbstractTest {
     @BeforeClass
     public static void before() throws Exception {
         File file = new File(MockTest.class.getResource("/org/jooq/test/data/db.txt").toURI());
-        MOCK = Factory.using(new MockConnection(new MockFileDatabase(file)), SQLDialect.ORACLE);
+        MOCK = DSL.using(new MockConnection(new MockFileDatabase(file)), SQLDialect.ORACLE);
     }
 
     @Test
     public void testEmptyResult() {
-        DSLContext e = Factory.using(new MockConnection(new EmptyResult()), SQLDialect.H2);
+        DSLContext e = DSL.using(new MockConnection(new EmptyResult()), SQLDialect.H2);
         Result<Record> result = e.fetch("select ?, ? from dual", 1, 2);
 
         assertEquals(0, result.size());
@@ -110,7 +110,7 @@ public class MockTest extends AbstractTest {
 
     @Test
     public void testSingleResult() {
-        DSLContext e = Factory.using(new MockConnection(new SingleResult()), SQLDialect.H2);
+        DSLContext e = DSL.using(new MockConnection(new SingleResult()), SQLDialect.H2);
         Result<Record> result = e.fetch("select ?, ? from dual", 1, 2);
 
         assertEquals(1, result.size());
@@ -139,7 +139,7 @@ public class MockTest extends AbstractTest {
 
     @Test
     public void testDoubleResult() {
-        DSLContext e = Factory.using(new MockConnection(new DoubleResult()), SQLDialect.H2);
+        DSLContext e = DSL.using(new MockConnection(new DoubleResult()), SQLDialect.H2);
         List<Result<Record>> result = e.fetchMany("select ?, ? from dual", 1, 2);
 
         assertEquals(2, result.size());
@@ -192,7 +192,7 @@ public class MockTest extends AbstractTest {
 
     @Test
     public void testBatchSingle() {
-        DSLContext e = Factory.using(new MockConnection(new BatchSingle()), SQLDialect.H2);
+        DSLContext e = DSL.using(new MockConnection(new BatchSingle()), SQLDialect.H2);
 
         int[] result =
         e.batch(
@@ -226,7 +226,7 @@ public class MockTest extends AbstractTest {
 
     @Test
     public void testBatchMultiple() {
-        DSLContext e = Factory.using(new MockConnection(new BatchMultiple()), SQLDialect.H2);
+        DSLContext e = DSL.using(new MockConnection(new BatchMultiple()), SQLDialect.H2);
 
         Query query = e.query("insert into x values(?, ?)", null, null);
 
@@ -263,7 +263,7 @@ public class MockTest extends AbstractTest {
 
     @Test
     public void testException() {
-        DSLContext e = Factory.using(new MockConnection(new Exceptional()), SQLDialect.H2);
+        DSLContext e = DSL.using(new MockConnection(new Exceptional()), SQLDialect.H2);
 
         Query query = e.query("insert into x values(1)");
 
@@ -288,7 +288,7 @@ public class MockTest extends AbstractTest {
     public void testInsertReturning() {
 
         // Note: INSERT .. RETURNING is hard to mock for all dialects...
-        DSLContext e = Factory.using(new MockConnection(new InsertReturning()), SQLDialect.ORACLE);
+        DSLContext e = DSL.using(new MockConnection(new InsertReturning()), SQLDialect.ORACLE);
 
         InsertResultStep<Table1Record> query = e
             .insertInto(TABLE1, FIELD_ID1)

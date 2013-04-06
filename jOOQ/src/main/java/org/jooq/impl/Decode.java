@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.DSL.function;
 
 import org.jooq.CaseConditionStep;
 import org.jooq.Configuration;
@@ -77,7 +77,7 @@ class Decode<T, Z> extends AbstractFunction<Z> {
 
             // Other dialects simulate it with a CASE ... WHEN expression
             default: {
-                CaseConditionStep<Z> when = Factory
+                CaseConditionStep<Z> when = DSL
                     .decode()
                     .when(field.isNotDistinctFrom(search), result);
 

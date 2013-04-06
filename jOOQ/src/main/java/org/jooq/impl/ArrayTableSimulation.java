@@ -35,10 +35,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.falseCondition;
-import static org.jooq.impl.Factory.fieldByName;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.using;
+import static org.jooq.impl.DSL.falseCondition;
+import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.using;
 
 import org.jooq.BindContext;
 import org.jooq.Configuration;
@@ -83,7 +83,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         this.array = array;
         this.alias = alias;
         this.fieldAlias = fieldAlias == null ? "COLUMN_VALUE" : fieldAlias;
-        this.field = new Fields(fieldByName(Factory.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
+        this.field = new Fields(fieldByName(DSL.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
     }
 
     @Override
@@ -138,7 +138,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
             for (Object element : array) {
 
                 // [#1081] Be sure to get the correct cast type also for null
-                Field<?> val = Factory.val(element, field.fields[0].getDataType());
+                Field<?> val = DSL.val(element, field.fields[0].getDataType());
                 Select<Record> subselect = using(configuration).select(val.as("COLUMN_VALUE")).select();
 
                 if (select == null) {

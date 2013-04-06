@@ -37,7 +37,7 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.impl.Factory.field;
+import static org.jooq.impl.DSL.field;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;

@@ -35,9 +35,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.table;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.val;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

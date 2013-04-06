@@ -51,7 +51,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.String> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1());
+		return org.jooq.impl.DSL.row(field1());
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.String> valuesRow() {
-		return org.jooq.impl.Factory.row(value1());
+		return org.jooq.impl.DSL.row(value1());
 	}
 
 	/**

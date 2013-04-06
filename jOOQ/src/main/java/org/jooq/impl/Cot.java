@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
+import static org.jooq.impl.DSL.function;
 
 import java.math.BigDecimal;
 
@@ -65,7 +65,7 @@ class Cot extends AbstractFunction<BigDecimal> {
         switch (configuration.getDialect()) {
             case INGRES:
             case ORACLE:
-                return Factory.cos(argument).div(Factory.sin(argument));
+                return DSL.cos(argument).div(DSL.sin(argument));
 
             default:
                 return function("cot", SQLDataType.NUMERIC, argument);

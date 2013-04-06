@@ -35,9 +35,9 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.nvl2;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.zero;
+import static org.jooq.impl.DSL.nvl2;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.zero;
 
 import org.jooq.BindContext;
 import org.jooq.Field;

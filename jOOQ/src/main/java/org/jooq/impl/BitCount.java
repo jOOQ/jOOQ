@@ -35,10 +35,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.bitAnd;
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.shr;
+import static org.jooq.impl.DSL.bitAnd;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.shr;
 
 import org.jooq.Configuration;
 import org.jooq.Field;

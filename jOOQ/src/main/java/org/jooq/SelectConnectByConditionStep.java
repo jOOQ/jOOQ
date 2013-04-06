@@ -38,7 +38,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -100,7 +100,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support({CUBRID, ORACLE})
     SelectConnectByConditionStep<R> and(String sql);
@@ -114,7 +114,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support({ CUBRID, ORACLE })
     SelectConnectByConditionStep<R> and(String sql, Object... bindings);
@@ -128,7 +128,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support({ CUBRID, ORACLE })
     SelectConnectByConditionStep<R> and(String sql, QueryPart... parts);

@@ -35,10 +35,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.two;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.two;
 
 import java.math.BigDecimal;
 
@@ -64,7 +64,7 @@ class Pi extends AbstractFunction<BigDecimal> {
         switch (configuration.getDialect()) {
             case DB2:
             case ORACLE:
-                return Factory.asin(one()).mul(two());
+                return DSL.asin(one()).mul(two());
 
             case SQLITE:
                 return inline(Math.PI, BigDecimal.class);

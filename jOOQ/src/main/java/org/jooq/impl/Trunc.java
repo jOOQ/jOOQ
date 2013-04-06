@@ -36,10 +36,10 @@
 package org.jooq.impl;
 
 import static java.math.BigDecimal.TEN;
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.zero;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.zero;
 import static org.jooq.impl.Utils.extractVal;
 
 import java.math.BigDecimal;
@@ -96,10 +96,10 @@ class Trunc<T> extends AbstractFunction<T> {
                     power = inline(TEN.pow(decimalsVal, MathContext.DECIMAL128));
                 }
                 else {
-                    power = Factory.power(inline(TEN), decimals);
+                    power = DSL.power(inline(TEN), decimals);
                 }
 
-                return Factory.decode()
+                return DSL.decode()
                     .when(field.sign().greaterOrEqual(zero()),
                           field.mul(power).floor().div(power))
                     .otherwise(

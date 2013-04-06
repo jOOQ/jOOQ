@@ -36,14 +36,14 @@
 package org.jooq.util.db2;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#DB2} specific factory
  *
  * @author Lukas Eder
  */
-public class DB2Factory extends Factory {
+public class DB2Factory extends DSL {
 
     /**
      * No instances

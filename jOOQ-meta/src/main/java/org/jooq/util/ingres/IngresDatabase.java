@@ -35,7 +35,7 @@
  */
 package org.jooq.util.ingres;
 
-import static org.jooq.impl.Factory.trim;
+import static org.jooq.impl.DSL.trim;
 import static org.jooq.util.ingres.ingres.Tables.IICONSTRAINTS;
 import static org.jooq.util.ingres.ingres.Tables.IICONSTRAINT_INDEXES;
 import static org.jooq.util.ingres.ingres.Tables.IIDB_COMMENTS;
@@ -55,7 +55,7 @@ import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -87,7 +87,7 @@ public class IngresDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.INGRES);
+        return DSL.using(getConnection(), SQLDialect.INGRES);
     }
 
     @Override

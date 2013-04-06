@@ -49,7 +49,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -125,7 +125,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      * @see Table#join(String)
      */
     @Support
@@ -141,7 +141,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      * @see Table#join(String, Object...)
      */
     @Support
@@ -157,7 +157,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      * @see Table#join(String, QueryPart...)
      */
     @Support
@@ -197,7 +197,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      * @see Table#crossJoin(String)
      */
     @Support
@@ -220,7 +220,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      * @see Table#crossJoin(String, Object...)
      */
     @Support
@@ -243,7 +243,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      * @see Table#crossJoin(String, QueryPart...)
      */
     @Support
@@ -269,7 +269,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      * @see Table#leftOuterJoin(String)
      */
     @Support
@@ -285,7 +285,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      * @see Table#leftOuterJoin(String, Object...)
      */
     @Support
@@ -301,7 +301,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      * @see Table#leftOuterJoin(String, QueryPart...)
      */
     @Support
@@ -331,7 +331,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      * @see Table#rightOuterJoin(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -349,7 +349,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      * @see Table#rightOuterJoin(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -367,7 +367,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      * @see Table#rightOuterJoin(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -397,7 +397,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      * @see Table#fullOuterJoin(String)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -415,7 +415,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      * @see Table#fullOuterJoin(String, Object...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -433,7 +433,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      * @see Table#fullOuterJoin(String, QueryPart...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -465,7 +465,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      * @see Table#naturalJoin(String)
      */
     @Support
@@ -484,7 +484,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      * @see Table#naturalJoin(String, Object...)
      */
     @Support
@@ -503,7 +503,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      * @see Table#naturalJoin(String, QueryPart...)
      */
     @Support
@@ -535,7 +535,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      * @see Table#naturalLeftOuterJoin(String)
      */
     @Support
@@ -554,7 +554,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      * @see Table#naturalLeftOuterJoin(String, Object...)
      */
     @Support
@@ -573,7 +573,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      * @see Table#naturalLeftOuterJoin(String, QueryPart...)
      */
     @Support
@@ -605,7 +605,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String)
+     * @see DSL#table(String)
      * @see Table#naturalRightOuterJoin(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -624,7 +624,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, Object...)
+     * @see DSL#table(String, Object...)
      * @see Table#naturalRightOuterJoin(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
@@ -643,7 +643,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#table(String, QueryPart...)
+     * @see DSL#table(String, QueryPart...)
      * @see Table#naturalRightOuterJoin(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })

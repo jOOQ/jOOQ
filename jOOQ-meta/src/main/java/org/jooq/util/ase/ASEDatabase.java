@@ -36,9 +36,9 @@
 package org.jooq.util.ase;
 
 import static java.util.Arrays.asList;
-import static org.jooq.impl.Factory.concat;
-import static org.jooq.impl.Factory.field;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.util.ase.sys.tables.Sysindexes.SYSINDEXES;
 import static org.jooq.util.ase.sys.tables.Sysusers.SYSUSERS;
 
@@ -52,7 +52,7 @@ import org.jooq.Record;
 import org.jooq.Record10;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -80,7 +80,7 @@ public class ASEDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.ASE);
+        return DSL.using(getConnection(), SQLDialect.ASE);
     }
 
     private SchemaDefinition getSchema() {

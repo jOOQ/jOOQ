@@ -42,7 +42,7 @@ import java.math.BigDecimal;
 import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.Support;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 
 /**
@@ -50,7 +50,7 @@ import org.jooq.impl.SQLDataType;
  *
  * @author Lukas Eder
  */
-public class OracleFactory extends Factory {
+public class OracleFactory extends DSL {
 
     /**
      * No instances

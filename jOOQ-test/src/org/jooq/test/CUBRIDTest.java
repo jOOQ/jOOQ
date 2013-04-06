@@ -31,6 +31,7 @@
 
 package org.jooq.test;
 
+import static org.jooq.impl.DSL.using;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.cubrid.generatedclasses.Tables.T_DATES;
@@ -58,7 +59,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -133,7 +133,7 @@ public class CUBRIDTest extends jOOQAbstractTest<
 
     @Override
     protected DSLContext create(Settings settings) {
-        return Factory.using(getConnection(), SQLDialect.CUBRID, settings);
+        return using(getConnection(), SQLDialect.CUBRID, settings);
     }
 
     @Override

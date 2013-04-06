@@ -44,7 +44,7 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.one;
+import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.Term.LIST_AGG;
 import static org.jooq.impl.Term.ROW_NUMBER;
 

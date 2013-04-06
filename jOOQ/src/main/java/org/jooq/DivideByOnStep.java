@@ -35,7 +35,7 @@
  */
 package org.jooq;
 
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 
 /**
@@ -59,7 +59,7 @@ public interface DivideByOnStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support
     DivideByOnConditionStep on(String sql);
@@ -72,7 +72,7 @@ public interface DivideByOnStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support
     DivideByOnConditionStep on(String sql, Object... bindings);
@@ -85,7 +85,7 @@ public interface DivideByOnStep {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support
     DivideByOnConditionStep on(String sql, QueryPart... parts);

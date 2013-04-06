@@ -63,8 +63,8 @@ import java.util.UUID;
 import javax.swing.UIManager;
 
 import org.jooq.ArrayRecord;
-import org.jooq.DSLContext;
 import org.jooq.DAO;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
@@ -89,7 +89,7 @@ import org.jooq.conf.SettingsTools;
 import org.jooq.debug.Debugger;
 import org.jooq.debug.console.Console;
 import org.jooq.debug.impl.DebuggerFactory;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test._.LifecycleWatcherListener;
 import org.jooq.test._.PrettyPrinter;
 import org.jooq.test._.TestStatisticsListener;
@@ -492,7 +492,7 @@ public abstract class jOOQAbstractTest<
 
                 @Override
                 public MockResult[] execute(MockExecuteContext context) throws SQLException {
-                    DSLContext executor = Factory.using(c, getDialect());
+                    DSLContext executor = DSL.using(c, getDialect());
 
                     if (context.batchSingle()) {
                         Query query = executor.query(context.sql(), new Object[context.batchBindings()[0].length]);

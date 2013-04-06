@@ -31,14 +31,14 @@
 package org.jooq.util.ase;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#ASE} specific factory
  *
  * @author Lukas Eder
  */
-public class ASEFactory extends Factory {
+public class ASEFactory extends DSL {
 
     /**
      * No instances

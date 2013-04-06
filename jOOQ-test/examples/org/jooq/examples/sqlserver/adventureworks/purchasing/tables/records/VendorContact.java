@@ -96,7 +96,7 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4());
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class VendorContact extends org.jooq.impl.UpdatableRecordImpl<org.jooq.ex
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.Integer, java.lang.Integer, java.lang.Integer, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4());
 	}
 
 	/**

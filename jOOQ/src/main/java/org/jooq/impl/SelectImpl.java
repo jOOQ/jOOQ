@@ -35,10 +35,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.condition;
-import static org.jooq.impl.Factory.exists;
-import static org.jooq.impl.Factory.notExists;
-import static org.jooq.impl.Factory.table;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.notExists;
+import static org.jooq.impl.DSL.table;
 
 import java.sql.ResultSet;
 import java.util.Arrays;

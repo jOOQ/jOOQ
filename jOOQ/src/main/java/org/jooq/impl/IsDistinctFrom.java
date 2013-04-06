@@ -46,10 +46,10 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.condition;
-import static org.jooq.impl.Factory.decode;
-import static org.jooq.impl.Factory.one;
-import static org.jooq.impl.Factory.zero;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.decode;
+import static org.jooq.impl.DSL.one;
+import static org.jooq.impl.DSL.zero;
 
 import org.jooq.BindContext;
 import org.jooq.Comparator;

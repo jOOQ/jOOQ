@@ -38,7 +38,7 @@ package org.jooq;
 import java.util.Collection;
 
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -98,7 +98,7 @@ public interface SelectOnStep<R extends Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String)
+     * @see DSL#condition(String)
      */
     @Support
     SelectOnConditionStep<R> on(String sql);
@@ -111,7 +111,7 @@ public interface SelectOnStep<R extends Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, Object...)
+     * @see DSL#condition(String, Object...)
      */
     @Support
     SelectOnConditionStep<R> on(String sql, Object... bindings);
@@ -124,7 +124,7 @@ public interface SelectOnStep<R extends Record> {
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses!
      *
-     * @see Factory#condition(String, QueryPart...)
+     * @see DSL#condition(String, QueryPart...)
      */
     @Support
     SelectOnConditionStep<R> on(String sql, QueryPart... parts);

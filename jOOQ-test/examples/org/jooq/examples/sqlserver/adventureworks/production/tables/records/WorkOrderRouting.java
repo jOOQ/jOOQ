@@ -216,7 +216,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row12<java.lang.Integer, java.lang.Integer, java.lang.Short, java.lang.Short, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> fieldsRow() {
-		return org.jooq.impl.Factory.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12());
+		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6(), field7(), field8(), field9(), field10(), field11(), field12());
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class WorkOrderRouting extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row12<java.lang.Integer, java.lang.Integer, java.lang.Short, java.lang.Short, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.sql.Timestamp, java.math.BigDecimal, java.math.BigDecimal, java.math.BigDecimal, java.sql.Timestamp> valuesRow() {
-		return org.jooq.impl.Factory.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12());
+		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6(), value7(), value8(), value9(), value10(), value11(), value12());
 	}
 
 	/**

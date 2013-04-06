@@ -66,13 +66,13 @@ import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A contextual DSL providing "attached" implementations to the
  * <code>org.jooq</code> interfaces.
  * <p>
- * Apart from the {@link Factory}, this contextual DSL is the main entry point
+ * Apart from the {@link DSL}, this contextual DSL is the main entry point
  * for client code, to access jOOQ classes and functionality that are related to
  * {@link Query} execution. Unlike objects created through the
  * <code>Factory</code>, objects created from a <code>DSLContext</code> will be
@@ -93,12 +93,12 @@ import org.jooq.impl.Factory;
  * The <code>Factory</code> provides convenient constructors to create a
  * {@link Configuration}, which will be shared among all <code>Query</code>
  * objects thus created. Optionally, you can pass a reusable
- * <code>Configuration</code> to the {@link Factory#using(Configuration)}
+ * <code>Configuration</code> to the {@link DSL#using(Configuration)}
  * constructor. Please consider thread-safety concerns documented in
  * {@link Configuration}, should you want to reuse the same
  * <code>Configuration</code> instance in various threads and / or transactions.
  *
- * @see Factory
+ * @see DSL
  * @see Configuration
  * @author Lukas Eder
  */
@@ -223,22 +223,22 @@ public interface DSLContext {
      * allow for modifying bind values on an existing {@link Query} (or any
      * other {@link QueryPart}).
      * <p>
-     * Bind values created with {@link Factory#val(Object)} will have their bind
+     * Bind values created with {@link DSL#val(Object)} will have their bind
      * index as name.
      *
      * @see Param
-     * @see Factory#param(String, Object)
+     * @see DSL#param(String, Object)
      */
     Map<String, Param<?>> extractParams(QueryPart part);
 
     /**
      * Get a named parameter from a {@link QueryPart}, provided its name.
      * <p>
-     * Bind values created with {@link Factory#val(Object)} will have their bind
+     * Bind values created with {@link DSL#val(Object)} will have their bind
      * index as name.
      *
      * @see Param
-     * @see Factory#param(String, Object)
+     * @see DSL#param(String, Object)
      */
     Param<?> extractParam(QueryPart part, String name);
 
@@ -352,7 +352,7 @@ public interface DSLContext {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link Factory#name(String...)} and similar methods
+     * literals is to use {@link DSL#name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -437,7 +437,7 @@ public interface DSLContext {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link Factory#name(String...)} and similar methods
+     * literals is to use {@link DSL#name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -541,7 +541,7 @@ public interface DSLContext {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link Factory#name(String...)} and similar methods
+     * literals is to use {@link DSL#name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -622,7 +622,7 @@ public interface DSLContext {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link Factory#name(String...)} and similar methods
+     * literals is to use {@link DSL#name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -709,7 +709,7 @@ public interface DSLContext {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link Factory#name(String...)} and similar methods
+     * literals is to use {@link DSL#name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -775,7 +775,7 @@ public interface DSLContext {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link Factory#name(String...)} and similar methods
+     * literals is to use {@link DSL#name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -904,7 +904,7 @@ public interface DSLContext {
      * guarantee syntax integrity. You may also create the possibility of
      * malicious SQL injection. Be sure to properly use bind variables and/or
      * escape literals when concatenated into SQL clauses! One way to escape
-     * literals is to use {@link Factory#name(String...)} and similar methods
+     * literals is to use {@link DSL#name(String...)} and similar methods
      *
      * @param sql The SQL clause, containing {numbered placeholders} where query
      *            parts can be injected
@@ -1326,7 +1326,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Collection)} instead.
+     * {@link DSL#select(Collection)} instead.
      * <p>
      * Example: <code><pre>
      * Executor create = Factory.using();
@@ -1338,7 +1338,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#select(Collection)
+     * @see DSL#select(Collection)
      */
     @Support
     SelectSelectStep<Record> select(Collection<? extends Field<?>> fields);
@@ -1350,7 +1350,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field...)} instead.
+     * {@link DSL#select(Field...)} instead.
      * <p>
      * Example: <code><pre>
      * Executor create = Factory.using();
@@ -1363,7 +1363,7 @@ public interface DSLContext {
      *       .execute();
      * </pre></code>
      *
-     * @see Factory#select(Field...)
+     * @see DSL#select(Field...)
      */
     @Support
     SelectSelectStep<Record> select(Field<?>... fields);
@@ -1381,7 +1381,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field)} instead.
+     * {@link DSL#select(Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1392,7 +1392,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1411,7 +1411,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field)} instead.
+     * {@link DSL#select(Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1422,7 +1422,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1441,7 +1441,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1452,7 +1452,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1471,7 +1471,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1482,7 +1482,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1501,7 +1501,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1512,7 +1512,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1531,7 +1531,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1542,7 +1542,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1561,7 +1561,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1572,7 +1572,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1591,7 +1591,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1602,7 +1602,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1621,7 +1621,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1632,7 +1632,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1651,7 +1651,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1662,7 +1662,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1681,7 +1681,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1692,7 +1692,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1711,7 +1711,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1722,7 +1722,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1741,7 +1741,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1752,7 +1752,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1771,7 +1771,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1782,7 +1782,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1801,7 +1801,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1812,7 +1812,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1831,7 +1831,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1842,7 +1842,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1861,7 +1861,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1872,7 +1872,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1891,7 +1891,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1902,7 +1902,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1921,7 +1921,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1932,7 +1932,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1951,7 +1951,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1962,7 +1962,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1981,7 +1981,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -1992,7 +1992,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2011,7 +2011,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2022,7 +2022,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2038,7 +2038,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Collection)} instead.
+     * {@link DSL#selectDistinct(Collection)} instead.
      * <p>
      * Example: <code><pre>
      * Executor create = Factory.using();
@@ -2050,7 +2050,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Collection)
+     * @see DSL#selectDistinct(Collection)
      */
     @Support
     SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields);
@@ -2062,7 +2062,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field...)} instead.
+     * {@link DSL#selectDistinct(Field...)} instead.
      * <p>
      * Example: <code><pre>
      * Executor create = Factory.using();
@@ -2074,7 +2074,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      */
     @Support
     SelectSelectStep<Record> selectDistinct(Field<?>... fields);
@@ -2092,7 +2092,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field)} instead.
+     * {@link DSL#selectDistinct(Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2103,7 +2103,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2122,7 +2122,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2133,7 +2133,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2152,7 +2152,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2163,7 +2163,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2182,7 +2182,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2193,7 +2193,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2212,7 +2212,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2223,7 +2223,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2242,7 +2242,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2253,7 +2253,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2272,7 +2272,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2283,7 +2283,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2302,7 +2302,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2313,7 +2313,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2332,7 +2332,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2343,7 +2343,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2362,7 +2362,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2373,7 +2373,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2392,7 +2392,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2403,7 +2403,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2422,7 +2422,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2433,7 +2433,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2452,7 +2452,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2463,7 +2463,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2482,7 +2482,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2493,7 +2493,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2512,7 +2512,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2523,7 +2523,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2542,7 +2542,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2553,7 +2553,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2572,7 +2572,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2583,7 +2583,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2602,7 +2602,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2613,7 +2613,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2632,7 +2632,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2643,7 +2643,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2662,7 +2662,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2673,7 +2673,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2692,7 +2692,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2703,7 +2703,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2722,7 +2722,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
+     * {@link DSL#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
      * using(configuration)
@@ -2733,7 +2733,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectDistinct(Field...)
+     * @see DSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2749,7 +2749,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectZero()} instead.
+     * {@link DSL#selectZero()} instead.
      * <p>
      * Example: <code><pre>
      * Executor create = Factory.using();
@@ -2761,8 +2761,8 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#zero()
-     * @see Factory#selectZero()
+     * @see DSL#zero()
+     * @see DSL#selectZero()
      */
     @Support
     SelectSelectStep<Record1<Integer>> selectZero();
@@ -2774,7 +2774,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectOne()} instead.
+     * {@link DSL#selectOne()} instead.
      * <p>
      * Example: <code><pre>
      * Executor create = Factory.using();
@@ -2786,8 +2786,8 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#one()
-     * @see Factory#selectOne()
+     * @see DSL#one()
+     * @see DSL#selectOne()
      */
     @Support
     SelectSelectStep<Record1<Integer>> selectOne();
@@ -2799,7 +2799,7 @@ public interface DSLContext {
      * statement from this {@link DSLContext}. If you don't need to render or
      * execute this <code>SELECT</code> statement (e.g. because you want to
      * create a subselect), consider using the static
-     * {@link Factory#selectCount()} instead.
+     * {@link DSL#selectCount()} instead.
      * <p>
      * Example: <code><pre>
      * Executor create = Factory.using();
@@ -2811,7 +2811,7 @@ public interface DSLContext {
      *       .orderBy(field2);
      * </pre></code>
      *
-     * @see Factory#selectCount()
+     * @see DSL#selectCount()
      */
     @Support
     SelectSelectStep<Record1<Integer>> selectCount();

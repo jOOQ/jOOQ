@@ -65,7 +65,7 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
 
     @Override
     public final int fetchCount() throws DataAccessException {
-        return Factory.using(getConfiguration()).fetchCount(this);
+        return DSL.using(getConfiguration()).fetchCount(this);
     }
 
     @Override

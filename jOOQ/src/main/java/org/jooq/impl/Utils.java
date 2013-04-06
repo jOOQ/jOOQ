@@ -39,10 +39,10 @@ import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DefaultExecuteContext.localConnection;
-import static org.jooq.impl.Factory.escape;
-import static org.jooq.impl.Factory.getDataType;
-import static org.jooq.impl.Factory.nullSafe;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.escape;
+import static org.jooq.impl.DSL.getDataType;
+import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.accessible;
@@ -895,7 +895,7 @@ final class Utils {
                 else {
                     @SuppressWarnings("unchecked")
                     Class<Object> type = (Class<Object>) (substitute != null ? substitute.getClass() : Object.class);
-                    result.add(new Val<Object>(substitute, Factory.getDataType(type)));
+                    result.add(new Val<Object>(substitute, DSL.getDataType(type)));
                 }
             }
 
@@ -1905,7 +1905,7 @@ final class Utils {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) rs.getObject(index);
-            return (T) Factory.using(ctx.configuration()).fetch(nested);
+            return (T) DSL.using(ctx.configuration()).fetch(nested);
         }
         else {
             return (T) rs.getObject(index);
@@ -2197,7 +2197,7 @@ final class Utils {
         }
         else if (Result.class.isAssignableFrom(type)) {
             ResultSet nested = (ResultSet) stmt.getObject(index);
-            return (T) Factory.using(ctx.configuration()).fetch(nested);
+            return (T) DSL.using(ctx.configuration()).fetch(nested);
         }
         else {
             return (T) stmt.getObject(index);

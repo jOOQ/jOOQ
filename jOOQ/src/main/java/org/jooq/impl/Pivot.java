@@ -35,8 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.trueCondition;
-import static org.jooq.impl.Factory.using;
+import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.DSL.using;
 
 import java.util.ArrayList;
 import java.util.Collection;

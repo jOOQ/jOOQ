@@ -30,8 +30,8 @@
  */
 package org.jooq.util.sybase;
 
-import static org.jooq.impl.Factory.concat;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.util.sybase.sys.Tables.SYSFKEY;
 import static org.jooq.util.sybase.sys.Tables.SYSIDX;
 import static org.jooq.util.sybase.sys.Tables.SYSIDXCOL;
@@ -48,7 +48,7 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -82,7 +82,7 @@ public class SybaseDatabase extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.SYBASE);
+        return DSL.using(getConnection(), SQLDialect.SYBASE);
     }
 
 

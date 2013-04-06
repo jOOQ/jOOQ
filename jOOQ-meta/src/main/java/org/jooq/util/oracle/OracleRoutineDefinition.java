@@ -36,7 +36,7 @@
 
 package org.jooq.util.oracle;
 
-import static org.jooq.impl.Factory.inline;
+import static org.jooq.impl.DSL.inline;
 import static org.jooq.util.oracle.sys.Tables.ALL_ARGUMENTS;
 import static org.jooq.util.oracle.sys.Tables.ALL_COL_COMMENTS;
 

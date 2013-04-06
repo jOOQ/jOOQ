@@ -50,9 +50,9 @@ import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.condition;
-import static org.jooq.impl.Factory.exists;
-import static org.jooq.impl.Factory.notExists;
+import static org.jooq.impl.DSL.condition;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.notExists;
 
 import java.util.ArrayList;
 import java.util.Collection;

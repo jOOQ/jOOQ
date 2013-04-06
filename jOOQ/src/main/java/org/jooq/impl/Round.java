@@ -35,8 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.val;
 
 import java.math.BigDecimal;
 
@@ -75,19 +75,19 @@ class Round<T extends Number> extends AbstractFunction<T> {
             // evaluate "round" if unavailable
             case DERBY: {
                 if (decimals == 0) {
-                    return Factory.decode()
-                        .when(argument.sub(Factory.floor(argument))
-                        .lessThan((T) Double.valueOf(0.5)), Factory.floor(argument))
-                        .otherwise(Factory.ceil(argument));
+                    return DSL.decode()
+                        .when(argument.sub(DSL.floor(argument))
+                        .lessThan((T) Double.valueOf(0.5)), DSL.floor(argument))
+                        .otherwise(DSL.ceil(argument));
                 }
                 else {
-                    Field<BigDecimal> factor = Factory.val(BigDecimal.ONE.movePointRight(decimals));
+                    Field<BigDecimal> factor = DSL.val(BigDecimal.ONE.movePointRight(decimals));
                     Field<T> mul = argument.mul(factor);
 
-                    return Factory.decode()
-                        .when(mul.sub(Factory.floor(mul))
-                        .lessThan((T) Double.valueOf(0.5)), Factory.floor(mul).div(factor))
-                        .otherwise(Factory.ceil(mul).div(factor));
+                    return DSL.decode()
+                        .when(mul.sub(DSL.floor(mul))
+                        .lessThan((T) Double.valueOf(0.5)), DSL.floor(mul).div(factor))
+                        .otherwise(DSL.ceil(mul).div(factor));
                 }
             }
 

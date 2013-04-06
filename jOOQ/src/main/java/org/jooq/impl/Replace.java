@@ -35,8 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.Factory.function;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.SQLDataType.VARCHAR;
 
 import org.jooq.Configuration;

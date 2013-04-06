@@ -45,12 +45,12 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.Factory.count;
-import static org.jooq.impl.Factory.inline;
-import static org.jooq.impl.Factory.lower;
-import static org.jooq.impl.Factory.param;
-import static org.jooq.impl.Factory.table;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.lower;
+import static org.jooq.impl.DSL.param;
+import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.val;
 
 import java.sql.Date;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ import org.jooq.Select;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -374,7 +374,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("unchecked")
     @Test
     public void testLimitBindValues() throws Exception {
-        Select<?> s2 = Factory.select().limit(1).offset(2);
+        Select<?> s2 = DSL.select().limit(1).offset(2);
         assertSame(asList(1, 2), s2.getBindValues());
         assertSame(asList(val(1), val(2)), s2.getParams().values());
     }

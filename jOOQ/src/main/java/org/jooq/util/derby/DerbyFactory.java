@@ -36,14 +36,14 @@
 package org.jooq.util.derby;
 
 import org.jooq.SQLDialect;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 
 /**
  * A {@link SQLDialect#DERBY} specific factory
  *
  * @author Lukas Eder
  */
-public class DerbyFactory extends Factory {
+public class DerbyFactory extends DSL {
 
     /**
      * No instances

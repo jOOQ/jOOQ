@@ -36,10 +36,10 @@
 
 package org.jooq.util.hsqldb;
 
-import static org.jooq.impl.Factory.concat;
-import static org.jooq.impl.Factory.nvl;
-import static org.jooq.impl.Factory.nvl2;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.nvl;
+import static org.jooq.impl.DSL.nvl2;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.util.hsqldb.information_schema.Tables.COLUMNS;
 import static org.jooq.util.hsqldb.information_schema.Tables.ELEMENT_TYPES;
 

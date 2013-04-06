@@ -35,9 +35,9 @@
  */
 package org.jooq.util.db2;
 
-import static org.jooq.impl.Factory.concat;
-import static org.jooq.impl.Factory.two;
-import static org.jooq.impl.Factory.val;
+import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.util.db2.syscat.Tables.DATATYPES;
 import static org.jooq.util.db2.syscat.Tables.FUNCTIONS;
 import static org.jooq.util.db2.syscat.Tables.KEYCOLUSE;
@@ -62,7 +62,7 @@ import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.SelectQuery;
-import org.jooq.impl.Factory;
+import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
@@ -94,7 +94,7 @@ public class DB2Database extends AbstractDatabase {
 
     @Override
     protected DSLContext create0() {
-        return Factory.using(getConnection(), SQLDialect.DB2);
+        return DSL.using(getConnection(), SQLDialect.DB2);
     }
 
     @Override

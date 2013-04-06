@@ -73,15 +73,14 @@ class ContextDSL extends Generators {
                  * building methods taking subselect arguments.
                  * <p>
                  * This creates an attached, renderable and executable <code>SELECT</code>
-                 * statement from this {@link Executor}. If you don't need to render or
+                 * statement from this {@link ContextDSL}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
                  * {@link Factory#select(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
-                 * Executor create = new Executor();
-                 *
-                 * create.select(«field1_field2_fieldn(degree)»)
+                 * using(configuration)
+                 *       .select(«field1_field2_fieldn(degree)»)
                  *       .from(table1)
                  *       .join(table2).on(field1.equal(field2))
                  *       .where(field1.greaterThan(100))
@@ -107,7 +106,7 @@ class ContextDSL extends Generators {
         }
 
         insert("org.jooq.ContextDSL", outAPI, "select");
-        insert("org.jooq.impl.Executor", outImpl, "select");
+        insert("org.jooq.impl.ContextDSLImpl", outImpl, "select");
     }
     
     def generateSelectDistinct() {
@@ -132,15 +131,14 @@ class ContextDSL extends Generators {
                  * building methods taking subselect arguments.
                  * <p>
                  * This creates an attached, renderable and executable <code>SELECT</code>
-                 * statement from this {@link Executor}. If you don't need to render or
+                 * statement from this {@link ContextDSL}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
                  * {@link Factory#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
-                 * Executor create = new Executor();
-                 *
-                 * create.selectDistinct(«field1_field2_fieldn(degree)»)
+                 * using(configuration)
+                 *       .selectDistinct(«field1_field2_fieldn(degree)»)
                  *       .from(table1)
                  *       .join(table2).on(field1.equal(field2))
                  *       .where(field1.greaterThan(100))
@@ -166,7 +164,7 @@ class ContextDSL extends Generators {
         }
 
         insert("org.jooq.ContextDSL", outAPI, "selectDistinct");
-        insert("org.jooq.impl.Executor", outImpl, "selectDistinct");
+        insert("org.jooq.impl.ContextDSLImpl", outImpl, "selectDistinct");
     }
 
     def generateInsert() {
@@ -180,9 +178,8 @@ class ContextDSL extends Generators {
                  * Create a new DSL insert statement.
                  * <p>
                  * Example: <code><pre>
-                 * Executor create = new Executor();
-                 *
-                 * create.insertInto(table, «field1_field2_fieldn(degree)»)
+                 * using(configuration)
+                 *       .insertInto(table, «field1_field2_fieldn(degree)»)
                  *       .values(«XXX1_XXX2_XXXn(degree, "valueA")»)
                  *       .values(«XXX1_XXX2_XXXn(degree, "valueB")»)
                  *       .onDuplicateKeyUpdate()
@@ -207,7 +204,7 @@ class ContextDSL extends Generators {
         }
 
         insert("org.jooq.ContextDSL", outAPI, "insert");
-        insert("org.jooq.impl.Executor", outImpl, "insert");
+        insert("org.jooq.impl.ContextDSLImpl", outImpl, "insert");
     }
 
     def generateMerge() {
@@ -253,6 +250,6 @@ class ContextDSL extends Generators {
         }
 
         insert("org.jooq.ContextDSL", outAPI, "merge");
-        insert("org.jooq.impl.Executor", outImpl, "merge");
+        insert("org.jooq.impl.ContextDSLImpl", outImpl, "merge");
     }
 }

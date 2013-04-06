@@ -51,9 +51,8 @@ import javax.annotation.Generated;
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Factory create = new Factory();
- *
- * create.mergeInto(table, field1, field2, field3, .., field12, field13)
+ * using(configuration)
+ *       .mergeInto(table, field1, field2, field3, .., field12, field13)
  *       .key(id)
  *       .values(value1, value2, value3, .., value12, value13)
  *       .execute();

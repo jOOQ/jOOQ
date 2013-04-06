@@ -61,16 +61,12 @@ class InsertDSL extends Generators {
 
             import javax.annotation.Generated;
 
-            import org.jooq.Support;
-            import org.jooq.impl.Executor;
-            
             /**
              * This type is used for the {@link Insert}'s DSL API.
              * <p>
              * Example: <code><pre>
-             * Executor create = new Executor();
-             *
-             * create.insertInto(table, «field1_field2_fieldn(degree)»)
+             * using(configuration)
+             *       .insertInto(table, «field1_field2_fieldn(degree)»)
              *       .values(«XXX1_XXX2_XXXn(degree, "valueA")»)
              *       .values(«XXX1_XXX2_XXXn(degree, "valueB")»)
              *       .onDuplicateKeyUpdate()
@@ -109,7 +105,7 @@ class InsertDSL extends Generators {
                  * This variant of the <code>INSERT .. SELECT</code> statement expects a
                  * select returning exactly as many fields as specified previously in the
                  * <code>INTO</code> clause:
-                 * {@link Executor#insertInto(Table, «(1..degree).join(", ", [e | 'Field'])»)}
+                 * {@link ContextDSL#insertInto(Table, «(1..degree).join(", ", [e | 'Field'])»)}
                  */
                 @Support
                 Insert<R> select(Select<? extends Record«degree»<«TN(degree)»>> select);

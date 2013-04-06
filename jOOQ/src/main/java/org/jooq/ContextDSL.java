@@ -1384,9 +1384,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1)
+     * using(configuration)
+     *       .select(field1)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1415,9 +1414,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2)
+     * using(configuration)
+     *       .select(field1, field2)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1446,9 +1444,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3)
+     * using(configuration)
+     *       .select(field1, field2, field3)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1477,9 +1474,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, field4)
+     * using(configuration)
+     *       .select(field1, field2, field3, field4)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1508,9 +1504,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, field4, field5)
+     * using(configuration)
+     *       .select(field1, field2, field3, field4, field5)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1539,9 +1534,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field5, field6)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field5, field6)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1570,9 +1564,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field6, field7)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field6, field7)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1601,9 +1594,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field7, field8)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field7, field8)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1632,9 +1624,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field8, field9)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field8, field9)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1663,9 +1654,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field9, field10)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field9, field10)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1694,9 +1684,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field10, field11)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field10, field11)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1725,9 +1714,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field11, field12)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field11, field12)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1756,9 +1744,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field12, field13)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field12, field13)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1787,9 +1774,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field13, field14)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field13, field14)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1818,9 +1804,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field14, field15)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field14, field15)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1849,9 +1834,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field15, field16)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field15, field16)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1880,9 +1864,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field16, field17)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field16, field17)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1911,9 +1894,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field17, field18)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field17, field18)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1942,9 +1924,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field18, field19)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field18, field19)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -1973,9 +1954,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field19, field20)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field19, field20)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2004,9 +1984,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field20, field21)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field20, field21)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2035,9 +2014,8 @@ public interface ContextDSL {
      * {@link Factory#select(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.select(field1, field2, field3, .., field21, field22)
+     * using(configuration)
+     *       .select(field1, field2, field3, .., field21, field22)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2117,9 +2095,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1)
+     * using(configuration)
+     *       .selectDistinct(field1)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2148,9 +2125,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2)
+     * using(configuration)
+     *       .selectDistinct(field1, field2)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2179,9 +2155,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2210,9 +2185,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, field4)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, field4)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2241,9 +2215,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, field4, field5)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, field4, field5)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2272,9 +2245,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field5, field6)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field5, field6)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2303,9 +2275,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field6, field7)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field6, field7)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2334,9 +2305,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field7, field8)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field7, field8)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2365,9 +2335,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field8, field9)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field8, field9)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2396,9 +2365,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field9, field10)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field9, field10)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2427,9 +2395,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field10, field11)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field10, field11)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2458,9 +2425,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field11, field12)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field11, field12)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2489,9 +2455,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field12, field13)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field12, field13)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2520,9 +2485,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field13, field14)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field13, field14)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2551,9 +2515,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field14, field15)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field14, field15)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2582,9 +2545,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field15, field16)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field15, field16)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2613,9 +2575,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field16, field17)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field16, field17)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2644,9 +2605,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field17, field18)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field17, field18)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2675,9 +2635,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field18, field19)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field18, field19)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2706,9 +2665,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field19, field20)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field19, field20)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2737,9 +2695,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field20, field21)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field20, field21)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2768,9 +2725,8 @@ public interface ContextDSL {
      * {@link Factory#selectDistinct(Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.selectDistinct(field1, field2, field3, .., field21, field22)
+     * using(configuration)
+     *       .selectDistinct(field1, field2, field3, .., field21, field22)
      *       .from(table1)
      *       .join(table2).on(field1.equal(field2))
      *       .where(field1.greaterThan(100))
@@ -2912,9 +2868,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1)
+     * using(configuration)
+     *       .insertInto(table, field1)
      *       .values(field1)
      *       .values(field1)
      *       .onDuplicateKeyUpdate()
@@ -2931,9 +2886,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2)
+     * using(configuration)
+     *       .insertInto(table, field1, field2)
      *       .values(field1, field2)
      *       .values(field1, field2)
      *       .onDuplicateKeyUpdate()
@@ -2950,9 +2904,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3)
      *       .values(field1, field2, field3)
      *       .values(field1, field2, field3)
      *       .onDuplicateKeyUpdate()
@@ -2969,9 +2922,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, field4)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, field4)
      *       .values(field1, field2, field3, field4)
      *       .values(field1, field2, field3, field4)
      *       .onDuplicateKeyUpdate()
@@ -2988,9 +2940,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, field4, field5)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, field4, field5)
      *       .values(field1, field2, field3, field4, field5)
      *       .values(field1, field2, field3, field4, field5)
      *       .onDuplicateKeyUpdate()
@@ -3007,9 +2958,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field5, field6)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field5, field6)
      *       .values(valueA1, valueA2, valueA3, .., valueA5, valueA6)
      *       .values(valueB1, valueB2, valueB3, .., valueB5, valueB6)
      *       .onDuplicateKeyUpdate()
@@ -3026,9 +2976,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field6, field7)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field6, field7)
      *       .values(valueA1, valueA2, valueA3, .., valueA6, valueA7)
      *       .values(valueB1, valueB2, valueB3, .., valueB6, valueB7)
      *       .onDuplicateKeyUpdate()
@@ -3045,9 +2994,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field7, field8)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field7, field8)
      *       .values(valueA1, valueA2, valueA3, .., valueA7, valueA8)
      *       .values(valueB1, valueB2, valueB3, .., valueB7, valueB8)
      *       .onDuplicateKeyUpdate()
@@ -3064,9 +3012,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field8, field9)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field8, field9)
      *       .values(valueA1, valueA2, valueA3, .., valueA8, valueA9)
      *       .values(valueB1, valueB2, valueB3, .., valueB8, valueB9)
      *       .onDuplicateKeyUpdate()
@@ -3083,9 +3030,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field9, field10)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field9, field10)
      *       .values(valueA1, valueA2, valueA3, .., valueA9, valueA10)
      *       .values(valueB1, valueB2, valueB3, .., valueB9, valueB10)
      *       .onDuplicateKeyUpdate()
@@ -3102,9 +3048,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field10, field11)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field10, field11)
      *       .values(valueA1, valueA2, valueA3, .., valueA10, valueA11)
      *       .values(valueB1, valueB2, valueB3, .., valueB10, valueB11)
      *       .onDuplicateKeyUpdate()
@@ -3121,9 +3066,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field11, field12)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field11, field12)
      *       .values(valueA1, valueA2, valueA3, .., valueA11, valueA12)
      *       .values(valueB1, valueB2, valueB3, .., valueB11, valueB12)
      *       .onDuplicateKeyUpdate()
@@ -3140,9 +3084,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field12, field13)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field12, field13)
      *       .values(valueA1, valueA2, valueA3, .., valueA12, valueA13)
      *       .values(valueB1, valueB2, valueB3, .., valueB12, valueB13)
      *       .onDuplicateKeyUpdate()
@@ -3159,9 +3102,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field13, field14)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field13, field14)
      *       .values(valueA1, valueA2, valueA3, .., valueA13, valueA14)
      *       .values(valueB1, valueB2, valueB3, .., valueB13, valueB14)
      *       .onDuplicateKeyUpdate()
@@ -3178,9 +3120,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field14, field15)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field14, field15)
      *       .values(valueA1, valueA2, valueA3, .., valueA14, valueA15)
      *       .values(valueB1, valueB2, valueB3, .., valueB14, valueB15)
      *       .onDuplicateKeyUpdate()
@@ -3197,9 +3138,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field15, field16)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field15, field16)
      *       .values(valueA1, valueA2, valueA3, .., valueA15, valueA16)
      *       .values(valueB1, valueB2, valueB3, .., valueB15, valueB16)
      *       .onDuplicateKeyUpdate()
@@ -3216,9 +3156,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field16, field17)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field16, field17)
      *       .values(valueA1, valueA2, valueA3, .., valueA16, valueA17)
      *       .values(valueB1, valueB2, valueB3, .., valueB16, valueB17)
      *       .onDuplicateKeyUpdate()
@@ -3235,9 +3174,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field17, field18)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field17, field18)
      *       .values(valueA1, valueA2, valueA3, .., valueA17, valueA18)
      *       .values(valueB1, valueB2, valueB3, .., valueB17, valueB18)
      *       .onDuplicateKeyUpdate()
@@ -3254,9 +3192,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field18, field19)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field18, field19)
      *       .values(valueA1, valueA2, valueA3, .., valueA18, valueA19)
      *       .values(valueB1, valueB2, valueB3, .., valueB18, valueB19)
      *       .onDuplicateKeyUpdate()
@@ -3273,9 +3210,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field19, field20)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field19, field20)
      *       .values(valueA1, valueA2, valueA3, .., valueA19, valueA20)
      *       .values(valueB1, valueB2, valueB3, .., valueB19, valueB20)
      *       .onDuplicateKeyUpdate()
@@ -3292,9 +3228,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field20, field21)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field20, field21)
      *       .values(valueA1, valueA2, valueA3, .., valueA20, valueA21)
      *       .values(valueB1, valueB2, valueB3, .., valueB20, valueB21)
      *       .onDuplicateKeyUpdate()
@@ -3311,9 +3246,8 @@ public interface ContextDSL {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = new Executor();
-     *
-     * create.insertInto(table, field1, field2, field3, .., field21, field22)
+     * using(configuration)
+     *       .insertInto(table, field1, field2, field3, .., field21, field22)
      *       .values(valueA1, valueA2, valueA3, .., valueA21, valueA22)
      *       .values(valueB1, valueB2, valueB3, .., valueB21, valueB22)
      *       .onDuplicateKeyUpdate()

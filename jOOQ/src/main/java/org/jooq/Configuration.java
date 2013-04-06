@@ -40,16 +40,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.conf.Settings;
-import org.jooq.impl.Executor;
 
 /**
- * A <code>Configuration</code> configures an {@link Executor}, providing it
+ * A <code>Configuration</code> configures an {@link ContextDSL}, providing it
  * with information for query construction, rendering and execution.
  * <p>
  * A <code>Configuration</code> wraps all information elements that are
  * needed...
  * <ul>
- * <li>by an {@link Executor} to construct {@link Query} objects</li>
+ * <li>by an {@link ContextDSL} to construct {@link Query} objects</li>
  * <li>by a {@link RenderContext} to render {@link Query} objects and
  * {@link QueryPart}s</li>
  * <li>by a {@link BindContext} to bind values to {@link Query} objects and

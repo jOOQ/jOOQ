@@ -51,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.ContextDSL;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
 import org.jooq.Record1;
@@ -68,7 +69,6 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
-import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -592,7 +592,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        Executor create = create(new Settings().withExecuteWithOptimisticLocking(true));
+        ContextDSL create = create(new Settings().withExecuteWithOptimisticLocking(true));
         boolean t = TBook_REC_TIMESTAMP() != null;
         boolean v = TBook_REC_VERSION() != null;
 
@@ -694,7 +694,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     private <R extends UpdatableRecord<R>> void testStoreWithOptimisticLock0(
         Table<R> table, TableField<R, Integer> id, TableField<R, String> string) throws Exception {
 
-        Executor create = create(new Settings().withExecuteWithOptimisticLocking(true));
+        ContextDSL create = create(new Settings().withExecuteWithOptimisticLocking(true));
 
         // Storing without changing shouldn't execute any queries
         R record1 = create.fetchOne(table, id.equal(1));

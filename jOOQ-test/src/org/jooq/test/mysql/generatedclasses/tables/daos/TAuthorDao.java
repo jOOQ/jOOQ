@@ -12,17 +12,17 @@ package org.jooq.test.mysql.generatedclasses.tables.daos;
 public class TAuthorDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TAuthor, java.lang.Integer> {
 
 	/**
-	 * Create a new TAuthorDao without any factory
+	 * Create a new TAuthorDao without any configuration
 	 */
 	public TAuthorDao() {
 		super(org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.mysql.generatedclasses.tables.pojos.TAuthor.class);
 	}
 
 	/**
-	 * Create a new TAuthorDao with an attached factory
+	 * Create a new TAuthorDao with an attached configuration
 	 */
-	public TAuthorDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.mysql.generatedclasses.tables.pojos.TAuthor.class, factory);
+	public TAuthorDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.mysql.generatedclasses.tables.TAuthor.T_AUTHOR, org.jooq.test.mysql.generatedclasses.tables.pojos.TAuthor.class, configuration);
 	}
 
 	/**

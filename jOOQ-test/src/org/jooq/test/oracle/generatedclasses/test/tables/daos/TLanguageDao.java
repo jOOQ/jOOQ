@@ -12,17 +12,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 public class TLanguageDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TLanguage, java.lang.Integer> {
 
 	/**
-	 * Create a new TLanguageDao without any factory
+	 * Create a new TLanguageDao without any configuration
 	 */
 	public TLanguageDao() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TLanguage.class);
 	}
 
 	/**
-	 * Create a new TLanguageDao with an attached factory
+	 * Create a new TLanguageDao with an attached configuration
 	 */
-	public TLanguageDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TLanguage.class, factory);
+	public TLanguageDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TLanguage.T_LANGUAGE, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TLanguage.class, configuration);
 	}
 
 	/**

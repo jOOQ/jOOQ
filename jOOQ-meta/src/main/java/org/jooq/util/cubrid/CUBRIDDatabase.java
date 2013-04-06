@@ -53,11 +53,11 @@ import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.ConnectionProvider;
+import org.jooq.ContextDSL;
 import org.jooq.Record;
 import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -269,7 +269,7 @@ public class CUBRIDDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected Executor create0() {
+    protected ContextDSL create0() {
         return Factory.using(getConnection(), SQLDialect.CUBRID);
     }
 }

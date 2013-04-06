@@ -60,6 +60,7 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
+import org.jooq.ContextDSL;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.FutureResult;
@@ -79,7 +80,6 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
 import org.jooq.impl.CustomCondition;
 import org.jooq.impl.CustomField;
-import org.jooq.impl.Executor;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -575,7 +575,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1169] Some additional checks to see if custom data is correctly
         // passed on to custom QueryParts
-        Executor create = create();
+        ContextDSL create = create();
         create.configuration().setData("Foo-Field", "Bar");
         create.configuration().setData("Foo-Condition", "Bar");
 

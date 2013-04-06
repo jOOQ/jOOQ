@@ -47,8 +47,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.ContextDSL;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
 import org.jooq.impl.SQLDataType;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
@@ -74,7 +74,7 @@ public abstract class AbstractDatabase implements Database {
 
     private SQLDialect                                                  dialect;
     private Connection                                                  connection;
-    private Executor                                                    create;
+    private ContextDSL                                                    create;
     private String[]                                                    excludes;
     private String[]                                                    includes;
     private String[]                                                    recordVersionFields;
@@ -135,7 +135,7 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
-    public final Executor create() {
+    public final ContextDSL create() {
         if (create == null) {
             create = create0();
         }
@@ -740,7 +740,7 @@ public abstract class AbstractDatabase implements Database {
     /**
      * Create a new Factory
      */
-    protected abstract Executor create0();
+    protected abstract ContextDSL create0();
 
     /**
      * Retrieve primary keys and store them to relations

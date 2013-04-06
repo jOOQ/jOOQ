@@ -50,12 +50,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jooq.ContextDSL;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record5;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -322,7 +322,7 @@ public class DerbyDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected Executor create0() {
+    protected ContextDSL create0() {
         return Factory.using(getConnection(), SQLDialect.DERBY);
     }
 }

@@ -10,17 +10,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 public class TBooleansDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TBooleansRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBooleans, java.lang.Integer> {
 
 	/**
-	 * Create a new TBooleansDao without any factory
+	 * Create a new TBooleansDao without any configuration
 	 */
 	public TBooleansDao() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBooleans.class);
 	}
 
 	/**
-	 * Create a new TBooleansDao with an attached factory
+	 * Create a new TBooleansDao with an attached configuration
 	 */
-	public TBooleansDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBooleans.class, factory);
+	public TBooleansDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TBooleans.T_BOOLEANS, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TBooleans.class, configuration);
 	}
 
 	/**

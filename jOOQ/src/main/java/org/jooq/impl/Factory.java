@@ -71,6 +71,7 @@ import org.jooq.Case;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
+import org.jooq.ContextDSL;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -147,7 +148,7 @@ import org.jooq.types.DayToSecond;
 /**
  * A factory providing implementations to the <code>org.jooq</code> interfaces.
  * <p>
- * Apart from the {@link Executor}, this factory is the main entry point for
+ * Apart from the {@link ContextDSL}, this factory is the main entry point for
  * client code, to access jOOQ classes and functionality. Here, you can
  * instanciate all of those objects that cannot be accessed through other
  * objects. For example, to create a {@link Field} representing a constant
@@ -180,7 +181,7 @@ import org.jooq.types.DayToSecond;
  * }
  * </pre></code>
  *
- * @see Executor
+ * @see ContextDSL
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -198,8 +199,8 @@ public class Factory {
      *
      * @param dialect The dialect to use with objects created from this executor
      */
-    public static Executor using(SQLDialect dialect) {
-        return new Executor(dialect, null);
+    public static ContextDSL using(SQLDialect dialect) {
+        return new ContextDSLImpl(dialect, null);
     }
 
     /**
@@ -212,8 +213,8 @@ public class Factory {
      * @param settings The runtime settings to apply to objects created from
      *            this executor
      */
-    public static Executor using(SQLDialect dialect, Settings settings) {
-        return new Executor(dialect, settings);
+    public static ContextDSL using(SQLDialect dialect, Settings settings) {
+        return new ContextDSLImpl(dialect, settings);
     }
 
     /**
@@ -231,8 +232,8 @@ public class Factory {
      * @param dialect The dialect to use with objects created from this executor
      * @see DefaultConnectionProvider
      */
-    public static Executor using(Connection connection, SQLDialect dialect) {
-        return new Executor(connection, dialect, null);
+    public static ContextDSL using(Connection connection, SQLDialect dialect) {
+        return new ContextDSLImpl(connection, dialect, null);
     }
 
     /**
@@ -252,8 +253,8 @@ public class Factory {
      *            this executor
      * @see DefaultConnectionProvider
      */
-    public static Executor using(Connection connection, SQLDialect dialect, Settings settings) {
-        return new Executor(connection, dialect, settings);
+    public static ContextDSL using(Connection connection, SQLDialect dialect, Settings settings) {
+        return new ContextDSLImpl(connection, dialect, settings);
     }
 
     /**
@@ -271,8 +272,8 @@ public class Factory {
      * @param dialect The dialect to use with objects created from this executor
      * @see DataSourceConnectionProvider
      */
-    public static Executor using(DataSource datasource, SQLDialect dialect) {
-        return new Executor(datasource, dialect);
+    public static ContextDSL using(DataSource datasource, SQLDialect dialect) {
+        return new ContextDSLImpl(datasource, dialect);
     }
 
     /**
@@ -292,8 +293,8 @@ public class Factory {
      *            this executor
      * @see DataSourceConnectionProvider
      */
-    public static Executor using(DataSource datasource, SQLDialect dialect, Settings settings) {
-        return new Executor(datasource, dialect, settings);
+    public static ContextDSL using(DataSource datasource, SQLDialect dialect, Settings settings) {
+        return new ContextDSLImpl(datasource, dialect, settings);
     }
 
     /**
@@ -304,8 +305,8 @@ public class Factory {
      *            JDBC connections
      * @param dialect The dialect to use with objects created from this executor
      */
-    public static Executor using(ConnectionProvider connectionProvider, SQLDialect dialect) {
-        return new Executor(connectionProvider, dialect);
+    public static ContextDSL using(ConnectionProvider connectionProvider, SQLDialect dialect) {
+        return new ContextDSLImpl(connectionProvider, dialect);
     }
 
     /**
@@ -318,8 +319,8 @@ public class Factory {
      * @param settings The runtime settings to apply to objects created from
      *            this executor
      */
-    public static Executor using(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
-        return new Executor(connectionProvider, dialect, settings);
+    public static ContextDSL using(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
+        return new ContextDSLImpl(connectionProvider, dialect, settings);
     }
 
     /**
@@ -327,8 +328,8 @@ public class Factory {
      *
      * @param configuration The configuration
      */
-    public static Executor using(Configuration configuration) {
-        return new Executor(configuration);
+    public static ContextDSL using(Configuration configuration) {
+        return new ContextDSLImpl(configuration);
     }
 
     // -------------------------------------------------------------------------
@@ -338,7 +339,7 @@ public class Factory {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -359,7 +360,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Collection)
+     * @see ContextDSL#select(Collection)
      */
     @Support
     public static SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
@@ -369,7 +370,7 @@ public class Factory {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -390,7 +391,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      */
     @Support
     public static SelectSelectStep<Record> select(Field<?>... fields) {
@@ -400,7 +401,7 @@ public class Factory {
     /**
      * Create a new DSL select statement.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -427,7 +428,7 @@ public class Factory {
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -448,7 +449,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -465,7 +466,7 @@ public class Factory {
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -486,7 +487,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -503,7 +504,7 @@ public class Factory {
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -524,7 +525,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -541,7 +542,7 @@ public class Factory {
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -562,7 +563,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -579,7 +580,7 @@ public class Factory {
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -600,7 +601,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -617,7 +618,7 @@ public class Factory {
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -638,7 +639,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -655,7 +656,7 @@ public class Factory {
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -676,7 +677,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -693,7 +694,7 @@ public class Factory {
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -714,7 +715,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -731,7 +732,7 @@ public class Factory {
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -752,7 +753,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -769,7 +770,7 @@ public class Factory {
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -790,7 +791,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -807,7 +808,7 @@ public class Factory {
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -828,7 +829,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -845,7 +846,7 @@ public class Factory {
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -866,7 +867,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -883,7 +884,7 @@ public class Factory {
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -904,7 +905,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -921,7 +922,7 @@ public class Factory {
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -942,7 +943,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -959,7 +960,7 @@ public class Factory {
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -980,7 +981,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -997,7 +998,7 @@ public class Factory {
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1018,7 +1019,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1035,7 +1036,7 @@ public class Factory {
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1056,7 +1057,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1073,7 +1074,7 @@ public class Factory {
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1094,7 +1095,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1111,7 +1112,7 @@ public class Factory {
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1132,7 +1133,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1149,7 +1150,7 @@ public class Factory {
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1170,7 +1171,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1187,7 +1188,7 @@ public class Factory {
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1208,7 +1209,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1225,7 +1226,7 @@ public class Factory {
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1246,7 +1247,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#select(Field...)
+     * @see ContextDSL#select(Field...)
      * @see #select(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1260,7 +1261,7 @@ public class Factory {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1281,7 +1282,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Collection)
+     * @see ContextDSL#selectDistinct(Collection)
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
@@ -1291,7 +1292,7 @@ public class Factory {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1312,7 +1313,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      */
     @Support
     public static SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
@@ -1328,7 +1329,7 @@ public class Factory {
      * {@link Field#in(Select)}, {@link Field#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1349,7 +1350,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1366,7 +1367,7 @@ public class Factory {
      * {@link Row2#in(Select)}, {@link Row2#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1387,7 +1388,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1404,7 +1405,7 @@ public class Factory {
      * {@link Row3#in(Select)}, {@link Row3#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1425,7 +1426,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1442,7 +1443,7 @@ public class Factory {
      * {@link Row4#in(Select)}, {@link Row4#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1463,7 +1464,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1480,7 +1481,7 @@ public class Factory {
      * {@link Row5#in(Select)}, {@link Row5#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1501,7 +1502,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1518,7 +1519,7 @@ public class Factory {
      * {@link Row6#in(Select)}, {@link Row6#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1539,7 +1540,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1556,7 +1557,7 @@ public class Factory {
      * {@link Row7#in(Select)}, {@link Row7#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1577,7 +1578,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1594,7 +1595,7 @@ public class Factory {
      * {@link Row8#in(Select)}, {@link Row8#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1615,7 +1616,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1632,7 +1633,7 @@ public class Factory {
      * {@link Row9#in(Select)}, {@link Row9#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1653,7 +1654,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1670,7 +1671,7 @@ public class Factory {
      * {@link Row10#in(Select)}, {@link Row10#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1691,7 +1692,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1708,7 +1709,7 @@ public class Factory {
      * {@link Row11#in(Select)}, {@link Row11#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1729,7 +1730,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1746,7 +1747,7 @@ public class Factory {
      * {@link Row12#in(Select)}, {@link Row12#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1767,7 +1768,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1784,7 +1785,7 @@ public class Factory {
      * {@link Row13#in(Select)}, {@link Row13#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1805,7 +1806,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1822,7 +1823,7 @@ public class Factory {
      * {@link Row14#in(Select)}, {@link Row14#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1843,7 +1844,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1860,7 +1861,7 @@ public class Factory {
      * {@link Row15#in(Select)}, {@link Row15#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1881,7 +1882,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1898,7 +1899,7 @@ public class Factory {
      * {@link Row16#in(Select)}, {@link Row16#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1919,7 +1920,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1936,7 +1937,7 @@ public class Factory {
      * {@link Row17#in(Select)}, {@link Row17#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1957,7 +1958,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -1974,7 +1975,7 @@ public class Factory {
      * {@link Row18#in(Select)}, {@link Row18#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -1995,7 +1996,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2012,7 +2013,7 @@ public class Factory {
      * {@link Row19#in(Select)}, {@link Row19#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -2033,7 +2034,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2050,7 +2051,7 @@ public class Factory {
      * {@link Row20#in(Select)}, {@link Row20#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -2071,7 +2072,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2088,7 +2089,7 @@ public class Factory {
      * {@link Row21#in(Select)}, {@link Row21#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -2109,7 +2110,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2126,7 +2127,7 @@ public class Factory {
      * {@link Row22#in(Select)}, {@link Row22#equal(Select)} and other predicate
      * building methods taking subselect arguments.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -2147,7 +2148,7 @@ public class Factory {
      *  .orderBy(field2);
      * </pre></code>
      *
-     * @see Executor#selectDistinct(Field...)
+     * @see ContextDSL#selectDistinct(Field...)
      * @see #selectDistinct(Field...)
      */
     @Generated("This method was generated using jOOQ-tools")
@@ -2161,7 +2162,7 @@ public class Factory {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -2183,7 +2184,7 @@ public class Factory {
      * </pre></code>
      *
      * @see Factory#zero()
-     * @see Executor#selectZero()
+     * @see ContextDSL#selectZero()
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectZero() {
@@ -2193,7 +2194,7 @@ public class Factory {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -2215,7 +2216,7 @@ public class Factory {
      * </pre></code>
      *
      * @see Factory#one()
-     * @see Executor#selectOne()
+     * @see ContextDSL#selectOne()
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectOne() {
@@ -2225,7 +2226,7 @@ public class Factory {
     /**
      * Create a new DSL subselect statement.
      * <p>
-     * Unlike {@link Select} factory methods in the {@link Executor} API, this
+     * Unlike {@link Select} factory methods in the {@link ContextDSL} API, this
      * creates an unattached, and thus not directly renderable or executable
      * <code>SELECT</code> statement. You can use this statement in two ways:
      * <ul>
@@ -2247,7 +2248,7 @@ public class Factory {
      * </pre></code>
      *
      * @see Factory#count()
-     * @see Executor#selectCount()
+     * @see ContextDSL#selectCount()
      */
     @Support
     public static SelectSelectStep<Record1<Integer>> selectCount() {
@@ -6703,7 +6704,7 @@ public class Factory {
      * <ul>
      * <li>They can be used with Spring's <code>JdbcTemplate</code>, which
      * supports named parameters. Use
-     * {@link Executor#renderNamedParams(QueryPart)} to render
+     * {@link ContextDSL#renderNamedParams(QueryPart)} to render
      * parameter names in SQL</li>
      * <li>Named parameters can be retrieved using a well-known name from
      * {@link Query#getParam(String)} and {@link Query#getParams()}.</li>
@@ -6711,7 +6712,7 @@ public class Factory {
      *
      * @see Query#getParam(String)
      * @see Query#getParams()
-     * @see Executor#renderNamedParams(QueryPart)
+     * @see ContextDSL#renderNamedParams(QueryPart)
      */
     @Support
     public static <T> Param<T> param(String name, T value) {
@@ -8447,7 +8448,7 @@ public class Factory {
     }
 
     /**
-     * Get the default data type for the {@link Executor}'s underlying
+     * Get the default data type for the {@link ContextDSL}'s underlying
      * {@link SQLDialect} and a given Java type.
      *
      * @param <T> The generic type

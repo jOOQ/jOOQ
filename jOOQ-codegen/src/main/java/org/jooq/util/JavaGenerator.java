@@ -67,7 +67,6 @@ import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.ArrayRecordImpl;
 import org.jooq.impl.DAOImpl;
 import org.jooq.impl.DefaultDataType;
-import org.jooq.impl.Executor;
 import org.jooq.impl.PackageImpl;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.SchemaImpl;
@@ -1168,16 +1167,16 @@ public class JavaGenerator extends AbstractGenerator {
 
         // Default constructor
         // -------------------
-        out.tab(1).javadoc("Create a new %s without any factory", className);
+        out.tab(1).javadoc("Create a new %s without any configuration", className);
         out.tab(1).println("public %s() {", className);
         out.tab(2).println("super(%s, %s.class);", tableIdentifier, pType);
         out.tab(1).println("}");
 
         // Initialising constructor
         // ------------------------
-        out.tab(1).javadoc("Create a new %s with an attached factory", className);
-        out.tab(1).println("public %s(%s factory) {", className, Executor.class);
-        out.tab(2).println("super(%s, %s.class, factory);", tableIdentifier, pType);
+        out.tab(1).javadoc("Create a new %s with an attached configuration", className);
+        out.tab(1).println("public %s(%s configuration) {", className, Configuration.class);
+        out.tab(2).println("super(%s, %s.class, configuration);", tableIdentifier, pType);
         out.tab(1).println("}");
 
         // Template method implementations

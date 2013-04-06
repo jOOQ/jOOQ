@@ -48,7 +48,6 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Executor;
 
 /**
  * A query that can return results. Mostly, this is a {@link Select} query used
@@ -99,7 +98,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * execution, but not for result fetching.
      * <p>
      * The returned <code>ResultSet</code> can be used with
-     * {@link Executor#fetch(ResultSet)}
+     * {@link ContextDSL#fetch(ResultSet)}
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query

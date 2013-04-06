@@ -10,17 +10,17 @@ package org.jooq.test.oracle.generatedclasses.multi_schema.tables.daos;
 public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.multi_schema.tables.records.TBookRecord, org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos.TBook, java.lang.Integer> {
 
 	/**
-	 * Create a new TBookDao without any factory
+	 * Create a new TBookDao without any configuration
 	 */
 	public TBookDao() {
 		super(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK, org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos.TBook.class);
 	}
 
 	/**
-	 * Create a new TBookDao with an attached factory
+	 * Create a new TBookDao with an attached configuration
 	 */
-	public TBookDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK, org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos.TBook.class, factory);
+	public TBookDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.oracle.generatedclasses.multi_schema.tables.TBook.T_BOOK, org.jooq.test.oracle.generatedclasses.multi_schema.tables.pojos.TBook.class, configuration);
 	}
 
 	/**

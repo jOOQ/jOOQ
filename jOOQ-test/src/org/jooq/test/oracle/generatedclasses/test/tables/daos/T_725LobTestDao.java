@@ -10,17 +10,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 public class T_725LobTestDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest, java.lang.Integer> {
 
 	/**
-	 * Create a new T_725LobTestDao without any factory
+	 * Create a new T_725LobTestDao without any configuration
 	 */
 	public T_725LobTestDao() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest.class);
 	}
 
 	/**
-	 * Create a new T_725LobTestDao with an attached factory
+	 * Create a new T_725LobTestDao with an attached configuration
 	 */
-	public T_725LobTestDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest.class, factory);
+	public T_725LobTestDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.T_725LobTest.T_725_LOB_TEST, org.jooq.test.oracle.generatedclasses.test.tables.pojos.T_725LobTest.class, configuration);
 	}
 
 	/**

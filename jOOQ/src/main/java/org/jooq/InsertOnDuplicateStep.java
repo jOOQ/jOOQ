@@ -43,8 +43,6 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
-import org.jooq.impl.Executor;
-
 /**
  * This type is used for the {@link Insert}'s DSL API.
  * <p>
@@ -79,7 +77,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * <li>The <code>INSERT</code> statement's table is a
      * {@link Table} with a {@link Table#getPrimaryKey()}</li>
      * <li>The RDBMS supports the <code>MERGE</code> clause (see
-     * {@link Executor#mergeInto(Table)}).</li>
+     * {@link ContextDSL#mergeInto(Table)}).</li>
      * </ul>
      * <p>
      * These are the dialects that fulfill the above requirements:

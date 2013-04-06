@@ -42,7 +42,6 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataChangedException;
 import org.jooq.exception.InvalidResultException;
-import org.jooq.impl.Executor;
 
 /**
  * A common interface for records that can be stored back to the database again.
@@ -148,8 +147,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * Should you want to circumvent jOOQ-generated updates to these columns,
      * you can render an <code>INSERT</code> or <code>UPDATE</code> statement
-     * manually using the various {@link Executor#insertInto(Table)},
-     * {@link Executor#update(Table)} methods.</li>
+     * manually using the various {@link ContextDSL#insertInto(Table)},
+     * {@link ContextDSL#update(Table)} methods.</li>
      * </ul>
      * <p>
      * <h5>Optimistic locking</h5>

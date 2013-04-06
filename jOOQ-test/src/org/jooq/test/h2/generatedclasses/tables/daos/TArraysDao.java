@@ -10,17 +10,17 @@ package org.jooq.test.h2.generatedclasses.tables.daos;
 public class TArraysDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedclasses.tables.records.TArraysRecord, org.jooq.test.h2.generatedclasses.tables.pojos.TArrays, java.lang.Integer> {
 
 	/**
-	 * Create a new TArraysDao without any factory
+	 * Create a new TArraysDao without any configuration
 	 */
 	public TArraysDao() {
 		super(org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS, org.jooq.test.h2.generatedclasses.tables.pojos.TArrays.class);
 	}
 
 	/**
-	 * Create a new TArraysDao with an attached factory
+	 * Create a new TArraysDao with an attached configuration
 	 */
-	public TArraysDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS, org.jooq.test.h2.generatedclasses.tables.pojos.TArrays.class, factory);
+	public TArraysDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.h2.generatedclasses.tables.TArrays.T_ARRAYS, org.jooq.test.h2.generatedclasses.tables.pojos.TArrays.class, configuration);
 	}
 
 	/**

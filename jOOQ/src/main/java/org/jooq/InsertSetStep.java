@@ -38,8 +38,6 @@ package org.jooq;
 import java.util.Collection;
 import java.util.Map;
 
-import org.jooq.impl.Executor;
-
 /**
  * This type is used for the {@link Insert}'s alternative DSL API.
  * <p>
@@ -126,8 +124,8 @@ public interface InsertSetStep<R extends Record> {
      * This variant of the <code>INSERT .. SELECT</code> statement does not
      * allow for specifying a subset of the fields inserted into. It will insert
      * into all fields of the table specified in the <code>INTO</code> clause.
-     * Use {@link Executor#insertInto(Table, Field...)} or
-     * {@link Executor#insertInto(Table, Collection)} instead, to
+     * Use {@link ContextDSL#insertInto(Table, Field...)} or
+     * {@link ContextDSL#insertInto(Table, Collection)} instead, to
      * define a field set for insertion.
      */
     @Support

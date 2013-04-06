@@ -57,6 +57,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Collections;
 
+import org.jooq.ContextDSL;
 import org.jooq.Field;
 import org.jooq.Insert;
 import org.jooq.Record;
@@ -73,7 +74,6 @@ import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
-import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -354,7 +354,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Inlining bind values globally, through the factory settings
         // -----------------------------------------------------------
         {
-            Executor create = create(new Settings()
+            ContextDSL create = create(new Settings()
                 .withStatementType(StatementType.STATIC_STATEMENT));
 
             Object[] array1 = create.select(
@@ -395,7 +395,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Inlining bind values locally, through bind value parameters
         // -----------------------------------------------------------
         {
-            Executor create = create();
+            ContextDSL create = create();
 
             Object[] array1 = create.select(inline(s1), inline(s2), inline(s3), inline(s4)).fetchOneArray();
             Object[] array2 = create.select(inline(b1), inline(b2), inline(sh1), inline(sh2), inline(i1), inline(i2), inline(l1), inline(l2), inline(bi1), inline(bi2), inline(bd1), inline(bd2), inline(db1), inline(db2), inline(f1), inline(f2)).fetchOneArray();
@@ -429,7 +429,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Inlining bind values globally, through the factory settings
         // -----------------------------------------------------------
         {
-            Executor create = create(new Settings()
+            ContextDSL create = create(new Settings()
                 .withStatementType(StatementType.STATIC_STATEMENT));
 
             // [#1557] Check correct inlining of floating point values with
@@ -456,7 +456,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Time t1 = Time.valueOf("12:01:15");
         Timestamp ts1 = Timestamp.valueOf("1981-07-10 12:01:15");
 
-        Executor create = create(new Settings()
+        ContextDSL create = create(new Settings()
             .withStatementType(StatementType.STATIC_STATEMENT));
 
         DATE date = create.newRecord(TDates());

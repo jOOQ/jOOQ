@@ -41,12 +41,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.jooq.exception.DataAccessException;
-import org.jooq.impl.Executor;
 
 /**
  * A wrapping object for {@link DatabaseMetaData}
  * <p>
- * This object can be obtained through {@link Executor#meta()} in order to
+ * This object can be obtained through {@link ContextDSL#meta()} in order to
  * provide convenient access to your database meta data. This abstraction has
  * two purposes:
  * <p>

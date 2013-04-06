@@ -50,7 +50,6 @@ import javax.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Executor;
 import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
 
@@ -804,7 +803,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * or {@link ResultSet#previous()}, etc.</li>
      * </ul>
      * <p>
-     * You may use {@link Executor#fetch(ResultSet)} to unwind this wrapper
+     * You may use {@link ContextDSL#fetch(ResultSet)} to unwind this wrapper
      * again.
      * <p>
      * This is the same as creating a new {@link Result} with this
@@ -874,7 +873,7 @@ public interface Record extends Attachable, Comparable<Record> {
      * "changed" flags set to true for all values. This means that
      * {@link UpdatableRecord#store()} will perform an <code>INSERT</code>
      * statement. If you wish to store the record using an <code>UPDATE</code>
-     * statement, use {@link Executor#executeUpdate(UpdatableRecord)} instead.
+     * statement, use {@link ContextDSL#executeUpdate(UpdatableRecord)} instead.
      *
      * @param source The source object to copy data from
      * @throws MappingException wrapping any reflection exception that might

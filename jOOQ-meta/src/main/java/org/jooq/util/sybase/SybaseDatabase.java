@@ -45,9 +45,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.ContextDSL;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.tools.JooqLogger;
 import org.jooq.util.AbstractDatabase;
@@ -81,7 +81,7 @@ public class SybaseDatabase extends AbstractDatabase {
     private static final JooqLogger log = JooqLogger.getLogger(SybaseDatabase.class);
 
     @Override
-    protected Executor create0() {
+    protected ContextDSL create0() {
         return Factory.using(getConnection(), SQLDialect.SYBASE);
     }
 

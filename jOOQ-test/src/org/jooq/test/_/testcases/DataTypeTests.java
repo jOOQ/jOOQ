@@ -77,6 +77,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
+import org.jooq.ContextDSL;
 import org.jooq.Converter;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -92,7 +93,6 @@ import org.jooq.SQLDialect;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Executor;
 import org.jooq.impl.SQLDataType;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -1594,7 +1594,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#2278] Run the subsequent test twice, once with bind values and once
         // with inlined bind values
-        for (Executor create : asList(
+        for (ContextDSL create : asList(
             create(),
             create(new Settings().withStatementType(STATIC_STATEMENT)))) {
 

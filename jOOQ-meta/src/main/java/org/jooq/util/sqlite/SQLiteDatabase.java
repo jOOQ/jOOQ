@@ -43,9 +43,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.ContextDSL;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -82,7 +82,7 @@ public class SQLiteDatabase extends AbstractDatabase {
     }
 
     @Override
-    protected Executor create0() {
+    protected ContextDSL create0() {
         return Factory.using(getConnection(), SQLDialect.SQLITE);
     }
 

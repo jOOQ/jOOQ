@@ -43,7 +43,7 @@ import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
-        
+
 import javax.annotation.Generated;
 
 /**

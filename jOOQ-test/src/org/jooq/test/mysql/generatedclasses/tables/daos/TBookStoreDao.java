@@ -12,17 +12,17 @@ package org.jooq.test.mysql.generatedclasses.tables.daos;
 public class TBookStoreDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookStoreRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TBookStore, java.lang.String> {
 
 	/**
-	 * Create a new TBookStoreDao without any factory
+	 * Create a new TBookStoreDao without any configuration
 	 */
 	public TBookStoreDao() {
 		super(org.jooq.test.mysql.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.mysql.generatedclasses.tables.pojos.TBookStore.class);
 	}
 
 	/**
-	 * Create a new TBookStoreDao with an attached factory
+	 * Create a new TBookStoreDao with an attached configuration
 	 */
-	public TBookStoreDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.mysql.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.mysql.generatedclasses.tables.pojos.TBookStore.class, factory);
+	public TBookStoreDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.mysql.generatedclasses.tables.TBookStore.T_BOOK_STORE, org.jooq.test.mysql.generatedclasses.tables.pojos.TBookStore.class, configuration);
 	}
 
 	/**

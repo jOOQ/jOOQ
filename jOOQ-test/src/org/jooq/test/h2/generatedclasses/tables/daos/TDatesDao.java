@@ -10,17 +10,17 @@ package org.jooq.test.h2.generatedclasses.tables.daos;
 public class TDatesDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedclasses.tables.records.TDatesRecord, org.jooq.test.h2.generatedclasses.tables.pojos.TDates, java.lang.Integer> {
 
 	/**
-	 * Create a new TDatesDao without any factory
+	 * Create a new TDatesDao without any configuration
 	 */
 	public TDatesDao() {
 		super(org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES, org.jooq.test.h2.generatedclasses.tables.pojos.TDates.class);
 	}
 
 	/**
-	 * Create a new TDatesDao with an attached factory
+	 * Create a new TDatesDao with an attached configuration
 	 */
-	public TDatesDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES, org.jooq.test.h2.generatedclasses.tables.pojos.TDates.class, factory);
+	public TDatesDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.h2.generatedclasses.tables.TDates.T_DATES, org.jooq.test.h2.generatedclasses.tables.pojos.TDates.class, configuration);
 	}
 
 	/**

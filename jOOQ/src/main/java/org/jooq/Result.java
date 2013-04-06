@@ -44,7 +44,6 @@ import java.util.Map;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.Executor;
 import org.jooq.tools.Convert;
 
 import org.w3c.dom.Document;
@@ -833,7 +832,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * or {@link ResultSet#previous()}, etc.</li>
      * </ul>
      * <p>
-     * You may use {@link Executor#fetch(ResultSet)} to unwind this wrapper
+     * You may use {@link ContextDSL#fetch(ResultSet)} to unwind this wrapper
      * again.
      *
      * @return A wrapper JDBC <code>ResultSet</code>

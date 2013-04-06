@@ -36,10 +36,10 @@
 
 package org.jooq.test;
 
+import org.jooq.ContextDSL;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 
 
@@ -49,7 +49,7 @@ import org.jooq.impl.Factory;
 public class OracleTestInline extends OracleTest {
 
     @Override
-    protected Executor create(Settings settings) {
+    protected ContextDSL create(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
         settings.withRenderFormatted(true);

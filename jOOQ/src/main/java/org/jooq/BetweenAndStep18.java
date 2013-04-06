@@ -35,8 +35,6 @@
  */
 package org.jooq;
 
-import org.jooq.Support;
-
 import javax.annotation.Generated;
 
 /**

@@ -51,6 +51,7 @@ import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.ContextDSL;
 import org.jooq.Field;
 import org.jooq.InsertQuery;
 import org.jooq.Loader;
@@ -99,7 +100,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     // Configuration data
     // ------------------
-    private final Executor          create;
+    private final ContextDSL          create;
     private final Configuration     configuration;
     private final Table<R>          table;
     private int                     onDuplicate             = ON_DUPLICATE_KEY_ERROR;

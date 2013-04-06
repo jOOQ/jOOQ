@@ -58,6 +58,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
+import org.jooq.ContextDSL;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -71,7 +72,6 @@ import org.jooq.conf.MappedSchema;
 import org.jooq.conf.RenderMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -129,7 +129,7 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
         T_785Record> {
 
 	@Override
-    protected Executor create(Settings settings) {
+    protected ContextDSL create(Settings settings) {
 	    settings = (settings != null) ? settings : new Settings();
         RenderMapping mapping = SettingsTools.getRenderMapping(settings);
         List<MappedSchema> schemata = mapping.getSchemata();

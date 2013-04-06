@@ -10,17 +10,17 @@ package org.jooq.test.mysql.generatedclasses.tables.daos;
 public class TIdentityPkDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.TIdentityPkRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TIdentityPk, java.lang.Integer> {
 
 	/**
-	 * Create a new TIdentityPkDao without any factory
+	 * Create a new TIdentityPkDao without any configuration
 	 */
 	public TIdentityPkDao() {
 		super(org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql.generatedclasses.tables.pojos.TIdentityPk.class);
 	}
 
 	/**
-	 * Create a new TIdentityPkDao with an attached factory
+	 * Create a new TIdentityPkDao with an attached configuration
 	 */
-	public TIdentityPkDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql.generatedclasses.tables.pojos.TIdentityPk.class, factory);
+	public TIdentityPkDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.mysql.generatedclasses.tables.TIdentityPk.T_IDENTITY_PK, org.jooq.test.mysql.generatedclasses.tables.pojos.TIdentityPk.class, configuration);
 	}
 
 	/**

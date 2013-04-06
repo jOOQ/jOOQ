@@ -45,7 +45,6 @@ import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 
 /**
@@ -86,7 +85,7 @@ public interface Query extends QueryPart, Attachable {
      * Retrieve the SQL code rendered by this Query
      * <p>
      * This method can be expected to work correctly for any SQL dialect, as a
-     * query is usually "attached" when created from a {@link Executor}.
+     * query is usually "attached" when created from a {@link ContextDSL}.
      * <p>
      * Use this method, when you want to use jOOQ for object oriented query
      * creation, but execute the query with some other technology, such as
@@ -98,7 +97,7 @@ public interface Query extends QueryPart, Attachable {
      * </ul>
      * <p>
      * Note, this is the same as calling {@link #getSQL(boolean)}. The boolean
-     * parameter will depend on your {@link Executor}'s {@link Settings}:
+     * parameter will depend on your {@link ContextDSL}'s {@link Settings}:
      * <table border="1">
      * <tr>
      * <th><code>StatementType</code></th>
@@ -140,7 +139,7 @@ public interface Query extends QueryPart, Attachable {
      * <code>List</code> cannot be modified. To modify bind values, use
      * {@link #getParams()} instead.
      *
-     * @see Executor#extractBindValues(QueryPart)
+     * @see ContextDSL#extractBindValues(QueryPart)
      */
     List<Object> getBindValues();
 
@@ -154,7 +153,7 @@ public interface Query extends QueryPart, Attachable {
      *
      * @see Param
      * @see Factory#param(String, Object)
-     * @see Executor#extractParams(QueryPart)
+     * @see ContextDSL#extractParams(QueryPart)
      */
     Map<String, Param<?>> getParams();
 
@@ -166,7 +165,7 @@ public interface Query extends QueryPart, Attachable {
      *
      * @see Param
      * @see Factory#param(String, Object)
-     * @see Executor#extractParam(QueryPart, String)
+     * @see ContextDSL#extractParam(QueryPart, String)
      */
     Param<?> getParam(String name);
 

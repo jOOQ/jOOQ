@@ -55,6 +55,7 @@ import java.util.UUID;
 import junit.framework.Assert;
 
 import org.jooq.ArrayRecord;
+import org.jooq.ContextDSL;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -74,7 +75,6 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Executor;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -705,8 +705,8 @@ public abstract class BaseTest<
         return delegate.getCastableDataTypes();
     }
 
-    protected Executor create(Settings settings) {
-        Executor create = delegate.create(settings);
+    protected ContextDSL create(Settings settings) {
+        ContextDSL create = delegate.create(settings);
         create.configuration().getExecuteListeners().add(new TestStatisticsListener());
         return create;
     }
@@ -723,7 +723,7 @@ public abstract class BaseTest<
         return delegate.getConnection0(null, null);
     }
 
-    protected final Executor create() {
+    protected final ContextDSL create() {
         return delegate.create();
     }
 

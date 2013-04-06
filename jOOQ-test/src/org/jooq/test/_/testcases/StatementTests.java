@@ -51,6 +51,7 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.ContextDSL;
 import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.Record1;
@@ -64,7 +65,6 @@ import org.jooq.UpdatableRecord;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.reflect.Reflect;
@@ -99,7 +99,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepStatement() throws Exception {
-        Executor create = create();
+        ContextDSL create = create();
         create.configuration().getExecuteListeners().add(new KeepStatementListener());
 
         // [#385] By default, new statements are created for every execution

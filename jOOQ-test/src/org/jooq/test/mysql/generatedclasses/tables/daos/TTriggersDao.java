@@ -10,17 +10,17 @@ package org.jooq.test.mysql.generatedclasses.tables.daos;
 public class TTriggersDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.TTriggersRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers, java.lang.Integer> {
 
 	/**
-	 * Create a new TTriggersDao without any factory
+	 * Create a new TTriggersDao without any configuration
 	 */
 	public TTriggersDao() {
 		super(org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers.class);
 	}
 
 	/**
-	 * Create a new TTriggersDao with an attached factory
+	 * Create a new TTriggersDao with an attached configuration
 	 */
-	public TTriggersDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers.class, factory);
+	public TTriggersDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.mysql.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.mysql.generatedclasses.tables.pojos.TTriggers.class, configuration);
 	}
 
 	/**

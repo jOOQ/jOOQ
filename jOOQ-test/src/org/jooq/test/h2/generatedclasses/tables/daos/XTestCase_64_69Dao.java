@@ -10,17 +10,17 @@ package org.jooq.test.h2.generatedclasses.tables.daos;
 public class XTestCase_64_69Dao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedclasses.tables.records.XTestCase_64_69Record, org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_64_69, java.lang.Integer> {
 
 	/**
-	 * Create a new XTestCase_64_69Dao without any factory
+	 * Create a new XTestCase_64_69Dao without any configuration
 	 */
 	public XTestCase_64_69Dao() {
 		super(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_64_69.class);
 	}
 
 	/**
-	 * Create a new XTestCase_64_69Dao with an attached factory
+	 * Create a new XTestCase_64_69Dao with an attached configuration
 	 */
-	public XTestCase_64_69Dao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_64_69.class, factory);
+	public XTestCase_64_69Dao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.h2.generatedclasses.tables.XTestCase_64_69.X_TEST_CASE_64_69, org.jooq.test.h2.generatedclasses.tables.pojos.XTestCase_64_69.class, configuration);
 	}
 
 	/**

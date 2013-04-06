@@ -10,17 +10,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 public class TDirectoryDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDirectory, java.lang.Integer> {
 
 	/**
-	 * Create a new TDirectoryDao without any factory
+	 * Create a new TDirectoryDao without any configuration
 	 */
 	public TDirectoryDao() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDirectory.class);
 	}
 
 	/**
-	 * Create a new TDirectoryDao with an attached factory
+	 * Create a new TDirectoryDao with an attached configuration
 	 */
-	public TDirectoryDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDirectory.class, factory);
+	public TDirectoryDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TDirectory.T_DIRECTORY, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TDirectory.class, configuration);
 	}
 
 	/**

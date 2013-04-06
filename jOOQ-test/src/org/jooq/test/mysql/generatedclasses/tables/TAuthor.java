@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 301566024;
+	private static final long serialVersionUID = 462802042;
 
 	/**
 	 * The singleton instance of <code>test.t_author</code>

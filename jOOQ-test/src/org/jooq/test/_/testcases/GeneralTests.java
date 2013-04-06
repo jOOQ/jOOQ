@@ -61,6 +61,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.util.Arrays;
 
+import org.jooq.ContextDSL;
 import org.jooq.ExecuteContext;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -79,7 +80,6 @@ import org.jooq.conf.Settings;
 import org.jooq.exception.DetachedException;
 import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -232,7 +232,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1191] Check execution capabilities with new features in ExecuteListener
         ConnectionProviderListener.c = create().configuration().getConnectionProvider().acquire();
         try {
-            Executor create = create();
+            ContextDSL create = create();
             create.configuration().getExecuteListeners().add(new ConnectionProviderListener());
             q = create
                     .selectFrom(TAuthor())
@@ -295,7 +295,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testAttachable() throws Exception {
         jOOQAbstractTest.reset = false;
-        Executor create = create();
+        ContextDSL create = create();
 
         S store1 = create.newRecord(TBookStore());
         assertNotNull(store1);

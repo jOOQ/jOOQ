@@ -37,12 +37,14 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
+import static org.jooq.impl.Factory.using;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.Condition;
+import org.jooq.Configuration;
 import org.jooq.DAO;
 import org.jooq.Field;
 import org.jooq.RecordMapper;
@@ -60,7 +62,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     private final Table<R>     table;
     private final Class<P>     type;
     private RecordMapper<R, P> mapper;
-    private Executor           create;
+    private Configuration      configuration;
 
     // -------------------------------------------------------------------------
     // XXX: Constructors and initialisation
@@ -70,18 +72,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         this(table, type, null);
     }
 
-    protected DAOImpl(Table<R> table, Class<P> type, Executor create) {
+    protected DAOImpl(Table<R> table, Class<P> type, Configuration configuration) {
         this.table = table;
         this.type = type;
-        this.create = create;
+        this.configuration = configuration;
         this.mapper = new ReflectionMapper<R, P>(table.fields(), type);
     }
 
     /**
      * Inject an attached factory
      */
-    public final void setFactory(Executor create) {
-        this.create = create;
+    public final void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
     }
 
     // -------------------------------------------------------------------------
@@ -103,7 +105,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         // Execute a batch INSERT
         if (objects.size() > 1) {
-            create.batchInsert(records(objects, false)).execute();
+            using(configuration).batchInsert(records(objects, false)).execute();
         }
 
         // Execute a regular INSERT
@@ -127,7 +129,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
         // Execute a batch UPDATE
         if (objects.size() > 1) {
-            create.batchUpdate(records(objects, true)).execute();
+            using(configuration).batchUpdate(records(objects, true)).execute();
         }
 
         // Execute a regular UPDATE
@@ -162,7 +164,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         Field<?> pk = pk();
 
         if (pk != null) {
-            create.delete(table).where(equal(pk, ids)).execute();
+            using(configuration).delete(table).where(equal(pk, ids)).execute();
         }
     }
 
@@ -176,10 +178,11 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         Field<?> pk = pk();
 
         if (pk != null) {
-            return create.selectCount()
-                         .from(table)
-                         .where(equal(pk, id))
-                         .fetchOne(0, Integer.class) > 0;
+            return using(configuration)
+                     .selectCount()
+                     .from(table)
+                     .where(equal(pk, id))
+                     .fetchOne(0, Integer.class) > 0;
         }
         else {
             return false;
@@ -188,16 +191,18 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public final long count() {
-        return create.selectCount()
-                     .from(table)
-                     .fetchOne(0, Long.class);
+        return using(configuration)
+                 .selectCount()
+                 .from(table)
+                 .fetchOne(0, Long.class);
     }
 
     @Override
     public final List<P> findAll() {
-        return create.selectFrom(table)
-                     .fetch()
-                     .map(mapper);
+        return using(configuration)
+                 .selectFrom(table)
+                 .fetch()
+                 .map(mapper);
     }
 
     @Override
@@ -206,9 +211,10 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         R record = null;
 
         if (pk != null) {
-            record = create.selectFrom(table)
-                           .where(equal(pk, id))
-                           .fetchOne();
+            record = using(configuration)
+                        .selectFrom(table)
+                        .where(equal(pk, id))
+                        .fetchOne();
         }
 
         return mapper.map(record);
@@ -216,17 +222,19 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
 
     @Override
     public final <Z> List<P> fetch(Field<Z> field, Z... values) {
-        return create.selectFrom(table)
-                     .where(field.in(values))
-                     .fetch()
-                     .map(mapper);
+        return using(configuration)
+                 .selectFrom(table)
+                 .where(field.in(values))
+                 .fetch()
+                 .map(mapper);
     }
 
     @Override
     public final <Z> P fetchOne(Field<Z> field, Z value) {
-        R record = create.selectFrom(table)
-                         .where(field.equal(value))
-                         .fetchOne();
+        R record = using(configuration)
+                     .selectFrom(table)
+                     .where(field.equal(value))
+                     .fetchOne();
 
         return mapper.map(record);
     }
@@ -281,7 +289,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         Field<?> pk = pk();
 
         for (P object : objects) {
-            R record = create.newRecord(table, object);
+            R record = using(configuration).newRecord(table, object);
 
             if (forUpdate && pk != null) {
                 ((AbstractRecord) record).getValue0(pk).setChanged(false);

@@ -35,11 +35,11 @@
  */
 package org.jooq.exception;
 
+import org.jooq.ContextDSL;
 import org.jooq.Cursor;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
-import org.jooq.impl.Executor;
 
 /**
  * An error occurred while fetching data into a user defined Java object with
@@ -52,7 +52,7 @@ import org.jooq.impl.Executor;
  * </ul>
  * ... or when copying data into a {@link Record} with any of these methods
  * <ul>
- * <li> {@link Executor#newRecord(org.jooq.Table, Object)}</li>
+ * <li> {@link ContextDSL#newRecord(org.jooq.Table, Object)}</li>
  * <li> {@link Record#from(Object)}</li>
  * </ul>
  *

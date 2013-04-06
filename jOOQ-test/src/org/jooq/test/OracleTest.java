@@ -92,6 +92,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
+import org.jooq.ContextDSL;
 import org.jooq.DAO;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -106,7 +107,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -214,13 +214,13 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Executor create(Settings settings) {
+    protected ContextDSL create(Settings settings) {
         return Factory.using(getConnection(), SQLDialect.ORACLE, settings);
     }
 
     @Override
     protected DAO<TAuthorRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor, Integer> TAuthorDao() {
-        return new org.jooq.test.oracle.generatedclasses.test.tables.daos.TAuthorDao(create());
+        return new org.jooq.test.oracle.generatedclasses.test.tables.daos.TAuthorDao(create().configuration());
     }
 
     @Override
@@ -1333,7 +1333,7 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleMultiSchemaFactories() throws Exception {
-        Executor create = Factory.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
+        ContextDSL create = Factory.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
 
         UAddressTypeRecord address = new UAddressTypeRecord();
         address.setStreet(new UStreetTypeRecord());

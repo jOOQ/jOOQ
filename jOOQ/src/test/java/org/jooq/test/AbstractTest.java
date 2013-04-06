@@ -45,10 +45,10 @@ import java.sql.Time;
 import java.sql.Timestamp;
 
 import org.jooq.BindContext;
+import org.jooq.ContextDSL;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.test.data.Table1Record;
 import org.jooq.util.oracle.OracleDataType;
@@ -67,7 +67,7 @@ public abstract class AbstractTest {
 
     protected Mockery              context;
     protected PreparedStatement    statement;
-    protected Executor             create;
+    protected ContextDSL             create;
     protected Result<Table1Record> resultEmpty;
     protected Result<Table1Record> resultOne;
     protected Result<Table1Record> resultTwo;

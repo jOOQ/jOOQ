@@ -36,7 +36,6 @@
 
 package org.jooq;
 
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.util.ase.ASEFactory;
 import org.jooq.util.cubrid.CUBRIDFactory;
@@ -169,7 +168,7 @@ public enum SQLDialect {
     }
 
     /**
-     * A {@link Executor} class whose instances are pre-configured with this
+     * A {@link ContextDSL} class whose instances are pre-configured with this
      * dialect.
      */
     public final Class<? extends Factory> getFactory() {

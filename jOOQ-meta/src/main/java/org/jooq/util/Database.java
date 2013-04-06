@@ -39,8 +39,8 @@ package org.jooq.util;
 import java.sql.Connection;
 import java.util.List;
 
+import org.jooq.ContextDSL;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
 import org.jooq.util.jaxb.CustomType;
 import org.jooq.util.jaxb.EnumType;
 import org.jooq.util.jaxb.ForcedType;
@@ -289,7 +289,7 @@ public interface Database {
     /**
      * Create the factory for this database
      */
-    Executor create();
+    ContextDSL create();
 
     /**
      * Check whether a type is an array type

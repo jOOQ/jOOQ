@@ -56,6 +56,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.ContextDSL;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
@@ -236,7 +237,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final int executeSelectFrom() {
-        Executor create = create(configuration);
+        ContextDSL create = create(configuration);
         Result<?> result = create.selectFrom(table(asField())).fetch();
         results.put(returnParameter, result);
         return 0;

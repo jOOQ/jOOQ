@@ -2,8 +2,6 @@ package org.jooq.util.postgres;
 
 import static org.junit.Assert.assertEquals;
 
-import org.jooq.util.postgres.PostgresUtils;
-
 import org.junit.Test;
 
 /**

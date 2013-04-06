@@ -45,8 +45,6 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
-import org.jooq.impl.Executor;
-
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
@@ -88,8 +86,8 @@ public interface MergeValuesStepN<R extends Record> {
      * This variant of the <code>MERGE .. SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
-     * {@link Executor#mergeInto(Table, Field...)} or
-     * {@link Executor#mergeInto(Table, Collection)}
+     * {@link ContextDSL#mergeInto(Table, Field...)} or
+     * {@link ContextDSL#mergeInto(Table, Collection)}
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> select(Select<?> select);

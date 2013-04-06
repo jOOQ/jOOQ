@@ -41,6 +41,7 @@ import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.Random;
 
+import org.jooq.ContextDSL;
 import org.jooq.ExecuteListener;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -50,7 +51,6 @@ import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
-import org.jooq.impl.Executor;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.StopWatch;
@@ -91,7 +91,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testBenchmarkNewRecord() throws Exception {
-        Executor create = create();
+        ContextDSL create = create();
 
         for (int i = 0; i < REPETITIONS_NEW_RECORD; i++) {
             create.newRecord(TBook());
@@ -128,7 +128,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // https://github.com/jOOQ/jOOQ/issues/1625
 
 
-        Executor create = create();
+        ContextDSL create = create();
         create.configuration().getSettings().setExecuteLogging(false);
         create.configuration().setExecuteListeners(Collections.<ExecuteListener>emptyList());
 
@@ -151,7 +151,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         watch.splitInfo("Reuse SQL String");
     }
 
-    private void testBenchmarkReuseSQLString(Executor create, int repetitions) throws Exception {
+    private void testBenchmarkReuseSQLString(ContextDSL create, int repetitions) throws Exception {
         String sql = createSelect(create).getSQL(false);
         PreparedStatement pst = getConnection().prepareStatement(sql);
         pst.setLong(1, 1);
@@ -166,7 +166,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         pst.close();
     }
 
-    private void testBenchmarkReuseSelect(Executor create, int repetitions) {
+    private void testBenchmarkReuseSelect(ContextDSL create, int repetitions) {
         Select<?> scs = createSelect(create);
 
         for (int i = 0; i < repetitions; i++) {
@@ -174,13 +174,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    private void testBenchmarkFullExecution(Executor create, int repetitions) {
+    private void testBenchmarkFullExecution(ContextDSL create, int repetitions) {
         for (int i = 0; i < repetitions; i++) {
             createSelect(create).execute();
         }
     }
 
-    private Select<?> createSelect(Executor create) {
+    private Select<?> createSelect(ContextDSL create) {
         return create.select()
                      .from(TBook())
                      .where(TBook_ID().equal(1))

@@ -86,6 +86,7 @@ import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.ContextDSL;
 import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.DataType;
@@ -139,7 +140,7 @@ final class Utils {
 
     /**
      * [#1537] This constant is used internally by jOOQ to omit the RETURNING
-     * clause in {@link Executor#batchStore(UpdatableRecord...)} calls for
+     * clause in {@link ContextDSL#batchStore(UpdatableRecord...)} calls for
      * {@link SQLDialect#POSTGRES}
      */
     static final String          DATA_OMIT_RETURNING_CLAUSE                   = "org.jooq.configuration.omit-returning-clause";

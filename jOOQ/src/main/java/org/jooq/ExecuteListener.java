@@ -45,7 +45,6 @@ import java.util.EventListener;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
@@ -55,7 +54,7 @@ import org.jooq.tools.StopWatchListener;
  * render, prepare, bind, execute, fetch steps.
  * <p>
  * <code>ExecuteListener</code> is a base type for loggers, debuggers,
- * profilers, data collectors that can be hooked into a jOOQ {@link Executor}
+ * profilers, data collectors that can be hooked into a jOOQ {@link ContextDSL}
  * using the {@link Configuration#getExecuteListeners()} property, passing
  * <code>Settings</code> to
  * {@link Factory#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ
@@ -249,10 +248,10 @@ import org.jooq.tools.StopWatchListener;
  * {@link StatementType#PREPARED_STATEMENT}</li>
  * <li>Used with {@link ResultQuery} of statement type
  * {@link StatementType#STATIC_STATEMENT}</li>
- * <li>Used with {@link Executor#fetch(ResultSet)} or with
+ * <li>Used with {@link ContextDSL#fetch(ResultSet)} or with
  * {@link InsertResultStep#fetch()}</li>
- * <li>Used with {@link Executor#batch(Query)}</li>
- * <li>Used with {@link Executor#batch(Query[])}</li>
+ * <li>Used with {@link ContextDSL#batch(Query)}</li>
+ * <li>Used with {@link ContextDSL#batch(Query[])}</li>
  * <li>Used with a {@link Routine} standalone call</li>
  * </ol>
  * <p>

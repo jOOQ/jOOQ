@@ -10,17 +10,17 @@ package org.jooq.test.mysql.generatedclasses.tables.daos;
 public class T_639NumbersTableDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.T_639NumbersTableRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.T_639NumbersTable, java.lang.Integer> {
 
 	/**
-	 * Create a new T_639NumbersTableDao without any factory
+	 * Create a new T_639NumbersTableDao without any configuration
 	 */
 	public T_639NumbersTableDao() {
 		super(org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.mysql.generatedclasses.tables.pojos.T_639NumbersTable.class);
 	}
 
 	/**
-	 * Create a new T_639NumbersTableDao with an attached factory
+	 * Create a new T_639NumbersTableDao with an attached configuration
 	 */
-	public T_639NumbersTableDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.mysql.generatedclasses.tables.pojos.T_639NumbersTable.class, factory);
+	public T_639NumbersTableDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.mysql.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.mysql.generatedclasses.tables.pojos.T_639NumbersTable.class, configuration);
 	}
 
 	/**

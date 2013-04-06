@@ -10,17 +10,17 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
 public class TExoticTypesDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes, java.lang.Integer> {
 
 	/**
-	 * Create a new TExoticTypesDao without any factory
+	 * Create a new TExoticTypesDao without any configuration
 	 */
 	public TExoticTypesDao() {
 		super(org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes.class);
 	}
 
 	/**
-	 * Create a new TExoticTypesDao with an attached factory
+	 * Create a new TExoticTypesDao with an attached configuration
 	 */
-	public TExoticTypesDao(org.jooq.impl.Executor factory) {
-		super(org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes.class, factory);
+	public TExoticTypesDao(org.jooq.Configuration configuration) {
+		super(org.jooq.test.oracle.generatedclasses.test.tables.TExoticTypes.T_EXOTIC_TYPES, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TExoticTypes.class, configuration);
 	}
 
 	/**

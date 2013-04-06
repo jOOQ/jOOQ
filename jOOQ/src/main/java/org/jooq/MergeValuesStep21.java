@@ -47,8 +47,6 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
-import org.jooq.impl.Executor;
-
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
@@ -91,7 +89,7 @@ public interface MergeValuesStep21<R extends Record, T1, T2, T3, T4, T5, T6, T7,
      * This variant of the <code>MERGE .. SELECT</code> statement expects a
      * select returning exactly as many fields as specified previously in the
      * <code>INTO</code> clause:
-     * {@link Executor#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
+     * {@link ContextDSL#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)}
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     Merge<R> select(Select<? extends Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select);

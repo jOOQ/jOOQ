@@ -50,6 +50,7 @@ import java.sql.Date;
 import java.util.UUID;
 
 import org.jooq.ArrayRecord;
+import org.jooq.ContextDSL;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -60,7 +61,6 @@ import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.Executor;
 import org.jooq.impl.Factory;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -129,7 +129,7 @@ public class IngresTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected Executor create(Settings settings) {
+    protected ContextDSL create(Settings settings) {
         return Factory.using(getConnection(), SQLDialect.INGRES, settings);
     }
 

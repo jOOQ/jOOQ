@@ -185,7 +185,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     @Override
-    public final Configuration getConfiguration() {
+    public final Configuration configuration() {
         return configuration;
     }
 

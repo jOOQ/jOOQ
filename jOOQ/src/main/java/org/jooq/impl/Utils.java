@@ -1196,7 +1196,7 @@ final class Utils {
      */
     static final Configuration getConfiguration(Attachable attachable) {
         if (attachable instanceof AttachableInternal) {
-            return ((AttachableInternal) attachable).getConfiguration();
+            return ((AttachableInternal) attachable).configuration();
         }
 
         return null;

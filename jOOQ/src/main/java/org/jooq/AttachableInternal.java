@@ -48,6 +48,6 @@ public interface AttachableInternal extends Attachable {
     /**
      * Get the underlying configuration
      */
-    Configuration getConfiguration();
+    Configuration configuration();
 
 }

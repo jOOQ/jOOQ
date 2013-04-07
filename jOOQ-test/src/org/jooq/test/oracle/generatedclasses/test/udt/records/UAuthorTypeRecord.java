@@ -61,7 +61,7 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks f = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.CountBooks();
 		f.setSelf(this);
 
-		f.execute(getConfiguration());
+		f.execute(configuration());
 		return f.getReturnValue();
 	}
 
@@ -83,7 +83,7 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks p = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks();
 		p.setSelf(this);
 
-		p.execute(getConfiguration());
+		p.execute(configuration());
 		from(p.getSelf());
 		return p;
 	}
@@ -95,7 +95,7 @@ public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test
 		org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.Load p = new org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.Load();
 		p.setSelf(this);
 
-		p.execute(getConfiguration());
+		p.execute(configuration());
 		from(p.getSelf());
 		return p.getSelf();
 	}

@@ -110,7 +110,7 @@ class BatchCRUD implements Batch {
         local.settings().setExecuteLogging(false);
 
         for (int i = 0; i < records.length; i++) {
-            Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
+            Configuration previous = ((AttachableInternal) records[i]).configuration();
 
             try {
                 records[i].attach(local);
@@ -172,7 +172,7 @@ class BatchCRUD implements Batch {
         Configuration local = configuration.derive(new DefaultExecuteListenerProvider(listeners));
 
         for (int i = 0; i < records.length; i++) {
-            Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
+            Configuration previous = ((AttachableInternal) records[i]).configuration();
 
             try {
                 records[i].attach(local);

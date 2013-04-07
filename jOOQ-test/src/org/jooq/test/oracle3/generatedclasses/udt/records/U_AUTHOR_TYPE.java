@@ -61,7 +61,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS f = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.COUNT_BOOKS();
 		f.setSELF(this);
 
-		f.execute(getConfiguration());
+		f.execute(configuration());
 		return f.getReturnValue();
 	}
 
@@ -83,7 +83,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.GET_BOOKS();
 		p.setSELF(this);
 
-		p.execute(getConfiguration());
+		p.execute(configuration());
 		from(p.getSELF());
 		return p;
 	}
@@ -95,7 +95,7 @@ public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.ora
 		org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD p = new org.jooq.test.oracle3.generatedclasses.udt.u_author_type.LOAD();
 		p.setSELF(this);
 
-		p.execute(getConfiguration());
+		p.execute(configuration());
 		from(p.getSELF());
 		return p.getSELF();
 	}

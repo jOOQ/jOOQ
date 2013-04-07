@@ -324,7 +324,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        AbstractRecord result = Utils.newRecord(getClass(), fields.fields.fields, getConfiguration());
+        AbstractRecord result = Utils.newRecord(getClass(), fields.fields.fields, configuration());
         Value<?>[] v = getValues();
 
         for (int i = 0; i < v.length; i++) {
@@ -471,7 +471,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public final <R extends Record> R into(Table<R> table) {
         try {
-            R result = Utils.newRecord(table, getConfiguration());
+            R result = Utils.newRecord(table, configuration());
 
             for (Field<?> targetField : table.fields()) {
                 Field<?> sourceField = field(targetField);
@@ -511,7 +511,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final ResultSet intoResultSet() {
-        ResultImpl<Record> result = new ResultImpl<Record>(getConfiguration(), fields.fields.fields);
+        ResultImpl<Record> result = new ResultImpl<Record>(configuration(), fields.fields.fields);
         result.add(this);
         return result.intoResultSet();
     }
@@ -654,7 +654,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public String toString() {
-        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(getConfiguration(), fields.fields.fields);
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
         result.add(this);
         return result.toString();
     }

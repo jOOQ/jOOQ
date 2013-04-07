@@ -189,7 +189,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
         R first = first(records);
 
         if (first instanceof AttachableInternal) {
-            return DSL.using(((AttachableInternal) first).getConfiguration());
+            return DSL.using(((AttachableInternal) first).configuration());
         }
         else {
             throw new DetachedException("Supply at least one attachable record");

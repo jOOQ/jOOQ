@@ -40,6 +40,10 @@ import java.util.List;
 /**
  * A provider for {@link ExecuteListener} instances.
  * <p>
+ * <strong>WARNING: The design of the <code>ExecuteListener</code> API is
+ * undergoing change and may be unstable at the current stage of jOOQ 3.0-RC3
+ * development. USE AT OWN RISK!</strong>
+ * <p>
  * In order to facilitate the lifecycle management of
  * <code>ExecuteListener</code> instances that are provided to a jOOQ
  * {@link Configuration}, clients can implement this API. To jOOQ, it is thus

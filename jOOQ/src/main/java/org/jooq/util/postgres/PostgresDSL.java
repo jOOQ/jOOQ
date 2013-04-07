@@ -33,21 +33,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.firebird;
+package org.jooq.util.postgres;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#FIREBIRD} specific factory
+ * The {@link SQLDialect#POSTGRES} specific DSL.
  *
  * @author Lukas Eder
  */
-public class FirebirdFactory extends DSL {
+public class PostgresDSL extends DSL {
 
     /**
      * No instances
      */
-    private FirebirdFactory() {
+    private PostgresDSL() {
     }
 }

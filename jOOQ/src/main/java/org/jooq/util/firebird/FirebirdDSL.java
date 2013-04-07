@@ -33,21 +33,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.sqlserver;
+package org.jooq.util.firebird;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#SQLSERVER} specific factory
+ * The {@link SQLDialect#FIREBIRD} specific DSL.
  *
  * @author Lukas Eder
  */
-public class SQLServerFactory extends DSL {
+public class FirebirdDSL extends DSL {
 
     /**
      * No instances
      */
-    private SQLServerFactory() {
+    private FirebirdDSL() {
     }
 }

@@ -46,16 +46,16 @@ import org.jooq.impl.DSL;
 import org.jooq.impl.SQLDataType;
 
 /**
- * A {@link SQLDialect#ORACLE} specific factory
+ * The {@link SQLDialect#ORACLE} specific DSL.
  *
  * @author Lukas Eder
  */
-public class OracleFactory extends DSL {
+public class OracleDSL extends DSL {
 
     /**
      * No instances
      */
-    private OracleFactory() {
+    private OracleDSL() {
     }
 
     // -------------------------------------------------------------------------

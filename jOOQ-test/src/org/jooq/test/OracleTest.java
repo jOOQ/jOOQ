@@ -78,9 +78,9 @@ import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.load;
 import static org.jooq.test.oracle2.generatedclasses.Tables.DATE_AS_TIMESTAMP_T_976;
 import static org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE;
 import static org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA;
-import static org.jooq.util.oracle.OracleFactory.contains;
-import static org.jooq.util.oracle.OracleFactory.score;
-import static org.jooq.util.oracle.OracleFactory.sysContext;
+import static org.jooq.util.oracle.OracleDSL.contains;
+import static org.jooq.util.oracle.OracleDSL.score;
+import static org.jooq.util.oracle.OracleDSL.sysContext;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

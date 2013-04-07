@@ -28,21 +28,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.ase;
+package org.jooq.util.sybase;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#ASE} specific factory
+ * The {@link SQLDialect#SYBASE} specific DSL.
  *
- * @author Lukas Eder
+ * @author Espen Stromsnes
  */
-public class ASEFactory extends DSL {
+public class SybaseDSL extends DSL {
 
     /**
      * No instances
      */
-    private ASEFactory() {
+    private SybaseDSL() {
     }
 }

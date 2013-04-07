@@ -28,52 +28,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.cubrid;
+package org.jooq.util.ase;
 
-import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#CUBRID} specific factory
+ * The {@link SQLDialect#ASE} specific DSL.
  *
  * @author Lukas Eder
  */
-public class CUBRIDFactory extends DSL {
+public class ASEDSL extends DSL {
 
     /**
      * No instances
      */
-    private CUBRIDFactory() {
-    }
-
-    // -------------------------------------------------------------------------
-    // MySQL-specific functions
-    // -------------------------------------------------------------------------
-
-    /**
-     * Use the CUBRID-specific <code>INCR()</code> function.
-     * <p>
-     * This function can be used to increment a field value in a
-     * <code>SELECT</code> statement as such: <code><pre>
-     * SELECT article, INCR(read_count)
-     * FROM article_table
-     * WHERE article_id = 130,987</pre></code>
-     */
-    public static <T> Field<T> incr(Field<T> field) {
-        return field("{incr}({0})", field.getDataType(), field);
-    }
-
-    /**
-     * Use the CUBRID-specific <code>DECR()</code> function.
-     * <p>
-     * This function can be used to increment a field value in a
-     * <code>SELECT</code> statement as such: <code><pre>
-     * SELECT article, DECR(read_count)
-     * FROM article_table
-     * WHERE article_id = 130,987</pre></code>
-     */
-    public static <T> Field<T> decr(Field<T> field) {
-        return field("{decr}({0})", field.getDataType(), field);
+    private ASEDSL() {
     }
 }

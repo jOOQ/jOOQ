@@ -58,7 +58,7 @@ import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.two;
 import static org.jooq.impl.DSL.val;
-import static org.jooq.util.oracle.OracleFactory.rownum;
+import static org.jooq.util.oracle.OracleDSL.rownum;
 
 import java.sql.Date;
 import java.util.Arrays;

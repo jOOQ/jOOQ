@@ -33,21 +33,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.h2;
+package org.jooq.util.ingres;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#H2} specific factory
+ * The {@link SQLDialect#INGRES} specific DSL.
  *
  * @author Lukas Eder
  */
-public class H2Factory extends DSL {
+public class IngresDSL extends DSL {
 
     /**
      * No instances
      */
-    private H2Factory() {
+    private IngresDSL() {
     }
 }

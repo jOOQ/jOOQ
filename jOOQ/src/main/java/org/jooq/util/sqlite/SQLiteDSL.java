@@ -40,16 +40,16 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#SQLITE} specific factory
+ * The {@link SQLDialect#SQLITE} specific DSL.
  *
  * @author Lukas Eder
  */
-public class SQLiteFactory extends DSL {
+public class SQLiteDSL extends DSL {
 
     /**
      * No instances
      */
-    private SQLiteFactory() {
+    private SQLiteDSL() {
     }
 
     // -------------------------------------------------------------------------

@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.ExecuteListener;
@@ -68,6 +69,15 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
      */
     public DefaultExecuteListenerProvider() {
         this(new ArrayList<ExecuteListener>());
+    }
+
+    /**
+     * Create a new provider instance from an argument <code>List</code>.
+     *
+     * @param listeners The argument list.
+     */
+    public DefaultExecuteListenerProvider(ExecuteListener... listeners) {
+        this.listeners = new ArrayList<ExecuteListener>(Arrays.asList(listeners));
     }
 
     /**

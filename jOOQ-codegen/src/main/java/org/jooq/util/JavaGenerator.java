@@ -1946,7 +1946,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println();
-        out.tab(2).println("f.execute(%s);", instance ? "getConfiguration()" : "configuration");
+        out.tab(2).println("f.execute(%s);", instance ? "configuration()" : "configuration");
 
         // TODO [#956] Find a way to register "SELF" as OUT parameter
         // in case this is a UDT instance (member) function
@@ -2018,7 +2018,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println();
-        out.tab(2).println("p.execute(%s);", instance ? "getConfiguration()" : "configuration");
+        out.tab(2).println("p.execute(%s);", instance ? "configuration()" : "configuration");
 
         if (procedure.getOutParameters().size() > 0) {
             final String getter = getStrategy().getJavaGetterName(procedure.getOutParameters().get(0), Mode.DEFAULT);

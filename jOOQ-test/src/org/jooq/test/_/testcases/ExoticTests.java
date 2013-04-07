@@ -108,7 +108,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testTableWithHint() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DB2:
@@ -142,7 +142,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testPivotClause() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DB2:
@@ -273,7 +273,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testAliasingPivot() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DB2:
@@ -390,7 +390,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testConnectBySimple() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DB2:
             case DERBY:
@@ -449,7 +449,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testConnectByDirectory() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DB2:
             case DERBY:

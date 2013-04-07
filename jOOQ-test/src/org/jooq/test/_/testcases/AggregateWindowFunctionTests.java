@@ -157,7 +157,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Some dialects don't support a median function or a simulation thereof
         // Use AVG instead, as in this example the values of MEDIAN and AVG
         // are the same
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DERBY:
@@ -232,7 +232,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Statistical aggregate functions, available in some dialects:
         // ------------------------------------------------------------
-        switch (getDialect()) {
+        switch (dialect()) {
             case DERBY:
             case FIREBIRD:
             case SQLITE:
@@ -258,7 +258,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(0.25, result2.get(1).getValue(3, Double.class));
 
                 // DB2 only knows STDDEV_POP / VAR_POP
-                if (getDialect() != SQLDialect.DB2) {
+                if (dialect() != SQLDialect.DB2) {
                     assertEquals("0.707", result2.get(0).getValue(2, String.class).substring(0, 5));
                     assertEquals(0.5, result2.get(0).getValue(4, Double.class));
                     assertEquals("0.707", result2.get(1).getValue(2, String.class).substring(0, 5));
@@ -307,7 +307,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
-        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(getDialect())) {
+        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect())) {
             log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
         }
         else {
@@ -320,7 +320,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLinearRegressionFunctions() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DERBY:
@@ -353,7 +353,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         List<String> values = Arrays.asList("1.5", "2.5", "4.0", "-0.5", "0.8", "2.0", "1.0", "2.0", "5.0");
         assertEquals(values, Arrays.asList(roundStrings(1, record.into(String[].class))));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case DB2:
                 log.info("SKIPPING", "Skipping linear regression window function tests");
                 return;
@@ -383,7 +383,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testWindowFunctions() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case FIREBIRD:
             case INGRES:
@@ -393,7 +393,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case DERBY:
             case H2:
             case HSQLDB:
@@ -518,7 +518,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), result.getValue(2, column));
         assertEquals(Integer.valueOf(1), result.getValue(3, column));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case CUBRID:
             case DB2:
             case SQLSERVER:
@@ -627,7 +627,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(0.25, result.get(0).getValue(7, Double.class));
 
         // DB2 only knows STDDEV_POP / VAR_POP
-        if (getDialect() != SQLDialect.DB2) {
+        if (dialect() != SQLDialect.DB2) {
             assertEquals("1.290", result.get(0).getValue(2, String.class).substring(0, 5));
             assertEquals("1.666", result.get(0).getValue(4, String.class).substring(0, 5));
             assertEquals("0.707", result.get(0).getValue(6, String.class).substring(0, 5));
@@ -635,7 +635,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // NTILE()
-        if (asList(CUBRID, DB2, SYBASE).contains(getDialect())) {
+        if (asList(CUBRID, DB2, SYBASE).contains(dialect())) {
             log.info("SKIPPING", "NTILE tests");
         }
         else {
@@ -657,7 +657,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         column = 0;
-        if (asList(CUBRID, SQLSERVER).contains(getDialect())) {
+        if (asList(CUBRID, SQLSERVER).contains(dialect())) {
             log.info("SKIPPING", "ROWS UNBOUNDED PRECEDING and similar tests");
             return;
         }
@@ -716,7 +716,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(3), result.getValue(2, column));
         assertEquals(Integer.valueOf(3), result.getValue(3, column));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case POSTGRES:
                 log.info("SKIPPING", "FIRST_VALUE(... IGNORE NULLS) window function test");
                 break;
@@ -747,7 +747,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case SYBASE:
                 log.info("SKIPPING", "LEAD/LAG tests");
                 break;
@@ -891,7 +891,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testListAgg() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DERBY:
             case INGRES:
@@ -928,7 +928,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("4, 3", result1.getValue(1, "books1"));
         assertEquals("4, 3", result1.getValue(1, "books2"));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case CUBRID:
             case DB2:
             case H2:

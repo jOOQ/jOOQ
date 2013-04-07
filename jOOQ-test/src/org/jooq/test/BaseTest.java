@@ -744,7 +744,7 @@ public abstract class BaseTest<
         return delegate.create();
     }
 
-    protected final SQLDialect getDialect() {
+    protected final SQLDialect dialect() {
         return delegate.getDialect();
     }
 
@@ -857,7 +857,7 @@ public abstract class BaseTest<
         Schema schema = TAuthor().getSchema();
 
         if (schema == null) {
-            Class<?> tables = Class.forName("org.jooq.test." + getDialect().getName().toLowerCase() + ".generatedclasses.Tables");
+            Class<?> tables = Class.forName("org.jooq.test." + dialect().getName().toLowerCase() + ".generatedclasses.Tables");
             return (Table<?>) tables.getField(name).get(tables);
         }
         else {

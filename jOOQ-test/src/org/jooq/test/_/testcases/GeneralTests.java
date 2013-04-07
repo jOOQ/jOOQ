@@ -140,7 +140,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("4", "" + create().select(nextval).fetchOne(nextval));
         assertEquals("5", "" + create().select(nextval).fetchOne(nextval));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             // HSQLDB and DERBY don't support currval, so don't test it
             case HSQLDB:
             case DERBY:

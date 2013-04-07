@@ -178,7 +178,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testGroupByCubeRollup() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DERBY:
             case FIREBIRD:
@@ -203,7 +203,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     TBook_AUTHOR_ID()))
                 .fetch();
 
-        if (getDialect() == DB2) {
+        if (dialect() == DB2) {
             assertEquals(Arrays.asList(null, 1, 2, 3, 4, 1, 2, 3, 4), result.getValues(0));
             assertEquals(Arrays.asList(null, null, null, null, null, 1, 1, 2, 2), result.getValues(1));
         }
@@ -212,7 +212,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(Arrays.asList(1, null, 1, null, 2, null, 2, null, null), result.getValues(1));
         }
 
-        if (getDialect() == MYSQL) {
+        if (dialect() == MYSQL) {
             log.info("SKIPPING", "CUBE and GROUPING SETS tests");
             return;
         }
@@ -220,7 +220,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // ROLLUP clause
         // -------------
         Field<Integer> groupingId = groupingId(TBook_ID(), TBook_AUTHOR_ID());
-        if (asList(DB2, SYBASE).contains(getDialect()))
+        if (asList(DB2, SYBASE).contains(dialect()))
             groupingId = one();
 
         Result<Record4<Integer, Integer, Integer, Integer>> result2 = create()
@@ -242,7 +242,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(null, null, 1, null, 1, null, 2, null, 2), result2.getValues(1));
         assertEquals(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0), result2.getValues(2));
 
-        if (!asList(DB2, SYBASE).contains(getDialect()))
+        if (!asList(DB2, SYBASE).contains(dialect()))
             assertEquals(Arrays.asList(3, 1, 0, 1, 0, 1, 0, 1, 0), result2.getValues(3));
 
         // CUBE clause
@@ -265,7 +265,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(null, 1, 2, null, 1, null, 1, null, 2, null, 2), result3.getValues(1));
         assertEquals(Arrays.asList(1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0), result3.getValues(2));
 
-        if (!asList(DB2, SYBASE).contains(getDialect()))
+        if (!asList(DB2, SYBASE).contains(dialect()))
             assertEquals(Arrays.asList(3, 2, 2, 1, 0, 1, 0, 1, 0, 1, 0), result3.getValues(3));
 
         // GROUPING SETS clause
@@ -290,7 +290,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Arrays.asList(null, null, 1, 2, 2, 1, 1, 2, 2), result4.getValues(1));
         assertEquals(Arrays.asList(1, 1, 1, 1, 1, 0, 0, 0, 0), result4.getValues(2));
 
-        if (!asList(DB2, SYBASE).contains(getDialect()))
+        if (!asList(DB2, SYBASE).contains(dialect()))
             assertEquals(Arrays.asList(3, 3, 2, 2, 2, 0, 0, 0, 0), result4.getValues(3));
     }
 
@@ -314,7 +314,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // HAVING without GROUP BY is not supported by some dialects,
             // So this exception is OK
-            switch (getDialect()) {
+            switch (dialect()) {
 
                 // [#1665] TODO: Add support for the empty GROUP BY () clause
                 case SQLITE:

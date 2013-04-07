@@ -208,7 +208,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Some dialects do not really implement the cancelation well. In those
         // dialects, this query will run forever
-        if (getDialect() != H2) {
+        if (dialect() != H2) {
             log.info("SKIPPING", "Dangerous timeout query");
             return;
         }

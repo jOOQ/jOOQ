@@ -105,7 +105,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testOrderByInSubquery() throws Exception {
         // TODO: [#780] Fix this for Ingres and Sybase ASE
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case INGRES:
                 log.info("SKIPPING", "Ordered subqueries");
@@ -278,7 +278,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testLimit() throws Exception {
 
         // Some dialects don't support LIMIT 0 / TOP 0
-        int lower = asList(DB2, DERBY, HSQLDB, INGRES, SYBASE).contains(getDialect()) ? 1 : 0;
+        int lower = asList(DB2, DERBY, HSQLDB, INGRES, SYBASE).contains(dialect()) ? 1 : 0;
 
         for (int i = lower; i < 6; i++) {
             assertEquals(Math.min(i, 4),
@@ -287,7 +287,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 create().select().from(TBook()).limit(i).fetch().size());
         }
 
-        if (getDialect() == SQLDialect.ASE) {
+        if (dialect() == SQLDialect.ASE) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }
@@ -315,7 +315,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitAliased() throws Exception {
-        if (asList(ASE, SQLSERVER).contains(getDialect())) {
+        if (asList(ASE, SQLSERVER).contains(dialect())) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }
@@ -381,13 +381,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitNamedParams() throws Exception {
-        if (asList(ASE, INGRES).contains(getDialect())) {
+        if (asList(ASE, INGRES).contains(dialect())) {
             log.info("SKIPPING", "Parameterised LIMIT .. OFFSET tests");
             return;
         }
 
         // Some dialects don't support LIMIT 0 / TOP 0
-        int lower = asList(DB2, DERBY, HSQLDB, SYBASE).contains(getDialect()) ? 1 : 0;
+        int lower = asList(DB2, DERBY, HSQLDB, SYBASE).contains(dialect()) ? 1 : 0;
 
         for (int i = lower; i < 6; i++) {
             Select<?> s1 = create().selectFrom(TBook()).limit(param("limit", i));
@@ -452,8 +452,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testLimitNested() throws Exception {
         // TODO [#780] This is not supported in Ingres
-        if (getDialect() == SQLDialect.INGRES ||
-            getDialect() == SQLDialect.ASE) {
+        if (dialect() == SQLDialect.INGRES ||
+            dialect() == SQLDialect.ASE) {
 
             log.info("SKIPPING", "LIMIT clauses in nested SELECTs");
             return;

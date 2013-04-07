@@ -124,7 +124,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1009] Somewhere on the way to the database and back, the CET time
         // zone is added, that's why there is a one-hour shift (except for SQLite)
-        if (getDialect() != SQLITE)
+        if (dialect() != SQLITE)
             assertEquals(Date.valueOf(zeroDate()), author.getValue(TAuthor_DATE_OF_BIRTH()));
 
         Map<Field<?>, String> map = new HashMap<Field<?>, String>();
@@ -402,7 +402,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("1985", book2.getValue(TBook_TITLE()));
 
         // No ON DELETE CASCADE constraints for Sybase ASE
-        if (getDialect() == SQLDialect.ASE) {
+        if (dialect() == SQLDialect.ASE) {
             create().truncate(table("t_book_to_book_store")).execute();
         }
 
@@ -564,7 +564,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Amazon", store.getValue(TBookStore_NAME()));
         assertEquals(null, create().fetchOne(TBookStore(), TBookStore_NAME().equal("Amazon")));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             // Sybase ASE and SQL server do not allow for explicitly setting
             // values on IDENTITY columns
             case ASE:
@@ -680,7 +680,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         // No ON DELETE CASCADE constraints for Sybase ASE
-        if (getDialect() == SQLDialect.ASE) {
+        if (dialect() == SQLDialect.ASE) {
             create().truncate(table("t_book_to_book_store")).execute();
         }
 

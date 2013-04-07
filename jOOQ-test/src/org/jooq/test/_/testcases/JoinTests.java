@@ -173,7 +173,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // This query causes a failure in Ingres. Potentially a bug. See E_OP039F_BOOLFACT on
         // http://docs.ingres.com/ingres/9.2/ingres-92-message-guide/1283-errors-from-opf#E_OP039F_BOOLFACT
-        if (!asList(CUBRID, DB2, INGRES).contains(getDialect())) {
+        if (!asList(CUBRID, DB2, INGRES).contains(dialect())) {
 
             // Advanced JOIN usages with single JOIN condition
             Result<Record> result = create().select()
@@ -306,7 +306,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TBook())
                 .naturalJoin(TAuthor())
-                .orderBy(getDialect() == SQLDialect.ORACLE
+                .orderBy(dialect() == SQLDialect.ORACLE
                         ? field("id")
                         : TBook_ID())
                 .fetch();
@@ -324,7 +324,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TBook())
                 .naturalLeftOuterJoin(TAuthor())
-                .orderBy(getDialect() == SQLDialect.ORACLE
+                .orderBy(dialect() == SQLDialect.ORACLE
                     ? field("id")
                     : TBook_ID())
                 .fetch();
@@ -348,7 +348,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TAuthor())
                 .join(TBook())
                 .using(TAuthor_ID())
-                .orderBy(getDialect() == SQLDialect.ORACLE
+                .orderBy(dialect() == SQLDialect.ORACLE
                         ? field("id")
                         : TBook_ID())
                 .fetch();
@@ -367,7 +367,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TBook())
                 .leftOuterJoin(TAuthor())
                 .using(TAuthor_ID())
-                .orderBy(getDialect() == SQLDialect.ORACLE
+                .orderBy(dialect() == SQLDialect.ORACLE
                     ? field("id")
                     : TBook_ID())
                 .fetch();
@@ -485,7 +485,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1086] TODO: Fix this for SQLite
         // In CUBRID, it is not suupported
-        if (getDialect() == SQLITE || getDialect() == CUBRID) {
+        if (dialect() == SQLITE || dialect() == CUBRID) {
             log.info("SKIPPING", "Nested JOINs");
             return;
         }
@@ -571,7 +571,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Test RIGHT OUTER JOIN
         // ---------------------
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case SQLITE:
                 log.info("SKIPPING", "RIGHT OUTER JOIN tests");
                 break;
@@ -609,7 +609,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Test FULL OUTER JOIN
         // --------------------
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DERBY:

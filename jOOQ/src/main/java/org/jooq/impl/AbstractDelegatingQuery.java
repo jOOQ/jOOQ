@@ -61,12 +61,12 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     }
 
     @Override
-    public final Configuration getConfiguration() {
+    public final Configuration configuration() {
         if (delegate instanceof AttachableInternal) {
-            return ((AttachableInternal) delegate).getConfiguration();
+            return ((AttachableInternal) delegate).configuration();
         }
 
-        return super.getConfiguration();
+        return super.configuration();
     }
 
     @Override

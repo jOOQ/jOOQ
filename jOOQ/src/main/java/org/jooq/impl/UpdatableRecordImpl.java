@@ -399,7 +399,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     private final boolean isExecuteWithOptimisticLocking() {
-        Configuration configuration = getConfiguration();
+        Configuration configuration = configuration();
 
         // This can be null when the current record is detached
         if (configuration != null) {

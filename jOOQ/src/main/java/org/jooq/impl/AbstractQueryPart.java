@@ -58,7 +58,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
     // [#1544] The deprecated Attachable and Attachable internal API
     // -------------------------------------------------------------------------
 
-    Configuration getConfiguration() {
+    Configuration configuration() {
         return new DefaultConfiguration();
     }
 
@@ -130,7 +130,7 @@ abstract class AbstractQueryPart implements QueryPartInternal {
      * Internal convenience method
      */
     protected final DSLContext create() {
-        return create(getConfiguration());
+        return create(configuration());
     }
 
     /**

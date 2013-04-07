@@ -65,27 +65,27 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
 
     @Override
     public final int fetchCount() throws DataAccessException {
-        return DSL.using(getConfiguration()).fetchCount(this);
+        return DSL.using(configuration()).fetchCount(this);
     }
 
     @Override
     public final Select<R> union(Select<? extends R> select) {
-        return new Union<R>(getConfiguration(), this, select, CombineOperator.UNION);
+        return new Union<R>(configuration(), this, select, CombineOperator.UNION);
     }
 
     @Override
     public final Select<R> unionAll(Select<? extends R> select) {
-        return new Union<R>(getConfiguration(), this, select, CombineOperator.UNION_ALL);
+        return new Union<R>(configuration(), this, select, CombineOperator.UNION_ALL);
     }
 
     @Override
     public final Select<R> except(Select<? extends R> select) {
-        return new Union<R>(getConfiguration(), this, select, CombineOperator.EXCEPT);
+        return new Union<R>(configuration(), this, select, CombineOperator.EXCEPT);
     }
 
     @Override
     public final Select<R> intersect(Select<? extends R> select) {
-        return new Union<R>(getConfiguration(), this, select, CombineOperator.INTERSECT);
+        return new Union<R>(configuration(), this, select, CombineOperator.INTERSECT);
     }
 
     @SuppressWarnings("unchecked")
@@ -155,7 +155,7 @@ abstract class AbstractSelect<R extends Record> extends AbstractResultQuery<R> i
         // If no projection was specified explicitly, create fields from result
         // set meta data instead. This is typically the case for SELECT * ...
         if (fields.isEmpty()) {
-            Configuration configuration = getConfiguration();
+            Configuration configuration = configuration();
             return new MetaDataFieldProvider(configuration, meta).getFields();
         }
 

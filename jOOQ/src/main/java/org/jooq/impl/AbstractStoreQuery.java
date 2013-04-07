@@ -142,7 +142,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     @Override
     public final Result<R> getReturnedRecords() {
         if (returned == null) {
-            returned = new ResultImpl<R>(getConfiguration(), returning);
+            returned = new ResultImpl<R>(configuration(), returning);
         }
 
         return returned;

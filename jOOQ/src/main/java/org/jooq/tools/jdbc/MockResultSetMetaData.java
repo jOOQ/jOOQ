@@ -165,7 +165,7 @@ public class MockResultSetMetaData implements ResultSetMetaData, Serializable {
                 Schema schema = table.getSchema();
 
                 if (schema != null) {
-                    Configuration configuration = ((AttachableInternal) rs.result).getConfiguration();
+                    Configuration configuration = ((AttachableInternal) rs.result).configuration();
                     Schema mapped = null;
 
                     if (configuration != null) {

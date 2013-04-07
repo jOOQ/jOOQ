@@ -86,7 +86,7 @@ abstract class AbstractStore implements AttachableInternal {
     }
 
     @Override
-    public final Configuration getConfiguration() {
+    public final Configuration configuration() {
         return configuration;
     }
 
@@ -94,7 +94,7 @@ abstract class AbstractStore implements AttachableInternal {
      * This method is used in generated code!
      */
     protected final DSLContext create() {
-        return DSL.using(getConfiguration());
+        return DSL.using(configuration());
     }
 
     // -------------------------------------------------------------------------

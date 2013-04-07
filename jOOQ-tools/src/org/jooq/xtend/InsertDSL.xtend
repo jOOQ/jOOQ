@@ -188,7 +188,7 @@ class InsertDSL extends Generators {
         
             @Override
             public final Insert<R> select(Select select) {
-                Configuration configuration = ((AttachableInternal) getDelegate()).getConfiguration();
+                Configuration configuration = ((AttachableInternal) getDelegate()).configuration();
                 return new InsertSelectQueryImpl<R>(configuration, into, fields, select);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»

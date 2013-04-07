@@ -83,7 +83,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     }
 
     @Override
-    public final Configuration getConfiguration() {
+    public final Configuration configuration() {
         return configuration;
     }
 
@@ -171,7 +171,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
             // If all params are inlined, the previous statement always has to
             // be closed
-            else if (SettingsTools.executeStaticStatements(getConfiguration().settings())) {
+            else if (SettingsTools.executeStaticStatements(configuration().settings())) {
                 close();
             }
         }
@@ -233,7 +233,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         if (isExecutable()) {
 
             // Get the attached configuration of this query
-            Configuration c = getConfiguration();
+            Configuration c = configuration();
 
             // [#1191] The following triggers a start event on all listeners.
             // This may be used to provide jOOQ with a JDBC connection, in case
@@ -360,7 +360,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      */
     @Override
     public final String getSQL() {
-        if (executePreparedStatements(getConfiguration().settings())) {
+        if (executePreparedStatements(configuration().settings())) {
             return getSQL(false);
         }
         else {

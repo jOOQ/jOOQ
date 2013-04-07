@@ -124,7 +124,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     }
 
     @Override
-    public final Configuration getConfiguration() {
+    public final Configuration configuration() {
         return configuration;
     }
 
@@ -857,7 +857,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
             Result<R> result = map.get(key);
             if (result == null) {
-                result = new ResultImpl<R>(getConfiguration(), this.fields);
+                result = new ResultImpl<R>(configuration(), this.fields);
                 map.put(key, result);
             }
 
@@ -1001,7 +1001,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <Z extends Record> Result<Z> into(Table<Z> table) {
-        Result<Z> list = new ResultImpl<Z>(getConfiguration(), table.fields());
+        Result<Z> list = new ResultImpl<Z>(configuration(), table.fields());
 
         for (R record : this) {
             list.add(record.into(table));

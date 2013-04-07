@@ -76,7 +76,7 @@ class DSLContext extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link Factory#select(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#select(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -87,7 +87,7 @@ class DSLContext extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see Factory#selectDistinct(Field...)
+                 * @see DSL#selectDistinct(Field...)
                  * @see #selectDistinct(Field...)
                  */
                 «generatedMethod»
@@ -134,7 +134,7 @@ class DSLContext extends Generators {
                  * statement from this {@link DSLContext}. If you don't need to render or
                  * execute this <code>SELECT</code> statement (e.g. because you want to
                  * create a subselect), consider using the static
-                 * {@link Factory#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
+                 * {@link DSL#selectDistinct(«FOR d : (1..degree) SEPARATOR ', '»Field«ENDFOR»)} instead.
                  * <p>
                  * Example: <code><pre>
                  * using(configuration)
@@ -145,7 +145,7 @@ class DSLContext extends Generators {
                  *       .orderBy(field2);
                  * </pre></code>
                  *
-                 * @see Factory#selectDistinct(Field...)
+                 * @see DSL#selectDistinct(Field...)
                  * @see #selectDistinct(Field...)
                  */
                 «generatedMethod»

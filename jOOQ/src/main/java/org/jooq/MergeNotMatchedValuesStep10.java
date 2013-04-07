@@ -50,7 +50,7 @@ import javax.annotation.Generated;
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Factory create = new Factory();
+ * DSLContext create = DSL.using(configuration);
  *
  * create.mergeInto(table)
  *       .using(select)

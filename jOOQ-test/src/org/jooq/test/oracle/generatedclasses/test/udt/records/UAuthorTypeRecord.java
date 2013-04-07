@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class UAuthorTypeRecord extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> {
 
-	private static final long serialVersionUID = 1930939886;
+	private static final long serialVersionUID = -285267908;
 
 
 	/**

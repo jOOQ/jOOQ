@@ -15,7 +15,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.pojos;
 })
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1041606392;
+	private static final long serialVersionUID = 85867128;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -92,11 +92,11 @@ public class XUnused implements java.io.Serializable {
 	}
 
 	@javax.persistence.Column(name = "CONFIGURATION", precision = 7)
-	public java.lang.Integer getConfiguration_() {
+	public java.lang.Integer getConfiguration() {
 		return this.configuration;
 	}
 
-	public void setConfiguration_(java.lang.Integer configuration) {
+	public void setConfiguration(java.lang.Integer configuration) {
 		this.configuration = configuration;
 	}
 

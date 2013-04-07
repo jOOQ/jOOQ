@@ -149,7 +149,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // The below code throws an exception on Ingres when run once. When run
         // twice, the DB crashes... This seems to be a driver / database bug
-        if (getDialect() != SQLDialect.INGRES) {
+        if (dialect() != SQLDialect.INGRES) {
             assertEquals(0, create().select().where(val(false).isTrue()).fetch().size());
             assertEquals(1, create().select().where(val(false).isFalse()).fetch().size());
             assertEquals(1, create().select().where(val(true).isTrue()).fetch().size());
@@ -177,7 +177,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<String> notLike = TBook_PUBLISHED_IN().cast(String.class);
 
         // DB2 doesn't support this syntax
-        if (getDialect() == DB2) {
+        if (dialect() == DB2) {
             notLike = val("bbb");
         }
 
@@ -213,7 +213,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // DERBY doesn't know any REPLACE function, hence only test those
         // conditions that do not use REPLACE internally
-        boolean derby = getDialect() == DERBY;
+        boolean derby = dialect() == DERBY;
 
         // [#1131] DB2 doesn't like concat in LIKE expressions very much
         // -------------------------------------------------------------
@@ -311,7 +311,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLikeRegex() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DB2:
             case DERBY:
@@ -343,7 +343,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                                       .where(TBook_ID().in(Collections.nCopies(999, 1)))
                                       .fetchOne(count));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case INGRES:
             case SQLITE:
                 log.info("SKIPPING", "SQLite/Ingres can't handle more than 999 variables");
@@ -463,7 +463,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetch(TBook_ID()));
 
         // [#1073] Some dialects incorrectly handle NULL in NOT IN predicates
-        if (asList(ASE).contains(getDialect())) {
+        if (asList(ASE).contains(dialect())) {
             assertEquals(
             asList(2, 3, 4),
             create().select(TBook_ID())
@@ -504,7 +504,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testQuantifiedPredicates() throws Exception {
 
         // = { ALL | ANY | SOME }
-        switch (getDialect()) {
+        switch (dialect()) {
             case SQLITE:
             case INGRES: // Ingres supports these syntaxes but has internal errors...
                 log.info("SKIPPING", "= { ALL | ANY | SOME } tests");

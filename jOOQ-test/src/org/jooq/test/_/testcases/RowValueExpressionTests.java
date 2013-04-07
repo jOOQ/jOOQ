@@ -317,7 +317,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRowValueExpressionOrderingSubselects() throws Exception {
         // IN with subselects - not supported by all DBs
         // TODO [#1772] Simulate this for all dialects
-        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
+        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect())) {
             log.info("SKIPPING", "Tuples and subselects");
         }
         else {
@@ -355,14 +355,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // IN with subselects - not supported by all DBs
         // TODO [#1772] Simulate this for all dialects
-        if (asList(ASE, CUBRID, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
+        if (asList(ASE, CUBRID, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect())) {
             log.info("SKIPPING", "Tuples and subselects");
         }
         else {
 
             // TODO: Create more systematic tests
             // DB2 cannot deal with row value expression comparison predicates
-            if (!asList(DB2).contains(getDialect())) {
+            if (!asList(DB2).contains(dialect())) {
                 assertEquals(1, (int)
                 create().selectOne()
                         .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
@@ -412,7 +412,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // SQL standard (DATE, INTERVAL) OVERLAPS (DATE, INTERVAL) predicate
         // -----------------------------------------------------------------
-        if (asList(INGRES).contains(getDialect())) {
+        if (asList(INGRES).contains(dialect())) {
             log.info("SKIPPING", "Ingres INTERVAL OVERLAPS tests");
         }
         else {

@@ -152,8 +152,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .values(10)
                 .execute());
 
-        if (getDialect() != POSTGRES &&
-            getDialect() != DB2) {
+        if (dialect() != POSTGRES &&
+            dialect() != DB2) {
 
             assertEquals(new BigInteger("1"), create().lastID());
         }
@@ -171,8 +171,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .returning()
                 .fetchOne();
 
-        if (getDialect() != POSTGRES &&
-            getDialect() != DB2) {
+        if (dialect() != POSTGRES &&
+            dialect() != DB2) {
 
             assertEquals(new BigInteger("2"), create().lastID());
             assertEquals(new BigInteger("2"), create().lastID());
@@ -187,13 +187,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO [#832] Make this work for Sybase also
         // TODO [#1004] Make this work for SQL Server also
         // TODO ... and then, think about Ingres, H2 and Derby as well
-        if (getDialect() == CUBRID ||
-            getDialect() == SYBASE ||
-            getDialect() == SQLSERVER ||
-            getDialect() == INGRES ||
-            getDialect() == H2 ||
-            getDialect() == DERBY ||
-            getDialect() == ASE) {
+        if (dialect() == CUBRID ||
+            dialect() == SYBASE ||
+            dialect() == SQLSERVER ||
+            dialect() == INGRES ||
+            dialect() == H2 ||
+            dialect() == DERBY ||
+            dialect() == ASE) {
 
             log.info("SKIPPING", "Multi-record INSERT .. RETURNING statement");
         }
@@ -322,7 +322,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1009] Somewhere on the way to the database and back, the CET time
         // zone is added, that's why there is a one-hour shift (except for SQLite)
-        if (getDialect() != SQLITE)
+        if (dialect() != SQLITE)
             assertEquals(Date.valueOf(zeroDate()), author1.getValue(TAuthor_DATE_OF_BIRTH()));
         assertEquals(1980, (int) author1.getValue(TAuthor_YEAR_OF_BIRTH()));
 
@@ -364,7 +364,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         Field<?> nullField = null;
-        switch (getDialect()) {
+        switch (dialect()) {
             case ORACLE:
             case POSTGRES:
                 // TODO: cast this to the UDT type
@@ -413,7 +413,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Integer> ID3;
         Field<Integer> ID4;
 
-        switch (getDialect()) {
+        switch (dialect()) {
             // Sybase ASE doesn't allow for selecting data inside VALUES()
             case ASE:
 
@@ -469,7 +469,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateWithRowValueExpression() throws Exception {
-        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(getDialect())) {
+        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(dialect())) {
             log.info("SKIPPING", "UPDATE with row value expression tests");
             return;
         }
@@ -489,7 +489,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("row1", author.getValue(TAuthor_FIRST_NAME()));
 
         // Postgres doesn't support subselects here
-        if (!asList(POSTGRES).contains(getDialect())) {
+        if (!asList(POSTGRES).contains(dialect())) {
             assertEquals(1,
             create().update(TAuthor())
                     .set(row(TAuthor_FIRST_NAME()), select(val("select1")))
@@ -514,7 +514,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("row2b", author.getValue(TAuthor_LAST_NAME()));
 
         // Postgres doesn't support subselects here
-        if (!asList(POSTGRES).contains(getDialect())) {
+        if (!asList(POSTGRES).contains(dialect())) {
             assertEquals(1,
             create().update(TAuthor())
                     .set(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME()),
@@ -542,7 +542,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, (int) author.getValue(TAuthor_YEAR_OF_BIRTH()));
 
         // Postgres doesn't support subselects here
-        if (!asList(POSTGRES).contains(getDialect())) {
+        if (!asList(POSTGRES).contains(dialect())) {
             assertEquals(1,
             create().update(TAuthor())
                     .set(row(TAuthor_FIRST_NAME(), TAuthor_LAST_NAME(), TAuthor_YEAR_OF_BIRTH()),
@@ -624,7 +624,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(returned.getValue(TTriggers_ID()));
         assertNull(returned.getValue(TTriggers_COUNTER()));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             // TODO [#1260] This should work eventually, when CUBRID fixes this
             // JDBC bug
@@ -730,7 +730,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateReturning() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DB2:
@@ -759,7 +759,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, (int) result1.get(0).getValue(TBook_ID()));
         assertEquals("XYZ", result1.get(0).getValue(TBook_TITLE()));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case FIREBIRD: {
                 break;
             }
@@ -785,7 +785,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testInsertOnDuplicateKeyUpdate() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DERBY:
             case H2:
@@ -823,7 +823,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testInsertOnDuplicateKeyIgnore() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DERBY:
             case H2:
@@ -860,7 +860,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testMerge() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DERBY:
             case H2:
@@ -980,7 +980,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testMergeWithOracleSyntaxExtension() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DB2:
             case DERBY:
@@ -1074,7 +1074,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testMergeWithH2SyntaxExtension() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DERBY:
             case INGRES:
@@ -1175,10 +1175,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateSelect() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case SQLITE:
             case MYSQL:
-                log.info("SKIPPING", "UPDATE .. SET .. = (SELECT ..) integration test. This syntax is poorly supported by " + getDialect());
+                log.info("SKIPPING", "UPDATE .. SET .. = (SELECT ..) integration test. This syntax is poorly supported by " + dialect());
                 return;
         }
 
@@ -1203,7 +1203,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateJoin() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case DB2:
             case DERBY:
             case FIREBIRD:
@@ -1213,7 +1213,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case POSTGRES:
             case SQLSERVER:
             case SQLITE:
-                log.info("SKIPPING", "UPDATE T1 JOIN T2 .. integration test. This syntax is not supported by " + getDialect());
+                log.info("SKIPPING", "UPDATE T1 JOIN T2 .. integration test. This syntax is not supported by " + dialect());
                 return;
         }
 
@@ -1240,7 +1240,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().truncate(TAuthor()).execute();
 
             // The above should fail if foreign keys are supported
-            if (!Arrays.asList(CUBRID, FIREBIRD, INGRES, SQLITE).contains(getDialect())) {
+            if (!Arrays.asList(CUBRID, FIREBIRD, INGRES, SQLITE).contains(dialect())) {
                 fail();
             }
         } catch (Exception expected) {

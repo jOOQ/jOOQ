@@ -111,19 +111,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 sequences++;
 
                 // DB2 has an additional sequence for the T_TRIGGERS table
-                if (getDialect() == DB2 ||
-                    getDialect() == H2) {
+                if (dialect() == DB2 ||
+                    dialect() == H2) {
 
                     sequences++;
                 }
 
                 // CUBRID generates sequences for AUTO_INCREMENT columns
-                else if (getDialect() == CUBRID) {
+                else if (dialect() == CUBRID) {
                     sequences += 3;
                 }
 
                 // Oracle has additional sequences for [#961]
-                else if (getDialect() == ORACLE) {
+                else if (dialect() == ORACLE) {
                     sequences += 5;
                 }
             }
@@ -176,7 +176,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
             // [#643] The U_INVALID types are only available in Oracle
             // [#799] The member procedure UDT's too
-            else if (getDialect() == ORACLE) {
+            else if (dialect() == ORACLE) {
                 assertEquals(7, schema.getUDTs().size());
             }
             else {
@@ -330,10 +330,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#745] TODO: Unify distinction between NUMERIC and DECIMAL
             else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.ORACLE
-                    && getDialect() != SQLDialect.POSTGRES
-                    && getDialect() != SQLDialect.SQLITE
-                    && getDialect() != SQLDialect.SQLSERVER) {
+                    && dialect() != SQLDialect.ORACLE
+                    && dialect() != SQLDialect.POSTGRES
+                    && dialect() != SQLDialect.SQLITE
+                    && dialect() != SQLDialect.SQLSERVER) {
 
                 assertEquals(BigDecimal.class, field.getType());
                 assertEquals(SQLDataType.DECIMAL.getType(), field.getDataType().getType());
@@ -354,17 +354,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#456] TODO: Should floating point numbers have precision and scale?
             else if ("FLOAT".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.HSQLDB
-                    && getDialect() != SQLDialect.MYSQL
-                    && getDialect() != SQLDialect.SYBASE) {
+                    && dialect() != SQLDialect.HSQLDB
+                    && dialect() != SQLDialect.MYSQL
+                    && dialect() != SQLDialect.SYBASE) {
 
                 assertEquals(Float.class, field.getType());
                 assertEquals(SQLDataType.REAL, field.getDataType());
                 assertEquals(0, field.getDataType().length());
             }
             else if ("FLOAT".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.MYSQL
-                    && getDialect() != SQLDialect.SYBASE) {
+                    && dialect() != SQLDialect.MYSQL
+                    && dialect() != SQLDialect.SYBASE) {
 
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());
@@ -378,8 +378,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#746] TODO: Fix this, too
             else if ("DOUBLE".equalsIgnoreCase(field.getName())
-                    && getDialect() != SQLDialect.SQLSERVER
-                    && getDialect() != SQLDialect.ASE) {
+                    && dialect() != SQLDialect.SQLSERVER
+                    && dialect() != SQLDialect.ASE) {
 
                 assertEquals(Double.class, field.getType());
                 assertEquals(SQLDataType.DOUBLE, field.getDataType());

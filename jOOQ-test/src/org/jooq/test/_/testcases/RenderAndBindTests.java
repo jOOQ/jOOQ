@@ -310,7 +310,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testInlinedBindValues() throws Exception {
 
         // [#1158] TODO get this working for derby as well
-        boolean derby = (getDialect() == DERBY);
+        boolean derby = (dialect() == DERBY);
 
         // [#1147] Some data types need special care when inlined
 

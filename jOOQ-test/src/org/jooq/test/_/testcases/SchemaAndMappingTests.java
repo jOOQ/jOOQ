@@ -96,7 +96,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUse() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case FIREBIRD:
@@ -160,7 +160,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testSchemaMapping() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case FIREBIRD:
             case SQLITE:
                 log.info("SKIPPING", "SchemaMapping tests");
@@ -199,7 +199,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Schema mapping is supported in many RDBMS. But maintaining several
         // databases is non-trivial in some of them.
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DB2:

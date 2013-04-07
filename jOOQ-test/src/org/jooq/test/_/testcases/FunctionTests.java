@@ -177,7 +177,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testFunctionPosition() throws Exception {
         // SQLite does not have anything like the position function
-        if (getDialect() == SQLDialect.SQLITE) {
+        if (dialect() == SQLDialect.SQLITE) {
             log.info("SKIPPING", "position function test");
             return;
         }
@@ -227,7 +227,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("2", create().select(nvl("2", "1")).fetchOne(0));
 
         // TODO [#831] Fix this for Sybase ASE
-        if (getDialect() != SQLDialect.ASE) {
+        if (dialect() != SQLDialect.ASE) {
             assertTrue(("" + create()
                 .select(nvl(TBook_CONTENT_TEXT(), "abc"))
                 .from(TBook())
@@ -248,7 +248,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("2", create().select(nvl2(val("2"), "2", "1")).fetchOne(0));
 
         // TODO [#831] Fix this for Sybase ASE
-        if (getDialect() != SQLDialect.ASE) {
+        if (dialect() != SQLDialect.ASE) {
             assertEquals("abc", create()
                 .select(nvl2(TBook_CONTENT_TEXT(), "abc", "xyz"))
                 .from(TBook())
@@ -344,7 +344,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             .as("case1");
 
         // Ingres does not allow sub selects in CASE expressions
-        Field<?> case2 = getDialect() == SQLDialect.INGRES
+        Field<?> case2 = dialect() == SQLDialect.INGRES
             ? decode()
                 .value(TBook_AUTHOR_ID())
                 .when(1, "Orwell")
@@ -445,7 +445,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         SelectQuery<?> q = create().selectQuery();
         Field<String> constant = val("abc");
 
-        switch (getDialect()) {
+        switch (dialect()) {
 
             // DERBY does not have a replace function
             case DERBY:
@@ -477,7 +477,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(3), record.getValue(length));
         assertEquals(Integer.valueOf(3), record.getValue(charLength));
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case HSQLDB:
             case H2:
                 // HSQLDB and H2 uses Java-style characters (16 bit)
@@ -496,7 +496,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnStrings_RPAD_LPAD() throws Exception {
 
         // RPAD, LPAD
-        switch (getDialect()) {
+        switch (dialect()) {
             case DERBY:
                 log.info("SKIPPING", "RPAD and LPAD functions");
                 break;
@@ -549,7 +549,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnStrings_REPEAT() throws Exception {
 
         // REPEAT
-        switch (getDialect()) {
+        switch (dialect()) {
             case DERBY:
                 log.info("SKIPPING", "REPEAT function");
                 break;
@@ -571,7 +571,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnStrings_ASCII() throws Exception {
 
         // ASCII
-        switch (getDialect()) {
+        switch (dialect()) {
             case DERBY:
             case INGRES: // TODO [#864]
             case SQLITE: // TODO [#862]
@@ -598,7 +598,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnStrings_HashFunctions() throws Exception {
 
         // MD5
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case DB2:
@@ -626,8 +626,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnNumbers() throws Exception {
 
         // Some databases are limited or buggy
-        boolean sqlite = (getDialect() == SQLITE);
-        boolean ingres = (getDialect() == INGRES);
+        boolean sqlite = (dialect() == SQLITE);
+        boolean ingres = (dialect() == INGRES);
 
         // The random function
         BigDecimal rand = create().select(rand()).fetchOne(rand());
@@ -751,7 +751,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList(1, 1, 2, 2), result.getValues(2));
 
         // Mathematical functions
-        switch (getDialect()) {
+        switch (dialect()) {
             case SQLITE:
                 log.info("SKIPPING", "Tests for mathematical functions");
                 break;
@@ -892,7 +892,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Weird behaviour in postgres
         // See also interesting thread:
         // http://archives.postgresql.org/pgsql-jdbc/2010-09/msg00037.php
-        if (getDialect() != SQLDialect.POSTGRES) {
+        if (dialect() != SQLDialect.POSTGRES) {
             assertEquals(timestamp.split(" ")[1], record.getValue(time).toString());
         }
 
@@ -966,7 +966,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testSystemFunctions() throws Exception {
-        if (getDialect() == SQLDialect.SQLITE) {
+        if (dialect() == SQLDialect.SQLITE) {
             log.info("SKIPPING", "System functions test");
             return;
         }
@@ -1011,7 +1011,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testBitwiseOperations() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case DERBY:
             case INGRES:
                 log.info("SKIPPING", "Tests for bitwise operations");
@@ -1021,7 +1021,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Integer> bitCount = bitCount(3);
 
         // TODO [#896] This somehow doesn't work on some dialects
-        if (asList(ASE, DB2, SQLSERVER).contains(getDialect())) {
+        if (asList(ASE, DB2, SQLSERVER).contains(dialect())) {
             bitCount = val(2);
         }
 

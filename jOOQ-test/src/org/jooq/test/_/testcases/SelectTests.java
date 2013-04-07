@@ -363,7 +363,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testForUpdateClauses() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case SQLITE:
                 log.info("SKIPPING", "FOR UPDATE tests");
                 return;
@@ -449,7 +449,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Check again with limit / offset clauses
         // ---------------------------------------
-        switch (getDialect()) {
+        switch (dialect()) {
             case INGRES:
             case ORACLE:
                 log.info("SKIPPING", "LIMIT .. OFFSET .. FOR UPDATE");
@@ -473,7 +473,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case DB2:
             case DERBY:
@@ -497,7 +497,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch();
                 assertEquals(2, r1a.size());
 
-                if (getDialect() == ORACLE) {
+                if (dialect() == ORACLE) {
                     Result<Record1<Integer>> r2a = create()
                         .select(TAuthor_ID())
                         .from(TAuthor())
@@ -535,7 +535,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case MYSQL:
             case POSTGRES:
                 log.info("SKIPPING", "FOR UPDATE OF tests");
@@ -569,7 +569,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE: // This should normally work. Why doesn't it?
             case MYSQL:
                 log.info("SKIPPING", "FOR UPDATE OF tests");
@@ -597,7 +597,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // Only few dialects support the FOR SHARE clause:
-        switch (getDialect()) {
+        switch (dialect()) {
             case MYSQL:
             case POSTGRES: {
                 Result<Record1<Integer>> result = create()

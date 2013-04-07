@@ -164,7 +164,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // TODO: [#396] MySQL seems to have a bug when passing null to IN/OUT
             // parameters. Check back on this, when this is fixed.
-            if (getDialect() != SQLDialect.MYSQL) {
+            if (dialect() != SQLDialect.MYSQL) {
                 Object p391a = invoke(cRoutines(), "p391", create().configuration(), null, null, DUMMY_OUT_INT, DUMMY_OUT_INT, null, null);
                 assertEquals(null, invoke(p391a, "getIo1"));
                 assertEquals(null, invoke(p391a, "getO1"));
@@ -174,7 +174,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // TODO: [#459] Sybase messes up IN/OUT parameter orders.
             // Check back on this, when this is fixed.
-            if (getDialect() != SQLDialect.SYBASE) {
+            if (dialect() != SQLDialect.SYBASE) {
                 Object p391b = invoke(cRoutines(), "p391", create().configuration(), null, 2, DUMMY_OUT_INT, DUMMY_OUT_INT, 3, null);
                 assertEquals(null, invoke(p391b, "getIo1"));
                 assertEquals("2", "" + invoke(p391b, "getO1"));
@@ -191,7 +191,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // F378, which is a stored function with OUT parameters
         // ---------------------------------------------------------------------
-        switch (getDialect()) {
+        switch (dialect()) {
 
             // Currently, this is only supported for oracle
             case ORACLE:
@@ -899,7 +899,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             return;
         }
 
-        if (getDialect() == SQLDialect.POSTGRES) {
+        if (dialect() == SQLDialect.POSTGRES) {
             log.info("SKIPPING", "UDT procedure test (Postgres JDBC driver flaw)");
             return;
         }
@@ -1060,7 +1060,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // Cross join the array table with the unnested string array value
             // ---------------------------------------------------------------
 
-            switch (getDialect()) {
+            switch (dialect()) {
                 case POSTGRES:
                 case H2:
                 case HSQLDB:
@@ -1195,7 +1195,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testStoredProceduresWithCursorParameters() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case H2:
             case HSQLDB:
             case ORACLE:
@@ -1256,7 +1256,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             Field<Result<Record>> field = FGetOneCursorField(null);
             Result<Record> bFromCursor;
 
-            switch (getDialect()) {
+            switch (dialect()) {
                 case HSQLDB:
                     bFromCursor = create().select().from(table(field)).fetch();
                     break;
@@ -1274,7 +1274,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // -------------------
             field = FGetOneCursorField(new Integer[] { 1, 2, 4, 6 });
 
-            switch (getDialect()) {
+            switch (dialect()) {
                 case HSQLDB:
                     bFromCursor = create().select().from(table(field)).fetch();
                     break;
@@ -1296,7 +1296,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             compareBookResults(bFromCursor, bFromTable);
         }
 
-        if (getDialect() == SQLDialect.HSQLDB) {
+        if (dialect() == SQLDialect.HSQLDB) {
             log.info("SKIPPING", "Cursor OUT parameter tests");
             return;
         }
@@ -1352,7 +1352,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // ---------------------------------------------------------------------
         // The two cursor procedure
         // ---------------------------------------------------------------------
-        if (getDialect() == SQLDialect.POSTGRES) {
+        if (dialect() == SQLDialect.POSTGRES) {
 
             // TODO [#707] This fails for Postgres, as UDT's are not correctly
             // deserialised

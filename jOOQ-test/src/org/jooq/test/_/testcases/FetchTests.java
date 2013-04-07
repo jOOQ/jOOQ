@@ -394,7 +394,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFetchMany() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ORACLE:
             case SQLITE:
             case SYBASE:
@@ -413,7 +413,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFetchWithoutResults() throws Exception {
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
                 log.info("SKIPPING", "Fetch without results tests");
                 return;
@@ -444,7 +444,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testFetchIntoWithAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -622,7 +622,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testFetchIntoWithoutAnnotations() throws Exception {
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -708,7 +708,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordFromWithAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -750,7 +750,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordFromWithoutAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -815,7 +815,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordFromUpdatePK() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -858,7 +858,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testReflectionWithAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -921,7 +921,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testReflectionWithoutAnnotations() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -1021,7 +1021,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testReflectionWithImmutablesAndConstructorProperties() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -1212,7 +1212,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFetchIntoCustomTable() throws Exception {
 
         // TODO [#791] Fix test data and have all upper case columns everywhere
-        switch (getDialect()) {
+        switch (dialect()) {
             case ASE:
             case CUBRID:
             case INGRES:
@@ -1431,7 +1431,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             rs.close();
 
             // [#1323] Check if Postgres' pre-9.0 encoding of binary data works, too
-            if (getDialect() == POSTGRES && i == 0) {
+            if (dialect() == POSTGRES && i == 0) {
                 create().execute("set bytea_output to escape");
             }
 
@@ -2012,7 +2012,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Some dialects do not really implement the timeout well. In those
         // dialects, this query will run forever
-        if (getDialect() != H2) {
+        if (dialect() != H2) {
             log.info("SKIPPING", "Dangerous timeout query");
             return;
         }
@@ -2058,7 +2058,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(r3.get(0).getValue(TBook_TITLE()), r3.get(1).getValue(TBook_TITLE()));
 
         // Some JDBC drivers already perform string interning...
-        if (getDialect() == ORACLE) {
+        if (dialect() == ORACLE) {
             Assert.assertNotSame(r1.get(0).getValue(TBook_TITLE()), r1.get(1).getValue(TBook_TITLE()));
         }
 

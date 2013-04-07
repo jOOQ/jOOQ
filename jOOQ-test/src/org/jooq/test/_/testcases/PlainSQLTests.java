@@ -290,7 +290,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Skip comments test for most dialects, as the behaviour w.r.t. comments
         // may differ
-        if (getDialect() != H2) {
+        if (dialect() != H2) {
             log.info("SKIPPING", "Skip comments tests");
             return;
         }

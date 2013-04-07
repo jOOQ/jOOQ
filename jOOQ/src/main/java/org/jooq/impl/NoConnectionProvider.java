@@ -40,14 +40,14 @@ import java.sql.Connection;
 import org.jooq.ConnectionProvider;
 
 /**
- * An "empty" implementation that is never connected
+ * An "empty" implementation that is never connected.
  *
  * @author Lukas Eder
  */
 public class NoConnectionProvider implements ConnectionProvider {
 
     /**
-     * This method will always return <code>null</code>
+     * This method will always return <code>null</code>.
      */
     @Override
     public final Connection acquire() {
@@ -55,7 +55,7 @@ public class NoConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * This method has no effect
+     * This method has no effect.
      */
     @Override
     public final void release(Connection connection) {}

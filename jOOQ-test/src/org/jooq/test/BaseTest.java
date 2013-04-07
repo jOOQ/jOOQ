@@ -55,8 +55,9 @@ import java.util.UUID;
 import junit.framework.Assert;
 
 import org.jooq.ArrayRecord;
-import org.jooq.DSLContext;
+import org.jooq.Configuration;
 import org.jooq.DAO;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -75,6 +76,7 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
 import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
@@ -707,6 +709,12 @@ public abstract class BaseTest<
 
     protected DSLContext create(Settings settings) {
         DSLContext create = delegate.create(settings);
+        create.configuration().getExecuteListeners().add(new TestStatisticsListener());
+        return create;
+    }
+
+    protected final DSLContext create(Configuration configuration) {
+        DSLContext create = DSL.using(configuration);
         create.configuration().getExecuteListeners().add(new TestStatisticsListener());
         return create;
     }

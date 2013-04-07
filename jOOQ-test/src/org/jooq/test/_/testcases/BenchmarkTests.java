@@ -38,7 +38,7 @@ package org.jooq.test._.testcases;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.jooq.DSLContext;
@@ -51,6 +51,7 @@ import org.jooq.Result;
 import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.impl.DefaultConfiguration;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.StopWatch;
@@ -127,10 +128,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // This benchmark is contributed by "jjYBdx4IL" on GitHub:
         // https://github.com/jOOQ/jOOQ/issues/1625
 
-
-        DSLContext create = create();
-        create.configuration().getSettings().setExecuteLogging(false);
-        create.configuration().setExecuteListeners(Collections.<ExecuteListener>emptyList());
+        DefaultConfiguration configuration = new DefaultConfiguration(create().configuration());
+        configuration.getSettings().setExecuteLogging(false);
+        configuration.setExecuteListeners(new ArrayList<ExecuteListener>());
+        DSLContext create = create(configuration);
 
         // Dry-run to avoid side-effects
         testBenchmarkFullExecution(create, 1);

@@ -37,9 +37,11 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.SQL99;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -48,7 +50,7 @@ import javax.xml.bind.JAXB;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.DSLContext;
-import org.jooq.ExecuteListener;
+import org.jooq.ExecuteListenerProvider;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
@@ -61,6 +63,7 @@ import org.jooq.conf.SettingsTools;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("deprecation")
 public class DefaultConfiguration implements Configuration {
 
     /**
@@ -68,38 +71,135 @@ public class DefaultConfiguration implements Configuration {
      */
     private static final long                       serialVersionUID = 8193158984283234708L;
 
-    private final ConnectionProvider                connectionProvider;
+    // Configuration objects
     private final SQLDialect                        dialect;
-
-    @SuppressWarnings("deprecation")
-    private final org.jooq.SchemaMapping            mapping;
     private final Settings                          settings;
     private final ConcurrentHashMap<Object, Object> data;
-    private final List<ExecuteListener>             listeners;
 
-    @SuppressWarnings("deprecation")
+    // Non-serializable Configuration objects
+    private transient ConnectionProvider            connectionProvider;
+    private transient ExecuteListenerProvider       listenerProvider;
+
+    // Derived objects
+    private final org.jooq.SchemaMapping            mapping;
+
+    // -------------------------------------------------------------------------
+    // XXX: Constructors
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a new "empty" configuration object.
+     * <p>
+     * This can be used as is, as a "dummy" configuration object, or as a base
+     * implementation for creating more sophisticated "derived" configurations
+     * through the various <code>derive()</code> methods.
+     */
     public DefaultConfiguration() {
-        this(new NoConnectionProvider(), SQL99, SettingsTools.defaultSettings(), null);
+        this(
+            new NoConnectionProvider(),
+            new DefaultExecuteListenerProvider(),
+            SQL99,
+            SettingsTools.defaultSettings(),
+            null);
     }
 
-    public DefaultConfiguration(Configuration configuration) {
+    /**
+     * Create a new "derived" configuration object from a pre-existing one.
+     * <p>
+     * This copies all properties from a pre-existing configuration into a new,
+     * derived one.
+     *
+     * @param configuration The pre-existing configuration.
+     */
+    DefaultConfiguration(Configuration configuration) {
         this(
             configuration.getConnectionProvider(),
+            configuration.getExecuteListenerProvider(),
             configuration.getDialect(),
             configuration.getSettings(),
             configuration.getData()
         );
     }
 
-    @SuppressWarnings("deprecation")
-    public DefaultConfiguration(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings, Map<Object, Object> data) {
+    /**
+     * Create the actual configuration object.
+     * <p>
+     * This constructor has been made package-private to allow for adding new
+     * configuration properties in the future, without breaking client code.
+     * Consider creating a configuration by chaining calls to various
+     * <code>derive()</code> methods.
+     */
+    DefaultConfiguration(
+            ConnectionProvider connectionProvider,
+            ExecuteListenerProvider listenerProvider,
+            SQLDialect dialect,
+            Settings settings,
+            Map<Object, Object> data)
+    {
         this.connectionProvider = connectionProvider;
+        this.listenerProvider = listenerProvider != null
+            ? listenerProvider
+            : new DefaultExecuteListenerProvider();
+
         this.dialect = dialect;
-        this.settings = settings != null ? settings : SettingsTools.defaultSettings();
+        this.settings = settings != null
+            ? SettingsTools.clone(settings)
+            : SettingsTools.defaultSettings();
+
+        this.data = data != null
+            ? new ConcurrentHashMap<Object, Object>(data)
+            : new ConcurrentHashMap<Object, Object>();
+
         this.mapping = new org.jooq.SchemaMapping(this);
-        this.data = data != null ? new ConcurrentHashMap<Object, Object>(data) : new ConcurrentHashMap<Object, Object>();
-        this.listeners = new ArrayList<ExecuteListener>();
     }
+
+    // -------------------------------------------------------------------------
+    // XXX: Deriving configurations
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive() {
+        return new DefaultConfiguration(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(SQLDialect newDialect) {
+        return new DefaultConfiguration(connectionProvider, listenerProvider, newDialect, settings, data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(ConnectionProvider newConnectionProvider) {
+        return new DefaultConfiguration(newConnectionProvider, listenerProvider, dialect, settings, data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(Settings newSettings) {
+        return new DefaultConfiguration(connectionProvider, listenerProvider, dialect, newSettings, data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(ExecuteListenerProvider newExecuteListenerProvider) {
+        return new DefaultConfiguration(connectionProvider, newExecuteListenerProvider, dialect, settings, data);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Getters
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -162,19 +262,8 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final List<ExecuteListener> getExecuteListeners() {
-        return listeners;
-    }
-
-    /**
-     * Set the execute listeners onto this configuration.
-     */
-    public final void setExecuteListeners(List<ExecuteListener> listeners) {
-        this.listeners.clear();
-
-        if (listeners != null) {
-            listeners.addAll(listeners);
-        }
+    public final ExecuteListenerProvider getExecuteListenerProvider() {
+        return listenerProvider;
     }
 
     @Override
@@ -186,5 +275,29 @@ public class DefaultConfiguration implements Configuration {
             ",\n\tdialect=" + dialect +
             ",\n\tdata=" + data +
             ",\n\tsettings=\n\t\t" + writer.toString().trim().replace("\n", "\n\t\t") +
-            "\n]";        }
+            "\n]";
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Serialisation
+    // -------------------------------------------------------------------------
+
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        oos.defaultWriteObject();
+
+        // Allow these objects to be non-serializable
+        oos.writeObject(connectionProvider instanceof Serializable
+            ? connectionProvider
+            : null);
+        oos.writeObject(listenerProvider instanceof Serializable
+            ? listenerProvider
+            : null);
+    }
+
+    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        ois.defaultReadObject();
+
+        connectionProvider = (ConnectionProvider) ois.readObject();
+        listenerProvider = (ExecuteListenerProvider) ois.readObject();
+    }
 }

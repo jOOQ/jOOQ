@@ -66,6 +66,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.DAO;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
+import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -90,6 +91,7 @@ import org.jooq.debug.Debugger;
 import org.jooq.debug.console.Console;
 import org.jooq.debug.impl.DebuggerFactory;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.test._.LifecycleWatcherListener;
 import org.jooq.test._.PrettyPrinter;
 import org.jooq.test._.TestStatisticsListener;
@@ -874,10 +876,24 @@ public abstract class jOOQAbstractTest<
                 .withDefaultSchema(defaultSchema));
 
         DSLContext create = create(settings);
-        create.configuration().getExecuteListeners().add(new TestStatisticsListener());
-        create.configuration().getExecuteListeners().add(new PrettyPrinter());
-        create.configuration().getExecuteListeners().add(new LifecycleWatcherListener());
+        addListeners(create.configuration(),
+            new TestStatisticsListener(),
+            new PrettyPrinter(),
+            new LifecycleWatcherListener());
+
         return create;
+    }
+
+    protected final List<ExecuteListener> getListeners(org.jooq.Configuration configuration) {
+
+        // Most test cases run with the DefaultExecuteListenerProvider,
+        // which (inofficially) exposes a mutable List
+        DefaultExecuteListenerProvider provider = (DefaultExecuteListenerProvider) configuration.getExecuteListenerProvider();
+        return provider.provide();
+    }
+
+    protected final void addListeners(org.jooq.Configuration configuration, ExecuteListener... listeners) {
+        getListeners(configuration).addAll(Arrays.asList(listeners));
     }
 
     protected final SQLDialect getDialect() {

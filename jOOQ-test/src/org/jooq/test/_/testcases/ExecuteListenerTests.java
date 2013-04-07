@@ -53,8 +53,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import org.jooq.DSLContext;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteType;
@@ -101,7 +101,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testExecuteListenerWithData() throws Exception {
         DSLContext create = create();
-        create.configuration().getExecuteListeners().add(new DataListener());
+        addListeners(create.configuration(), new DataListener());
 
         create.selectOne().fetch();
     }
@@ -211,7 +211,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testExecuteListenerCustomException() throws Exception {
         DSLContext create = create();
-        create.configuration().getExecuteListeners().add(new CustomExceptionListener());
+        addListeners(create.configuration(), new CustomExceptionListener());
 
         try {
             create.fetch("invalid sql");
@@ -237,7 +237,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
         DSLContext create = create();
-        create.configuration().getExecuteListeners().add(new ResultQueryListener());
+        addListeners(create.configuration(), new ResultQueryListener());
 
         create.configuration().setData("Foo", "Bar");
         create.configuration().setData("Bar", "Baz");
@@ -581,7 +581,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         DSLContext create = create();
-        create.configuration().getExecuteListeners().add(new BatchSingleListener());
+        addListeners(create.configuration(), new BatchSingleListener());
 
         create.configuration().setData("Foo", "Bar");
         create.configuration().setData("Bar", "Baz");
@@ -795,7 +795,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         DSLContext create = create();
-        create.configuration().getExecuteListeners().add(new BatchMultipleListener());
+        addListeners(create.configuration(), new BatchMultipleListener());
 
         create.configuration().setData("Foo", "Bar");
         create.configuration().setData("Bar", "Baz");
@@ -1021,7 +1021,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testExecuteListenerFetchLazyTest() throws Exception {
         DSLContext create = create();
-        create.configuration().getExecuteListeners().add(new FetchLazyListener());
+        addListeners(create.configuration(), new FetchLazyListener());
         FetchLazyListener.reset();
 
         create.selectFrom(TAuthor()).fetch();

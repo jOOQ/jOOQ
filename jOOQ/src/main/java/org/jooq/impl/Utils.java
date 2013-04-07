@@ -38,11 +38,11 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DefaultExecuteContext.localConnection;
 import static org.jooq.tools.jdbc.JDBCUtils.safeFree;
 import static org.jooq.tools.jdbc.JDBCUtils.wasNull;
 import static org.jooq.tools.reflect.Reflect.accessible;
@@ -86,13 +86,14 @@ import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
-import org.jooq.DSLContext;
 import org.jooq.Converter;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.ExecuteListenerProvider;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.QueryPart;
@@ -1095,13 +1096,16 @@ final class Utils {
      */
     static final List<ExecuteListener> getListeners(ExecuteContext ctx) {
         List<ExecuteListener> result = new ArrayList<ExecuteListener>();
-
         if (!FALSE.equals(ctx.configuration().getSettings().isExecuteLogging())) {
             result.add(new StopWatchListener());
             result.add(new LoggerListener());
         }
 
-        result.addAll(ctx.configuration().getExecuteListeners());
+        ExecuteListenerProvider provider = ctx.configuration().getExecuteListenerProvider();
+        if (provider != null) {
+            result.addAll(provider.provide());
+        }
+
         return result;
     }
 

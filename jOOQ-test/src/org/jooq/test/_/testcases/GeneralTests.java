@@ -233,7 +233,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         ConnectionProviderListener.c = create().configuration().getConnectionProvider().acquire();
         try {
             DSLContext create = create();
-            create.configuration().getExecuteListeners().add(new ConnectionProviderListener());
+            addListeners(create.configuration(), new ConnectionProviderListener());
             q = create
                     .selectFrom(TAuthor())
                     .orderBy(TAuthor_LAST_NAME());

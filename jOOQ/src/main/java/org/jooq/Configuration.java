@@ -36,7 +36,6 @@
 package org.jooq;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 import org.jooq.conf.Settings;
@@ -147,10 +146,12 @@ public interface Configuration extends Serializable {
     Object setData(Object key, Object value);
 
     /**
-     * Get the configured <code>ExecuteListeners</code> from this configuration.
+     * Get the configured <code>ExecuteListenerProvider</code> from this
+     * configuration.
      * <p>
      * This method allows for retrieving the configured
-     * <code>ExecuteListener</code> instances from this configuration. These
+     * <code>ExecuteListenerProvider</code> from this configuration. The
+     * provider will provide jOOQ with {@link ExecuteListener} instances. These
      * instances receive execution lifecycle notification events every time jOOQ
      * executes queries. jOOQ makes no assumptions about the internal state of
      * these listeners, i.e. listener instances may
@@ -167,9 +168,56 @@ public interface Configuration extends Serializable {
      * listeners will never be exposed through this method, though.
      *
      * @return The configured set of execute listeners.
+     * @see ExecuteListenerProvider
      * @see ExecuteListener
      * @see ExecuteContext
      */
-    List<ExecuteListener> getExecuteListeners();
+    ExecuteListenerProvider getExecuteListenerProvider();
+
+    /**
+     * Create a derived configuration from this one, without changing any
+     * properties.
+     *
+     * @return The derived configuration.
+     */
+    Configuration derive();
+
+    /**
+     * Create a derived configuration from this one, with a new dialect.
+     *
+     * @param newDialect The new dialect to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(SQLDialect newDialect);
+
+    /**
+     * Create a derived configuration from this one, with a new connection
+     * provider.
+     *
+     * @param newConnectionProvider The new connection provider to be contained
+     *            in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Create a derived configuration from this one, with new settings.
+     *
+     * @param newSettings The new settings to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(Settings newSettings);
+
+    /**
+     * Create a derived configuration from this one, with a new execute listener
+     * provider.
+     *
+     * @param newExecuteListenerProvider The new execute listener provider to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(ExecuteListenerProvider newExecuteListenerProvider);
 
 }

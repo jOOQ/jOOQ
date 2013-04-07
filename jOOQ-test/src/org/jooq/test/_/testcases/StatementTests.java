@@ -51,8 +51,8 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jooq.DSLContext;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -100,7 +100,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testKeepStatement() throws Exception {
         DSLContext create = create();
-        create.configuration().getExecuteListeners().add(new KeepStatementListener());
+        addListeners(create.configuration(), new KeepStatementListener());
 
         // [#385] By default, new statements are created for every execution
         KeepStatementListener.reset();

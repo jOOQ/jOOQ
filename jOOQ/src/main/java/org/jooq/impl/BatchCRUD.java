@@ -49,6 +49,7 @@ import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
+import org.jooq.ExecuteListener;
 import org.jooq.Query;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
@@ -95,55 +96,45 @@ class BatchCRUD implements Batch {
 
     private final int[] executePrepared() {
         Map<String, List<Query>> queries = new LinkedHashMap<String, List<Query>>();
-
-        Boolean executeLogging = configuration.getSettings().isExecuteLogging();
         QueryCollector collector = new QueryCollector();
 
-        try {
-            // [#1537] Communicate with UpdatableRecordImpl
-            configuration.setData(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
+        // Add the QueryCollector to intercept query execution after rendering
+        List<ExecuteListener> listeners = new ArrayList<ExecuteListener>(configuration.getExecuteListenerProvider().provide());
+        listeners.add(collector);
+        Configuration local = configuration.derive(new DefaultExecuteListenerProvider(listeners));
 
-            // Add the QueryCollector to intercept query execution after rendering
-            configuration.getExecuteListeners().add(collector);
+        // [#1537] Communicate with UpdatableRecordImpl
+        local.setData(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
 
-            // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
-            configuration.getSettings().setExecuteLogging(false);
+        // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
+        local.getSettings().setExecuteLogging(false);
 
-            for (int i = 0; i < records.length; i++) {
-                Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
+        for (int i = 0; i < records.length; i++) {
+            Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
 
-                try {
-                    records[i].attach(configuration);
-                    executeAction(i);
-                }
-                catch (QueryCollectorException e) {
-                    Query query = e.getQuery();
-                    String sql = e.getSQL();
+            try {
+                records[i].attach(local);
+                executeAction(i);
+            }
+            catch (QueryCollectorException e) {
+                Query query = e.getQuery();
+                String sql = e.getSQL();
 
-                    // Aggregate executable queries by identical SQL
-                    if (query.isExecutable()) {
-                        List<Query> list = queries.get(sql);
+                // Aggregate executable queries by identical SQL
+                if (query.isExecutable()) {
+                    List<Query> list = queries.get(sql);
 
-                        if (list == null) {
-                            list = new ArrayList<Query>();
-                            queries.put(sql, list);
-                        }
-
-                        list.add(query);
+                    if (list == null) {
+                        list = new ArrayList<Query>();
+                        queries.put(sql, list);
                     }
-                }
-                finally {
-                    records[i].attach(previous);
+
+                    list.add(query);
                 }
             }
-        }
-
-        // Restore the original factory
-        finally {
-            configuration.getData().remove(Utils.DATA_OMIT_RETURNING_CLAUSE);
-
-            configuration.getExecuteListeners().remove(collector);
-            configuration.getSettings().setExecuteLogging(executeLogging);
+            finally {
+                records[i].attach(previous);
+            }
         }
 
         // Execute one batch statement for each identical SQL statement. Every
@@ -176,32 +167,27 @@ class BatchCRUD implements Batch {
         List<Query> queries = new ArrayList<Query>();
         QueryCollector collector = new QueryCollector();
 
-        try {
-            configuration.getExecuteListeners().add(collector);
+        List<ExecuteListener> listeners = new ArrayList<ExecuteListener>(configuration.getExecuteListenerProvider().provide());
+        listeners.add(collector);
+        Configuration local = configuration.derive(new DefaultExecuteListenerProvider(listeners));
 
-            for (int i = 0; i < records.length; i++) {
-                Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
+        for (int i = 0; i < records.length; i++) {
+            Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
 
-                try {
-                    records[i].attach(configuration);
-                    executeAction(i);
-                }
-                catch (QueryCollectorException e) {
-                    Query query = e.getQuery();
+            try {
+                records[i].attach(local);
+                executeAction(i);
+            }
+            catch (QueryCollectorException e) {
+                Query query = e.getQuery();
 
-                    if (query.isExecutable()) {
-                        queries.add(query);
-                    }
-                }
-                finally {
-                    records[i].attach(previous);
+                if (query.isExecutable()) {
+                    queries.add(query);
                 }
             }
-        }
-
-        // Restore the original factory
-        finally {
-            configuration.getExecuteListeners().remove(collector);
+            finally {
+                records[i].attach(previous);
+            }
         }
 
         // Resulting statements can be batch executed in their requested order

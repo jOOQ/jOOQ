@@ -59,6 +59,7 @@ import org.jooq.Configuration;
 import org.jooq.DAO;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
+import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
@@ -707,16 +708,24 @@ public abstract class BaseTest<
         return delegate.getCastableDataTypes();
     }
 
-    protected DSLContext create(Settings settings) {
+    protected final DSLContext create(Settings settings) {
         DSLContext create = delegate.create(settings);
-        create.configuration().getExecuteListeners().add(new TestStatisticsListener());
+        addListeners(create.configuration(), new TestStatisticsListener());
         return create;
     }
 
     protected final DSLContext create(Configuration configuration) {
         DSLContext create = DSL.using(configuration);
-        create.configuration().getExecuteListeners().add(new TestStatisticsListener());
+        addListeners(create.configuration(), new TestStatisticsListener());
         return create;
+    }
+
+    protected final List<ExecuteListener> getListeners(Configuration configuration) {
+        return delegate.getListeners(configuration);
+    }
+
+    protected final void addListeners(Configuration configuration, ExecuteListener... listeners) {
+        delegate.addListeners(configuration, listeners);
     }
 
     protected final Connection getConnection() {

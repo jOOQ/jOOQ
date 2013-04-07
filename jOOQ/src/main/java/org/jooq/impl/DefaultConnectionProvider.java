@@ -44,7 +44,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.tools.JooqLogger;
 
 /**
- * A default implementation for {@link ConnectionProvider}
+ * A default implementation for {@link ConnectionProvider}.
  * <p>
  * This implementation just wraps a JDBC {@link Connection} and provides jOOQ
  * with the same connection for every query. jOOQ will not call any
@@ -85,7 +85,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#commit()}
+     * Convenience method to access {@link Connection#commit()}.
      */
     public final void commit() throws DataAccessException {
         try {
@@ -98,7 +98,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#rollback()}
+     * Convenience method to access {@link Connection#rollback()}.
      */
     public final void rollback() throws DataAccessException {
         try {
@@ -111,7 +111,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#rollback(Savepoint)}
+     * Convenience method to access {@link Connection#rollback(Savepoint)}.
      */
     public final void rollback(Savepoint savepoint) throws DataAccessException {
         try {
@@ -124,7 +124,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#setSavepoint()}
+     * Convenience method to access {@link Connection#setSavepoint()}.
      */
     public final Savepoint setSavepoint() throws DataAccessException {
         try {
@@ -137,7 +137,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#setSavepoint(String)}
+     * Convenience method to access {@link Connection#setSavepoint(String)}.
      */
     public final Savepoint setSavepoint(String name) throws DataAccessException {
         try {
@@ -151,7 +151,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
 
     /**
      * Convenience method to access
-     * {@link Connection#releaseSavepoint(Savepoint)}
+     * {@link Connection#releaseSavepoint(Savepoint)}.
      */
     public final void releaseSavepoint(Savepoint savepoint) throws DataAccessException {
         try {
@@ -164,7 +164,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#setAutoCommit(boolean)}
+     * Convenience method to access {@link Connection#setAutoCommit(boolean)}.
      */
     public final void setAutoCommit(boolean autoCommit) throws DataAccessException {
         try {
@@ -177,7 +177,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#getAutoCommit()}
+     * Convenience method to access {@link Connection#getAutoCommit()}.
      */
     public final boolean getAutoCommit() throws DataAccessException {
         try {
@@ -189,7 +189,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#setHoldability(int)}
+     * Convenience method to access {@link Connection#setHoldability(int)}.
      */
     public final void setHoldability(int holdability) throws DataAccessException {
         try {
@@ -202,7 +202,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#getHoldability()}
+     * Convenience method to access {@link Connection#getHoldability()}.
      */
     public final int getHoldability() throws DataAccessException {
         try {
@@ -215,7 +215,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
 
     /**
      * Convenience method to access
-     * {@link Connection#setTransactionIsolation(int)}
+     * {@link Connection#setTransactionIsolation(int)}.
      */
     public final void setTransactionIsolation(int level) throws DataAccessException {
         try {
@@ -228,7 +228,7 @@ public class DefaultConnectionProvider implements ConnectionProvider {
     }
 
     /**
-     * Convenience method to access {@link Connection#getTransactionIsolation()}
+     * Convenience method to access {@link Connection#getTransactionIsolation()}.
      */
     public final int getTransactionIsolation() throws DataAccessException {
         try {

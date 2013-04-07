@@ -82,8 +82,8 @@ import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
-import org.jooq.DSLContext;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DeleteQuery;
 import org.jooq.DeleteWhereStep;
@@ -215,7 +215,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     DSLContextImpl(SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new NoConnectionProvider(), dialect, settings, null));
+        this(new DefaultConfiguration(new NoConnectionProvider(), null, dialect, settings, null));
     }
 
     DSLContextImpl(Connection connection, SQLDialect dialect) {
@@ -223,7 +223,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     DSLContextImpl(Connection connection, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), dialect, settings, null));
+        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, dialect, settings, null));
     }
 
     DSLContextImpl(DataSource datasource, SQLDialect dialect) {
@@ -231,7 +231,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     DSLContextImpl(DataSource datasource, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), dialect, settings, null));
+        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, dialect, settings, null));
     }
 
     DSLContextImpl(ConnectionProvider connectionProvider, SQLDialect dialect) {
@@ -239,7 +239,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     DSLContextImpl(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(connectionProvider, dialect, settings, null));
+        this(new DefaultConfiguration(connectionProvider, null, dialect, settings, null));
     }
 
     DSLContextImpl(Configuration configuration) {

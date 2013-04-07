@@ -884,7 +884,7 @@ implements
      * Return a standard MERGE statement simulating the H2-specific syntax
      */
     private final QueryPart getStandardMerge(Configuration config) {
-        switch (config.getDialect()) {
+        switch (config.dialect()) {
             case CUBRID:
             case DB2:
             case HSQLDB:
@@ -987,14 +987,14 @@ implements
                                      .set(insert);
             }
             default:
-                throw new SQLDialectNotSupportedException("The H2-specific MERGE syntax is not supported in dialect : " + config.getDialect());
+                throw new SQLDialectNotSupportedException("The H2-specific MERGE syntax is not supported in dialect : " + config.dialect());
         }
     }
 
     @Override
     public final void toSQL(RenderContext context) {
         if (h2Style) {
-            if (context.configuration().getDialect() == H2) {
+            if (context.configuration().dialect() == H2) {
                 toSQLH2(context);
             }
             else {
@@ -1045,7 +1045,7 @@ implements
                .formatIndentEnd()
                .declareTables(false);
 
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case SQLSERVER:
             case SYBASE: {
                 if (using instanceof Select) {
@@ -1115,7 +1115,7 @@ implements
                    .sql(notMatchedWhere);
         }
 
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case SQLSERVER:
                 context.sql(";");
                 break;
@@ -1125,7 +1125,7 @@ implements
     @Override
     public final void bind(BindContext context) {
         if (h2Style) {
-            if (context.configuration().getDialect() == H2) {
+            if (context.configuration().dialect() == H2) {
                 bindH2(context);
             }
             else {

@@ -100,7 +100,7 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect())) {
             if (not) {
                 return (QueryPartInternal) field.notBetween(minValue, maxValue).and(field.notBetween(maxValue, minValue));
             }

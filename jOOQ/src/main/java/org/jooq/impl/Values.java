@@ -83,7 +83,7 @@ class Values<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
 
             // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor

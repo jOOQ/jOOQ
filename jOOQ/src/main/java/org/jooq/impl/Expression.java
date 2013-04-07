@@ -126,7 +126,7 @@ class Expression<T> extends AbstractFunction<T> {
     @SuppressWarnings("unchecked")
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        SQLDialect dialect = configuration.getDialect();
+        SQLDialect dialect = configuration.dialect();
 
         // ---------------------------------------------------------------------
         // XXX: Bitwise operators
@@ -285,7 +285,7 @@ class Expression<T> extends AbstractFunction<T> {
          * Return the expression to be rendered when the RHS is an interval type
          */
         private final Field<T> getIntervalExpression(Configuration configuration) {
-            SQLDialect dialect = configuration.getDialect();
+            SQLDialect dialect = configuration.dialect();
             int sign = (operator == ADD) ? 1 : -1;
 
             switch (dialect) {
@@ -436,7 +436,7 @@ class Expression<T> extends AbstractFunction<T> {
          * Return the expression to be rendered when the RHS is a number type
          */
         private final Field<T> getNumberExpression(Configuration configuration) {
-            switch (configuration.getDialect()) {
+            switch (configuration.dialect()) {
                 case ASE:
                 case FIREBIRD:
                 case SQLSERVER:
@@ -539,7 +539,7 @@ class Expression<T> extends AbstractFunction<T> {
         public final void toSQL(RenderContext context) {
             String op = operator.toSQL();
 
-            if (operator == BIT_XOR && context.configuration().getDialect() == POSTGRES) {
+            if (operator == BIT_XOR && context.configuration().dialect() == POSTGRES) {
                 op = "#";
             }
 

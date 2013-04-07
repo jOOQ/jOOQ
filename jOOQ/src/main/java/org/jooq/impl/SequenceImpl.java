@@ -118,7 +118,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
 
         @Override
         final Field<T> getFunction0(Configuration configuration) {
-            SQLDialect dialect = configuration.getDialect();
+            SQLDialect dialect = configuration.dialect();
 
             switch (dialect) {
                 case DB2:
@@ -175,7 +175,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
             RenderContext local = create(configuration).renderContext();
             Schema mappedSchema = Utils.getMappedSchema(configuration, schema);
 
-            if (mappedSchema != null && configuration.getDialect() != CUBRID) {
+            if (mappedSchema != null && configuration.dialect() != CUBRID) {
                 local.sql(mappedSchema);
                 local.sql(".");
             }

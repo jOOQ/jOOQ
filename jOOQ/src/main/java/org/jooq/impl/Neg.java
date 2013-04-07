@@ -71,7 +71,7 @@ class Neg<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        SQLDialect dialect = context.configuration().getDialect();
+        SQLDialect dialect = context.configuration().dialect();
 
         if (operator == BIT_NOT && asList(H2, HSQLDB, INGRES, ORACLE).contains(dialect)) {
             context.sql("(0 -")

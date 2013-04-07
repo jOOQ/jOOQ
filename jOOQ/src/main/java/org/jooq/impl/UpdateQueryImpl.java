@@ -463,7 +463,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
             // Some dialects don't really support row value expressions on the
             // right hand side of a SET clause
-            if (multiValue != null && !asList(INGRES, ORACLE).contains(context.configuration().getDialect())) {
+            if (multiValue != null && !asList(INGRES, ORACLE).contains(context.configuration().dialect())) {
                 context.sql(multiValue);
             }
 

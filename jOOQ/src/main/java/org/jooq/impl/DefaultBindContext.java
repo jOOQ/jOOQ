@@ -103,7 +103,7 @@ class DefaultBindContext extends AbstractBindContext {
     @Override
     @SuppressWarnings({ "unchecked", "rawtypes" })
     protected final BindContext bindValue0(Object value, Class<?> type) throws SQLException {
-        SQLDialect dialect = configuration.getDialect();
+        SQLDialect dialect = configuration.dialect();
 
         // [#650] Check first, if we have a converter for the supplied type
         Converter<?, ?> converter = DataTypes.converter(type);
@@ -140,7 +140,7 @@ class DefaultBindContext extends AbstractBindContext {
 
             // [#1225] [#1227] TODO Put this logic into DataType
             // Some dialects have trouble binding binary data as BLOB
-            else if (asList(POSTGRES, SYBASE).contains(configuration.getDialect()) && sqlType == Types.BLOB) {
+            else if (asList(POSTGRES, SYBASE).contains(configuration.dialect()) && sqlType == Types.BLOB) {
                 stmt.setNull(nextIndex(), Types.BINARY);
             }
 
@@ -151,12 +151,12 @@ class DefaultBindContext extends AbstractBindContext {
 
             // [#725] For SQL Server, unknown types should be set to null
             // explicitly, too
-            else if (configuration.getDialect() == SQLSERVER) {
+            else if (configuration.dialect() == SQLSERVER) {
                 stmt.setNull(nextIndex(), sqlType);
             }
 
             // [#730] For Sybase, unknown types can be set to null using varchar
-            else if (configuration.getDialect() == SYBASE) {
+            else if (configuration.dialect() == SYBASE) {
                 stmt.setNull(nextIndex(), Types.VARCHAR);
             }
 

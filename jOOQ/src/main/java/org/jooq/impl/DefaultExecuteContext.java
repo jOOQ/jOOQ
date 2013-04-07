@@ -407,14 +407,14 @@ class DefaultExecuteContext implements ExecuteContext {
         // wrapped by a ConnectionProxy, transparently, in order to implement
         // Settings.getStatementType() correctly.
 
-        ConnectionProvider provider = connectionProvider != null ? connectionProvider : configuration.getConnectionProvider();
+        ConnectionProvider provider = connectionProvider != null ? connectionProvider : configuration.connectionProvider();
 
         if (connection == null && provider != null) {
             Connection c = provider.acquire();
 
             if (c != null) {
                 LOCAL_CONNECTION.set(c);
-                connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.getSettings());
+                connection = new SettingsEnabledConnection(new ProviderEnabledConnection(provider, c), configuration.settings());
             }
         }
 

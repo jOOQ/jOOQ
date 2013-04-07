@@ -174,7 +174,7 @@ class ArrayTable extends AbstractTable<Record> {
     }
 
     private final Table<Record> table(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case ORACLE: {
                 if (array.getDataType().getType().isArray()) {
                     return simulate().as(alias);
@@ -202,7 +202,7 @@ class ArrayTable extends AbstractTable<Record> {
                 }
 
                 else {
-                    throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + configuration.getDialect());
+                    throw new SQLDialectNotSupportedException("ARRAY TABLE is not supported for " + configuration.dialect());
                 }
             }
         }

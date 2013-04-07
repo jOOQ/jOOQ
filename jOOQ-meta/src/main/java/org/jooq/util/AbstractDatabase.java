@@ -118,7 +118,7 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final SQLDialect getDialect() {
         if (dialect == null) {
-            dialect = create().configuration().getDialect();
+            dialect = create().configuration().dialect();
         }
 
         return dialect;

@@ -239,8 +239,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         DSLContext create = create();
         addListeners(create.configuration(), new ResultQueryListener());
 
-        create.configuration().setData("Foo", "Bar");
-        create.configuration().setData("Bar", "Baz");
+        create.configuration().data("Foo", "Bar");
+        create.configuration().data("Bar", "Baz");
 
         Result<?> result =
         create.select(TBook_ID(), val("Hello"))
@@ -249,7 +249,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
               .fetch();
 
         // [#1145] When inlining variables, no bind events are triggered
-        int plus = (SettingsTools.executePreparedStatements(create.configuration().getSettings()) ? 2 : 0);
+        int plus = (SettingsTools.executePreparedStatements(create.configuration().settings()) ? 2 : 0);
 
         // Check correct order of listener method invocation
         assertEquals(1, ResultQueryListener.start);
@@ -311,12 +311,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(ctx.query(), ctx.batchQueries()[0]);
             assertEquals(1, ctx.batchSQL().length);
 
-            assertEquals("Bar", ctx.configuration().getData("Foo"));
-            assertEquals("Baz", ctx.configuration().getData("Bar"));
+            assertEquals("Bar", ctx.configuration().data("Foo"));
+            assertEquals("Baz", ctx.configuration().data("Bar"));
             assertEquals(new HashMap<String, String>() {{
                 put("Foo", "Bar");
                 put("Bar", "Baz");
-            }}, ctx.configuration().getData());
+            }}, ctx.configuration().data());
 
             assertNull(ctx.routine());
             assertEquals(ExecuteType.READ, ctx.type());
@@ -573,7 +573,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerOnBatchSingle() {
-        if (!executePreparedStatements(create().configuration().getSettings())) {
+        if (!executePreparedStatements(create().configuration().settings())) {
             log.info("SKIPPINT", "Single batch tests with statement type = STATEMENT");
             return;
         }
@@ -583,8 +583,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         DSLContext create = create();
         addListeners(create.configuration(), new BatchSingleListener());
 
-        create.configuration().setData("Foo", "Bar");
-        create.configuration().setData("Bar", "Baz");
+        create.configuration().data("Foo", "Bar");
+        create.configuration().data("Bar", "Baz");
 
         int[] result = create.batch(create().insertInto(TAuthor())
                                             .set(TAuthor_ID(), param("id", Integer.class))
@@ -639,12 +639,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertTrue(ctx.batchQueries()[0].toString().toLowerCase().contains("insert"));
             assertEquals(1, ctx.batchSQL().length);
 
-            assertEquals("Bar", ctx.configuration().getData("Foo"));
-            assertEquals("Baz", ctx.configuration().getData("Bar"));
+            assertEquals("Bar", ctx.configuration().data("Foo"));
+            assertEquals("Baz", ctx.configuration().data("Bar"));
             assertEquals(new HashMap<String, String>() {{
                 put("Foo", "Bar");
                 put("Bar", "Baz");
-            }}, ctx.configuration().getData());
+            }}, ctx.configuration().data());
 
             assertNull(ctx.routine());
             assertNull(ctx.resultSet());
@@ -797,8 +797,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         DSLContext create = create();
         addListeners(create.configuration(), new BatchMultipleListener());
 
-        create.configuration().setData("Foo", "Bar");
-        create.configuration().setData("Bar", "Baz");
+        create.configuration().data("Foo", "Bar");
+        create.configuration().data("Bar", "Baz");
 
         int[] result = create.batch(
             create().insertInto(TAuthor())
@@ -871,12 +871,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertTrue(ctx.batchQueries()[3].toString().toLowerCase().contains("insert"));
             assertEquals(4, ctx.batchSQL().length);
 
-            assertEquals("Bar", ctx.configuration().getData("Foo"));
-            assertEquals("Baz", ctx.configuration().getData("Bar"));
+            assertEquals("Bar", ctx.configuration().data("Foo"));
+            assertEquals("Baz", ctx.configuration().data("Bar"));
             assertEquals(new HashMap<String, String>() {{
                 put("Foo", "Bar");
                 put("Bar", "Baz");
-            }}, ctx.configuration().getData());
+            }}, ctx.configuration().data());
 
             assertNull(ctx.routine());
             assertNull(ctx.resultSet());

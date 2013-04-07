@@ -66,12 +66,12 @@ public class PrettyPrinter extends DefaultExecuteListener {
 
         // Create a new factory for logging rendering purposes
         // This factory doesn't need a connection, only the SQLDialect...
-        DSLContext pretty = DSL.using(ctx.configuration().getDialect(),
+        DSLContext pretty = DSL.using(ctx.configuration().dialect(),
 
         // ... and the flag for pretty-printing
-            SettingsTools.clone(ctx.configuration().getSettings()).withRenderFormatted(true));
+            SettingsTools.clone(ctx.configuration().settings()).withRenderFormatted(true));
 
-        DSLContext normal = DSL.using(ctx.configuration().getDialect());
+        DSLContext normal = DSL.using(ctx.configuration().dialect());
 
         String n = "" + count.incrementAndGet();
 

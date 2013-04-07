@@ -2483,33 +2483,33 @@ public class BasicTest extends AbstractTest {
         RenderContext r_refP = r_refP();
         RenderContext r_ref = r_ref();
 
-        r_refI.configuration().getSettings().setRenderNameStyle(RenderNameStyle.AS_IS);
-        r_refP.configuration().getSettings().setRenderNameStyle(RenderNameStyle.AS_IS);
-        r_ref.configuration().getSettings().setRenderNameStyle(RenderNameStyle.AS_IS);
+        r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.AS_IS);
+        r_refP.configuration().settings().setRenderNameStyle(RenderNameStyle.AS_IS);
+        r_ref.configuration().settings().setRenderNameStyle(RenderNameStyle.AS_IS);
 
         assertEquals("select 1 from TABLE1 where TABLE1.ID1 = 2", r_refI.render(q));
         assertEquals("select :1 from TABLE1 where TABLE1.ID1 = :2", r_refP.render(q));
         assertEquals("select ? from TABLE1 where TABLE1.ID1 = ?", r_ref.render(q));
 
-        r_refI.configuration().getSettings().setRenderNameStyle(RenderNameStyle.LOWER);
-        r_refP.configuration().getSettings().setRenderNameStyle(RenderNameStyle.LOWER);
-        r_ref.configuration().getSettings().setRenderNameStyle(RenderNameStyle.LOWER);
+        r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.LOWER);
+        r_refP.configuration().settings().setRenderNameStyle(RenderNameStyle.LOWER);
+        r_ref.configuration().settings().setRenderNameStyle(RenderNameStyle.LOWER);
 
         assertEquals("select 1 from table1 where table1.id1 = 2", r_refI.render(q));
         assertEquals("select :1 from table1 where table1.id1 = :2", r_refP.render(q));
         assertEquals("select ? from table1 where table1.id1 = ?", r_ref.render(q));
 
-        r_refI.configuration().getSettings().setRenderNameStyle(RenderNameStyle.UPPER);
-        r_refP.configuration().getSettings().setRenderNameStyle(RenderNameStyle.UPPER);
-        r_ref.configuration().getSettings().setRenderNameStyle(RenderNameStyle.UPPER);
+        r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.UPPER);
+        r_refP.configuration().settings().setRenderNameStyle(RenderNameStyle.UPPER);
+        r_ref.configuration().settings().setRenderNameStyle(RenderNameStyle.UPPER);
 
         assertEquals("select 1 from TABLE1 where TABLE1.ID1 = 2", r_refI.render(q));
         assertEquals("select :1 from TABLE1 where TABLE1.ID1 = :2", r_refP.render(q));
         assertEquals("select ? from TABLE1 where TABLE1.ID1 = ?", r_ref.render(q));
 
-        r_refI.configuration().getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
-        r_refP.configuration().getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
-        r_ref.configuration().getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
+        r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.QUOTED);
+        r_refP.configuration().settings().setRenderNameStyle(RenderNameStyle.QUOTED);
+        r_ref.configuration().settings().setRenderNameStyle(RenderNameStyle.QUOTED);
 
         assertEquals("select 1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
         assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :2", r_refP.render(q));
@@ -2522,16 +2522,16 @@ public class BasicTest extends AbstractTest {
 
         RenderContext r_refI = r_refI();
 
-        r_refI.configuration().getSettings().setRenderNameStyle(RenderNameStyle.AS_IS);
+        r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.AS_IS);
         assertEquals("select 1 \"Aa \"\"Bb\"\" Cc\" from TABLE1 \"Xx ''Yy''\\ Zz\"", r_refI.render(q));
 
-        r_refI.configuration().getSettings().setRenderNameStyle(RenderNameStyle.LOWER);
+        r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.LOWER);
         assertEquals("select 1 \"aa \"\"bb\"\" cc\" from table1 \"xx ''yy''\\ zz\"", r_refI.render(q));
 
-        r_refI.configuration().getSettings().setRenderNameStyle(RenderNameStyle.UPPER);
+        r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.UPPER);
         assertEquals("select 1 \"AA \"\"BB\"\" CC\" from TABLE1 \"XX ''YY''\\ ZZ\"", r_refI.render(q));
 
-        r_refI.configuration().getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
+        r_refI.configuration().settings().setRenderNameStyle(RenderNameStyle.QUOTED);
         assertEquals("select 1 \"Aa \"\"Bb\"\" Cc\" from \"TABLE1\" \"Xx ''Yy''\\ Zz\"", r_refI.render(q));
     }
 
@@ -2543,17 +2543,17 @@ public class BasicTest extends AbstractTest {
         RenderContext r_refP = r_refP();
         RenderContext r_ref = r_ref();
 
-        r_refI.configuration().getSettings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
-        r_refP.configuration().getSettings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
-        r_ref.configuration().getSettings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
+        r_refI.configuration().settings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
+        r_refP.configuration().settings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
+        r_ref.configuration().settings().setRenderKeywordStyle(RenderKeywordStyle.UPPER);
 
         assertEquals("SELECT 1 FROM \"TABLE1\" WHERE \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
         assertEquals("SELECT :1 FROM \"TABLE1\" WHERE \"TABLE1\".\"ID1\" = :2", r_refP.render(q));
         assertEquals("SELECT ? FROM \"TABLE1\" WHERE \"TABLE1\".\"ID1\" = ?", r_ref.render(q));
 
-        r_refI.configuration().getSettings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
-        r_refP.configuration().getSettings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
-        r_ref.configuration().getSettings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
+        r_refI.configuration().settings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
+        r_refP.configuration().settings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
+        r_ref.configuration().settings().setRenderKeywordStyle(RenderKeywordStyle.LOWER);
 
         assertEquals("select 1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = 2", r_refI.render(q));
         assertEquals("select :1 from \"TABLE1\" where \"TABLE1\".\"ID1\" = :2", r_refP.render(q));

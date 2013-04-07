@@ -97,7 +97,7 @@ class BatchSingle implements BatchBindStep {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
         // should be used...
-        if (executeStaticStatements(configuration.getSettings())) {
+        if (executeStaticStatements(configuration.settings())) {
             return executeStatic();
         }
         else {

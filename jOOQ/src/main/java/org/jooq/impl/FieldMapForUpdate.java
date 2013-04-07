@@ -70,7 +70,7 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             // disambiguated columns in queries like
             // UPDATE t1 JOIN t2 .. SET t1.val = ..., t2.val = ...
             boolean restoreQualify = context.qualify();
-            boolean supportsQualify = asList(POSTGRES, SQLITE).contains(context.configuration().getDialect()) ? false : restoreQualify;
+            boolean supportsQualify = asList(POSTGRES, SQLITE).contains(context.configuration().dialect()) ? false : restoreQualify;
 
             for (Entry<Field<?>, Field<?>> entry : entrySet()) {
                 context.sql(separator);

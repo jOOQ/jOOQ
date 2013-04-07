@@ -113,11 +113,11 @@ public class DefaultConfiguration implements Configuration {
      */
     DefaultConfiguration(Configuration configuration) {
         this(
-            configuration.getConnectionProvider(),
-            configuration.getExecuteListenerProvider(),
-            configuration.getDialect(),
-            configuration.getSettings(),
-            configuration.getData()
+            configuration.connectionProvider(),
+            configuration.executeListenerProvider(),
+            configuration.dialect(),
+            configuration.settings(),
+            configuration.data()
         );
     }
 
@@ -205,7 +205,7 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final SQLDialect getDialect() {
+    public final SQLDialect dialect() {
         return dialect;
     }
 
@@ -213,7 +213,7 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final ConnectionProvider getConnectionProvider() {
+    public final ConnectionProvider connectionProvider() {
         return connectionProvider;
     }
 
@@ -222,7 +222,7 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     @Deprecated
-    public final org.jooq.SchemaMapping getSchemaMapping() {
+    public final org.jooq.SchemaMapping schemaMapping() {
         return mapping;
     }
 
@@ -230,7 +230,7 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Settings getSettings() {
+    public final Settings settings() {
         return settings;
     }
 
@@ -238,7 +238,7 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final ConcurrentHashMap<Object, Object> getData() {
+    public final ConcurrentHashMap<Object, Object> data() {
         return data;
     }
 
@@ -246,7 +246,7 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Object getData(Object key) {
+    public final Object data(Object key) {
         return data.get(key);
     }
 
@@ -254,7 +254,7 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Object setData(Object key, Object value) {
+    public final Object data(Object key, Object value) {
         return data.put(key, value);
     }
 
@@ -262,7 +262,7 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final ExecuteListenerProvider getExecuteListenerProvider() {
+    public final ExecuteListenerProvider executeListenerProvider() {
         return listenerProvider;
     }
 

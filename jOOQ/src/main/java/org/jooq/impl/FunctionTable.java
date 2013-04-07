@@ -78,26 +78,26 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case HSQLDB: {
                 context.keyword("table(").sql(function).sql(")");
                 break;
             }
 
             default:
-                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + context.configuration().getDialect());
+                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + context.configuration().dialect());
         }
     }
 
     @Override
     public final void bind(BindContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case HSQLDB:
                 context.bind(function);
                 break;
 
             default:
-                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + context.configuration().getDialect());
+                throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + context.configuration().dialect());
         }
     }
 

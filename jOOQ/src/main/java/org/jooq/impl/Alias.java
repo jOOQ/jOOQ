@@ -98,7 +98,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     @Override
     public final void toSQL(RenderContext context) {
         if (context.declareFields() || context.declareTables()) {
-            SQLDialect dialect = context.configuration().getDialect();
+            SQLDialect dialect = context.configuration().dialect();
             boolean simulateDerivedColumnList = false;
 
             // [#1801] Some databases don't allow "derived column names" in
@@ -184,7 +184,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     private void toSQLAs(RenderContext context) {
-        if (asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(context.configuration().getDialect())) {
+        if (asList(DERBY, HSQLDB, MYSQL, POSTGRES).contains(context.configuration().dialect())) {
             context.keyword(" as");
         }
     }

@@ -516,7 +516,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             @Override
             public void toSQL(RenderContext context) {
-                context.configuration().setData("Foo-Field", "Baz");
+                context.configuration().data("Foo-Field", "Baz");
 
                 if (context.inline()) {
                     context.sql(TBook_ID().getName() + " * 2");
@@ -524,7 +524,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Firebird is the only dialect that cannot handle type inferral
                 // When multiplying an INT by a bind value
-                else if (context.configuration().getDialect() == FIREBIRD) {
+                else if (context.configuration().dialect() == FIREBIRD) {
                     context.sql(TBook_ID().getName() + " * cast (? as int)");
                 }
                 else {
@@ -548,7 +548,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             @Override
             public void toSQL(RenderContext context) {
-                context.configuration().setData("Foo-Condition", "Baz");
+                context.configuration().data("Foo-Condition", "Baz");
 
                 context.sql(IDx2);
                 context.sql(" > ");
@@ -576,8 +576,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1169] Some additional checks to see if custom data is correctly
         // passed on to custom QueryParts
         DSLContext create = create();
-        create.configuration().setData("Foo-Field", "Bar");
-        create.configuration().setData("Foo-Condition", "Bar");
+        create.configuration().data("Foo-Field", "Bar");
+        create.configuration().data("Foo-Condition", "Bar");
 
         Result<Record2<Integer, Integer>> result = create
             .select(TBook_ID(), IDx2)
@@ -596,7 +596,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(8), result.getValue(2, IDx2));
 
         // [#1169] Check again
-        assertEquals("Baz", create.configuration().getData("Foo-Field"));
-        assertEquals("Baz", create.configuration().getData("Foo-Condition"));
+        assertEquals("Baz", create.configuration().data("Foo-Field"));
+        assertEquals("Baz", create.configuration().data("Foo-Condition"));
     }
 }

@@ -81,7 +81,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
 
-        Settings settings = configuration.getSettings();
+        Settings settings = configuration.settings();
 
         this.sql = new StringBuilder();
         this.cachedRenderKeywordStyle = settings.getRenderKeywordStyle();
@@ -275,12 +275,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         // [#2367] ... but in SQLite, quoting "normal" literals is generally
         // asking for trouble, as SQLite bends the rules here, see
         // http://www.sqlite.org/lang_keywords.html for details ...
-            && configuration.getDialect() != SQLDialect.SQLITE)
+            && configuration.dialect() != SQLDialect.SQLITE)
 
         ||
 
         // [#2367] ... yet, do quote when an identifier is a SQLite keyword
-            (configuration.getDialect() == SQLDialect.SQLITE
+            (configuration.dialect() == SQLDialect.SQLITE
             && SQLITE_KEYWORDS.contains(literal.toUpperCase()))
 
         ||
@@ -299,7 +299,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             sql(literal);
         }
         else {
-            switch (configuration.getDialect()) {
+            switch (configuration.dialect()) {
 
                 // MySQL supports backticks and double quotes
                 case MYSQL:
@@ -417,7 +417,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             case NEVER:
                 return false;
             case SOME:
-                return asList(castDialects).contains(configuration.getDialect());
+                return asList(castDialects).contains(configuration.dialect());
         }
 
         return null;

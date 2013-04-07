@@ -82,7 +82,7 @@ class CompareCondition extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        SQLDialect dialect = context.configuration().getDialect();
+        SQLDialect dialect = context.configuration().dialect();
         Field<?> lhs = field1;
         Field<?> rhs = field2;
         Comparator op = comparator;

@@ -64,7 +64,7 @@ class Power extends AbstractFunction<BigDecimal> {
 
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case DERBY:
             case SQLITE:
                 return DSL.exp(DSL.ln(arg1).mul(arg2));

@@ -60,7 +60,7 @@ public interface Context<C extends Context<C>> {
      * to {@link QueryPart} objects for a given {@link RenderContext} or
      * {@link BindContext}.
      * <p>
-     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * Unlike {@link Configuration#data()}, these data's lifecycle only
      * matches that of a render or bind context.
      *
      * @return The custom data. This is never <code>null</code>
@@ -75,7 +75,7 @@ public interface Context<C extends Context<C>> {
      * to {@link QueryPart} objects for a given {@link RenderContext} or
      * {@link BindContext}.
      * <p>
-     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * Unlike {@link Configuration#data()}, these data's lifecycle only
      * matches that of a render or bind context.
      *
      * @param key A key to identify the custom data
@@ -93,7 +93,7 @@ public interface Context<C extends Context<C>> {
      * to {@link QueryPart} objects for a given {@link RenderContext} or
      * {@link BindContext}.
      * <p>
-     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * Unlike {@link Configuration#data()}, these data's lifecycle only
      * matches that of a render or bind context.
      *
      * @param key A key to identify the custom data

@@ -171,7 +171,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
             // If all params are inlined, the previous statement always has to
             // be closed
-            else if (SettingsTools.executeStaticStatements(getConfiguration().getSettings())) {
+            else if (SettingsTools.executeStaticStatements(getConfiguration().settings())) {
                 close();
             }
         }
@@ -274,7 +274,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 }
 
                 // [#1145] Bind variables only for true prepared statements
-                if (executePreparedStatements(c.getSettings())) {
+                if (executePreparedStatements(c.settings())) {
                     listener.bindStart(ctx);
                     create(c).bind(this, ctx.statement());
                     listener.bindEnd(ctx);
@@ -360,7 +360,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      */
     @Override
     public final String getSQL() {
-        if (executePreparedStatements(getConfiguration().getSettings())) {
+        if (executePreparedStatements(getConfiguration().settings())) {
             return getSQL(false);
         }
         else {

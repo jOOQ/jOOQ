@@ -204,7 +204,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             return executeCallableStatement();
         }
         else {
-            switch (configuration.getDialect()) {
+            switch (configuration.dialect()) {
 
                 // [#852] Some RDBMS don't allow for using JDBC procedure escape
                 // syntax for functions. Select functions from DUAL instead
@@ -273,7 +273,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             // Postgres requires two separate queries running in the same
             // transaction to be executed when fetching refcursor types
             boolean autoCommit = connection.getAutoCommit();
-            if (autoCommit && configuration.getDialect() == SQLDialect.POSTGRES) {
+            if (autoCommit && configuration.dialect() == SQLDialect.POSTGRES) {
                 connection.setAutoCommit(false);
             }
 
@@ -281,7 +281,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             ctx.statement().execute();
             listener.executeEnd(ctx);
 
-            if (autoCommit && configuration.getDialect() == SQLDialect.POSTGRES) {
+            if (autoCommit && configuration.dialect() == SQLDialect.POSTGRES) {
                 connection.setAutoCommit(autoCommit);
             }
 
@@ -363,7 +363,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 Field<?> value = getInValues().get(parameter);
 
                 // Disambiguate overloaded procedure signatures
-                if (SQLDialect.POSTGRES == context.configuration().getDialect() && isOverloaded()) {
+                if (SQLDialect.POSTGRES == context.configuration().dialect() && isOverloaded()) {
                     value = value.cast(parameter.getType());
                 }
 
@@ -379,7 +379,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLEnd(RenderContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case ORACLE:
                 context.sql(";")
                        .formatIndentEnd()
@@ -394,7 +394,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLBegin(RenderContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case ORACLE:
                 context.keyword("begin")
                        .formatIndentStart()
@@ -408,7 +408,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLAssign(RenderContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case ORACLE:
                 context.sql("? := ");
                 break;
@@ -420,7 +420,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLCall(RenderContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case ORACLE:
                 break;
 
@@ -433,7 +433,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case ORACLE:
                 context.sql(parameter);
                 context.sql(" => ");
@@ -447,7 +447,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case ORACLE:
                 context.sql(parameter);
                 context.sql(" => ");
@@ -501,7 +501,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 int index = parameterIndexes.get(parameter);
                 int sqlType = parameter.getDataType().getDataType(c).getSQLType();
 
-                switch (c.getDialect()) {
+                switch (c.dialect()) {
 
                     // For some user defined types Oracle needs to bind
                     // also the type name
@@ -705,7 +705,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             for (Parameter<?> p : getInParameters()) {
 
                 // Disambiguate overloaded function signatures
-                if (SQLDialect.POSTGRES == c.getDialect() && isOverloaded()) {
+                if (SQLDialect.POSTGRES == c.dialect() && isOverloaded()) {
                     array[i] = getInValues().get(p).cast(p.getType());
                 }
                 else {

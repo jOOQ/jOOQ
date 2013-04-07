@@ -67,7 +67,7 @@ class Limit extends AbstractQueryPart {
         boolean inline = context.inline();
         CastMode castMode = context.castMode();
 
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
@@ -210,7 +210,7 @@ class Limit extends AbstractQueryPart {
 
     @Override
     public final void bind(BindContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
 
             // OFFSET .. LIMIT support provided by the following dialects
             // ----------------------------------------------------------

@@ -1440,7 +1440,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     @Support({ ASE, CUBRID, DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE, SQLSERVER, SYBASE })
     public final BigInteger lastID() throws DataAccessException {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case DERBY: {
                 Field<BigInteger> field = field("identity_val_local()", BigInteger.class);
                 return select(field).fetchOne(field);
@@ -1476,7 +1476,7 @@ class DSLContextImpl implements DSLContext, Serializable {
             }
 
             default:
-                throw new SQLDialectNotSupportedException("identity functionality not supported by " + configuration.getDialect());
+                throw new SQLDialectNotSupportedException("identity functionality not supported by " + configuration.dialect());
         }
     }
 
@@ -1503,7 +1503,7 @@ class DSLContextImpl implements DSLContext, Serializable {
         try {
             String schemaName = render(schema);
 
-            switch (configuration.getDialect()) {
+            switch (configuration.dialect()) {
                 case DB2:
                 case DERBY:
                 case H2:
@@ -1537,8 +1537,8 @@ class DSLContextImpl implements DSLContext, Serializable {
             }
         }
         finally {
-            getRenderMapping(configuration.getSettings()).setDefaultSchema(schema.getName());
-            configuration.getSchemaMapping().use(schema);
+            getRenderMapping(configuration.settings()).setDefaultSchema(schema.getName());
+            configuration.schemaMapping().use(schema);
         }
 
         return result;

@@ -284,7 +284,7 @@ final class Utils {
 
     private static final boolean attachRecords(Configuration configuration) {
         if (configuration != null) {
-            Settings settings = configuration.getSettings();
+            Settings settings = configuration.settings();
 
             if (settings != null) {
                 return !FALSE.equals(settings.isAttachRecords());
@@ -1065,7 +1065,7 @@ final class Utils {
      */
     @SuppressWarnings("deprecation")
     static final Schema getMappedSchema(Configuration configuration, Schema schema) {
-        org.jooq.SchemaMapping mapping = configuration.getSchemaMapping();
+        org.jooq.SchemaMapping mapping = configuration.schemaMapping();
 
         if (mapping != null) {
             return mapping.map(schema);
@@ -1080,7 +1080,7 @@ final class Utils {
      */
     @SuppressWarnings("deprecation")
     static final <R extends Record> Table<R> getMappedTable(Configuration configuration, Table<R> table) {
-        org.jooq.SchemaMapping mapping = configuration.getSchemaMapping();
+        org.jooq.SchemaMapping mapping = configuration.schemaMapping();
 
         if (mapping != null) {
             return mapping.map(table);
@@ -1096,12 +1096,12 @@ final class Utils {
      */
     static final List<ExecuteListener> getListeners(ExecuteContext ctx) {
         List<ExecuteListener> result = new ArrayList<ExecuteListener>();
-        if (!FALSE.equals(ctx.configuration().getSettings().isExecuteLogging())) {
+        if (!FALSE.equals(ctx.configuration().settings().isExecuteLogging())) {
             result.add(new StopWatchListener());
             result.add(new LoggerListener());
         }
 
-        ExecuteListenerProvider provider = ctx.configuration().getExecuteListenerProvider();
+        ExecuteListenerProvider provider = ctx.configuration().executeListenerProvider();
         if (provider != null) {
             result.addAll(provider.provide());
         }
@@ -1768,7 +1768,7 @@ final class Utils {
         }
         else if (type == BigInteger.class) {
             // The SQLite JDBC driver doesn't support BigDecimals
-            if (ctx.configuration().getDialect() == SQLDialect.SQLITE) {
+            if (ctx.configuration().dialect() == SQLDialect.SQLITE) {
                 return Convert.convert(rs.getString(index), (Class<T>) BigInteger.class);
             }
             else {
@@ -1778,7 +1778,7 @@ final class Utils {
         }
         else if (type == BigDecimal.class) {
             // The SQLite JDBC driver doesn't support BigDecimals
-            if (ctx.configuration().getDialect() == SQLDialect.SQLITE) {
+            if (ctx.configuration().dialect() == SQLDialect.SQLITE) {
                 return Convert.convert(rs.getString(index), (Class<T>) BigDecimal.class);
             }
             else {
@@ -1795,7 +1795,7 @@ final class Utils {
             return (T) rs.getClob(index);
         }
         else if (type == Date.class) {
-            return (T) getDate(ctx.configuration().getDialect(), rs, index);
+            return (T) getDate(ctx.configuration().dialect(), rs, index);
         }
         else if (type == Double.class) {
             return (T) wasNull(rs, Double.valueOf(rs.getDouble(index)));
@@ -1816,13 +1816,13 @@ final class Utils {
             return (T) rs.getString(index);
         }
         else if (type == Time.class) {
-            return (T) getTime(ctx.configuration().getDialect(), rs, index);
+            return (T) getTime(ctx.configuration().dialect(), rs, index);
         }
         else if (type == Timestamp.class) {
-            return (T) getTimestamp(ctx.configuration().getDialect(), rs, index);
+            return (T) getTimestamp(ctx.configuration().dialect(), rs, index);
         }
         else if (type == YearToMonth.class) {
-            if (ctx.configuration().getDialect() == POSTGRES) {
+            if (ctx.configuration().dialect() == POSTGRES) {
                 Object object = rs.getObject(index);
                 return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
@@ -1832,7 +1832,7 @@ final class Utils {
             }
         }
         else if (type == DayToSecond.class) {
-            if (ctx.configuration().getDialect() == POSTGRES) {
+            if (ctx.configuration().dialect() == POSTGRES) {
                 Object object = rs.getObject(index);
                 return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
@@ -1858,7 +1858,7 @@ final class Utils {
             return (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
-            switch (ctx.configuration().getDialect()) {
+            switch (ctx.configuration().dialect()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
@@ -1882,7 +1882,7 @@ final class Utils {
 
         // The type byte[] is handled earlier. byte[][] can be handled here
         else if (type.isArray()) {
-            switch (ctx.configuration().getDialect()) {
+            switch (ctx.configuration().dialect()) {
                 case POSTGRES: {
                     return pgGetArray(ctx, type, index);
                 }
@@ -1900,7 +1900,7 @@ final class Utils {
             return getEnumType(type, rs.getString(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            switch (ctx.configuration().getDialect()) {
+            switch (ctx.configuration().dialect()) {
                 case POSTGRES:
                     return (T) pgNewUDTRecord(type, rs.getObject(index));
             }
@@ -2123,7 +2123,7 @@ final class Utils {
             return (T) stmt.getTimestamp(index);
         }
         else if (type == YearToMonth.class) {
-            if (ctx.configuration().getDialect() == POSTGRES) {
+            if (ctx.configuration().dialect() == POSTGRES) {
                 Object object = stmt.getObject(index);
                 return (T) (object == null ? null : PostgresUtils.toYearToMonth(object));
             }
@@ -2133,7 +2133,7 @@ final class Utils {
             }
         }
         else if (type == DayToSecond.class) {
-            if (ctx.configuration().getDialect() == POSTGRES) {
+            if (ctx.configuration().dialect() == POSTGRES) {
                 Object object = stmt.getObject(index);
                 return (T) (object == null ? null : PostgresUtils.toDayToSecond(object));
             }
@@ -2159,7 +2159,7 @@ final class Utils {
             return (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
-            switch (ctx.configuration().getDialect()) {
+            switch (ctx.configuration().dialect()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
@@ -2192,7 +2192,7 @@ final class Utils {
             return getEnumType(type, stmt.getString(index));
         }
         else if (UDTRecord.class.isAssignableFrom(type)) {
-            switch (ctx.configuration().getDialect()) {
+            switch (ctx.configuration().dialect()) {
                 case POSTGRES:
                     return (T) pgNewUDTRecord(type, stmt.getObject(index));
             }

@@ -71,31 +71,31 @@ public interface Configuration extends Serializable {
     /**
      * Retrieve the configured dialect.
      */
-    SQLDialect getDialect();
+    SQLDialect dialect();
 
     /**
      * Get this configuration's underlying connection provider.
      */
-    ConnectionProvider getConnectionProvider();
+    ConnectionProvider connectionProvider();
 
     /**
      * Retrieve the configured schema mapping.
      *
-     * @deprecated - 2.0.5 - Use {@link #getSettings()} instead
+     * @deprecated - 2.0.5 - Use {@link #settings()} instead
      */
     @Deprecated
-    SchemaMapping getSchemaMapping();
+    SchemaMapping schemaMapping();
 
     /**
      * Retrieve the runtime configuration settings.
      */
-    Settings getSettings();
+    Settings settings();
 
     /**
      * Get all custom data from this <code>Configuration</code>.
      * <p>
      * This is custom data that was previously set to the configuration using
-     * {@link #setData(Object, Object)}. Use custom data if you want to pass
+     * {@link #data(Object, Object)}. Use custom data if you want to pass
      * data to your custom {@link QueryPart} or {@link ExecuteListener} objects
      * to be made available at render, bind, execution, fetch time.
      * <p>
@@ -104,13 +104,13 @@ public interface Configuration extends Serializable {
      * @return The custom data. This is never <code>null</code>
      * @see ExecuteListener
      */
-    Map<Object, Object> getData();
+    Map<Object, Object> data();
 
     /**
      * Get some custom data from this <code>Configuration</code>.
      * <p>
      * This is custom data that was previously set to the configuration using
-     * {@link #setData(Object, Object)}. Use custom data if you want to pass
+     * {@link #data(Object, Object)}. Use custom data if you want to pass
      * data to your custom {@link QueryPart} or {@link ExecuteListener} objects
      * to be made available at render, bind, execution, fetch time.
      * <p>
@@ -121,7 +121,7 @@ public interface Configuration extends Serializable {
      *         in this <code>Configuration</code>
      * @see ExecuteListener
      */
-    Object getData(Object key);
+    Object data(Object key);
 
     /**
      * Set some custom data to this <code>Configuration</code>.
@@ -143,7 +143,7 @@ public interface Configuration extends Serializable {
      *         was previously set for the given key
      * @see ExecuteListener
      */
-    Object setData(Object key, Object value);
+    Object data(Object key, Object value);
 
     /**
      * Get the configured <code>ExecuteListenerProvider</code> from this
@@ -172,7 +172,7 @@ public interface Configuration extends Serializable {
      * @see ExecuteListener
      * @see ExecuteContext
      */
-    ExecuteListenerProvider getExecuteListenerProvider();
+    ExecuteListenerProvider executeListenerProvider();
 
     /**
      * Create a derived configuration from this one, without changing any

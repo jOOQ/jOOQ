@@ -41,7 +41,7 @@ import org.jooq.tools.JooqLogger;
 
 /**
  * An exception thrown if an SQL construct is used, which is not supported by
- * the dialect set in {@link Configuration#getDialect()}
+ * the dialect set in {@link Configuration#dialect()}
  *
  * @author Lukas Eder
  */

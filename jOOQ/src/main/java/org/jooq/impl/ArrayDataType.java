@@ -71,7 +71,7 @@ class ArrayDataType<T> extends DefaultDataType<T[]> {
     }
 
     private static String getArrayType(Configuration configuration, String dataType) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case HSQLDB:
                 return dataType + " array";
             case POSTGRES:

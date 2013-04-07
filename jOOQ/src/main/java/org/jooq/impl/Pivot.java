@@ -102,7 +102,7 @@ implements
     }
 
     private Table<?> pivot(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
 
             // Oracle has native support for the PIVOT clause
             case ORACLE: {

@@ -36,7 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.Utils.fieldArray;
-import static org.jooq.util.sqlite.SQLiteFactory.rowid;
+import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

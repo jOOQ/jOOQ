@@ -28,21 +28,52 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.sybase;
+package org.jooq.util.cubrid;
 
+import org.jooq.Field;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#SYBASE} specific factory
+ * The {@link SQLDialect#CUBRID} specific DSL.
  *
- * @author Espen Stromsnes
+ * @author Lukas Eder
  */
-public class SybaseFactory extends DSL {
+public class CUBRIDDSL extends DSL {
 
     /**
      * No instances
      */
-    private SybaseFactory() {
+    private CUBRIDDSL() {
+    }
+
+    // -------------------------------------------------------------------------
+    // MySQL-specific functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Use the CUBRID-specific <code>INCR()</code> function.
+     * <p>
+     * This function can be used to increment a field value in a
+     * <code>SELECT</code> statement as such: <code><pre>
+     * SELECT article, INCR(read_count)
+     * FROM article_table
+     * WHERE article_id = 130,987</pre></code>
+     */
+    public static <T> Field<T> incr(Field<T> field) {
+        return field("{incr}({0})", field.getDataType(), field);
+    }
+
+    /**
+     * Use the CUBRID-specific <code>DECR()</code> function.
+     * <p>
+     * This function can be used to increment a field value in a
+     * <code>SELECT</code> statement as such: <code><pre>
+     * SELECT article, DECR(read_count)
+     * FROM article_table
+     * WHERE article_id = 130,987</pre></code>
+     */
+    public static <T> Field<T> decr(Field<T> field) {
+        return field("{decr}({0})", field.getDataType(), field);
     }
 }

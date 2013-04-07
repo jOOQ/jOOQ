@@ -58,7 +58,7 @@ import java.util.Map;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.types.Interval;
-import org.jooq.util.oracle.OracleFactory;
+import org.jooq.util.oracle.OracleDSL;
 
 /**
  * A field used in tables and conditions
@@ -1002,7 +1002,7 @@ public interface Field<T> extends GroupField {
      * </pre></code>
      * <p>
      * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
-     * function. Refer to {@link OracleFactory#contains(Field, String)} instead.
+     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
      *
      * @see DSL#escape(String, char)
      * @see #like(String, char)
@@ -1029,7 +1029,7 @@ public interface Field<T> extends GroupField {
      * </pre></code>
      * <p>
      * Note, this does not correspond to the Oracle Text <code>CONTAINS()</code>
-     * function. Refer to {@link OracleFactory#contains(Field, String)} instead.
+     * function. Refer to {@link OracleDSL#contains(Field, String)} instead.
      *
      * @see DSL#escape(Field, char)
      * @see #like(Field, char)

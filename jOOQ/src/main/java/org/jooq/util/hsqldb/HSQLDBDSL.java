@@ -33,21 +33,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.db2;
+package org.jooq.util.hsqldb;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#DB2} specific factory
+ * The {@link SQLDialect#HSQLDB} specific DSL.
  *
  * @author Lukas Eder
  */
-public class DB2Factory extends DSL {
+public class HSQLDBDSL extends DSL {
 
     /**
      * No instances
      */
-    private DB2Factory() {
+    private HSQLDBDSL() {
     }
 }

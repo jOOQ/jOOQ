@@ -47,18 +47,18 @@ import static org.jooq.test.mysql.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.mysql.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.mysql.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.mysql.generatedclasses.Tables.V_BOOK;
-import static org.jooq.util.mysql.MySQLFactory.aesDecrypt;
-import static org.jooq.util.mysql.MySQLFactory.aesEncrypt;
-import static org.jooq.util.mysql.MySQLFactory.compress;
-import static org.jooq.util.mysql.MySQLFactory.decode;
-import static org.jooq.util.mysql.MySQLFactory.desDecrypt;
-import static org.jooq.util.mysql.MySQLFactory.desEncrypt;
-import static org.jooq.util.mysql.MySQLFactory.encode;
-import static org.jooq.util.mysql.MySQLFactory.password;
-import static org.jooq.util.mysql.MySQLFactory.sha1;
-import static org.jooq.util.mysql.MySQLFactory.sha2;
-import static org.jooq.util.mysql.MySQLFactory.uncompress;
-import static org.jooq.util.mysql.MySQLFactory.uncompressedLength;
+import static org.jooq.util.mysql.MySQLDSL.aesDecrypt;
+import static org.jooq.util.mysql.MySQLDSL.aesEncrypt;
+import static org.jooq.util.mysql.MySQLDSL.compress;
+import static org.jooq.util.mysql.MySQLDSL.decode;
+import static org.jooq.util.mysql.MySQLDSL.desDecrypt;
+import static org.jooq.util.mysql.MySQLDSL.desEncrypt;
+import static org.jooq.util.mysql.MySQLDSL.encode;
+import static org.jooq.util.mysql.MySQLDSL.password;
+import static org.jooq.util.mysql.MySQLDSL.sha1;
+import static org.jooq.util.mysql.MySQLDSL.sha2;
+import static org.jooq.util.mysql.MySQLDSL.uncompress;
+import static org.jooq.util.mysql.MySQLDSL.uncompressedLength;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -128,7 +128,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.mysql.MySQLDataType;
-import org.jooq.util.mysql.MySQLFactory;
+import org.jooq.util.mysql.MySQLDSL;
 
 import org.junit.Test;
 
@@ -843,11 +843,11 @@ public class MySQLTest extends jOOQAbstractTest<
 
     @Test
     public void testMySQLEnumIndex() throws Exception {
-        assertNull(MySQLFactory.enumType(TBookStatus.class, -1));
-        assertNull(MySQLFactory.enumType(TBookStatus.class, 0));
-        assertEquals(TBookStatus.SOLD_OUT, MySQLFactory.enumType(TBookStatus.class, 1));
-        assertEquals(TBookStatus.ORDERED, MySQLFactory.enumType(TBookStatus.class, 2));
-        assertEquals(TBookStatus.ON_STOCK, MySQLFactory.enumType(TBookStatus.class, 3));
-        assertNull(MySQLFactory.enumType(TBookStatus.class, 4));
+        assertNull(MySQLDSL.enumType(TBookStatus.class, -1));
+        assertNull(MySQLDSL.enumType(TBookStatus.class, 0));
+        assertEquals(TBookStatus.SOLD_OUT, MySQLDSL.enumType(TBookStatus.class, 1));
+        assertEquals(TBookStatus.ORDERED, MySQLDSL.enumType(TBookStatus.class, 2));
+        assertEquals(TBookStatus.ON_STOCK, MySQLDSL.enumType(TBookStatus.class, 3));
+        assertNull(MySQLDSL.enumType(TBookStatus.class, 4));
     }
 }

@@ -36,22 +36,6 @@
 
 package org.jooq;
 
-import org.jooq.impl.DSL;
-import org.jooq.util.ase.ASEFactory;
-import org.jooq.util.cubrid.CUBRIDFactory;
-import org.jooq.util.db2.DB2Factory;
-import org.jooq.util.derby.DerbyFactory;
-import org.jooq.util.firebird.FirebirdFactory;
-import org.jooq.util.h2.H2Factory;
-import org.jooq.util.hsqldb.HSQLDBFactory;
-import org.jooq.util.ingres.IngresFactory;
-import org.jooq.util.mysql.MySQLFactory;
-import org.jooq.util.oracle.OracleFactory;
-import org.jooq.util.postgres.PostgresFactory;
-import org.jooq.util.sqlite.SQLiteFactory;
-import org.jooq.util.sqlserver.SQLServerFactory;
-import org.jooq.util.sybase.SybaseFactory;
-
 /**
  * This enumeration lists all supported dialects.
  *
@@ -66,84 +50,82 @@ public enum SQLDialect {
      *             unit testing
      */
     @Deprecated
-    SQL99(null, null),
+    SQL99(null),
 
     /**
      * The Sybase Adaptive Server SQL dialect
      */
-    ASE("ASE", ASEFactory.class),
+    ASE("ASE"),
 
     /**
      * The CUBRID SQL dialect
      */
-    CUBRID("CUBRID", CUBRIDFactory.class),
+    CUBRID("CUBRID"),
 
     /**
      * The IBM DB2 SQL dialect
      */
-    DB2("DB2", DB2Factory.class),
+    DB2("DB2"),
 
     /**
      * The Apache Derby SQL dialect
      */
-    DERBY("Derby", DerbyFactory.class),
+    DERBY("Derby"),
 
     /**
      * The Firebird SQL dialect
      */
-    FIREBIRD("Firebird", FirebirdFactory.class),
+    FIREBIRD("Firebird"),
 
     /**
      * The H2 SQL dialect
      */
-    H2("H2", H2Factory.class),
+    H2("H2"),
 
     /**
      * The Hypersonic SQL dialect
      */
-    HSQLDB("HSQLDB", HSQLDBFactory.class),
+    HSQLDB("HSQLDB"),
 
     /**
      * The Ingres dialect
      */
-    INGRES("Ingres", IngresFactory.class),
+    INGRES("Ingres"),
 
     /**
      * The MySQL dialect
      */
-    MYSQL("MySQL", MySQLFactory.class),
+    MYSQL("MySQL"),
 
     /**
      * The Oracle dialect
      */
-    ORACLE("Oracle", OracleFactory.class),
+    ORACLE("Oracle"),
 
     /**
      * The PostGres dialect
      */
-    POSTGRES("Postgres", PostgresFactory.class),
+    POSTGRES("Postgres"),
 
     /**
      * The SQLite dialect
      */
-    SQLITE("SQLite", SQLiteFactory.class),
+    SQLITE("SQLite"),
 
     /**
      * The SQL Server dialect
      */
-    SQLSERVER("SQLServer", SQLServerFactory.class),
+    SQLSERVER("SQLServer"),
 
     /**
      * The Sybase dialect
      */
-    SYBASE("Sybase", SybaseFactory.class);
+    SYBASE("Sybase");
 
-    private final String                   name;
-    private final Class<? extends DSL> sQL;
+    private final String name;
 
-    private SQLDialect(String name, Class<? extends DSL> sQL) {
+    private SQLDialect(String name) {
         this.name = name;
-        this.sQL = sQL;
     }
 
     /**
@@ -165,13 +147,5 @@ public enum SQLDialect {
      */
     public final String getNameUC() {
         return name.toUpperCase();
-    }
-
-    /**
-     * A {@link DSLContext} class whose instances are pre-configured with this
-     * dialect.
-     */
-    public final Class<? extends DSL> getFactory() {
-        return sQL;
     }
 }

@@ -41,16 +41,16 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#MYSQL} specific factory
+ * The {@link SQLDialect#MYSQL} specific DSL.
  *
  * @author Lukas Eder
  */
-public class MySQLFactory extends DSL {
+public class MySQLDSL extends DSL {
 
     /**
      * No instances
      */
-    private MySQLFactory() {
+    private MySQLDSL() {
     }
 
     // -------------------------------------------------------------------------

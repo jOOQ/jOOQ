@@ -33,21 +33,21 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.util.postgres;
+package org.jooq.util.db2;
 
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#POSTGRES} specific factory
+ * The {@link SQLDialect#DB2} specific DSL.
  *
  * @author Lukas Eder
  */
-public class PostgresFactory extends DSL {
+public class DB2DSL extends DSL {
 
     /**
      * No instances
      */
-    private PostgresFactory() {
+    private DB2DSL() {
     }
 }

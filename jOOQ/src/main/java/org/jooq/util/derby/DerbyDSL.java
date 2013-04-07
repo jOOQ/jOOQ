@@ -39,15 +39,15 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 /**
- * A {@link SQLDialect#DERBY} specific factory
+ * The {@link SQLDialect#DERBY} specific DSL.
  *
  * @author Lukas Eder
  */
-public class DerbyFactory extends DSL {
+public class DerbyDSL extends DSL {
 
     /**
      * No instances
      */
-    private DerbyFactory() {
+    private DerbyDSL() {
     }
 }

@@ -39,9 +39,9 @@ import static org.jooq.SQLDialect.SQL99;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.JAXB;
 
@@ -55,36 +55,49 @@ import org.jooq.conf.SettingsTools;
 
 /**
  * A default implementation for configurations within a {@link DSLContext}, if no
- * custom configuration was supplied to {@link DSL#using(Configuration)}
+ * custom configuration was supplied to {@link DSL#using(Configuration)}.
+ * <p>
+ * The <code>DefaultConfiguration</code>
+ *
+ * @author Lukas Eder
  */
-class DefaultConfiguration implements Configuration {
+public class DefaultConfiguration implements Configuration {
 
     /**
      * Serial version UID
      */
-    private static final long            serialVersionUID = 8193158984283234708L;
+    private static final long                       serialVersionUID = 8193158984283234708L;
 
-    private transient ConnectionProvider connectionProvider;
-    private final SQLDialect             dialect;
-
-    @SuppressWarnings("deprecation")
-    private final org.jooq.SchemaMapping mapping;
-    private final Settings               settings;
-    private final Map<Object, Object>    data;
-    private List<ExecuteListener>        listeners;
+    private final ConnectionProvider                connectionProvider;
+    private final SQLDialect                        dialect;
 
     @SuppressWarnings("deprecation")
-    DefaultConfiguration() {
+    private final org.jooq.SchemaMapping            mapping;
+    private final Settings                          settings;
+    private final ConcurrentHashMap<Object, Object> data;
+    private final List<ExecuteListener>             listeners;
+
+    @SuppressWarnings("deprecation")
+    public DefaultConfiguration() {
         this(new NoConnectionProvider(), SQL99, SettingsTools.defaultSettings(), null);
     }
 
+    public DefaultConfiguration(Configuration configuration) {
+        this(
+            configuration.getConnectionProvider(),
+            configuration.getDialect(),
+            configuration.getSettings(),
+            configuration.getData()
+        );
+    }
+
     @SuppressWarnings("deprecation")
-    DefaultConfiguration(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings, Map<Object, Object> data) {
+    public DefaultConfiguration(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings, Map<Object, Object> data) {
         this.connectionProvider = connectionProvider;
         this.dialect = dialect;
         this.settings = settings != null ? settings : SettingsTools.defaultSettings();
         this.mapping = new org.jooq.SchemaMapping(this);
-        this.data = data != null ? data : new HashMap<Object, Object>();
+        this.data = data != null ? new ConcurrentHashMap<Object, Object>(data) : new ConcurrentHashMap<Object, Object>();
         this.listeners = new ArrayList<ExecuteListener>();
     }
 
@@ -125,7 +138,7 @@ class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Map<Object, Object> getData() {
+    public final ConcurrentHashMap<Object, Object> getData() {
         return data;
     }
 
@@ -154,11 +167,14 @@ class DefaultConfiguration implements Configuration {
     }
 
     /**
-     * {@inheritDoc}
+     * Set the execute listeners onto this configuration.
      */
-    @Override
     public final void setExecuteListeners(List<ExecuteListener> listeners) {
-        this.listeners = listeners != null ? listeners : new ArrayList<ExecuteListener>();
+        this.listeners.clear();
+
+        if (listeners != null) {
+            listeners.addAll(listeners);
+        }
     }
 
     @Override

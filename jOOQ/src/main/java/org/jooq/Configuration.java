@@ -172,12 +172,4 @@ public interface Configuration extends Serializable {
      */
     List<ExecuteListener> getExecuteListeners();
 
-    /**
-     * Set new <code>ExecuteListeners</code> onto this configuration.
-     *
-     * @param listeners The new set of execute listeners.
-     * @see #getExecuteListeners()
-     */
-    void setExecuteListeners(List<ExecuteListener> listeners);
-
 }

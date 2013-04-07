@@ -368,7 +368,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
-                if (returning.size() == 1 && returning.get(0).equals(field)) {
+                if (returning.size() == 1 && new Fields(returning).field(field) != null) {
                     for (Number id : ids) {
                         R typed = Utils.newRecord(into, configuration);
                         ((AbstractRecord) typed).setValue(field, new Value<Number>(id));

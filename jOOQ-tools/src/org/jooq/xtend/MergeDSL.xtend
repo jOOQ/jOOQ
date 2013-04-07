@@ -72,7 +72,7 @@ class MergeDSL extends Generators {
          * This type is used for the {@link Merge}'s DSL API.
          * <p>
          * Example: <code><pre>
-         * Factory create = new Factory();
+         * DSLContext create = DSL.using(configuration);
          *
          * create.mergeInto(table)
          *       .using(select)
@@ -153,7 +153,7 @@ class MergeDSL extends Generators {
              * This type is used for the {@link Merge}'s DSL API.
              * <p>
              * Example: <code><pre>
-             * Factory create = new Factory();
+             * DSLContext create = DSL.using(configuration);
              *
              * create.mergeInto(table)
              *       .using(select)
@@ -222,7 +222,7 @@ class MergeDSL extends Generators {
              * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
              * <p>
              * Example: <code><pre>
-             * Factory create = new Factory();
+             * DSLContext create = DSL.using(configuration);
              *
              * create.mergeInto(table, «field1_field2_fieldn(degree)»)
              *       .key(id)

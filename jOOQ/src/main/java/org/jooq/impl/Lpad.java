@@ -70,7 +70,7 @@ class Lpad extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case ASE:
             case SQLSERVER:
             case SYBASE: {

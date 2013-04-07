@@ -70,7 +70,7 @@ class Ln extends AbstractFunction<BigDecimal> {
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
         if (base == null) {
-            switch (configuration.getDialect()) {
+            switch (configuration.dialect()) {
                 case ASE:
                 case H2:
                 case SQLSERVER:
@@ -81,7 +81,7 @@ class Ln extends AbstractFunction<BigDecimal> {
             }
         }
         else {
-            switch (configuration.getDialect()) {
+            switch (configuration.dialect()) {
                 case ASE:
                 case DB2:
                 case DERBY:

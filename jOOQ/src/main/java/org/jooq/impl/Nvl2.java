@@ -64,7 +64,7 @@ class Nvl2<T> extends AbstractFunction<T> {
 
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case H2:
             case HSQLDB:
             case INGRES:

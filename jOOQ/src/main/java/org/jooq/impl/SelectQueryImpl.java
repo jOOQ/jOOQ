@@ -177,7 +177,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // If a limit applies
         if (getLimit().isApplicable()) {
-            switch (context.configuration().getDialect()) {
+            switch (context.configuration().dialect()) {
 
                 // Oracle knows the ROWNUM pseudo-column. That makes things simple
                 case ORACLE:
@@ -250,7 +250,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
-        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.configuration().getDialect())) {
+        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.configuration().dialect())) {
             context.formatSeparator()
                    .keyword("for update");
 
@@ -261,7 +261,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             else if (!forUpdateOfTables.isEmpty()) {
                 context.keyword(" of ");
 
-                switch (context.configuration().getDialect()) {
+                switch (context.configuration().dialect()) {
 
                     // Some dialects don't allow for an OF [table-names] clause
                     // It can be simulated by listing the table's fields, though
@@ -291,7 +291,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             }
         }
         else if (forShare) {
-            switch (context.configuration().getDialect()) {
+            switch (context.configuration().dialect()) {
 
                 // MySQL has a non-standard implementation for the "FOR SHARE" clause
                 case MYSQL:
@@ -410,7 +410,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * This part is common to any type of limited query
      */
     private final void toSQLReference0(RenderContext context, QueryPart limitOffsetRownumber) {
-        SQLDialect dialect = context.configuration().getDialect();
+        SQLDialect dialect = context.configuration().dialect();
 
         // SELECT clause
         // -------------

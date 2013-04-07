@@ -138,7 +138,7 @@ class Val<T> extends AbstractParam<T> {
 
             // Generated enums should not be cast...
             if (!(value instanceof EnumType)) {
-                switch (context.configuration().getDialect()) {
+                switch (context.configuration().dialect()) {
 
                     // These dialects can hardly detect the type of a bound constant.
                     case DB2:
@@ -167,7 +167,7 @@ class Val<T> extends AbstractParam<T> {
         // the safe side, always cast these types in those dialects that support
         // them
         if (getDataType().isInterval()) {
-            switch (context.configuration().getDialect()) {
+            switch (context.configuration().dialect()) {
                 case ORACLE:
                 case POSTGRES:
                     return true;
@@ -183,7 +183,7 @@ class Val<T> extends AbstractParam<T> {
     private final void toSQLCast(RenderContext context) {
         DataType<T> dataType = getDataType(context.configuration());
         DataType<T> type = dataType.getSQLDataType();
-        SQLDialect dialect = context.configuration().getDialect();
+        SQLDialect dialect = context.configuration().dialect();
 
         // [#822] Some RDBMS need precision / scale information on BigDecimals
         if (value != null && getType() == BigDecimal.class && asList(CUBRID, DB2, DERBY, FIREBIRD, HSQLDB).contains(dialect)) {
@@ -308,7 +308,7 @@ class Val<T> extends AbstractParam<T> {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private final void toSQL(RenderContext context, Object val, Class<?> type) {
-        SQLDialect dialect = context.configuration().getDialect();
+        SQLDialect dialect = context.configuration().dialect();
 
         // [#650] Check first, if we have a converter for the supplied type
         Converter<?, ?> converter = DataTypes.converter(type);

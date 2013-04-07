@@ -135,7 +135,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
         if (onDuplicateKeyUpdate) {
-            switch (context.configuration().getDialect()) {
+            switch (context.configuration().dialect()) {
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
@@ -151,7 +151,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can't really handle this clause. Simulation
                 // should be done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().dialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -166,14 +166,14 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().dialect());
             }
         }
 
         // ON DUPLICATE KEY IGNORE clause
         // ------------------------------
         else if (onDuplicateKeyIgnore) {
-            switch (context.configuration().getDialect()) {
+            switch (context.configuration().dialect()) {
 
                 // MySQL has a nice, native syntax for this
                 case MYSQL: {
@@ -198,7 +198,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can't really handle this clause. Simulation
                 // should be done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().dialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -213,7 +213,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().dialect());
             }
         }
 
@@ -230,7 +230,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
         if (onDuplicateKeyUpdate) {
-            switch (context.configuration().getDialect()) {
+            switch (context.configuration().dialect()) {
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
@@ -242,7 +242,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can't really handle this clause. Simulation
                 // is done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().dialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -257,14 +257,14 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY UPDATE clause cannot be simulated for " + context.configuration().dialect());
             }
         }
 
         // ON DUPLICATE KEY IGNORE clause
         // ------------------------------
         else if (onDuplicateKeyIgnore) {
-            switch (context.configuration().getDialect()) {
+            switch (context.configuration().dialect()) {
 
                 // MySQL has a nice, native syntax for this
                 case MYSQL: {
@@ -281,7 +281,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 // Some dialects can't really handle this clause. Simulation
                 // is done in two steps
                 case H2: {
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().dialect());
                 }
 
                 // Some databases allow for simulating this clause using a
@@ -296,7 +296,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 }
 
                 default:
-                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().getDialect());
+                    throw new SQLDialectNotSupportedException("The ON DUPLICATE KEY IGNORE clause cannot be simulated for " + context.configuration().dialect());
             }
         }
 
@@ -310,7 +310,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     private final void toSQLInsert(RenderContext context) {
         context.keyword("insert ")
                // [#1295] MySQL natively supports the IGNORE keyword
-               .keyword((onDuplicateKeyIgnore && context.configuration().getDialect() == MYSQL) ? "ignore " : "")
+               .keyword((onDuplicateKeyIgnore && context.configuration().dialect() == MYSQL) ? "ignore " : "")
                .keyword("into ")
                .sql(getInto())
                .sql(" ")

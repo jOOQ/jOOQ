@@ -95,7 +95,7 @@ public class SettingsTest {
         assertEquals("\"T\"", create1.render(table));
 
         DSLContext create2 = DSL.using(SQLDialect.ORACLE);
-        create2.configuration().getSettings().setRenderSchema(false);
+        create2.configuration().settings().setRenderSchema(false);
         assertEquals("\"T\"", create2.render(table));
     }
 
@@ -105,7 +105,7 @@ public class SettingsTest {
         assertEquals("\"TABLEX\"", create1.render(TABLE1));
 
         DSLContext create2 = DSL.using(SQLDialect.ORACLE);
-        create2.configuration().getSettings().setRenderMapping(mapping());
+        create2.configuration().settings().setRenderMapping(mapping());
         assertEquals("\"TABLEX\"", create2.render(TABLE1));
     }
 

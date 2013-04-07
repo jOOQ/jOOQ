@@ -102,7 +102,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
     @Override
     public final void bind(BindContext ctx) {
-        switch (ctx.configuration().getDialect()) {
+        switch (ctx.configuration().dialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {
@@ -138,7 +138,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
            .keyword("case");
 
         int size = compareValues.size();
-        switch (ctx.configuration().getDialect()) {
+        switch (ctx.configuration().dialect()) {
 
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {

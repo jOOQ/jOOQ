@@ -69,7 +69,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     final Field<DayToSecond> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
 
             // Sybase ASE's datediff incredibly overflows on 3 days' worth of
             // microseconds. That's why the days have to be leveled at first

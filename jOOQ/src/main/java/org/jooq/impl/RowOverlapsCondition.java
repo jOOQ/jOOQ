@@ -101,7 +101,7 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         boolean intervalOverlaps = type0.isDateTime() && (type1.isInterval() || type1.isNumeric());
 
         // The non-standard OVERLAPS predicate is always simulated
-        if (!standardOverlaps || asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+        if (!standardOverlaps || asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect())) {
 
             // Interval OVERLAPS predicates need some additional arithmetic
             if (intervalOverlaps) {
@@ -119,7 +119,7 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         }
 
         // These dialects seem to have trouble with INTERVAL OVERLAPS predicates
-        else if (intervalOverlaps && asList(HSQLDB).contains(configuration.getDialect())) {
+        else if (intervalOverlaps && asList(HSQLDB).contains(configuration.dialect())) {
                 return (QueryPartInternal)
                         right1.le(left1.add(left2)).and(
                         left1.le(right1.add(right2)));

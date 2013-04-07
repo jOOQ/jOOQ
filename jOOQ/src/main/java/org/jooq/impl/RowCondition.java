@@ -99,7 +99,7 @@ class RowCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        SQLDialect dialect = configuration.getDialect();
+        SQLDialect dialect = configuration.dialect();
 
         // Regular comparison predicate simulation
         if (asList(EQUALS, NOT_EQUALS).contains(comparator) &&
@@ -181,7 +181,7 @@ class RowCondition extends AbstractCondition {
         public final void toSQL(RenderContext context) {
 
             // Some dialects do not support != comparison with rows
-            if (comparator == NOT_EQUALS && asList(DB2).contains(context.configuration().getDialect())) {
+            if (comparator == NOT_EQUALS && asList(DB2).contains(context.configuration().dialect())) {
                 context.keyword("not(")
                        .sql(left)
                        .sql(" = ")
@@ -190,7 +190,7 @@ class RowCondition extends AbstractCondition {
             }
             else {
                 // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = asList(ORACLE).contains(context.configuration().getDialect());
+                boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect());
 
                 context.sql(left)
                        .sql(" ")

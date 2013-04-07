@@ -175,7 +175,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
-        if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().getDialect())) {
+        if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect())) {
             ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
         }
 
@@ -206,7 +206,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // [#706] Postgres requires two separate queries running in the same
         // transaction to be executed when fetching refcursor types
-        if (ctx.configuration().getDialect() == SQLDialect.POSTGRES && isSelectingRefCursor()) {
+        if (ctx.configuration().dialect() == SQLDialect.POSTGRES && isSelectingRefCursor()) {
             autoCommit = connection.getAutoCommit();
 
             if (autoCommit) {
@@ -222,7 +222,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
             // JTDS doesn't seem to implement PreparedStatement.execute()
             // correctly, at least not for sp_help
-            if (ctx.configuration().getDialect() == ASE) {
+            if (ctx.configuration().dialect() == ASE) {
                 ctx.resultSet(ctx.statement().executeQuery());
             }
 

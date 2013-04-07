@@ -101,7 +101,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
     private final QueryPartInternal delegate(Configuration configuration) {
 
         // These dialects need to simulate the IS DISTINCT FROM operator
-        if (asList(ASE, CUBRID, DB2, DERBY, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.getDialect())) {
+        if (asList(ASE, CUBRID, DB2, DERBY, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect())) {
             if (caseExpression == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {
                     caseExpression = (QueryPartInternal) decode()
@@ -127,7 +127,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
         }
 
         // MySQL knows the <=> operator
-        else if (MYSQL.equals(configuration.getDialect())) {
+        else if (MYSQL.equals(configuration.dialect())) {
             if (mySQLCondition == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {
                     mySQLCondition = (QueryPartInternal) condition("not({0} <=> {1})", lhs, rhs);

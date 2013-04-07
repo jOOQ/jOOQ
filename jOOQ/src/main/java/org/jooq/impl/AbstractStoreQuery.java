@@ -150,7 +150,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
     final void toSQLReturning(RenderContext context) {
         if (!returning.isEmpty()) {
-            switch (context.configuration().getDialect()) {
+            switch (context.configuration().dialect()) {
                 case FIREBIRD:
                 case POSTGRES:
                     context.formatSeparator()
@@ -166,7 +166,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     }
 
     final void bindReturning(BindContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case FIREBIRD:
             case POSTGRES:
                 context.bind((QueryPart) returning);
@@ -184,7 +184,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
         // Just in case, always set Sybase ASE statement mode to return
         // Generated keys if client code wants to SELECT @@identity afterwards
-        if (ctx.configuration().getDialect() == SQLDialect.ASE) {
+        if (ctx.configuration().dialect() == SQLDialect.ASE) {
             ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
             return;
         }
@@ -197,7 +197,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
         // Values should be returned from the INSERT
         else {
-            switch (ctx.configuration().getDialect()) {
+            switch (ctx.configuration().dialect()) {
 
                 // Postgres uses the RETURNING clause in SQL
                 case FIREBIRD:
@@ -248,7 +248,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         else {
             int result = 1;
             ResultSet rs;
-            switch (ctx.configuration().getDialect()) {
+            switch (ctx.configuration().dialect()) {
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {
@@ -256,7 +256,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    DSLContext create = DSL.using(ctx.connection(), SQLDialect.SQLITE, ctx.configuration().getSettings());
+                    DSLContext create = DSL.using(ctx.connection(), SQLDialect.SQLITE, ctx.configuration().settings());
                     returned =
                     create.select(returning)
                           .from(getInto())

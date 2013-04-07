@@ -63,7 +63,7 @@ public interface ExecuteContext {
      * {@link #data(Object, Object)}. Use custom data if you want to pass data
      * between events received by an {@link ExecuteListener}.
      * <p>
-     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * Unlike {@link Configuration#data()}, these data's lifecycle only
      * matches that of a single query execution.
      *
      * @return The custom data. This is never <code>null</code>
@@ -78,7 +78,7 @@ public interface ExecuteContext {
      * {@link #data(Object, Object)}. Use custom data if you want to pass
      * data between events received by an {@link ExecuteListener}.
      * <p>
-     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * Unlike {@link Configuration#data()}, these data's lifecycle only
      * matches that of a single query execution.
      *
      * @param key A key to identify the custom data
@@ -95,7 +95,7 @@ public interface ExecuteContext {
      * {@link #data(Object, Object)}. Use custom data if you want to pass
      * data between events received by an {@link ExecuteListener}.
      * <p>
-     * Unlike {@link Configuration#getData()}, these data's lifecycle only
+     * Unlike {@link Configuration#data()}, these data's lifecycle only
      * matches that of a single query execution.
      *
      * @param key A key to identify the custom data
@@ -115,7 +115,7 @@ public interface ExecuteContext {
     /**
      * The connection to be used in this execute context.
      * <p>
-     * This returns a proxy to the {@link Configuration#getConnectionProvider()}
+     * This returns a proxy to the {@link Configuration#connectionProvider()}
      * 's supplied connection. This proxy takes care of two things:
      * <ul>
      * <li>It takes care of properly implementing

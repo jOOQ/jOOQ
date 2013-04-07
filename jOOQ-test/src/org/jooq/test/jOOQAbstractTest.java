@@ -888,7 +888,7 @@ public abstract class jOOQAbstractTest<
 
         // Most test cases run with the DefaultExecuteListenerProvider,
         // which (inofficially) exposes a mutable List
-        DefaultExecuteListenerProvider provider = (DefaultExecuteListenerProvider) configuration.getExecuteListenerProvider();
+        DefaultExecuteListenerProvider provider = (DefaultExecuteListenerProvider) configuration.executeListenerProvider();
         return provider.provide();
     }
 
@@ -897,7 +897,7 @@ public abstract class jOOQAbstractTest<
     }
 
     protected final SQLDialect getDialect() {
-        return create().configuration().getDialect();
+        return create().configuration().dialect();
     }
 
     protected String getSchemaSuffix() {

@@ -119,7 +119,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
             return query;
         }
         else {
-            switch (context.getDialect()) {
+            switch (context.dialect()) {
 
                 // [#869] Postgres supports this syntax natively
                 case POSTGRES: {

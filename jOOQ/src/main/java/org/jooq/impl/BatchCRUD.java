@@ -86,7 +86,7 @@ class BatchCRUD implements Batch {
 
         // [#1180] Run batch queries with BatchMultiple, if no bind variables
         // should be used...
-        if (executeStaticStatements(configuration.getSettings())) {
+        if (executeStaticStatements(configuration.settings())) {
             return executeStatic();
         }
         else {
@@ -99,15 +99,15 @@ class BatchCRUD implements Batch {
         QueryCollector collector = new QueryCollector();
 
         // Add the QueryCollector to intercept query execution after rendering
-        List<ExecuteListener> listeners = new ArrayList<ExecuteListener>(configuration.getExecuteListenerProvider().provide());
+        List<ExecuteListener> listeners = new ArrayList<ExecuteListener>(configuration.executeListenerProvider().provide());
         listeners.add(collector);
         Configuration local = configuration.derive(new DefaultExecuteListenerProvider(listeners));
 
         // [#1537] Communicate with UpdatableRecordImpl
-        local.setData(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
+        local.data(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
 
         // [#1529] Avoid DEBUG logging of single INSERT / UPDATE statements
-        local.getSettings().setExecuteLogging(false);
+        local.settings().setExecuteLogging(false);
 
         for (int i = 0; i < records.length; i++) {
             Configuration previous = ((AttachableInternal) records[i]).getConfiguration();
@@ -167,7 +167,7 @@ class BatchCRUD implements Batch {
         List<Query> queries = new ArrayList<Query>();
         QueryCollector collector = new QueryCollector();
 
-        List<ExecuteListener> listeners = new ArrayList<ExecuteListener>(configuration.getExecuteListenerProvider().provide());
+        List<ExecuteListener> listeners = new ArrayList<ExecuteListener>(configuration.executeListenerProvider().provide());
         listeners.add(collector);
         Configuration local = configuration.derive(new DefaultExecuteListenerProvider(listeners));
 

@@ -68,7 +68,7 @@ class Decode<T, Z> extends AbstractFunction<Z> {
     @SuppressWarnings("unchecked")
     @Override
     final Field<Z> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
 
             // Oracle actually has this function
             case ORACLE: {

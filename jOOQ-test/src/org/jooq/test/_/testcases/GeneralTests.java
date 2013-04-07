@@ -230,7 +230,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .getValue(TAuthor_FIRST_NAME()));
 
         // [#1191] Check execution capabilities with new features in ExecuteListener
-        ConnectionProviderListener.c = create().configuration().getConnectionProvider().acquire();
+        ConnectionProviderListener.c = create().configuration().connectionProvider().acquire();
         try {
             DSLContext create = create();
             addListeners(create.configuration(), new ConnectionProviderListener());
@@ -249,7 +249,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             result.get(1).store();
         }
         finally {
-            create().configuration().getConnectionProvider().release(ConnectionProviderListener.c);
+            create().configuration().connectionProvider().release(ConnectionProviderListener.c);
             ConnectionProviderListener.c = null;
         }
 

@@ -64,7 +64,7 @@ class Degrees extends AbstractFunction<BigDecimal> {
 
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case FIREBIRD:
             case INGRES:
             case ORACLE:

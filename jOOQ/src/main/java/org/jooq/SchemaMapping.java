@@ -102,11 +102,11 @@ public class SchemaMapping implements Serializable {
     }
 
     private final RenderMapping mapping() {
-        return SettingsTools.getRenderMapping(configuration.getSettings());
+        return SettingsTools.getRenderMapping(configuration.settings());
     }
 
     private final boolean renderSchema() {
-        return Boolean.TRUE.equals(configuration.getSettings().isRenderSchema());
+        return Boolean.TRUE.equals(configuration.settings().isRenderSchema());
     }
 
     private static void logDeprecation() {

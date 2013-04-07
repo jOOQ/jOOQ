@@ -59,7 +59,7 @@ class RegexpLike extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
 
             // [#620] These databases are compatible with the MySQL syntax
             case CUBRID:

@@ -62,7 +62,7 @@ class Cot extends AbstractFunction<BigDecimal> {
 
     @Override
     final Field<BigDecimal> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case INGRES:
             case ORACLE:
                 return DSL.cos(argument).div(DSL.sin(argument));

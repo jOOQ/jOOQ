@@ -73,7 +73,7 @@ class Concat extends AbstractFunction<String> {
         Field<String>[] others = new Field[cast.length - 1];
         System.arraycopy(cast, 1, others, 0, others.length);
 
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case MYSQL:
                 return function("concat", SQLDataType.VARCHAR, cast);
 

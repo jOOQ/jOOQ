@@ -127,7 +127,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // https://github.com/jOOQ/jOOQ/issues/1625
 
         Configuration configuration = create().configuration().derive();
-        configuration.getSettings().setExecuteLogging(false);
+        configuration.settings().setExecuteLogging(false);
         getListeners(configuration).clear();
         DSLContext create = create(configuration);
 

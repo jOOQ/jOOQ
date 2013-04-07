@@ -63,7 +63,7 @@ class Sign extends AbstractFunction<Integer> {
     @SuppressWarnings("unchecked")
     @Override
     final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case SQLITE:
                 return DSL.decode()
                     .when(((Field<Integer>) argument).greaterThan(zero()), one())

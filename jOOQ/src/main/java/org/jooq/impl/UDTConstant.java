@@ -59,7 +59,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
 
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
@@ -122,7 +122,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     private String getInlineConstructor(RenderContext context) {
         // TODO [#884] Fix this with a local render context (using ctx.literal)
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
             case POSTGRES:
                 return "ROW";
 
@@ -146,7 +146,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
 
     @Override
     public final void bind(BindContext context) {
-        switch (context.configuration().getDialect()) {
+        switch (context.configuration().dialect()) {
 
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
@@ -168,7 +168,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             }
 
             default:
-                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.configuration().getDialect());
+                throw new SQLDialectNotSupportedException("UDTs not supported in dialect " + context.configuration().dialect());
         }
     }
 }

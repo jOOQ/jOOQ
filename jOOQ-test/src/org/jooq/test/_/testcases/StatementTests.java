@@ -129,7 +129,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, KeepStatementListener.statements.size());
         assertEquals(0, KeepStatementListener.closed);
         assertEquals(
-            create().configuration().getSettings().getStatementType() == StatementType.PREPARED_STATEMENT,
+            create().configuration().settings().getStatementType() == StatementType.PREPARED_STATEMENT,
             KeepStatementListener.statements.get(0) ==
             KeepStatementListener.statements.get(1));
 

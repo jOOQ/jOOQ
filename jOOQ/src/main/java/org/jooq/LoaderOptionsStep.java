@@ -138,7 +138,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * in some RDBMS, where large commits lead to a high level of concurrency in
      * the database. Use this on fresh transactions only. Commits/Rollbacks are
      * executed directly upon the connection returned by
-     * {@link Configuration#getConnectionProvider()}. This might not work with
+     * {@link Configuration#connectionProvider()}. This might not work with
      * container-managed transactions, or when
      * {@link Connection#getAutoCommit()} is set to true.
      * <p>
@@ -159,7 +159,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * in some RDBMS, where large commits lead to a high level of concurrency in
      * the database. Use this on fresh transactions only. Commits/Rollbacks are
      * executed directly upon the connection returned by
-     * {@link Configuration#getConnectionProvider()}. This might not work with
+     * {@link Configuration#connectionProvider()}. This might not work with
      * container-managed transactions, or when
      * {@link Connection#getAutoCommit()} is set to true.
      * <p>
@@ -180,7 +180,7 @@ public interface LoaderOptionsStep<R extends TableRecord<R>> extends LoaderSourc
      * in some RDBMS, where large commits lead to a high level of concurrency in
      * the database. Use this on fresh transactions only. Commits/Rollbacks are
      * executed directly upon the connection returned by
-     * {@link Configuration#getConnectionProvider()}. This might not work with
+     * {@link Configuration#connectionProvider()}. This might not work with
      * container-managed transactions, or when
      * {@link Connection#getAutoCommit()} is set to true.
      * <p>

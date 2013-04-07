@@ -260,7 +260,7 @@ class DebugProcessor {
                     try {
                         ctx.statement().close();
                         // Better return possibility? Based on originating query?
-                        String sql = DSL.using(ctx.configuration().getDialect()).selectZero().where("1 = 2").getSQL();
+                        String sql = DSL.using(ctx.configuration().dialect()).selectZero().where("1 = 2").getSQL();
                         ctx.sql(sql);
                         ctx.statement(ctx.connection().prepareStatement(sql));
                     } catch(Exception e) {

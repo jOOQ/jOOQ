@@ -85,7 +85,7 @@ class MetaImpl implements Meta, Serializable {
 
     private final DatabaseMetaData meta() {
         if (meta == null) {
-            ConnectionProvider provider = configuration.getConnectionProvider();
+            ConnectionProvider provider = configuration.connectionProvider();
             Connection connection = null;
 
             try {
@@ -230,7 +230,7 @@ class MetaImpl implements Meta, Serializable {
 
             // SQLite JDBC's DatabaseMetaData.getColumns() can only return a single
             // table's columns
-            if (columnCache == null && configuration.getDialect() != SQLITE) {
+            if (columnCache == null && configuration.dialect() != SQLITE) {
                 columnCache = getColumns0("%").intoGroups(fieldByName(String.class, "TABLE_NAME"));
             }
 
@@ -290,7 +290,7 @@ class MetaImpl implements Meta, Serializable {
                 // TODO: Exception handling should be moved inside SQLDataType
                 DataType<?> type = null;
                 try {
-                    type = DefaultDataType.getDataType(configuration.getDialect(), typeName, precision, scale);
+                    type = DefaultDataType.getDataType(configuration.dialect(), typeName, precision, scale);
 
                     if (type.hasPrecision()) {
                         type = type.precision(precision);

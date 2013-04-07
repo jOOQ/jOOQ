@@ -59,7 +59,7 @@ class CurrentDate extends AbstractFunction<Date> {
 
     @Override
     final Field<Date> getFunction0(Configuration configuration) {
-        switch (configuration.getDialect()) {
+        switch (configuration.dialect()) {
             case ORACLE:
                 return field("sysdate", SQLDataType.DATE);
 

@@ -78,7 +78,7 @@ class Cast<T> extends AbstractField<T> {
         // Avoid casting bind values inside an explicit cast...
         CastMode castMode = context.castMode();
 
-        if (context.configuration().getDialect() == SQLDialect.DERBY) {
+        if (context.configuration().dialect() == SQLDialect.DERBY) {
 
             // [#857] Interestingly, Derby does not allow for casting numeric
             // types directly to VARCHAR. An intermediary cast to CHAR is needed
@@ -166,7 +166,7 @@ class Cast<T> extends AbstractField<T> {
 
     @Override
     public final void bind(BindContext context) {
-        if (context.configuration().getDialect() == SQLDialect.DERBY) {
+        if (context.configuration().dialect() == SQLDialect.DERBY) {
 
             // [#859] casting numeric types to BOOLEAN
             if (field.getDataType().isNumeric() &&

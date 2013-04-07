@@ -56,8 +56,6 @@ class BetweenAndSteps extends Generators {
             «classHeader»
             package org.jooq;
 
-            import org.jooq.Support;
-
             import javax.annotation.Generated;
             
             /**
@@ -108,7 +106,6 @@ class BetweenAndSteps extends Generators {
         package org.jooq.impl;
         
         import static java.util.Arrays.asList;
-        import static org.jooq.impl.DSL.row;
         import static org.jooq.SQLDialect.ASE;
         import static org.jooq.SQLDialect.CUBRID;
         import static org.jooq.SQLDialect.DB2;
@@ -120,6 +117,7 @@ class BetweenAndSteps extends Generators {
         import static org.jooq.SQLDialect.SQLITE;
         import static org.jooq.SQLDialect.SQLSERVER;
         import static org.jooq.SQLDialect.SYBASE;
+        import static org.jooq.impl.DSL.row;
 
         import javax.annotation.Generated;
         
@@ -249,7 +247,7 @@ class BetweenAndSteps extends Generators {
                 RowN max = (RowN) maxValue;
         
                 // These dialects don't support the SYMMETRIC keyword at all
-                if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.getDialect())) {
+                if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect())) {
                     if (not) {
                         return (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min));
                     }
@@ -260,7 +258,7 @@ class BetweenAndSteps extends Generators {
         
                 // These dialects either don't support row value expressions, or they
                 // Can't handle row value expressions with the BETWEEN predicate
-                else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.getDialect())) {
+                else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect())) {
                     Condition result = r.ge(min).and(r.le(max));
         
                     if (not) {

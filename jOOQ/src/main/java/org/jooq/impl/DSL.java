@@ -3092,8 +3092,8 @@ public class DSL {
     }
 
     /**
-     * <code>function()</code> can be used to access native functions that are
-     * not yet or insufficiently supported by jOOQ.
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -3110,8 +3110,8 @@ public class DSL {
     }
 
     /**
-     * <code>function()</code> can be used to access native functions that are
-     * not yet or insufficiently supported by jOOQ.
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -3124,6 +3124,32 @@ public class DSL {
      */
     @Support
     public static <T> Field<T> function(String name, DataType<T> type, Field<?>... arguments) {
+        return new Function<T>(name, type, nullSafe(arguments));
+    }
+
+    /**
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
+     *
+     * @param name The function name (possibly qualified)
+     * @param type The function return type
+     * @param arguments The function arguments
+     */
+    @Support
+    public static <T> Field<T> function(Name name, Class<T> type, Field<?>... arguments) {
+        return function(name, getDataType(type), nullSafe(arguments));
+    }
+
+    /**
+     * <code>function()</code> can be used to access native or user-defined
+     * functions that are not yet or insufficiently supported by jOOQ.
+     *
+     * @param name The function name (possibly qualified)
+     * @param type The function return type
+     * @param arguments The function arguments
+     */
+    @Support
+    public static <T> Field<T> function(Name name, DataType<T> type, Field<?>... arguments) {
         return new Function<T>(name, type, nullSafe(arguments));
     }
 

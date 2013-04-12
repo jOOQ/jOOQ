@@ -40,14 +40,11 @@ import static java.util.Collections.nCopies;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.sum;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.Arrays;
 
-import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -92,39 +89,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     public SchemaAndMappingTests(jOOQAbstractTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T725, T639, T785> delegate) {
         super(delegate);
-    }
-
-    @Test
-    public void testUse() throws Exception {
-        switch (dialect()) {
-            case ASE:
-            case CUBRID:
-            case FIREBIRD:
-            case SQLITE:
-            case SQLSERVER:
-                log.info("SKIPPING", "USE test");
-                return;
-        }
-
-        DSLContext factory = create();
-        factory.use(schema().getName());
-
-        Result<?> result =
-        factory.select(TBook_AUTHOR_ID(), count())
-               .from(TBook())
-               .join(TAuthor())
-               .on(TBook_AUTHOR_ID().equal(TAuthor_ID()))
-               .where(TAuthor_YEAR_OF_BIRTH().greaterOrEqual(TAuthor_ID()))
-               .groupBy(TBook_AUTHOR_ID())
-               .having(count().greaterOrEqual(1))
-               .orderBy(TBook_AUTHOR_ID().desc())
-               .fetch();
-
-        assertEquals(Arrays.asList(2, 1), result.getValues(TBook_AUTHOR_ID()));
-        assertEquals(Arrays.asList(2, 2), result.getValues(count()));
-
-        String sql = factory.select(TBook_AUTHOR_ID()).from(TAuthor()).getSQL();
-        assertFalse(sql.toLowerCase().contains(TAuthor().getSchema().getName().toLowerCase()));
     }
 
     @Test

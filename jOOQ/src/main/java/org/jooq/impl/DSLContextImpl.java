@@ -50,7 +50,6 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.conf.SettingsTools.getRenderMapping;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.trueCondition;
@@ -1492,62 +1491,6 @@ class DSLContextImpl implements DSLContext, Serializable {
     public final <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException {
         Field<T> currval = sequence.currval();
         return select(currval).fetchOne(currval);
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES, SYBASE })
-    public final int use(Schema schema) throws DataAccessException {
-        int result = 0;
-
-        try {
-            String schemaName = render(schema);
-
-            switch (configuration.dialect()) {
-                case DB2:
-                case DERBY:
-                case H2:
-                case HSQLDB:
-                    result = query("set schema " + schemaName).execute();
-                    break;
-
-                case ASE:
-                case MYSQL:
-                case SYBASE:
-                    result = query("use " + schemaName).execute();
-                    break;
-
-                case ORACLE:
-                    result = query("alter session set current_schema = " + schemaName).execute();
-                    break;
-
-                case POSTGRES:
-                    result = query("set search_path = " + schemaName).execute();
-                    break;
-
-                // SQL Server do not support such a syntax for selecting
-                // schemata, only for selecting databases
-                case SQLSERVER:
-                    break;
-
-                // CUBRID and SQLite don't have any schemata
-                case CUBRID:
-                case SQLITE:
-                    break;
-            }
-        }
-        finally {
-            getRenderMapping(configuration.settings()).setDefaultSchema(schema.getName());
-            configuration.schemaMapping().use(schema);
-        }
-
-        return result;
-    }
-
-    @Override
-    @Support({ DB2, DERBY, H2, HSQLDB, MYSQL, SYBASE, ORACLE, POSTGRES, SYBASE })
-    public final int use(String schema) throws DataAccessException {
-        return use(new SchemaImpl(schema));
     }
 
     // -------------------------------------------------------------------------

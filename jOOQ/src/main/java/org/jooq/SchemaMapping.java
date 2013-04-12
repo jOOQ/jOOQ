@@ -413,7 +413,7 @@ public class SchemaMapping implements Serializable {
         if (tables == null) {
 
             // [#1857] thread-safe lazy initialisation for those users who
-            // want to use Factory and dependent objects in a "thread-safe" manner
+            // want to use Configuration and dependent objects in a "thread-safe" manner
             synchronized (this) {
                 if (tables == null) {
                     tables = new HashMap<String, Table<?>>();

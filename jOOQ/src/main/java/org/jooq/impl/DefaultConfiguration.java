@@ -52,6 +52,7 @@ import org.jooq.ConnectionProvider;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteListenerProvider;
 import org.jooq.SQLDialect;
+import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 
@@ -69,19 +70,19 @@ public class DefaultConfiguration implements Configuration {
     /**
      * Serial version UID
      */
-    private static final long                       serialVersionUID = 8193158984283234708L;
+    private static final long                   serialVersionUID = 8193158984283234708L;
 
     // Configuration objects
-    private final SQLDialect                        dialect;
-    private final Settings                          settings;
-    private final ConcurrentHashMap<Object, Object> data;
+    private SQLDialect                          dialect;
+    private Settings                            settings;
+    private ConcurrentHashMap<Object, Object>   data;
 
     // Non-serializable Configuration objects
-    private transient ConnectionProvider            connectionProvider;
-    private transient ExecuteListenerProvider[]     listenerProviders;
+    private transient ConnectionProvider        connectionProvider;
+    private transient ExecuteListenerProvider[] listenerProviders;
 
     // Derived objects
-    private final org.jooq.SchemaMapping            mapping;
+    private org.jooq.SchemaMapping              mapping;
 
     // -------------------------------------------------------------------------
     // XXX: Constructors
@@ -92,7 +93,7 @@ public class DefaultConfiguration implements Configuration {
      * <p>
      * This can be used as is, as a "dummy" configuration object, or as a base
      * implementation for creating more sophisticated "derived" configurations
-     * through the various <code>derive()</code> methods.
+     * through the various <code>derive()</code> or <code>set()</code> methods.
      */
     public DefaultConfiguration() {
         this(
@@ -195,6 +196,35 @@ public class DefaultConfiguration implements Configuration {
     @Override
     public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
         return new DefaultConfiguration(connectionProvider, newExecuteListenerProviders, dialect, settings, data);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Changing configurations
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final Configuration set(SQLDialect newDialect) {
+        this.dialect = newDialect;
+        return this;
+    }
+
+    @Override
+    public final Configuration set(ConnectionProvider newConnectionProvider) {
+        this.connectionProvider = newConnectionProvider;
+        return this;
+    }
+
+    @Override
+    public final Configuration set(Settings newSettings) {
+        this.settings = newSettings;
+        this.mapping = new SchemaMapping(this);
+        return this;
+    }
+
+    @Override
+    public final Configuration set(ExecuteListenerProvider... newExecuteListenerProviders) {
+        this.listenerProviders = newExecuteListenerProviders;
+        return this;
     }
 
     // -------------------------------------------------------------------------

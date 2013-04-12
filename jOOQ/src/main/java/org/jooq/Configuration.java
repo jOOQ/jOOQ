@@ -95,9 +95,9 @@ public interface Configuration extends Serializable {
      * Get all custom data from this <code>Configuration</code>.
      * <p>
      * This is custom data that was previously set to the configuration using
-     * {@link #data(Object, Object)}. Use custom data if you want to pass
-     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects
-     * to be made available at render, bind, execution, fetch time.
+     * {@link #data(Object, Object)}. Use custom data if you want to pass data
+     * to your custom {@link QueryPart} or {@link ExecuteListener} objects to be
+     * made available at render, bind, execution, fetch time.
      * <p>
      * See {@link ExecuteListener} for more details.
      *
@@ -110,9 +110,9 @@ public interface Configuration extends Serializable {
      * Get some custom data from this <code>Configuration</code>.
      * <p>
      * This is custom data that was previously set to the configuration using
-     * {@link #data(Object, Object)}. Use custom data if you want to pass
-     * data to your custom {@link QueryPart} or {@link ExecuteListener} objects
-     * to be made available at render, bind, execution, fetch time.
+     * {@link #data(Object, Object)}. Use custom data if you want to pass data
+     * to your custom {@link QueryPart} or {@link ExecuteListener} objects to be
+     * made available at render, bind, execution, fetch time.
      * <p>
      * See {@link ExecuteListener} for more details.
      *
@@ -212,12 +212,60 @@ public interface Configuration extends Serializable {
 
     /**
      * Create a derived configuration from this one, with a new execute listener
-     * provider.
+     * providers.
      *
-     * @param newExecuteListenerProvider The new execute listener provider to be
-     *            contained in the derived configuration.
+     * @param newExecuteListenerProvider The new execute listener providers to
+     *            be contained in the derived configuration.
      * @return The derived configuration.
      */
     Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders);
+
+    /**
+     * Change this configuration to hold a new dialect.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newDialect The new dialect to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(SQLDialect newDialect);
+
+    /**
+     * Change this configuration to hold a new connection provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newConnectionProvider The new connection provider to be contained
+     *            in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Change this configuration to hold a new settings.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newSettings The new settings to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(Settings newSettings);
+
+    /**
+     * Change this configuration to hold a new execute listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newExecuteListenerProviders The new execute listener providers to
+     *            be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(ExecuteListenerProvider... newExecuteListenerProviders);
 
 }

@@ -100,9 +100,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerWithData() throws Exception {
-        DSLContext create = create();
-        addListeners(create.configuration(), new DataListener());
-
+        DSLContext create = create(new DataListener());
         create.selectOne().fetch();
     }
 
@@ -210,8 +208,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerCustomException() throws Exception {
-        DSLContext create = create();
-        addListeners(create.configuration(), new CustomExceptionListener());
+        DSLContext create = create(new CustomExceptionListener());
 
         try {
             create.fetch("invalid sql");
@@ -236,8 +233,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerOnResultQuery() throws Exception {
-        DSLContext create = create();
-        addListeners(create.configuration(), new ResultQueryListener());
+        DSLContext create = create(new ResultQueryListener());
 
         create.configuration().data("Foo", "Bar");
         create.configuration().data("Bar", "Baz");
@@ -580,8 +576,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        DSLContext create = create();
-        addListeners(create.configuration(), new BatchSingleListener());
+        DSLContext create = create(new BatchSingleListener());
 
         create.configuration().data("Foo", "Bar");
         create.configuration().data("Bar", "Baz");
@@ -794,8 +789,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testExecuteListenerOnBatchMultiple() {
         jOOQAbstractTest.reset = false;
 
-        DSLContext create = create();
-        addListeners(create.configuration(), new BatchMultipleListener());
+        DSLContext create = create(new BatchMultipleListener());
 
         create.configuration().data("Foo", "Bar");
         create.configuration().data("Bar", "Baz");
@@ -1020,8 +1014,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testExecuteListenerFetchLazyTest() throws Exception {
-        DSLContext create = create();
-        addListeners(create.configuration(), new FetchLazyListener());
+        DSLContext create = create(new FetchLazyListener());
         FetchLazyListener.reset();
 
         create.selectFrom(TAuthor()).fetch();

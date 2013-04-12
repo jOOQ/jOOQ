@@ -172,7 +172,7 @@ public interface Configuration extends Serializable {
      * @see ExecuteListener
      * @see ExecuteContext
      */
-    ExecuteListenerProvider executeListenerProvider();
+    ExecuteListenerProvider[] executeListenerProviders();
 
     /**
      * Create a derived configuration from this one, without changing any
@@ -218,6 +218,6 @@ public interface Configuration extends Serializable {
      *            contained in the derived configuration.
      * @return The derived configuration.
      */
-    Configuration derive(ExecuteListenerProvider newExecuteListenerProvider);
+    Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders);
 
 }

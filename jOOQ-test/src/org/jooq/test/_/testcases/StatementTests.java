@@ -99,8 +99,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepStatement() throws Exception {
-        DSLContext create = create();
-        addListeners(create.configuration(), new KeepStatementListener());
+        DSLContext create = create(new KeepStatementListener());
 
         // [#385] By default, new statements are created for every execution
         KeepStatementListener.reset();

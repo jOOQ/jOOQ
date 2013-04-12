@@ -956,6 +956,16 @@ final class Utils {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    static final <T> T[] combine(T[] array, T value) {
+        T[] result = (T[]) java.lang.reflect.Array.newInstance(array.getClass().getComponentType(), array.length + 1);
+
+        System.arraycopy(array, 0, result, 0, array.length);
+        result[array.length] = value;
+
+        return result;
+    }
+
     /**
      * Combine a field with an array of fields
      */
@@ -1088,25 +1098,6 @@ final class Utils {
         else {
             return table;
         }
-    }
-
-    /**
-     * Get a list of ExecuteListener instances (including defaults) from a
-     * configuration
-     */
-    static final List<ExecuteListener> getListeners(ExecuteContext ctx) {
-        List<ExecuteListener> result = new ArrayList<ExecuteListener>();
-        if (!FALSE.equals(ctx.configuration().settings().isExecuteLogging())) {
-            result.add(new StopWatchListener());
-            result.add(new LoggerListener());
-        }
-
-        ExecuteListenerProvider provider = ctx.configuration().executeListenerProvider();
-        if (provider != null) {
-            result.addAll(provider.provide());
-        }
-
-        return result;
     }
 
     /**

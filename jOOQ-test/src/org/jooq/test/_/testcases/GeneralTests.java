@@ -232,8 +232,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // [#1191] Check execution capabilities with new features in ExecuteListener
         ConnectionProviderListener.c = create().configuration().connectionProvider().acquire();
         try {
-            DSLContext create = create();
-            addListeners(create.configuration(), new ConnectionProviderListener());
+            DSLContext create = create(new ConnectionProviderListener());
             q = create
                     .selectFrom(TAuthor())
                     .orderBy(TAuthor_LAST_NAME());

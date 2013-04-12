@@ -49,7 +49,7 @@ import org.jooq.impl.DSL;
 public class OracleTestInline extends OracleTest {
 
     @Override
-    protected DSLContext create(Settings settings) {
+    protected DSLContext create0(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
         settings.withRenderFormatted(true);

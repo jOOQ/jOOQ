@@ -36,9 +36,6 @@
 package org.jooq.impl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.jooq.ExecuteListener;
 import org.jooq.ExecuteListenerProvider;
@@ -46,9 +43,9 @@ import org.jooq.ExecuteListenerProvider;
 /**
  * A default implementation for {@link ExecuteListenerProvider}.
  * <p>
- * This implementation just wraps a <code>List</code> of {@link ExecuteListener}
- * instances, always providing the same.
- *
+ * This implementation just wraps an instance of {@link ExecuteListener}, always
+ * providing the same.
+ * 
  * @author Lukas Eder
  */
 public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, Serializable {
@@ -61,40 +58,38 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
     /**
      * The delegate list.
      */
-    private List<ExecuteListener> listeners;
+    private final ExecuteListener listener;
 
     /**
-     * Create a new provider instance with an empty <code>ArrayList</code>
-     * argument.
+     * Convenience method to construct an array of
+     * <code>DefaultExecuteListenerProvider</code> from an array of
+     * <code>ExecuteListener</code> instances.
      */
-    public DefaultExecuteListenerProvider() {
-        this(new ArrayList<ExecuteListener>());
+    public static ExecuteListenerProvider[] providers(ExecuteListener... listeners) {
+        ExecuteListenerProvider[] result = new ExecuteListenerProvider[listeners.length];
+
+        for (int i = 0; i < listeners.length; i++) {
+            result[i] = new DefaultExecuteListenerProvider(listeners[i]);
+        }
+
+        return result;
     }
 
     /**
-     * Create a new provider instance from an argument <code>List</code>.
+     * Create a new provider instance from an argument listener.
      *
-     * @param listeners The argument list.
+     * @param listener The argument listener.
      */
-    public DefaultExecuteListenerProvider(ExecuteListener... listeners) {
-        this.listeners = new ArrayList<ExecuteListener>(Arrays.asList(listeners));
-    }
-
-    /**
-     * Create a new provider instance from an argument <code>List</code>.
-     *
-     * @param listeners The argument list.
-     */
-    public DefaultExecuteListenerProvider(List<ExecuteListener> listeners) {
-        this.listeners = listeners;
+    public DefaultExecuteListenerProvider(ExecuteListener listener) {
+        this.listener = listener;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final List<ExecuteListener> provide() {
-        return listeners;
+    public final ExecuteListener provide() {
+        return listener;
     }
 
     /**
@@ -102,6 +97,6 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
      */
     @Override
     public String toString() {
-        return "" + listeners;
+        return listener.toString();
     }
 }

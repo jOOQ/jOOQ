@@ -78,7 +78,7 @@ public class DefaultConfiguration implements Configuration {
 
     // Non-serializable Configuration objects
     private transient ConnectionProvider            connectionProvider;
-    private transient ExecuteListenerProvider       listenerProvider;
+    private transient ExecuteListenerProvider[]     listenerProviders;
 
     // Derived objects
     private final org.jooq.SchemaMapping            mapping;
@@ -97,7 +97,7 @@ public class DefaultConfiguration implements Configuration {
     public DefaultConfiguration() {
         this(
             new NoConnectionProvider(),
-            new DefaultExecuteListenerProvider(),
+            new ExecuteListenerProvider[0],
             SQL99,
             SettingsTools.defaultSettings(),
             null);
@@ -114,7 +114,7 @@ public class DefaultConfiguration implements Configuration {
     DefaultConfiguration(Configuration configuration) {
         this(
             configuration.connectionProvider(),
-            configuration.executeListenerProvider(),
+            configuration.executeListenerProviders(),
             configuration.dialect(),
             configuration.settings(),
             configuration.data()
@@ -131,15 +131,15 @@ public class DefaultConfiguration implements Configuration {
      */
     DefaultConfiguration(
             ConnectionProvider connectionProvider,
-            ExecuteListenerProvider listenerProvider,
+            ExecuteListenerProvider[] listenerProviders,
             SQLDialect dialect,
             Settings settings,
             Map<Object, Object> data)
     {
         this.connectionProvider = connectionProvider;
-        this.listenerProvider = listenerProvider != null
-            ? listenerProvider
-            : new DefaultExecuteListenerProvider();
+        this.listenerProviders = listenerProviders != null
+            ? listenerProviders
+            : new ExecuteListenerProvider[0];
 
         this.dialect = dialect;
         this.settings = settings != null
@@ -170,7 +170,7 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration derive(SQLDialect newDialect) {
-        return new DefaultConfiguration(connectionProvider, listenerProvider, newDialect, settings, data);
+        return new DefaultConfiguration(connectionProvider, listenerProviders, newDialect, settings, data);
     }
 
     /**
@@ -178,7 +178,7 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
-        return new DefaultConfiguration(newConnectionProvider, listenerProvider, dialect, settings, data);
+        return new DefaultConfiguration(newConnectionProvider, listenerProviders, dialect, settings, data);
     }
 
     /**
@@ -186,15 +186,15 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration derive(Settings newSettings) {
-        return new DefaultConfiguration(connectionProvider, listenerProvider, dialect, newSettings, data);
+        return new DefaultConfiguration(connectionProvider, listenerProviders, dialect, newSettings, data);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public final Configuration derive(ExecuteListenerProvider newExecuteListenerProvider) {
-        return new DefaultConfiguration(connectionProvider, newExecuteListenerProvider, dialect, settings, data);
+    public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
+        return new DefaultConfiguration(connectionProvider, newExecuteListenerProviders, dialect, settings, data);
     }
 
     // -------------------------------------------------------------------------
@@ -262,8 +262,8 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final ExecuteListenerProvider executeListenerProvider() {
-        return listenerProvider;
+    public final ExecuteListenerProvider[] executeListenerProviders() {
+        return listenerProviders;
     }
 
     @Override
@@ -289,15 +289,21 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(connectionProvider instanceof Serializable
             ? connectionProvider
             : null);
-        oos.writeObject(listenerProvider instanceof Serializable
-            ? listenerProvider
-            : null);
+
+        ExecuteListenerProvider[] clone = new ExecuteListenerProvider[listenerProviders.length];
+        for (int i = 0; i < clone.length; i++) {
+            if (listenerProviders[i] instanceof Serializable) {
+                clone[i] = listenerProviders[i];
+            }
+        }
+
+        oos.writeObject(clone);
     }
 
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
 
         connectionProvider = (ConnectionProvider) ois.readObject();
-        listenerProvider = (ExecuteListenerProvider) ois.readObject();
+        listenerProviders = (ExecuteListenerProvider[]) ois.readObject();
     }
 }

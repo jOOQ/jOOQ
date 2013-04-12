@@ -129,7 +129,7 @@ public class HSQLDBTest2 extends jOOQAbstractTest<
         T_785Record> {
 
 	@Override
-    protected DSLContext create(Settings settings) {
+    protected DSLContext create0(Settings settings) {
 	    settings = (settings != null) ? settings : new Settings();
         RenderMapping mapping = SettingsTools.getRenderMapping(settings);
         List<MappedSchema> schemata = mapping.getSchemata();

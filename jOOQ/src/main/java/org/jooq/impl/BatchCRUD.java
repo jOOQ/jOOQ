@@ -49,7 +49,6 @@ import org.jooq.BatchBindStep;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
-import org.jooq.ExecuteListener;
 import org.jooq.Query;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
@@ -99,9 +98,10 @@ class BatchCRUD implements Batch {
         QueryCollector collector = new QueryCollector();
 
         // Add the QueryCollector to intercept query execution after rendering
-        List<ExecuteListener> listeners = new ArrayList<ExecuteListener>(configuration.executeListenerProvider().provide());
-        listeners.add(collector);
-        Configuration local = configuration.derive(new DefaultExecuteListenerProvider(listeners));
+        Configuration local = configuration.derive(Utils.combine(
+            configuration.executeListenerProviders(),
+            new DefaultExecuteListenerProvider(collector)
+        ));
 
         // [#1537] Communicate with UpdatableRecordImpl
         local.data(Utils.DATA_OMIT_RETURNING_CLAUSE, true);
@@ -167,9 +167,10 @@ class BatchCRUD implements Batch {
         List<Query> queries = new ArrayList<Query>();
         QueryCollector collector = new QueryCollector();
 
-        List<ExecuteListener> listeners = new ArrayList<ExecuteListener>(configuration.executeListenerProvider().provide());
-        listeners.add(collector);
-        Configuration local = configuration.derive(new DefaultExecuteListenerProvider(listeners));
+        Configuration local = configuration.derive(Utils.combine(
+            configuration.executeListenerProviders(),
+            new DefaultExecuteListenerProvider(collector)
+        ));
 
         for (int i = 0; i < records.length; i++) {
             Configuration previous = ((AttachableInternal) records[i]).configuration();

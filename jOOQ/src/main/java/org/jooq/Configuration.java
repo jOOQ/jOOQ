@@ -214,7 +214,7 @@ public interface Configuration extends Serializable {
      * Create a derived configuration from this one, with a new execute listener
      * providers.
      *
-     * @param newExecuteListenerProvider The new execute listener providers to
+     * @param newExecuteListenerProviders The new execute listener providers to
      *            be contained in the derived configuration.
      * @return The derived configuration.
      */

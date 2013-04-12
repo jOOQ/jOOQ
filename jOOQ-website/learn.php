@@ -6,6 +6,13 @@ function getH1() {
 function getActiveMenu() {
 	return "learn";
 }
+function printStep($step) {
+	global $root;
+    global $minorVersion;
+	global $version;
+	
+	echo $root . '/doc/' . $minorVersion . '/manual/getting-started/tutorials/jooq-in-7-steps/jooq-in-7-steps-step' . $step;
+}
 function printContent() {
 	global $root;
     global $minorVersion;
@@ -17,17 +24,17 @@ function printContent() {
 <td valign="top" width="50%">
 <h2>Getting started</h2>
 <p>
-Your simplest entry point is probably to get <a href="tutorial.php">the tutorial</a>
+Your simplest entry point is probably to get the tutorial
 running. It shows how to use jOOQ and its code generator with a simple MySQL database
 </p>
 <ul>
-    <li><a href="tutorial.php#step0">Preparation: Download jOOQ and your SQL driver</a></li>
-    <li><a href="tutorial.php#step1">Step 1: Create a SQL database and a table</a></li>
-    <li><a href="tutorial.php#step2">Step 2: Generate classes</a></li>
-    <li><a href="tutorial.php#step3">Step 3: Write a main class and establish a MySQL connection</a></li>
-    <li><a href="tutorial.php#step4">Step 4: Write a query using jOOQ's DSL</a></li>
-    <li><a href="tutorial.php#step5">Step 5: Iterate over results</a></li>
-    <li><a href="tutorial.php#step6">Step 6: Explore!</a></li>
+    <li><a href="<?=printStep(1)?>">Preparation: Download jOOQ and your SQL driver</a></li>
+    <li><a href="<?=printStep(2)?>">Step 1: Create a SQL database and a table</a></li>
+    <li><a href="<?=printStep(3)?>">Step 2: Generate classes</a></li>
+    <li><a href="<?=printStep(4)?>">Step 3: Write a main class and establish a MySQL connection</a></li>
+    <li><a href="<?=printStep(5)?>">Step 4: Write a query using jOOQ's DSL</a></li>
+    <li><a href="<?=printStep(6)?>">Step 5: Iterate over results</a></li>
+    <li><a href="<?=printStep(7)?>">Step 6: Explore!</a></li>
 </ul>
 </td>
 

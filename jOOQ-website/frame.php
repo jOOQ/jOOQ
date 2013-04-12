@@ -1,8 +1,5 @@
 <?php
-  $root = "";
-  $minorVersion = "3.0";
-  $version = $minorVersion . ".0-RC2";
-
+require 'conf.php';
 function manualHeader($isSingle, $forVersion) {
   global $minorVersion;
   $singleSuffix = ($isSingle ? '-single-page' : '');

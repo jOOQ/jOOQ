@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.0.0 (RC2) - March 8, 2013
+Version 3.0.0 (RC3) - April 12, 2013
 ================================================================================
 
 This major release is a great move towards better integration of SQL as a
@@ -92,8 +92,8 @@ This Record typesafety is applied to
 Apart from this major improvement, there had been many minor changes throughout
 the jOOQ API. Here are some important ones:
 
-- Factory has been split into Factory (static QueryPart construction) and
-  Executor (Query execution, "attached" QueryPart construction). This greatly
+- Factory has been split into DSL (static QueryPart construction) and
+  DSLContext (Query execution, "attached" QueryPart construction). This greatly
   improves the overall DSL experience while allowing for more fine-grained
   Executor lifecycle control.
 - A ConnectionProvider has been introduced as an abstraction of the JDBC
@@ -117,11 +117,94 @@ For those users among you, migrating from jOOQ 2.x to 3.0, here are a couple of
 useful hints:
 http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/
 
-Note, that for technical reasons, jOOQ 3.0.0-RC2 could not yet be integration
+Note, that for technical reasons, jOOQ 3.0.0-RC3 could not yet be integration
 tested with DB2, Ingres, and Sybase ASE.
 
 Note, that further code generation and model API improvements were postponed to
 a later release
+
+Features and improvements
+-------------------------
+#2195 - Remove the standalone tutorial, link to the manual
+#2321 - Implement various Key.toString() methods 
+#2329 - Add Javadoc to Configuration.executeListenerProviders()
+#2331 - Add hint to the manual about mvn eclipse:clean and eclipse:eclipse when
+        building jOOQ
+#2363 - Change the readme file to use Markdown
+#2366 - Add org.jooq.util.example package to jOOQ-codegen with some example
+        GeneratorStrategies
+#2372 - Add aliases for arithmetic operators to be able to use Groovy default
+        operator overloading
+#2389 - Make org.jooq.impl.DefaultConfiguration public
+#2392 - Add Configuration.set() methods. They should allow for modifying a
+        Configuration
+#2396 - Add DSL.function(Name, Class, Field...) and 
+        DSL.function(Name, DataType, Field...) to allow for custom, 
+        fully-qualified function references 
+
+API changes (backwards-compatible)
+----------------------------------
+#2378 - Allow for overriding getIdentity() and getReferences() in CustomTable
+
+API changes (backwards-incompatible)
+------------------------------------
+#2328 - Remove UpdatableTable marker interface, pulling up methods to Table
+#2342 - Change Configuration.data() to return Map<Object, Object>
+#2343 - Decouple lifecycle of Configuration and ExecuteContext
+#2350 - Do not statically reference a Connection from GenerationTool
+#2353 - Decouple org.jooq.Context from Configuration. Choose composition over
+        inheritance
+#2362 - Decouple org.jooq.DSLContext from Configuration. Choose composition over
+        inheritance
+#2379 - Replace 3.0-RC1 Executor type by a contextual DSL type constructed from
+        DSL.using()
+#2380 - Rename org.jooq.impl.Factory to org.jooq.impl.DSL
+#2382 - Let DAO reference a Configuration instead of a DSLContext
+#2388 - Replace Configuration's List<ExecuteListener> with 
+        ExecuteListenerProvider[] to simplify correct and thread-safe client
+        implementations
+#2390 - Change Configuration API to reflect jOOQ-style getter / setter naming
+#2391 - Rename dialect-specific Factories [Dialect]Factory to [Dialect]DSL
+#2399 - Remove support for the USE statement 
+
+Behaviour changes (backwards-incompatible)
+------------------------------------------
+#2351 - Relax ConnectionProvider contract, allowing acquire() to return new
+        Connections even before release() is called
+
+Bug fixes
+---------
+#1868 - Cursor.close() doesn't terminate the ExecuteListener life cycle 
+#2325 - "HsqlException: incompatible data type in conversion" when binding a 
+        UUID[] to an HSQLDB prepared statement 
+#2327 - Compilation error in generated tables, when a table contains a UNIQUE
+        key but no PRIMARY key
+#2332 - Documentation example regarding DSL.concat() does not compile
+#2336 - jOOQ 3.0 regression: NoClassDefFoundError caused by missing log4j
+        dependency
+#2338 - Tutorial example unclear: There are three artefacts in Maven, not one
+#2346 - org.jooq.Meta's generated Schema and other objects are Serializable, but
+        their enclosed Meta instance is not
+#2347 - Let equals() implementations succeed early on identity
+#2354 - Single page manual display errors on Firefox
+#2361 - Inaccurate Configuration Javadoc explaining wrong ExecuteListener
+        lifecycle
+#2367 - SQLite identifiers that collide with keywords should be quoted
+#2381 - Do not add TableFieldImpl to table in constructor of TableFieldImpl
+#2385 - fetchOne() and fetchLazy() don't terminate the ExecuteListener life
+        cycle when an exception occurs
+#2393 - Fully qualified name not used for user-defined aggregate function
+
+Version 3.0.0 (RC2) - March 8, 2013
+================================================================================
+
+This major release is a great move towards better integration of SQL as a
+language in Java. Unlike any other database abstraction framework, jOOQ now
+formally supports the notion of "row value expressions". The jOOQ API uses
+Xtend-generated API types from Row1 .. Row22, as well as Record1 .. Record22 to 
+bring you even more compile-time typesafety on a record-level.
+
+See subsequent release candidates or release 3.0.0 for more information.
 
 Features and improvements
 -------------------------

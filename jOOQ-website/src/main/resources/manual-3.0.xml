@@ -1398,16 +1398,18 @@ catch (DataAccessException expected) {
 									</ul>
 									
 									<p>
-										ExecuteListeners are hooked into your <reference id="dsl-context" title="Configuration"/> by returning them from a <reference class="org.jooq.ExecuteListenerProvider"/>:
+										ExecuteListeners are hooked into your <reference id="dsl-context" title="Configuration"/> by returning them from an <reference class="org.jooq.ExecuteListenerProvider"/>:
 									</p>
 
-<java><![CDATA[// TODO: Change this! Create your Executor
-DSLContext create = DSL.using(connection, dialect);
+<java><![CDATA[// Create your Configuration
+Configuration configuration = new DefaultConfiguration(connection, dialect);
 
-// Hook your listeners to the Executor's listener list:
-create.getExecuteListeners().add(new MyFirstListener());
-create.getExecuteListeners().add(new PerformanceLoggingListener());
-create.getExecuteListeners().add(new NoInsertListener());]]></java>
+// Derive a new configuration, hooking your listener providers into it:
+configuration = configuration.derive(
+    new DefaultExecuteListenerProvider(new MyFirstListener()),
+    new DefaultExecuteListenerProvider(new PerformanceLoggingListener()),
+    new DefaultExecuteListenerProvider(new NoInsertListener())
+);]]></java>
 									
 									<p>
 										See the manual's section about <reference id="execute-listeners" title="ExecuteListeners"/> to see examples of such listener implementations.
@@ -8315,8 +8317,14 @@ public class StatisticsListener extends DefaultExecuteListener {
 								Now, configure jOOQ's runtime to load your listener
 							</p>
 
-<java><![CDATA[// TODO Fix me!! DSLContext create = DSL.using(connection, dialect);
-create.getExecuteListeners().add(new StatisticsListener());]]></java>
+<java><![CDATA[// Create a configuration with an appropriate listener provider:
+Configuration configuration = new DefaultConfiguration(connection, dialect);
+configuration = configuration.derive(
+    new DefaultExecuteListenerProvider(new StatisticsListener())
+);
+
+// Create a DSLContext from the above configuration
+DSLContext create = DSL.using(configuration);]]></java>
 
 							<p>
 								And log results any time with a snippet like this:
@@ -9730,8 +9738,14 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetc
 								Both modes will require that you set the <reference class="org.jooq.debug.impl.DebugListener"/> in the Configuration:
 							</p>
 
-<java><![CDATA[// TODO fixme!! DSLContext create = DSLContext.using(connection, dialect);
-executor.getExecuteListeners().add(new org.jooq.debug.impl.DebugListener());]]></java>
+<java><![CDATA[// Create a configuration with an appropriate listener provider:
+Configuration configuration = new DefaultConfiguration(connection, dialect);
+configuration = configuration.derive(
+    new DefaultExecuteListenerProvider(new org.jooq.debug.impl.DebugListener())
+);
+
+// Create a DSLContext from the above configuration
+DSLContext create = DSL.using(configuration);]]></java>
 
 							<h3>In-process mode</h3>
 							<p>

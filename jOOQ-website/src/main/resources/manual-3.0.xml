@@ -250,17 +250,21 @@ SELECT 1 FROM DUAL]]></sql>
 <java><![CDATA[// Java assumptions
 // ----------------
  
-// Whenever you see "standalone functions", assume they were static imported from org.jooq.impl.Factory 
-exists(); max(); min(); val(); inline(); // correspond to Factory.exists(); Factory.max(); Factory.min(); etc...
+// Whenever you see "standalone functions", assume they were static imported from org.jooq.impl.DSL 
+exists(); max(); min(); val(); inline(); // correspond to DSL.exists(); DSL.max(); DSL.min(); etc...
 
 // Whenever you see BOOK/Book, AUTHOR/Author and similar entities, assume they were (static) imported from the generated schema
 BOOK.TITLE, AUTHOR.LAST_NAME // correspond to com.example.generated.Tables.BOOK.TITLE, com.example.generated.Tables.BOOK.TITLE
 
-// Whenever you see "create" being used in Java code, assume that this is an instance of org.jooq.impl.Executor.
-// The reason why it is called "create" is the fact, that a jOOQ QueryPart is being created from an Executor:
-Executor create = new Executor(connection, SQLDialect.ORACLE);]]></java>
+// Whenever you see "create" being used in Java code, assume that this is an instance of org.jooq.DSLContext.
+// The reason why it is called "create" is the fact, that a jOOQ QueryPart is being created from the DSL object:
+DSLContext create = DSL.using(connection, SQLDialect.ORACLE);]]></java>
 
-							<h3>Term: Degree (arity)</h3>
+                            <p>
+                                Your naming may differ, of course. For instance, you could name the "create" instance "db", instead.
+                            </p>
+
+							<h3>Degree (arity)</h3>
 							<p>
 							    jOOQ records (and many other API elements) have a degree N between 1 and {max-row-degree}. The variable degree of an API element is denoted as [N], e.g. Row[N] or Record[N]. The term "degree" is preferred over arity, as "degree" is the term used in the SQL standard, whereas "arity" is used more often in mathematics and relational theory.
 							</p>
@@ -745,7 +749,7 @@ INFO: GENERATION FINISHED!     : Total: 791.688ms, +9.143ms
 											
 <java><![CDATA[// For convenience, always static import your generated tables and jOOQ functions to decrease verbosity:
 import static test.generated.Tables.*;
-import static org.jooq.impl.Factory.*;
+import static org.jooq.impl.DSL.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -785,11 +789,11 @@ public class Main {
 												Let's add a simple query:
 											</p>
 											
-<java><![CDATA[Executor create = new Executor(conn, SQLDialect.MYSQL);
+<java><![CDATA[DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
 Result<Record> result = create.select().from(POSTS).fetch();]]></java>
 
 											<p>
-												First get an instance of <code>Executor</code> so we can write a simple <code>SELECT</code> query. We pass an instance of the MySQL connection to <code>Executor</code>. Note that the executor doesn't close the connection. We'll have to do that ourselves.
+												First get an instance of <code>DSLContext</code> so we can write a simple <code>SELECT</code> query. We pass an instance of the MySQL connection to <code>DSL</code>. Note that the DSLContext doesn't close the connection. We'll have to do that ourselves.
 											</p>
 											<p>
 												We then use jOOQ's DSL to return an instance of Result. We'll be using this result in the next step.
@@ -821,7 +825,7 @@ Result<Record> result = create.select().from(POSTS).fetch();]]></java>
 // For convenience, always static import your generated tables and
 // jOOQ functions to decrease verbosity:
 import static test.generated.Tables.*;
-import static org.jooq.impl.Factory.*;
+import static org.jooq.impl.DSL.*;
 
 import java.sql.*;
 
@@ -844,7 +848,7 @@ public class Main {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             conn = DriverManager.getConnection(url, userName, password);
 
-            Executor create = new Executor(conn, SQLDialect.MYSQL);
+            DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
             Result<Record> result = create.select().from(POSTS).fetch();
 
             for (Record r : result) {
@@ -949,14 +953,14 @@ import java.sql.DriverManager                                        //
                                                                      //
 import org.jooq._                                                    //
 import org.jooq.impl._                                               //
-import org.jooq.impl.Factory._                                       //
+import org.jooq.impl.DSL._                                           //
 import org.jooq.scala.example.h2.Tables._                            //
 import org.jooq.scala.Conversions._                                  // Import implicit defs for overloaded jOOQ/SQL operators
                                                                      //
 object Test {                                                        //
   def main(args: Array[String]): Unit = {                            //
     val c = DriverManager.getConnection("jdbc:h2:~/test", "sa", ""); // Standard JDBC connection
-    val e = new Executor(c, SQLDialect.H2);                          //
+    val e = DSL.using(c, SQLDialect.H2);                             //
     val x = T_AUTHOR as "x"                                          // SQL-esque table aliasing
                                                                      //
     for (r <- e                                                      // Iteration over Result. "r" is an org.jooq.Record3
@@ -1085,8 +1089,12 @@ object Test {                                                        //
 				</content>
 
 				<sections>
-					<section id="factory">
-					    <title>The Factory class</title>
+                    <redirect id="factory" redirect-to="dsl">
+                        <redirect id="factory-subclasses" redirect-to="dsl-subclasses"/>
+                    </redirect>
+                    
+					<section id="dsl">
+					    <title>The DSL type</title>
 					    <content>
 							<p>
 								jOOQ exposes a lot of interfaces and hides most implementation facts from client code. The reasons for this are:
@@ -1097,34 +1105,34 @@ object Test {                                                        //
 								<li>API guarantee. You only depend on the exposed interfaces, not concrete (potentially dialect-specific) implementations.</li>
 							</ul>
 							<p>
-								The <reference class="org.jooq.impl.Factory"/> class is the main class from where you will create all jOOQ objects.	It serves as a static factory for <reference id="table-expressions" title="table expressions"/>, <reference id="column-expressions" title="column expressions"/> (or "fields"), <reference id="conditional-expressions" title="conditional expressions"/> and many other <reference id="queryparts" title="QueryParts"/>.
+								The <reference class="org.jooq.impl.DSL"/> class is the main class from where you will create all jOOQ objects.	It serves as a static factory for <reference id="table-expressions" title="table expressions"/>, <reference id="column-expressions" title="column expressions"/> (or "fields"), <reference id="conditional-expressions" title="conditional expressions"/> and many other <reference id="queryparts" title="QueryParts"/>.
 							</p>
 
-							<h3>The static Factory API</h3>
+							<h3>The static DSL API</h3>
 							<p>
-								With jOOQ 2.0, static factory methods have been introduced in order to make client code look more like SQL. Ideally, when working with jOOQ, you will simply static import all methods from the Factory class:
+								With jOOQ 2.0, static factory methods have been introduced in order to make client code look more like SQL. Ideally, when working with jOOQ, you will simply static import all methods from the DSL class:
 							</p>
 
-<java>import static org.jooq.impl.Factory.*;</java>
+<java>import static org.jooq.impl.DSL.*;</java>
 
 							<p>
-							    Note, that when working with Eclipse, you could also add the Factory to your favourites. This will allow to access functions even more fluently:
+							    Note, that when working with Eclipse, you could also add the DSL to your favourites. This will allow to access functions even more fluently:
 							</p>
 <java>concat(trim(FIRST_NAME), trim(LAST_NAME));
 
 // ... which is in fact the same as:
-Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</java>
+DSL.concat(DSL.trim(FIRST_NAME), DSL.trim(LAST_NAME));</java>
 					    </content>
 					    
 					    <sections>
-							<section id="factory-subclasses">
-								<title>Factory subclasses</title>
+							<section id="dsl-subclasses">
+								<title>DSL subclasses</title>
 								<content>
 									<p>
-										There are a couple of subclasses for the general Factory. Each SQL dialect has its own dialect-specific Factory. For instance, if you're only using the MySQL dialect, you can choose to reference the MySQLFactory instead of the standard Factory:
+										There are a couple of subclasses for the general DSL. Each SQL dialect has its own dialect-specific DSL. For instance, if you're only using the MySQL dialect, you can choose to reference the MySQLDSL instead of the standard DSL:
 									</p>
 									<p>
-										The advantage of referencing a dialect-specific Factory lies in the fact that you have access to more proprietary RDMBS functionality. This may include:
+										The advantage of referencing a dialect-specific DSL lies in the fact that you have access to more proprietary RDMBS functionality. This may include:
 									</p>
 									<ul>
 		    							<li>MySQL's encryption functions</li>
@@ -1134,42 +1142,79 @@ Factory.concat(Factory.trim(FIRST_NAME), Factory.trim(LAST_NAME));</java>
 							</section>
 					    </sections>
 					</section>
+                    
+                    <redirect id="executor" redirect-to="dsl-context">
+                        <redirect id="sql-dialects" redirect-to="sql-dialects"/>
+                        <redirect id="connection-vs-datasource" redirect-to="connection-vs-datasource"/>
+                        <redirect id="custom-data" redirect-to="custom-data"/>
+                        <redirect id="custom-execute-listeners" redirect-to="custom-execute-listeners"/>
+                        <redirect id="custom-settings" redirect-to="custom-settings"/>
+                        <redirect id="runtime-schema-mapping" redirect-to="runtime-schema-mapping"/>
+                    </redirect>
 					
-					<section id="executor">
-						<title>The Executor class</title>
+					<section id="dsl-context">
+						<title>The DSLContext class</title>
 						<content>
 							<p>
-							Executor implements <reference class="org.jooq.Configuration"/>, an object that configures jOOQ's behaviour when executing queries (see <reference id="sql-execution"/> for more details). Unlike Factories, Executors allow for creating <reference id="sql-statements" title="SQL statements"/> that are already "configured" and ready for execution.
+							    DSLContext references a <reference class="org.jooq.Configuration"/>, an object that configures jOOQ's behaviour when executing queries (see <reference id="sql-execution"/> for more details). Unlike the static DSL, the DSLContext allow for creating <reference id="sql-statements" title="SQL statements"/> that are already "configured" and ready for execution.
 							</p>
 							
-							<h3>The Executor as a Configuration object</h3>
+                            <h3>Fluent creation of a DSLContext object</h3>
+                            <p>
+                                The DSLContext object can be created fluently from the <reference id="dsl" title="DSL type"/>:
+                            </p>
+
+<java><![CDATA[// Create it from a pre-existing configuration
+DSLContext create = DSL.using(configuration);
+
+// Create it from ad-hoc arguments
+DSLContext create = DSL.using(connection, dialect);]]></java>
+
+                            <p>
+                                If you do not have a reference to a pre-existing Configuration object (e.g. created from <reference class="org.jooq.impl.DefaultConfiguration"/>), the various overloaded <code>DSL.using()</code> methods will create one for you.
+                            </p>
+                            
+							<h3>Contents of a Configuration object</h3>
 							<p>
-							    As any Configuration object, an Executor can be supplied with these objects:
+							    A Configuration can be supplied with these objects:
 							</p>
 							<ul>
 								<li><reference class="org.jooq.SQLDialect"/> : The dialect of your database. This may be any of the currently supported database types (see <reference id="sql-dialects"/> for more details)</li>
     							<li><reference class="org.jooq.conf.Settings"/> : An optional runtime configuration (see <reference id="custom-settings"/> for more details)</li>
-								<li>
+								<li><reference class="org.jooq.ExecuteListenerProvider"/> : An optional reference to a provider class that can provide execute listeners to jOOQ (see <reference id="execute-listeners"/> for more details)</li>
+                                <li>
 									Any of these:
 									<ul>
-										<li><reference class="java.sql.Connection"/> : An optional JDBC Connection that will be re-used for the whole lifecycle of your Executor (see <reference id="connection-vs-datasource"/> for more details). For simplicity, this is the use-case referenced from this manual, most of the time.</li>
-		    							<li><reference class="java.sql.DataSource"/> : An optional JDBC DataSource that will be re-used for the whole lifecycle of your Executor. If you prefer using DataSources over Connections, jOOQ will internally fetch new Connections from your DataSource, conveniently closing them again after query execution. This is particularly useful in J2EE or Spring contexts (see <reference id="connection-vs-datasource"/> for more details)</li>
+										<li><reference class="java.sql.Connection"/> : An optional JDBC Connection that will be re-used for the whole lifecycle of your Configuration (see <reference id="connection-vs-datasource"/> for more details). For simplicity, this is the use-case referenced from this manual, most of the time.</li>
+		    							<li><reference class="java.sql.DataSource"/> : An optional JDBC DataSource that will be re-used for the whole lifecycle of your Configuration. If you prefer using DataSources over Connections, jOOQ will internally fetch new Connections from your DataSource, conveniently closing them again after query execution. This is particularly useful in J2EE or Spring contexts (see <reference id="connection-vs-datasource"/> for more details)</li>
 		    							<li><reference class="org.jooq.ConnectionProvider"/> : A custom abstraction that is used by jOOQ to "acquire" and "release" connections. jOOQ will internally "acquire" new Connections from your ConnectionProvider, conveniently "releasing" them again after query execution. (see <reference id="connection-vs-datasource"/> for more details)</li>
 									</ul>
 								</li>
 							</ul>
 							
 							<p>
-								As a Configuration object, an Executor can construct <reference id="sql-statements" title="statements"/>, for later <reference id="sql-execution" title="execution"/>. An example is given here:
+								Wrapping a Configuration object, a DSLContext can construct <reference id="sql-statements" title="statements"/>, for later <reference id="sql-execution" title="execution"/>. An example is given here:
 							</p>
-<java><![CDATA[// The Executor is "configured" with a Connection and a SQLDialect
-Executor create = new Executor(connection, dialect);
+<java><![CDATA[// The DSLContext is "configured" with a Connection and a SQLDialect
+DSLContext create = DSL.using(connection, dialect);
 
-// This select statement contains an internal reference to the Executor:
+// This select statement contains an internal reference to the DSLContext's Configuration:
 Select<?> select = create.selectOne();
 
-// Using the internally referenced Executor, the select statement can now be executed:
+// Using the internally referenced Configuration, the select statement can now be executed:
 Result<?> result = select.fetch();]]></java>
+
+                            <p>
+                                Note that you do not need to keep a reference to a DSLContext. You may as well inline your local variable, and fluently execute a SQL statement as such:
+                            </p>
+
+<java><![CDATA[// Execute a statement from a single execution chain:
+Result<?> result =
+DSL.using(connection, dialect)
+   .select()
+   .from(BOOK)
+   .where(BOOK.TITLE.like("Animal%"))
+   .fetch();]]></java>
 						</content>
 
 						<sections>
@@ -1180,7 +1225,7 @@ Result<?> result = select.fetch();]]></java>
 										While jOOQ tries to represent the SQL standard as much as possible, many features are vendor-specific to a given database and to its "SQL dialect". jOOQ models this using the <reference class="org.jooq.SQLDialect"/> enum type.
 									</p>
 									<p>
-										The SQL dialect is one of the main attributes of an <reference id="executor" title="Executor"/>. Queries created from such executors will assume dialect-specific behaviour when <reference id="sql-rendering" title="rendering SQL"/> and <reference id="variable-binding" title="binding bind values"/>.
+										The SQL dialect is one of the main attributes of a <reference id="dsl-context" title="Configuration"/>. Queries created from DSLContexts will assume dialect-specific behaviour when <reference id="sql-rendering" title="rendering SQL"/> and <reference id="variable-binding" title="binding bind values"/>.
 									</p>
 									<p>
 										Some parts of the jOOQ API are officially supported only by a given subset of the supported SQL dialects. For instance, the <reference id="connect-by-clause" title="Oracle CONNECT BY clause"/>, which is supported by the Oracle and CUBRID databases, is annotated with a <reference class="org.jooq.Support"/> annotation, as such:
@@ -1233,7 +1278,7 @@ SelectSelectStep<R> select(Field<?>... fields);]]></java>
 								<content>
 									<h3>Interact with JDBC Connections</h3>
 									<p>
-										While you can use jOOQ for <reference id="sql-building" title="SQL building"/> only, you can also run queries against a JDBC <reference class="java.sql.Connection"/>. Internally, jOOQ creates <reference class="java.sql.Statement"/> or <reference class="java.sql.PreparedStatement"/> objects from such a Connection, in order to execute statements. The normal operation mode is to provide an <reference id="executor" title="Executor"/> with a JDBC Connection, whose lifecycle you will control yourself. This means that jOOQ will not actively close connections, rollback or commit transactions.
+										While you can use jOOQ for <reference id="sql-building" title="SQL building"/> only, you can also run queries against a JDBC <reference class="java.sql.Connection"/>. Internally, jOOQ creates <reference class="java.sql.Statement"/> or <reference class="java.sql.PreparedStatement"/> objects from such a Connection, in order to execute statements. The normal operation mode is to provide a <reference id="dsl-context" title="Configuration"/> with a JDBC Connection, whose lifecycle you will control yourself. This means that jOOQ will not actively close connections, rollback or commit transactions.
 									</p>
 									<p>
 										Note, in this case, jOOQ will internally use a <reference class="org.jooq.impl.DefaultConnectionProvider"/>, which you can reference directly if you prefer that. The DefaultConnectionProvider exposes various transaction-control methods, such as commit(), rollback(), etc.
@@ -1271,7 +1316,7 @@ SelectSelectStep<R> select(Field<?>... fields);]]></java>
 								<title>Custom data</title>
 								<content>
 									<p>
-										In advanced use cases of integrating your application with jOOQ, you may want to put custom data into your <reference id="executor" title="Executors"/>, which you can then access from your...
+										In advanced use cases of integrating your application with jOOQ, you may want to put custom data into your <reference id="dsl-context" title="Configuration"/>, which you can then access from your...
 									</p>
 									
 									<ul>
@@ -1290,7 +1335,7 @@ public class NoInsertListener extends DefaultExecuteListener {
     public void start(ExecuteContext ctx) {
     
         // This listener is active only, when your custom flag is set to true
-        if (Boolean.TRUE.equals(ctx.getData("com.example.my-namespace.no-inserts"))) {
+        if (Boolean.TRUE.equals(ctx.configuration().data("com.example.my-namespace.no-inserts"))) {
         
             // If active, fail this execution, if an INSERT statement is being executed
             if (ctx.query() instanceof Insert) {
@@ -1304,23 +1349,24 @@ public class NoInsertListener extends DefaultExecuteListener {
 									</p>
 									
 									<p>
-										Now, the above listener can be added to your <reference id="executor" title="Executors"/>, but you will also need to pass the flag to the <code>Executor</code>, in order for the listener to work:
+										Now, the above listener can be added to your <reference id="dsl-context" title="Configuration"/>, but you will also need to pass the flag to the <code>Configuration</code>, in order for the listener to work:
 									</p>
 									
-<java><![CDATA[// Create your Executor
-Executor create = new Executor(connection, dialect);
+<java><![CDATA[// Create your Configuration
+Configuration configuration = new DefaultConfiguration(connection, dialect);
 
-// Hook your own ExecuteListener into your Executor
-create.getExecuteListeners().add(new NoInsertListener());
+// Derive a new configuration with an execute listener provider:
+configuration = configuration.derive(new DefaultExecuteListenerProvider(new NoInsertListener()));
 
 // Use any String literal to identify your custom data
-create.setData("com.example.my-namespace.no-inserts", true);
+configuration.data("com.example.my-namespace.no-inserts", true);
 
 // Try to execute an INSERT statement
 try {
-    create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.LAST_NAME)
-          .values(1, "Orwell")
-          .execute();
+    DSL.using(configuration)
+       .insertInto(AUTHOR, AUTHOR.ID, AUTHOR.LAST_NAME)
+       .values(1, "Orwell")
+       .execute();
           
     // You shouldn't get here
     Assert.fail();
@@ -1332,7 +1378,7 @@ catch (DataAccessException expected) {
 }]]></java>
 
 									<p>
-										Using the <code>getData()</code> and <code>setData()</code> methods, you can store and retrieve custom data in your <code>Executors</code> and <code>Configurations</code>.
+										Using the <code>data()</code> methods, you can store and retrieve custom data in your <code>Configurations</code>.
 									</p>
 								</content>
 							</section>
@@ -1352,11 +1398,11 @@ catch (DataAccessException expected) {
 									</ul>
 									
 									<p>
-										ExecuteListeners are hooked into your <reference id="executor" title="Executor"/> by adding them to the <code>getExecuteListeners()</code> property:
+										ExecuteListeners are hooked into your <reference id="dsl-context" title="Configuration"/> by returning them from a <reference class="org.jooq.ExecuteListenerProvider"/>:
 									</p>
 
-<java><![CDATA[// Create your Executor
-Executor create = new Executor(connection, dialect);
+<java><![CDATA[// TODO: Change this! Create your Executor
+DSLContext create = DSL.using(connection, dialect);
 
 // Hook your listeners to the Executor's listener list:
 create.getExecuteListeners().add(new MyFirstListener());
@@ -1373,21 +1419,22 @@ create.getExecuteListeners().add(new NoInsertListener());]]></java>
 								<title>Custom Settings</title>
 								<content>
 									<p>
-										The jOOQ Executor allows for some optional configuration elements to be used by advanced users. The <reference class="org.jooq.conf.Settings" /> class is a JAXB-annotated type, that can be provided to an Executor in several ways:
+										The jOOQ Configuration allows for some optional configuration elements to be used by advanced users. The <reference class="org.jooq.conf.Settings" /> class is a JAXB-annotated type, that can be provided to a Configuration in several ways:
 									</p>
 									<ul>
-										<li>In the constructor. This will override default settings below</li>
-										<li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
+										<li>In the DSLContext constructor (<code>DSL.using()</code>). This will override default settings below</li>
+										<li>in the <reference code="org.jooq.impl.DefaultConfiguration"/> constructor. This will override default settings below</li>
+                                        <li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
 										<li>From the classpath at /jooq-settings.xml</li>
 										<li>From the settings defaults, as specified in <a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd</a></li>
 									</ul>
 									<h3>Example</h3>
 									<p>
-										For example, if you want to indicate to jOOQ, that it should inline all bind variables, and execute static <reference class="java.sql.Statement"/> instead of binding its variables to <reference class="java.sql.PreparedStatement"/>, you can do so by using the following Executor:
+										For example, if you want to indicate to jOOQ, that it should inline all bind variables, and execute static <reference class="java.sql.Statement"/> instead of binding its variables to <reference class="java.sql.PreparedStatement"/>, you can do so by creating the following DSLContext:
 									</p>
 <java><![CDATA[Settings settings = new Settings();
 settings.setStatementType(StatementType.STATIC_STATEMENT);
-Executor create = new Executor(connection, dialect, settings);]]></java>
+DSLContext create = DSL.using(connection, dialect, settings);]]></java>
 									<p>
 										Subsequent sections of the manual contain some more in-depth explanations about these settings:
 									</p>
@@ -1428,7 +1475,7 @@ Executor create = new Executor(connection, dialect, settings);]]></java>
 
 									<h3>Mapping DEV to MY_BOOK_WORLD with jOOQ</h3>
 									<p>
-										When a user from My Book World logs in, you want them to access the MY_BOOK_WORLD schema using classes generated from DEV. This can be achieved with the <reference class="org.jooq.conf.RenderMapping"/> class, that you can equip your Executor's <reference id="custom-settings" title="settings"/> with. Take the following example:
+										When a user from My Book World logs in, you want them to access the MY_BOOK_WORLD schema using classes generated from DEV. This can be achieved with the <reference class="org.jooq.conf.RenderMapping"/> class, that you can equip your Configuration's <reference id="custom-settings" title="settings"/> with. Take the following example:
 									</p>
 
 <java>Settings settings = new Settings()
@@ -1437,14 +1484,14 @@ Executor create = new Executor(connection, dialect, settings);]]></java>
         new MappedSchema().withInput("DEV")
                           .withOutput("MY_BOOK_WORLD")));
 
-// Add the settings to the executor
-Executor create = new Executor(connection, SQLDialect.ORACLE, settings);
+// Add the settings to the DSLContext
+DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
 
-// Run queries with the "mapped" executor
+// Run queries with the "mapped" Configuration
 create.selectFrom(AUTHOR).fetch();</java>
 
 									<p>
-										The query executed with an Executor equipped with the above mapping will in fact produce this SQL statement:
+										The query executed with a Configuration equipped with the above mapping will in fact produce this SQL statement:
 									</p>
 									
 <sql>SELECT * FROM MY_BOOK_WORLD.AUTHOR</sql>
@@ -1479,29 +1526,11 @@ create.selectFrom(AUTHOR).fetch();</java>
 <java>Settings settings = JAXB.unmarshal(new File("jooq-runtime.xml"), Settings.class);</java>
 
 									<p>
-										This will map generated classes from DEV to MY_BOOK_WORLD, from LOG to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you want to change your mapping configuration, you will have to create a new Executor.
+										This will map generated classes from DEV to MY_BOOK_WORLD, from LOG to MY_BOOK_WORLD_LOG, but leave the MASTER schema alone. Whenever you want to change your mapping configuration, you will have to create a new Configuration.
 									</p>
 
 
 									<h3>Using a default schema</h3>
-									<p>
-										Another option to switch schema names is to use a default schema for the Executor's underlying Connection. Many RDBMS support a USE or SET SCHEMA command, which you can call like this:
-									</p>
-
-<java>// Set the default schema
-Schema MY_BOOK_WORLD = ...
-create.use(MY_BOOK_WORLD);
-
-// Run queries with an executor having a default schema
-create.selectFrom(AUTHOR).fetch();</java>
-
-									<p>
-										Queries generated from the above Executor will produce this kind of SQL statement:
-									</p>
-
-<sql>-- the schema name is omitted from all SQL constructs.
-SELECT * FROM AUTHOR</sql>
-
                             		<p>
                             			If you wish not to render any schema name at all, use the following Settings property for this:
                            			</p>
@@ -1510,8 +1539,8 @@ SELECT * FROM AUTHOR</sql>
 <java>Settings settings = new Settings()
     .withRenderSchema(false);
 
-// Add the settings to the executor
-Executor create = new Executor(connection, SQLDialect.ORACLE, settings);
+// Add the settings to the Configuration
+DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
 
 // Run queries that omit rendering schema names
 create.selectFrom(AUTHOR).fetch();</java>
@@ -1530,14 +1559,14 @@ create.selectFrom(AUTHOR).fetch();</java>
          new MappedTable().withInput("AUTHOR")
                           .withOutput("MY_APP__AUTHOR"))));
 
-// Add the settings to the executor
-Executor create = new Executor(connection, SQLDialect.ORACLE, settings);
+// Add the settings to the Configuration
+DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
 
-// Run queries with the "mapped" executor
+// Run queries with the "mapped" configuration
 create.selectFrom(AUTHOR).fetch();</java>
 
 									<p>
-										The query executed with an Executor equipped with the above mapping will in fact produce this SQL statement:
+										The query executed with a Configuration equipped with the above mapping will in fact produce this SQL statement:
 									</p>
 									
 <sql>SELECT * FROM MY_BOOK_WORLD.MY_APP__AUTHOR</sql>
@@ -1559,7 +1588,7 @@ create.selectFrom(AUTHOR).fetch();</java>
 						<title>SQL Statements</title>
 						<content>
 							<p>
-								jOOQ currently supports 6 types of SQL statements. All of these statements are constructed from an Executor instance with an optional <reference id="connection-vs-datasource" title="JDBC Connection or DataSource"/>. If supplied with a Connection or DataSource, they can be executed. Depending on the <reference id="query-vs-resultquery" title="query type"/>, executed queries can return results.
+								jOOQ currently supports 6 types of SQL statements. All of these statements are constructed from a DSLContext instance with an optional <reference id="connection-vs-datasource" title="JDBC Connection or DataSource"/>. If supplied with a Connection or DataSource, they can be executed. Depending on the <reference id="query-vs-resultquery" title="query type"/>, executed queries can return results.
 							</p>
 						</content>
 
@@ -1600,7 +1629,7 @@ create.select()
 										Many other frameworks have similar APIs with similar feature sets. Yet, what makes jOOQ special is its informal <reference id="reference-bnf-notation" title="BNF notation"/> modelling a unified SQL dialect suitable for many vendor-specific dialects, and implementing that BNF notation as a hierarchy of interfaces in Java. This concept is extremely powerful, when <reference id="jooq-in-modern-ides" title="using jOOQ in modern IDEs" /> with syntax completion. Not only can you code much faster, your SQL code will be compile-checked to a certain extent. An example of a DSL query equivalent to the previous one is given here:
 									</p>
 									
-<java><![CDATA[Executor create = new Executor(connection, dialect);
+<java><![CDATA[DSLContext create = DSL.using(connection, dialect);
 Result<?> result = create.select()
                          .from(AUTHOR)
                          .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
@@ -1609,7 +1638,7 @@ Result<?> result = create.select()
                          			<p>
                          				Unlike other, simpler frameworks that use <a href="http://en.wikipedia.org/wiki/Fluent_interface">"fluent APIs"</a> or <a href="http://en.wikipedia.org/wiki/Method_chaining">"method chaining"</a>, jOOQ's BNF-based interface hierarchy will not allow bad query syntax. The following will not compile, for instance:
                          			</p>
-<java><![CDATA[Executor create = new Executor(connection, dialect);
+<java><![CDATA[DSLContext create = DSL.using(connection, dialect);
 Result<?> result = create.select()
                          .join(BOOK).on(BOOK.AUTHOR_ID.equal(AUTHOR.ID))
                       //  ^^^^ "join" is not possible here
@@ -1646,7 +1675,7 @@ Result<?> result = create.select()
 										Historically, jOOQ started out as an object-oriented SQL builder library like any other. This meant that all queries and their syntactic components were modeled as so-called <reference id="queryparts" title="QueryParts"/>, which delegate <reference id="sql-rendering" title="SQL rendering"/> and <reference id="variable-binding" title="variable binding"/> to child components. This part of the API will be referred to as the model API (or non-DSL API), which is still maintained and used internally by jOOQ for incremental query building. An example of incremental query building is given here:
 									</p>
 									
-<java><![CDATA[Executor create = new Executor(connection, dialect);
+<java><![CDATA[DSLContext create = DSL.using(connection, dialect);
 SelectQuery<Record> query = create.selectQuery();
 query.addFrom(AUTHOR);
 
@@ -1661,7 +1690,7 @@ Result<?> result = query.fetch();]]></java>
 										This query is equivalent to the one shown before using the DSL syntax. In fact, internally, the DSL API constructs precisely this SelectQuery object. Note, that you can always access the SelectQuery object to switch between DSL and model APIs:
 									</p>
 
-<java><![CDATA[Executor create = new Executor(connection, dialect);
+<java><![CDATA[DSLContext create = DSL.using(connection, dialect);
 SelectFinalStep<?> select = create.select().from(AUTHOR);
 
 // Add the JOIN clause on the internal QueryObject representation
@@ -1730,7 +1759,7 @@ ORDER BY AUTHOR.LAST_NAME ASC NULLS FIRST
 
 
 
-Executor create = new Executor(connection, dialect);
+DSLContext create = DSL.using(connection, dialect);
 
 create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
       .from(AUTHOR)
@@ -1751,7 +1780,7 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
 
 									<h3>SELECT from single physical tables</h3>
 									<p>
-										A very similar, but limited API is available, if you want to select from single physical tables in order to retrieve <reference id="crud-with-updatablerecords" title="TableRecords or even UpdatableRecords"/>. The decision, which type of select to create is already made at the very first step, when you create the <code>SELECT</code> statement with the Factory or Executor:
+										A very similar, but limited API is available, if you want to select from single physical tables in order to retrieve <reference id="crud-with-updatablerecords" title="TableRecords or even UpdatableRecords"/>. The decision, which type of select to create is already made at the very first step, when you create the <code>SELECT</code> statement with the DSL or DSLContext types:
 									</p>
 
 <java><![CDATA[public <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table);]]></java>
@@ -1780,7 +1809,7 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
 										<title>The SELECT clause</title>
 										<content>
 											<p>
-												The SELECT clause lets you project your own record types, referencing table fields, functions, arithmetic expressions, etc. The Factory provides several methods for expressing a SELECT clause:
+												The SELECT clause lets you project your own record types, referencing table fields, functions, arithmetic expressions, etc. The DSL type provides several methods for expressing a SELECT clause:
 											</p>
 
 <code-pair>
@@ -1840,7 +1869,7 @@ create.select().from(tableByName("BOOK"));]]></java>
 
 											<h3>Typesafe projections with degree up to {max-row-degree}</h3>
 											<p>
-												Since jOOQ 3.0, <reference id="record-n" title="records"/> and <reference id="row-value-expressions" title="row value expressions"/> up to degree {max-row-degree} are now generically typesafe. This is reflected by an overloaded <code>SELECT</code> (and <code>SELECT DISTINCT</code>) API in both Factory and Executor. An extract from Factory:
+												Since jOOQ 3.0, <reference id="record-n" title="records"/> and <reference id="row-value-expressions" title="row value expressions"/> up to degree {max-row-degree} are now generically typesafe. This is reflected by an overloaded <code>SELECT</code> (and <code>SELECT DISTINCT</code>) API in both DSL and DSLContext. An extract from the DSL type:
 											</p>
 											
 <java><![CDATA[// Non-typesafe select methods:
@@ -1911,8 +1940,8 @@ FROM TABLE(DBMS_XPLAN.DISPLAY_CURSOR(null, null, 'ALLSTATS'));]]></sql>
 <code-pair>
 	<sql><![CDATA[SELECT 1 FROM DUAL
 SELECT 1]]></sql>
-	<java><![CDATA[new Executor(SQLDialect.ORACLE).selectOne().getSQL();
-new Executor(SQLDialect.POSTGRES).selectOne().getSQL();]]></java>
+	<java><![CDATA[DSL.using(SQLDialect.ORACLE).selectOne().getSQL();
+DSL.using(SQLDialect.POSTGRES).selectOne().getSQL();]]></java>
 </code-pair>
 
 											<p>
@@ -1942,7 +1971,7 @@ new Executor(SQLDialect.POSTGRES).selectOne().getSQL();]]></java>
 												All of these JOIN methods can be called on <reference class="org.jooq.Table"/> types, or directly after the FROM clause for convenience. The following example joins AUTHOR and BOOK
 											</p>
 
-<java><![CDATA[Executor create = new Executor(connection, dialect);
+<java><![CDATA[DSLContext create = DSL.using(connection, dialect);
 
 // Call "join" directly on the AUTHOR table
 Result<?> result = create.select()
@@ -2150,7 +2179,7 @@ ORDER BY 1]]></sql>
 </text>
 
 											<p>
-												Some of the supported functions and pseudo-columns are these (available from the <reference id="factory" title="Factory"/>):
+												Some of the supported functions and pseudo-columns are these (available from the <reference id="dsl" title="DSL"/>):
 											</p>
 
 											<ul>
@@ -3529,20 +3558,20 @@ SELECT 1
 SELECT 1
 SELECT 1 FROM [SYS].[DUMMY]
 ]]></sql>
-	<java><![CDATA[new Executor(SQLDialect.ASE      ).selectOne().getSQL();
-new Executor(SQLDialect.CUBRID   ).selectOne().getSQL();
-new Executor(SQLDialect.DB2      ).selectOne().getSQL();
-new Executor(SQLDialect.DERBY    ).selectOne().getSQL();
-new Executor(SQLDialect.FIREBIRD ).selectOne().getSQL();
-new Executor(SQLDialect.H2       ).selectOne().getSQL();
-new Executor(SQLDialect.HSQLDB   ).selectOne().getSQL();
-new Executor(SQLDialect.INGRES   ).selectOne().getSQL();
-new Executor(SQLDialect.MYSQL    ).selectOne().getSQL();
-new Executor(SQLDialect.ORACLE   ).selectOne().getSQL();
-new Executor(SQLDialect.POSTGRES ).selectOne().getSQL();
-new Executor(SQLDialect.SQLITE   ).selectOne().getSQL();
-new Executor(SQLDialect.SQLSERVER).selectOne().getSQL();
-new Executor(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
+	<java><![CDATA[DSL.using(SQLDialect.ASE      ).selectOne().getSQL();
+DSL.using(SQLDialect.CUBRID   ).selectOne().getSQL();
+DSL.using(SQLDialect.DB2      ).selectOne().getSQL();
+DSL.using(SQLDialect.DERBY    ).selectOne().getSQL();
+DSL.using(SQLDialect.FIREBIRD ).selectOne().getSQL();
+DSL.using(SQLDialect.H2       ).selectOne().getSQL();
+DSL.using(SQLDialect.HSQLDB   ).selectOne().getSQL();
+DSL.using(SQLDialect.INGRES   ).selectOne().getSQL();
+DSL.using(SQLDialect.MYSQL    ).selectOne().getSQL();
+DSL.using(SQLDialect.ORACLE   ).selectOne().getSQL();
+DSL.using(SQLDialect.POSTGRES ).selectOne().getSQL();
+DSL.using(SQLDialect.SQLITE   ).selectOne().getSQL();
+DSL.using(SQLDialect.SQLSERVER).selectOne().getSQL();
+DSL.using(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 </code-pair>
 
 									<p>
@@ -3562,13 +3591,13 @@ new Executor(SQLDialect.SYBASE   ).selectOne().getSQL();]]></java>
 						
 						    <h3>Using column expressions in jOOQ</h3>
 							<p>
-								jOOQ allows you to freely create arbitrary column expressions using a fluent expression construction API. Many expressions can be formed as functions from <reference id="factory" title="Factory methods"/>, other expressions can be formed based on a pre-existing column expression. For example:
+								jOOQ allows you to freely create arbitrary column expressions using a fluent expression construction API. Many expressions can be formed as functions from <reference id="dsl" title="DSL methods"/>, other expressions can be formed based on a pre-existing column expression. For example:
 							</p>
 							
 <java><![CDATA[// A regular table column expression
 Field<String> field1 = BOOK.TITLE;
 
-// A function created from the Factory using "prefix" notation
+// A function created from the DSL using "prefix" notation
 Field<String> field2 = trim(BOOK.TITLE);
 
 // The same function created from a pre-existing Field using "postfix" notation
@@ -3580,7 +3609,7 @@ Field<String> field4 = listAgg(BOOK.TITLE)
                           .over().partitionBy(AUTHOR.ID);]]></java>
 
 							<p>
-								In general, it is up to you whether you want to use the "prefix" notation or the "postfix" notation to create new column expressions based on existing ones. The "SQL way" would be to use the "prefix notation", with functions created from the <reference id="factory" title="Factory"/>. The "Java way" or "object-oriented way" would be to use the "postfix" notation with functions created from <reference class="org.jooq.Field"/> objects. Both ways ultimately create the same query part, though.
+								In general, it is up to you whether you want to use the "prefix" notation or the "postfix" notation to create new column expressions based on existing ones. The "SQL way" would be to use the "prefix notation", with functions created from the <reference id="dsl" title="DSL"/>. The "Java way" or "object-oriented way" would be to use the "postfix" notation with functions created from <reference class="org.jooq.Field"/> objects. Both ways ultimately create the same query part, though.
 							</p>
 						</content>
 
@@ -3687,8 +3716,8 @@ SELECT CAST(AUTHOR.LAST_NAME AS TEXT) FROM DUAL</sql>
     <Z> Field<Z> cast(Class<? extends Z> type);
 }
 
-// And additional convenience methods in the Factory:
-public class Factory {
+// And additional convenience methods in the DSL:
+public class DSL {
     <T> Field<T> cast(Object object, Field<T> field);
     <T> Field<T> cast(Object object, DataType<T> type);
     <T> Field<T> cast(Object object, Class<? extends T> type);
@@ -3732,7 +3761,7 @@ public class Factory {
 </code-pair>
 
 									<p>
-										For more advanced datetime arithmetic, use the Factory's timestampDiff() and dateDiff() functions, as well as jOOQ's built-in SQL standard <code>INTERVAL</code> data type support:
+										For more advanced datetime arithmetic, use the DSL's timestampDiff() and dateDiff() functions, as well as jOOQ's built-in SQL standard <code>INTERVAL</code> data type support:
 									</p>
 									<ul>
 										<li><code>INTERVAL YEAR TO MONTH</code>: <reference class="org.jooq.types.YearToMonth"/></li>
@@ -3767,7 +3796,7 @@ create.select(concat("A", "B", "C"));
 										There are a variety of general functions supported by jOOQ As discussed in the chapter about <reference id="sql-dialects" title="SQL dialects"/> functions are mostly simulated in your database, in case they are not natively supported.
 									</p>
 									<p>
-										This is a list of general functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+										This is a list of general functions supported by jOOQ's <reference id="dsl" title="DSL"/>:
 									</p>
 									<ul>
 										<li><strong><code>COALESCE</code></strong>: Get the first non-null value in a list of arguments.</li>
@@ -3777,7 +3806,7 @@ create.select(concat("A", "B", "C"));
 									</ul>
 																
 									<p>
-										Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+										Please refer to the <reference class="org.jooq.impl.DSL" title="DSL Javadoc"/> for more details.
 									</p>
 								</content>
 							</section>
@@ -3789,7 +3818,7 @@ create.select(concat("A", "B", "C"));
 										Math can be done efficiently in the database before returning results to your Java application. In addition to the <reference id="arithmetic-expressions" title="arithmetic expressions" /> discussed previously, jOOQ also supports a variety of numeric functions. As discussed in the chapter about <reference id="sql-dialects" title="SQL dialects"/> numeric functions (as any function type) are mostly simulated in your database, in case they are not natively supported.
 									</p>
 									<p>
-										This is a list of numeric functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+										This is a list of numeric functions supported by jOOQ's <reference id="dsl" title="DSL"/>:
 									</p>
 									
 									<ul>
@@ -3824,7 +3853,7 @@ create.select(concat("A", "B", "C"));
 									</ul>
 									
 									<p>
-										Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+										Please refer to the <reference class="org.jooq.impl.DSL" title="DSL Javadoc"/> for more details.
 									</p>
 								</content>
 							</section>
@@ -3864,7 +3893,7 @@ create.select(concat("A", "B", "C"));
 										String formatting can be done efficiently in the database before returning results to your Java application. As discussed in the chapter about <reference id="sql-dialects" title="SQL dialects"/> string functions (as any function type) are mostly simulated in your database, in case they are not natively supported.
 									</p>
 									<p>
-										This is a list of numeric functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+										This is a list of numeric functions supported by jOOQ's <reference id="dsl" title="DSL"/>:
 									</p>
 									
 									<ul>
@@ -3889,7 +3918,7 @@ create.select(concat("A", "B", "C"));
 									</ul>
 									
 									<p>
-										Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+										Please refer to the <reference class="org.jooq.impl.DSL" title="DSL Javadoc"/> for more details.
 									</p>
 									
 									<h3>Regular expressions, <code>REGEXP</code>, <code>REGEXP_LIKE</code>, etc.</h3>
@@ -3900,7 +3929,7 @@ create.select(concat("A", "B", "C"));
 <java><![CDATA[create.selectFrom(BOOK).where(TITLE.likeRegex("^.*SQL.*$"));]]></java>
 
 									<p>
-										Note that the SQL standard specifies that patterns should follow the XQuery standards. In the real world, the POSIX regular expression standard is the most used one, some use Java regular expressions, and only a few ones use Perl regular expressions. jOOQ does not make any assumptions about regular expression syntax. For cross-database compatibility, please read the relevant databaes manuals carefully, to learn about the appropriate syntax. Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+										Note that the SQL standard specifies that patterns should follow the XQuery standards. In the real world, the POSIX regular expression standard is the most used one, some use Java regular expressions, and only a few ones use Perl regular expressions. jOOQ does not make any assumptions about regular expression syntax. For cross-database compatibility, please read the relevant databaes manuals carefully, to learn about the appropriate syntax. Please refer to the <reference class="org.jooq.impl.DSL" title="DSL Javadoc"/> for more details.
 									</p>
 								</content>
 								<!-- don't forget regex here! -->
@@ -3910,7 +3939,7 @@ create.select(concat("A", "B", "C"));
 								<title>Date and time functions</title>
 								<content>
 									<p>
-										This is a list of date and time functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+										This is a list of date and time functions supported by jOOQ's <reference id="dsl" title="DSL"/>:
 									</p>
 									
 									<ul>
@@ -3934,7 +3963,7 @@ create.select(concat("A", "B", "C"));
 								<title>System functions</title>
 								<content>
 									<p>
-										This is a list of system functions supported by jOOQ's <reference id="factory" title="Factory"/>:
+										This is a list of system functions supported by jOOQ's <reference id="dsl" title="DSL"/>:
 									</p>
 									<ul>
 										<li><strong><code>CURRENT_USER</code></strong>: Get current user.</li>
@@ -3946,7 +3975,7 @@ create.select(concat("A", "B", "C"));
 								<title>Aggregate functions</title>
 								<content>
 									<p>
-										Aggregate functions work just like functions, even if they have a slightly different semantics. Here are some example aggregate functions from the <reference id="factory" title="Factory"/>:
+										Aggregate functions work just like functions, even if they have a slightly different semantics. Here are some example aggregate functions from the <reference id="dsl" title="DSL"/>:
 									</p>
 
 <java><![CDATA[// Every-day, SQL standard aggregate functions
@@ -4062,7 +4091,7 @@ GROUP BY AUTHOR_ID</sql>
 										Most major RDBMS support the concept of window functions. jOOQ knows of implementations in DB2, Oracle, Postgres, SQL Server, and Sybase SQL Anywhere, and supports most of their specific syntaxes. Note, that H2 and HSQLDB have implemented <code>ROW_NUMBER()</code> functions, without true windowing support.
 									</p>
 									<p>
-										As previously discussed, any <reference class="org.jooq.AggregateFunction"/> can be transformed into a window function using the <code>over()</code> method. See the chapter about <reference id="aggregate-functions" title="aggregate functions"/> for details. In addition to those, there are also some more window functions supported by jOOQ, as declared in the <reference id="factory" title="Factory"/>:
+										As previously discussed, any <reference class="org.jooq.AggregateFunction"/> can be transformed into a window function using the <code>over()</code> method. See the chapter about <reference id="aggregate-functions" title="aggregate functions"/> for details. In addition to those, there are also some more window functions supported by jOOQ, as declared in the <reference id="dsl" title="DSL"/>:
 									</p>
 
 <java><![CDATA[// Ranking functions
@@ -4320,7 +4349,7 @@ ORDER BY 1 NULLS FIRST, 2 NULLS FIRST
 									
 									<h3>jOOQ's support for ROLLUP(), CUBE(), GROUPING SETS()</h3>
 									<p>
-										jOOQ fully supports all of these functions, as well as the utility functions <code>GROUPING()</code> and <code>GROUPING_ID()</code>, used for identifying the grouping set ID of a record. The <reference id="factory" title="Factory API"/> thus includes:
+										jOOQ fully supports all of these functions, as well as the utility functions <code>GROUPING()</code> and <code>GROUPING_ID()</code>, used for identifying the grouping set ID of a record. The <reference id="dsl" title="DSL API"/> thus includes:
 									</p>
 									
 <java><![CDATA[// The various grouping function constructors
@@ -4589,10 +4618,10 @@ create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 								<title>Tuples or row value expressions</title>
 								<content>
 									<p>
-										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the <code>VALUES</code> row value constructor allows for providing a row value expression as a source for <code>INSERT</code> data. Row value expressions can appear in various other places, though. They are supported by jOOQ as records / rows. jOOQ's <reference id="factory" title="Factory"/> allows for the construction of type-safe records up to the degree of {max-row-degree}. Higher-degree Rows are supported as well, but without any type-safety. Row types are modelled as follows:
+										According to the SQL standard, row value expressions can have a degree of more than one. This is commonly used in the <reference id="insert-statement" title="INSERT statement"/>, where the <code>VALUES</code> row value constructor allows for providing a row value expression as a source for <code>INSERT</code> data. Row value expressions can appear in various other places, though. They are supported by jOOQ as records / rows. jOOQ's <reference id="dsl" title="DSL"/> allows for the construction of type-safe records up to the degree of {max-row-degree}. Higher-degree Rows are supported as well, but without any type-safety. Row types are modelled as follows:
 									</p>
 									
-<java><![CDATA[// The Factory provides overloaded row value expression constructor methods:
+<java><![CDATA[// The DSL provides overloaded row value expression constructor methods:
 public static <T1>             Row1<T1>             row(T1 t1)                      { ... }
 public static <T1, T2>         Row2<T1, T2>         row(T1 t1, T2 t2)               { ... }
 public static <T1, T2, T3>     Row3<T1, T2, T3>     row(T1 t1, T2 t2, T3 t3)        { ... }
@@ -4688,9 +4717,9 @@ TITLE != 'Animal Farm']]></sql>
 BOOK.TITLE.notEqual("Animal Farm")]]></java>
 </code-pair>
 
-									<h3>Create conditions from the Factory</h3>
+									<h3>Create conditions from the DSL</h3>
 									<p>
-										There are a few types of conditions, that can be created statically from the <reference id="factory" title="Factory"/>. These are:
+										There are a few types of conditions, that can be created statically from the <reference id="dsl" title="DSL"/>. These are:
 									</p>
 									<ul>
 										<li><reference id="plain-sql" title="plain SQL conditions"/>, that allow you to phrase your own SQL string <reference id="conditional-expressions" title="conditional expression"/></li>
@@ -4759,7 +4788,7 @@ orExists(Select<?>)       // Combine conditions with OR. Convenience for adding 
 orNot(Condition)          // Combine conditions with OR. Convenience for adding an inverted condition to the rhs
 orNotExists(Select<?>)    // Combine conditions with OR. Convenience for adding an inverted exists predicate to the rhs
 
-not()                     // Invert a condition (synonym for Factory.not(Condition)]]></java>
+not()                     // Invert a condition (synonym for DSL.not(Condition)]]></java>
 								</content>
 							</section>
 
@@ -5270,7 +5299,7 @@ NULL                 -- [ANY] AND NULL yields NULL</sql>
 										Slightly less intuitive, yet more powerful than the previously discussed <reference id="in-predicate" title="IN predicate"/> is the <code>EXISTS</code> predicate, that can be used to form semi-joins or anti-joins. With jOOQ, the <code>EXISTS</code> predicate can be formed in various ways:
 									</p>
 									<ul>
-										<li>From the <reference id="factory" title="Factory"/>, using static methods. This is probably the most used case</li>
+										<li>From the <reference id="dsl" title="DSL"/>, using static methods. This is probably the most used case</li>
 										<li>From a <reference id="conditional-expressions" title="conditional expression"/> using <reference id="boolean-operators" title="convenience methods attached to boolean operators"/></li>
 										<li>From a <reference id="select-statement" title="SELECT statement"/> using <reference id="where-clause" title="convenience methods attached to the where clause"/>, and from other clauses</li>
 									</ul>
@@ -5291,7 +5320,7 @@ notExists(create.selectOne().from(BOOK)
 </code-pair>
 
 									<p>
-										Note that in SQL, the projection of a subselect in an <code>EXISTS</code> predicate is irrelevant. To help you write queries like the above, you can use jOOQ's selectZero() or selectOne() <reference id="factory" title="Factory"/> methods
+										Note that in SQL, the projection of a subselect in an <code>EXISTS</code> predicate is irrelevant. To help you write queries like the above, you can use jOOQ's selectZero() or selectOne() <reference id="dsl" title="DSL"/> methods
 									</p>
 									
 									<h3>Performance of IN vs. EXISTS</h3>
@@ -5377,7 +5406,7 @@ row(Date.valueOf('2010-01-01'), new DayToSecond(2)).overlaps(Date.valueOf('2010-
 								<li>Plain SQL as a <reference id="query-vs-resultquery" title="query"/></li>
 							</ul>
 
-							<h3>The Factory plain SQL API</h3>
+							<h3>The DSL plain SQL API</h3>
 							<p>
 								Plain SQL API methods are usually overloaded in three ways. Let's look at the <code>condition</code> query part constructor:
 							</p>
@@ -5394,7 +5423,7 @@ Condition condition(String sql, Object... bindings);
 Condition condition(String sql, QueryPart... parts);]]></java>
 							
 							<p>
-								Please refer to the <reference class="org.jooq.impl.Factory"/> Javadoc for more details. The following is a more complete listing of plain SQL construction methods from the Factory:
+								Please refer to the <reference class="org.jooq.impl.DSL"/> Javadoc for more details. The following is a more complete listing of plain SQL construction methods from the DSL:
 							</p>
 
 <java><![CDATA[// A condition
@@ -5540,7 +5569,7 @@ stmm.executeQuery();]]></java>
 create.select().from(BOOK).where(BOOK.ID.equal(val(5))).and(BOOK.TITLE.equal(val("Animal Farm")));]]></java>
 
 									<p>
-										Note the using of <reference class="org.jooq.impl.Factory" anchor="#val(java.lang.Object)" title="Factory.val()"/> to explicitly create an indexed bind value. You don't have to worry about that index. When the query is <reference id="sql-rendering" title="rendered"/>, each bind value will render a question mark. When the query <reference id="variable-binding" title="binds its variables"/>, each bind value will generate the appropriate bind value index. 
+										Note the using of <reference class="org.jooq.impl.DSL" anchor="#val(java.lang.Object)" title="DSL.val()"/> to explicitly create an indexed bind value. You don't have to worry about that index. When the query is <reference id="sql-rendering" title="rendered"/>, each bind value will render a question mark. When the query <reference id="variable-binding" title="binds its variables"/>, each bind value will generate the appropriate bind value index. 
 									</p>
 									
 									<h3>Extract bind values from a query</h3>
@@ -5608,7 +5637,7 @@ Query query2 = create.select().from(AUTHOR).where(LAST_NAME.equal(param("lastNam
 query2.bind("lastName", "Orwell");]]></java>
 
 									<p>
-										In order to actually render named parameter names in generated SQL, use the <reference class="org.jooq.impl.Factory" anchor="#renderNamedParams(org.jooq.QueryPart)" title="Factory.renderNamedParams()"/> method:
+										In order to actually render named parameter names in generated SQL, use the <reference class="org.jooq.DSLContext" anchor="#renderNamedParams(org.jooq.QueryPart)" title="DSLContext.renderNamedParams()"/> method:
 									</p>
 
 <code-pair>
@@ -5634,10 +5663,10 @@ WHERE LAST_NAME = :lastName]]></sql>
 									</p>
 									<ul>
 										<li>
-											By using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such an Executor.
+											By using the <reference id="custom-settings" title="Settings"/> and setting the <reference class="org.jooq.conf.StatementType"/> to STATIC_STATEMENT. This will inline all bind values for SQL statements rendered from such a Configuration.
 										</li>
 										<li>
-											By using <reference class="org.jooq.impl.Factory" anchor="#inline(java.lang.Object)" title="Factory.inline()"/> methods.
+											By using <reference class="org.jooq.impl.DSL" anchor="#inline(java.lang.Object)" title="DSL.inline()"/> methods.
 										</li>
 									</ul>
 									<p>
@@ -5657,8 +5686,8 @@ create.select()
 Settings settings = new Settings()
     .withStatementType(StatementType.STATIC_STATEMENT);
 
-// Add the settings to the executor
-Executor create = new Executor(connection, SQLDialect.ORACLE, settings);
+// Add the settings to the Configuration
+DSLContext create = DSL.using(connection, SQLDialect.ORACLE, settings);
 
 // Run queries that omit rendering schema names
 create.select()
@@ -5818,11 +5847,11 @@ public final void toSQL(RenderContext context) {
 									</p>
 	
 	
-<java><![CDATA[// Create an executor that will render "formatted" SQL
-Executor pretty = new Executor(dialect, new Settings().withRenderFormatted(true));]]></java>
+<java><![CDATA[// Create a DSLContext that will render "formatted" SQL
+DSLContext pretty = DSL.using(dialect, new Settings().withRenderFormatted(true));]]></java>
 
 									<p>
-										And then, use the above factory to render pretty-printed SQL:
+										And then, use the above DSLContext to render pretty-printed SQL:
 									</p>
 									
 <code-pair>
@@ -5964,7 +5993,7 @@ final Field<Integer> IDx2 = new CustomField<Integer>(BOOK.ID.getName(), BOOK.ID.
             context.statement().setInt(context.nextIndex(), 2);
             
             // Alternatively, you could also write:
-            // context.bind(Factory.val(2));
+            // context.bind(DSL.val(2));
         }
         catch (SQLException e) {
             throw translate(getSQL(), e);
@@ -6010,7 +6039,7 @@ create.selectFrom(BOOK).where("BOOK.ID = {0} AND TITLE = {1}", id, title);]]></j
 							    <title>Serializability</title>
 								<content>
 									<p>
-										The only transient, non-serializable element in any jOOQ object is the <reference id="executor" title="Executor's"/> underlying <reference class="java.sql.Connection"/>. When you want to execute queries after de-serialisation, or when you want to store/refresh/delete <reference id="crud-with-updatablerecords" title="Updatable Records"/>, you will have to "re-attach" them to an Executor
+										The only transient, non-serializable element in any jOOQ object is the <reference id="dsl-context" title="Configuration's"/> underlying <reference class="java.sql.Connection"/>. When you want to execute queries after de-serialisation, or when you want to store/refresh/delete <reference id="crud-with-updatablerecords" title="Updatable Records"/>, you may have to "re-attach" them to a Configuration
 									</p>
 
 <java><![CDATA[// Deserialise a SELECT statement
@@ -6021,7 +6050,7 @@ Select<?> select = (Select<?>) in.readObject();
 select.execute();
 
 // In order to execute the above select, attach it first
-Executor create = new Executor(connection, SQLDialect.ORACLE);
+DSLContext create = DSL.using(connection, SQLDialect.ORACLE);
 create.attach(select);]]></java>
 
 									<h3>Automatically attaching QueryParts</h3>
@@ -6398,7 +6427,7 @@ System.out.println("Title       : " + book.getTitle());
 System.out.println("Published in: " + book.getPublishedIn());]]></java>
 									
 									<p>
-										When you use the <reference class="org.jooq.FactoryOperations" anchor="#selectFrom(org.jooq.Table)" title="Factory.selectFrom()"/> method, jOOQ will return the record type supplied with the argument table. Beware though, that you will no longer be able to use any clause that modifies the type of your <reference id="table-expressions" title="table expression"/>. This includes: 
+										When you use the <reference class="org.jooq.DSLContext" anchor="#selectFrom(org.jooq.Table)" title="DSLContext.selectFrom()"/> method, jOOQ will return the record type supplied with the argument table. Beware though, that you will no longer be able to use any clause that modifies the type of your <reference id="table-expressions" title="table expression"/>. This includes: 
 									</p>
 									<ul>
                    						<li><reference id="select-clause" title="The SELECT clause"/></li>
@@ -6546,7 +6575,7 @@ create.selectFrom(BOOK)
 								<title>POJOs</title>
 								<content>
 									<p>
-										Fetching data in records is fine as long as your application is not really layered, or as long as you're still writing code in the DAO layer. But if you have a more advanced application architecture, you may not want to allow for jOOQ artefacts to leak into other layers. You may choose to write POJOs (Plain Old Java Objects) as your primary DTOs (Data Transfer Objects), without any dependencies on jOOQ's <reference class="org.jooq.Record"/> types, which may even potentially hold a reference to a <reference id="factory" title="Factory"/>, and thus a JDBC <reference class="java.sql.Connection"/>. Like Hibernate/JPA, jOOQ allows you to operate with POJOs. Unlike Hibernate/JPA, jOOQ does not "attach" those POJOs or create proxies with any magic in them.
+										Fetching data in records is fine as long as your application is not really layered, or as long as you're still writing code in the DAO layer. But if you have a more advanced application architecture, you may not want to allow for jOOQ artefacts to leak into other layers. You may choose to write POJOs (Plain Old Java Objects) as your primary DTOs (Data Transfer Objects), without any dependencies on jOOQ's <reference class="org.jooq.Record"/> types, which may even potentially hold a reference to a <reference id="dslcontext" title="Configuration"/>, and thus a JDBC <reference class="java.sql.Connection"/>. Like Hibernate/JPA, jOOQ allows you to operate with POJOs. Unlike Hibernate/JPA, jOOQ does not "attach" those POJOs or create proxies with any magic in them.
 									</p>
 									<p>
 										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to <reference id="codegen-pojos" title="generate POJOs"/> for you, but you're not required to use those generated POJOs. You can use your own.
@@ -6699,11 +6728,11 @@ create.executeUpdate(book);]]></java>
 										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to <reference id="codegen-daos" title="generate DAOs"/> for you. Those DAOs operate on <reference id="codegen-pojos" title="generated POJOs"/>. An example of using such a DAO is given here:
 									</p>
 
-<java><![CDATA[// Initialise an Executor
-Executor create = new Executor(connection, SQLDialect.ORACLE);
+<java><![CDATA[// Initialise a Configuration
+Configuration configuration = new DefaultConfiguration(connection, SQLDialect.ORACLE);
 
-// Initialise the DAO with the Executor
-BookDao bookDao = new BookDao(create);
+// Initialise the DAO with the Configuration
+BookDao bookDao = new BookDao(configuration);
 
 // Start using the DAO
 Book book = bookDao.findById(5);
@@ -7071,7 +7100,7 @@ Result<?> r1 = create.select(BOOK.ID, BOOK.AUTHOR_ID, BOOK.TITLE)
 								With JDBC, you have full control over your SQL statements. You can decide yourself, if you want to execute a static <reference class="java.sql.Statement"/> without bind values, or a <reference class="java.sql.PreparedStatement"/> with (or without) bind values. But you have to decide early, which way to go. And you'll have to prevent SQL injection and syntax errors manually, when inlining your bind variables.
 							</p>
 							<p>
-								With jOOQ, this is easier. As a matter of fact, it is plain simple. With jOOQ, you can just set a flag in your <reference id="executor" title="Executor's"/> <reference id="custom-settings" title="Settings"/>, and all queries produced by that executor will be executed as static statements, with all bind values inlined. An example is given here:
+								With jOOQ, this is easier. As a matter of fact, it is plain simple. With jOOQ, you can just set a flag in your <reference id="dsl-context" title="Configuration's"/> <reference id="custom-settings" title="Settings"/>, and all queries produced by that configuration will be executed as static statements, with all bind values inlined. An example is given here:
 							</p>
 							
 <code-pair>
@@ -7085,11 +7114,11 @@ Result<?> r1 = create.select(BOOK.ID, BOOK.AUTHOR_ID, BOOK.TITLE)
 -- These statements are rendered by the two factories:
 SELECT ? FROM DUAL WHERE ? = ?
 SELECT 1 FROM DUAL WHERE 1 = 1]]></sql>
-<java><![CDATA[// This Executor executes PreparedStatements
-Executor prepare = new Executor(connection, SQLDialect.ORACLE);
+<java><![CDATA[// This DSLContext executes PreparedStatements
+DSLContext prepare = DSL.using(connection, SQLDialect.ORACLE);
 
-// This Executor executes static Statements
-Executor inlined = new Executor(connection, SQLDialect.ORACLE, 
+// This DSLContext executes static Statements
+DSLContext inlined = DSL.using(connection, SQLDialect.ORACLE, 
   new Settings().withStatementType(StatementType.STATIC_STATEMENT));
   
 prepare.select(val(1)).where(val(1).equal(1)).fetch();
@@ -7106,7 +7135,7 @@ inlined.select(val(1)).where(val(1).equal(1)).fetch();]]></java>
 							
 							<h3>Inlining bind values on a per-bind-value basis</h3>
 							<p>
-								Note that you don't have to inline all your bind values at once. If you know that a bind value is not really a variable and should be inlined explicitly, you can do so by using <reference class="org.jooq.impl.Factory" anchor="#inline(Object)" title="Factory.inline()"/>, as documented in the manual's section about <reference id="inlined-parameters" title="inlined parameters"/>
+								Note that you don't have to inline all your bind values at once. If you know that a bind value is not really a variable and should be inlined explicitly, you can do so by using <reference class="org.jooq.impl.DSL" anchor="#inline(Object)" title="DSL.inline()"/>, as documented in the manual's section about <reference id="inlined-parameters" title="inlined parameters"/>
 							</p>
 						</content>
 					</section>
@@ -7250,7 +7279,7 @@ create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
 
 							<h3>Standalone calls to sequences</h3>
 							<p>
-								Instead of actually phrasing a select statement, you can also use the <reference id="executor" title="Executor's"/> convenience methods:
+								Instead of actually phrasing a select statement, you can also use the <reference id="dsl-context" title="DSLContext's"/> convenience methods:
 							</p>							
 							
 <java><![CDATA[// Fetch the next value from a sequence
@@ -7431,7 +7460,7 @@ create.select(authorExists("Paulo")).fetchOne(0, boolean.class);]]></java>
 										These member functions and procedures can simply be mapped to Java methods:
 									</p>
 
-<java><![CDATA[// Create an empty, attached UDT record from the Factory
+<java><![CDATA[// Create an empty, attached UDT record from the DSLContext
 UAuthorType author = create.newRecord(U_AUTHOR_TYPE);
 
 // Set the author ID and load the record using the LOAD procedure
@@ -7643,7 +7672,7 @@ String text = create.selectFrom(BOOK).fetch().format();</java>
 										With jOOQ, you can load this data using various parameters from the	loader API. A simple load may look like this:
 									</p>
 
-<java>Executor create = new Executor(connection, dialect);
+<java>DSLContext create = DSL.using(connection, dialect);
 
 // Load data into the AUTHOR table from an input stream
 // holding the CSV data.
@@ -7779,7 +7808,7 @@ DELETE FROM BOOK WHERE ID = 5;]]></sql>
 								<title>Simple CRUD</title>
 								<content>
 									<p>
-										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, it will generate <reference class="org.jooq.UpdatableRecord"/> implementations for every table that has a primary key. When <reference id="fetching" title="fetching"/> such a record form the database, these records are "attached" to the <reference id="factory" title="Factory" /> that created them. This means that they hold an internal reference to the same database connection that was used to fetch them. This connection is used internally by any of the following methods of the UpdatableRecord:
+										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, it will generate <reference class="org.jooq.UpdatableRecord"/> implementations for every table that has a primary key. When <reference id="fetching" title="fetching"/> such a record form the database, these records are "attached" to the <reference id="dsl-context" title="Configuration" /> that created them. This means that they hold an internal reference to the same database connection that was used to fetch them. This connection is used internally by any of the following methods of the UpdatableRecord:
 									</p>
 									
 <java><![CDATA[// Refresh a record from the database.
@@ -7858,7 +7887,7 @@ book.refresh();]]></java>
 
 									<h3>CRUD and SELECT statements</h3>
 									<p>
-										CRUD operations can be combined with regular querying, if you select records from single database tables, as explained in the manual's section about <reference id="select-statement" title="SELECT statements"/>. For this, you will need to use the <code>selectFrom()</code> method from the <reference id="executor" title="Executor"/>:
+										CRUD operations can be combined with regular querying, if you select records from single database tables, as explained in the manual's section about <reference id="select-statement" title="SELECT statements"/>. For this, you will need to use the <code>selectFrom()</code> method from the <reference id="dsl-context" title="DSLContext"/>:
 									</p>
 									
 <java><![CDATA[// Loop over records returned from a SELECT statement
@@ -8036,8 +8065,8 @@ List<BookRecord> books = author.fetchChildren(FK_BOOK_AUTHOR);]]></java>
 										The above changes to jOOQ's behaviour are transparent to the API, the only thing you need to do for it to be activated is to set the Settings flag. Here is an example illustrating optimistic locking:
 									</p>
 
-<java><![CDATA[// Properly configure the Executor
-Executor optimistic = new Executor(connection, SQLDialect.ORACLE, 
+<java><![CDATA[// Properly configure the DSLContext
+DSLContext optimistic = DSLContext.using(connection, SQLDialect.ORACLE, 
   new Settings().withExecuteWithOptimisticLocking(true));
   
 // Fetch a book two times
@@ -8069,8 +8098,8 @@ book2.store();]]></java>
 										The MODIFIED column will contain a timestamp indicating the last modification timestamp for any book in the BOOK table. If you're using jOOQ and it's <reference id="crud-with-updatablerecords" title="store() methods on UpdatableRecords"/>, jOOQ will then generate this TIMESTAMP value for you, automatically. However, instead of running an additional <reference id="for-update-clause" title="SELECT .. FOR UPDATE"/> statement prior to an UPDATE or DELETE statement, jOOQ adds a WHERE-clause to the UPDATE or DELETE statement, checking for TIMESTAMP's integrity. This can be best illustrated with an example:   
 									</p>
 									
-<java><![CDATA[// Properly configure the Executor
-Executor optimistic = new Executor(connection, SQLDialect.ORACLE, 
+<java><![CDATA[// Properly configure the DSLContext
+DSLContext optimistic = DSL.using(connection, SQLDialect.ORACLE, 
   new Settings().withExecuteWithOptimisticLocking(true));
   
 // Fetch a book two times
@@ -8106,7 +8135,7 @@ book2.store();]]></java>
 								<title>Batch execution</title>
 								<content>
 									<p>
-										When inserting, updating, deleting a lot of records, you may wish to profit from JDBC batch operations, which can be performed by jOOQ. These are available through jOOQ's <reference id="factory" title="Factory"/> as shown in the following example:
+										When inserting, updating, deleting a lot of records, you may wish to profit from JDBC batch operations, which can be performed by jOOQ. These are available through jOOQ's <reference id="dsl-context" title="DSLContext"/> as shown in the following example:
 									</p>
 									
 <java><![CDATA[// Fetch a bunch of books
@@ -8190,11 +8219,11 @@ public class BookDao extends DAOImpl<BookRecord, Book, Integer> {
 								Note that you can further subtype those pre-generated DAO classes, to add more useful DAO methods to them. Using such a DAO is simple:
 							</p>
 							
-<java><![CDATA[// Initialise an Executor
-Executor create = new Executor(connection, SQLDialect.ORACLE);
+<java><![CDATA[// Initialise an Configuration
+Configuration configuration = new DefaultConfiguration(connection, SQLDialect.ORACLE);
 
-// Initialise the DAO with the Executor
-BookDao bookDao = new BookDao(create);
+// Initialise the DAO with the Configuration
+BookDao bookDao = new BookDao(configuration);
 
 // Start using the DAO
 Book book = bookDao.findById(5);
@@ -8252,7 +8281,7 @@ bookDao.delete(book);]]></java>
 						<title>ExecuteListeners</title>
 						<content>
 							<p>
-								The <reference id="executor" title="Executor class"/> lets you specify a list of <reference class="org.jooq.ExecuteListener"/> instances. The ExecuteListener is essentially an event listener for Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a base type for loggers, debuggers, profilers, data collectors, triggers, etc. Advanced ExecuteListeners can also provide custom implementations of Connection, PreparedStatement and ResultSet to jOOQ in apropriate methods.
+								The <reference id="dsl-context" title="Executor class"/> lets you specify a list of <reference class="org.jooq.ExecuteListener"/> instances. The ExecuteListener is essentially an event listener for Query, Routine, or ResultSet render, prepare, bind, execute, fetch steps. It is a base type for loggers, debuggers, profilers, data collectors, triggers, etc. Advanced ExecuteListeners can also provide custom implementations of Connection, PreparedStatement and ResultSet to jOOQ in apropriate methods.
 							</p>
 							<p>
 								For convenience and better backwards-compatibility, consider extending <reference class="org.jooq.impl.DefaultExecuteListener"/> instead of implementing this interface.
@@ -8286,7 +8315,7 @@ public class StatisticsListener extends DefaultExecuteListener {
 								Now, configure jOOQ's runtime to load your listener
 							</p>
 
-<java><![CDATA[Executor create = new Executor(connection, dialect);
+<java><![CDATA[// TODO Fix me!! DSLContext create = DSL.using(connection, dialect);
 create.getExecuteListeners().add(new StatisticsListener());]]></java>
 
 							<p>
@@ -8321,10 +8350,10 @@ for (ExecuteType type : ExecuteType.values()) {
 								The following depicts an example of a custom ExecuteListener, which pretty-prints all queries being executed by jOOQ to stdout:
 							</p>
 
-<java><![CDATA[import org.jooq.ExecuteContext;
+<java><![CDATA[import org.jooq.DSLContext;
+import org.jooq.ExecuteContext;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DefaultExecuteListener;
-import org.jooq.impl.Executor;
 import org.jooq.tools.StringUtils;
 
 public class PrettyPrinter extends DefaultExecuteListener {
@@ -8335,21 +8364,21 @@ public class PrettyPrinter extends DefaultExecuteListener {
     @Override
     public void executeStart(ExecuteContext ctx) {
 
-        // Create a new Executor for logging rendering purposes
-        // This Executor doesn't need a connection, only the SQLDialect...
-        Executor executor = new Executor(ctx.getDialect(), 
+        // Create a new DSLContext for logging rendering purposes
+        // This DSLContext doesn't need a connection, only the SQLDialect...
+        DSLContext create = DSL.using(ctx.dialect(), 
         
         // ... and the flag for pretty-printing
         	new Settings().withRenderFormatted(true));
 
         // If we're executing a query
         if (ctx.query() != null) {
-            System.out.println(executor.renderInlined(ctx.query()));
+            System.out.println(create.renderInlined(ctx.query()));
         }
         
         // If we're executing a routine
         else if (ctx.routine() != null) {
-            System.out.println(executor.renderInlined(ctx.routine()));
+            System.out.println(create.renderInlined(ctx.routine()));
         }
         
         // If we're executing anything else (e.g. plain SQL)
@@ -8377,7 +8406,7 @@ public class PrettyPrinter extends DefaultExecuteListener {
 						<title>Logging</title>
 						<content>
 							<p>
-								jOOQ logs all SQL queries and fetched result sets to its internal DEBUG logger, which is implemented as an <reference id="execute-listeners" title="execute listener"/>. By default, execute logging is activated in the <reference id="custom-settings" title="jOOQ Factory Settings"/>. In order to see any DEBUG log output, put either log4j or slf4j on jOOQ's classpath along with their respective configuration. A sample log4j configuration can be seen here:
+								jOOQ logs all SQL queries and fetched result sets to its internal DEBUG logger, which is implemented as an <reference id="execute-listeners" title="execute listener"/>. By default, execute logging is activated in the <reference id="custom-settings" title="jOOQ Settings"/>. In order to see any DEBUG log output, put either log4j or slf4j on jOOQ's classpath along with their respective configuration. A sample log4j configuration can be seen here:
 							</p>
 							
 <xml><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -8438,10 +8467,10 @@ Finishing                : Total: 4.814ms, +3.375ms
 						<title>Performance considerations</title>
 						<content>
 							<p>
-								Many users may have switched from higher-level abstractions such as Hibernate to jOOQ, because of Hibernate's hard-to-manage performance, when it comes to large database schemas and complex second-level caching strategies. jOOQ is not a lightweight database abstraction framework, and it comes with its own overhead. Please be sure to consider the following points:
+								Many users may have switched from higher-level abstractions such as Hibernate to jOOQ, because of Hibernate's difficult-to-manage performance, when it comes to large database schemas and complex second-level caching strategies. However, jOOQ itself is not a lightweight database abstraction framework, and it comes with its own overhead. Please be sure to consider the following points:
 							</p>
 							<ul>
-								<li>It takes some time to construct jOOQ queries. If you can reuse the same queries, you might cache them. Beware of thread-safety issues, though, as jOOQ's <reference id="executor" title="Executor"/> is not threadsafe, and queries are "attached" to their creating Executor</li>
+								<li>It takes some time to construct jOOQ queries. If you can reuse the same queries, you might cache them. Beware of thread-safety issues, though, as jOOQ's <reference id="dsl-context" title="Configuration"/> is not necessarily threadsafe, and queries are "attached" to their creating DSLContext</li>
 								<li>It takes some time to render SQL strings. Internally, jOOQ reuses the same <reference class="java.lang.StringBuilder"/> for the complete query, but some rendering elements may take their time. You could, of course, cache SQL generated by jOOQ and prepare your own <reference class="java.sql.PreparedStatement"/> objects</li>
 								<li>It takes some time to bind values to prepared statements. jOOQ does not keep any open prepared statements, internally. Use a sophisticated connection pool, that will cache prepared statements and inject them into jOOQ through the standard JDBC API</li>
 								<li>It takes some time to fetch results. By default, jOOQ will always fetch the complete <reference class="java.sql.ResultSet"/> into memory. Use <reference id="lazy-fetching" title="lazy fetching"/> to prevent that, and scroll over an open underlying database cursor</li>
@@ -9288,8 +9317,8 @@ public class Book implements java.io.Serializable
         super(BOOK, Book.class);
     }
 
-    public BookDao(Executor executor) {
-        super(BOOK, Book.class, executor);
+    public BookDao(Configuration configuration) {
+        super(BOOK, Book.class, configuration);
     }
 
     // Every column generates at least one fetch method
@@ -9569,17 +9598,17 @@ create.selectFrom(AUTHOR)
 							
 							<h3>Using jOOQ's own mock API</h3>
 							<p>
-								This work is greatly simplified, when using jOOQ's own mock API. The <code>org.jooq.tools.jdbc</code> package contains all the essential implementations for both JDBC 4.0 and 4.1, which are needed to mock JDBC for jOOQ. In order to write mock tests, provide the jOOQ <reference id="executor" title="Executor"/> with a <reference class="org.jooq.tools.jdbc.MockConnection" title="MockConnection"/>, and implement the <reference class="org.jooq.tools.jdbc.MockDataProvider" title="MockDataProvider"/>:
+								This work is greatly simplified, when using jOOQ's own mock API. The <code>org.jooq.tools.jdbc</code> package contains all the essential implementations for both JDBC 4.0 and 4.1, which are needed to mock JDBC for jOOQ. In order to write mock tests, provide the jOOQ <reference id="dsl-context" title="Configuration"/> with a <reference class="org.jooq.tools.jdbc.MockConnection" title="MockConnection"/>, and implement the <reference class="org.jooq.tools.jdbc.MockDataProvider" title="MockDataProvider"/>:
 							</p>
 							
 <java><![CDATA[// Initialise your data provider (implementation further down):
 MockDataProvider provider = new MyProvider();
 MockConnection connection = new MockConnection(provider);
 
-// Pass the mock connection to a jOOQ executor:
-Executor create = new Executor(connection, SQLDialect.ORACLE);
+// Pass the mock connection to a jOOQ DSLContext:
+DSLContext create = DSL.using(connection, SQLDialect.ORACLE);
 
-// Execute queries transparently, with the above executor:
+// Execute queries transparently, with the above DSLContext:
 Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetch();]]></java>
 
                             <p>
@@ -9609,8 +9638,8 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetc
     @Override
     public MockResult[] execute(MockExecuteContext ctx) throws SQLException {
 
-        // You might need an executor to create org.jooq.Result and org.jooq.Record objects
-        Executor create = new Executor(SQLDialect.ORACLE);
+        // You might need a DSLContext to create org.jooq.Result and org.jooq.Record objects
+        DSLContext create = DSL.using(SQLDialect.ORACLE);
         MockResult[] mock = new MockResult[1];
         
         // The execute context contains SQL string(s), bind values, and other meta-data
@@ -9698,10 +9727,10 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetc
 							</ul>
 
 							<p>
-								Both modes will require that you set the <reference class="org.jooq.debug.impl.DebugListener"/> in the Executor's configuration:
+								Both modes will require that you set the <reference class="org.jooq.debug.impl.DebugListener"/> in the Configuration:
 							</p>
 
-<java><![CDATA[Executor executor = new Executor(connection, dialect);
+<java><![CDATA[// TODO fixme!! DSLContext create = DSLContext.using(connection, dialect);
 executor.getExecuteListeners().add(new org.jooq.debug.impl.DebugListener());]]></java>
 
 							<h3>In-process mode</h3>
@@ -10135,7 +10164,7 @@ for (Record record : create().select(
 							</p>
 							<ul>
 								<li>[N] in Row[N] has been raised from 8 to 22. This means that existing row value expressions with degree >= 9 are now type-safe</li>
-								<li>Subqueries returned from <code>Factory.select(...)</code> now implement <code>Select&lt;Record[N]>, not Select&lt;Record></code></li>
+								<li>Subqueries returned from <code>DSL.select(...)</code> now implement <code>Select&lt;Record[N]>, not Select&lt;Record></code></li>
 								<li><code>IN</code> predicates and comparison predicates taking subselects changed incompatibly</li>
 								<li><code>INSERT</code> and <code>MERGE</code> statements now take typesafe <code>VALUES()</code> clauses</li>
 							</ul>
@@ -10162,18 +10191,18 @@ Result<?> result = create.select(BOOK.TITLE, BOOK.ID).from(BOOK).fetch();]]></ja
 							    The duplication of the SELECT API is no longer useful, now that SelectQuery and SelectXXXStep are generic.
 							</p>
 							
-							<h3>Query building vs. query execution</h3>
+							<h3>Factory was split into DSL (query building) and DSLContext (query execution)</h3>
 							<p>
 								The pre-existing Factory class has been split into two parts:
 							</p>
 							
 							<ol>
-								<li><strong>The Factory</strong>: This class contains only static factory methods. All QueryParts constructed from this class are "unattached", i.e. queries that are constructed through a Factory cannot be executed immediately. This is useful for subqueries.</li>
-								<li><strong>The Executor</strong>: This class holds a reference to a Configuration and can construct executable ("attached") QueryParts.</li>
+								<li><strong>The DSL</strong>: This class contains only static factory methods. All QueryParts constructed from this class are "unattached", i.e. queries that are constructed through DSL cannot be executed immediately. This is useful for subqueries.<br/>The DSL class corresponds to the static part of the jOOQ 2.x Factory type</li>
+								<li><strong>The DSLContext</strong>: This type holds a reference to a Configuration and can construct executable ("attached") QueryParts.<br/>The DSLContext type corresponds to the non-static part of the jOOQ 2.x Factory / FactoryOperations type.</li>
 							</ol>
 							
 							<p>
-								The FactoryOperations interface has been removed entirely. An example:
+								The FactoryOperations interface has been renamed to DSLContext. An example:
 							</p>
 							
 <java><![CDATA[// jOOQ 2.6, check if there are any books
@@ -10184,10 +10213,10 @@ create.selectOne()
       ).fetch();                // Execute the "attached" query
 
 // jOOQ 3.0
-Executor create = new Executor(connection, dialect);
+DSLContext create = DSL.using(connection, dialect);
 create.selectOne()
       .whereExists(
-        selectFrom(BOOK)        // Create a static subselect from the Factory
+        selectFrom(BOOK)        // Create a static subselect from the DSL
       ).fetch();                // Execute the "attached" query]]></java>							
 							
 							<h3>Quantified comparison predicates</h3>
@@ -10217,10 +10246,10 @@ Field<?>   field1a = Factory.rollup(...); // OK
 Field<?>   field2a = Factory.one();       // OK
 
 // jOOQ 3.0
-GroupField field1b = Factory.rollup(...); // OK
-Field<?>   field1c = Factory.rollup(...); // Compilation error
-GroupField field2b = Factory.one();       // OK
-Field<?>   field2c = Factory.one();       // OK]]></java>
+GroupField field1b = DSL.rollup(...); // OK
+Field<?>   field1c = DSL.rollup(...); // Compilation error
+GroupField field2b = DSL.one();       // OK
+Field<?>   field2c = DSL.one();       // OK]]></java>
 							
 							<h3>NULL predicate</h3>
 							<p>
@@ -10249,10 +10278,10 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 							
 							<h3>Configuration</h3>
 							<p>
-								<code>Executor</code>, <code>ExecuteContext</code>, <code>RenderContext</code>, <code>BindContext</code> no longer extend <code>Configuration</code> for "convenience". From jOOQ 3.0 onwards, composition is chosen over inheritance as these objects are not really configurations. Most importantly
+								<code>DSLContext</code>, <code>ExecuteContext</code>, <code>RenderContext</code>, <code>BindContext</code> no longer extend <code>Configuration</code> for "convenience". From jOOQ 3.0 onwards, composition is chosen over inheritance as these objects are not really configurations. Most importantly
 							</p>
 							<ul>
-								<li><code>Executor</code> is only a DSL entry point for constructing "attached" QueryParts</li>
+								<li><code>DSLContext</code> is only a DSL entry point for constructing "attached" QueryParts</li>
 								<li><code>ExecuteContext</code> has a well-defined lifecycle, tied to that of a single query execution</li>
 								<li><code>RenderContext</code> has a well-defined lifecycle, tied to that of a single rendering operation</li>
 								<li><code>BindContext</code> has a well-defined lifecycle, tied to that of a single variable binding operation</li>
@@ -10280,12 +10309,12 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 							</p>
 							
 							<ul>
-								<li>Connection-related JDBC wrapper utility methods (commit, rollback, etc) have been moved to the new DefaultConnectionProvider. They're no longer available from the Factory/Executor. This had been confusing to some users who called upon these methods while operating in pool DataSource mode.</li>
+								<li>Connection-related JDBC wrapper utility methods (commit, rollback, etc) have been moved to the new DefaultConnectionProvider. They're no longer available from the DSLContext. This had been confusing to some users who called upon these methods while operating in pool DataSource mode.</li>
 							</ul>
 							
 							<h3>ExecuteListeners</h3>
 							<p>
-								ExecuteListeners can no longer be configured via Settings. Instead they have to be injected into the Configuration (e.g. the Executor). This resolves many class loader issues that were encountered before. It also helps listener implementations control their lifecycles themselves.
+								ExecuteListeners can no longer be configured via Settings. Instead they have to be injected into the Configuration. This resolves many class loader issues that were encountered before. It also helps listener implementations control their lifecycles themselves.
 							</p>
 							
 							<h3>Data type API</h3>
@@ -10318,7 +10347,7 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 								<li>The code generation configuration no longer accepts comma-separated regular expressions. Use the regex pipe | instead.</li>
 								<li>The code generation configuration can no longer be loaded from .properties files. Only XML configurations are supported.</li>
 								<li>The master data type feature is no longer supported. This feature was unlikely to behave exactly as users expected. It is better if users write their own code generators to generate master enum data types from their database tables. jOOQ's enum mapping and converter features sufficiently cover interacting with such user-defined types.</li>
-								<li>The Factory subtypes are no longer instanciable. As Factory now only contains static methods, subclassing is no longer useful. There are still dialect-specific Factories providing static methods for dialect-specific functions. But the code-generator no longer generates a schema-specific Factory</li>
+								<li>The DSL subtypes are no longer instanciable. As DSL now only contains static methods, subclassing is no longer useful. There are still dialect-specific DSL types providing static methods for dialect-specific functions. But the code-generator no longer generates a schema-specific DSL</li>
 								<li>The concept of a "main key" is no longer supported. The code generator produces UpdatableRecords only if the underlying table has a PRIMARY KEY. The reason for this removal is the fact that "main keys" are not reliable enough. They were chosen arbitrarily among UNIQUE KEYs.</li>
 								<li>The UpdatableTable type has been removed. While adding significant complexity to the type hierarchy, this type adds not much value over a simple <code>Table.getPrimaryKey() != null</code> check.</li>
 							</ul>
@@ -10349,13 +10378,13 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 					  Degree
 					  Dialect
 					  Domain Specific language (internal / external)
+                      DSL
+                      DSLContext
 					  Execute
 					  Execute listener
 					  Execution lifecycle
-					  Executor
 					  Export
 					  Expression
-					  Factory
 					  Fetch
 					  Field
 					  Function

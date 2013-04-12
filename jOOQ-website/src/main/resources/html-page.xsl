@@ -73,7 +73,13 @@ function printContent() {
 		<xsl:apply-templates select="/manual/section" mode="toc"/>
 
 		<xsl:for-each select="/manual/section//section">
+            <xsl:variable name="id" select="@id"/>
+            
 			<h2 id="{@id}">
+                <xsl:for-each select="//redirect[@redirect-to = $id]">
+                    <a id="{@id}" name="{@id}"/>
+                </xsl:for-each>
+                
 				<a name="{@id}" href="#{@id}">#</a>
 				<xsl:text> </xsl:text>
 				<xsl:apply-templates select="." mode="chapter-number"/>

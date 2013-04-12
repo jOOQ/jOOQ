@@ -41,6 +41,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -62,6 +64,7 @@ import org.apache.fop.apps.MimeConstants;
 import org.jooq.Constants;
 import org.joox.Context;
 import org.joox.Each;
+import org.joox.Filter;
 import org.joox.Match;
 
 /**
@@ -184,8 +187,16 @@ public class Transform {
         }
 
         int blanks = 0, completed = 0;
-        for (Match section : manual.find("section").each()) {
-            Match sections = section.add(section.parents("section")).reverse();
+
+        Filter f = new Filter() {
+            @Override
+            public boolean filter(Context arg0) {
+                return Arrays.asList("section", "redirect").contains($(arg0.element()).tag());
+            }
+        };
+
+        for (Match section : manual.xpath("//section | //redirect").each()) {
+            Match sections = section.add(section.parents(f)).reverse();
 
             String path = path(StringUtils.join(sections.ids(), "/"));
             String relativePath = relative(path);
@@ -193,31 +204,48 @@ public class Transform {
             File dir = new File(path);
             dir.mkdirs();
 
-            PrintStream stream = System.out;
-            boolean blank = StringUtils.isBlank(section.find("content").text());
-            if (blank) {
-                blanks++;
-                stream = System.err;
-            }
-            else {
-                completed++;
-            }
-
-            stream.print("[");
-            stream.print(blank ? " " : "x");
-            stream.println("] Transforming section " + path);
-
             File file = new File(dir, "index.php");
             file.delete();
             FileOutputStream out = new FileOutputStream(file);
 
-            Source source = new DOMSource(manual.document());
-            Result target = new StreamResult(out);
+            // A redirection section
+            if ("redirect".equals(section.tag())) {
+                Match redirectSection = manual.xpath("//section[@id='" + section.attr("redirect-to") + "']");
+                Match redirectSections = redirectSection.add(redirectSection.parents("section")).reverse();
 
-            transformer.setParameter("sectionID", section.id());
-            transformer.setParameter("relativePath", relativePath);
-            transformer.setParameter("root", root);
-            transformer.transform(source, target);
+                String redirectPath = path(StringUtils.join(redirectSections.ids(), "/"));
+
+                PrintWriter o = new PrintWriter(out);
+                o.println("<?php header('Location: " + relativePath + redirectPath + "'); ?>");
+                o.flush();
+
+                System.out.println("[r] Redirecting section  " + path + " to " + redirectPath);
+            }
+
+            // A regular section (without redirection)
+            else {
+                PrintStream stream = System.out;
+                boolean blank = StringUtils.isBlank(section.find("content").text());
+                if (blank) {
+                    blanks++;
+                    stream = System.err;
+                }
+                else {
+                    completed++;
+                }
+
+                stream.print("[");
+                stream.print(blank ? " " : "x");
+                stream.println("] Transforming section " + path);
+
+                Source source = new DOMSource(manual.document());
+                Result target = new StreamResult(out);
+
+                transformer.setParameter("sectionID", section.id());
+                transformer.setParameter("relativePath", relativePath);
+                transformer.setParameter("root", root);
+                transformer.transform(source, target);
+            }
 
             out.close();
         }

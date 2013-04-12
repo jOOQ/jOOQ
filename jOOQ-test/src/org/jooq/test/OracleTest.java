@@ -1329,6 +1329,19 @@ public class OracleTest extends jOOQAbstractTest<
                 .fetch(0, Integer.class);
 
         assertEquals(asList(3, 3, 3, 3), result2);
+
+        // [#2393] Check if fully qualifying the aggregate function works, too
+        DSLContext create = DSL.using(getConnectionMultiSchema(), SQLDialect.ORACLE);
+
+        List<Integer> result3 =
+        create  .select(secondMax(TBook_ID()))
+                .from(TBook())
+                .groupBy(TBook_AUTHOR_ID())
+                .orderBy(TBook_AUTHOR_ID().asc())
+                .fetch(0, Integer.class);
+
+        assertEquals(asList(1, 3), result3);
+
     }
 
     @Test

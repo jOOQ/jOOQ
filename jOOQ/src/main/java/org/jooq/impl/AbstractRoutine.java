@@ -652,7 +652,17 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             i++;
         }
 
-        return (AggregateFunction<T>) function(getName(), type, array);
+        // [#2393] Fully qualify custom aggregate functions.
+        // TODO: Merge this code into RoutineField! 
+        List<String> names = new ArrayList<String>();
+        if (schema != null) {
+            names.add(schema.getName());
+        }
+        if (pkg != null) {
+            names.add(pkg.getName());
+        }
+        names.add(name);
+        return (AggregateFunction<T>) function(DSL.name(names.toArray(new String[names.size()])), type, array);
     }
 
     /**

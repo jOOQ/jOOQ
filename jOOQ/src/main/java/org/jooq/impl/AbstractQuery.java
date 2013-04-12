@@ -290,8 +290,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             }
             finally {
 
-                // ResultQuery.fetchLazy() needs to keep open resources
-                if (!keepResult()) {
+                // [#2385] Successful fetchLazy() needs to keep open resources
+                if (!keepResult() || ctx.exception() != null) {
                     Utils.safeClose(listener, ctx, keepStatement());
                 }
 

@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = 456270161;
+	private static final long serialVersionUID = 1155873001;
 
 	/**
 	 * The singleton instance of <code>DBA.t_exotic_types</code>

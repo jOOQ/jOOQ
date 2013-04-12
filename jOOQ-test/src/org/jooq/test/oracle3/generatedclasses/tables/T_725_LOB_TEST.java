@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class T_725_LOB_TEST extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_725_LOB_TEST> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -134455687;
+	private static final long serialVersionUID = 774504999;
 
 	/**
 	 * The singleton instance of <code>T_725_LOB_TEST</code>

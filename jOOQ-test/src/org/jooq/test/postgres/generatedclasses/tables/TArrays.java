@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1058178513;
+	private static final long serialVersionUID = 319889473;
 
 	/**
 	 * The singleton instance of <code>public.t_arrays</code>

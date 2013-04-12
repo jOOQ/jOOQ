@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1758533497;
+	private static final long serialVersionUID = 1704947591;
 
 	/**
 	 * The singleton instance of <code>public.t_language</code>

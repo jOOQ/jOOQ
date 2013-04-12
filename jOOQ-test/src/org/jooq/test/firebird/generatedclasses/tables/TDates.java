@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1375474415;
+	private static final long serialVersionUID = -859335573;
 
 	/**
 	 * The singleton instance of <code>T_DATES</code>

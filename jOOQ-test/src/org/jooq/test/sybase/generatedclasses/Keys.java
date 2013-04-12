@@ -66,11 +66,6 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_71Record> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2 = ForeignKeys0.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_2;
 	public static final org.jooq.ForeignKey<org.jooq.test.sybase.generatedclasses.tables.records.XTestCase_2025Record, org.jooq.test.sybase.generatedclasses.tables.records.XUnusedRecord> X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3 = ForeignKeys0.X_TEST_CASE_2025__FK_X_TEST_CASE_2025_3;
 
-	/**
-	 * No further instances allowed
-	 */
-	private Keys() {}
-
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------

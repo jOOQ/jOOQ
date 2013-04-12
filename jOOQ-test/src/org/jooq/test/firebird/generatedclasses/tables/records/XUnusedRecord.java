@@ -13,7 +13,7 @@ package org.jooq.test.firebird.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.firebird.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.lang.Long, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal, java.lang.Integer, java.lang.Integer>, org.jooq.test.firebird.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 1216436444;
+	private static final long serialVersionUID = 700664839;
 
 	/**
 	 * Setter for <code>X_UNUSED.ID</code>. 
@@ -124,7 +124,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>X_UNUSED.CONFIGURATION</code>. 
 	 */
 	@Override
-	public void setConfiguration_(java.lang.Integer value) {
+	public void setConfiguration(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
@@ -133,7 +133,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@javax.persistence.Column(name = "CONFIGURATION", length = 4)
 	@Override
-	public java.lang.Integer getConfiguration_() {
+	public java.lang.Integer getConfiguration() {
 		return (java.lang.Integer) getValue(6);
 	}
 
@@ -504,7 +504,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value7() {
-		return getConfiguration_();
+		return getConfiguration();
 	}
 
 	/**
@@ -594,7 +594,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 		setIdRef(from.getIdRef());
 		setClass_(from.getClass_());
 		setFields(from.getFields());
-		setConfiguration_(from.getConfiguration_());
+		setConfiguration(from.getConfiguration());
 		setUDT(from.getUDT());
 		setMetaData(from.getMetaData());
 		setType0(from.getType0());

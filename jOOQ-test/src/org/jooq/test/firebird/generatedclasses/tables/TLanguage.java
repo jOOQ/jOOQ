@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1618116990;
+	private static final long serialVersionUID = -837764772;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>

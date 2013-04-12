@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -293765288;
+	private static final long serialVersionUID = -212651508;
 
 	/**
 	 * The singleton instance of <code>DBA.t_identity_pk</code>

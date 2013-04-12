@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class T_ARRAYS extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_ARRAYS> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 2095212152;
+	private static final long serialVersionUID = -2045627520;
 
 	/**
 	 * The singleton instance of <code>T_ARRAYS</code>

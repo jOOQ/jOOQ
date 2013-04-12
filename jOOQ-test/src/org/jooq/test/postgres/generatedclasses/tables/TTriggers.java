@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 1457554322;
+	private static final long serialVersionUID = 1604173830;
 
 	/**
 	 * The singleton instance of <code>public.t_triggers</code>

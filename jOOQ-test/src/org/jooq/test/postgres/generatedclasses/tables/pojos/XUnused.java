@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnused implements java.io.Serializable {
 
-	private static final long serialVersionUID = -1294856127;
+	private static final long serialVersionUID = 1836870664;
 
 	private final java.lang.Integer    id;
 	private final java.lang.String     name;
@@ -85,7 +85,7 @@ public class XUnused implements java.io.Serializable {
 		return this.fields;
 	}
 
-	public java.lang.Integer getConfiguration_() {
+	public java.lang.Integer getConfiguration() {
 		return this.configuration;
 	}
 

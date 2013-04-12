@@ -59,11 +59,6 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.X_TEST_CASE_85, org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> FK_X_TEST_CASE_85 = ForeignKeys0.FK_X_TEST_CASE_85;
 	public static final org.jooq.ForeignKey<org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED, org.jooq.test.oracle3.generatedclasses.tables.records.X_UNUSED> FK_X_UNUSED_SELF = ForeignKeys0.FK_X_UNUSED_SELF;
 
-	/**
-	 * No further instances allowed
-	 */
-	private Keys() {}
-
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------

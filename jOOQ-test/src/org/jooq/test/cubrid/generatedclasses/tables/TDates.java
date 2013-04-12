@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -2070658832;
+	private static final long serialVersionUID = 903726288;
 
 	/**
 	 * The singleton instance of <code>t_dates</code>

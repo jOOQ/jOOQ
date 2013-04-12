@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -2141884759;
+	private static final long serialVersionUID = 1855523683;
 
 	/**
 	 * The singleton instance of <code>test2.t_booleans</code>

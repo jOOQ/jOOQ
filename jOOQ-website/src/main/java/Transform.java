@@ -219,7 +219,7 @@ public class Transform {
                 o.println("<?php header('Location: " + relativePath + redirectPath + "'); ?>");
                 o.flush();
 
-                System.out.println("[r] Redirecting section  " + path + " to " + redirectPath);
+                System.out.println("[r] Redirecting  section " + path + " to " + redirectPath);
             }
 
             // A regular section (without redirection)

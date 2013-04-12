@@ -66,6 +66,7 @@ import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.SettingsTools;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -207,11 +208,139 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testExecuteListenerException() throws Exception {
+        ExecuteListenerEvents events = new ExecuteListenerEvents();
+        DSLContext create = create(events);
+
+        try {
+            create.fetch("invalid sql");
+            fail();
+        }
+        catch (DataAccessException e) {
+
+            // Some databases may fail at "prepareStart", some may fail at "executeStart"
+            // [#2385] But all should terminate on "exception" and "end"
+            assertEquals("exception", events.events.get(events.events.size() - 2));
+            assertEquals("end", events.events.get(events.events.size() - 1));
+        }
+
+        events.events.clear();
+
+        try {
+            create.fetchLazy("invalid sql");
+            fail();
+        }
+        catch (DataAccessException e) {
+
+            // Some databases may fail at "prepareStart", some may fail at "executeStart"
+            // [#2385] But all should terminate on "exception" and "end"
+            assertEquals("exception", events.events.get(events.events.size() - 2));
+            assertEquals("end", events.events.get(events.events.size() - 1));
+        }
+    }
+
+    public static class ExecuteListenerEvents implements ExecuteListener {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -731317256251936182L;
+
+        public final List<String> events = new ArrayList<String>();
+
+        @Override
+        public void start(ExecuteContext ctx) {
+            events.add("start");
+        }
+
+        @Override
+        public void renderStart(ExecuteContext ctx) {
+            events.add("renderStart");
+        }
+
+        @Override
+        public void renderEnd(ExecuteContext ctx) {
+            events.add("renderEnd");
+        }
+
+        @Override
+        public void prepareStart(ExecuteContext ctx) {
+            events.add("prepareStart");
+        }
+
+        @Override
+        public void prepareEnd(ExecuteContext ctx) {
+            events.add("prepareEnd");
+        }
+
+        @Override
+        public void bindStart(ExecuteContext ctx) {
+            events.add("bindStart");
+        }
+
+        @Override
+        public void bindEnd(ExecuteContext ctx) {
+            events.add("bindEnd");
+        }
+
+        @Override
+        public void executeStart(ExecuteContext ctx) {
+            events.add("executeStart");
+        }
+
+        @Override
+        public void executeEnd(ExecuteContext ctx) {
+            events.add("executeEnd");
+        }
+
+        @Override
+        public void fetchStart(ExecuteContext ctx) {
+            events.add("fetchStart");
+        }
+
+        @Override
+        public void resultStart(ExecuteContext ctx) {
+            events.add("resultStart");
+        }
+
+        @Override
+        public void recordStart(ExecuteContext ctx) {
+            events.add("recordStart");
+        }
+
+        @Override
+        public void recordEnd(ExecuteContext ctx) {
+            events.add("recordEnd");
+        }
+
+        @Override
+        public void resultEnd(ExecuteContext ctx) {
+            events.add("resultEnd");
+        }
+
+        @Override
+        public void fetchEnd(ExecuteContext ctx) {
+            events.add("fetchEnd");
+        }
+
+        @Override
+        public void end(ExecuteContext ctx) {
+            events.add("end");
+        }
+
+        @Override
+        public void exception(ExecuteContext ctx) {
+            events.add("exception");
+        }
+    }
+
+    @Test
     public void testExecuteListenerCustomException() throws Exception {
         DSLContext create = create(new CustomExceptionListener());
 
         try {
             create.fetch("invalid sql");
+            fail();
         }
         catch (E e) {
             assertEquals("ERROR", e.getMessage());

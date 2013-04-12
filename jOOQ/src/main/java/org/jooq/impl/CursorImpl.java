@@ -1291,8 +1291,9 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 throw ctx.exception();
             }
 
-            // Conveniently close cursors and underlying objects after the last
-            // Record was fetched
+            // [#1868] [#2373] [#2385] This calls through to Utils.safeClose()
+            // if necessary, lazy-terminating the ExecuteListener lifecycle if
+            // the result is not eager-fetched.
             if (record == null) {
                 CursorImpl.this.close();
             }

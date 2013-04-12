@@ -21,6 +21,7 @@ public class Keys {
 	// UNIQUE and PRIMARY KEY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord> DATE_AS_TIMESTAMP_PK_T_DATES = UniqueKeys0.DATE_AS_TIMESTAMP_PK_T_DATES;
 	public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> DATE_AS_TIMESTAMP_PK_T_976 = UniqueKeys0.DATE_AS_TIMESTAMP_PK_T_976;
 
 	// -------------------------------------------------------------------------
@@ -33,6 +34,7 @@ public class Keys {
 	// -------------------------------------------------------------------------
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
+		public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord> DATE_AS_TIMESTAMP_PK_T_DATES = createUniqueKey(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampTDates.DATE_AS_TIMESTAMP_T_DATES, org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampTDates.DATE_AS_TIMESTAMP_T_DATES.DATE_AS_TIMESTAMP_ID);
 		public static final org.jooq.UniqueKey<org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record> DATE_AS_TIMESTAMP_PK_T_976 = createUniqueKey(org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976, org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976.DATE_AS_TIMESTAMP_ID);
 	}
 }

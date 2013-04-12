@@ -10360,7 +10360,8 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 								<li>The DSL subtypes are no longer instanciable. As DSL now only contains static methods, subclassing is no longer useful. There are still dialect-specific DSL types providing static methods for dialect-specific functions. But the code-generator no longer generates a schema-specific DSL</li>
 								<li>The concept of a "main key" is no longer supported. The code generator produces UpdatableRecords only if the underlying table has a PRIMARY KEY. The reason for this removal is the fact that "main keys" are not reliable enough. They were chosen arbitrarily among UNIQUE KEYs.</li>
 								<li>The UpdatableTable type has been removed. While adding significant complexity to the type hierarchy, this type adds not much value over a simple <code>Table.getPrimaryKey() != null</code> check.</li>
-							</ul>
+							    <li>The <code>USE</code> statement support has been removed from jOOQ. Its behaviour was ill-defined, while it didn't work the same way (or didn't work at all) in some databases.</li>
+                            </ul>
 						</content>
 					</section>
 

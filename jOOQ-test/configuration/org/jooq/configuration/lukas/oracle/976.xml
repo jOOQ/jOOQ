@@ -10,19 +10,35 @@
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>
         <strategy>
-        	<name>org.jooq.configuration.lukas.oracle.Oracle2Strategy</name>
+            <name>org.jooq.configuration.lukas.oracle.Oracle2Strategy</name>
         </strategy>
         <database>
             <name>org.jooq.util.oracle.OracleDatabase</name>
-            <includes>.*976.*</includes>
+            <includes>.*976.*|T_DATES</includes>
             <excludes></excludes>
             <schemata>
                 <schema>
-                	<inputSchema>TEST</inputSchema>
+                    <inputSchema>TEST</inputSchema>
                 </schema>
             </schemata>
             <dateAsTimestamp>true</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
+
+            <!-- [#2404] Try combining forced types with dateAsTimestamp -->
+            <customTypes>
+                <customType>
+                    <name>java.util.GregorianCalendar</name>
+                    <converter>org.jooq.test._.converters.CalendarConverter</converter>
+                </customType>
+            </customTypes>
+
+            <!-- Then, associate custom types with database columns -->
+            <forcedTypes>
+                <forcedType>
+                    <name>java.util.GregorianCalendar</name>
+                    <expressions>.*T_DATES\.(T|D|TS)</expressions>
+                </forcedType>
+            </forcedTypes>
         </database>
         <generate>
             <relations>true</relations>

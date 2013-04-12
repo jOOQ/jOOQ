@@ -158,7 +158,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         @Override
         public void executeStart(ExecuteContext ctx) {
-            assertThings(ctx, "bindEnd", "executeStart");
+            if (SettingsTools.executePreparedStatements(ctx.configuration().settings())) {
+                assertThings(ctx, "bindEnd", "executeStart");
+            }
+            else {
+                assertThings(ctx, "prepareEnd", "executeStart");
+            }
         }
 
         @Override

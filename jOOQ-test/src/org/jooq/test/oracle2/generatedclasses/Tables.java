@@ -12,6 +12,11 @@ package org.jooq.test.oracle2.generatedclasses;
 public class Tables {
 
 	/**
+	 * The table TEST.T_DATES
+	 */
+	public static final org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampTDates DATE_AS_TIMESTAMP_T_DATES = org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampTDates.DATE_AS_TIMESTAMP_T_DATES;
+
+	/**
 	 * The table TEST.T_976
 	 */
 	public static final org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976 DATE_AS_TIMESTAMP_T_976 = org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976;

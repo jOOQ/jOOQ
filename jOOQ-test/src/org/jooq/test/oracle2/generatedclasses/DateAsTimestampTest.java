@@ -9,7 +9,7 @@ package org.jooq.test.oracle2.generatedclasses;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class DateAsTimestampTest extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -714050228;
+	private static final long serialVersionUID = 761142164;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -32,6 +32,7 @@ public class DateAsTimestampTest extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
+			org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampTDates.DATE_AS_TIMESTAMP_T_DATES,
 			org.jooq.test.oracle2.generatedclasses.tables.DateAsTimestampT_976.DATE_AS_TIMESTAMP_T_976);
 	}
 

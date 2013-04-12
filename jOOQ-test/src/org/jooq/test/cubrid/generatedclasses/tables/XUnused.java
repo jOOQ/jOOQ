@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1469042772;
+	private static final long serialVersionUID = 711305226;
 
 	/**
 	 * The singleton instance of <code>x_unused</code>

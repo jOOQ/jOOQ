@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -122182678;
+	private static final long serialVersionUID = 1308396530;
 
 	/**
 	 * The singleton instance of <code>T_EXOTIC_TYPES</code>

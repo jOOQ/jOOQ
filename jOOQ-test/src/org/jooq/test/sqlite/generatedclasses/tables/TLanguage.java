@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1354448628;
+	private static final long serialVersionUID = -645985516;
 
 	/**
 	 * The singleton instance of <code>t_language</code>

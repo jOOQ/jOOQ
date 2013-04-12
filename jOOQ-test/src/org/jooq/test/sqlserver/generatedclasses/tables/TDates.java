@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 2048560760;
+	private static final long serialVersionUID = 874429888;
 
 	/**
 	 * The singleton instance of <code>dbo.t_dates</code>

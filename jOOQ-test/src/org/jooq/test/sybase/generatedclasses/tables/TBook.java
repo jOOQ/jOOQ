@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 788795956;
+	private static final long serialVersionUID = -543498014;
 
 	/**
 	 * The singleton instance of <code>DBA.t_book</code>

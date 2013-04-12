@@ -15,7 +15,7 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
 })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 387526505;
+	private static final long serialVersionUID = -2066598184;
 
 	/**
 	 * Setter for <code>test2.x_unused.ID</code>. 
@@ -125,7 +125,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Setter for <code>test2.x_unused.CONFIGURATION</code>. 
 	 */
-	public void setConfiguration_(java.lang.Integer value) {
+	public void setConfiguration(java.lang.Integer value) {
 		setValue(7, value);
 	}
 
@@ -133,7 +133,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Getter for <code>test2.x_unused.CONFIGURATION</code>. 
 	 */
 	@javax.persistence.Column(name = "CONFIGURATION", precision = 10)
-	public java.lang.Integer getConfiguration_() {
+	public java.lang.Integer getConfiguration() {
 		return (java.lang.Integer) getValue(7);
 	}
 
@@ -432,7 +432,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value8() {
-		return getConfiguration_();
+		return getConfiguration();
 	}
 
 	/**

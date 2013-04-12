@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -1769382440;
+	private static final long serialVersionUID = -1819858000;
 
 	/**
 	 * The singleton instance of <code>public.t_dates</code>

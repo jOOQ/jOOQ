@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -1597361281;
+	private static final long serialVersionUID = -1675620055;
 
 	/**
 	 * The singleton instance of <code>public.t_book_to_book_store</code>

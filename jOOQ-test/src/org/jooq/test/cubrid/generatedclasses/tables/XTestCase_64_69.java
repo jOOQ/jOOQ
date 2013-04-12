@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = 1876210968;
+	private static final long serialVersionUID = -1945921436;
 
 	/**
 	 * The singleton instance of <code>x_test_case_64_69</code>

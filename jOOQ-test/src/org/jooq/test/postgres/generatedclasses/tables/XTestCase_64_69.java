@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -319037433;
+	private static final long serialVersionUID = 483042035;
 
 	/**
 	 * The singleton instance of <code>public.x_test_case_64_69</code>

@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record15<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 123773423;
+	private static final long serialVersionUID = -1135581026;
 
 	/**
 	 * Setter for <code>public.x_unused.id</code>. 
@@ -98,14 +98,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Setter for <code>public.x_unused.configuration</code>. 
 	 */
-	public void setConfiguration_(java.lang.Integer value) {
+	public void setConfiguration(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>public.x_unused.configuration</code>. 
 	 */
-	public java.lang.Integer getConfiguration_() {
+	public java.lang.Integer getConfiguration() {
 		return (java.lang.Integer) getValue(6);
 	}
 
@@ -426,7 +426,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value7() {
-		return getConfiguration_();
+		return getConfiguration();
 	}
 
 	/**

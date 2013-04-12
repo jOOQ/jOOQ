@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -719775291;
+	private static final long serialVersionUID = -1497081165;
 
 	/**
 	 * The singleton instance of <code>public.x_unused</code>

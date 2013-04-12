@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record14<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.String, java.math.BigDecimal> {
 
-	private static final long serialVersionUID = 282926742;
+	private static final long serialVersionUID = -1658653597;
 
 	/**
 	 * Setter for <code>x_unused.ID</code>. 
@@ -98,14 +98,14 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	/**
 	 * Setter for <code>x_unused.CONFIGURATION</code>. 
 	 */
-	public void setConfiguration_(java.lang.Integer value) {
+	public void setConfiguration(java.lang.Integer value) {
 		setValue(6, value);
 	}
 
 	/**
 	 * Getter for <code>x_unused.CONFIGURATION</code>. 
 	 */
-	public java.lang.Integer getConfiguration_() {
+	public java.lang.Integer getConfiguration() {
 		return (java.lang.Integer) getValue(6);
 	}
 
@@ -404,7 +404,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value7() {
-		return getConfiguration_();
+		return getConfiguration();
 	}
 
 	/**

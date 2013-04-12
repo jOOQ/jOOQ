@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1697508807;
+	private static final long serialVersionUID = -1630386323;
 
 	/**
 	 * The singleton instance of <code>t_booleans</code>

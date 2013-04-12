@@ -16,6 +16,7 @@ public class Keys {
 	// IDENTITY definitions
 	// -------------------------------------------------------------------------
 
+	public static final org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = Identities0.IDENTITY_T_TRIGGERS;
 
 	// -------------------------------------------------------------------------
 	// UNIQUE and PRIMARY KEY definitions
@@ -59,14 +60,13 @@ public class Keys {
 	public static final org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.XTestCase_85Record, org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> FK_X_TEST_CASE_85_X_UNUSED_1 = ForeignKeys0.FK_X_TEST_CASE_85_X_UNUSED_1;
 	public static final org.jooq.ForeignKey<org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord, org.jooq.test.sqlite.generatedclasses.tables.records.XUnusedRecord> FK_X_UNUSED_X_UNUSED_1 = ForeignKeys0.FK_X_UNUSED_X_UNUSED_1;
 
-	/**
-	 * No further instances allowed
-	 */
-	private Keys() {}
-
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb
 	// -------------------------------------------------------------------------
+
+	private static class Identities0 extends org.jooq.impl.AbstractKeys {
+		public static org.jooq.Identity<org.jooq.test.sqlite.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> IDENTITY_T_TRIGGERS = createIdentity(org.jooq.test.sqlite.generatedclasses.tables.TTriggers.T_TRIGGERS, org.jooq.test.sqlite.generatedclasses.tables.TTriggers.ID_GENERATED);
+	}
 
 	private static class UniqueKeys0 extends org.jooq.impl.AbstractKeys {
 		public static final org.jooq.UniqueKey<org.jooq.test.sqlite.generatedclasses.tables.records.T_639NumbersTableRecord> PK_T_639_NUMBERS_TABLE = createUniqueKey(org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE, org.jooq.test.sqlite.generatedclasses.tables.T_639NumbersTable.ID);

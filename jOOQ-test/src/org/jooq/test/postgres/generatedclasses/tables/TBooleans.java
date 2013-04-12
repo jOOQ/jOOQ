@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1904959080;
+	private static final long serialVersionUID = 785458260;
 
 	/**
 	 * The singleton instance of <code>public.t_booleans</code>

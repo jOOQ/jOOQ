@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 778837699;
+	private static final long serialVersionUID = -2121597026;
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>. 
@@ -143,7 +143,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Setter for <code>PUBLIC.X_UNUSED.CONFIGURATION</code>. 
 	 */
 	@Override
-	public void setConfiguration_(java.lang.Integer value) {
+	public void setConfiguration(java.lang.Integer value) {
 		setValue(8, value);
 	}
 
@@ -151,7 +151,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 * Getter for <code>PUBLIC.X_UNUSED.CONFIGURATION</code>. 
 	 */
 	@Override
-	public java.lang.Integer getConfiguration_() {
+	public java.lang.Integer getConfiguration() {
 		return (java.lang.Integer) getValue(8);
 	}
 
@@ -496,7 +496,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public java.lang.Integer value9() {
-		return getConfiguration_();
+		return getConfiguration();
 	}
 
 	/**
@@ -572,7 +572,7 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 		setClass_(from.getClass_());
 		setFields(from.getFields());
 		setTable_(from.getTable_());
-		setConfiguration_(from.getConfiguration_());
+		setConfiguration(from.getConfiguration());
 		setUDT(from.getUDT());
 		setMetaData(from.getMetaData());
 		setValues_(from.getValues_());

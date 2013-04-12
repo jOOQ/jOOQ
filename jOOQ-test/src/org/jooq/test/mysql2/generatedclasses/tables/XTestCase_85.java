@@ -11,7 +11,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -511175717;
+	private static final long serialVersionUID = -1692042389;
 
 	/**
 	 * The singleton instance of <code>test2.x_test_case_85</code>

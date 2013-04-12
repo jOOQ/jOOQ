@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = -315273820;
+	private static final long serialVersionUID = 647694214;
 
 	/**
 	 * The singleton instance of <code>t_book_to_book_store</code>

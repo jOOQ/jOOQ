@@ -9,7 +9,7 @@ package org.jooq.test.oracle3.generatedclasses.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class U_AUTHOR_TYPE extends org.jooq.impl.UDTRecordImpl<org.jooq.test.oracle3.generatedclasses.udt.records.U_AUTHOR_TYPE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1091090111;
+	private static final long serialVersionUID = 1402198725;
 
 
 	/**

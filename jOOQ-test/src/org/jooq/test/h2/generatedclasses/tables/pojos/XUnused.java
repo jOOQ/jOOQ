@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 1155539946;
+	private static final long serialVersionUID = -83592242;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
@@ -109,12 +109,12 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 	}
 
 	@Override
-	public java.lang.Integer getConfiguration_() {
+	public java.lang.Integer getConfiguration() {
 		return this.configuration;
 	}
 
 	@Override
-	public void setConfiguration_(java.lang.Integer configuration) {
+	public void setConfiguration(java.lang.Integer configuration) {
 		this.configuration = configuration;
 	}
 
@@ -205,7 +205,7 @@ public class XUnused implements org.jooq.test.h2.generatedclasses.tables.interfa
 		setClass_(from.getClass_());
 		setFields(from.getFields());
 		setTable_(from.getTable_());
-		setConfiguration_(from.getConfiguration_());
+		setConfiguration(from.getConfiguration());
 		setUDT(from.getUDT());
 		setMetaData(from.getMetaData());
 		setValues_(from.getValues_());

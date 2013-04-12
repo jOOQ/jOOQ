@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -746809245;
+	private static final long serialVersionUID = -193340665;
 
 	/**
 	 * The singleton instance of <code>public.t_exotic_types</code>

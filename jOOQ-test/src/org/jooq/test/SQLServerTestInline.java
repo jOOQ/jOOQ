@@ -49,7 +49,7 @@ import org.jooq.impl.DSL;
 public class SQLServerTestInline extends SQLServerTest {
 
     @Override
-    protected DSLContext create(Settings settings) {
+    protected DSLContext create0(Settings settings) {
         settings = (settings != null) ? settings : new Settings();
         settings.withStatementType(StatementType.STATIC_STATEMENT);
         return DSL.using(getConnection(), SQLDialect.SQLSERVER, settings);

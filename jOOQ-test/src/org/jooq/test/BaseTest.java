@@ -60,6 +60,7 @@ import org.jooq.DAO;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteListener;
+import org.jooq.ExecuteListenerProvider;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
@@ -77,8 +78,7 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.conf.Settings;
-import org.jooq.impl.DSL;
-import org.jooq.test._.TestStatisticsListener;
+import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -709,23 +709,19 @@ public abstract class BaseTest<
     }
 
     protected final DSLContext create(Settings settings) {
-        DSLContext create = delegate.create(settings);
-        addListeners(create.configuration(), new TestStatisticsListener());
-        return create;
+        return delegate.create(settings);
     }
 
     protected final DSLContext create(Configuration configuration) {
-        DSLContext create = DSL.using(configuration);
-        addListeners(create.configuration(), new TestStatisticsListener());
-        return create;
+        return delegate.create(configuration);
     }
 
-    protected final List<ExecuteListener> getListeners(Configuration configuration) {
-        return delegate.getListeners(configuration);
-    }
+    protected final DSLContext create(ExecuteListener... listeners) {
+        ExecuteListenerProvider[] providers = new ExecuteListenerProvider[listeners.length];
+        for (int i = 0; i < listeners.length; i++)
+            providers[i] = new DefaultExecuteListenerProvider(listeners[i]);
 
-    protected final void addListeners(Configuration configuration, ExecuteListener... listeners) {
-        delegate.addListeners(configuration, listeners);
+        return create(create().configuration().derive(providers));
     }
 
     protected final Connection getConnection() {

@@ -67,6 +67,7 @@ import org.jooq.DAO;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteListener;
+import org.jooq.ExecuteListenerProvider;
 import org.jooq.ExecuteType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -860,7 +861,7 @@ public abstract class jOOQAbstractTest<
     protected abstract Class<?> cLibrary();
     protected abstract Class<?> cSequences();
     protected abstract DataType<?>[] getCastableDataTypes();
-    protected abstract DSLContext create(Settings settings);
+    protected abstract DSLContext create0(Settings settings);
 
     protected final Schema schema() {
         return create().map(TAuthor().getSchema());
@@ -875,25 +876,42 @@ public abstract class jOOQAbstractTest<
             .withRenderMapping(new RenderMapping()
                 .withDefaultSchema(defaultSchema));
 
-        DSLContext create = create(settings);
-        addListeners(create.configuration(),
-            new TestStatisticsListener(),
-            new PrettyPrinter(),
-            new LifecycleWatcherListener());
-
-        return create;
+        return DSL.using(create0(settings).configuration().derive(
+            DefaultExecuteListenerProvider.providers(
+                new TestStatisticsListener(),
+                new PrettyPrinter(),
+                new LifecycleWatcherListener()
+            )
+        ));
     }
 
-    protected final List<ExecuteListener> getListeners(org.jooq.Configuration configuration) {
-
-        // Most test cases run with the DefaultExecuteListenerProvider,
-        // which (inofficially) exposes a mutable List
-        DefaultExecuteListenerProvider provider = (DefaultExecuteListenerProvider) configuration.executeListenerProvider();
-        return provider.provide();
+    protected final DSLContext create(Settings settings) {
+        DSLContext create = create0(settings);
+        return create(create.configuration());
     }
 
-    protected final void addListeners(org.jooq.Configuration configuration, ExecuteListener... listeners) {
-        getListeners(configuration).addAll(Arrays.asList(listeners));
+    protected final DSLContext create(org.jooq.Configuration configuration) {
+        return DSL.using(configuration.derive(combine(
+            configuration.executeListenerProviders(),
+            new DefaultExecuteListenerProvider(new TestStatisticsListener())
+        )));
+    }
+
+    protected final DSLContext create(ExecuteListener... listeners) {
+        ExecuteListenerProvider[] providers = new ExecuteListenerProvider[listeners.length];
+        for (int i = 0; i < listeners.length; i++)
+            providers[i] = new DefaultExecuteListenerProvider(listeners[i]);
+
+        return create(create().configuration().derive(providers));
+    }
+
+    protected static final <T> T[] combine(T[] array, T value) {
+        T[] result = (T[]) java.lang.reflect.Array.newInstance(array.getClass().getComponentType(), array.length + 1);
+
+        System.arraycopy(array, 0, result, 0, array.length);
+        result[array.length] = value;
+
+        return result;
     }
 
     protected final SQLDialect getDialect() {

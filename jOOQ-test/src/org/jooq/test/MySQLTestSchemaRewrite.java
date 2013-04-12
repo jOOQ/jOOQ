@@ -132,7 +132,7 @@ public class MySQLTestSchemaRewrite extends jOOQAbstractTest<
     }
 
     @Override
-    protected DSLContext create(Settings settings) {
+    protected DSLContext create0(Settings settings) {
         return DSL.using(getConnection(), SQLDialect.MYSQL, settings);
     }
 

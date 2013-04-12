@@ -132,7 +132,7 @@ public class CUBRIDTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected DSLContext create(Settings settings) {
+    protected DSLContext create0(Settings settings) {
         return using(getConnection(), SQLDialect.CUBRID, settings);
     }
 

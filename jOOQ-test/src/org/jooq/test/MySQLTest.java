@@ -158,7 +158,7 @@ public class MySQLTest extends jOOQAbstractTest<
         T_785Record> {
 
     @Override
-    protected DSLContext create(Settings settings) {
+    protected DSLContext create0(Settings settings) {
         return DSL.using(getConnection(), SQLDialect.MYSQL, settings);
     }
 

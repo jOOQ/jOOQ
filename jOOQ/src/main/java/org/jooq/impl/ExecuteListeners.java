@@ -35,11 +35,17 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.FALSE;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
+import org.jooq.ExecuteListenerProvider;
 import org.jooq.conf.Settings;
+import org.jooq.tools.LoggerListener;
+import org.jooq.tools.StopWatchListener;
 
 /**
  * A queue implementation for several {@link ExecuteListener} objects as defined
@@ -52,7 +58,7 @@ class ExecuteListeners implements ExecuteListener {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 7399239846062763212L;
+    private static final long           serialVersionUID = 7399239846062763212L;
 
     private final List<ExecuteListener> listeners;
 
@@ -63,9 +69,31 @@ class ExecuteListeners implements ExecuteListener {
     private boolean                     fetchEnd;
 
     ExecuteListeners(ExecuteContext ctx) {
-        listeners = Utils.getListeners(ctx);
+        listeners = listeners(ctx);
 
         start(ctx);
+    }
+
+    /**
+     * Provide delegate listeners from an <code>ExecuteContext</code>
+     */
+    private static List<ExecuteListener> listeners(ExecuteContext ctx) {
+        List<ExecuteListener> result = new ArrayList<ExecuteListener>();
+        
+        if (!FALSE.equals(ctx.configuration().settings().isExecuteLogging())) {
+            result.add(new StopWatchListener());
+            result.add(new LoggerListener());
+        }
+
+        for (ExecuteListenerProvider provider : ctx.configuration().executeListenerProviders()) {
+
+            // Could be null after deserialisation
+            if (provider != null) {
+                result.add(provider.provide());
+            }
+        }
+
+        return result;
     }
 
     @Override

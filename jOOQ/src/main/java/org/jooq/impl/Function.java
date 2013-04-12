@@ -55,6 +55,7 @@ import org.jooq.AggregateFunction;
 import org.jooq.BindContext;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
@@ -92,8 +93,12 @@ class Function<T> extends AbstractField<T> implements
 
     private static final long              serialVersionUID = 347252741712134044L;
 
-    private final QueryPartList<QueryPart> arguments;
+    // Mutually exclusive attributes: super.getName(), this.name, this.term
+    private final Name                     name;
     private final Term                     term;
+
+    // Other attributes
+    private final QueryPartList<QueryPart> arguments;
     private final boolean                  distinct;
     private final SortFieldList            withinGroupOrderBy;
     private final SortFieldList            keepDenseRankOrderBy;
@@ -120,10 +125,15 @@ class Function<T> extends AbstractField<T> implements
         this(term, false, type, arguments);
     }
 
+    Function(Name name, DataType<T> type, QueryPart... arguments) {
+        this(name, false, type, arguments);
+    }
+
     Function(String name, boolean distinct, DataType<T> type, QueryPart... arguments) {
         super(name, type);
 
         this.term = null;
+        this.name = null;
         this.distinct = distinct;
         this.arguments = new QueryPartList<QueryPart>(arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
@@ -136,12 +146,34 @@ class Function<T> extends AbstractField<T> implements
         super(term.name().toLowerCase(), type);
 
         this.term = term;
+        this.name = null;
         this.distinct = distinct;
         this.arguments = new QueryPartList<QueryPart>(arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
         this.partitionBy = new QueryPartList<Field<?>>();
         this.orderBy = new SortFieldList();
+    }
+
+    Function(Name name, boolean distinct, DataType<T> type, QueryPart... arguments) {
+        super(last(name.getName()), type);
+
+        this.term = null;
+        this.name = name;
+        this.distinct = distinct;
+        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.keepDenseRankOrderBy = new SortFieldList();
+        this.withinGroupOrderBy = new SortFieldList();
+        this.partitionBy = new QueryPartList<Field<?>>();
+        this.orderBy = new SortFieldList();
+    }
+
+    private static String last(String... strings) {
+        if (strings != null && strings.length > 0) {
+            return strings[strings.length - 1];
+        }
+
+        return null;
     }
 
     // -------------------------------------------------------------------------
@@ -238,7 +270,7 @@ class Function<T> extends AbstractField<T> implements
      * [#1275] <code>LIST_AGG</code> simulation for Postgres, Sybase
      */
     private void toSQLStringAgg(RenderContext context) {
-        context.sql(getFNName(context.configuration().dialect()));
+        toSQLFunctionName(context);
         context.sql("(");
 
         if (distinct) {
@@ -269,7 +301,7 @@ class Function<T> extends AbstractField<T> implements
      * [#1273] <code>LIST_AGG</code> simulation for MySQL and CUBRID
      */
     private final void toSQLGroupConcat(RenderContext context) {
-        context.sql(getFNName(context.configuration().dialect()));
+        toSQLFunctionName(context);
         context.sql("(");
 
         if (distinct) {
@@ -377,7 +409,7 @@ class Function<T> extends AbstractField<T> implements
      * Render function arguments and argument modifiers
      */
     private final void toSQLArguments(RenderContext context) {
-        context.sql(getFNName(context.configuration().dialect()));
+        toSQLFunctionName(context);
         context.sql("(");
 
         if (distinct) {
@@ -408,12 +440,15 @@ class Function<T> extends AbstractField<T> implements
         context.sql(")");
     }
 
-    private final String getFNName(SQLDialect dialect) {
-        if (term != null) {
-            return term.translate(dialect);
+    private final void toSQLFunctionName(RenderContext ctx) {
+        if (name != null) {
+            ctx.sql(name);
+        }
+        else if (term != null) {
+            ctx.sql(term.translate(ctx.configuration().dialect()));
         }
         else {
-            return getName();
+            ctx.sql(getName());
         }
     }
 

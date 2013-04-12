@@ -904,17 +904,9 @@ public abstract class jOOQAbstractTest<
         return "";
     }
 
-    // IMPORTANT! Make this the first test, to prevent side-effects
     @Test
     public void testInsertIdentity() throws Exception {
         new InsertUpdateTests(this).testInsertIdentity();
-    }
-
-
-    // IMPORTANT! Make this the an early test, to check for attaching side-effects
-    @Test
-    public void testUse() throws Exception {
-        new SchemaAndMappingTests(this).testUse();
     }
 
     @Test

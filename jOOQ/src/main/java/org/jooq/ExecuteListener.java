@@ -44,8 +44,8 @@ import java.util.EventListener;
 
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
-import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.tools.LoggerListener;
 import org.jooq.tools.StopWatchListener;
 
@@ -55,7 +55,7 @@ import org.jooq.tools.StopWatchListener;
  * <p>
  * <code>ExecuteListener</code> is a base type for loggers, debuggers,
  * profilers, data collectors that can be hooked into a jOOQ {@link DSLContext}
- * using the {@link Configuration#getExecuteListeners()} property, passing
+ * using the {@link Configuration#executeListenerProviders()} property, passing
  * <code>Settings</code> to
  * {@link DSL#using(java.sql.Connection, SQLDialect, Settings)}. jOOQ
  * will use that configuration at the beginning of a query execution event to

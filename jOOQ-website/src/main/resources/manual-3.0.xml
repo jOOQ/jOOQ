@@ -1355,8 +1355,8 @@ public class NoInsertListener extends DefaultExecuteListener {
 <java><![CDATA[// Create your Configuration
 Configuration configuration = new DefaultConfiguration(connection, dialect);
 
-// Derive a new configuration with an execute listener provider:
-configuration = configuration.derive(new DefaultExecuteListenerProvider(new NoInsertListener()));
+// Set a new execute listener provider onto the configuration:
+configuration.set(new DefaultExecuteListenerProvider(new NoInsertListener()));
 
 // Use any String literal to identify your custom data
 configuration.data("com.example.my-namespace.no-inserts", true);
@@ -1404,8 +1404,8 @@ catch (DataAccessException expected) {
 <java><![CDATA[// Create your Configuration
 Configuration configuration = new DefaultConfiguration(connection, dialect);
 
-// Derive a new configuration, hooking your listener providers into it:
-configuration = configuration.derive(
+// Hook your listener providers into the configuration:
+configuration.set(
     new DefaultExecuteListenerProvider(new MyFirstListener()),
     new DefaultExecuteListenerProvider(new PerformanceLoggingListener()),
     new DefaultExecuteListenerProvider(new NoInsertListener())
@@ -8319,9 +8319,7 @@ public class StatisticsListener extends DefaultExecuteListener {
 
 <java><![CDATA[// Create a configuration with an appropriate listener provider:
 Configuration configuration = new DefaultConfiguration(connection, dialect);
-configuration = configuration.derive(
-    new DefaultExecuteListenerProvider(new StatisticsListener())
-);
+configuration.set(new DefaultExecuteListenerProvider(new StatisticsListener()));
 
 // Create a DSLContext from the above configuration
 DSLContext create = DSL.using(configuration);]]></java>
@@ -9740,9 +9738,7 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetc
 
 <java><![CDATA[// Create a configuration with an appropriate listener provider:
 Configuration configuration = new DefaultConfiguration(connection, dialect);
-configuration = configuration.derive(
-    new DefaultExecuteListenerProvider(new org.jooq.debug.impl.DebugListener())
-);
+configuration.set(new DefaultExecuteListenerProvider(new org.jooq.debug.impl.DebugListener()));
 
 // Create a DSLContext from the above configuration
 DSLContext create = DSL.using(configuration);]]></java>

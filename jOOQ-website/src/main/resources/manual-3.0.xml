@@ -1425,7 +1425,7 @@ configuration.set(
 									</p>
 									<ul>
 										<li>In the DSLContext constructor (<code>DSL.using()</code>). This will override default settings below</li>
-										<li>in the <reference code="org.jooq.impl.DefaultConfiguration"/> constructor. This will override default settings below</li>
+										<li>in the <reference class="org.jooq.impl.DefaultConfiguration"/> constructor. This will override default settings below</li>
                                         <li>From a location specified by a JVM parameter: -Dorg.jooq.settings</li>
 										<li>From the classpath at /jooq-settings.xml</li>
 										<li>From the settings defaults, as specified in <a href="http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd" title="The jOOQ Runtime configuration XSD">http://www.jooq.org/xsd/jooq-runtime-{runtime-xsd-version}.xsd</a></li>
@@ -6577,7 +6577,7 @@ create.selectFrom(BOOK)
 								<title>POJOs</title>
 								<content>
 									<p>
-										Fetching data in records is fine as long as your application is not really layered, or as long as you're still writing code in the DAO layer. But if you have a more advanced application architecture, you may not want to allow for jOOQ artefacts to leak into other layers. You may choose to write POJOs (Plain Old Java Objects) as your primary DTOs (Data Transfer Objects), without any dependencies on jOOQ's <reference class="org.jooq.Record"/> types, which may even potentially hold a reference to a <reference id="dslcontext" title="Configuration"/>, and thus a JDBC <reference class="java.sql.Connection"/>. Like Hibernate/JPA, jOOQ allows you to operate with POJOs. Unlike Hibernate/JPA, jOOQ does not "attach" those POJOs or create proxies with any magic in them.
+										Fetching data in records is fine as long as your application is not really layered, or as long as you're still writing code in the DAO layer. But if you have a more advanced application architecture, you may not want to allow for jOOQ artefacts to leak into other layers. You may choose to write POJOs (Plain Old Java Objects) as your primary DTOs (Data Transfer Objects), without any dependencies on jOOQ's <reference class="org.jooq.Record"/> types, which may even potentially hold a reference to a <reference id="dsl-context" title="Configuration"/>, and thus a JDBC <reference class="java.sql.Connection"/>. Like Hibernate/JPA, jOOQ allows you to operate with POJOs. Unlike Hibernate/JPA, jOOQ does not "attach" those POJOs or create proxies with any magic in them.
 									</p>
 									<p>
 										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to <reference id="codegen-pojos" title="generate POJOs"/> for you, but you're not required to use those generated POJOs. You can use your own.

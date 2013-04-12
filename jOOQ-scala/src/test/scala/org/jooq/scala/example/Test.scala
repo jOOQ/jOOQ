@@ -41,14 +41,14 @@ import java.sql.DriverManager
 
 import org.jooq._
 import org.jooq.impl._
-import org.jooq.impl.Factory._
+import org.jooq.impl.DSL._
 import org.jooq.scala.example.h2.Tables._
 import org.jooq.scala.Conversions._
 
 object Test {
   def main(args: Array[String]): Unit = {
     val c = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
-    val f = new Executor(c, SQLDialect.H2);
+    val f = DSL.using(c, SQLDialect.H2);
     val x = T_AUTHOR as "x"
 
     for (r <- f

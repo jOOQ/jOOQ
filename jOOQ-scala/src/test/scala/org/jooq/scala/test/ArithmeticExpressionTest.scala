@@ -4,7 +4,7 @@ import collection.JavaConversions._
 import org.scalatest.FunSuite
 import org.jooq._
 import org.jooq.impl._
-import org.jooq.impl.Factory._
+import org.jooq.impl.DSL._
 import org.jooq.scala.example.h2.Tables._
 import org.jooq.scala.Conversions._
 

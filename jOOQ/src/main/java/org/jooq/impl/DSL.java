@@ -230,8 +230,8 @@ public class DSL {
     /**
      * Create an executor with a connection and a dialect configured.
      * <p>
-     * If you provide a JDBC connection to a jOOQ Executor, jOOQ will use that
-     * connection directly for creating statements.
+     * If you provide a JDBC connection to a jOOQ Configuration, jOOQ will use
+     * that connection directly for creating statements.
      * <p>
      * This is a convenience constructor for
      * {@link #using(ConnectionProvider, SQLDialect, Settings)} using a
@@ -249,8 +249,8 @@ public class DSL {
     /**
      * Create an executor with a connection, a dialect and settings configured.
      * <p>
-     * If you provide a JDBC connection to a jOOQ Executor, jOOQ will use that
-     * connection directly for creating statements.
+     * If you provide a JDBC connection to a jOOQ Configuration, jOOQ will use
+     * that connection directly for creating statements.
      * <p>
      * This is a convenience constructor for
      * {@link #using(ConnectionProvider, SQLDialect, Settings)} using a
@@ -270,8 +270,8 @@ public class DSL {
     /**
      * Create an executor with a data source and a dialect configured.
      * <p>
-     * If you provide a JDBC data source to a jOOQ Executor, jOOQ will use that
-     * data source for initialising connections, and creating statements.
+     * If you provide a JDBC data source to a jOOQ Configuration, jOOQ will use
+     * that data source for initialising connections, and creating statements.
      * <p>
      * This is a convenience constructor for
      * {@link #using(ConnectionProvider, SQLDialect)} using a
@@ -289,8 +289,8 @@ public class DSL {
     /**
      * Create an executor with a data source, a dialect and settings configured.
      * <p>
-     * If you provide a JDBC data source to a jOOQ Executor, jOOQ will use that
-     * data source for initialising connections, and creating statements.
+     * If you provide a JDBC data source to a jOOQ Configuration, jOOQ will use
+     * that data source for initialising connections, and creating statements.
      * <p>
      * This is a convenience constructor for
      * {@link #using(ConnectionProvider, SQLDialect, Settings)} using a

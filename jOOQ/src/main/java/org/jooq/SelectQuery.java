@@ -267,7 +267,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * Add an Oracle-style hint to the select clause
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.select(field1, field2)
      *       .hint("/*+ALL_ROWS&#42;/")
@@ -376,8 +376,8 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * <p>
      * Indexes start at <code>1</code> in SQL!
      * <p>
-     * Note, you can use <code>addOrderBy(Factory.val(1).desc())</code> or
-     * <code>addOrderBy(Factory.literal(1).desc())</code> to apply descending
+     * Note, you can use <code>addOrderBy(DSL.val(1).desc())</code> or
+     * <code>addOrderBy(DSL.literal(1).desc())</code> to apply descending
      * ordering
      *
      * @param fieldIndexes The ordering fields

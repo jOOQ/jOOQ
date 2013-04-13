@@ -35,14 +35,14 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.ExpressionOperator.ADD;
-import static org.jooq.impl.ExpressionOperator.DIVIDE;
-import static org.jooq.impl.ExpressionOperator.MULTIPLY;
-import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.ExpressionOperator.ADD;
+import static org.jooq.impl.ExpressionOperator.DIVIDE;
+import static org.jooq.impl.ExpressionOperator.MULTIPLY;
+import static org.jooq.impl.ExpressionOperator.SUBTRACT;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -995,7 +995,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     // ------------------------------------------------------------------------
     // XXX: Pre-2.0 API. This API is maintained for backwards-compatibility. It
     // will be removed in the future. Consider using equivalent methods from
-    // org.jooq.Factory
+    // org.jooq.impl.DSL
     // ------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")

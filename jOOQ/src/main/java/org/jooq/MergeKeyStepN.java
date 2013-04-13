@@ -49,7 +49,7 @@ import java.util.Collection;
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Factory create = new Factory();
+ * DSLContext create = DSL.using(configuration);
  *
  * create.mergeInto(table, field1, field2)
  *       .key(id)

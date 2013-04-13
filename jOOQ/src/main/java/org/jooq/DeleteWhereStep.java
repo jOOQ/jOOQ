@@ -43,7 +43,7 @@ import org.jooq.impl.DSL;
  * This type is used for the {@link Delete}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Factory create = new Factory();
+ * DSLContext create = DSL.using(configuration);
  *
  * create.delete(table)
  *       .where(field1.greaterThan(100))

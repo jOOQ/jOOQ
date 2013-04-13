@@ -55,8 +55,10 @@ import org.jooq.exception.MappingException;
  * <p>
  * However, some RDBMS also allow for other constructs, such as Postgres'
  * <code>FETCH ALL IN {cursor-name}</code>. The easiest way to execute such a
- * query is by using <code><pre>
- * Factory create = new PostgresFactory(connection);
+ * query is by using
+ * <p>
+ * <code><pre>
+ * DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
  * Result&lt;Record&gt; result = create.fetch("FETCH ALL IN \"&lt;unnamed cursor 1&gt;\"");
  * </pre></code> Another example (for SQLite): <code><pre>
  * Result&lt;Record&gt; result = create.fetch("pragma table_info('my_table')");

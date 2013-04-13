@@ -176,7 +176,7 @@ import org.jooq.types.DayToSecond;
  * public class Main {
  *   public static void main(String[] args) {
  *     DSL.select(val("Hello"), inline("World"));
- *     // DSL.val ^^^           ^^^^^^ Factory.inline
+ *     // DSL.val ^^^           ^^^^^^ DSL.inline
  *   }
  * }
  * </pre></code>
@@ -8489,7 +8489,7 @@ public class DSL {
      *
      * @param <T> The generic type
      * @param type The Java type
-     * @return The <code>Factory</code>'s underlying default data type.
+     * @return The <code>DSL</code>'s underlying default data type.
      */
     @SuppressWarnings("deprecation")
     @Support

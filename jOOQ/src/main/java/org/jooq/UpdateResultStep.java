@@ -44,7 +44,7 @@ import org.jooq.exception.DataAccessException;
  * This type is used for the {@link Update}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Executor create = Factory.using(config);
+ * DSLContext create = DSL.using(configuration);
  *
  * TableRecord<?> record =
  * create.update(table)

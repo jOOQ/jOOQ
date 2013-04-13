@@ -118,7 +118,7 @@ public interface DSLContext {
      * Map a schema to another one.
      * <p>
      * This will map a schema onto another one, depending on configured schema
-     * mapping in this <code>Executor</code>. If no applicable schema mapping
+     * mapping in this <code>DSLContext</code>. If no applicable schema mapping
      * can be found, the schema itself is returned.
      *
      * @param schema A schema
@@ -130,7 +130,7 @@ public interface DSLContext {
      * Map a table to another one.
      * <p>
      * This will map a table onto another one, depending on configured table
-     * mapping in this <code>Executor</code>. If no applicable table mapping can
+     * mapping in this <code>DSLContext</code>. If no applicable table mapping can
      * be found, the table itself is returned.
      *
      * @param table A table
@@ -273,12 +273,14 @@ public interface DSLContext {
     // -------------------------------------------------------------------------
 
     /**
-     * Attach this <code>Executor</code> to some attachables.
+     * Attach this <code>DSLContext</code>'s underlying {@link #configuration()}
+     * to some attachables.
      */
     void attach(Attachable... attachables);
 
     /**
-     * Attach this <code>Executor</code> to some attachables.
+     * Attach this <code>DSLContext</code>'s underlying {@link #configuration()}
+     * to some attachables.
      */
     void attach(Collection<? extends Attachable> attachables);
 

@@ -133,7 +133,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
 
         // Use regular predicates
         if (fields1.length == 1) {
-            return extractExecutor(records)
+            return extractDSLContext(records)
                 .selectFrom(table)
                 .where(((Field<Object>) fields1[0]).in(extractValues(records, fields2[0])))
                 .fetch();
@@ -141,7 +141,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
 
         // Use row value expressions
         else {
-            return extractExecutor(records)
+            return extractDSLContext(records)
                 .selectFrom(table)
                 .where(row(fields1).in(extractRows(records, fields2)))
                 .fetch();
@@ -184,7 +184,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     /**
      * Extract a configuration from the first record of a collection of records
      */
-    private static <R extends Record> DSLContext extractExecutor(Collection<? extends R> records)
+    private static <R extends Record> DSLContext extractDSLContext(Collection<? extends R> records)
         throws DetachedException {
         R first = first(records);
 

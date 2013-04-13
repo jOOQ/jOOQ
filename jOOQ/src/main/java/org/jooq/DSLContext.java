@@ -75,22 +75,22 @@ import org.jooq.impl.DSL;
  * Apart from the {@link DSL}, this contextual DSL is the main entry point
  * for client code, to access jOOQ classes and functionality that are related to
  * {@link Query} execution. Unlike objects created through the
- * <code>Factory</code>, objects created from a <code>DSLContext</code> will be
+ * <code>DSL</code> type, objects created from a <code>DSLContext</code> will be
  * "attached" to the <code>DSLContext</code>'s {@link #configuration()}, such
  * that they can be executed immediately in a fluent style. An example is given
  * here:
  * <p>
  * <code><pre>
- * DSLContext create = Factory.using(connection, dialect);
+ * DSLContext create = DSL.using(connection, dialect);
  *
  * // Immediately fetch results after constructing a query
  * create.selectFrom(MY_TABLE).where(MY_TABLE.ID.eq(1)).fetch();
  *
  * // The above is equivalent to this "non-fluent" style
- * create.fetch(Factory.selectFrom(MY_TABLE).where(MY_TABLE.ID.eq(1)));
+ * create.fetch(DSL.selectFrom(MY_TABLE).where(MY_TABLE.ID.eq(1)));
  * </pre></code>
  * <p>
- * The <code>Factory</code> provides convenient constructors to create a
+ * The <code>DSL</code> provides convenient constructors to create a
  * {@link Configuration}, which will be shared among all <code>Query</code>
  * objects thus created. Optionally, you can pass a reusable
  * <code>Configuration</code> to the {@link DSL#using(Configuration)}
@@ -1329,7 +1329,7 @@ public interface DSLContext {
      * {@link DSL#select(Collection)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.select(fields)
      *       .from(table1)
@@ -1353,7 +1353,7 @@ public interface DSLContext {
      * {@link DSL#select(Field...)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.select(field1, field2)
      *       .from(table1)
@@ -2041,7 +2041,7 @@ public interface DSLContext {
      * {@link DSL#selectDistinct(Collection)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.selectDistinct(fields)
      *       .from(table1)
@@ -2065,7 +2065,7 @@ public interface DSLContext {
      * {@link DSL#selectDistinct(Field...)} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.selectDistinct(field1, field2)
      *       .from(table1)
@@ -2752,7 +2752,7 @@ public interface DSLContext {
      * {@link DSL#selectZero()} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.selectZero()
      *       .from(table1)
@@ -2777,7 +2777,7 @@ public interface DSLContext {
      * {@link DSL#selectOne()} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.selectOne()
      *       .from(table1)
@@ -2802,7 +2802,7 @@ public interface DSLContext {
      * {@link DSL#selectCount()} instead.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.selectCount()
      *       .from(table1)
@@ -2846,7 +2846,7 @@ public interface DSLContext {
      * <code>SET a = b</code> syntax.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table)
      *       .set(field1, value1)
@@ -3266,7 +3266,7 @@ public interface DSLContext {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table, field1, field2)
      *       .values(value1, value2)
@@ -3284,7 +3284,7 @@ public interface DSLContext {
      * Create a new DSL insert statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.insertInto(table, field1, field2)
      *       .values(value1, value2)
@@ -3311,7 +3311,7 @@ public interface DSLContext {
      * Create a new DSL update statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.update(table)
      *       .set(field1, value1)
@@ -3390,7 +3390,7 @@ public interface DSLContext {
      * </table>
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.mergeInto(table)
      *       .using(select)
@@ -3985,7 +3985,7 @@ public interface DSLContext {
      * Create a new DSL delete statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.delete(table)
      *       .where(field1.greaterThan(100))
@@ -4223,7 +4223,7 @@ public interface DSLContext {
      * Create a new DSL truncate statement.
      * <p>
      * Example: <code><pre>
-     * Executor create = Factory.using();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.truncate(table)
      *       .execute();

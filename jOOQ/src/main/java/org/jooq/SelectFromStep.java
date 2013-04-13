@@ -138,7 +138,7 @@ public interface SelectFromStep<R extends Record> extends SelectWhereStep<R> {
      * Add an Oracle-style hint to the preceding select clause
      * <p>
      * Example: <code><pre>
-     * Factory create = new Factory();
+     * DSLContext create = DSL.using(configuration);
      *
      * create.select(field1, field2)
      *       .hint("/*+ALL_ROWS&#42;/")

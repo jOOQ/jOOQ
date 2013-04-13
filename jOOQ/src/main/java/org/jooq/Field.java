@@ -1824,7 +1824,7 @@ public interface Field<T> extends GroupField {
     // ------------------------------------------------------------------------
     // Pre-2.0 API. This API is maintained for backwards-compatibility. It will
     // be removed in the future. Consider using equivalent methods from
-    // org.jooq.Factory
+    // org.jooq.impl.DSL
     // ------------------------------------------------------------------------
 
     /**

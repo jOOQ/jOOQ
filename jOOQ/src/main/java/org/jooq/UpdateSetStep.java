@@ -41,7 +41,7 @@ import java.util.Map;
  * This type is used for the {@link Update}'s DSL API.
  * <p>
  * Example: <code><pre>
- * Factory create = new Factory();
+ * DSLContext create = DSL.using(configuration);
  *
  * create.update(table)
  *       .set(field1, value1)

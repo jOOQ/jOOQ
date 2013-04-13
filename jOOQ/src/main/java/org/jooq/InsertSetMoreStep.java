@@ -39,7 +39,7 @@ package org.jooq;
  * This type is used for the {@link Insert}'s alternative DSL API.
  * <p>
  * Example: <code><pre>
- * Executor create = Factory.using(config);
+ * DSLContext create = DSL.using(configuration);
  *
  * create.insertInto(table)
  *       .set(field1, value1)

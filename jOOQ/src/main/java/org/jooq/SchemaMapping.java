@@ -280,7 +280,7 @@ public class SchemaMapping implements Serializable {
                 if (!getSchemata().containsKey(schemaName)) {
 
                     // [#1857] thread-safe lazy initialisation for those users who
-                    // want to use Factory and dependent objects in a "thread-safe" manner
+                    // want to use a Configuration and dependent objects in a "thread-safe" manner
                     synchronized (this) {
                         if (!getSchemata().containsKey(schemaName)) {
                             Schema mapped = schema;
@@ -342,7 +342,7 @@ public class SchemaMapping implements Serializable {
             if (!getTables().containsKey(key)) {
 
                 // [#1857] thread-safe lazy initialisation for those users who
-                // want to use Factory and dependent objects in a "thread-safe" manner
+                // want to use Configuration and dependent objects in a "thread-safe" manner
                 synchronized (this) {
                     if (!getTables().containsKey(key)) {
                         Table<R> mapped = table;
@@ -399,7 +399,7 @@ public class SchemaMapping implements Serializable {
         if (schemata == null) {
 
             // [#1857] thread-safe lazy initialisation for those users who
-            // want to use Factory and dependent objects in a "thread-safe" manner
+            // want to use Configuration and dependent objects in a "thread-safe" manner
             synchronized (this) {
                 if (schemata == null) {
                     schemata = new HashMap<String, Schema>();

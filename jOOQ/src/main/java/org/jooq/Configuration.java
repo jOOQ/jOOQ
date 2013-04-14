@@ -41,13 +41,13 @@ import java.util.Map;
 import org.jooq.conf.Settings;
 
 /**
- * A <code>Configuration</code> configures an {@link DSLContext}, providing it
+ * A <code>Configuration</code> configures a {@link DSLContext}, providing it
  * with information for query construction, rendering and execution.
  * <p>
  * A <code>Configuration</code> wraps all information elements that are
  * needed...
  * <ul>
- * <li>by an {@link DSLContext} to construct {@link Query} objects</li>
+ * <li>by a {@link DSLContext} to construct {@link Query} objects</li>
  * <li>by a {@link RenderContext} to render {@link Query} objects and
  * {@link QueryPart}s</li>
  * <li>by a {@link BindContext} to bind values to {@link Query} objects and

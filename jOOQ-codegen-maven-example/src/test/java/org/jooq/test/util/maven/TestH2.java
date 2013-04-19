@@ -37,19 +37,20 @@ package org.jooq.test.util.maven;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static org.jooq.impl.Factory.countDistinct;
-import static org.jooq.maven.example.h2.Tables.T_AUTHOR;
-import static org.jooq.maven.example.h2.Tables.T_BOOK;
-import static org.jooq.maven.example.h2.Tables.T_BOOK_STORE;
-import static org.jooq.maven.example.h2.Tables.T_BOOK_TO_BOOK_STORE;
+import static org.jooq.impl.DSL.countDistinct;
+import static org.jooq.maven.example.h2.tables.TAuthor.T_AUTHOR;
+import static org.jooq.maven.example.h2.tables.TBook.T_BOOK;
+import static org.jooq.maven.example.h2.tables.TBookStore.T_BOOK_STORE;
+import static org.jooq.maven.example.h2.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.jooq.DSLContext;
 import org.jooq.Record3;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
+import org.jooq.impl.DSL;
 import org.jooq.maven.example.h2.tables.TAuthor;
 import org.jooq.maven.example.h2.tables.TBook;
 import org.jooq.maven.example.h2.tables.TBookStore;
@@ -65,14 +66,14 @@ import org.junit.Test;
  */
 public class TestH2 {
 
-    private static Executor create;
+    private static DSLContext create;
     private static Connection connection;
 
     @BeforeClass
     public static void start() throws Exception {
         Class.forName("org.h2.Driver");
         connection = DriverManager.getConnection("jdbc:h2:~/maven-test", "sa", "");
-        create = new Executor(connection, SQLDialect.H2);
+        create = DSL.using(connection, SQLDialect.H2);
     }
 
     @AfterClass

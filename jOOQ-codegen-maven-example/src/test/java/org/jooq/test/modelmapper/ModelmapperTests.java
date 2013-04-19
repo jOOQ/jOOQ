@@ -35,17 +35,18 @@
  */
 package org.jooq.test.modelmapper;
 
-import static org.jooq.maven.example.h2.Tables.T_AUTHOR;
-import static org.jooq.maven.example.h2.Tables.T_BOOK;
+import static org.jooq.maven.example.h2.tables.TAuthor.T_AUTHOR;
+import static org.jooq.maven.example.h2.tables.TBook.T_BOOK;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
 
+import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.SQLDialect;
-import org.jooq.impl.Executor;
+import org.jooq.impl.DSL;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -54,14 +55,14 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 
 public class ModelmapperTests {
-    private static Executor create;
+    private static DSLContext create;
     private static Connection connection;
 
     @BeforeClass
     public static void start() throws Exception {
         Class.forName("org.h2.Driver");
         connection = DriverManager.getConnection("jdbc:h2:~/maven-test", "sa", "");
-        create = new Executor(connection, SQLDialect.H2);
+        create = DSL.using(connection, SQLDialect.H2);
     }
 
     @AfterClass

@@ -16,7 +16,7 @@ function printContent() {
 			of heavy mappers, hiding the beauty and simplicity of relational data.
 			SQL was never meant to be object-oriented. SQL was never meant to be
 			anything other than... SQL!</p>
-<h2 id="jOOQ-code"><a href="#jOOQ code" name="jOOQ code">#</a> What does jOOQ code look like?</h2>
+<h2 id="jOOQ-code"><a href="#jOOQ-code" name="jOOQ-code">#</a> What does jOOQ code look like?</h2>
 <p>It's simple. With the jOOQ DSL, SQL looks almost as if it were
 natively supported by Java. For instance, get all books published in 2011, ordered by title</p>
 
@@ -70,6 +70,56 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
 	</tr>
 </table>
 
+<h2 id="jOOQ-typesafety"><a href="#jOOQ-typesafety" name="jOOQ-typesafety">#</a> What does type safety mean to jOOQ?</h2>
+    <p>SQL is a very type safe language. So is jOOQ. jOOQ uniquely respects SQL's row value expression typesafety. jOOQ will use your Java compiler to type-check the following:</p>
+
+<pre class="prettyprint lang-java">
+select().from(t).where(t.a.eq(select(t2.x).from(t2));
+// Type-check here: ---------------> ^^^^
+select().from(t).where(t.a.eq(any(select(t2.x).from(t2)));
+// Type-check here: -------------------> ^^^^
+select().from(t).where(t.a.in(select(t2.x).from(t2));
+// Type-check here: ---------------> ^^^^
+</pre>
+
+    <p>And also set operations:</p>
+
+<pre class="prettyprint lang-java">
+select(t1.a, t1.b).from(t1).union(select(t2.a, t2.b).from(t2));
+// Type-check here: -------------------> ^^^^^^^^^^
+</pre>
+
+    <p>And even row value expressions:</p>
+
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td width="50%" class="left"><pre class="prettyprint lang-sql">
+SELECT * FROM t WHERE (t.a, t.b) = (1, 2)
+
+SELECT * FROM t WHERE (t.a, t.b) OVERLAPS (date1, date2)
+
+SELECT * FROM t WHERE (t.a, t.b) IN (SELECT x, y FROM t2)
+
+UPDATE t SET (a, b) = (SELECT x, y FROM t2 WHERE ...)
+
+INSERT INTO t (a, b) VALUES (1, 2)
+&nbsp;
+</pre></td>
+		<td width="50%" class="right"><pre class="prettyprint lang-java">
+select().from(t).where(row(t.a, t.b).eq(1, 2));
+// Type-check here: ----------------->  ^^^^
+select().from(t).where(row(t.a, t.b).overlaps(date1, date2));
+// Type-check here: ------------------------> ^^^^^^^^^^^^
+select().from(t).where(row(t.a, t.b).in(select(t2.x, t2.y).from(t2)));
+// Type-check here: -------------------------> ^^^^^^^^^^
+update(t).set(row(t.a, t.b), select(t2.x, t2.y).where(...));
+// Type-check here: --------------> ^^^^^^^^^^
+insertInto(t, t.a, t.b).values(1, 2);
+// Type-check here: ---------> ^^^^
+</pre></td>
+	</tr>
+</table>
+
 <h2 id="What-is-jOOQ"><a href="#What-is-jOOQ" name="What-is-jOOQ">#</a> What is jOOQ?</h2>
     <p>jOOQ stands for Java Object Oriented Querying. It combines these essential features:</p>
 
@@ -102,10 +152,10 @@ create.select(AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME, count())
     <ul>
     <li>When you love your RDBMS of choice, including all its vendor-specific features.</li>
     <li>When you love control over your code.</li>
-    <li>When you love the relational data model (read this <a href="http://database-programmer.blogspot.com/2010/12/historical-perspective-of-orm-and.html" title="Ken Downs view on ORM's and how jOOQ fits into this world">interesting article</a>).</li>
+    <li>When you love the relational data model.</li>
     <li>When you love SQL.</li>
     <li>When you love stored procedures.</li>
-    <li>When you love both <a href="http://en.wikipedia.org/wiki/OLAP" title="Online Analytical Processing, advanced SELECT statements, i.e. what none of the ORM's do, but jOOQ does best">OLAP</a> and <a href="http://en.wikipedia.org/wiki/OLTP" title="Online Transaction Processing, i.e. basic CRUD operations, what all ORM's do">OLTP</a></li>
+    <li>When you love both <a href="http://en.wikipedia.org/wiki/OLAP" title="Online Analytical Processing, advanced SELECT statements, i.e. what none of the ORMs do, but jOOQ does best">OLAP</a> and <a href="http://en.wikipedia.org/wiki/OLTP" title="Online Transaction Processing, i.e. basic CRUD operations, what all ORM's do">OLTP</a></li>
     </ul>
 
 <h2 id="When-not-to-use-jOOQ"><a href="#When-not-to-use-jOOQ" name="When-not-to-use-jOOQ">#</a> When not to use jOOQ</h2>

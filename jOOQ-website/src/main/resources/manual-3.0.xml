@@ -6934,6 +6934,25 @@ Result<Record> result = create.fetch(rs);
 // As a Cursor
 Cursor<Record> cursor = create.fetchLazy(rs);]]></java>
 
+                                    <p>
+                                        You can also tighten the interaction with jOOQ's data type system and <reference id="data-type-conversion" title="data type conversion"/> features, by passing the record type to the above fetch methods:
+                                    </p>
+                                    
+<java><![CDATA[// Pass an array of types:
+Result<Record> result = create.fetch    (rs, Integer.class, String.class);
+Cursor<Record> result = create.fetchLazy(rs, Integer.class, String.class);
+
+// Pass an array of data types:
+Result<Record> result = create.fetch    (rs, SQLDataType.INTEGER, SQLDataType.VARCHAR);
+Cursor<Record> result = create.fetchLazy(rs, SQLDataType.INTEGER, SQLDataType.VARCHAR);
+
+// Pass an array of fields:
+Result<Record> result = create.fetch    (rs, BOOK.ID, BOOK.TITLE);
+Cursor<Record> result = create.fetchLazy(rs, BOOK.ID, BOOK.TITLE);]]></java>
+
+                                    <p>
+                                        If supplied, the additional information is used to override the information obtained from the <reference class="java.sql.ResultSet" title="ResultSet"/>'s <reference class="java.sql.ResultSetMetaData"/> information.
+                                    </p>                                    
 								</content>
 							</section>
 

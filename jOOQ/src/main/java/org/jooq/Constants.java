@@ -43,14 +43,30 @@ package org.jooq;
 public final class Constants {
 
     /**
-     * The latest jOOQ version
+     * The latest jOOQ minor version.
      */
-    public static final String VERSION = "3.0.0";
+    public static final String MINOR_VERSION  = "3.0";
+
+    /**
+     * The latest jOOQ version.
+     * <p>
+     * This is the same as {@link #MINOR_VERSION}, but it may include patch
+     * version suffixes.
+     */
+    public static final String VERSION        = "3.0.0";
+
+    /**
+     * The latest jOOQ full version.
+     * <p>
+     * This is the same as {@link #VERSION}, but it may include release
+     * candidate and other suffixes.
+     */
+    public static final String FULL_VERSION   = "3.0.0-RC3";
 
     /**
      * The maximum degree of {@link Row} and {@link Record} subtypes
      */
-    public static final int MAX_ROW_DEGREE = 22;
+    public static final int    MAX_ROW_DEGREE = 22;
 
     /**
      * No further instances

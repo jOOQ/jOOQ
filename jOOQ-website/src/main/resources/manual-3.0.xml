@@ -8669,8 +8669,13 @@ Finishing                : Total: 4.814ms, +3.375ms
 
 							<h3>Run code generation from Eclipse</h3>
 							<p>
-								Of course, you can also run code generation from your IDE. In Eclipse, set up a project like this. Note that this example uses jOOQ's log4j support by adding log4j.xml and log4j.jar to the project classpath:
+								Of course, you can also run code generation from your IDE. In Eclipse, set up a project like this. Note that:
 							</p>
+                            <ul>
+                                <li>this example uses jOOQ's log4j support by adding log4j.xml and log4j.jar to the project classpath.</li>
+                                <li>the actual jooq-{jooq-version}.jar, jooq-meta-{jooq-version}.jar, jooq-codegen-{jooq-version}.jar artefacts may contain version numbers in the file names.</li>
+                            </ul>
+                            
 							<div class="screenshot">
 							<img class="screenshot" src="&lt;?=$root?&gt;/img/eclipse-example-01.png" alt="Eclipse configuration"/>
 							</div>

@@ -133,13 +133,13 @@ final class Utils {
     static final JooqLogger      log                                          = JooqLogger.getLogger(Utils.class);
 
     // ------------------------------------------------------------------------
-    // Some constants for use with Configuration.setData()
+    // Some constants for use with Context.data()
     // ------------------------------------------------------------------------
 
     /**
      * [#1537] This constant is used internally by jOOQ to omit the RETURNING
      * clause in {@link DSLContext#batchStore(UpdatableRecord...)} calls for
-     * {@link SQLDialect#POSTGRES}
+     * {@link SQLDialect#POSTGRES}.
      */
     static final String          DATA_OMIT_RETURNING_CLAUSE                   = "org.jooq.configuration.omit-returning-clause";
 
@@ -152,6 +152,27 @@ final class Utils {
      * are the same
      */
     static final String          DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY = "org.jooq.configuration.row-value-expression-subquery";
+
+    /**
+     * [#1520] Count the number of bind values, and potentially enforce a static
+     * statement.
+     */
+    static final String          DATA_COUNT_BIND_VALUES                       = "org.jooq.configuration.count-bind-values";
+
+    /**
+     * [#1520] Enforce executing static statements.
+     * <p>
+     * Some SQL dialects support only a limited amount of bind variables. This
+     * flag is set when static statements have too many bind variables. Known
+     * values are:
+     * <ul>
+     * <li>{@link SQLDialect#ASE} : 2000</li>
+     * <li>{@link SQLDialect#INGRES} : 1024</li>
+     * <li>{@link SQLDialect#SQLITE} : 999</li>
+     * <li>{@link SQLDialect#SQLSERVER} : 2100</li>
+     * </ul>
+     */
+    static final String          DATA_FORCE_STATIC_STATEMENT                  = "org.jooq.configuration.force-static-statement";
 
     // ------------------------------------------------------------------------
     // Other constants

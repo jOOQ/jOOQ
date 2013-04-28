@@ -51,7 +51,7 @@ import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Query;
 import org.jooq.UpdatableRecord;
-import org.jooq.exception.ControlFlowException;
+import org.jooq.exception.ControlFlowSignal;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -117,7 +117,7 @@ class BatchCRUD implements Batch {
                 records[i].attach(local);
                 executeAction(i);
             }
-            catch (QueryCollectorException e) {
+            catch (QueryCollectorSignal e) {
                 Query query = e.getQuery();
                 String sql = e.getSQL();
 
@@ -180,7 +180,7 @@ class BatchCRUD implements Batch {
                 records[i].attach(local);
                 executeAction(i);
             }
-            catch (QueryCollectorException e) {
+            catch (QueryCollectorSignal e) {
                 Query query = e.getQuery();
 
                 if (query.isExecutable()) {
@@ -266,7 +266,7 @@ class BatchCRUD implements Batch {
 
         @Override
         public void renderEnd(ExecuteContext ctx) {
-            throw new QueryCollectorException(ctx.sql(), ctx.query());
+            throw new QueryCollectorSignal(ctx.sql(), ctx.query());
         }
     }
 
@@ -276,7 +276,7 @@ class BatchCRUD implements Batch {
      * This exception is used as a signal for jOOQ's internals to abort query
      * execution, and return generated SQL back to batch execution.
      */
-    private static class QueryCollectorException extends ControlFlowException {
+    private static class QueryCollectorSignal extends ControlFlowSignal {
 
         /**
          * Generated UID
@@ -285,7 +285,7 @@ class BatchCRUD implements Batch {
         private final String      sql;
         private final Query       query;
 
-        QueryCollectorException(String sql, Query query) {
+        QueryCollectorSignal(String sql, Query query) {
             this.sql = sql;
             this.query = query;
         }

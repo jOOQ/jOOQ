@@ -84,9 +84,6 @@ public interface Query extends QueryPart, Attachable {
     /**
      * Retrieve the SQL code rendered by this Query
      * <p>
-     * This method can be expected to work correctly for any SQL dialect, as a
-     * query is usually "attached" when created from a {@link DSLContext}.
-     * <p>
      * Use this method, when you want to use jOOQ for object oriented query
      * creation, but execute the query with some other technology, such as
      * <ul>
@@ -118,6 +115,12 @@ public interface Query extends QueryPart, Attachable {
      * JDBC {@link Statement}</td>
      * </tr>
      * </table>
+     * <p>
+     * [#1520] Note that the query actually being executed might not contain any
+     * bind variables, in case the number of bind variables exceeds your SQL
+     * dialect's maximum number of supported bind variables. This is not
+     * reflected by this method, which will only use the {@link Settings} to
+     * decide whether to render bind values.
      *
      * @see #getSQL(boolean)
      */
@@ -126,7 +129,13 @@ public interface Query extends QueryPart, Attachable {
     /**
      * Retrieve the SQL code rendered by this Query
      * <p>
-     * See {@link #getSQL()} for more details
+     * [#1520] Note that the query actually being executed might not contain any
+     * bind variables, in case the number of bind variables exceeds your SQL
+     * dialect's maximum number of supported bind variables. This is not
+     * reflected by this method, which will only use <code>inline</code>
+     * argument to decide whether to render bind values.
+     * <p>
+     * See {@link #getSQL()} for more details.
      *
      * @param inline Whether to inline bind variables. This overrides values in
      *            {@link Settings#getStatementType()}

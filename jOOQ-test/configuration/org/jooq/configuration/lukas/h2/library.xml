@@ -94,16 +94,27 @@
             <records>false</records>
             <pojos>false</pojos>
 
-            <navigationMethods>true</navigationMethods>
-            <deprecated>true</deprecated>
-            <instanceFields>false</instanceFields>
+            <!-- [#2401] Be sure that excess whitespace is trimmed by JAXB -->
+            <navigationMethods>
+                true
+            </navigationMethods>
+            <deprecated>
+                true
+            </deprecated>
+            <instanceFields>
+                false
+            </instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
             <interfaces>true</interfaces>
             <jpaAnnotations>false</jpaAnnotations>
         </generate>
         <target>
-            <packageName>org.jooq.test.h2.generatedclasses</packageName>
-            <directory>./src</directory>
+            <packageName>
+                org.jooq.test.h2.generatedclasses
+            </packageName>
+            <directory>
+                ./src
+            </directory>
         </target>
     </generator>
 </configuration>

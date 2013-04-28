@@ -61,7 +61,7 @@ public final class Constants {
      * This is the same as {@link #VERSION}, but it may include release
      * candidate and other suffixes.
      */
-    public static final String FULL_VERSION   = "3.0.0-RC3";
+    public static final String FULL_VERSION   = "3.0.0";
 
     /**
      * The maximum degree of {@link Row} and {@link Record} subtypes

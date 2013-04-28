@@ -66,6 +66,7 @@ import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
+import org.jooq.test._.tools.DOMBuilder;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
@@ -405,6 +406,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testIntoXML() throws Exception {
         Result<B> books = create().selectFrom(TBook()).fetch();
         testXML(books.intoXML(), books);
+    }
+
+    @Test
+    public void testIntoXMLContentHandler() throws Exception {
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+        Result<B> books = create().selectFrom(TBook()).fetch();
+        testXML((Document) books.intoXML(new DOMBuilder(document)).getRootDocument(), books);
     }
 
     private void testXML(Document doc, Result<B> books) throws XPathExpressionException {

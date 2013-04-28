@@ -1623,6 +1623,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testIntoXMLContentHandler() throws Exception {
+        new FormatTests(this).testIntoXMLContentHandler();
+    }
+
+    @Test
     public void testCombinedSelectQuery() throws Exception {
         new SelectTests(this).testCombinedSelectQuery();
     }

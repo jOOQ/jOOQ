@@ -78,6 +78,10 @@ import org.jooq.tools.json.JSONObject;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * @author Lukas Eder
@@ -678,6 +682,56 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         catch (ParserConfigurationException ignore) {
             throw new RuntimeException(ignore);
         }
+    }
+
+    @Override
+    public final <H extends ContentHandler> H intoXML(H handler) throws SAXException {
+        Attributes empty = new AttributesImpl();
+
+        handler.startDocument();
+        handler.startPrefixMapping("", "http://www.jooq.org/xsd/jooq-export-2.6.0.xsd");
+        handler.startElement("", "", "result", empty);
+        handler.startElement("", "", "fields", empty);
+
+        for (Field<?> field : fields) {
+            AttributesImpl attrs = new AttributesImpl();
+            attrs.addAttribute("", "", "name", "CDATA", field.getName());
+            attrs.addAttribute("", "", "type", "CDATA", field.getDataType().getTypeName().toUpperCase());
+
+            handler.startElement("", "", "field", attrs);
+            handler.endElement("", "", "field");
+        }
+
+        handler.endElement("", "", "fields");
+        handler.startElement("", "", "records", empty);
+
+        for (Record record : this) {
+            handler.startElement("", "", "record", empty);
+
+            for (int index = 0; index < fields.fields.length; index++) {
+                Field<?> field = fields.fields[index];
+                Object value = record.getValue(index);
+
+                AttributesImpl attrs = new AttributesImpl();
+                attrs.addAttribute("", "", "field", "CDATA", field.getName());
+
+                handler.startElement("", "", "value", attrs);
+
+                if (value != null) {
+                    char[] chars = format0(value, false).toCharArray();
+                    handler.characters(chars, 0, chars.length);
+                }
+
+                handler.endElement("", "", "value");
+            }
+
+            handler.endElement("", "", "record");
+        }
+
+        handler.endElement("", "", "records");
+        handler.endPrefixMapping("");
+        handler.endDocument();
+        return handler;
     }
 
     private final String escapeXML(String string) {

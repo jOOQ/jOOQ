@@ -47,6 +47,8 @@ import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
 
 import org.w3c.dom.Document;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 /**
  * A wrapper for database results returned by <code>{@link SelectQuery}</code>
@@ -429,6 +431,17 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
      */
     Document intoXML();
+
+    /**
+     * Get this result as XML using a SAX <code>ContentHandler</code>.
+     *
+     * @param handler The custom content handler.
+     * @return The argument content handler is returned for convenience.
+     * @see #formatXML()
+     * @see <a
+     *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
+     */
+    <H extends ContentHandler> H intoXML(H handler) throws SAXException;
 
     /**
      * Return the generated result as a list of name/value maps.

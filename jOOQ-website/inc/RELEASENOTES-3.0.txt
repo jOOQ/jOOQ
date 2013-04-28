@@ -10,7 +10,7 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.0.0 (RC3) - April 12, 2013
+Version 3.0.0 - April 28, 2013
 ================================================================================
 
 This major release is a great move towards better integration of SQL as a
@@ -117,11 +117,37 @@ For those users among you, migrating from jOOQ 2.x to 3.0, here are a couple of
 useful hints:
 http://www.jooq.org/doc/3.0/manual/reference/migrating-to-3.0/
 
-Note, that for technical reasons, jOOQ 3.0.0-RC3 could not yet be integration
-tested with DB2, Ingres, and Sybase ASE.
+Note, that for technical reasons, jOOQ 3.0.0 could not yet be integration
+tested with DB2, Ingres, and Sybase ASE. Consider using jOOQ 2.6, instead
 
 Note, that further code generation and model API improvements were postponed to
 a later release
+
+Note, previous release candidates contained more features, improvements and bug
+fixes. See their respective sections for details.
+
+Features and improvements
+-------------------------
+#2410 - Add some more API usage examples to the section about ResultSet fetching
+#2415 - Add Constants.MINOR_VERSION and Constants.FULL_VERSION for internal and
+        external reuse
+
+Bug fixes
+---------
+#1998 - Wrong screenshots in the manual's section about code generation. 
+        jooq-meta.jar is missing
+#2407 - Fix bad references to pre-3.0 Factory in Javadoc
+
+Version 3.0.0 (RC3) - April 12, 2013
+================================================================================
+
+This major release is a great move towards better integration of SQL as a
+language in Java. Unlike any other database abstraction framework, jOOQ now
+formally supports the notion of "row value expressions". The jOOQ API uses
+Xtend-generated API types from Row1 .. Row22, as well as Record1 .. Record22 to 
+bring you even more compile-time typesafety on a record-level.
+
+See release 3.0.0 for more information.
 
 Features and improvements
 -------------------------

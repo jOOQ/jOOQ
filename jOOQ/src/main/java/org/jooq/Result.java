@@ -58,7 +58,7 @@ import org.w3c.dom.Document;
 public interface Result<R extends Record> extends List<R>, Attachable {
 
     /**
-     * Get this result's fields as a {@link Row}
+     * Get this result's fields as a {@link Row}.
      */
     Row fieldsRow();
 
@@ -304,13 +304,13 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         DataTypeException;
 
     /**
-     * Whether there are any records contained in this <code>Result</code>
+     * Whether there are any records contained in this <code>Result</code>.
      */
     @Override
     boolean isEmpty();
 
     /**
-     * Whether there are any records contained in this <code>Result</code>
+     * Whether there are any records contained in this <code>Result</code>.
      */
     boolean isNotEmpty();
 
@@ -398,7 +398,9 @@ public interface Result<R extends Record> extends List<R>, Attachable {
 
     /**
      * Get a simple formatted representation of this result as a JSON array of
-     * array. The format is the following: <code><pre>
+     * array.
+     * <p>
+     * The format is the following: <code><pre>
      * {"fields":[{"name":"field-1","type":"type-1"},
      *            {"name":"field-2","type":"type-2"},
      *            ...,
@@ -412,7 +414,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     String formatJSON();
 
     /**
-     * Get this result formatted as XML
+     * Get this result formatted as XML.
      *
      * @see <a
      *      href="http://www.jooq.org/xsd/jooq-export-2.6.0.xsd">http://www.jooq.org/xsd/jooq-export-2.6.0.xsd</a>
@@ -420,7 +422,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     String formatXML();
 
     /**
-     * Get this result as XML
+     * Get this result as XML.
      *
      * @see #formatXML()
      * @see <a
@@ -555,7 +557,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
 
     /**
      * Return a {@link Map} with one of the result's columns as key and another
-     * one of the result's columns as value
+     * one of the result's columns as value.
      * <p>
      * Unlike {@link #intoMap(Field, Field)}, this method allows for non-unique
      * keys in the result set.
@@ -620,7 +622,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
         MappingException;
 
     /**
-     * Convert this result into an array of arrays
+     * Convert this result into an array of arrays.
      * <p>
      * The resulting array has the same number of first-dimension elements as
      * this result has records. It has the same number of second-dimension
@@ -804,7 +806,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     <Z extends Record> Result<Z> into(Table<Z> table) throws MappingException;
 
     /**
-     * Map results into a custom handler callback
+     * Map results into a custom handler callback.
      *
      * @param handler The handler callback
      * @return Convenience result, returning the parameter handler itself
@@ -840,7 +842,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
     ResultSet intoResultSet();
 
     /**
-     * Map results into a custom mapper callback
+     * Map results into a custom mapper callback.
      *
      * @param mapper The mapper callback
      * @return The custom mapped records

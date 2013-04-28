@@ -257,6 +257,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             Connection connection = ctx.connection();
 
             listener.renderStart(ctx);
+            // [#1520] TODO: Should the number of bind values be checked, here?
             ctx.sql(create(configuration).render(this));
             listener.renderEnd(ctx);
 
@@ -653,7 +654,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         }
 
         // [#2393] Fully qualify custom aggregate functions.
-        // TODO: Merge this code into RoutineField! 
+        // TODO: Merge this code into RoutineField!
         List<String> names = new ArrayList<String>();
         if (schema != null) {
             names.add(schema.getName());

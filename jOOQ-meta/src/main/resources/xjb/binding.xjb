@@ -12,6 +12,9 @@
  
         <!-- Force all classes implements Serializable -->
         <xjc:serializable uid="300" />
+        
+        <!-- [#2401] Trim unnecessary whitespace from configuration -->
+        <xjc:javaType name="java.lang.String" xmlType="xs:string" adapter="org.jooq.util.jaxb.tools.TrimAdapter"/>
     </jaxb:globalBindings>
  
  

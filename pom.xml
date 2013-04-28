@@ -12,7 +12,7 @@
 
     <groupId>org.jooq</groupId>
     <artifactId>jooq-parent</artifactId>
-    <version>3.0.0-RC3</version>
+    <version>3.0.0</version>
     <packaging>pom</packaging>
 
     <name>jOOQ Parent</name>
@@ -84,11 +84,11 @@
             </roles>
         </contributor>
         <contributor>
-        	<name>Ivan Dugic</name>
-        	<email>idugic@gmail.com</email>
-        	<roles>
-        		<role>core-implementations</role>
-        	</roles>
+            <name>Ivan Dugic</name>
+            <email>idugic@gmail.com</email>
+            <roles>
+                <role>core-implementations</role>
+            </roles>
         </contributor>
         <contributor>
             <name>Peter Ertl</name>
@@ -119,12 +119,12 @@
             </roles>
         </contributor>
         <contributor>
-        	<name>Sugiharto Lim</name>
-        	<email>truesaint@gmail.com</email>
-        	<roles>
-        		<role>firebird-support</role>
-        	</roles>	
-       	</contributor>
+            <name>Sugiharto Lim</name>
+            <email>truesaint@gmail.com</email>
+            <roles>
+                <role>firebird-support</role>
+            </roles>    
+           </contributor>
     </contributors>
 
     <modules>
@@ -218,25 +218,25 @@
             
             <!-- If generated test sources are available, attach them to the
                  test source path -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<id>add-test-sources</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>add-test-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${project.build.directory}/generated-test-sources/jooq-h2</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>add-test-sources</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-test-sources/jooq-h2</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

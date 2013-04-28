@@ -37,6 +37,8 @@
 package org.jooq.impl;
 
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
+import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Utils.DATA_FORCE_STATIC_STATEMENT;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,6 +52,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.RenderContext;
 import org.jooq.conf.SettingsTools;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DetachedException;
@@ -256,7 +259,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 // [#385] First time statement preparing
                 else {
                     listener.renderStart(ctx);
-                    ctx.sql(getSQL());
+                    ctx.sql(getSQL0(ctx));
                     listener.renderEnd(ctx);
 
                     sql = ctx.sql();
@@ -273,8 +276,14 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                     ctx.statement().setQueryTimeout(timeout);
                 }
 
-                // [#1145] Bind variables only for true prepared statements
-                if (executePreparedStatements(c.settings())) {
+                if (
+
+                    // [#1145] Bind variables only for true prepared statements
+                    executePreparedStatements(c.settings()) &&
+
+                    // [#1520] Renderers may enforce static statements, too
+                    !Boolean.TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
+
                     listener.bindStart(ctx);
                     create(c).bind(this, ctx.statement());
                     listener.bindEnd(ctx);
@@ -353,9 +362,24 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
         return true;
     }
 
+    private final String getSQL0(ExecuteContext ctx) {
+        if (executePreparedStatements(configuration().settings())) {
+            try {
+                RenderContext render = new DefaultRenderContext(configuration);
+                render.data(DATA_COUNT_BIND_VALUES, true);
+                return render.render(this);
+            }
+            catch (DefaultRenderContext.ForceInlineSignal e) {
+                ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
+                return getSQL(true);
+            }
+        }
+        else {
+            return getSQL(true);
+        }
+    }
+
     /**
-     * This method is also declared as {@link Query#getSQL()}
-     * <p>
      * {@inheritDoc}
      */
     @Override
@@ -369,8 +393,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     }
 
     /**
-     * This method is also declared as {@link Query#getSQL(boolean)}
-     * <p>
      * {@inheritDoc}
      */
     @Override

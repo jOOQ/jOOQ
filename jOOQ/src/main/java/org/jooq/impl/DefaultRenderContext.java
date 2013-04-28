@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -44,6 +45,7 @@ import java.util.Stack;
 import java.util.regex.Pattern;
 
 import org.jooq.Configuration;
+import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -51,6 +53,8 @@ import org.jooq.SQLDialect;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
+import org.jooq.exception.ControlFlowSignal;
+import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -58,12 +62,15 @@ import org.jooq.tools.StringUtils;
  */
 class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
 
+    private static final JooqLogger  log                = JooqLogger.getLogger(DefaultRenderContext.class);
+
     private static final Pattern     IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
     private static final Pattern     NEWLINE            = Pattern.compile("[\\n\\r]");
     private static final Set<String> SQLITE_KEYWORDS;
 
     private final StringBuilder      sql;
     private boolean                  inline;
+    private int                      params;
     private boolean                  renderNamedParams;
     private boolean                  qualify            = true;
     private int                      alias;
@@ -336,6 +343,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext sql(QueryPart part) {
         if (part != null) {
+            checkForceInline(part);
             QueryPartInternal internal = (QueryPartInternal) part;
 
             // If this is supposed to be a declaration section and the part
@@ -362,6 +370,43 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         }
 
         return this;
+    }
+
+    private final void checkForceInline(QueryPart part) throws ForceInlineSignal {
+        if (inline)
+            return;
+
+        if (part instanceof Param) {
+            if (((Param<?>) part).isInline())
+                return;
+
+            switch (configuration().dialect()) {
+                case ASE:
+                    checkForceInline(2000);
+                    return;
+
+                case INGRES:
+                    checkForceInline(1024);
+                    return;
+
+                case SQLITE:
+                    checkForceInline(999);
+                    return;
+
+                case SQLSERVER:
+                    checkForceInline(2100);
+                    return;
+
+                default:
+                    return;
+            }
+        }
+    }
+
+    private final void checkForceInline(int max) throws ForceInlineSignal {
+        if (Boolean.TRUE.equals(data(DATA_COUNT_BIND_VALUES)))
+            if (++params > max)
+                throw new ForceInlineSignal();
     }
 
     @Override
@@ -583,5 +628,24 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             "WHEN",
             "WHERE"
         ));
+    }
+
+    /**
+     * A query execution interception signal.
+     * <p>
+     * This exception is used as a signal for jOOQ's internals to abort query
+     * execution, and return generated SQL back to batch execution.
+     */
+    class ForceInlineSignal extends ControlFlowSignal {
+
+        /**
+         * Generated UID
+         */
+        private static final long serialVersionUID = -9131368742983295195L;
+
+        public ForceInlineSignal() {
+            if (log.isDebugEnabled())
+                log.debug("Re-render query", "Forcing bind variable inlining as " + configuration().dialect() + " does not support " + params + " bind variables (or more) in a single query");
+        }
     }
 }

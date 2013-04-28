@@ -343,57 +343,47 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                                       .where(TBook_ID().in(Collections.nCopies(999, 1)))
                                       .fetchOne(count));
 
-        switch (dialect()) {
-            case INGRES:
-            case SQLITE:
-                log.info("SKIPPING", "SQLite/Ingres can't handle more than 999 variables");
-                break;
+        // Oracle needs splitting of IN(..) expressions when there are
+        // more than 1000 elements
+        assertEquals(1, (int) create().select(count)
+            .from(TBook())
+            .where(TBook_ID().in(Collections.nCopies(1000, 1)))
+            .fetchOne(count));
 
-            default:
-                // Oracle needs splitting of IN(..) expressions when there are
-                // more than 1000 elements
-                assertEquals(1, (int) create().select(count)
-                    .from(TBook())
-                    .where(TBook_ID().in(Collections.nCopies(1000, 1)))
-                    .fetchOne(count));
+        assertEquals(1, (int) create().select(count)
+            .from(TBook())
+            .where(TBook_ID().in(Collections.nCopies(1001, 1)))
+            .fetchOne(count));
 
-                assertEquals(1, (int) create().select(count)
-                    .from(TBook())
-                    .where(TBook_ID().in(Collections.nCopies(1001, 1)))
-                    .fetchOne(count));
+        // SQL Server's is at 2100...
+        // Sybase ASE's is at 2000...
+        assertEquals(1, (int) create().select(count)
+            .from(TBook())
+            .where(TBook_ID().in(Collections.nCopies(3000, 1)))
+            .fetchOne(count));
 
-                // SQL Server's is at 2100...
-                // Sybase ASE's is at 2000...
-                assertEquals(1, (int) create().select(count)
-                    .from(TBook())
-                    .where(TBook_ID().in(Collections.nCopies(1950, 1)))
-                    .fetchOne(count));
+        assertEquals(3, (int) create().select(count)
+            .from(TBook())
+            .where(TBook_ID().notIn(Collections.nCopies(3000, 1)))
+            .fetchOne(count));
 
-                assertEquals(3, (int) create().select(count)
-                    .from(TBook())
-                    .where(TBook_ID().notIn(Collections.nCopies(1950, 1)))
-                    .fetchOne(count));
+        // [#1520] Any database should be able to handle lots of inlined
+        // variables, including SQL Server and Sybase ASE
+        assertEquals(3, (int) create(new Settings().withStatementType(STATIC_STATEMENT))
+            .select(count)
+            .from(TBook())
+            .where(TBook_ID().notIn(Collections.nCopies(3000, 1)))
+            .fetchOne(count));
 
-                // [#1520] Any database should be able to handle lots of inlined
-                // variables, including SQL Server and Sybase ASE
-                assertEquals(3, (int) create(new Settings().withStatementType(STATIC_STATEMENT))
-                    .select(count)
-                    .from(TBook())
-                    .where(TBook_ID().notIn(Collections.nCopies(3000, 1)))
-                    .fetchOne(count));
+        // [#1515] Check correct splitting of NOT IN
+        List<Integer> list = new ArrayList<Integer>();
+        list.addAll(Collections.nCopies(1000, 1));
+        list.addAll(Collections.nCopies(1000, 2));
 
-                // [#1515] Check correct splitting of NOT IN
-                List<Integer> list = new ArrayList<Integer>();
-                list.addAll(Collections.nCopies(1000, 1));
-                list.addAll(Collections.nCopies(1000, 2));
-
-                assertEquals(2, (int) create().select(count)
-                    .from(TBook())
-                    .where(TBook_ID().notIn(list))
-                    .fetchOne(count));
-
-                break;
-        }
+        assertEquals(2, (int) create().select(count)
+            .from(TBook())
+            .where(TBook_ID().notIn(list))
+            .fetchOne(count));
     }
 
     @Test

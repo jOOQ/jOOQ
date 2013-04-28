@@ -55,7 +55,7 @@ import org.jooq.UpdatableRecord;
  * @author Lukas Eder
  * @see ExecuteListener
  */
-public class ControlFlowException extends RuntimeException {
+public class ControlFlowSignal extends RuntimeException {
 
     /**
      * Generated UID
@@ -65,12 +65,12 @@ public class ControlFlowException extends RuntimeException {
     /**
      * Create a new <code>ControlFlowException</code>.
      */
-    public ControlFlowException() {}
+    public ControlFlowSignal() {}
 
     /**
      * Create a new <code>ControlFlowException</code>.
      */
-    public ControlFlowException(String message) {
+    public ControlFlowSignal(String message) {
         super(message);
     }
 }

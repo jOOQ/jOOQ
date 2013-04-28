@@ -105,6 +105,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         castMode(context.castMode());
         declareFields(context.declareFields());
         declareTables(context.declareTables());
+        data().putAll(context.data());
     }
 
     // ------------------------------------------------------------------------

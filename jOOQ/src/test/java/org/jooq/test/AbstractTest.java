@@ -67,7 +67,7 @@ public abstract class AbstractTest {
 
     protected Mockery              context;
     protected PreparedStatement    statement;
-    protected DSLContext             create;
+    protected DSLContext           create;
     protected Result<Table1Record> resultEmpty;
     protected Result<Table1Record> resultOne;
     protected Result<Table1Record> resultTwo;

@@ -51,6 +51,7 @@ import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.Query;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.ControlFlowException;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -270,12 +271,12 @@ class BatchCRUD implements Batch {
     }
 
     /**
-     * A query execution interception signal
+     * A query execution interception signal.
      * <p>
      * This exception is used as a signal for jOOQ's internals to abort query
-     * execution, and return generated SQL back to batch execution
+     * execution, and return generated SQL back to batch execution.
      */
-    private static class QueryCollectorException extends RuntimeException {
+    private static class QueryCollectorException extends ControlFlowException {
 
         /**
          * Generated UID

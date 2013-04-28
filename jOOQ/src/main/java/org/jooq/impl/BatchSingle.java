@@ -120,6 +120,7 @@ class BatchSingle implements BatchBindStep {
 
         try {
             listener.renderStart(ctx);
+            // [#1520] TODO: Should the number of bind values be checked, here?
             ctx.sql(create.render(query));
             listener.renderEnd(ctx);
 

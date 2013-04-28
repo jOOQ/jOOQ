@@ -88,13 +88,6 @@ class DefaultBindContext extends AbstractBindContext {
         this.stmt = stmt;
     }
 
-    DefaultBindContext(BindContext context) {
-        this(context.configuration(), context.statement());
-
-        declareFields(context.declareFields());
-        declareTables(context.declareTables());
-    }
-
     @Override
     public final PreparedStatement statement() {
         return stmt;

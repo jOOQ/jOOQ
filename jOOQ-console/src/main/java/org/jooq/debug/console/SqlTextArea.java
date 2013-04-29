@@ -79,11 +79,12 @@ public class SqlTextArea extends RSyntaxTextArea {
         setMatchedBracketBGColor(null);
         setMatchedBracketBorderColor(new Color(192, 192, 192));
         getActionMap().put("copy", new RSyntaxTextAreaEditorKit.CopyAsRtfAction());
-        Font editorFont = getFont().deriveFont(UIManager.getFont("TextField.font").getSize2D());
+        Font editorFont = UIManager.getFont("TextArea.font");
+        editorFont = new Font("Monospaced", editorFont.getStyle(), editorFont.getSize());
         SyntaxScheme syntaxScheme = getSyntaxScheme();
         syntaxScheme.setStyle(Token.SEPARATOR, new Style(new Color(200, 0, 0), null));
         syntaxScheme.setStyle(Token.RESERVED_WORD, new Style(Color.BLUE, null, editorFont));
-        setFont(new Font("Monospaced", editorFont.getStyle(), editorFont.getSize()));
+        setFont(editorFont);
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -92,6 +93,7 @@ public class SqlTextArea extends RSyntaxTextArea {
                 switch(e.getKeyCode()) {
                     case KeyEvent.VK_P:
                         if(isControlDown && isShiftDown) {
+                            //int position = RSyntaxUtilities.getMatchingBracketPosition(SqlTextArea.this, null).y;
                             int position = RSyntaxUtilities.getMatchingBracketPosition(SqlTextArea.this);
                             if(position >= 0) {
                                 setCaretPosition(position + 1);

@@ -10,7 +10,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/ojdbc6.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hsqldb.jar" sourcepath="/jOOQ-sources/hsqldb-2.2.4.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/db2jcc4.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/sqlitejdbc-v056.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/derby.jar" sourcepath="/jOOQ-sources/db-derby-10.8.1.2-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/derbyclient.jar" sourcepath="/jOOQ-sources/db-derby-10.8.1.2-src.zip"/>
 	<classpathentry exported="true" kind="lib" path="lib/derbynet.jar" sourcepath="/jOOQ-sources/db-derby-10.8.1.2-src.zip"/>
@@ -31,6 +30,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/connector-api-1.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/antlr-runtime-3.4.jar"/>
 	<classpathentry kind="lib" path="lib/postgis-jdbc-1.3.3.jar" sourcepath="C:/Users/Lukas/.m2/repository/org/postgis/postgis-jdbc/1.3.3/postgis-jdbc-1.3.3-sources.jar"/>
+	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.7.15-SNAPSHOT-2.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-console"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-meta"/>
 	<classpathentry kind="output" path="bin"/>

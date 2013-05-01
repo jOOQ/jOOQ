@@ -35,10 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.POSTGRES;
-
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -313,7 +309,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      *
      * @see #lessThan(Row5)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lessThan(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -356,7 +352,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      *
      * @see #lessThan(Row5)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lt(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -402,7 +398,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      *
      * @see #lessOrEqual(Row5)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lessOrEqual(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -445,7 +441,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      *
      * @see #lessOrEqual(Row5)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition le(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -491,7 +487,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      *
      * @see #greaterThan(Row5)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition greaterThan(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -534,7 +530,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      *
      * @see #greaterThan(Row5)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition gt(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -580,7 +576,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      *
      * @see #greaterOrEqual(Row5)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition greaterOrEqual(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
@@ -623,7 +619,7 @@ public interface Row5<T1, T2, T3, T4, T5> extends Row {
      *
      * @see #greaterOrEqual(Row5)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition ge(Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     // ------------------------------------------------------------------------

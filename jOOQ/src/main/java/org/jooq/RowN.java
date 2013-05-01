@@ -35,10 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.POSTGRES;
-
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -284,7 +280,7 @@ public interface RowN extends Row {
      *
      * @see #lessThan(RowN)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lessThan(Select<? extends Record> select);
 
     /**
@@ -327,7 +323,7 @@ public interface RowN extends Row {
      *
      * @see #lessThan(RowN)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lt(Select<? extends Record> select);
 
     /**
@@ -373,7 +369,7 @@ public interface RowN extends Row {
      *
      * @see #lessOrEqual(RowN)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lessOrEqual(Select<? extends Record> select);
 
     /**
@@ -416,7 +412,7 @@ public interface RowN extends Row {
      *
      * @see #lessOrEqual(RowN)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition le(Select<? extends Record> select);
 
     /**
@@ -462,7 +458,7 @@ public interface RowN extends Row {
      *
      * @see #greaterThan(RowN)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition greaterThan(Select<? extends Record> select);
 
     /**
@@ -505,7 +501,7 @@ public interface RowN extends Row {
      *
      * @see #greaterThan(RowN)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition gt(Select<? extends Record> select);
 
     /**
@@ -551,7 +547,7 @@ public interface RowN extends Row {
      *
      * @see #greaterOrEqual(RowN)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition greaterOrEqual(Select<? extends Record> select);
 
     /**
@@ -594,7 +590,7 @@ public interface RowN extends Row {
      *
      * @see #greaterOrEqual(RowN)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition ge(Select<? extends Record> select);
 
     // ------------------------------------------------------------------------

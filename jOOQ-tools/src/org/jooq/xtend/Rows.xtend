@@ -60,10 +60,6 @@ class Rows extends Generators {
             «classHeader»
             package org.jooq;
 
-            import static org.jooq.SQLDialect.HSQLDB;
-            import static org.jooq.SQLDialect.MYSQL;
-            import static org.jooq.SQLDialect.POSTGRES;
-
             import java.util.Collection;
 
             import javax.annotation.Generated;
@@ -322,7 +318,7 @@ class Rows extends Generators {
                  *
                  * @see #lessThan(Row«typeSuffixRaw»)
                  */
-                @Support({ HSQLDB, MYSQL, POSTGRES })
+                @Support
                 Condition lessThan(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
@@ -365,7 +361,7 @@ class Rows extends Generators {
                  *
                  * @see #lessThan(Row«typeSuffixRaw»)
                  */
-                @Support({ HSQLDB, MYSQL, POSTGRES })
+                @Support
                 Condition lt(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
@@ -411,7 +407,7 @@ class Rows extends Generators {
                  *
                  * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
-                @Support({ HSQLDB, MYSQL, POSTGRES })
+                @Support
                 Condition lessOrEqual(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
@@ -454,7 +450,7 @@ class Rows extends Generators {
                  *
                  * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
-                @Support({ HSQLDB, MYSQL, POSTGRES })
+                @Support
                 Condition le(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
@@ -500,7 +496,7 @@ class Rows extends Generators {
                  *
                  * @see #greaterThan(Row«typeSuffixRaw»)
                  */
-                @Support({ HSQLDB, MYSQL, POSTGRES })
+                @Support
                 Condition greaterThan(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
@@ -543,7 +539,7 @@ class Rows extends Generators {
                  *
                  * @see #greaterThan(Row«typeSuffixRaw»)
                  */
-                @Support({ HSQLDB, MYSQL, POSTGRES })
+                @Support
                 Condition gt(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
@@ -589,7 +585,7 @@ class Rows extends Generators {
                  *
                  * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
-                @Support({ HSQLDB, MYSQL, POSTGRES })
+                @Support
                 Condition greaterOrEqual(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
@@ -632,7 +628,7 @@ class Rows extends Generators {
                  *
                  * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
-                @Support({ HSQLDB, MYSQL, POSTGRES })
+                @Support
                 Condition ge(Select<? extends Record«recTypeSuffix»> select);
 
                 // ------------------------------------------------------------------------

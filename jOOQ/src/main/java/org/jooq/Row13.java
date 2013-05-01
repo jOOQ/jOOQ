@@ -35,10 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.POSTGRES;
-
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -353,7 +349,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lessThan(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     /**
@@ -396,7 +392,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessThan(Row13)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lt(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     /**
@@ -442,7 +438,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lessOrEqual(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     /**
@@ -485,7 +481,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #lessOrEqual(Row13)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition le(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     /**
@@ -531,7 +527,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition greaterThan(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     /**
@@ -574,7 +570,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterThan(Row13)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition gt(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     /**
@@ -620,7 +616,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition greaterOrEqual(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     /**
@@ -663,7 +659,7 @@ public interface Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> e
      *
      * @see #greaterOrEqual(Row13)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition ge(Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     // ------------------------------------------------------------------------

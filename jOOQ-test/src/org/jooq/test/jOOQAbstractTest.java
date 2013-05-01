@@ -128,6 +128,7 @@ import org.jooq.test._.testcases.PredicateTests;
 import org.jooq.test._.testcases.RecordTests;
 import org.jooq.test._.testcases.ReferentialTests;
 import org.jooq.test._.testcases.RenderAndBindTests;
+import org.jooq.test._.testcases.ResultSetTests;
 import org.jooq.test._.testcases.ResultTests;
 import org.jooq.test._.testcases.RoutineAndUDTTests;
 import org.jooq.test._.testcases.RowValueExpressionTests;
@@ -1415,6 +1416,21 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testRecordReset() throws Exception {
         new RecordTests(this).testRecordReset();
+    }
+
+    @Test
+    public void testResultSetType() throws Exception {
+        new ResultSetTests(this).testResultSetType();
+    }
+
+    @Test
+    public void testResultSetTypeWithListener() throws Exception {
+        new ResultSetTests(this).testResultSetTypeWithListener();
+    }
+
+    @Test
+    public void testResultSetConcurrency() throws Exception {
+        new ResultSetTests(this).testResultSetConcurrency();
     }
 
     @Test

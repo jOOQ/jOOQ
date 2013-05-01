@@ -919,6 +919,21 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final ResultQuery<R> resultSetConcurrency(int resultSetConcurrency) {
+        return getDelegate().resultSetConcurrency(resultSetConcurrency);
+    }
+
+    @Override
+    public final ResultQuery<R> resultSetType(int resultSetType) {
+        return getDelegate().resultSetType(resultSetType);
+    }
+
+    @Override
+    public final ResultQuery<R> resultSetHoldability(int resultSetHoldability) {
+        return getDelegate().resultSetHoldability(resultSetHoldability);
+    }
+
+    @Override
     public final ResultQuery<R> intern(Field<?>... fields) {
         return getDelegate().intern(fields);
     }

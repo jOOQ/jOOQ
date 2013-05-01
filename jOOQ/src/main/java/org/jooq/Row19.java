@@ -46,7 +46,7 @@ import java.util.Collection;
 import javax.annotation.Generated;
 
 /**
- * A model type for a row value expression with degree <code>19</code>
+ * A model type for a row value expression with degree <code>19</code>.
  * <p>
  * Note: Not all databases support row value expressions, but many row value
  * expression operations can be simulated on all databases. See relevant row
@@ -62,97 +62,97 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first field
+     * Get the first field.
      */
     Field<T1> field1();
 
     /**
-     * Get the second field
+     * Get the second field.
      */
     Field<T2> field2();
 
     /**
-     * Get the third field
+     * Get the third field.
      */
     Field<T3> field3();
 
     /**
-     * Get the fourth field
+     * Get the fourth field.
      */
     Field<T4> field4();
 
     /**
-     * Get the fifth field
+     * Get the fifth field.
      */
     Field<T5> field5();
 
     /**
-     * Get the sixth field
+     * Get the sixth field.
      */
     Field<T6> field6();
 
     /**
-     * Get the seventh field
+     * Get the seventh field.
      */
     Field<T7> field7();
 
     /**
-     * Get the eighth field
+     * Get the eighth field.
      */
     Field<T8> field8();
 
     /**
-     * Get the ninth field
+     * Get the ninth field.
      */
     Field<T9> field9();
 
     /**
-     * Get the tenth field
+     * Get the tenth field.
      */
     Field<T10> field10();
 
     /**
-     * Get the eleventh field
+     * Get the eleventh field.
      */
     Field<T11> field11();
 
     /**
-     * Get the twelfth field
+     * Get the twelfth field.
      */
     Field<T12> field12();
 
     /**
-     * Get the thirteenth field
+     * Get the thirteenth field.
      */
     Field<T13> field13();
 
     /**
-     * Get the fourteenth field
+     * Get the fourteenth field.
      */
     Field<T14> field14();
 
     /**
-     * Get the fifteenth field
+     * Get the fifteenth field.
      */
     Field<T15> field15();
 
     /**
-     * Get the sixteenth field
+     * Get the sixteenth field.
      */
     Field<T16> field16();
 
     /**
-     * Get the seventeenth field
+     * Get the seventeenth field.
      */
     Field<T17> field17();
 
     /**
-     * Get the eighteenth field
+     * Get the eighteenth field.
      */
     Field<T18> field18();
 
     /**
-     * Get the ninteenth field
+     * Get the ninteenth field.
      */
     Field<T19> field19();
 
@@ -162,7 +162,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      * <p>
      * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
@@ -173,7 +173,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition equal(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for equality
+     * Compare this row value expression with a record for equality.
      *
      * @see #equal(Row19)
      */
@@ -182,7 +182,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row19)
      */
@@ -191,7 +191,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row19)
      */
@@ -199,16 +199,16 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition equal(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #equal(Row19)
      */
-    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition equal(Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row19)
      */
@@ -216,7 +216,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition eq(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for equality
+     * Compare this row value expression with a record for equality.
      *
      * @see #equal(Row19)
      */
@@ -225,7 +225,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row19)
      */
@@ -234,7 +234,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row19)
      */
@@ -242,16 +242,16 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition eq(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #equal(Row19)
      */
-    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition eq(Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      * <p>
      * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -270,7 +270,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition notEqual(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record);
 
     /**
-     * Compare this row value expression with another row value expression for
+     * Compare this row value expression with another row value expression for.
      * non-equality
      *
      * @see #notEqual(Row19)
@@ -280,7 +280,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(Row19)
      */
@@ -288,16 +288,16 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition notEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notEqual(Row19)
      */
-    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notEqual(Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(Row19)
      */
@@ -305,7 +305,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition ne(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for non-equality
+     * Compare this row value expression with a record for non-equality.
      *
      * @see #notEqual(Row19)
      */
@@ -314,7 +314,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(Row19)
      */
@@ -323,6 +323,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
+     * non-equality.
      *
      * @see #notEqual(Row19)
      */
@@ -330,11 +331,11 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition ne(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notEqual(Row19)
      */
-    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition ne(Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     // ------------------------------------------------------------------------
@@ -343,7 +344,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -354,7 +355,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition lessThan(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessThan(Row19)
      */
@@ -363,7 +364,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row19)
      */
@@ -372,7 +373,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row19)
      */
@@ -380,7 +381,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition lessThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessThan(Row19)
      */
@@ -389,7 +390,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row19)
      */
@@ -397,7 +398,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition lt(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessThan(Row19)
      */
@@ -406,7 +407,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row19)
      */
@@ -415,7 +416,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row19)
      */
@@ -423,7 +424,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition lt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessThan(Row19)
      */
@@ -432,7 +433,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -443,7 +444,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition lessOrEqual(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -452,7 +453,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -461,7 +462,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -469,7 +470,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition lessOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -478,7 +479,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -486,7 +487,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition le(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -495,7 +496,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -504,7 +505,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -512,7 +513,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition le(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessOrEqual(Row19)
      */
@@ -521,7 +522,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -532,7 +533,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition greaterThan(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterThan(Row19)
      */
@@ -541,7 +542,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row19)
      */
@@ -550,7 +551,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row19)
      */
@@ -558,7 +559,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition greaterThan(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterThan(Row19)
      */
@@ -567,7 +568,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row19)
      */
@@ -575,7 +576,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition gt(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterThan(Row19)
      */
@@ -584,7 +585,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row19)
      */
@@ -593,7 +594,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row19)
      */
@@ -601,7 +602,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition gt(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterThan(Row19)
      */
@@ -610,7 +611,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -621,7 +622,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition greaterOrEqual(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -630,7 +631,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -639,7 +640,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -647,7 +648,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition greaterOrEqual(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -656,7 +657,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -664,7 +665,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition ge(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -673,7 +674,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -682,7 +683,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -690,7 +691,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition ge(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterOrEqual(Row19)
      */
@@ -703,7 +704,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(Row19, Row19)
      */
@@ -712,7 +713,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(Row19, Row19)
      */
@@ -721,7 +722,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(Row19, Row19)
      */
@@ -729,7 +730,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> between(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      *
      * @see #between(Row19, Row19)
      */
@@ -738,7 +739,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      * <p>
@@ -752,7 +753,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
                       Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      *
@@ -764,7 +765,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(Row19, Row19)
      */
@@ -773,7 +774,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(Row19, Row19)
      */
@@ -782,7 +783,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(Row19, Row19)
      */
@@ -791,7 +792,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * records
+     * records.
      *
      * @see #betweenSymmetric(Row19, Row19)
      */
@@ -800,7 +801,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      * <p>
      * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
      * <p>
@@ -815,7 +816,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * records
+     * records.
      * <p>
      * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
      *
@@ -827,7 +828,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #between(Row19, Row19)
      */
@@ -836,7 +837,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #notBetween(Row19, Row19)
      */
@@ -845,7 +846,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #notBetween(Row19, Row19)
      */
@@ -853,7 +854,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     BetweenAndStep19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> notBetween(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> minValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      *
      * @see #notBetween(Row19, Row19)
      */
@@ -862,7 +863,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      * <p>
      * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
      * <p>
@@ -876,7 +877,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
                          Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> maxValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      * <p>
      * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
      *
@@ -888,7 +889,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(Row19, Row19)
      */
@@ -897,7 +898,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(Row19, Row19)
      */
@@ -906,7 +907,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(Row19, Row19)
      */
@@ -915,7 +916,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * records
+     * records.
      *
      * @see #notBetweenSymmetric(Row19, Row19)
      */
@@ -924,7 +925,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      * <p>
      * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
      * <p>
@@ -939,7 +940,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * records
+     * records.
      * <p>
      * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
      *
@@ -960,7 +961,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      * <p>
      * Row IN predicates can be simulated in those databases that do not support
      * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
@@ -972,7 +973,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      *
      * @see #in(Collection)
      */
@@ -980,7 +981,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition in(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... rows);
 
     /**
-     * Compare this row value expression with a set of records for equality
+     * Compare this row value expression with a set of records for equality.
      *
      * @see #in(Collection)
      */
@@ -988,16 +989,16 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition in(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... record);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #in(Collection)
      */
-    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition in(Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      * <p>
      * Row NOT IN predicates can be simulated in those databases that do not
      * support such predicates natively:
@@ -1010,7 +1011,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      *
      * @see #notIn(Collection)
      */
@@ -1018,7 +1019,7 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition notIn(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... rows);
 
     /**
-     * Compare this row value expression with a set of records for non-equality
+     * Compare this row value expression with a set of records for non-equality.
      *
      * @see #notIn(Collection)
      */
@@ -1026,11 +1027,11 @@ public interface Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T
     Condition notIn(Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... record);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notIn(Collection)
      */
-    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notIn(Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
 }

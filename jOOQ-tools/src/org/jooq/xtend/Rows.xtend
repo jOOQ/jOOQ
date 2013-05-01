@@ -67,7 +67,7 @@ class Rows extends Generators {
             import javax.annotation.Generated;
 
             /**
-             * A model type for a row value expression with degree <code>«degree»</code>
+             * A model type for a row value expression with degree <code>«degree»</code>.
              * <p>
              * Note: Not all databases support row value expressions, but many row value
              * expression operations can be simulated on all databases. See relevant row
@@ -84,7 +84,7 @@ class Rows extends Generators {
                 «FOR d : (1..degree)»
 
                 /**
-                 * Get the «first(d)» field
+                 * Get the «first(d)» field.
                  */
                 Field<T«d»> field«d»();
                 «ENDFOR»
@@ -95,7 +95,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * equality
+                 * equality.
                  * <p>
                  * Row equality comparison predicates can be simulated in those databases
                  * that do not support such predicates natively:
@@ -106,7 +106,7 @@ class Rows extends Generators {
                 Condition equal(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for equality
+                 * Compare this row value expression with a record for equality.
                  *
                  * @see #equal(Row«degree»)
                  */
@@ -115,7 +115,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * equality
+                 * equality.
                  *
                  * @see #equal(Row«degree»)
                  */
@@ -124,7 +124,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * equality
+                 * equality.
                  *
                  * @see #equal(Row«degree»)
                  */
@@ -132,16 +132,16 @@ class Rows extends Generators {
                 Condition equal(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for equality
+                 * Compare this row value expression with a subselect for equality.
                  *
                  * @see #equal(Row«degree»)
                  */
-                @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support
                 Condition equal(Select<? extends Record«degree»<«TN(degree)»>> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * equality
+                 * equality.
                  *
                  * @see #equal(Row«degree»)
                  */
@@ -149,7 +149,7 @@ class Rows extends Generators {
                 Condition eq(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for equality
+                 * Compare this row value expression with a record for equality.
                  *
                  * @see #equal(Row«degree»)
                  */
@@ -158,7 +158,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * equality
+                 * equality.
                  *
                  * @see #equal(Row«degree»)
                  */
@@ -167,7 +167,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * equality
+                 * equality.
                  *
                  * @see #equal(Row«degree»)
                  */
@@ -175,16 +175,16 @@ class Rows extends Generators {
                 Condition eq(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for equality
+                 * Compare this row value expression with a subselect for equality.
                  *
                  * @see #equal(Row«degree»)
                  */
-                @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support
                 Condition eq(Select<? extends Record«degree»<«TN(degree)»>> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * non-equality
+                 * non-equality.
                  * <p>
                  * Row non-equality comparison predicates can be simulated in those
                  * databases that do not support such predicates natively:
@@ -203,7 +203,7 @@ class Rows extends Generators {
                 Condition notEqual(Record«degree»<«TN(degree)»> record);
 
                 /**
-                 * Compare this row value expression with another row value expression for
+                 * Compare this row value expression with another row value expression for.
                  * non-equality
                  *
                  * @see #notEqual(Row«degree»)
@@ -213,7 +213,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * non-equality
+                 * non-equality.
                  *
                  * @see #notEqual(Row«degree»)
                  */
@@ -221,16 +221,16 @@ class Rows extends Generators {
                 Condition notEqual(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for non-equality
+                 * Compare this row value expression with a subselect for non-equality.
                  *
                  * @see #notEqual(Row«degree»)
                  */
-                @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support
                 Condition notEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * non-equality
+                 * non-equality.
                  *
                  * @see #notEqual(Row«degree»)
                  */
@@ -238,7 +238,7 @@ class Rows extends Generators {
                 Condition ne(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for non-equality
+                 * Compare this row value expression with a record for non-equality.
                  *
                  * @see #notEqual(Row«degree»)
                  */
@@ -247,7 +247,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * non-equality
+                 * non-equality.
                  *
                  * @see #notEqual(Row«degree»)
                  */
@@ -256,6 +256,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
+                 * non-equality.
                  *
                  * @see #notEqual(Row«degree»)
                  */
@@ -263,11 +264,11 @@ class Rows extends Generators {
                 Condition ne(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for non-equality
+                 * Compare this row value expression with a subselect for non-equality.
                  *
                  * @see #notEqual(Row«degree»)
                  */
-                @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support
                 Condition ne(Select<? extends Record«degree»<«TN(degree)»>> select);
 
                 // ------------------------------------------------------------------------
@@ -276,7 +277,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  * <p>
                  * Row order comparison predicates can be simulated in those
                  * databases that do not support such predicates natively:
@@ -287,7 +288,7 @@ class Rows extends Generators {
                 Condition lessThan(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for order
+                 * Compare this row value expression with a record for order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -296,7 +297,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -305,7 +306,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -313,7 +314,7 @@ class Rows extends Generators {
                 Condition lessThan(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for order
+                 * Compare this row value expression with a subselect for order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -322,7 +323,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -330,7 +331,7 @@ class Rows extends Generators {
                 Condition lt(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for order
+                 * Compare this row value expression with a record for order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -339,7 +340,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -348,7 +349,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -356,7 +357,7 @@ class Rows extends Generators {
                 Condition lt(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for order
+                 * Compare this row value expression with a subselect for order.
                  *
                  * @see #lessThan(Row«degree»)
                  */
@@ -365,7 +366,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  * <p>
                  * Row order comparison predicates can be simulated in those
                  * databases that do not support such predicates natively:
@@ -376,7 +377,7 @@ class Rows extends Generators {
                 Condition lessOrEqual(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for order
+                 * Compare this row value expression with a record for order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -385,7 +386,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -394,7 +395,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -402,7 +403,7 @@ class Rows extends Generators {
                 Condition lessOrEqual(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for order
+                 * Compare this row value expression with a subselect for order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -411,7 +412,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -419,7 +420,7 @@ class Rows extends Generators {
                 Condition le(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for order
+                 * Compare this row value expression with a record for order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -428,7 +429,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -437,7 +438,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -445,7 +446,7 @@ class Rows extends Generators {
                 Condition le(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for order
+                 * Compare this row value expression with a subselect for order.
                  *
                  * @see #lessOrEqual(Row«degree»)
                  */
@@ -454,7 +455,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  * <p>
                  * Row order comparison predicates can be simulated in those
                  * databases that do not support such predicates natively:
@@ -465,7 +466,7 @@ class Rows extends Generators {
                 Condition greaterThan(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for order
+                 * Compare this row value expression with a record for order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -474,7 +475,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -483,7 +484,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -491,7 +492,7 @@ class Rows extends Generators {
                 Condition greaterThan(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for order
+                 * Compare this row value expression with a subselect for order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -500,7 +501,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -508,7 +509,7 @@ class Rows extends Generators {
                 Condition gt(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for order
+                 * Compare this row value expression with a record for order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -517,7 +518,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -526,7 +527,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -534,7 +535,7 @@ class Rows extends Generators {
                 Condition gt(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for order
+                 * Compare this row value expression with a subselect for order.
                  *
                  * @see #greaterThan(Row«degree»)
                  */
@@ -543,7 +544,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  * <p>
                  * Row order comparison predicates can be simulated in those
                  * databases that do not support such predicates natively:
@@ -554,7 +555,7 @@ class Rows extends Generators {
                 Condition greaterOrEqual(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for order
+                 * Compare this row value expression with a record for order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -563,7 +564,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -572,7 +573,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -580,7 +581,7 @@ class Rows extends Generators {
                 Condition greaterOrEqual(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for order
+                 * Compare this row value expression with a subselect for order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -589,7 +590,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -597,7 +598,7 @@ class Rows extends Generators {
                 Condition ge(Row«degree»<«TN(degree)»> row);
 
                 /**
-                 * Compare this row value expression with a record for order
+                 * Compare this row value expression with a record for order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -606,7 +607,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -615,7 +616,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with another row value expression for
-                 * order
+                 * order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -623,7 +624,7 @@ class Rows extends Generators {
                 Condition ge(«Field_TN_tn(degree)»);
 
                 /**
-                 * Compare this row value expression with a subselect for order
+                 * Compare this row value expression with a subselect for order.
                  *
                  * @see #greaterOrEqual(Row«degree»)
                  */
@@ -636,7 +637,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a range of two other row
-                 * value expressions
+                 * value expressions.
                  *
                  * @see #between(Row«degree», Row«degree»)
                  */
@@ -645,7 +646,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a range of two other row
-                 * value expressions
+                 * value expressions.
                  *
                  * @see #between(Row«degree», Row«degree»)
                  */
@@ -654,7 +655,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a range of two other row
-                 * value expressions
+                 * value expressions.
                  *
                  * @see #between(Row«degree», Row«degree»)
                  */
@@ -662,7 +663,7 @@ class Rows extends Generators {
                 BetweenAndStep«degree»<«TN(degree)»> between(Row«degree»<«TN(degree)»> minValue);
 
                 /**
-                 * Check if this row value expression is within a range of two records
+                 * Check if this row value expression is within a range of two records.
                  *
                  * @see #between(Row«degree», Row«degree»)
                  */
@@ -671,7 +672,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a range of two other row
-                 * value expressions
+                 * value expressions.
                  * <p>
                  * This is the same as calling <code>between(minValue).and(maxValue)</code>
                  * <p>
@@ -685,7 +686,7 @@ class Rows extends Generators {
                                   Row«degree»<«TN(degree)»> maxValue);
 
                 /**
-                 * Check if this row value expression is within a range of two records
+                 * Check if this row value expression is within a range of two records.
                  * <p>
                  * This is the same as calling <code>between(minValue).and(maxValue)</code>
                  *
@@ -697,7 +698,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
-                 * other row value expressions
+                 * other row value expressions.
                  *
                  * @see #betweenSymmetric(Row«degree», Row«degree»)
                  */
@@ -706,7 +707,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
-                 * other row value expressions
+                 * other row value expressions.
                  *
                  * @see #betweenSymmetric(Row«degree», Row«degree»)
                  */
@@ -715,7 +716,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
-                 * other row value expressions
+                 * other row value expressions.
                  *
                  * @see #betweenSymmetric(Row«degree», Row«degree»)
                  */
@@ -724,7 +725,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
-                 * records
+                 * records.
                  *
                  * @see #betweenSymmetric(Row«degree», Row«degree»)
                  */
@@ -733,7 +734,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
-                 * other row value expressions
+                 * other row value expressions.
                  * <p>
                  * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
                  * <p>
@@ -748,7 +749,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
-                 * records
+                 * records.
                  * <p>
                  * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
                  *
@@ -760,7 +761,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a range of two other
-                 * row value expressions
+                 * row value expressions.
                  *
                  * @see #between(Row«degree», Row«degree»)
                  */
@@ -769,7 +770,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a range of two other
-                 * row value expressions
+                 * row value expressions.
                  *
                  * @see #notBetween(Row«degree», Row«degree»)
                  */
@@ -778,7 +779,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a range of two other
-                 * row value expressions
+                 * row value expressions.
                  *
                  * @see #notBetween(Row«degree», Row«degree»)
                  */
@@ -786,7 +787,7 @@ class Rows extends Generators {
                 BetweenAndStep«degree»<«TN(degree)»> notBetween(Row«degree»<«TN(degree)»> minValue);
 
                 /**
-                 * Check if this row value expression is within a range of two records
+                 * Check if this row value expression is within a range of two records.
                  *
                  * @see #notBetween(Row«degree», Row«degree»)
                  */
@@ -795,7 +796,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a range of two other
-                 * row value expressions
+                 * row value expressions.
                  * <p>
                  * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
                  * <p>
@@ -809,7 +810,7 @@ class Rows extends Generators {
                                      Row«degree»<«TN(degree)»> maxValue);
 
                 /**
-                 * Check if this row value expression is within a range of two records
+                 * Check if this row value expression is within a range of two records.
                  * <p>
                  * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
                  *
@@ -821,7 +822,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
-                 * other row value expressions
+                 * other row value expressions.
                  *
                  * @see #notBetweenSymmetric(Row«degree», Row«degree»)
                  */
@@ -830,7 +831,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
-                 * other row value expressions
+                 * other row value expressions.
                  *
                  * @see #notBetweenSymmetric(Row«degree», Row«degree»)
                  */
@@ -839,7 +840,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
-                 * other row value expressions
+                 * other row value expressions.
                  *
                  * @see #notBetweenSymmetric(Row«degree», Row«degree»)
                  */
@@ -848,7 +849,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
-                 * records
+                 * records.
                  *
                  * @see #notBetweenSymmetric(Row«degree», Row«degree»)
                  */
@@ -857,7 +858,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
-                 * other row value expressions
+                 * other row value expressions.
                  * <p>
                  * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
                  * <p>
@@ -872,7 +873,7 @@ class Rows extends Generators {
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
-                 * records
+                 * records.
                  * <p>
                  * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
                  *
@@ -888,13 +889,13 @@ class Rows extends Generators {
 
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
-«««                 * distinctness
+«««                 * distinctness.
 «««                 */
 «««                @Support
 «««                Condition isDistinctFrom(Row«degree»<«TN(degree)»> row);
 «««
 «««                /**
-«««                 * Compare this row value expression with a record for distinctness
+«««                 * Compare this row value expression with a record for distinctness.
 «««                 *
 «««                 * @see #isDistinctFrom(Row«degree»)
 «««                 */
@@ -903,7 +904,7 @@ class Rows extends Generators {
 «««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
-«««                 * distinctness
+«««                 * distinctness.
 «««                 *
 «««                 * @see #isDistinctFrom(Row«degree»)
 «««                 */
@@ -912,7 +913,7 @@ class Rows extends Generators {
 «««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
-«««                 * distinctness
+«««                 * distinctness.
 «««                 *
 «««                 * @see #isDistinctFrom(Row«degree»)
 «««                 */
@@ -921,13 +922,13 @@ class Rows extends Generators {
 «««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
-«««                 * non-distinctness
+«««                 * non-distinctness.
 «««                 */
 «««                @Support
 «««                Condition isNotDistinctFrom(Row«degree»<«TN(degree)»> row);
 «««
 «««                /**
-«««                 * Compare this row value expression with a record for non-distinctness
+«««                 * Compare this row value expression with a record for non-distinctness.
 «««                 *
 «««                 * @see #isNotDistinctFrom(Row«degree»)
 «««                 */
@@ -936,7 +937,7 @@ class Rows extends Generators {
 «««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
-«««                 * non-distinctness
+«««                 * non-distinctness.
 «««                 *
 «««                 * @see #isNotDistinctFrom(Row«degree»)
 «««                 */
@@ -945,7 +946,7 @@ class Rows extends Generators {
 «««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
-«««                 * non-distinctness
+«««                 * non-distinctness.
 «««                 *
 «««                 * @see #isNotDistinctFrom(Row«degree»)
 «««                 */
@@ -958,7 +959,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with a set of row value expressions for
-                 * equality
+                 * equality.
                  * <p>
                  * Row IN predicates can be simulated in those databases that do not support
                  * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
@@ -970,7 +971,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with a set of row value expressions for
-                 * equality
+                 * equality.
                  *
                  * @see #in(Collection)
                  */
@@ -978,7 +979,7 @@ class Rows extends Generators {
                 Condition in(Row«degree»<«TN(degree)»>... rows);
 
                 /**
-                 * Compare this row value expression with a set of records for equality
+                 * Compare this row value expression with a set of records for equality.
                  *
                  * @see #in(Collection)
                  */
@@ -986,16 +987,16 @@ class Rows extends Generators {
                 Condition in(Record«degree»<«TN(degree)»>... record);
 
                 /**
-                 * Compare this row value expression with a subselect for equality
+                 * Compare this row value expression with a subselect for equality.
                  *
                  * @see #in(Collection)
                  */
-                @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support
                 Condition in(Select<? extends Record«degree»<«TN(degree)»>> select);
 
                 /**
                  * Compare this row value expression with a set of row value expressions for
-                 * equality
+                 * equality.
                  * <p>
                  * Row NOT IN predicates can be simulated in those databases that do not
                  * support such predicates natively:
@@ -1008,7 +1009,7 @@ class Rows extends Generators {
 
                 /**
                  * Compare this row value expression with a set of row value expressions for
-                 * equality
+                 * equality.
                  *
                  * @see #notIn(Collection)
                  */
@@ -1016,7 +1017,7 @@ class Rows extends Generators {
                 Condition notIn(Row«degree»<«TN(degree)»>... rows);
 
                 /**
-                 * Compare this row value expression with a set of records for non-equality
+                 * Compare this row value expression with a set of records for non-equality.
                  *
                  * @see #notIn(Collection)
                  */
@@ -1024,11 +1025,11 @@ class Rows extends Generators {
                 Condition notIn(Record«degree»<«TN(degree)»>... record);
 
                 /**
-                 * Compare this row value expression with a subselect for non-equality
+                 * Compare this row value expression with a subselect for non-equality.
                  *
                  * @see #notIn(Collection)
                  */
-                @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+                @Support
                 Condition notIn(Select<? extends Record«degree»<«TN(degree)»>> select);
 
                 «IF degree == 2»
@@ -1037,7 +1038,7 @@ class Rows extends Generators {
                 // ------------------------------------------------------------------------
 
                 /**
-                 * Check if this row value expression overlaps another row value expression
+                 * Check if this row value expression overlaps another row value expression.
                  * <p>
                  * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
                  * which comes in two flavours:
@@ -1059,7 +1060,7 @@ class Rows extends Generators {
                 Condition overlaps(T1 t1, T2 t2);
 
                 /**
-                 * Check if this row value expression overlaps another row value expression
+                 * Check if this row value expression overlaps another row value expression.
                  * <p>
                  * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
                  * which comes in two flavours:
@@ -1081,7 +1082,7 @@ class Rows extends Generators {
                 Condition overlaps(Field<T1> t1, Field<T2> t2);
 
                 /**
-                 * Check if this row value expression overlaps another row value expression
+                 * Check if this row value expression overlaps another row value expression.
                  * <p>
                  * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
                  * which comes in two flavours:

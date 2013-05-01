@@ -6498,8 +6498,8 @@ public class DSL {
     /**
      * The <code>row_number() over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      * <p>
      * Newer versions of {@link SQLDialect#DERBY} and {@link SQLDialect#H2} also
      * support the <code>ROW_NUMBER() OVER()</code> window function without any
@@ -6515,8 +6515,8 @@ public class DSL {
     /**
      * The <code>rank_over() over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> rank() {
@@ -6526,8 +6526,8 @@ public class DSL {
     /**
      * The <code>dense_rank() over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     public static WindowOverStep<Integer> denseRank() {
@@ -6537,8 +6537,8 @@ public class DSL {
     /**
      * The <code>precent_rank() over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
     @Support({ POSTGRES, ORACLE, SYBASE })
     public static WindowOverStep<BigDecimal> percentRank() {
@@ -6548,8 +6548,8 @@ public class DSL {
     /**
      * The <code>cume_dist() over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
     @Support({ POSTGRES, ORACLE, SYBASE })
     public static WindowOverStep<BigDecimal> cumeDist() {
@@ -6559,19 +6559,19 @@ public class DSL {
     /**
      * The <code>ntile([number]) over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ POSTGRES, ORACLE, SQLSERVER })
+    @Support({ CUBRID, POSTGRES, ORACLE, SQLSERVER })
     public static WindowOverStep<Integer> ntile(int number) {
-        return new Function<Integer>("ntile", SQLDataType.INTEGER, field("" + number, Integer.class));
+        return new Function<Integer>("ntile", SQLDataType.INTEGER, inline(number));
     }
 
     /**
      * The <code>first_value(field) over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
@@ -6581,8 +6581,8 @@ public class DSL {
     /**
      * The <code>last_value(field) over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
@@ -6592,10 +6592,10 @@ public class DSL {
     /**
      * The <code>lead(field) over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field));
     }
@@ -6603,10 +6603,10 @@ public class DSL {
     /**
      * The <code>lead(field, offset) over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), inline(offset));
     }
@@ -6616,10 +6616,10 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(nullSafe(field), offset, Utils.field(defaultValue));
     }
@@ -6629,10 +6629,10 @@ public class DSL {
      * <code>lead(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), inline(offset), nullSafe(defaultValue));
     }
@@ -6640,10 +6640,10 @@ public class DSL {
     /**
      * The <code>lag(field) over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field));
     }
@@ -6651,10 +6651,10 @@ public class DSL {
     /**
      * The <code>lag(field, offset) over ([analytic clause])</code> function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), inline(offset));
     }
@@ -6664,10 +6664,10 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(nullSafe(field), offset, Utils.field(defaultValue));
     }
@@ -6677,10 +6677,10 @@ public class DSL {
      * <code>lag(field, offset, defaultValue) over ([analytic clause])</code>
      * function.
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), inline(offset), nullSafe(defaultValue));
     }

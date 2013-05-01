@@ -60,8 +60,8 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * MAX(ID) OVER (PARTITION BY 1)
      * </code></pre>
      * <p>
-     * Window functions are supported in DB2, Postgres, Oracle, SQL Server and
-     * Sybase.
+     * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
+     * Server and Sybase.
      */
     @Override
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })

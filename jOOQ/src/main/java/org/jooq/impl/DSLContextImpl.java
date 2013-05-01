@@ -1364,6 +1364,18 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
+    public final Batch batch(String... queries) {
+        Query[] result = new Query[queries.length];
+
+        for (int i = 0; i < queries.length; i++) {
+            result[i] = query(queries[i]);
+        }
+
+        return batch(result);
+    }
+
+    @Override
+    @Support
     public final Batch batch(Collection<? extends Query> queries) {
         return batch(queries.toArray(new Query[queries.size()]));
     }
@@ -1376,8 +1388,20 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
+    public final BatchBindStep batch(String sql) {
+        return batch(query(sql));
+    }
+
+    @Override
+    @Support
     public final Batch batch(Query query, Object[]... bindings) {
         return batch(query).bind(bindings);
+    }
+
+    @Override
+    @Support
+    public final Batch batch(String sql, Object[]... bindings) {
+        return batch(query(sql), bindings);
     }
 
     @Override

@@ -4022,6 +4022,19 @@ public interface DSLContext {
     /**
      * Execute a set of queries in batch mode (without bind values).
      * <p>
+     * This is a convenience method for calling
+     * <code><pre>batch(query(queries[0]), query(queries[1]), ...)</pre></code>.
+     *
+     * @see #query(String)
+     * @see #batch(Query...)
+     * @see Statement#executeBatch()
+     */
+    @Support
+    Batch batch(String... queries);
+
+    /**
+     * Execute a set of queries in batch mode (without bind values).
+     * <p>
      * This essentially runs the following logic: <code><pre>
      * Statement s = connection.createStatement();
      *
@@ -4073,6 +4086,19 @@ public interface DSLContext {
     /**
      * Execute a set of queries in batch mode (with bind values).
      * <p>
+     * This is a convenience method for calling
+     * <code><pre>batch(query(sql))</pre></code>.
+     *
+     * @see #query(String)
+     * @see #batch(Query)
+     * @see Statement#executeBatch()
+     */
+    @Support
+    BatchBindStep batch(String sql);
+
+    /**
+     * Execute a set of queries in batch mode (with bind values).
+     * <p>
      * This is a convenience method for calling {@link #batch(Query)} and then
      * binding values one by one using {@link BatchBindStep#bind(Object...)}
      * <p>
@@ -4085,6 +4111,19 @@ public interface DSLContext {
      */
     @Support
     Batch batch(Query query, Object[]... bindings);
+
+    /**
+     * Execute a set of queries in batch mode (with bind values).
+     * <p>
+     * This is a convenience method for calling
+     * <code><pre>batch(query(sql), bindings)</pre></code>.
+     *
+     * @see #query(String)
+     * @see #batch(Query, Object[][])
+     * @see Statement#executeBatch()
+     */
+    @Support
+    Batch batch(String sql, Object[]... bindings);
 
     /**
      * Execute a set of <code>INSERT</code> and <code>UPDATE</code> queries in

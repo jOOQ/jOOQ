@@ -55,8 +55,7 @@ import org.jooq.impl.DSL;
 public interface Query extends QueryPart, Attachable {
 
     /**
-     * Execute the query, if it has been created with a properly configured
-     * factory
+     * Execute the query, if it has been created with a proper configuration.
      *
      * @return A result value, depending on the concrete implementation of
      *         {@link Query}:
@@ -73,7 +72,7 @@ public interface Query extends QueryPart, Attachable {
     int execute() throws DataAccessException;
 
     /**
-     * Whether this query is executable in its current state
+     * Whether this query is executable in its current state.
      * <p>
      * DML queries may be incomplete in structure and thus not executable.
      * Calling {@link #execute()} on such queries has no effect, but beware that
@@ -82,7 +81,7 @@ public interface Query extends QueryPart, Attachable {
     boolean isExecutable();
 
     /**
-     * Retrieve the SQL code rendered by this Query
+     * Retrieve the SQL code rendered by this Query.
      * <p>
      * Use this method, when you want to use jOOQ for object oriented query
      * creation, but execute the query with some other technology, such as
@@ -127,7 +126,7 @@ public interface Query extends QueryPart, Attachable {
     String getSQL();
 
     /**
-     * Retrieve the SQL code rendered by this Query
+     * Retrieve the SQL code rendered by this Query.
      * <p>
      * [#1520] Note that the query actually being executed might not contain any
      * bind variables, in case the number of bind variables exceeds your SQL
@@ -179,7 +178,7 @@ public interface Query extends QueryPart, Attachable {
     Param<?> getParam(String name);
 
     /**
-     * Bind a new value to a named parameter
+     * Bind a new value to a named parameter.
      * <p>
      * [#1886] If the bind value with name <code>param</code> is inlined (
      * {@link Param#isInline()}) or if this query was created with
@@ -200,7 +199,7 @@ public interface Query extends QueryPart, Attachable {
     Query bind(String param, Object value) throws IllegalArgumentException, DataTypeException;
 
     /**
-     * Bind a new value to an indexed parameter
+     * Bind a new value to an indexed parameter.
      * <p>
      * [#1886] If the bind value at <code>index</code> is inlined (
      * {@link Param#isInline()}) or if this query was created with
@@ -224,14 +223,14 @@ public interface Query extends QueryPart, Attachable {
     // ------------------------------------------------------------------------
 
     /**
-     * Specify the query timeout for the underlying JDBC {@link Statement}
+     * Specify the query timeout for the underlying JDBC {@link Statement}.
      *
      * @see Statement#setQueryTimeout(int)
      */
     Query queryTimeout(int timeout);
 
     /**
-     * Keep the query's underlying statement open after execution
+     * Keep the query's underlying statement open after execution.
      * <p>
      * This indicates to jOOQ that the query's underlying {@link Statement} or
      * {@link PreparedStatement} should be kept open after execution. If it is
@@ -243,7 +242,7 @@ public interface Query extends QueryPart, Attachable {
     Query keepStatement(boolean keepStatement);
 
     /**
-     * Close the underlying statement
+     * Close the underlying statement.
      * <p>
      * This closes the query's underlying {@link Statement} or
      * {@link PreparedStatement} if a previous call to
@@ -257,7 +256,7 @@ public interface Query extends QueryPart, Attachable {
     void close() throws DataAccessException;
 
     /**
-     * Cancel the underlying statement
+     * Cancel the underlying statement.
      * <p>
      * This cancels the query's underlying {@link Statement} or
      * {@link PreparedStatement}. If there is no underlying open and running

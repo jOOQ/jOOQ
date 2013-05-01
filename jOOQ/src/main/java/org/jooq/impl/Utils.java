@@ -655,6 +655,13 @@ final class Utils {
     }
 
     /**
+     * Create a new array
+     */
+    static final <T> T[] array(T... array) {
+        return array;
+    }
+
+    /**
      * Use this rather than {@link Arrays#asList(Object...)} for
      * <code>null</code>-safety
      */

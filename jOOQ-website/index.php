@@ -175,7 +175,7 @@ insertInto(t, t.a, t.b).values(1, 2);
     as well as some 180 integration tests with an overall of around 1200 queries for any
     of these databases:</p>
 <ul>
-    <li>CUBRID 8.4.1 and 9.0.0</li>
+    <li>CUBRID 8.4.1 and 9.1.0</li>
     <li>DB2 9.7</li>
     <li>Derby 10.8</li>
     <li>Firebird 2.5.1</li>

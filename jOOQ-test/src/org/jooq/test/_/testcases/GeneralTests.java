@@ -82,8 +82,6 @@ import org.jooq.impl.DefaultConnectionProvider;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
-import org.jooq.test.sqlite.generatedclasses.Tables;
-import org.jooq.test.sqlite.generatedclasses.tables.records.ProjectRecord;
 
 import org.junit.Test;
 
@@ -392,14 +390,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testEquals() throws Exception {
-        ProjectRecord record = create().newRecord(Tables.PROJECT);
-        record.setCode("billyboytest");
-        record.setCompany("code1234");
-        record.setName("nca");
-        record.insert();
-
-        if (true) return;
-        // 'billyboytest', 'code1234', 'nca'
 
         // Record.equals()
         // ---------------

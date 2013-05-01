@@ -49,17 +49,19 @@ class Rows extends Generators {
     }
 
     def generateRowClasses() {
-        for (degree : (1..Constants::MAX_ROW_DEGREE)) {
+        for (degree : (0..Constants::MAX_ROW_DEGREE)) {
             val out = new StringBuilder();
+            
+			val typeSuffix = '''«degreeOrN(degree)»«IF degree > 0»<«TN(degree)»>«ENDIF»'''
+			val typeSuffixRaw = '''«degreeOrN(degree)»'''
+			val recTypeSuffix = '''«degreeOr(degree)»«IF degree > 0»<«TN(degree)»>«ENDIF»'''
 
             out.append('''
             «classHeader»
             package org.jooq;
 
-            import static org.jooq.SQLDialect.DB2;
             import static org.jooq.SQLDialect.HSQLDB;
             import static org.jooq.SQLDialect.MYSQL;
-            import static org.jooq.SQLDialect.ORACLE;
             import static org.jooq.SQLDialect.POSTGRES;
 
             import java.util.Collection;
@@ -67,7 +69,7 @@ class Rows extends Generators {
             import javax.annotation.Generated;
 
             /**
-             * A model type for a row value expression with degree <code>«degree»</code>.
+             * A model type for a row value expression with degree <code>«IF degree > 0»«degree»«ELSE»N > «Constants::MAX_ROW_DEGREE»«ENDIF»</code>.
              * <p>
              * Note: Not all databases support row value expressions, but many row value
              * expression operations can be simulated on all databases. See relevant row
@@ -76,8 +78,9 @@ class Rows extends Generators {
              * @author Lukas Eder
              */
             «generatedAnnotation»
-            public interface Row«degree»<«TN(degree)»> extends Row {
-
+            public interface Row«typeSuffix» extends Row {
+            «IF degree > 0»
+            
                 // ------------------------------------------------------------------------
                 // Field accessors
                 // ------------------------------------------------------------------------
@@ -88,7 +91,8 @@ class Rows extends Generators {
                  */
                 Field<T«d»> field«d»();
                 «ENDFOR»
-
+			«ENDIF»
+            
                 // ------------------------------------------------------------------------
                 // Equal / Not equal comparison predicates
                 // ------------------------------------------------------------------------
@@ -103,21 +107,21 @@ class Rows extends Generators {
                  * <code>A = 1 AND B = 2</code>
                  */
                 @Support
-                Condition equal(Row«degree»<«TN(degree)»> row);
+                Condition equal(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition equal(Record«degree»<«TN(degree)»> record);
+                Condition equal(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition equal(«TN_tn(degree)»);
@@ -126,7 +130,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition equal(«Field_TN_tn(degree)»);
@@ -134,33 +138,33 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition equal(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition equal(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition eq(Row«degree»<«TN(degree)»> row);
+                Condition eq(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition eq(Record«degree»<«TN(degree)»> record);
+                Condition eq(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition eq(«TN_tn(degree)»);
@@ -169,7 +173,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition eq(«Field_TN_tn(degree)»);
@@ -177,10 +181,10 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for equality.
                  *
-                 * @see #equal(Row«degree»)
+                 * @see #equal(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition eq(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition eq(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
@@ -192,21 +196,21 @@ class Rows extends Generators {
                  * <code>NOT(A = 1 AND B = 2)</code>
                  */
                 @Support
-                Condition notEqual(Row«degree»<«TN(degree)»> row);
+                Condition notEqual(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for non-equality
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition notEqual(Record«degree»<«TN(degree)»> record);
+                Condition notEqual(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for.
                  * non-equality
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition notEqual(«TN_tn(degree)»);
@@ -215,7 +219,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * non-equality.
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition notEqual(«Field_TN_tn(degree)»);
@@ -223,33 +227,33 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for non-equality.
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition notEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition notEqual(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality.
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition ne(Row«degree»<«TN(degree)»> row);
+                Condition ne(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for non-equality.
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition ne(Record«degree»<«TN(degree)»> record);
+                Condition ne(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * non-equality.
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition ne(«TN_tn(degree)»);
@@ -258,7 +262,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * non-equality.
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition ne(«Field_TN_tn(degree)»);
@@ -266,10 +270,10 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for non-equality.
                  *
-                 * @see #notEqual(Row«degree»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition ne(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition ne(Select<? extends Record«recTypeSuffix»> select);
 
                 // ------------------------------------------------------------------------
                 // Ordering comparison predicates
@@ -285,21 +289,21 @@ class Rows extends Generators {
                  * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2 AND C < 3)</code>
                  */
                 @Support
-                Condition lessThan(Row«degree»<«TN(degree)»> row);
+                Condition lessThan(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition lessThan(Record«degree»<«TN(degree)»> record);
+                Condition lessThan(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition lessThan(«TN_tn(degree)»);
@@ -308,7 +312,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition lessThan(«Field_TN_tn(degree)»);
@@ -316,33 +320,33 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
-                Condition lessThan(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition lessThan(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition lt(Row«degree»<«TN(degree)»> row);
+                Condition lt(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition lt(Record«degree»<«TN(degree)»> record);
+                Condition lt(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition lt(«TN_tn(degree)»);
@@ -351,7 +355,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition lt(«Field_TN_tn(degree)»);
@@ -359,10 +363,10 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for order.
                  *
-                 * @see #lessThan(Row«degree»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
-                Condition lt(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition lt(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
@@ -374,21 +378,21 @@ class Rows extends Generators {
                  * <code>A < 1 OR (A = 1 AND B < 2) OR (A = 1 AND B = 2)</code>
                  */
                 @Support
-                Condition lessOrEqual(Row«degree»<«TN(degree)»> row);
+                Condition lessOrEqual(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition lessOrEqual(Record«degree»<«TN(degree)»> record);
+                Condition lessOrEqual(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition lessOrEqual(«TN_tn(degree)»);
@@ -397,7 +401,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition lessOrEqual(«Field_TN_tn(degree)»);
@@ -405,33 +409,33 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
-                Condition lessOrEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition lessOrEqual(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition le(Row«degree»<«TN(degree)»> row);
+                Condition le(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition le(Record«degree»<«TN(degree)»> record);
+                Condition le(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition le(«TN_tn(degree)»);
@@ -440,7 +444,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition le(«Field_TN_tn(degree)»);
@@ -448,10 +452,10 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for order.
                  *
-                 * @see #lessOrEqual(Row«degree»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
-                Condition le(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition le(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
@@ -463,21 +467,21 @@ class Rows extends Generators {
                  * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2 AND C > 3)</code>
                  */
                 @Support
-                Condition greaterThan(Row«degree»<«TN(degree)»> row);
+                Condition greaterThan(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition greaterThan(Record«degree»<«TN(degree)»> record);
+                Condition greaterThan(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition greaterThan(«TN_tn(degree)»);
@@ -486,7 +490,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition greaterThan(«Field_TN_tn(degree)»);
@@ -494,33 +498,33 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
-                Condition greaterThan(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition greaterThan(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition gt(Row«degree»<«TN(degree)»> row);
+                Condition gt(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition gt(Record«degree»<«TN(degree)»> record);
+                Condition gt(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition gt(«TN_tn(degree)»);
@@ -529,7 +533,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition gt(«Field_TN_tn(degree)»);
@@ -537,10 +541,10 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for order.
                  *
-                 * @see #greaterThan(Row«degree»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
-                Condition gt(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition gt(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
@@ -552,21 +556,21 @@ class Rows extends Generators {
                  * <code>A > 1 OR (A = 1 AND B > 2) OR (A = 1 AND B = 2)</code>
                  */
                 @Support
-                Condition greaterOrEqual(Row«degree»<«TN(degree)»> row);
+                Condition greaterOrEqual(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition greaterOrEqual(Record«degree»<«TN(degree)»> record);
+                Condition greaterOrEqual(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition greaterOrEqual(«TN_tn(degree)»);
@@ -575,7 +579,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition greaterOrEqual(«Field_TN_tn(degree)»);
@@ -583,33 +587,33 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
-                Condition greaterOrEqual(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition greaterOrEqual(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition ge(Row«degree»<«TN(degree)»> row);
+                Condition ge(Row«typeSuffix» row);
 
                 /**
                  * Compare this row value expression with a record for order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition ge(Record«degree»<«TN(degree)»> record);
+                Condition ge(Record«recTypeSuffix» record);
 
                 /**
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition ge(«TN_tn(degree)»);
@@ -618,7 +622,7 @@ class Rows extends Generators {
                  * Compare this row value expression with another row value expression for
                  * order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support
                 Condition ge(«Field_TN_tn(degree)»);
@@ -626,10 +630,10 @@ class Rows extends Generators {
                 /**
                  * Compare this row value expression with a subselect for order.
                  *
-                 * @see #greaterOrEqual(Row«degree»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
                  */
                 @Support({ HSQLDB, MYSQL, POSTGRES })
-                Condition ge(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition ge(Select<? extends Record«recTypeSuffix»> select);
 
                 // ------------------------------------------------------------------------
                 // [NOT] BETWEEN predicates
@@ -639,36 +643,36 @@ class Rows extends Generators {
                  * Check if this row value expression is within a range of two other row
                  * value expressions.
                  *
-                 * @see #between(Row«degree», Row«degree»)
+                 * @see #between(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> between(«TN_XXXn(degree, "minValue")»);
+                BetweenAndStep«typeSuffix» between(«TN_XXXn(degree, "minValue")»);
 
                 /**
                  * Check if this row value expression is within a range of two other row
                  * value expressions.
                  *
-                 * @see #between(Row«degree», Row«degree»)
+                 * @see #between(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> between(«Field_TN_XXXn(degree, "minValue")»);
+                BetweenAndStep«typeSuffix» between(«Field_TN_XXXn(degree, "minValue")»);
 
                 /**
                  * Check if this row value expression is within a range of two other row
                  * value expressions.
                  *
-                 * @see #between(Row«degree», Row«degree»)
+                 * @see #between(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> between(Row«degree»<«TN(degree)»> minValue);
+                BetweenAndStep«typeSuffix» between(Row«typeSuffix» minValue);
 
                 /**
                  * Check if this row value expression is within a range of two records.
                  *
-                 * @see #between(Row«degree», Row«degree»)
+                 * @see #between(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> between(Record«degree»<«TN(degree)»> minValue);
+                BetweenAndStep«typeSuffix» between(Record«recTypeSuffix» minValue);
 
                 /**
                  * Check if this row value expression is within a range of two other row
@@ -682,55 +686,55 @@ class Rows extends Generators {
                  * expressions
                  */
                 @Support
-                Condition between(Row«degree»<«TN(degree)»> minValue,
-                                  Row«degree»<«TN(degree)»> maxValue);
+                Condition between(Row«typeSuffix» minValue,
+                                  Row«typeSuffix» maxValue);
 
                 /**
                  * Check if this row value expression is within a range of two records.
                  * <p>
                  * This is the same as calling <code>between(minValue).and(maxValue)</code>
                  *
-                 * @see #between(Row«degree», Row«degree»)
+                 * @see #between(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition between(Record«degree»<«TN(degree)»> minValue,
-                                  Record«degree»<«TN(degree)»> maxValue);
+                Condition between(Record«recTypeSuffix» minValue,
+                                  Record«recTypeSuffix» maxValue);
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * other row value expressions.
                  *
-                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 * @see #betweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(«TN_XXXn(degree, "minValue")»);
+                BetweenAndStep«typeSuffix» betweenSymmetric(«TN_XXXn(degree, "minValue")»);
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * other row value expressions.
                  *
-                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 * @see #betweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(«Field_TN_XXXn(degree, "minValue")»);
+                BetweenAndStep«typeSuffix» betweenSymmetric(«Field_TN_XXXn(degree, "minValue")»);
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * other row value expressions.
                  *
-                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 * @see #betweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(Row«degree»<«TN(degree)»> minValue);
+                BetweenAndStep«typeSuffix» betweenSymmetric(Row«typeSuffix» minValue);
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
                  * records.
                  *
-                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 * @see #betweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> betweenSymmetric(Record«degree»<«TN(degree)»> minValue);
+                BetweenAndStep«typeSuffix» betweenSymmetric(Record«recTypeSuffix» minValue);
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
@@ -744,8 +748,8 @@ class Rows extends Generators {
                  * <code>BETWEEN</code> predicate for row value expressions
                  */
                 @Support
-                Condition betweenSymmetric(Row«degree»<«TN(degree)»> minValue,
-                                           Row«degree»<«TN(degree)»> maxValue);
+                Condition betweenSymmetric(Row«typeSuffix» minValue,
+                                           Row«typeSuffix» maxValue);
 
                 /**
                  * Check if this row value expression is within a symmetric range of two
@@ -753,46 +757,46 @@ class Rows extends Generators {
                  * <p>
                  * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
                  *
-                 * @see #betweenSymmetric(Row«degree», Row«degree»)
+                 * @see #betweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition betweenSymmetric(Record«degree»<«TN(degree)»> minValue,
-                                           Record«degree»<«TN(degree)»> maxValue);
+                Condition betweenSymmetric(Record«recTypeSuffix» minValue,
+                                           Record«recTypeSuffix» maxValue);
 
                 /**
                  * Check if this row value expression is not within a range of two other
                  * row value expressions.
                  *
-                 * @see #between(Row«degree», Row«degree»)
+                 * @see #between(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> notBetween(«TN_XXXn(degree, "minValue")»);
+                BetweenAndStep«typeSuffix» notBetween(«TN_XXXn(degree, "minValue")»);
 
                 /**
                  * Check if this row value expression is not within a range of two other
                  * row value expressions.
                  *
-                 * @see #notBetween(Row«degree», Row«degree»)
+                 * @see #notBetween(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> notBetween(«Field_TN_XXXn(degree, "minValue")»);
+                BetweenAndStep«typeSuffix» notBetween(«Field_TN_XXXn(degree, "minValue")»);
 
                 /**
                  * Check if this row value expression is not within a range of two other
                  * row value expressions.
                  *
-                 * @see #notBetween(Row«degree», Row«degree»)
+                 * @see #notBetween(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> notBetween(Row«degree»<«TN(degree)»> minValue);
+                BetweenAndStep«typeSuffix» notBetween(Row«typeSuffix» minValue);
 
                 /**
                  * Check if this row value expression is within a range of two records.
                  *
-                 * @see #notBetween(Row«degree», Row«degree»)
+                 * @see #notBetween(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> notBetween(Record«degree»<«TN(degree)»> minValue);
+                BetweenAndStep«typeSuffix» notBetween(Record«recTypeSuffix» minValue);
 
                 /**
                  * Check if this row value expression is not within a range of two other
@@ -806,55 +810,55 @@ class Rows extends Generators {
                  * expressions
                  */
                 @Support
-                Condition notBetween(Row«degree»<«TN(degree)»> minValue,
-                                     Row«degree»<«TN(degree)»> maxValue);
+                Condition notBetween(Row«typeSuffix» minValue,
+                                     Row«typeSuffix» maxValue);
 
                 /**
                  * Check if this row value expression is within a range of two records.
                  * <p>
                  * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
                  *
-                 * @see #notBetween(Row«degree», Row«degree»)
+                 * @see #notBetween(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition notBetween(Record«degree»<«TN(degree)»> minValue,
-                                     Record«degree»<«TN(degree)»> maxValue);
+                Condition notBetween(Record«recTypeSuffix» minValue,
+                                     Record«recTypeSuffix» maxValue);
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * other row value expressions.
                  *
-                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 * @see #notBetweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(«TN_XXXn(degree, "minValue")»);
+                BetweenAndStep«typeSuffix» notBetweenSymmetric(«TN_XXXn(degree, "minValue")»);
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * other row value expressions.
                  *
-                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 * @see #notBetweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(«Field_TN_XXXn(degree, "minValue")»);
+                BetweenAndStep«typeSuffix» notBetweenSymmetric(«Field_TN_XXXn(degree, "minValue")»);
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * other row value expressions.
                  *
-                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 * @see #notBetweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(Row«degree»<«TN(degree)»> minValue);
+                BetweenAndStep«typeSuffix» notBetweenSymmetric(Row«typeSuffix» minValue);
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
                  * records.
                  *
-                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 * @see #notBetweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                BetweenAndStep«degree»<«TN(degree)»> notBetweenSymmetric(Record«degree»<«TN(degree)»> minValue);
+                BetweenAndStep«typeSuffix» notBetweenSymmetric(Record«recTypeSuffix» minValue);
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
@@ -868,8 +872,8 @@ class Rows extends Generators {
                  * predicate for row value expressions
                  */
                 @Support
-                Condition notBetweenSymmetric(Row«degree»<«TN(degree)»> minValue,
-                                              Row«degree»<«TN(degree)»> maxValue);
+                Condition notBetweenSymmetric(Row«typeSuffix» minValue,
+                                              Row«typeSuffix» maxValue);
 
                 /**
                  * Check if this row value expression is not within a symmetric range of two
@@ -877,11 +881,11 @@ class Rows extends Generators {
                  * <p>
                  * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
                  *
-                 * @see #notBetweenSymmetric(Row«degree», Row«degree»)
+                 * @see #notBetweenSymmetric(Row«typeSuffixRaw», Row«typeSuffixRaw»)
                  */
                 @Support
-                Condition notBetweenSymmetric(Record«degree»<«TN(degree)»> minValue,
-                                              Record«degree»<«TN(degree)»> maxValue);
+                Condition notBetweenSymmetric(Record«recTypeSuffix» minValue,
+                                              Record«recTypeSuffix» maxValue);
 
                 // ------------------------------------------------------------------------
                 // [NOT] DISTINCT predicates
@@ -892,21 +896,21 @@ class Rows extends Generators {
 «««                 * distinctness.
 «««                 */
 «««                @Support
-«««                Condition isDistinctFrom(Row«degree»<«TN(degree)»> row);
+«««                Condition isDistinctFrom(Row«typeSuffix» row);
 «««
 «««                /**
 «««                 * Compare this row value expression with a record for distinctness.
 «««                 *
-«««                 * @see #isDistinctFrom(Row«degree»)
+«««                 * @see #isDistinctFrom(Row«typeSuffixRaw»)
 «««                 */
 «««                @Support
-«««                Condition isDistinctFrom(Record«degree»<«TN(degree)»> record);
+«««                Condition isDistinctFrom(Record«recTypeSuffix» record);
 «««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
 «««                 * distinctness.
 «««                 *
-«««                 * @see #isDistinctFrom(Row«degree»)
+«««                 * @see #isDistinctFrom(Row«typeSuffixRaw»)
 «««                 */
 «««                @Support
 «««                Condition isDistinctFrom(«TN_tn(degree)»);
@@ -915,7 +919,7 @@ class Rows extends Generators {
 «««                 * Compare this row value expression with another row value expression for
 «««                 * distinctness.
 «««                 *
-«««                 * @see #isDistinctFrom(Row«degree»)
+«««                 * @see #isDistinctFrom(Row«typeSuffixRaw»)
 «««                 */
 «««                @Support
 «««                Condition isDistinctFrom(«Field_TN_tn(degree)»);
@@ -925,21 +929,21 @@ class Rows extends Generators {
 «««                 * non-distinctness.
 «««                 */
 «««                @Support
-«««                Condition isNotDistinctFrom(Row«degree»<«TN(degree)»> row);
+«««                Condition isNotDistinctFrom(Row«typeSuffix» row);
 «««
 «««                /**
 «««                 * Compare this row value expression with a record for non-distinctness.
 «««                 *
-«««                 * @see #isNotDistinctFrom(Row«degree»)
+«««                 * @see #isNotDistinctFrom(Row«typeSuffixRaw»)
 «««                 */
 «««                @Support
-«««                Condition isNotDistinctFrom(Record«degree»<«TN(degree)»> record);
+«««                Condition isNotDistinctFrom(Record«recTypeSuffix» record);
 «««
 «««                /**
 «««                 * Compare this row value expression with another row value expression for
 «««                 * non-distinctness.
 «««                 *
-«««                 * @see #isNotDistinctFrom(Row«degree»)
+«««                 * @see #isNotDistinctFrom(Row«typeSuffixRaw»)
 «««                 */
 «««                @Support
 «««                Condition isNotDistinctFrom(«TN_tn(degree)»);
@@ -948,7 +952,7 @@ class Rows extends Generators {
 «««                 * Compare this row value expression with another row value expression for
 «««                 * non-distinctness.
 «««                 *
-«««                 * @see #isNotDistinctFrom(Row«degree»)
+«««                 * @see #isNotDistinctFrom(Row«typeSuffixRaw»)
 «««                 */
 «««                @Support
 «««                Condition isNotDistinctFrom(«Field_TN_tn(degree)»);
@@ -967,7 +971,7 @@ class Rows extends Generators {
                  * is equivalent to <code>(A = 1 AND B = 2) OR (A = 3 AND B = 4)</code>
                  */
                 @Support
-                Condition in(Collection<? extends Row«degree»<«TN(degree)»>> rows);
+                Condition in(Collection<? extends Row«typeSuffix»> rows);
 
                 /**
                  * Compare this row value expression with a set of row value expressions for
@@ -976,7 +980,7 @@ class Rows extends Generators {
                  * @see #in(Collection)
                  */
                 @Support
-                Condition in(Row«degree»<«TN(degree)»>... rows);
+                Condition in(Row«typeSuffix»... rows);
 
                 /**
                  * Compare this row value expression with a set of records for equality.
@@ -984,7 +988,7 @@ class Rows extends Generators {
                  * @see #in(Collection)
                  */
                 @Support
-                Condition in(Record«degree»<«TN(degree)»>... record);
+                Condition in(Record«recTypeSuffix»... record);
 
                 /**
                  * Compare this row value expression with a subselect for equality.
@@ -992,7 +996,7 @@ class Rows extends Generators {
                  * @see #in(Collection)
                  */
                 @Support
-                Condition in(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition in(Select<? extends Record«recTypeSuffix»> select);
 
                 /**
                  * Compare this row value expression with a set of row value expressions for
@@ -1005,7 +1009,7 @@ class Rows extends Generators {
                  * equivalent to <code>NOT((A = 1 AND B = 2) OR (A = 3 AND B = 4))</code>
                  */
                 @Support
-                Condition notIn(Collection<? extends Row«degree»<«TN(degree)»>> rows);
+                Condition notIn(Collection<? extends Row«typeSuffix»> rows);
 
                 /**
                  * Compare this row value expression with a set of row value expressions for
@@ -1014,7 +1018,7 @@ class Rows extends Generators {
                  * @see #notIn(Collection)
                  */
                 @Support
-                Condition notIn(Row«degree»<«TN(degree)»>... rows);
+                Condition notIn(Row«typeSuffix»... rows);
 
                 /**
                  * Compare this row value expression with a set of records for non-equality.
@@ -1022,7 +1026,7 @@ class Rows extends Generators {
                  * @see #notIn(Collection)
                  */
                 @Support
-                Condition notIn(Record«degree»<«TN(degree)»>... record);
+                Condition notIn(Record«recTypeSuffix»... record);
 
                 /**
                  * Compare this row value expression with a subselect for non-equality.
@@ -1030,7 +1034,7 @@ class Rows extends Generators {
                  * @see #notIn(Collection)
                  */
                 @Support
-                Condition notIn(Select<? extends Record«degree»<«TN(degree)»>> select);
+                Condition notIn(Select<? extends Record«recTypeSuffix»> select);
 
                 «IF degree == 2»
                 // ------------------------------------------------------------------------
@@ -1107,7 +1111,7 @@ class Rows extends Generators {
             }
             ''');
 
-            write("org.jooq.Row" + degree, out);
+            write("org.jooq.Row" + degreeOrN(degree), out);
         }
     }
 

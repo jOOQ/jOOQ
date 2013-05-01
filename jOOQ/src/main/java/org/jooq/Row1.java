@@ -35,10 +35,6 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.POSTGRES;
-
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -293,7 +289,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #lessThan(Row1)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lessThan(Select<? extends Record1<T1>> select);
 
     /**
@@ -336,7 +332,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #lessThan(Row1)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lt(Select<? extends Record1<T1>> select);
 
     /**
@@ -382,7 +378,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #lessOrEqual(Row1)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition lessOrEqual(Select<? extends Record1<T1>> select);
 
     /**
@@ -425,7 +421,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #lessOrEqual(Row1)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition le(Select<? extends Record1<T1>> select);
 
     /**
@@ -471,7 +467,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #greaterThan(Row1)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition greaterThan(Select<? extends Record1<T1>> select);
 
     /**
@@ -514,7 +510,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #greaterThan(Row1)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition gt(Select<? extends Record1<T1>> select);
 
     /**
@@ -560,7 +556,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #greaterOrEqual(Row1)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition greaterOrEqual(Select<? extends Record1<T1>> select);
 
     /**
@@ -603,7 +599,7 @@ public interface Row1<T1> extends Row {
      *
      * @see #greaterOrEqual(Row1)
      */
-    @Support({ HSQLDB, MYSQL, POSTGRES })
+    @Support
     Condition ge(Select<? extends Record1<T1>> select);
 
     // ------------------------------------------------------------------------

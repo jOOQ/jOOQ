@@ -37,16 +37,7 @@ package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLITE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.currentDate;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.not;
@@ -315,71 +306,67 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testRowValueExpressionOrderingSubselects() throws Exception {
-        // IN with subselects - not supported by all DBs
-        // TODO [#1772] Simulate this for all dialects
-        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect())) {
-            log.info("SKIPPING", "Tuples and subselects");
-        }
-        else {
-            assertEquals(1, (int)
-            create().selectOne()
-                    .where(trueCondition())
-                    .and(row(1).lt(select(inline(2))))
-                    .and(row(1).le(select(inline(1))))
-                    .and(row(1).gt(select(inline(0))))
-                    .and(row(1).ge(select(inline(1))))
-                    .fetchOne(0, Integer.class));
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1).lt(select(inline(2))))
+                .and(row(1).le(select(inline(1))))
+                .and(row(1).gt(select(inline(0))))
+                .and(row(1).ge(select(inline(1))))
+                .fetchOne(0, Integer.class));
 
-            assertEquals(1, (int)
-            create().selectOne()
-                    .where(trueCondition())
-                    .and(row(1, 1).lt(select(inline(1), inline(2))))
-                    .and(row(1, 1).le(select(inline(1), inline(2))))
-                    .and(row(1, 1).gt(select(inline(1), inline(0))))
-                    .and(row(1, 1).ge(select(inline(1), inline(0))))
-                    .fetchOne(0, Integer.class));
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1).lt(select(inline(1), inline(2))))
+                .and(row(1, 1).le(select(inline(1), inline(2))))
+                .and(row(1, 1).gt(select(inline(1), inline(0))))
+                .and(row(1, 1).ge(select(inline(1), inline(0))))
+                .fetchOne(0, Integer.class));
 
-            assertEquals(1, (int)
-            create().selectOne()
-                    .where(trueCondition())
-                    .and(row(1, 1, 1).lt(select(inline(1), inline(1), inline(2))))
-                    .and(row(1, 1, 1).le(select(inline(1), inline(1), inline(2))))
-                    .and(row(1, 1, 1).gt(select(inline(1), inline(1), inline(0))))
-                    .and(row(1, 1, 1).ge(select(inline(1), inline(1), inline(0))))
-                    .fetchOne(0, Integer.class));
-        }
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(trueCondition())
+                .and(row(1, 1, 1).lt(select(inline(1), inline(1), inline(2))))
+                .and(row(1, 1, 1).le(select(inline(1), inline(1), inline(2))))
+                .and(row(1, 1, 1).gt(select(inline(1), inline(1), inline(0))))
+                .and(row(1, 1, 1).ge(select(inline(1), inline(1), inline(0))))
+                .fetchOne(0, Integer.class));
     }
 
     @Test
     public void testRowValueExpressionInConditions() throws Exception {
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
+                .and(row(3, "2").notIn(
+                    select(val(2), val("3")).union(
+                    select(val(4), val("3")))))
+                .fetchOne(0, Integer.class));
 
-        // IN with subselects - not supported by all DBs
-        // TODO [#1772] Simulate this for all dialects
-        if (asList(ASE, CUBRID, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect())) {
-            log.info("SKIPPING", "Tuples and subselects");
-        }
-        else {
+        assertEquals(1, (int)
+        create().selectOne()
+                .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
+                .and(row(1, 2, 3).notIn(select(val(3), val(2), val(1))))
+                .and(row(1, 2, "3").equal(select(val(1), val(2), val("3"))))
+                .and(row(1, "2", 3).notEqual(select(val(1), val("4"), val(3))))
+                .fetchOne(0, Integer.class));
 
-            // TODO: Create more systematic tests
-            // DB2 cannot deal with row value expression comparison predicates
-            if (!asList(DB2).contains(dialect())) {
-                assertEquals(1, (int)
-                create().selectOne()
-                        .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
-                        .and(row(1, 2, 3).notIn(select(val(3), val(2), val(1))))
-                        .and(row(1, 2, "3").equal(select(val(1), val(2), val("3"))))
-                        .and(row(1, "2", 3).notEqual(select(val(1), val("4"), val(3))))
-                        .fetchOne(0, Integer.class));
-            }
+        assertEquals(1, (int)
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(row(TBook_ID(), TBook_AUTHOR_ID()).in(select(val(1), val(1))))
+                .fetchOne(0, Integer.class));
 
-            assertEquals(1, (int)
-                create().selectOne()
-                        .where(row(1, 2, 3).in(select(val(1), val(2), val(3))))
-                        .and(row(3, "2").notIn(
-                            select(val(2), val("3")).union(
-                            select(val(4), val("3")))))
-                        .fetchOne(0, Integer.class));
-        }
+        assertEquals(asList(1, 2),
+        create().select(TBook_ID())
+                .from(TBook())
+                .where(row(TBook_ID(), TBook_AUTHOR_ID()).in(
+                    select(val(1), val(1)).unionAll(
+                    select(val(2), val(1)).unionAll(
+                    select(TBook_ID(), TBook_ID()).from(TBook())))))
+                .orderBy(TBook_ID())
+                .fetch(0, Integer.class));
     }
 
     @Test

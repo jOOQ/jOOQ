@@ -46,7 +46,7 @@ import java.util.Collection;
 import javax.annotation.Generated;
 
 /**
- * A model type for a row value expression with degree <code>2</code>
+ * A model type for a row value expression with degree <code>2</code>.
  * <p>
  * Note: Not all databases support row value expressions, but many row value
  * expression operations can be simulated on all databases. See relevant row
@@ -62,12 +62,12 @@ public interface Row2<T1, T2> extends Row {
     // ------------------------------------------------------------------------
 
     /**
-     * Get the first field
+     * Get the first field.
      */
     Field<T1> field1();
 
     /**
-     * Get the second field
+     * Get the second field.
      */
     Field<T2> field2();
 
@@ -77,7 +77,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      * <p>
      * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
@@ -88,7 +88,7 @@ public interface Row2<T1, T2> extends Row {
     Condition equal(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for equality
+     * Compare this row value expression with a record for equality.
      *
      * @see #equal(Row2)
      */
@@ -97,7 +97,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row2)
      */
@@ -106,7 +106,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row2)
      */
@@ -114,16 +114,16 @@ public interface Row2<T1, T2> extends Row {
     Condition equal(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #equal(Row2)
      */
-    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition equal(Select<? extends Record2<T1, T2>> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row2)
      */
@@ -131,7 +131,7 @@ public interface Row2<T1, T2> extends Row {
     Condition eq(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for equality
+     * Compare this row value expression with a record for equality.
      *
      * @see #equal(Row2)
      */
@@ -140,7 +140,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row2)
      */
@@ -149,7 +149,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(Row2)
      */
@@ -157,16 +157,16 @@ public interface Row2<T1, T2> extends Row {
     Condition eq(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #equal(Row2)
      */
-    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition eq(Select<? extends Record2<T1, T2>> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      * <p>
      * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -185,7 +185,7 @@ public interface Row2<T1, T2> extends Row {
     Condition notEqual(Record2<T1, T2> record);
 
     /**
-     * Compare this row value expression with another row value expression for
+     * Compare this row value expression with another row value expression for.
      * non-equality
      *
      * @see #notEqual(Row2)
@@ -195,7 +195,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(Row2)
      */
@@ -203,16 +203,16 @@ public interface Row2<T1, T2> extends Row {
     Condition notEqual(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notEqual(Row2)
      */
-    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notEqual(Select<? extends Record2<T1, T2>> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(Row2)
      */
@@ -220,7 +220,7 @@ public interface Row2<T1, T2> extends Row {
     Condition ne(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for non-equality
+     * Compare this row value expression with a record for non-equality.
      *
      * @see #notEqual(Row2)
      */
@@ -229,7 +229,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(Row2)
      */
@@ -238,6 +238,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
+     * non-equality.
      *
      * @see #notEqual(Row2)
      */
@@ -245,11 +246,11 @@ public interface Row2<T1, T2> extends Row {
     Condition ne(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notEqual(Row2)
      */
-    @Support({ HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition ne(Select<? extends Record2<T1, T2>> select);
 
     // ------------------------------------------------------------------------
@@ -258,7 +259,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -269,7 +270,7 @@ public interface Row2<T1, T2> extends Row {
     Condition lessThan(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessThan(Row2)
      */
@@ -278,7 +279,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row2)
      */
@@ -287,7 +288,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row2)
      */
@@ -295,7 +296,7 @@ public interface Row2<T1, T2> extends Row {
     Condition lessThan(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessThan(Row2)
      */
@@ -304,7 +305,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row2)
      */
@@ -312,7 +313,7 @@ public interface Row2<T1, T2> extends Row {
     Condition lt(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessThan(Row2)
      */
@@ -321,7 +322,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row2)
      */
@@ -330,7 +331,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(Row2)
      */
@@ -338,7 +339,7 @@ public interface Row2<T1, T2> extends Row {
     Condition lt(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessThan(Row2)
      */
@@ -347,7 +348,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -358,7 +359,7 @@ public interface Row2<T1, T2> extends Row {
     Condition lessOrEqual(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -367,7 +368,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -376,7 +377,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -384,7 +385,7 @@ public interface Row2<T1, T2> extends Row {
     Condition lessOrEqual(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -393,7 +394,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -401,7 +402,7 @@ public interface Row2<T1, T2> extends Row {
     Condition le(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -410,7 +411,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -419,7 +420,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -427,7 +428,7 @@ public interface Row2<T1, T2> extends Row {
     Condition le(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessOrEqual(Row2)
      */
@@ -436,7 +437,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -447,7 +448,7 @@ public interface Row2<T1, T2> extends Row {
     Condition greaterThan(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterThan(Row2)
      */
@@ -456,7 +457,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row2)
      */
@@ -465,7 +466,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row2)
      */
@@ -473,7 +474,7 @@ public interface Row2<T1, T2> extends Row {
     Condition greaterThan(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterThan(Row2)
      */
@@ -482,7 +483,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row2)
      */
@@ -490,7 +491,7 @@ public interface Row2<T1, T2> extends Row {
     Condition gt(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterThan(Row2)
      */
@@ -499,7 +500,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row2)
      */
@@ -508,7 +509,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(Row2)
      */
@@ -516,7 +517,7 @@ public interface Row2<T1, T2> extends Row {
     Condition gt(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterThan(Row2)
      */
@@ -525,7 +526,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -536,7 +537,7 @@ public interface Row2<T1, T2> extends Row {
     Condition greaterOrEqual(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -545,7 +546,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -554,7 +555,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -562,7 +563,7 @@ public interface Row2<T1, T2> extends Row {
     Condition greaterOrEqual(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -571,7 +572,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -579,7 +580,7 @@ public interface Row2<T1, T2> extends Row {
     Condition ge(Row2<T1, T2> row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -588,7 +589,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -597,7 +598,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -605,7 +606,7 @@ public interface Row2<T1, T2> extends Row {
     Condition ge(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterOrEqual(Row2)
      */
@@ -618,7 +619,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(Row2, Row2)
      */
@@ -627,7 +628,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(Row2, Row2)
      */
@@ -636,7 +637,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(Row2, Row2)
      */
@@ -644,7 +645,7 @@ public interface Row2<T1, T2> extends Row {
     BetweenAndStep2<T1, T2> between(Row2<T1, T2> minValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      *
      * @see #between(Row2, Row2)
      */
@@ -653,7 +654,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      * <p>
@@ -667,7 +668,7 @@ public interface Row2<T1, T2> extends Row {
                       Row2<T1, T2> maxValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      *
@@ -679,7 +680,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
@@ -688,7 +689,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
@@ -697,7 +698,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
@@ -706,7 +707,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * records
+     * records.
      *
      * @see #betweenSymmetric(Row2, Row2)
      */
@@ -715,7 +716,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      * <p>
      * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
      * <p>
@@ -730,7 +731,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * records
+     * records.
      * <p>
      * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
      *
@@ -742,7 +743,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #between(Row2, Row2)
      */
@@ -751,7 +752,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #notBetween(Row2, Row2)
      */
@@ -760,7 +761,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #notBetween(Row2, Row2)
      */
@@ -768,7 +769,7 @@ public interface Row2<T1, T2> extends Row {
     BetweenAndStep2<T1, T2> notBetween(Row2<T1, T2> minValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      *
      * @see #notBetween(Row2, Row2)
      */
@@ -777,7 +778,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      * <p>
      * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
      * <p>
@@ -791,7 +792,7 @@ public interface Row2<T1, T2> extends Row {
                          Row2<T1, T2> maxValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      * <p>
      * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
      *
@@ -803,7 +804,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
@@ -812,7 +813,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
@@ -821,7 +822,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
@@ -830,7 +831,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * records
+     * records.
      *
      * @see #notBetweenSymmetric(Row2, Row2)
      */
@@ -839,7 +840,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      * <p>
      * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
      * <p>
@@ -854,7 +855,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * records
+     * records.
      * <p>
      * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
      *
@@ -875,7 +876,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      * <p>
      * Row IN predicates can be simulated in those databases that do not support
      * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
@@ -887,7 +888,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      *
      * @see #in(Collection)
      */
@@ -895,7 +896,7 @@ public interface Row2<T1, T2> extends Row {
     Condition in(Row2<T1, T2>... rows);
 
     /**
-     * Compare this row value expression with a set of records for equality
+     * Compare this row value expression with a set of records for equality.
      *
      * @see #in(Collection)
      */
@@ -903,16 +904,16 @@ public interface Row2<T1, T2> extends Row {
     Condition in(Record2<T1, T2>... record);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #in(Collection)
      */
-    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition in(Select<? extends Record2<T1, T2>> select);
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      * <p>
      * Row NOT IN predicates can be simulated in those databases that do not
      * support such predicates natively:
@@ -925,7 +926,7 @@ public interface Row2<T1, T2> extends Row {
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      *
      * @see #notIn(Collection)
      */
@@ -933,7 +934,7 @@ public interface Row2<T1, T2> extends Row {
     Condition notIn(Row2<T1, T2>... rows);
 
     /**
-     * Compare this row value expression with a set of records for non-equality
+     * Compare this row value expression with a set of records for non-equality.
      *
      * @see #notIn(Collection)
      */
@@ -941,11 +942,11 @@ public interface Row2<T1, T2> extends Row {
     Condition notIn(Record2<T1, T2>... record);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notIn(Collection)
      */
-    @Support({ DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notIn(Select<? extends Record2<T1, T2>> select);
 
     // ------------------------------------------------------------------------
@@ -953,7 +954,7 @@ public interface Row2<T1, T2> extends Row {
     // ------------------------------------------------------------------------
 
     /**
-     * Check if this row value expression overlaps another row value expression
+     * Check if this row value expression overlaps another row value expression.
      * <p>
      * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
      * which comes in two flavours:
@@ -975,7 +976,7 @@ public interface Row2<T1, T2> extends Row {
     Condition overlaps(T1 t1, T2 t2);
 
     /**
-     * Check if this row value expression overlaps another row value expression
+     * Check if this row value expression overlaps another row value expression.
      * <p>
      * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
      * which comes in two flavours:
@@ -997,7 +998,7 @@ public interface Row2<T1, T2> extends Row {
     Condition overlaps(Field<T1> t1, Field<T2> t2);
 
     /**
-     * Check if this row value expression overlaps another row value expression
+     * Check if this row value expression overlaps another row value expression.
      * <p>
      * The SQL standard specifies a temporal <code>OVERLAPS</code> predicate,
      * which comes in two flavours:

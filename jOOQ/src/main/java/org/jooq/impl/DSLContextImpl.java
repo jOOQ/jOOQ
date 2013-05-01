@@ -1376,6 +1376,12 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
+    public final Batch batch(Query query, Object[]... bindings) {
+        return batch(query).bind(bindings);
+    }
+
+    @Override
+    @Support
     public final Batch batchStore(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.STORE, records);
     }

@@ -4071,6 +4071,22 @@ public interface DSLContext {
     BatchBindStep batch(Query query);
 
     /**
+     * Execute a set of queries in batch mode (with bind values).
+     * <p>
+     * This is a convenience method for calling {@link #batch(Query)} and then
+     * binding values one by one using {@link BatchBindStep#bind(Object...)}
+     * <p>
+     * Note: bind values will be inlined to a static batch query as in
+     * {@link #batch(Query...)}, if you choose to execute queries with
+     * <code>{@link Settings#getStatementType()} == {@link StatementType#STATIC_STATEMENT}</code>
+     *
+     * @see #batch(Query)
+     * @see Statement#executeBatch()
+     */
+    @Support
+    Batch batch(Query query, Object[]... bindings);
+
+    /**
      * Execute a set of <code>INSERT</code> and <code>UPDATE</code> queries in
      * batch mode (with bind values).
      * <p>

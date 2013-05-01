@@ -154,6 +154,13 @@ final class Utils {
     static final String          DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY = "org.jooq.configuration.row-value-expression-subquery";
 
     /**
+     * [#1296] This constant is used internally by jOOQ to indicate that
+     * {@link ResultSet} rows must be locked to simulate a
+     * <code>FOR UPDATE</code> clause.
+     */
+    static final String          DATA_LOCK_ROWS_FOR_UPDATE                    = "org.jooq.configuration.lock-rows-for-update";
+
+    /**
      * [#1520] Count the number of bind values, and potentially enforce a static
      * statement.
      */

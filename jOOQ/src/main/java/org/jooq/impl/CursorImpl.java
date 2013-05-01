@@ -35,6 +35,9 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -1263,7 +1266,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
                     // [#1296] Force a row-lock by updating the row if the
                     // FOR UPDATE clause is simulated
-                    if (rs.getConcurrency() == ResultSet.CONCUR_UPDATABLE) {
+                    if (TRUE.equals(ctx.data(DATA_LOCK_ROWS_FOR_UPDATE))) {
                         rs.updateObject(1, rs.getObject(1));
                         rs.updateRow();
                     }

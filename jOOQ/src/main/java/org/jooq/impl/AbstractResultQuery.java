@@ -42,6 +42,7 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -176,6 +177,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
         if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect())) {
+            ctx.data(DATA_LOCK_ROWS_FOR_UPDATE, true);
             ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
         }
 

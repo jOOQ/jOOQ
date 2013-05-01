@@ -38,6 +38,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
+import static org.jooq.SQLDialect.SQLITE;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -85,6 +86,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testResultSetType() throws Exception {
+        if (asList(SQLITE).contains(dialect())) {
+            log.info("SKIPPING", "ResultSet type tests");
+            return;
+        }
+
         ResultSet rs =
         create().select(TBook_ID())
                 .from(TBook())
@@ -108,6 +114,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("serial")
     @Test
     public void testResultSetTypeWithListener() throws Exception {
+        if (asList(SQLITE).contains(dialect())) {
+            log.info("SKIPPING", "ResultSet type tests");
+            return;
+        }
+
         assertEquals(
             asList(1, 1, 1, 2),
             create(new DefaultExecuteListener() {
@@ -137,6 +148,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("serial")
     @Test
     public void testResultSetConcurrency() throws Exception {
+        if (asList(SQLITE).contains(dialect())) {
+            log.info("SKIPPING", "ResultSet concurrency tests");
+            return;
+        }
+
         jOOQAbstractTest.reset = false;
 
         assertEquals(

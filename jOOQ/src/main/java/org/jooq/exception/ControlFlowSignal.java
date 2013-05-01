@@ -73,4 +73,12 @@ public class ControlFlowSignal extends RuntimeException {
     public ControlFlowSignal(String message) {
         super(message);
     }
+
+    @SuppressWarnings("sync-override")
+    @Override
+    public Throwable fillInStackTrace() {
+
+        // Prevent "expensive" operation of filling in a stack trace for signals
+        return this;
+    }
 }

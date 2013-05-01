@@ -191,7 +191,11 @@ abstract class Generators {
      * <code>T1, T2, .., T[N]</code>
      */
     def TN(int degree) {
-        (1..degree).join(", ", [e | "T" + e])
+    	return
+    	if (degree == 0)
+    		"Object..."
+		else
+	        (1..degree).join(", ", [e | "T" + e])
     }
     
     /**
@@ -200,7 +204,11 @@ abstract class Generators {
      * <code>t1, t2, .., t[N]</code>
      */
     def tn(int degree) {
-        (1..degree).join(", ", [e | "t" + e])
+    	return
+    	if (degree == 0)
+    		"values"
+		else
+	        (1..degree).join(", ", [e | "t" + e])
     }
     
     /** 
@@ -209,7 +217,11 @@ abstract class Generators {
      * <code>T1 t1, T2 t2, .., T[N] t[N]</code>
      */
     def TN_tn(int degree) {
-        (1..degree).join(", ", [e | "T" + e + " t" + e])
+    	return 
+    	if (degree == 0)
+    		"Object... values"
+    	else
+        	(1..degree).join(", ", [e | "T" + e + " t" + e])
     }
     
     /** 
@@ -218,7 +230,11 @@ abstract class Generators {
      * <code>T1 t1, T2 t2, .., T[N] t[N]</code>
      */
     def TN_XXXn(int degree, String XXX) {
-        (1..degree).join(", ", [e | "T" + e + " " + XXX + e])
+    	return
+    	if (degree == 0)
+    		"Object... " + XXX + "s"
+		else
+	        (1..degree).join(", ", [e | "T" + e + " " + XXX + e])
     }
     
     /**
@@ -227,7 +243,11 @@ abstract class Generators {
      * <code>Field&lt;T1> t1, Field&lt;T2> t2, .., Field&ltT[N]> t[N]</code>
      */
     def Field_TN_tn(int degree) {
-        (1..degree).join(", ", [e | "Field<T" + e + "> t" + e])
+    	return
+    	if (degree == 0)
+    		"Field<?>... fields"
+		else
+	        (1..degree).join(", ", [e | "Field<T" + e + "> t" + e])
     }
     
     /**
@@ -236,7 +256,11 @@ abstract class Generators {
      * <code>Field&lt;T1> t1, Field&lt;T2> t2, .., Field&ltT[N]> t[N]</code>
      */
     def Field_TN_XXXn(int degree, String XXX) {
-        (1..degree).join(", ", [e | "Field<T" + e + "> " + XXX + e])
+    	return
+    	if (degree == 0)
+    		"Field<?>... " + XXX + "s"
+		else
+	        (1..degree).join(", ", [e | "Field<T" + e + "> " + XXX + e])
     }
     
     /**
@@ -245,7 +269,11 @@ abstract class Generators {
      * <code>Field&lt;T1> field1, Field&lt;T2> field2, .., Field&ltT[N]> field[N]</code>
      */
     def Field_TN_fieldn(int degree) {
-        (1..degree).join(", ", [e | "Field<T" + e + "> field" + e])
+    	return
+    	if (degree == 0)
+    		"Field<?>... fields"
+		else
+	        (1..degree).join(", ", [e | "Field<T" + e + "> field" + e])
     }
     
     /**
@@ -263,7 +291,11 @@ abstract class Generators {
      * <code>field1, field2, .., field[N]</code>
      */
     def XXXn(int degree, String XXX) {
-        (1..degree).join(", ", [e | XXX + e])
+    	return
+    	if (degree == 0)
+    		XXX + "s"
+		else
+	        (1..degree).join(", ", [e | XXX + e])
     }
     
     /**
@@ -302,5 +334,26 @@ abstract class Generators {
      */
     def Utils_field_tn(int degree) {
         (1..degree).join(", ", [e | "Utils.field(t" + e + ")"])
+    }
+    
+    /**
+     * A numeric degree or "N"
+     */
+    def degreeOrN(int degree) {
+    	return degreeOr(degree, "N")
+    }
+    
+    /**
+     * A numeric degree or [nothing]
+     */
+    def degreeOr(int degree) {
+    	return degreeOr(degree, "")
+    }
+    
+    /**
+     * A numeric degree or [or]
+     */
+    def degreeOr(int degree, String or) {
+    	return if (degree == 0) or else degree
     }
 }

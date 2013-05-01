@@ -35,17 +35,16 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 
 import java.util.Collection;
 
+import javax.annotation.Generated;
+
 /**
- * A model type for a row value expression with degree <code>N > 8</code>
+ * A model type for a row value expression with degree <code>N > 22</code>.
  * <p>
  * Note: Not all databases support row value expressions, but many row value
  * expression operations can be simulated on all databases. See relevant row
@@ -53,6 +52,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@Generated("This class was generated using jOOQ-tools")
 public interface RowN extends Row {
 
     // ------------------------------------------------------------------------
@@ -61,7 +61,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      * <p>
      * Row equality comparison predicates can be simulated in those databases
      * that do not support such predicates natively:
@@ -72,7 +72,7 @@ public interface RowN extends Row {
     Condition equal(RowN row);
 
     /**
-     * Compare this row value expression with a record for equality
+     * Compare this row value expression with a record for equality.
      *
      * @see #equal(RowN)
      */
@@ -81,7 +81,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(RowN)
      */
@@ -90,7 +90,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(RowN)
      */
@@ -98,16 +98,16 @@ public interface RowN extends Row {
     Condition equal(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #equal(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition equal(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(RowN)
      */
@@ -115,7 +115,7 @@ public interface RowN extends Row {
     Condition eq(RowN row);
 
     /**
-     * Compare this row value expression with a record for equality
+     * Compare this row value expression with a record for equality.
      *
      * @see #equal(RowN)
      */
@@ -124,7 +124,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(RowN)
      */
@@ -133,7 +133,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * equality
+     * equality.
      *
      * @see #equal(RowN)
      */
@@ -141,16 +141,16 @@ public interface RowN extends Row {
     Condition eq(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #equal(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition eq(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      * <p>
      * Row non-equality comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -169,7 +169,7 @@ public interface RowN extends Row {
     Condition notEqual(Record record);
 
     /**
-     * Compare this row value expression with another row value expression for
+     * Compare this row value expression with another row value expression for.
      * non-equality
      *
      * @see #notEqual(RowN)
@@ -179,7 +179,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(RowN)
      */
@@ -187,16 +187,16 @@ public interface RowN extends Row {
     Condition notEqual(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notEqual(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notEqual(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(RowN)
      */
@@ -204,7 +204,7 @@ public interface RowN extends Row {
     Condition ne(RowN row);
 
     /**
-     * Compare this row value expression with a record for non-equality
+     * Compare this row value expression with a record for non-equality.
      *
      * @see #notEqual(RowN)
      */
@@ -213,7 +213,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * non-equality
+     * non-equality.
      *
      * @see #notEqual(RowN)
      */
@@ -222,6 +222,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
+     * non-equality.
      *
      * @see #notEqual(RowN)
      */
@@ -229,11 +230,11 @@ public interface RowN extends Row {
     Condition ne(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notEqual(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition ne(Select<? extends Record> select);
 
     // ------------------------------------------------------------------------
@@ -242,7 +243,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -253,7 +254,7 @@ public interface RowN extends Row {
     Condition lessThan(RowN row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessThan(RowN)
      */
@@ -262,7 +263,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(RowN)
      */
@@ -271,7 +272,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(RowN)
      */
@@ -279,16 +280,16 @@ public interface RowN extends Row {
     Condition lessThan(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessThan(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lessThan(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(RowN)
      */
@@ -296,7 +297,7 @@ public interface RowN extends Row {
     Condition lt(RowN row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessThan(RowN)
      */
@@ -305,7 +306,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(RowN)
      */
@@ -314,7 +315,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessThan(RowN)
      */
@@ -322,16 +323,16 @@ public interface RowN extends Row {
     Condition lt(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessThan(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lt(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -342,7 +343,7 @@ public interface RowN extends Row {
     Condition lessOrEqual(RowN row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessOrEqual(RowN)
      */
@@ -351,7 +352,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(RowN)
      */
@@ -360,7 +361,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(RowN)
      */
@@ -368,16 +369,16 @@ public interface RowN extends Row {
     Condition lessOrEqual(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessOrEqual(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition lessOrEqual(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(RowN)
      */
@@ -385,7 +386,7 @@ public interface RowN extends Row {
     Condition le(RowN row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #lessOrEqual(RowN)
      */
@@ -394,7 +395,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(RowN)
      */
@@ -403,7 +404,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #lessOrEqual(RowN)
      */
@@ -411,16 +412,16 @@ public interface RowN extends Row {
     Condition le(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #lessOrEqual(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition le(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -431,7 +432,7 @@ public interface RowN extends Row {
     Condition greaterThan(RowN row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterThan(RowN)
      */
@@ -440,7 +441,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(RowN)
      */
@@ -449,7 +450,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(RowN)
      */
@@ -457,16 +458,16 @@ public interface RowN extends Row {
     Condition greaterThan(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterThan(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition greaterThan(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(RowN)
      */
@@ -474,7 +475,7 @@ public interface RowN extends Row {
     Condition gt(RowN row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterThan(RowN)
      */
@@ -483,7 +484,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(RowN)
      */
@@ -492,7 +493,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterThan(RowN)
      */
@@ -500,16 +501,16 @@ public interface RowN extends Row {
     Condition gt(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterThan(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition gt(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      * <p>
      * Row order comparison predicates can be simulated in those
      * databases that do not support such predicates natively:
@@ -520,7 +521,7 @@ public interface RowN extends Row {
     Condition greaterOrEqual(RowN row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterOrEqual(RowN)
      */
@@ -529,7 +530,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(RowN)
      */
@@ -538,7 +539,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(RowN)
      */
@@ -546,16 +547,16 @@ public interface RowN extends Row {
     Condition greaterOrEqual(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterOrEqual(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition greaterOrEqual(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(RowN)
      */
@@ -563,7 +564,7 @@ public interface RowN extends Row {
     Condition ge(RowN row);
 
     /**
-     * Compare this row value expression with a record for order
+     * Compare this row value expression with a record for order.
      *
      * @see #greaterOrEqual(RowN)
      */
@@ -572,7 +573,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(RowN)
      */
@@ -581,7 +582,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with another row value expression for
-     * order
+     * order.
      *
      * @see #greaterOrEqual(RowN)
      */
@@ -589,11 +590,11 @@ public interface RowN extends Row {
     Condition ge(Field<?>... fields);
 
     /**
-     * Compare this row value expression with a subselect for order
+     * Compare this row value expression with a subselect for order.
      *
      * @see #greaterOrEqual(RowN)
      */
-    @Support({ CUBRID, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support({ HSQLDB, MYSQL, POSTGRES })
     Condition ge(Select<? extends Record> select);
 
     // ------------------------------------------------------------------------
@@ -602,7 +603,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(RowN, RowN)
      */
@@ -611,7 +612,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(RowN, RowN)
      */
@@ -620,7 +621,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      *
      * @see #between(RowN, RowN)
      */
@@ -628,7 +629,7 @@ public interface RowN extends Row {
     BetweenAndStepN between(RowN minValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      *
      * @see #between(RowN, RowN)
      */
@@ -637,7 +638,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a range of two other row
-     * value expressions
+     * value expressions.
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      * <p>
@@ -651,7 +652,7 @@ public interface RowN extends Row {
                       RowN maxValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      *
@@ -663,7 +664,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(RowN, RowN)
      */
@@ -672,7 +673,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(RowN, RowN)
      */
@@ -681,7 +682,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #betweenSymmetric(RowN, RowN)
      */
@@ -690,7 +691,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * records
+     * records.
      *
      * @see #betweenSymmetric(RowN, RowN)
      */
@@ -699,7 +700,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      * <p>
      * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
      * <p>
@@ -714,7 +715,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is within a symmetric range of two
-     * records
+     * records.
      * <p>
      * This is the same as calling <code>betweenSymmetric(minValue).and(maxValue)</code>
      *
@@ -726,7 +727,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #between(RowN, RowN)
      */
@@ -735,7 +736,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #notBetween(RowN, RowN)
      */
@@ -744,7 +745,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      *
      * @see #notBetween(RowN, RowN)
      */
@@ -752,7 +753,7 @@ public interface RowN extends Row {
     BetweenAndStepN notBetween(RowN minValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      *
      * @see #notBetween(RowN, RowN)
      */
@@ -761,7 +762,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a range of two other
-     * row value expressions
+     * row value expressions.
      * <p>
      * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
      * <p>
@@ -775,7 +776,7 @@ public interface RowN extends Row {
                          RowN maxValue);
 
     /**
-     * Check if this row value expression is within a range of two records
+     * Check if this row value expression is within a range of two records.
      * <p>
      * This is the same as calling <code>notBetween(minValue).and(maxValue)</code>
      *
@@ -787,7 +788,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(RowN, RowN)
      */
@@ -796,7 +797,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(RowN, RowN)
      */
@@ -805,7 +806,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      *
      * @see #notBetweenSymmetric(RowN, RowN)
      */
@@ -814,7 +815,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * records
+     * records.
      *
      * @see #notBetweenSymmetric(RowN, RowN)
      */
@@ -823,7 +824,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * other row value expressions
+     * other row value expressions.
      * <p>
      * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
      * <p>
@@ -838,7 +839,7 @@ public interface RowN extends Row {
 
     /**
      * Check if this row value expression is not within a symmetric range of two
-     * records
+     * records.
      * <p>
      * This is the same as calling <code>notBetweenSymmetric(minValue).and(maxValue)</code>
      *
@@ -859,7 +860,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      * <p>
      * Row IN predicates can be simulated in those databases that do not support
      * such predicates natively: <code>(A, B) IN ((1, 2), (3, 4))</code> is
@@ -871,7 +872,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      *
      * @see #in(Collection)
      */
@@ -879,24 +880,24 @@ public interface RowN extends Row {
     Condition in(RowN... rows);
 
     /**
-     * Compare this row value expression with a set of records for equality
+     * Compare this row value expression with a set of records for equality.
      *
      * @see #in(Collection)
      */
     @Support
-    Condition in(Record... records);
+    Condition in(Record... record);
 
     /**
-     * Compare this row value expression with a subselect for equality
+     * Compare this row value expression with a subselect for equality.
      *
      * @see #in(Collection)
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition in(Select<? extends Record> select);
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      * <p>
      * Row NOT IN predicates can be simulated in those databases that do not
      * support such predicates natively:
@@ -909,7 +910,7 @@ public interface RowN extends Row {
 
     /**
      * Compare this row value expression with a set of row value expressions for
-     * equality
+     * equality.
      *
      * @see #notIn(Collection)
      */
@@ -917,18 +918,19 @@ public interface RowN extends Row {
     Condition notIn(RowN... rows);
 
     /**
-     * Compare this row value expression with a set of records for non-equality
+     * Compare this row value expression with a set of records for non-equality.
      *
      * @see #notIn(Collection)
      */
     @Support
-    Condition notIn(Record... records);
+    Condition notIn(Record... record);
 
     /**
-     * Compare this row value expression with a subselect for non-equality
+     * Compare this row value expression with a subselect for non-equality.
      *
      * @see #notIn(Collection)
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES })
+    @Support
     Condition notIn(Select<? extends Record> select);
+
 }

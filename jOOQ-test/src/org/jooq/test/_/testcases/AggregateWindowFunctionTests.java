@@ -635,7 +635,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // NTILE()
-        if (asList(CUBRID, DB2, SYBASE).contains(dialect())) {
+        if (asList(DB2, SYBASE).contains(dialect())) {
             log.info("SKIPPING", "NTILE tests");
         }
         else {
@@ -659,65 +659,68 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         column = 0;
         if (asList(CUBRID, SQLSERVER).contains(dialect())) {
             log.info("SKIPPING", "ROWS UNBOUNDED PRECEDING and similar tests");
-            return;
+        }
+        else {
+
+            // SUM()
+            result =
+            create().select(TBook_ID(),
+                            sum(TBook_ID()).over().partitionByOne(),
+                            sum(TBook_ID()).over().partitionBy(TBook_AUTHOR_ID()),
+                            sum(TBook_ID()).over().orderBy(TBook_ID().asc())
+                                                  .rowsBetweenUnboundedPreceding()
+                                                  .andPreceding(1))
+                    .from(TBook())
+                    .orderBy(TBook_ID().asc())
+                    .fetch();
+
+            // Overall SUM()
+            column++;
+            assertEquals(new BigDecimal("10"), result.getValue(0, column));
+            assertEquals(new BigDecimal("10"), result.getValue(1, column));
+            assertEquals(new BigDecimal("10"), result.getValue(2, column));
+            assertEquals(new BigDecimal("10"), result.getValue(3, column));
+
+            // Partitioned SUM()
+            column++;
+            assertEquals(new BigDecimal("3"), result.getValue(0, column));
+            assertEquals(new BigDecimal("3"), result.getValue(1, column));
+            assertEquals(new BigDecimal("7"), result.getValue(2, column));
+            assertEquals(new BigDecimal("7"), result.getValue(3, column));
+
+            // Ordered SUM() with ROWS
+            column++;
+            assertEquals(null, result.getValue(0, column));
+            assertEquals(new BigDecimal("1"), result.getValue(1, column));
+            assertEquals(new BigDecimal("3"), result.getValue(2, column));
+            assertEquals(new BigDecimal("6"), result.getValue(3, column));
+
+            column = 0;
+
+            // FIRST_VALUE()
+            result =
+            create().select(TBook_ID(),
+                            firstValue(TBook_ID()).over()
+                                                  .partitionBy(TBook_AUTHOR_ID())
+                                                  .orderBy(TBook_PUBLISHED_IN().asc())
+                                                  .rowsBetweenUnboundedPreceding()
+                                                  .andUnboundedFollowing())
+                    .from(TBook())
+                    .orderBy(TBook_ID().asc())
+                    .fetch();
+
+            // Partitioned and ordered FIRST_VALUE() with ROWS
+            column++;
+            assertEquals(Integer.valueOf(2), result.getValue(0, column));
+            assertEquals(Integer.valueOf(2), result.getValue(1, column));
+            assertEquals(Integer.valueOf(3), result.getValue(2, column));
+            assertEquals(Integer.valueOf(3), result.getValue(3, column));
         }
 
-        // SUM()
-        result =
-        create().select(TBook_ID(),
-                        sum(TBook_ID()).over().partitionByOne(),
-                        sum(TBook_ID()).over().partitionBy(TBook_AUTHOR_ID()),
-                        sum(TBook_ID()).over().orderBy(TBook_ID().asc())
-                                              .rowsBetweenUnboundedPreceding()
-                                              .andPreceding(1))
-                .from(TBook())
-                .orderBy(TBook_ID().asc())
-                .fetch();
-
-        // Overall SUM()
-        column++;
-        assertEquals(new BigDecimal("10"), result.getValue(0, column));
-        assertEquals(new BigDecimal("10"), result.getValue(1, column));
-        assertEquals(new BigDecimal("10"), result.getValue(2, column));
-        assertEquals(new BigDecimal("10"), result.getValue(3, column));
-
-        // Partitioned SUM()
-        column++;
-        assertEquals(new BigDecimal("3"), result.getValue(0, column));
-        assertEquals(new BigDecimal("3"), result.getValue(1, column));
-        assertEquals(new BigDecimal("7"), result.getValue(2, column));
-        assertEquals(new BigDecimal("7"), result.getValue(3, column));
-
-        // Ordered SUM() with ROWS
-        column++;
-        assertEquals(null, result.getValue(0, column));
-        assertEquals(new BigDecimal("1"), result.getValue(1, column));
-        assertEquals(new BigDecimal("3"), result.getValue(2, column));
-        assertEquals(new BigDecimal("6"), result.getValue(3, column));
-
-        column = 0;
-
-        // FIRST_VALUE()
-        result =
-        create().select(TBook_ID(),
-                        firstValue(TBook_ID()).over()
-                                              .partitionBy(TBook_AUTHOR_ID())
-                                              .orderBy(TBook_PUBLISHED_IN().asc())
-                                              .rowsBetweenUnboundedPreceding()
-                                              .andUnboundedFollowing())
-                .from(TBook())
-                .orderBy(TBook_ID().asc())
-                .fetch();
-
-        // Partitioned and ordered FIRST_VALUE() with ROWS
-        column++;
-        assertEquals(Integer.valueOf(2), result.getValue(0, column));
-        assertEquals(Integer.valueOf(2), result.getValue(1, column));
-        assertEquals(Integer.valueOf(3), result.getValue(2, column));
-        assertEquals(Integer.valueOf(3), result.getValue(3, column));
-
         switch (dialect()) {
+            case CUBRID:
             case POSTGRES:
+            case SQLSERVER:
                 log.info("SKIPPING", "FIRST_VALUE(... IGNORE NULLS) window function test");
                 break;
 

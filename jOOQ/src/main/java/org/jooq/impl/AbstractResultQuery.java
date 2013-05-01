@@ -198,10 +198,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         // [#1846] [#2265] [#2299] Users may explicitly specify how ResultSets
         // created by jOOQ behave. This will override any other default behaviour
         if (resultSetConcurrency != 0 || resultSetType != 0 || resultSetHoldability != 0) {
-            ctx.statement(ctx.connection().prepareStatement(ctx.sql(),
-                resultSetType != 0 ? resultSetType : ResultSet.TYPE_FORWARD_ONLY,
-                resultSetConcurrency != 0 ? resultSetConcurrency : ResultSet.CONCUR_READ_ONLY,
-                resultSetHoldability != 0 ? resultSetHoldability : ctx.connection().getHoldability()));
+            int type = resultSetType != 0 ? resultSetType : ResultSet.TYPE_FORWARD_ONLY;
+            int concurrency = resultSetConcurrency != 0 ? resultSetConcurrency : ResultSet.CONCUR_READ_ONLY;
+
+            // Sybase doesn't support holdability. Avoid setting it!
+            if (resultSetHoldability == 0) {
+                ctx.statement(ctx.connection().prepareStatement(ctx.sql(), type, concurrency));
+            }
+            else {
+                ctx.statement(ctx.connection().prepareStatement(ctx.sql(), type, concurrency, resultSetHoldability));
+            }
         }
 
         // [#1296] These dialects do not implement FOR UPDATE. But the same

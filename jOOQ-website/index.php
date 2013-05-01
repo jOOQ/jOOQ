@@ -185,7 +185,7 @@ insertInto(t, t.a, t.b).values(1, 2);
     <li>MySQL 5.1.41 and 5.5.8</li>
     <li>Oracle XE 10.2.0.1.0 and 11g</li>
     <li>PostgreSQL 9.0</li>
-    <li>SQLite with inofficial JDBC driver v056</li>
+    <li>SQLite (using <a href="https://bitbucket.org/xerial/sqlite-jdbc">xerial sqlite-jdbc</a>)</li>
     <li>SQL Server 2008 R8 and 2012</li>
     <li>Sybase Adaptive Server Enterprise 15.5</li>
     <li>Sybase SQL Anywhere 12</li>

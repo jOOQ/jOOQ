@@ -875,7 +875,7 @@ public interface ResultQuery<R extends Record> extends Query {
     <Z extends Record> Z fetchOneInto(Table<Z> table) throws DataAccessException, InvalidResultException;
 
     /**
-     * Fetch results into a custom handler callback
+     * Fetch results into a custom handler callback.
      * <p>
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
@@ -888,7 +888,7 @@ public interface ResultQuery<R extends Record> extends Query {
     <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
-     * Fetch results into a custom mapper callback
+     * Fetch results into a custom mapper callback.
      *
      * @param mapper The mapper callback
      * @return The custom mapped records
@@ -955,7 +955,7 @@ public interface ResultQuery<R extends Record> extends Query {
     FutureResult<R> fetchLater(ExecutorService executor) throws DataAccessException;
 
     /**
-     * The record type produced by this query
+     * The record type produced by this query.
      */
     Class<? extends R> getRecordType();
 
@@ -989,7 +989,7 @@ public interface ResultQuery<R extends Record> extends Query {
 
     /**
      * Specify the maximum number of rows returned by the underlying
-     * {@link Statement}
+     * {@link Statement}.
      * <p>
      * This is not the same as setting a <code>LIMIT .. OFFSET</code> clause
      * onto the statement, where the result set is restricted within the
@@ -998,6 +998,54 @@ public interface ResultQuery<R extends Record> extends Query {
      * @see Statement#setMaxRows(int)
      */
     ResultQuery<R> maxRows(int rows);
+
+    /**
+     * Specify the <code>ResultSet</code> concurrency of <code>ResultSet</code>
+     * objects created by jOOQ.
+     * <p>
+     * This will affect the way you may perceive <code>ResultSet</code> objects
+     * obtained from any of these methods:
+     * <ul>
+     * <li>{@link ResultQuery#fetchResultSet()}</li>
+     * <li>{@link Cursor#resultSet()}</li>
+     * <li>{@link ExecuteContext#resultSet()}</li>
+     * </ul>
+     *
+     * @see Statement#getResultSetConcurrency()
+     */
+    ResultQuery<R> resultSetConcurrency(int resultSetConcurrency);
+
+    /**
+     * Specify the <code>ResultSet</code> type of <code>ResultSet</code>
+     * objects created by jOOQ.
+     * <p>
+     * This will affect the way you may perceive <code>ResultSet</code> objects
+     * obtained from any of these methods:
+     * <ul>
+     * <li>{@link ResultQuery#fetchResultSet()}</li>
+     * <li>{@link Cursor#resultSet()}</li>
+     * <li>{@link ExecuteContext#resultSet()}</li>
+     * </ul>
+     *
+     * @see Statement#getResultSetType()
+     */
+    ResultQuery<R> resultSetType(int resultSetType);
+
+    /**
+     * Specify the <code>ResultSet</code> holdability of <code>ResultSet</code>
+     * objects created by jOOQ.
+     * <p>
+     * This will affect the way you may perceive <code>ResultSet</code> objects
+     * obtained from any of these methods:
+     * <ul>
+     * <li>{@link ResultQuery#fetchResultSet()}</li>
+     * <li>{@link Cursor#resultSet()}</li>
+     * <li>{@link ExecuteContext#resultSet()}</li>
+     * </ul>
+     *
+     * @see Statement#getResultSetHoldability()
+     */
+    ResultQuery<R> resultSetHoldability(int resultSetHoldability);
 
     /**
      * Specify a set of fields whose values should be interned.

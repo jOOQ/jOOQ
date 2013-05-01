@@ -88,6 +88,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractResultQuery.class);
 
     private int                     maxRows;
+    private int                     resultSetConcurrency;
+    private int                     resultSetType;
+    private int                     resultSetHoldability;
     private transient boolean       lazy;
     private transient int           size;
     private transient boolean       many;
@@ -140,6 +143,24 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
+    public final ResultQuery<R> resultSetConcurrency(int concurrency) {
+        this.resultSetConcurrency = concurrency;
+        return this;
+    }
+
+    @Override
+    public final ResultQuery<R> resultSetType(int type) {
+        this.resultSetType = type;
+        return this;
+    }
+
+    @Override
+    public final ResultQuery<R> resultSetHoldability(int holdability) {
+        this.resultSetHoldability = holdability;
+        return this;
+    }
+
+    @Override
     public final ResultQuery<R> intern(Field<?>... fields) {
         this.internFields = fields;
         return this;
@@ -174,9 +195,18 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     protected final void prepare(ExecuteContext ctx) throws SQLException {
 
+        // [#1846] [#2265] [#2299] Users may explicitly specify how ResultSets
+        // created by jOOQ behave. This will override any other default behaviour
+        if (resultSetConcurrency != 0 || resultSetType != 0 || resultSetHoldability != 0) {
+            ctx.statement(ctx.connection().prepareStatement(ctx.sql(),
+                resultSetType != 0 ? resultSetType : ResultSet.TYPE_FORWARD_ONLY,
+                resultSetConcurrency != 0 ? resultSetConcurrency : ResultSet.CONCUR_READ_ONLY,
+                resultSetHoldability != 0 ? resultSetHoldability : ctx.connection().getHoldability()));
+        }
+
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
-        if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect())) {
+        else if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect())) {
             ctx.data(DATA_LOCK_ROWS_FOR_UPDATE, true);
             ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
         }

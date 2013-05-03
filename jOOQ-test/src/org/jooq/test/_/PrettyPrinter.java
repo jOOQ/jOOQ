@@ -35,6 +35,8 @@
  */
 package org.jooq.test._;
 
+import static org.jooq.conf.ParamType.INLINED;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.jooq.DSLContext;
@@ -84,7 +86,7 @@ public class PrettyPrinter extends DefaultExecuteListener {
             System.out.println(normal.renderInlined(ctx.query()));
             System.out.println();
             System.out.println(pretty.renderContext()
-                                     .inline(true)
+                                     .paramType(INLINED)
                                      .render(ctx.query()));
         }
 
@@ -93,7 +95,7 @@ public class PrettyPrinter extends DefaultExecuteListener {
             System.out.println(normal.renderInlined(ctx.routine()));
             System.out.println();
             System.out.println(pretty.renderContext()
-                                     .inline(true)
+                                     .paramType(INLINED)
                                      .render(ctx.routine()));
         }
 

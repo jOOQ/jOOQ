@@ -35,6 +35,8 @@
  */
 package org.jooq.conf;
 
+import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.StatementType.PREPARED_STATEMENT;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 
@@ -83,6 +85,28 @@ public final class SettingsTools {
         }
 
         DEFAULT_SETTINGS = settings;
+    }
+
+    /**
+     * Get the parameter type from the settings.
+     * <p>
+     * The {@link ParamType} can be overridden by the {@link StatementType}.
+     * If the latter is set to {@link StatementType#STATIC_STATEMENT}, then the
+     * former defaults to {@link ParamType#INLINED}.
+     */
+    public static final ParamType getParamType(Settings settings) {
+        if (executeStaticStatements(settings)) {
+            return INLINED;
+        }
+        else if (settings != null) {
+            ParamType result = settings.getParamType();
+
+            if (result != null) {
+                return result;
+            }
+        }
+
+        return INDEXED;
     }
 
     /**

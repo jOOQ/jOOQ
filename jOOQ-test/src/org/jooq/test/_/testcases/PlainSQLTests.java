@@ -42,6 +42,8 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
@@ -60,8 +62,8 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Condition;
-import org.jooq.DSLContext;
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.FutureResult;
 import org.jooq.QueryPart;
@@ -427,7 +429,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testPlainSQLResultQuery() throws Exception {
         // [#1749] TODO Firebird renders CAST(? as VARCHAR(...)) bind values with sizes
         // pre-calculated. Hence the param needs to have some min length...
-        String sql = create().select(param("p", "abc").as("p")).getSQL(false);
+        String sql = create().select(param("p", "abc").as("p")).getSQL(INDEXED);
         ResultQuery<Record> q = create().resultQuery(sql, "10");
 
         Result<Record> fetch1 = q.fetch();
@@ -518,7 +520,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             public void toSQL(RenderContext context) {
                 context.configuration().data("Foo-Field", "Baz");
 
-                if (context.inline()) {
+                if (context.paramType() == INLINED) {
                     context.sql(TBook_ID().getName() + " * 2");
                 }
 
@@ -553,7 +555,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 context.sql(IDx2);
                 context.sql(" > ");
 
-                if (context.inline()) {
+                if (context.paramType() == INLINED) {
                     context.sql("3");
                 }
                 else {

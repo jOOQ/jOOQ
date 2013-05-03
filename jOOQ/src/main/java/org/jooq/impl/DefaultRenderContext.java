@@ -36,6 +36,9 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 
 import java.util.Arrays;
@@ -50,6 +53,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.conf.ParamType;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
@@ -69,9 +73,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private static final Set<String> SQLITE_KEYWORDS;
 
     private final StringBuilder      sql;
-    private boolean                  inline;
+    private ParamType            paramType;
     private int                      params;
-    private boolean                  renderNamedParams;
     private boolean                  qualify            = true;
     private int                      alias;
     private CastMode                 castMode           = CastMode.DEFAULT;
@@ -99,8 +102,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     DefaultRenderContext(RenderContext context) {
         this(context.configuration());
 
-        inline(context.inline());
-        namedParams(context.namedParams());
+        paramType(context.paramType());
         qualify(context.qualify());
         castMode(context.castMode());
         declareFields(context.declareFields());
@@ -374,7 +376,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     private final void checkForceInline(QueryPart part) throws ForceInlineSignal {
-        if (inline)
+        if (paramType == INLINED)
             return;
 
         if (part instanceof Param) {
@@ -412,12 +414,24 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final boolean inline() {
-        return inline;
+        return paramType == INLINED;
     }
 
     @Override
+    @Deprecated
     public final RenderContext inline(boolean i) {
-        this.inline = i;
+        this.paramType = i ? INLINED : INDEXED;
+        return this;
+    }
+
+    @Override
+    public final ParamType paramType() {
+        return paramType;
+    }
+
+    @Override
+    public final RenderContext paramType(ParamType p) {
+        paramType = p;
         return this;
     }
 
@@ -434,12 +448,13 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final boolean namedParams() {
-        return renderNamedParams;
+        return paramType == NAMED;
     }
 
     @Override
+    @Deprecated
     public final RenderContext namedParams(boolean r) {
-        this.renderNamedParams = r;
+        this.paramType = r ? NAMED : INDEXED;
         return this;
     }
 
@@ -487,11 +502,8 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         sb.append("rendering    [");
         sb.append(render());
         sb.append("]\n");
-        sb.append("inlining     [");
-        sb.append(inline);
-        sb.append("]\n");
-        sb.append("named params [");
-        sb.append(renderNamedParams);
+        sb.append("parameters   [");
+        sb.append(paramType);
         sb.append("]\n");
 
         toString(sb);

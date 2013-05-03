@@ -44,6 +44,7 @@ import org.jooq.Configuration;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.RenderContext;
+import org.jooq.conf.ParamType;
 
 /**
  * @author Lukas Eder
@@ -100,8 +101,14 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     }
 
     @Override
+    @Deprecated
     public final String getSQL(boolean inline) {
         return delegate.getSQL(inline);
+    }
+
+    @Override
+    public final String getSQL(ParamType paramType) {
+        return delegate.getSQL(paramType);
     }
 
     @Override

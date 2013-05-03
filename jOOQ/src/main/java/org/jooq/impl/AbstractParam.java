@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.INLINED;
+
 import org.jooq.DataType;
 import org.jooq.Param;
 import org.jooq.RenderContext;
@@ -113,6 +115,6 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     }
 
     final boolean isInline(RenderContext context) {
-        return isInline() || context.inline();
+        return isInline() || context.paramType() == INLINED;
     }
 }

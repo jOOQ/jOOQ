@@ -41,6 +41,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
@@ -139,8 +140,27 @@ public interface Query extends QueryPart, Attachable {
      * @param inline Whether to inline bind variables. This overrides values in
      *            {@link Settings#getStatementType()}
      * @return The generated SQL
+     * @deprecated - [#2414] - 3.1.0 - Use {@link #getSQL(ParamType)} instead
      */
+    @Deprecated
     String getSQL(boolean inline);
+
+    /**
+     * Retrieve the SQL code rendered by this Query.
+     * <p>
+     * [#1520] Note that the query actually being executed might not contain any
+     * bind variables, in case the number of bind variables exceeds your SQL
+     * dialect's maximum number of supported bind variables. This is not
+     * reflected by this method, which will only use <code>paramType</code>
+     * argument to decide whether to render bind values.
+     * <p>
+     * See {@link #getSQL()} for more details.
+     *
+     * @param paramType How to render parameters. This overrides values in
+     *            {@link Settings#getStatementType()}
+     * @return The generated SQL
+     */
+    String getSQL(ParamType paramType);
 
     /**
      * Retrieve the bind values that will be bound by this Query. This

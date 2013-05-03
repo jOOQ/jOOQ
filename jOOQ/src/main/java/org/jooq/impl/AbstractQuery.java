@@ -36,7 +36,10 @@
 
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.INDEXED;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
+import static org.jooq.conf.SettingsTools.getParamType;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Utils.DATA_FORCE_STATIC_STATEMENT;
 
@@ -53,7 +56,7 @@ import org.jooq.ExecuteListener;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.RenderContext;
-import org.jooq.conf.SettingsTools;
+import org.jooq.conf.ParamType;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DetachedException;
 import org.jooq.tools.JooqLogger;
@@ -174,7 +177,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
 
             // If all params are inlined, the previous statement always has to
             // be closed
-            else if (SettingsTools.executeStaticStatements(configuration().settings())) {
+            else if (getParamType(configuration().settings()) == INLINED) {
                 close();
             }
         }
@@ -239,8 +242,9 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             Configuration c = configuration();
 
             // [#1191] The following triggers a start event on all listeners.
-            // This may be used to provide jOOQ with a JDBC connection, in case
-            // this Query / Configuration was previously deserialised
+            //         This may be used to provide jOOQ with a JDBC connection,
+            //         in case this Query / Configuration was previously
+            //         deserialised
             ExecuteContext ctx = new DefaultExecuteContext(c, this);
             ExecuteListener listener = new ExecuteListeners(ctx);
 
@@ -279,6 +283,8 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                 if (
 
                     // [#1145] Bind variables only for true prepared statements
+                    // [#2414] Even if parameters are inlined here, child
+                    //         QueryParts may override this behaviour!
                     executePreparedStatements(c.settings()) &&
 
                     // [#1520] Renderers may enforce static statements, too
@@ -371,11 +377,11 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             }
             catch (DefaultRenderContext.ForceInlineSignal e) {
                 ctx.data(DATA_FORCE_STATIC_STATEMENT, true);
-                return getSQL(true);
+                return getSQL(INLINED);
             }
         }
         else {
-            return getSQL(true);
+            return getSQL(INLINED);
         }
     }
 
@@ -384,24 +390,32 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      */
     @Override
     public final String getSQL() {
-        if (executePreparedStatements(configuration().settings())) {
-            return getSQL(false);
-        }
-        else {
-            return getSQL(true);
-        }
+        return getSQL(getParamType(configuration().settings()));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
+    public final String getSQL(ParamType paramType) {
+        switch (paramType) {
+            case INDEXED:
+                return create().render(this);
+            case INLINED:
+                return create().renderInlined(this);
+            case NAMED:
+                return create().renderNamedParams(this);
+        }
+
+        throw new IllegalArgumentException("ParamType not supported: " + paramType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Deprecated
     public final String getSQL(boolean inline) {
-        if (inline) {
-            return create().renderInlined(this);
-        }
-        else {
-            return create().render(this);
-        }
+        return getSQL(inline ? INLINED : INDEXED);
     }
 }

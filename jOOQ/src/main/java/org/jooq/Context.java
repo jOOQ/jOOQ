@@ -146,7 +146,7 @@ public interface Context<C extends Context<C>> {
      * must assure that calling {@link #nextIndex()} is followed by setting a
      * bind value to {@link BindContext#statement()}</li>
      * <li>When rendering unnamed bind variables with
-     * {@link RenderContext#namedParams()} being to <code>true</code></li>
+     * {@link RenderContext#paramType()} being to <code>NAMED</code></li>
      * </ul>
      */
     int nextIndex();

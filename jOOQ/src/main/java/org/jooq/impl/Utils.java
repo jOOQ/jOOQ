@@ -38,6 +38,7 @@ package org.jooq.impl;
 import static java.lang.Boolean.FALSE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.getDataType;
 import static org.jooq.impl.DSL.nullSafe;
@@ -833,7 +834,7 @@ final class Utils {
             else if (sqlChars[i] == '?' && substituteIndex < substitutes.size()) {
                 QueryPart substitute = substitutes.get(substituteIndex++);
 
-                if (render.inline()) {
+                if (render.paramType() == INLINED) {
                     render.sql(substitute);
                 }
                 else {

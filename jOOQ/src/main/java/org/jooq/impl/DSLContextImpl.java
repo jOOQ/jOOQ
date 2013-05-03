@@ -50,6 +50,8 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.trueCondition;
@@ -296,12 +298,12 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     public final String renderNamedParams(QueryPart part) {
-        return renderContext().namedParams(true).render(part);
+        return renderContext().paramType(NAMED).render(part);
     }
 
     @Override
     public final String renderInlined(QueryPart part) {
-        return renderContext().inline(true).render(part);
+        return renderContext().paramType(INLINED).render(part);
     }
 
     @Override

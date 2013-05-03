@@ -45,6 +45,7 @@ import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.val;
@@ -424,7 +425,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().update(TAuthor())
                     .set(TAuthor_FIRST_NAME(), "Hugo")
                     .where(TAuthor_ID().equal(100))
-                    .getSQL(true));
+                    .getSQL(INLINED));
 
         assertNotNull(result);
         assertEquals(0, result.size());
@@ -434,7 +435,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             create().update(TAuthor())
                     .set(TAuthor_FIRST_NAME(), "Hugo")
                     .where(TAuthor_ID().equal(100))
-                    .getSQL(true));
+                    .getSQL(INLINED));
 
         assertNotNull(result);
         assertEquals(0, results.size());

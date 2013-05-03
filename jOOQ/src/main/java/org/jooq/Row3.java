@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.Comparator;
+
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -69,6 +71,22 @@ public interface Row3<T1, T2, T3> extends Row {
      * Get the third field.
      */
     Field<T3> field3();
+
+    // ------------------------------------------------------------------------
+    // Generic comparison predicates
+    // ------------------------------------------------------------------------
+
+    @Support
+    Condition compare(Comparator comparator, Row3<T1, T2, T3> row);
+
+    @Support
+    Condition compare(Comparator comparator, Record3<T1, T2, T3> record);
+
+    @Support
+    Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3);
+
+    @Support
+    Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3);
 
     // ------------------------------------------------------------------------
     // Equal / Not equal comparison predicates

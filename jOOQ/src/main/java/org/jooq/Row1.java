@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.Comparator;
+
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -59,6 +61,22 @@ public interface Row1<T1> extends Row {
      * Get the first field.
      */
     Field<T1> field1();
+
+    // ------------------------------------------------------------------------
+    // Generic comparison predicates
+    // ------------------------------------------------------------------------
+
+    @Support
+    Condition compare(Comparator comparator, Row1<T1> row);
+
+    @Support
+    Condition compare(Comparator comparator, Record1<T1> record);
+
+    @Support
+    Condition compare(Comparator comparator, T1 t1);
+
+    @Support
+    Condition compare(Comparator comparator, Field<T1> t1);
 
     // ------------------------------------------------------------------------
     // Equal / Not equal comparison predicates

@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.Comparator;
+
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -50,6 +52,22 @@ import javax.annotation.Generated;
  */
 @Generated("This class was generated using jOOQ-tools")
 public interface RowN extends Row {
+
+    // ------------------------------------------------------------------------
+    // Generic comparison predicates
+    // ------------------------------------------------------------------------
+
+    @Support
+    Condition compare(Comparator comparator, RowN row);
+
+    @Support
+    Condition compare(Comparator comparator, Record record);
+
+    @Support
+    Condition compare(Comparator comparator, Object... values);
+
+    @Support
+    Condition compare(Comparator comparator, Field<?>... values);
 
     // ------------------------------------------------------------------------
     // Equal / Not equal comparison predicates

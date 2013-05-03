@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.Comparator;
+
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -74,6 +76,22 @@ public interface Row4<T1, T2, T3, T4> extends Row {
      * Get the fourth field.
      */
     Field<T4> field4();
+
+    // ------------------------------------------------------------------------
+    // Generic comparison predicates
+    // ------------------------------------------------------------------------
+
+    @Support
+    Condition compare(Comparator comparator, Row4<T1, T2, T3, T4> row);
+
+    @Support
+    Condition compare(Comparator comparator, Record4<T1, T2, T3, T4> record);
+
+    @Support
+    Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4);
+
+    @Support
+    Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4);
 
     // ------------------------------------------------------------------------
     // Equal / Not equal comparison predicates

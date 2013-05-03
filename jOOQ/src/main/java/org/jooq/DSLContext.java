@@ -61,6 +61,7 @@ import java.util.Map;
 
 import javax.annotation.Generated;
 
+import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
 import org.jooq.exception.DataAccessException;
@@ -165,8 +166,7 @@ public interface DSLContext {
      * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
      * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
      * <li> <code>{@link RenderContext#format()} == false</code></li>
-     * <li> <code>{@link RenderContext#inline()} == false</code></li>
-     * <li> <code>{@link RenderContext#namedParams()} == false</code></li>
+     * <li> <code>{@link RenderContext#paramType()} == {@link ParamType#INDEXED}</code></li>
      * <li> <code>{@link RenderContext#qualify()} == true</code></li>
      * <li> <code>{@link RenderContext#subquery()} == false</code></li>
      * </ul>

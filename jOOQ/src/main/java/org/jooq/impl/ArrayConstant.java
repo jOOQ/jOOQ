@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.ArrayRecord;
@@ -59,7 +60,7 @@ class ArrayConstant<R extends ArrayRecord<?>> extends AbstractParam<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        if (context.inline()) {
+        if (context.paramType() == INLINED) {
             context.sql(array.getName());
             context.sql("(");
 

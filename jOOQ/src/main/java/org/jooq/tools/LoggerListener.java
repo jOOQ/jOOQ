@@ -35,6 +35,8 @@
  */
 package org.jooq.tools;
 
+import static org.jooq.conf.ParamType.INLINED;
+
 import java.util.logging.Level;
 
 import org.jooq.ExecuteContext;
@@ -67,7 +69,7 @@ public class LoggerListener extends DefaultExecuteListener {
 
                 // [#1278] DEBUG log also SQL with inlined bind values, if
                 // that is not the same as the actual SQL passed to JDBC
-                String inlined = ctx.query().getSQL(true);
+                String inlined = ctx.query().getSQL(INLINED);
                 if (!ctx.sql().equals(inlined)) {
                     log.debug("-> with bind values", inlined);
                 }

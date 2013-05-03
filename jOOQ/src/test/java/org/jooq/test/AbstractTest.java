@@ -35,6 +35,8 @@
  */
 package org.jooq.test;
 
+import static org.jooq.conf.ParamType.INLINED;
+import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
@@ -144,23 +146,23 @@ public abstract class AbstractTest {
     }
 
     protected final RenderContext r_refI() {
-        return r_ref().inline(true);
+        return r_ref().paramType(INLINED);
     }
 
     protected final RenderContext r_decI() {
-        return r_dec().inline(true);
+        return r_dec().paramType(INLINED);
     }
 
     protected final RenderContext r_decIF() {
-        return r_decF().inline(true);
+        return r_decF().paramType(INLINED);
     }
 
     protected final RenderContext r_decIT() {
-        return r_decT().inline(true);
+        return r_decT().paramType(INLINED);
     }
 
     protected final RenderContext r_refP() {
-        return r_ref().namedParams(true);
+        return r_ref().paramType(NAMED);
     }
 
     protected final String zeroDate() {

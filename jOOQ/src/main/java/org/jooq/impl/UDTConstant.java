@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
@@ -64,7 +65,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // Oracle supports java.sql.SQLData, hence the record can be bound
             // to the CallableStatement directly
             case ORACLE: {
-                if (context.inline()) {
+                if (context.paramType() == INLINED) {
                     toSQLInline(context);
                 } else {
                     context.sql("?");

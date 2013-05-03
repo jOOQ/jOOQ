@@ -51,6 +51,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.tools.StringUtils.leftPad;
 
 import java.math.BigDecimal;
@@ -276,7 +277,7 @@ class Val<T> extends AbstractParam<T> {
      * {@link RenderContext#namedParams()}
      */
     private final String getBindVariable(RenderContext context) {
-        if (context.namedParams()) {
+        if (context.paramType() == NAMED) {
             int index = context.nextIndex();
 
             if (StringUtils.isBlank(getParamName())) {

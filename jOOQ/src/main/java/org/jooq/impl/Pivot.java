@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.using;
 
@@ -54,6 +55,7 @@ import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.Support;
 import org.jooq.Table;
+import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -222,7 +224,7 @@ implements
         public void toSQL(RenderContext context) {
 
             // Bind variables are not allowed inside of PIVOT clause
-            boolean inline = context.inline();
+            ParamType paramType = context.paramType();
             boolean declareFields = context.declareFields();
             boolean declareTables = context.declareTables();
 
@@ -231,7 +233,7 @@ implements
                    .declareTables(declareTables)
                    .formatSeparator()
                    .keyword("pivot (")
-                   .inline(true)
+                   .paramType(INLINED)
                    .declareFields(true)
                    .formatIndentStart()
                    .sql(aggregateFunctions)
@@ -242,7 +244,7 @@ implements
                    .keyword("in (")
                    .sql(in)
                    .declareFields(declareFields)
-                   .inline(inline)
+                   .paramType(paramType)
                    .sql(")")
                    .formatIndentEnd()
                    .formatNewLine()

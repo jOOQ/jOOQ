@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.RenderContext.CastMode.NEVER;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
 
@@ -44,6 +45,7 @@ import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.RenderContext;
 import org.jooq.RenderContext.CastMode;
+import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 
 /**
@@ -64,7 +66,7 @@ class Limit extends AbstractQueryPart {
 
     @Override
     public final void toSQL(RenderContext context) {
-        boolean inline = context.inline();
+        ParamType paramType = context.paramType();
         CastMode castMode = context.castMode();
 
         switch (context.configuration().dialect()) {
@@ -134,14 +136,14 @@ class Limit extends AbstractQueryPart {
 
                 // INGRES doesn't allow bind variables in the
                 // OFFSET m FETCH FIRST n ROWS ONLY clause
-                context.inline(true)
+                context.paramType(INLINED)
                        .formatSeparator()
                        .keyword("offset ")
                        .sql(offsetOrZero)
                        .keyword(" fetch first ")
                        .sql(numberOfRows)
                        .keyword(" rows only")
-                       .inline(inline);
+                       .paramType(paramType);
 
                 break;
             }
@@ -149,12 +151,12 @@ class Limit extends AbstractQueryPart {
             // Nice TOP .. START AT support
             // ----------------------------
             case SYBASE: {
-                context.inline(true)
+                context.paramType(INLINED)
                        .keyword("top ")
                        .sql(numberOfRows)
                        .keyword(" start at ")
                        .sql(offsetPlusOne)
-                       .inline(inline);
+                       .paramType(paramType);
 
                 break;
             }
@@ -168,12 +170,12 @@ class Limit extends AbstractQueryPart {
                 }
 
                 // DB2 doesn't allow bind variables here. Casting is not needed.
-                context.inline(true)
+                context.paramType(INLINED)
                        .formatSeparator()
                        .keyword("fetch first ")
                        .sql(numberOfRows)
                        .keyword(" rows only")
-                       .inline(inline);
+                       .paramType(paramType);
 
                 break;
             }
@@ -185,10 +187,10 @@ class Limit extends AbstractQueryPart {
                 }
 
                 // SQL Server and Sybase don't allow bind variables in the TOP n clause
-                context.inline(true)
+                context.paramType(INLINED)
                        .keyword("top ")
                        .sql(numberOfRows)
-                       .inline(inline);
+                       .paramType(paramType);
 
                 break;
             }

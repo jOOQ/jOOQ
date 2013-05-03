@@ -35,6 +35,8 @@
  */
 package org.jooq.test._.testcases;
 
+import static org.jooq.conf.ParamType.INDEXED;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -151,7 +153,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     private void testBenchmarkReuseSQLString(DSLContext create, int repetitions) throws Exception {
-        String sql = createSelect(create).getSQL(false);
+        String sql = createSelect(create).getSQL(INDEXED);
         PreparedStatement pst = getConnection().prepareStatement(sql);
         pst.setLong(1, 1);
         pst.setString(2, RANDOM);

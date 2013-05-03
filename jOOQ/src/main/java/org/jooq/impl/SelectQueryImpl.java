@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
@@ -75,6 +76,7 @@ import org.jooq.SortField;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.TableLike;
+import org.jooq.conf.ParamType;
 import org.jooq.exception.DataAccessException;
 import org.jooq.tools.StringUtils;
 
@@ -490,14 +492,14 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             // toSQL()'s LIMIT .. OFFSET rendering and bind()'s "obliviousness"
             // thereof. This should be improved by delegating to composed Select
             // objects.
-            boolean inline = context.inline();
-            context.inline(true)
+            ParamType paramType = context.paramType();
+            context.paramType(INLINED)
                    .sql(",")
                    .formatIndentStart()
                    .formatSeparator()
                    .sql(limitOffsetRownumber)
                    .formatIndentEnd()
-                   .inline(inline);
+                   .paramType(paramType);
         }
 
         context.declareFields(false);

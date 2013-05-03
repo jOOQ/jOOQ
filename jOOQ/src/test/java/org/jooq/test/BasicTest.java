@@ -38,6 +38,7 @@ package org.jooq.test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.avg;
 import static org.jooq.impl.DSL.condition;
@@ -957,7 +958,7 @@ public class BasicTest extends AbstractTest {
 
             @Override
             public void toSQL(RenderContext ctx) {
-                if (ctx.inline()) {
+                if (ctx.paramType() == INLINED) {
                     ctx.sql("1 = 1");
                 } else {
                     ctx.sql("? = ?");
@@ -1050,7 +1051,7 @@ public class BasicTest extends AbstractTest {
 
             @Override
             public void toSQL(RenderContext ctx) {
-                if (ctx.inline()) {
+                if (ctx.paramType() == INLINED) {
                     ctx.sql("1");
                 } else {
                     ctx.sql("?");

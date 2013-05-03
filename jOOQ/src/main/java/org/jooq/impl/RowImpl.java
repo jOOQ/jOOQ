@@ -414,462 +414,462 @@ implements
 
     @Override
     public final Condition compare(Comparator comparator, RowN row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row1<T1> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row2<T1, T2> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row3<T1, T2, T3> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row4<T1, T2, T3, T4> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row5<T1, T2, T3, T4, T5> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row6<T1, T2, T3, T4, T5, T6> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row7<T1, T2, T3, T4, T5, T6, T7> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row8<T1, T2, T3, T4, T5, T6, T7, T8> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row) {
-    	return new RowCondition(this, row, comparator);
+        return new RowCondition(this, row, comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record1<T1> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record2<T1, T2> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record3<T1, T2, T3> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record4<T1, T2, T3, T4> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record5<T1, T2, T3, T4, T5> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record6<T1, T2, T3, T4, T5, T6> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record7<T1, T2, T3, T4, T5, T6, T7> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record8<T1, T2, T3, T4, T5, T6, T7, T8> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> record) {
-    	return new RowCondition(this, record.valuesRow(), comparator);
+        return new RowCondition(this, record.valuesRow(), comparator);
     }
 
     @Override
     public final Condition compare(Comparator comparator, Object... values) {
-    	return compare(comparator, row(values));
+        return compare(comparator, row(values));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1) {
-    	return compare(comparator, row(t1));
+        return compare(comparator, row(t1));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2) {
-    	return compare(comparator, row(t1, t2));
+        return compare(comparator, row(t1, t2));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3) {
-    	return compare(comparator, row(t1, t2, t3));
+        return compare(comparator, row(t1, t2, t3));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4) {
-    	return compare(comparator, row(t1, t2, t3, t4));
+        return compare(comparator, row(t1, t2, t3, t4));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5));
+        return compare(comparator, row(t1, t2, t3, t4, t5));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
     }
 
     @Override
     public final Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<?>... values) {
-    	return compare(comparator, row(values));
+        return compare(comparator, row(values));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1) {
-    	return compare(comparator, row(t1));
+        return compare(comparator, row(t1));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2) {
-    	return compare(comparator, row(t1, t2));
+        return compare(comparator, row(t1, t2));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3) {
-    	return compare(comparator, row(t1, t2, t3));
+        return compare(comparator, row(t1, t2, t3));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
-    	return compare(comparator, row(t1, t2, t3, t4));
+        return compare(comparator, row(t1, t2, t3, t4));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5));
+        return compare(comparator, row(t1, t2, t3, t4, t5));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21));
     }
 
     @Override
     public final Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
-    	return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
+        return compare(comparator, row(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22));
     }
 
     // ------------------------------------------------------------------------

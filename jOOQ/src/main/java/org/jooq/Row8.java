@@ -100,16 +100,72 @@ public interface Row8<T1, T2, T3, T4, T5, T6, T7, T8> extends Row {
     // ------------------------------------------------------------------------
     // Generic comparison predicates
     // ------------------------------------------------------------------------
-
+    
+    /**
+     * Compare this row value expression with another row value expression
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all 
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(Row8)
+     * @see #notEqual(Row8)
+     * @see #lessThan(Row8)
+     * @see #lessOrEqual(Row8)
+     * @see #greaterThan(Row8)
+     * @see #greaterOrEqual(Row8)
+     */
     @Support
     Condition compare(Comparator comparator, Row8<T1, T2, T3, T4, T5, T6, T7, T8> row);
 
+    /**
+     * Compare this row value expression with a record record
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all 
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(Row8)
+     * @see #notEqual(Row8)
+     * @see #lessThan(Row8)
+     * @see #lessOrEqual(Row8)
+     * @see #greaterThan(Row8)
+     * @see #greaterOrEqual(Row8)
+     */
     @Support
     Condition compare(Comparator comparator, Record8<T1, T2, T3, T4, T5, T6, T7, T8> record);
 
+    /**
+     * Compare this row value expression with another row value expression
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all 
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(Row8)
+     * @see #notEqual(Row8)
+     * @see #lessThan(Row8)
+     * @see #lessOrEqual(Row8)
+     * @see #greaterThan(Row8)
+     * @see #greaterOrEqual(Row8)
+     */
     @Support
     Condition compare(Comparator comparator, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8);
 
+    /**
+     * Compare this row value expression with another row value expression
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all 
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(Row8)
+     * @see #notEqual(Row8)
+     * @see #lessThan(Row8)
+     * @see #lessOrEqual(Row8)
+     * @see #greaterThan(Row8)
+     * @see #greaterOrEqual(Row8)
+     */
     @Support
     Condition compare(Comparator comparator, Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8);
 

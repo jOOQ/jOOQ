@@ -202,8 +202,16 @@ class MetaImpl implements Meta, Serializable {
             }
 
             try {
+                String[] types = null;
+
+                // [#2323] SQLite JDBC drivers have a bug. They return other
+                // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
+                if (configuration.dialect() == SQLITE) {
+                    types = new String[] { "TABLE", "VIEW" };
+                }
+
                 List<Table<?>> result = new ArrayList<Table<?>>();
-                Result<Record> tables = create.fetch(meta().getTables(null, getName(), "%", null));
+                Result<Record> tables = create.fetch(meta().getTables(null, getName(), "%", types));
 
                 for (Record table : tables) {
 //                  String catalog = table.getValue(0, String.class);

@@ -45,7 +45,7 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.impl.SubqueryOperator.NOT_IN;
+import static org.jooq.SubqueryComparator.NOT_IN;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +58,7 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.Row;
+import org.jooq.SubqueryComparator;
 
 /**
  * @author Lukas Eder
@@ -71,9 +72,9 @@ class RowInCondition extends AbstractCondition {
 
     private final Row                          left;
     private final QueryPartList<? extends Row> right;
-    private final SubqueryOperator             operator;
+    private final SubqueryComparator           operator;
 
-    RowInCondition(Row left, QueryPartList<? extends Row> right, SubqueryOperator operator) {
+    RowInCondition(Row left, QueryPartList<? extends Row> right, SubqueryComparator operator) {
         this.left = left;
         this.right = right;
         this.operator = operator;

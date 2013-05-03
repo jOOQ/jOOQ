@@ -36,10 +36,17 @@
 
 package org.jooq;
 
+
 /**
- * A comparator to be used in conditions
+ * A comparator to be used in conditions.
+ * <p>
+ * Comparison operators listed here can be used to compare {@link Field} or
+ * {@link Row} values with other {@link Field} or {@link Row} values. See
+ * {@link SubqueryComparator} for comparing {@link Field} or {@link Row} values
+ * with subselects.
  *
  * @author Lukas Eder
+ * @see SubqueryComparator
  */
 public enum Comparator {
 

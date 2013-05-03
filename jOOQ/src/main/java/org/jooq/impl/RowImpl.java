@@ -119,6 +119,7 @@ import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
 import org.jooq.Select;
+import org.jooq.SubqueryComparator;
 
 /**
  * @author Lukas Eder
@@ -9446,13 +9447,13 @@ implements
     @Override
     public final Condition in(Collection rows) {
         QueryPartList<Row> list = new QueryPartList<Row>(rows);
-        return new RowInCondition(this, list, SubqueryOperator.IN);
+        return new RowInCondition(this, list, SubqueryComparator.IN);
     }
 
     @Override
     public final Condition notIn(Collection rows) {
         QueryPartList<Row> list = new QueryPartList<Row>(rows);
-        return new RowInCondition(this, list, SubqueryOperator.NOT_IN);
+        return new RowInCondition(this, list, SubqueryComparator.NOT_IN);
     }
 
     // ------------------------------------------------------------------------
@@ -9461,7 +9462,7 @@ implements
 
     @Override
     public final Condition equal(Select select) {
-        return new RowSubqueryCondition(this, select, SubqueryOperator.EQUALS);
+        return new RowSubqueryCondition(this, select, SubqueryComparator.EQUALS);
     }
 
     @Override
@@ -9471,7 +9472,7 @@ implements
 
     @Override
     public final Condition notEqual(Select select) {
-        return new RowSubqueryCondition(this, select, SubqueryOperator.NOT_EQUALS);
+        return new RowSubqueryCondition(this, select, SubqueryComparator.NOT_EQUALS);
     }
 
     @Override
@@ -9481,7 +9482,7 @@ implements
 
     @Override
     public final Condition greaterThan(Select select) {
-        return new RowSubqueryCondition(this, select, SubqueryOperator.GREATER);
+        return new RowSubqueryCondition(this, select, SubqueryComparator.GREATER);
     }
 
     @Override
@@ -9491,7 +9492,7 @@ implements
 
     @Override
     public final Condition greaterOrEqual(Select select) {
-        return new RowSubqueryCondition(this, select, SubqueryOperator.GREATER_OR_EQUAL);
+        return new RowSubqueryCondition(this, select, SubqueryComparator.GREATER_OR_EQUAL);
     }
 
     @Override
@@ -9501,7 +9502,7 @@ implements
 
     @Override
     public final Condition lessThan(Select select) {
-        return new RowSubqueryCondition(this, select, SubqueryOperator.LESS);
+        return new RowSubqueryCondition(this, select, SubqueryComparator.LESS);
     }
 
     @Override
@@ -9511,7 +9512,7 @@ implements
 
     @Override
     public final Condition lessOrEqual(Select select) {
-        return new RowSubqueryCondition(this, select, SubqueryOperator.LESS_OR_EQUAL);
+        return new RowSubqueryCondition(this, select, SubqueryComparator.LESS_OR_EQUAL);
     }
 
     @Override
@@ -9521,12 +9522,12 @@ implements
 
     @Override
     public final Condition in(Select select) {
-        return new RowSubqueryCondition(this, select, SubqueryOperator.IN);
+        return new RowSubqueryCondition(this, select, SubqueryComparator.IN);
     }
 
     @Override
     public final Condition notIn(Select select) {
-        return new RowSubqueryCondition(this, select, SubqueryOperator.NOT_IN);
+        return new RowSubqueryCondition(this, select, SubqueryComparator.NOT_IN);
     }
 
     // ------------------------------------------------------------------------

@@ -62,7 +62,7 @@ import org.jooq.exception.MappingException;
 public interface Cursor<R extends Record> extends Iterable<R> {
 
     /**
-     * Get this cursor's fields as a {@link Row}
+     * Get this cursor's fields as a {@link Row}.
      */
     Row fieldsRow();
 
@@ -95,7 +95,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     Field<?>[] fields();
 
     /**
-     * Check whether this cursor has a next record
+     * Check whether this cursor has a next record.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
@@ -137,7 +137,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     Result<R> fetch(int number) throws DataAccessException;
 
     /**
-     * Fetch the next record from the cursor
+     * Fetch the next record from the cursor.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
@@ -153,7 +153,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     R fetchOne() throws DataAccessException;
 
     /**
-     * Fetch the next record into a custom handler callback
+     * Fetch the next record into a custom handler callback.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
@@ -169,7 +169,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     <H extends RecordHandler<? super R>> H fetchOneInto(H handler) throws DataAccessException;
 
     /**
-     * Fetch results into a custom handler callback
+     * Fetch results into a custom handler callback.
      * <p>
      * The resulting records are attached to the original {@link Configuration}
      * by default. Use {@link Settings#isAttachRecords()} to override this
@@ -182,7 +182,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     <H extends RecordHandler<? super R>> H fetchInto(H handler) throws DataAccessException;
 
     /**
-     * Fetch the next record into a custom mapper callback
+     * Fetch the next record into a custom mapper callback.
      * <p>
      * This will conveniently close the <code>Cursor</code>, after the last
      * <code>Record</code> was fetched.
@@ -194,7 +194,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     <E> E fetchOne(RecordMapper<? super R, E> mapper) throws DataAccessException;
 
     /**
-     * Fetch results into a custom mapper callback
+     * Fetch results into a custom mapper callback.
      *
      * @param mapper The mapper callback
      * @return The custom mapped records
@@ -276,7 +276,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
 
     /**
      * Explicitly close the underlying {@link PreparedStatement} and
-     * {@link ResultSet}
+     * {@link ResultSet}.
      * <p>
      * If you fetch all records from the underlying {@link ResultSet}, jOOQ
      * <code>Cursor</code> implementations will close themselves for you.
@@ -297,7 +297,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     boolean isClosed();
 
     /**
-     * Get the <code>Cursor</code>'s underlying {@link ResultSet}
+     * Get the <code>Cursor</code>'s underlying {@link ResultSet}.
      * <p>
      * If you modify the underlying <code>ResultSet</code>, the
      * <code>Cursor</code> may be affected and in some cases, rendered unusable.

@@ -204,6 +204,11 @@ final class Utils {
     private static final Pattern DASH_PATTERN                                 = Pattern.compile("(-+)");                                ;
 
     /**
+     * A pattern for the dash line syntax
+     */
+    private static final Pattern PLUS_PATTERN                                 = Pattern.compile("\\+(-+)(?=\\+)");                                ;
+
+    /**
      * A pattern for the JDBC escape syntax
      */
     private static final Pattern JDBC_ESCAPE_PATTERN                          = Pattern.compile("\\{(fn|d|t|ts)\\b.*");
@@ -2456,12 +2461,45 @@ final class Utils {
             throw new DataAccessException("String must contain at least two lines");
         }
 
-        // Find the set of positions defined by the dashed line number two:
-        // -----  ------- ----
-        // results in
+        // [#2235] Distinguish between jOOQ's Result.format() and H2's format
+        boolean formatted = (string.charAt(0) == '+');
+
+        // In jOOQ's Result.format(), that's line number one:
+        // 1: +----+------+----+
+        // 2: |ABC |XYZ   |HEHE|
+        // 3: +----+------+----+
+        // 4: |Data|{null}|1234|
+        // 5: +----+------+----+
+        //    012345678901234567
+        // resulting in
+        // [{1,5} {6,12} {13,17}]
+        if (formatted) {
+            return parseTXTLines(nullLiteral, strings, PLUS_PATTERN, 0, 1, 3, strings.length - 1);
+        }
+
+        // In H2 format, that's line number two:
+        // 1: ABC    XYZ     HEHE
+        // 2: -----  ------- ----
+        // 3: Data   {null}  1234
+        //    0123456789012345678
+        // resulting in
         // [{0,5} {7,14} {15,19}]
+        else {
+            return parseTXTLines(nullLiteral, strings, DASH_PATTERN, 1, 0, 2, strings.length);
+        }
+    }
+
+    private static List<String[]> parseTXTLines(
+            String nullLiteral,
+            String[] strings,
+            Pattern pattern,
+            int matchLine,
+            int headerLine,
+            int dataLineStart,
+            int dataLineEnd) {
+
         List<int[]> positions = new ArrayList<int[]>();
-        Matcher m = DASH_PATTERN.matcher(strings[1]);
+        Matcher m = pattern.matcher(strings[matchLine]);
 
         while (m.find()) {
             positions.add(new int[] { m.start(1), m.end(1) });
@@ -2469,12 +2507,11 @@ final class Utils {
 
         // Parse header line and data lines into string arrays
         List<String[]> result = new ArrayList<String[]>();
-        parseTXTLine(positions, result, strings[0], nullLiteral);
+        parseTXTLine(positions, result, strings[headerLine], nullLiteral);
 
-        for (int j = 2; j < strings.length; j++) {
+        for (int j = dataLineStart; j < dataLineEnd; j++) {
             parseTXTLine(positions, result, strings[j], nullLiteral);
         }
-
         return result;
     }
 

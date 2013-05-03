@@ -46,7 +46,7 @@ import java.sql.Statement;
 import javax.xml.bind.JAXB;
 
 /**
- * Convenience methods for jOOQ runtime settings
+ * Convenience methods for jOOQ runtime settings.
  *
  * @author Lukas Eder
  */
@@ -86,7 +86,7 @@ public final class SettingsTools {
     }
 
     /**
-     * Get the statement type from the settings
+     * Get the statement type from the settings.
      */
     public static final StatementType getStatementType(Settings settings) {
         if (settings != null) {
@@ -101,21 +101,21 @@ public final class SettingsTools {
     }
 
     /**
-     * Whether a {@link PreparedStatement} should be executed
+     * Whether a {@link PreparedStatement} should be executed.
      */
     public static final boolean executePreparedStatements(Settings settings) {
         return getStatementType(settings) == PREPARED_STATEMENT;
     }
 
     /**
-     * Whether static {@link Statement} should be executed
+     * Whether static {@link Statement} should be executed.
      */
     public static final boolean executeStaticStatements(Settings settings) {
         return getStatementType(settings) == STATIC_STATEMENT;
     }
 
     /**
-     * Lazy access to {@link RenderMapping}
+     * Lazy access to {@link RenderMapping}.
      */
     public static final RenderMapping getRenderMapping(Settings settings) {
         if (settings.getRenderMapping() == null) {
@@ -126,7 +126,7 @@ public final class SettingsTools {
     }
 
     /**
-     * Retrieve the configured default settings
+     * Retrieve the configured default settings.
      * <p>
      * <ul>
      * <li>If the JVM flag <code>-Dorg.jooq.settings</code> points to a valid
@@ -146,7 +146,7 @@ public final class SettingsTools {
     }
 
     /**
-     * Clone some settings
+     * Clone some settings.
      */
     public static final Settings clone(Settings settings) {
         return (Settings) settings.clone();

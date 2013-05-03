@@ -394,6 +394,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testFetchAny() throws Exception {
+        A a1 = create().fetchAny(TAuthor());
+        assertTrue(asList(1, 2).contains(a1.getValue(TAuthor_ID())));
+
+        A a2 = create().fetchAny(TAuthor(), TAuthor_ID().eq(1));
+        assertEquals(1, (int) a2.getValue(TAuthor_ID()));
+
+        A a3 = create().fetchAny(TAuthor(), TAuthor_ID().eq(3));
+        assertNull(a3);
+    }
+
+    @Test
     public void testFetchMany() throws Exception {
         switch (dialect()) {
             case ORACLE:

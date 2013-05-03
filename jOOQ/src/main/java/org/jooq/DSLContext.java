@@ -4501,7 +4501,7 @@ public interface DSLContext {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT * FROM [table]</pre></code>
+     * <code><pre>SELECT * FROM [table]</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -4514,7 +4514,7 @@ public interface DSLContext {
 
     /**
      * Execute and return all records for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -4527,7 +4527,7 @@ public interface DSLContext {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table]</pre></code>
+     * <code><pre>SELECT * FROM [table]</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -4542,7 +4542,7 @@ public interface DSLContext {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -4558,7 +4558,7 @@ public interface DSLContext {
 
     /**
      * Execute and return zero or one record for
-     * <code><pre>SELECT * FROM [table] LIMIT 1</pre></code>
+     * <code><pre>SELECT * FROM [table] LIMIT 1</pre></code>.
      * <p>
      * The resulting record is attached to this {@link Configuration} by
      * default. Use {@link Settings#isAttachRecords()} to override this
@@ -4571,8 +4571,22 @@ public interface DSLContext {
     <R extends Record> R fetchAny(Table<R> table) throws DataAccessException;
 
     /**
+     * Execute and return zero or one record for
+     * <code><pre>SELECT * FROM [table] WHERE [condition] LIMIT 1</pre></code>.
+     * <p>
+     * The resulting record is attached to this {@link Configuration} by
+     * default. Use {@link Settings#isAttachRecords()} to override this
+     * behaviour.
+     *
+     * @return The record or <code>null</code> if no record was returned
+     * @throws DataAccessException if something went wrong executing the query
+     */
+    @Support
+    <R extends Record> R fetchAny(Table<R> table, Condition condition) throws DataAccessException;
+
+    /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table]</pre></code>
+     * <code><pre>SELECT * FROM [table]</pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -4585,7 +4599,7 @@ public interface DSLContext {
 
     /**
      * Execute and return all records lazily for
-     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>
+     * <code><pre>SELECT * FROM [table] WHERE [condition] </pre></code>.
      * <p>
      * The result and its contained records are attached to this
      * {@link Configuration} by default. Use {@link Settings#isAttachRecords()}
@@ -4597,7 +4611,7 @@ public interface DSLContext {
     <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException;
 
     /**
-     * Insert one record
+     * Insert one record.
      * <p>
      * This executes something like the following statement:
      * <code><pre>INSERT INTO [table] ... VALUES [record] </pre></code>
@@ -4614,7 +4628,7 @@ public interface DSLContext {
     <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException;
 
     /**
-     * Update a table
+     * Update a table.
      * <code><pre>UPDATE [table] SET [modified values in record] WHERE [record is supplied record] </pre></code>
      *
      * @return The number of updated records
@@ -4624,7 +4638,7 @@ public interface DSLContext {
     <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException;
 
     /**
-     * Update a table
+     * Update a table.
      * <code><pre>UPDATE [table] SET [modified values in record] WHERE [condition]</pre></code>
      *
      * @return The number of updated records
@@ -4634,7 +4648,7 @@ public interface DSLContext {
     <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) throws DataAccessException;
 
     /**
-     * Delete a record from a table
+     * Delete a record from a table.
      * <code><pre>DELETE FROM [table] WHERE [record is supplied record]</pre></code>
      *
      * @return The number of deleted records
@@ -4644,7 +4658,7 @@ public interface DSLContext {
     <R extends UpdatableRecord<R>> int executeDelete(R record) throws DataAccessException;
 
     /**
-     * Delete a record from a table
+     * Delete a record from a table.
      * <code><pre>DELETE FROM [table] WHERE [condition]</pre></code>
      *
      * @return The number of deleted records

@@ -37,6 +37,7 @@ package org.jooq;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Iterator;
 import java.util.List;
 
@@ -299,8 +300,13 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     /**
      * Get the <code>Cursor</code>'s underlying {@link ResultSet}.
      * <p>
-     * If you modify the underlying <code>ResultSet</code>, the
-     * <code>Cursor</code> may be affected and in some cases, rendered unusable.
+     * This will return a {@link ResultSet} wrapping the JDBC driver's
+     * <code>ResultSet</code>. Closing this <code>ResultSet</code> may close the
+     * producing {@link Statement} or {@link PreparedStatement}, depending on
+     * your setting for {@link ResultQuery#keepStatement(boolean)}.
+     * <p>
+     * Modifying this <code>ResultSet</code> will affect this
+     * <code>Cursor</code>.
      *
      * @return The underlying <code>ResultSet</code>. May be <code>null</code>,
      *         for instance when the <code>Cursor</code> is closed.

@@ -1609,6 +1609,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchFromTXT() throws Exception {
+        new FormatTests(this).testFetchFromTXT();
+    }
+
+    @Test
     public void testFormat() throws Exception {
         new FormatTests(this).testFormat();
     }

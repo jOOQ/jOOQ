@@ -48,22 +48,6 @@ class Rows extends Generators {
         rows.generateRowImpl();
     }
 
-    def typeSuffix(int degree) {
-        '''«degreeOrN(degree)»«IF degree > 0»<«TN(degree)»>«ENDIF»'''
-    }
-
-    def typeSuffixRaw(int degree) {
-        '''«degreeOrN(degree)»'''
-    }
-
-    def recTypeSuffix(int degree) {
-        '''«degreeOr(degree)»«IF degree > 0»<«TN(degree)»>«ENDIF»'''
-    }
-
-    def recTypeSuffixRaw(int degree) {
-        '''«degreeOr(degree)»'''
-    }
-
     def generateRowClasses() {
         for (degree : (0..Constants::MAX_ROW_DEGREE)) {
             val out = new StringBuilder();

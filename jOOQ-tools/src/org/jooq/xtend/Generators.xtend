@@ -356,4 +356,46 @@ abstract class Generators {
     def degreeOr(int degree, String or) {
     	return if (degree == 0) or else degree
     }
+    
+    /**
+     * The generic type of a class, e.g. <code>""</code> or <code>&lt;T1, T2, T3></code>
+     */
+    def type(int degree) {
+    	type(degree, "")
+    }
+    
+    /**
+     * The generic type of a class, e.g. <code>""</code> or <code>&lt;T1, T2, T3></code>
+     */
+    def type(int degree, String spacer) {
+    	'''«IF degree > 0»<«TN(degree)»>«spacer»«ENDIF»'''
+    }
+    
+    /**
+     * The generic type suffix of a class, e.g. <code>N</code> or <code>3&lt;T1, T2, T3></code>
+     */
+    def typeSuffix(int degree) {
+        '''«typeSuffixRaw(degree)»«type(degree)»'''
+    }
+
+	/**
+     * The "raw" generic type suffix of a class, e.g. <code>N</code> or <code>3</code>
+     */
+    def typeSuffixRaw(int degree) {
+        '''«degreeOrN(degree)»'''
+    }
+
+	/**
+     * The generic type suffix of a record, e.g. <code>""</code> or <code>3&lt;T1, T2, T3></code>
+     */
+    def recTypeSuffix(int degree) {
+        '''«recTypeSuffixRaw(degree)»«type(degree)»'''
+    }
+
+	/**
+     * The "raw" generic type suffix of a record, e.g. <code>""</code> or <code>3</code>
+     */
+    def recTypeSuffixRaw(int degree) {
+        '''«degreeOr(degree)»'''
+    }
 }

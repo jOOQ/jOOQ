@@ -1299,6 +1299,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testFetchAny() throws Exception {
+        new FetchTests(this).testFetchAny();
+    }
+
+    @Test
     public void testFetchMany() throws Exception {
         new FetchTests(this).testFetchMany();
     }

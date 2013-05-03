@@ -1661,6 +1661,12 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
+    public final <R extends Record> R fetchAny(Table<R> table, Condition condition) throws DataAccessException {
+        return Utils.filterOne(selectFrom(table).where(condition).limit(1).fetch());
+    }
+
+    @Override
+    @Support
     public final <R extends Record> Cursor<R> fetchLazy(Table<R> table) throws DataAccessException {
         return fetchLazy(table, trueCondition());
     }

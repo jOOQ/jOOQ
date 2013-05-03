@@ -1353,7 +1353,7 @@ public class NoInsertListener extends DefaultExecuteListener {
 									</p>
 									
 <java><![CDATA[// Create your Configuration
-Configuration configuration = new DefaultConfiguration(connection, dialect);
+Configuration configuration = new DefaultConfiguration().set(connection).set(dialect);
 
 // Set a new execute listener provider onto the configuration:
 configuration.set(new DefaultExecuteListenerProvider(new NoInsertListener()));
@@ -1402,7 +1402,7 @@ catch (DataAccessException expected) {
 									</p>
 
 <java><![CDATA[// Create your Configuration
-Configuration configuration = new DefaultConfiguration(connection, dialect);
+Configuration configuration = new DefaultConfiguration().set(connection).set(dialect);
 
 // Hook your listener providers into the configuration:
 configuration.set(
@@ -6731,7 +6731,7 @@ create.executeUpdate(book);]]></java>
 									</p>
 
 <java><![CDATA[// Initialise a Configuration
-Configuration configuration = new DefaultConfiguration(connection, SQLDialect.ORACLE);
+Configuration configuration = new DefaultConfiguration().set(connection).set(SQLDialect.ORACLE);
 
 // Initialise the DAO with the Configuration
 BookDao bookDao = new BookDao(configuration);
@@ -8241,7 +8241,7 @@ public class BookDao extends DAOImpl<BookRecord, Book, Integer> {
 							</p>
 							
 <java><![CDATA[// Initialise an Configuration
-Configuration configuration = new DefaultConfiguration(connection, SQLDialect.ORACLE);
+Configuration configuration = new DefaultConfiguration().set(connection).set(SQLDialect.ORACLE);
 
 // Initialise the DAO with the Configuration
 BookDao bookDao = new BookDao(configuration);
@@ -8337,7 +8337,7 @@ public class StatisticsListener extends DefaultExecuteListener {
 							</p>
 
 <java><![CDATA[// Create a configuration with an appropriate listener provider:
-Configuration configuration = new DefaultConfiguration(connection, dialect);
+Configuration configuration = new DefaultConfiguration().set(connection).set(dialect);
 configuration.set(new DefaultExecuteListenerProvider(new StatisticsListener()));
 
 // Create a DSLContext from the above configuration
@@ -9761,7 +9761,7 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetc
 							</p>
 
 <java><![CDATA[// Create a configuration with an appropriate listener provider:
-Configuration configuration = new DefaultConfiguration(connection, dialect);
+Configuration configuration = new DefaultConfiguration.set(connection).set(dialect);
 configuration.set(new DefaultExecuteListenerProvider(new org.jooq.debug.impl.DebugListener()));
 
 // Create a DSLContext from the above configuration

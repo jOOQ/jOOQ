@@ -49,35 +49,35 @@ class Rows extends Generators {
     }
 
     def typeSuffix(int degree) {
-    	'''«degreeOrN(degree)»«IF degree > 0»<«TN(degree)»>«ENDIF»'''
+        '''«degreeOrN(degree)»«IF degree > 0»<«TN(degree)»>«ENDIF»'''
     }
 
     def typeSuffixRaw(int degree) {
-    	'''«degreeOrN(degree)»'''
+        '''«degreeOrN(degree)»'''
     }
 
     def recTypeSuffix(int degree) {
-    	'''«degreeOr(degree)»«IF degree > 0»<«TN(degree)»>«ENDIF»'''
+        '''«degreeOr(degree)»«IF degree > 0»<«TN(degree)»>«ENDIF»'''
     }
 
     def recTypeSuffixRaw(int degree) {
-    	'''«degreeOr(degree)»'''
+        '''«degreeOr(degree)»'''
     }
 
     def generateRowClasses() {
         for (degree : (0..Constants::MAX_ROW_DEGREE)) {
             val out = new StringBuilder();
             
-			val typeSuffix = typeSuffix(degree)
-			val typeSuffixRaw = typeSuffixRaw(degree)
-			val recTypeSuffix = recTypeSuffix(degree)
+            val typeSuffix = typeSuffix(degree)
+            val typeSuffixRaw = typeSuffixRaw(degree)
+            val recTypeSuffix = recTypeSuffix(degree)
 
             out.append('''
             «classHeader»
             package org.jooq;
 
-«««            import org.jooq.Comparator;
-«««
+            import org.jooq.Comparator;
+
             import java.util.Collection;
 
             import javax.annotation.Generated;
@@ -105,27 +105,24 @@ class Rows extends Generators {
                  */
                 Field<T«d»> field«d»();
                 «ENDFOR»
-			«ENDIF»
+            «ENDIF»
             
-«««                // ------------------------------------------------------------------------
-«««                // Generic comparison predicates
-«««                // ------------------------------------------------------------------------
-«««            
-«««                @Support
-«««            	Condition compare(Comparator comparator, Row«typeSuffix» row);
-«««            
-«««                @Support
-«««            	Condition compare(Comparator comparator, Record«recTypeSuffix» record);
-«««            
-«««                @Support
-«««            	Condition compare(Comparator comparator, «TN_tn(degree)»);
-«««            
-«««                @Support
-«««            	Condition compare(Comparator comparator, «Field_TN_tn(degree)»);
-«««            
-«««                @Support
-«««            	Condition compare(Comparator comparator, Select<? extends Record«recTypeSuffix»> select);
-«««            
+                // ------------------------------------------------------------------------
+                // Generic comparison predicates
+                // ------------------------------------------------------------------------
+            
+                @Support
+                Condition compare(Comparator comparator, Row«typeSuffix» row);
+            
+                @Support
+                Condition compare(Comparator comparator, Record«recTypeSuffix» record);
+            
+                @Support
+                Condition compare(Comparator comparator, «TN_tn(degree)»);
+            
+                @Support
+                Condition compare(Comparator comparator, «Field_TN_tn(degree)»);
+            
                 // ------------------------------------------------------------------------
                 // Equal / Not equal comparison predicates
                 // ------------------------------------------------------------------------
@@ -1346,34 +1343,66 @@ class Rows extends Generators {
             }
 
             // ------------------------------------------------------------------------
+            // Generic comparison predicates
+            // ------------------------------------------------------------------------
+            «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final Condition compare(Comparator comparator, Row«typeSuffix(degree)» row) {
+            	return new RowCondition(this, row, comparator);
+            }
+            «ENDFOR»
+            «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final Condition compare(Comparator comparator, Record«recTypeSuffix(degree)» record) {
+            	return new RowCondition(this, record.valuesRow(), comparator);
+            }
+            «ENDFOR»
+            «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final Condition compare(Comparator comparator, «TN_tn(degree)») {
+            	return compare(comparator, row(«tn(degree)»));
+            }
+            «ENDFOR»
+            «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
+
+            @Override
+            public final Condition compare(Comparator comparator, «Field_TN_tn(degree)») {
+            	return compare(comparator, row(«tn(degree)»));
+            }
+            «ENDFOR»
+
+            // ------------------------------------------------------------------------
             // Equal / Not equal comparison predicates
             // ------------------------------------------------------------------------
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition equal(Row«typeSuffix(degree)» row) {
-                return new RowCondition(this, row, Comparator.EQUALS);
+                return compare(Comparator.EQUALS, row);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition equal(Record«recTypeSuffix(degree)» record) {
-                return new RowCondition(this, record.valuesRow(), Comparator.EQUALS);
+                return compare(Comparator.EQUALS, record);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition equal(«TN_tn(degree)») {
-                return equal(row(«tn(degree)»));
+                return compare(Comparator.EQUALS, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition equal(«Field_TN_tn(degree)») {
-                return equal(row(«tn(degree)»));
+                return compare(Comparator.EQUALS, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
@@ -1408,28 +1437,28 @@ class Rows extends Generators {
 
             @Override
             public final Condition notEqual(Row«typeSuffix(degree)» row) {
-                return new RowCondition(this, row, Comparator.NOT_EQUALS);
+                return compare(Comparator.NOT_EQUALS, row);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition notEqual(Record«recTypeSuffix(degree)» record) {
-                return new RowCondition(this, record.valuesRow(), Comparator.NOT_EQUALS);
+                return compare(Comparator.NOT_EQUALS, record);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition notEqual(«TN_tn(degree)») {
-                return notEqual(row(«tn(degree)»));
+                return compare(Comparator.NOT_EQUALS, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition notEqual(«Field_TN_tn(degree)») {
-                return notEqual(row(«tn(degree)»));
+                return compare(Comparator.NOT_EQUALS, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
@@ -1468,28 +1497,28 @@ class Rows extends Generators {
 
             @Override
             public final Condition lessThan(Row«typeSuffix(degree)» row) {
-                return new RowCondition(this, row, Comparator.LESS);
+                return compare(Comparator.LESS, row);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition lessThan(Record«recTypeSuffix(degree)» record) {
-                return new RowCondition(this, record.valuesRow(), Comparator.LESS);
+                return compare(Comparator.LESS, record);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition lessThan(«TN_tn(degree)») {
-                return lessThan(row(«tn(degree)»));
+                return compare(Comparator.LESS, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition lessThan(«Field_TN_tn(degree)») {
-                return lessThan(row(«tn(degree)»));
+                return compare(Comparator.LESS, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
@@ -1524,28 +1553,28 @@ class Rows extends Generators {
 
             @Override
             public final Condition lessOrEqual(Row«typeSuffix(degree)» row) {
-                return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+                return compare(Comparator.LESS_OR_EQUAL, row);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition lessOrEqual(Record«recTypeSuffix(degree)» record) {
-                return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
+                return compare(Comparator.LESS_OR_EQUAL, record);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition lessOrEqual(«TN_tn(degree)») {
-                return lessOrEqual(row(«tn(degree)»));
+                return compare(Comparator.LESS_OR_EQUAL, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition lessOrEqual(«Field_TN_tn(degree)») {
-                return lessOrEqual(row(«tn(degree)»));
+                return compare(Comparator.LESS_OR_EQUAL, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
@@ -1580,28 +1609,28 @@ class Rows extends Generators {
 
             @Override
             public final Condition greaterThan(Row«typeSuffix(degree)» row) {
-                return new RowCondition(this, row, Comparator.GREATER);
+                return compare(Comparator.GREATER, row);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition greaterThan(Record«recTypeSuffix(degree)» record) {
-                return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
+                return compare(Comparator.GREATER, record);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition greaterThan(«TN_tn(degree)») {
-                return greaterThan(row(«tn(degree)»));
+                return compare(Comparator.GREATER, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition greaterThan(«Field_TN_tn(degree)») {
-                return greaterThan(row(«tn(degree)»));
+                return compare(Comparator.GREATER, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
@@ -1636,28 +1665,28 @@ class Rows extends Generators {
 
             @Override
             public final Condition greaterOrEqual(Row«typeSuffix(degree)» row) {
-                return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+                return compare(Comparator.GREATER_OR_EQUAL, row);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition greaterOrEqual(Record«recTypeSuffix(degree)» record) {
-                return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
+                return compare(Comparator.GREATER_OR_EQUAL, record);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition greaterOrEqual(«TN_tn(degree)») {
-                return greaterOrEqual(row(«tn(degree)»));
+                return compare(Comparator.GREATER_OR_EQUAL, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition greaterOrEqual(«Field_TN_tn(degree)») {
-                return greaterOrEqual(row(«tn(degree)»));
+                return compare(Comparator.GREATER_OR_EQUAL, «tn(degree)»);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»

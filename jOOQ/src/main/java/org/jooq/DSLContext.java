@@ -1140,30 +1140,8 @@ public interface DSLContext {
     /**
      * Fetch all data from a formatted string.
      * <p>
-     * The supplied string is supposed to be formatted in the following,
-     * human-readable way: <code><pre>
-     * COL1  COL2   COL3 containing whitespace
-     * ----- ----   --------------------------
-     * val1  1      some text
-     * val2   2      more text
-     * </pre></code> This method will decode the above formatted string
-     * according to the following rules:
-     * <ul>
-     * <li>The number of columns is defined by the number of dash groups in the
-     * second line</li>
-     * <li>The column types are <code>VARCHAR(N)</code> where
-     * <code>N = number of dashes per dash group</code></li>
-     * <li>The column names are defined by the trimmed text contained in the
-     * first row</li>
-     * <li>The data is defined by the trimmed text contained in the subsequent
-     * rows</li>
-     * </ul>
-     * <p>
-     * This is the same as calling {@link #fetchFromTXT(String, String)} with
-     * <code>"{null}"</code> as <code>nullLiteral</code>
-     * <p>
-     * A future version of jOOQ will also support the inverse operation of
-     * {@link Result#format()} through this method
+     * The supplied string is supposed to be formatted in a human-readable way.
+     * This is the same as calling <code>fetchFromTXT(string, "{null}")</code>
      *
      * @param string The formatted string
      * @return The transformed result
@@ -1177,6 +1155,32 @@ public interface DSLContext {
     /**
      * Fetch all data from a formatted string.
      * <p>
+     * This method supports parsing results from two types of human-readable
+     * formats:
+     * <h3>The jOOQ {@link Result#format()}</h3>
+     * <p>
+     * This format is recognised by the fact that the first line starts with a
+     * "plus" sign: <code><pre>
+     * +-----+-----+--------------------------+
+     * |COL1 |COL2 |COL3 containing whitespace|
+     * +-----+-----+--------------------------+
+     * |val1 |1    |some text                 |
+     * |val2 | 2   | more text                |
+     * +-----+-----+--------------------------+
+     * </pre></code> This method will decode the above formatted string
+     * according to the following rules:
+     * <ul>
+     * <li>The number of columns is defined by the number of dash groups in the
+     * first line. Groups are separated by exactly one "plus" sign</li>
+     * <li>The column types are <code>VARCHAR(N)</code> where
+     * <code>N = number of dashes per dash group</code></li>
+     * <li>The column names are defined by the trimmed text contained in the
+     * second row</li>
+     * <li>The data is defined by the trimmed text contained in the subsequent
+     * rows</li>
+     * </ul>
+     * <h3>The H2 database test data format</h3>
+     * <p>
      * The supplied string is supposed to be formatted in the following,
      * human-readable way: <code><pre>
      * COL1  COL2   COL3 containing whitespace
@@ -1187,7 +1191,7 @@ public interface DSLContext {
      * according to the following rules:
      * <ul>
      * <li>The number of columns is defined by the number of dash groups in the
-     * second line</li>
+     * second line. Groups are separated by space(s)</li>
      * <li>The column types are <code>VARCHAR(N)</code> where
      * <code>N = number of dashes per dash group</code></li>
      * <li>The column names are defined by the trimmed text contained in the
@@ -1195,9 +1199,10 @@ public interface DSLContext {
      * <li>The data is defined by the trimmed text contained in the subsequent
      * rows</li>
      * </ul>
+     * <h3>Both parsing methods</h3>
      * <p>
-     * A future version of jOOQ will also support the inverse operation of
-     * {@link Result#format()} through this method
+     * Both parsing methods make no assumption about the resulting data types.
+     * Instead, all data is string-based.
      *
      * @param string The formatted string
      * @param nullLiteral The string literal to be used as <code>null</code>

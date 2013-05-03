@@ -43,6 +43,9 @@ import static org.jooq.impl.DSL.val;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
+import static org.jooq.test.data.Table2.FIELD_ID2;
+import static org.jooq.test.data.Table2.FIELD_NAME2;
+import static org.jooq.test.data.Table2.TABLE2;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -338,6 +341,17 @@ public class MockTest extends AbstractTest {
         assertEquals(2, r.size());
         assertEquals("ID1", r.field(0).getName());
         assertEquals("NAME1", r.field(1).getName());
+        assertEquals(asList(1, 2), r.getValues(0));
+        assertEquals(asList("X", "Y"), r.getValues(1));
+    }
+
+    @Test
+    public void testFileDatabase_SELECT_ID2_NAME2_FROM_TABLE2() throws Exception {
+        Result<Record2<Integer, String>> r = MOCK.select(FIELD_ID2, FIELD_NAME2).from(TABLE2).fetch();
+
+        assertEquals(2, r.size());
+        assertEquals("ID2", r.field(0).getName());
+        assertEquals("NAME2", r.field(1).getName());
         assertEquals(asList(1, 2), r.getValues(0));
         assertEquals(asList("X", "Y"), r.getValues(1));
     }

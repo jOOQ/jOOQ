@@ -44,20 +44,20 @@ import org.jooq.impl.DSL;
  * An intermediate type for the construction of a <code>JOIN</code> clause,
  * where there must be a join criteria added using an <code>ON</code> clause
  * (with a {@link Condition}), or using a <code>USING</code> clause (with a list
- * of {@link Field})
+ * of {@link Field}).
  *
  * @author Lukas Eder
  */
 public interface TableOnStep {
 
     /**
-     * Add an <code>ON</code> clause to the <code>JOIN</code>
+     * Add an <code>ON</code> clause to the <code>JOIN</code>.
      */
     @Support
     TableOnConditionStep on(Condition... conditions);
 
     /**
-     * Add an <code>ON</code> clause to the <code>JOIN</code>
+     * Add an <code>ON</code> clause to the <code>JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -70,7 +70,7 @@ public interface TableOnStep {
     TableOnConditionStep on(String sql);
 
     /**
-     * Add an <code>ON</code> clause to the <code>JOIN</code>
+     * Add an <code>ON</code> clause to the <code>JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -83,7 +83,7 @@ public interface TableOnStep {
     TableOnConditionStep on(String sql, Object... bindings);
 
     /**
-     * Add an <code>ON</code> clause to the <code>JOIN</code>
+     * Add an <code>ON</code> clause to the <code>JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -96,7 +96,7 @@ public interface TableOnStep {
     TableOnConditionStep on(String sql, QueryPart... parts);
 
     /**
-     * Join the table with the <code>USING(column [, column...])</code> syntax
+     * Join a table with the <code>USING(column [, column...])</code> syntax.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
@@ -105,7 +105,7 @@ public interface TableOnStep {
     Table<Record> using(Field<?>... fields);
 
     /**
-     * Join the table with the <code>USING(column [, column...])</code> syntax
+     * Join a table with the <code>USING(column [, column...])</code> syntax.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.

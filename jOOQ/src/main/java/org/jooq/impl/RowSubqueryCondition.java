@@ -42,15 +42,15 @@ import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SubqueryComparator.EQUALS;
+import static org.jooq.SubqueryComparator.IN;
+import static org.jooq.SubqueryComparator.NOT_EQUALS;
+import static org.jooq.SubqueryComparator.NOT_IN;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.SubqueryOperator.EQUALS;
-import static org.jooq.impl.SubqueryOperator.IN;
-import static org.jooq.impl.SubqueryOperator.NOT_EQUALS;
-import static org.jooq.impl.SubqueryOperator.NOT_IN;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
 
 import java.util.ArrayList;
@@ -67,6 +67,7 @@ import org.jooq.Row;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
+import org.jooq.SubqueryComparator;
 
 /**
  * @author Lukas Eder
@@ -76,13 +77,13 @@ class RowSubqueryCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long      serialVersionUID = -1806139685201770706L;
+    private static final long        serialVersionUID = -1806139685201770706L;
 
-    private final Row              left;
-    private final Select<?>        right;
-    private final SubqueryOperator operator;
+    private final Row                left;
+    private final Select<?>          right;
+    private final SubqueryComparator operator;
 
-    RowSubqueryCondition(Row left, Select<?> right, SubqueryOperator operator) {
+    RowSubqueryCondition(Row left, Select<?> right, SubqueryComparator operator) {
         this.left = left;
         this.right = right;
         this.operator = operator;

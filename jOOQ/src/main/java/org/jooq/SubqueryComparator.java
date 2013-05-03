@@ -34,29 +34,51 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
+package org.jooq;
+
 
 /**
- * Any operator used in a {@link SubQueryCondition}
+ * A comparator to be used in subquery conditions.
+ * <p>
+ * Comparison operators listed here can be used to compare {@link Field} or
+ * {@link Row} values with subqueries. See {@link Comparator} for comparing
+ * {@link Field} or {@link Row} values with other {@link Field} or {@link Row}
+ * values.
  *
  * @author Lukas Eder
+ * @see Comparator
  */
-enum SubqueryOperator {
+public enum SubqueryComparator {
 
+    @Support
     IN("in"),
+
+    @Support
     NOT_IN("not in"),
+
+    @Support
     EQUALS("="),
+
+    @Support
     NOT_EQUALS("<>"),
+
+    @Support
     LESS("<"),
+
+    @Support
     LESS_OR_EQUAL("<="),
+
+    @Support
     GREATER(">"),
+
+    @Support
     GREATER_OR_EQUAL(">="),
 
     ;
 
     private final String sql;
 
-    private SubqueryOperator(String sql) {
+    private SubqueryComparator(String sql) {
         this.sql = sql;
     }
 

@@ -40,19 +40,20 @@ import org.jooq.BindContext;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.Select;
+import org.jooq.SubqueryComparator;
 
 /**
  * @author Lukas Eder
  */
 class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
-    private static final long      serialVersionUID = -402776705884329740L;
+    private static final long        serialVersionUID = -402776705884329740L;
 
-    private final Select<?>        query;
-    private final Field<?>         field;
-    private final SubqueryOperator operator;
+    private final Select<?>          query;
+    private final Field<?>           field;
+    private final SubqueryComparator operator;
 
-    SelectQueryAsSubQueryCondition(Select<?> query, Field<?> field, SubqueryOperator operator) {
+    SelectQueryAsSubQueryCondition(Select<?> query, Field<?> field, SubqueryComparator operator) {
         this.query = query;
         this.field = field;
         this.operator = operator;

@@ -110,16 +110,72 @@ class Rows extends Generators {
                 // ------------------------------------------------------------------------
                 // Generic comparison predicates
                 // ------------------------------------------------------------------------
-            
+                
+                /**
+                 * Compare this row value expression with another row value expression
+                 * using a dynamic comparator.
+                 * <p>
+                 * See the explicit comparison methods for details. Note, not all 
+                 * {@link Comparator} types are supported
+                 *
+                 * @see #equal(Row«typeSuffixRaw»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
+                 */
                 @Support
                 Condition compare(Comparator comparator, Row«typeSuffix» row);
             
+                /**
+                 * Compare this row value expression with a record record
+                 * using a dynamic comparator.
+                 * <p>
+                 * See the explicit comparison methods for details. Note, not all 
+                 * {@link Comparator} types are supported
+                 *
+                 * @see #equal(Row«typeSuffixRaw»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
+                 */
                 @Support
                 Condition compare(Comparator comparator, Record«recTypeSuffix» record);
             
+                /**
+                 * Compare this row value expression with another row value expression
+                 * using a dynamic comparator.
+                 * <p>
+                 * See the explicit comparison methods for details. Note, not all 
+                 * {@link Comparator} types are supported
+                 *
+                 * @see #equal(Row«typeSuffixRaw»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
+                 */
                 @Support
                 Condition compare(Comparator comparator, «TN_tn(degree)»);
             
+                /**
+                 * Compare this row value expression with another row value expression
+                 * using a dynamic comparator.
+                 * <p>
+                 * See the explicit comparison methods for details. Note, not all 
+                 * {@link Comparator} types are supported
+                 *
+                 * @see #equal(Row«typeSuffixRaw»)
+                 * @see #notEqual(Row«typeSuffixRaw»)
+                 * @see #lessThan(Row«typeSuffixRaw»)
+                 * @see #lessOrEqual(Row«typeSuffixRaw»)
+                 * @see #greaterThan(Row«typeSuffixRaw»)
+                 * @see #greaterOrEqual(Row«typeSuffixRaw»)
+                 */
                 @Support
                 Condition compare(Comparator comparator, «Field_TN_tn(degree)»);
             
@@ -1349,28 +1405,28 @@ class Rows extends Generators {
 
             @Override
             public final Condition compare(Comparator comparator, Row«typeSuffix(degree)» row) {
-            	return new RowCondition(this, row, comparator);
+                return new RowCondition(this, row, comparator);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition compare(Comparator comparator, Record«recTypeSuffix(degree)» record) {
-            	return new RowCondition(this, record.valuesRow(), comparator);
+                return new RowCondition(this, record.valuesRow(), comparator);
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition compare(Comparator comparator, «TN_tn(degree)») {
-            	return compare(comparator, row(«tn(degree)»));
+                return compare(comparator, row(«tn(degree)»));
             }
             «ENDFOR»
             «FOR degree : (0..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition compare(Comparator comparator, «Field_TN_tn(degree)») {
-            	return compare(comparator, row(«tn(degree)»));
+                return compare(comparator, row(«tn(degree)»));
             }
             «ENDFOR»
 

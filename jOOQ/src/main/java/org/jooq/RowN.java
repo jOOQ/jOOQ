@@ -56,16 +56,72 @@ public interface RowN extends Row {
     // ------------------------------------------------------------------------
     // Generic comparison predicates
     // ------------------------------------------------------------------------
-
+    
+    /**
+     * Compare this row value expression with another row value expression
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all 
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(RowN)
+     * @see #notEqual(RowN)
+     * @see #lessThan(RowN)
+     * @see #lessOrEqual(RowN)
+     * @see #greaterThan(RowN)
+     * @see #greaterOrEqual(RowN)
+     */
     @Support
     Condition compare(Comparator comparator, RowN row);
 
+    /**
+     * Compare this row value expression with a record record
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all 
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(RowN)
+     * @see #notEqual(RowN)
+     * @see #lessThan(RowN)
+     * @see #lessOrEqual(RowN)
+     * @see #greaterThan(RowN)
+     * @see #greaterOrEqual(RowN)
+     */
     @Support
     Condition compare(Comparator comparator, Record record);
 
+    /**
+     * Compare this row value expression with another row value expression
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all 
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(RowN)
+     * @see #notEqual(RowN)
+     * @see #lessThan(RowN)
+     * @see #lessOrEqual(RowN)
+     * @see #greaterThan(RowN)
+     * @see #greaterOrEqual(RowN)
+     */
     @Support
     Condition compare(Comparator comparator, Object... values);
 
+    /**
+     * Compare this row value expression with another row value expression
+     * using a dynamic comparator.
+     * <p>
+     * See the explicit comparison methods for details. Note, not all 
+     * {@link Comparator} types are supported
+     *
+     * @see #equal(RowN)
+     * @see #notEqual(RowN)
+     * @see #lessThan(RowN)
+     * @see #lessOrEqual(RowN)
+     * @see #greaterThan(RowN)
+     * @see #greaterOrEqual(RowN)
+     */
     @Support
     Condition compare(Comparator comparator, Field<?>... values);
 

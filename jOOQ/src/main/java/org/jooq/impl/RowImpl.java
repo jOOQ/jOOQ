@@ -42,6 +42,7 @@ import java.util.Collection;
 
 import javax.annotation.Generated;
 
+import org.jooq.BetweenAndStepN;
 import org.jooq.BetweenAndStep1;
 import org.jooq.BetweenAndStep2;
 import org.jooq.BetweenAndStep3;
@@ -64,7 +65,6 @@ import org.jooq.BetweenAndStep19;
 import org.jooq.BetweenAndStep20;
 import org.jooq.BetweenAndStep21;
 import org.jooq.BetweenAndStep22;
-import org.jooq.BetweenAndStepN;
 import org.jooq.BindContext;
 import org.jooq.Comparator;
 import org.jooq.Condition;
@@ -95,6 +95,7 @@ import org.jooq.Record21;
 import org.jooq.Record22;
 import org.jooq.RenderContext;
 import org.jooq.Row;
+import org.jooq.RowN;
 import org.jooq.Row1;
 import org.jooq.Row2;
 import org.jooq.Row3;
@@ -117,7 +118,6 @@ import org.jooq.Row19;
 import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
-import org.jooq.RowN;
 import org.jooq.Select;
 
 /**
@@ -130,6 +130,7 @@ implements
 
     // This row implementation implements all row types. Type-safety is
     // being checked through the type-safe API. No need for further checks here
+    RowN,
     Row1<T1>,
     Row2<T1, T2>,
     Row3<T1, T2, T3>,
@@ -151,8 +152,8 @@ implements
     Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>,
     Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>,
     Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>,
-    Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
-    RowN {
+    Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>
+{
 
     /**
      * Generated UID
@@ -411,6 +412,11 @@ implements
     // ------------------------------------------------------------------------
 
     @Override
+    public final Condition equal(RowN row) {
+        return new RowCondition(this, row, Comparator.EQUALS);
+    }
+
+    @Override
     public final Condition equal(Row1<T1> row) {
         return new RowCondition(this, row, Comparator.EQUALS);
     }
@@ -521,8 +527,8 @@ implements
     }
 
     @Override
-    public final Condition equal(RowN row) {
-        return new RowCondition(this, row, Comparator.EQUALS);
+    public final Condition equal(Record record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.EQUALS);
     }
 
     @Override
@@ -636,9 +642,8 @@ implements
     }
 
     @Override
-    public final Condition equal(Record record) {
-        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return new RowCondition(this, row, Comparator.EQUALS);
+    public final Condition equal(Object... values) {
+        return equal(row(values));
     }
 
     @Override
@@ -752,7 +757,7 @@ implements
     }
 
     @Override
-    public final Condition equal(Object... values) {
+    public final Condition equal(Field<?>... values) {
         return equal(row(values));
     }
 
@@ -867,8 +872,8 @@ implements
     }
 
     @Override
-    public final Condition equal(Field<?>... f) {
-        return equal(row(f));
+    public final Condition eq(RowN row) {
+        return equal(row);
     }
 
     @Override
@@ -982,8 +987,8 @@ implements
     }
 
     @Override
-    public final Condition eq(RowN row) {
-        return equal(row);
+    public final Condition eq(Record record) {
+        return equal(record);
     }
 
     @Override
@@ -1097,8 +1102,8 @@ implements
     }
 
     @Override
-    public final Condition eq(Record record) {
-        return equal(record);
+    public final Condition eq(Object... values) {
+        return equal(values);
     }
 
     @Override
@@ -1212,7 +1217,7 @@ implements
     }
 
     @Override
-    public final Condition eq(Object... values) {
+    public final Condition eq(Field<?>... values) {
         return equal(values);
     }
 
@@ -1327,8 +1332,8 @@ implements
     }
 
     @Override
-    public final Condition eq(Field<?>... values) {
-        return equal(values);
+    public final Condition notEqual(RowN row) {
+        return new RowCondition(this, row, Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -1442,8 +1447,8 @@ implements
     }
 
     @Override
-    public final Condition notEqual(RowN row) {
-        return new RowCondition(this, row, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Record record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -1557,9 +1562,8 @@ implements
     }
 
     @Override
-    public final Condition notEqual(Record record) {
-        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return new RowCondition(this, row, Comparator.NOT_EQUALS);
+    public final Condition notEqual(Object... values) {
+        return notEqual(row(values));
     }
 
     @Override
@@ -1673,7 +1677,7 @@ implements
     }
 
     @Override
-    public final Condition notEqual(Object... values) {
+    public final Condition notEqual(Field<?>... values) {
         return notEqual(row(values));
     }
 
@@ -1788,8 +1792,8 @@ implements
     }
 
     @Override
-    public final Condition notEqual(Field<?>... f) {
-        return notEqual(row(f));
+    public final Condition ne(RowN row) {
+        return notEqual(row);
     }
 
     @Override
@@ -1903,8 +1907,8 @@ implements
     }
 
     @Override
-    public final Condition ne(RowN row) {
-        return notEqual(row);
+    public final Condition ne(Record record) {
+        return notEqual(record);
     }
 
     @Override
@@ -2018,8 +2022,8 @@ implements
     }
 
     @Override
-    public final Condition ne(Record record) {
-        return notEqual(record);
+    public final Condition ne(Object... values) {
+        return notEqual(values);
     }
 
     @Override
@@ -2133,7 +2137,7 @@ implements
     }
 
     @Override
-    public final Condition ne(Object... values) {
+    public final Condition ne(Field<?>... values) {
         return notEqual(values);
     }
 
@@ -2247,14 +2251,14 @@ implements
         return notEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
     }
 
-    @Override
-    public final Condition ne(Field<?>... values) {
-        return notEqual(values);
-    }
-
     // ------------------------------------------------------------------------
     // Ordering comparison predicates
     // ------------------------------------------------------------------------
+
+    @Override
+    public final Condition lessThan(RowN row) {
+        return new RowCondition(this, row, Comparator.LESS);
+    }
 
     @Override
     public final Condition lessThan(Row1<T1> row) {
@@ -2367,8 +2371,8 @@ implements
     }
 
     @Override
-    public final Condition lessThan(RowN row) {
-        return new RowCondition(this, row, Comparator.LESS);
+    public final Condition lessThan(Record record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS);
     }
 
     @Override
@@ -2482,9 +2486,8 @@ implements
     }
 
     @Override
-    public final Condition lessThan(Record record) {
-        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return new RowCondition(this, row, Comparator.LESS);
+    public final Condition lessThan(Object... values) {
+        return lessThan(row(values));
     }
 
     @Override
@@ -2598,7 +2601,7 @@ implements
     }
 
     @Override
-    public final Condition lessThan(Object... values) {
+    public final Condition lessThan(Field<?>... values) {
         return lessThan(row(values));
     }
 
@@ -2713,8 +2716,8 @@ implements
     }
 
     @Override
-    public final Condition lessThan(Field<?>... f) {
-        return lessThan(row(f));
+    public final Condition lt(RowN row) {
+        return lessThan(row);
     }
 
     @Override
@@ -2828,8 +2831,8 @@ implements
     }
 
     @Override
-    public final Condition lt(RowN row) {
-        return lessThan(row);
+    public final Condition lt(Record record) {
+        return lessThan(record);
     }
 
     @Override
@@ -2943,8 +2946,8 @@ implements
     }
 
     @Override
-    public final Condition lt(Record record) {
-        return lessThan(record);
+    public final Condition lt(Object... values) {
+        return lessThan(values);
     }
 
     @Override
@@ -3058,7 +3061,7 @@ implements
     }
 
     @Override
-    public final Condition lt(Object... values) {
+    public final Condition lt(Field<?>... values) {
         return lessThan(values);
     }
 
@@ -3173,8 +3176,8 @@ implements
     }
 
     @Override
-    public final Condition lt(Field<?>... values) {
-        return lessThan(values);
+    public final Condition lessOrEqual(RowN row) {
+        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
     }
 
     @Override
@@ -3288,8 +3291,8 @@ implements
     }
 
     @Override
-    public final Condition lessOrEqual(RowN row) {
-        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    public final Condition lessOrEqual(Record record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.LESS_OR_EQUAL);
     }
 
     @Override
@@ -3403,9 +3406,8 @@ implements
     }
 
     @Override
-    public final Condition lessOrEqual(Record record) {
-        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return new RowCondition(this, row, Comparator.LESS_OR_EQUAL);
+    public final Condition lessOrEqual(Object... values) {
+        return lessOrEqual(row(values));
     }
 
     @Override
@@ -3519,7 +3521,7 @@ implements
     }
 
     @Override
-    public final Condition lessOrEqual(Object... values) {
+    public final Condition lessOrEqual(Field<?>... values) {
         return lessOrEqual(row(values));
     }
 
@@ -3634,8 +3636,8 @@ implements
     }
 
     @Override
-    public final Condition lessOrEqual(Field<?>... f) {
-        return lessOrEqual(row(f));
+    public final Condition le(RowN row) {
+        return lessOrEqual(row);
     }
 
     @Override
@@ -3749,8 +3751,8 @@ implements
     }
 
     @Override
-    public final Condition le(RowN row) {
-        return lessOrEqual(row);
+    public final Condition le(Record record) {
+        return lessOrEqual(record);
     }
 
     @Override
@@ -3864,8 +3866,8 @@ implements
     }
 
     @Override
-    public final Condition le(Record record) {
-        return lessOrEqual(record);
+    public final Condition le(Object... values) {
+        return lessOrEqual(values);
     }
 
     @Override
@@ -3979,7 +3981,7 @@ implements
     }
 
     @Override
-    public final Condition le(Object... values) {
+    public final Condition le(Field<?>... values) {
         return lessOrEqual(values);
     }
 
@@ -4094,8 +4096,8 @@ implements
     }
 
     @Override
-    public final Condition le(Field<?>... values) {
-        return lessOrEqual(values);
+    public final Condition greaterThan(RowN row) {
+        return new RowCondition(this, row, Comparator.GREATER);
     }
 
     @Override
@@ -4209,8 +4211,8 @@ implements
     }
 
     @Override
-    public final Condition greaterThan(RowN row) {
-        return new RowCondition(this, row, Comparator.GREATER);
+    public final Condition greaterThan(Record record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER);
     }
 
     @Override
@@ -4324,9 +4326,8 @@ implements
     }
 
     @Override
-    public final Condition greaterThan(Record record) {
-        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return new RowCondition(this, row, Comparator.GREATER);
+    public final Condition greaterThan(Object... values) {
+        return greaterThan(row(values));
     }
 
     @Override
@@ -4440,7 +4441,7 @@ implements
     }
 
     @Override
-    public final Condition greaterThan(Object... values) {
+    public final Condition greaterThan(Field<?>... values) {
         return greaterThan(row(values));
     }
 
@@ -4555,8 +4556,8 @@ implements
     }
 
     @Override
-    public final Condition greaterThan(Field<?>... f) {
-        return greaterThan(row(f));
+    public final Condition gt(RowN row) {
+        return greaterThan(row);
     }
 
     @Override
@@ -4670,8 +4671,8 @@ implements
     }
 
     @Override
-    public final Condition gt(RowN row) {
-        return greaterThan(row);
+    public final Condition gt(Record record) {
+        return greaterThan(record);
     }
 
     @Override
@@ -4785,8 +4786,8 @@ implements
     }
 
     @Override
-    public final Condition gt(Record record) {
-        return greaterThan(record);
+    public final Condition gt(Object... values) {
+        return greaterThan(values);
     }
 
     @Override
@@ -4900,7 +4901,7 @@ implements
     }
 
     @Override
-    public final Condition gt(Object... values) {
+    public final Condition gt(Field<?>... values) {
         return greaterThan(values);
     }
 
@@ -5015,8 +5016,8 @@ implements
     }
 
     @Override
-    public final Condition gt(Field<?>... values) {
-        return greaterThan(values);
+    public final Condition greaterOrEqual(RowN row) {
+        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
     }
 
     @Override
@@ -5130,8 +5131,8 @@ implements
     }
 
     @Override
-    public final Condition greaterOrEqual(RowN row) {
-        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    public final Condition greaterOrEqual(Record record) {
+        return new RowCondition(this, record.valuesRow(), Comparator.GREATER_OR_EQUAL);
     }
 
     @Override
@@ -5245,9 +5246,8 @@ implements
     }
 
     @Override
-    public final Condition greaterOrEqual(Record record) {
-        Row row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return new RowCondition(this, row, Comparator.GREATER_OR_EQUAL);
+    public final Condition greaterOrEqual(Object... values) {
+        return greaterOrEqual(row(values));
     }
 
     @Override
@@ -5361,7 +5361,7 @@ implements
     }
 
     @Override
-    public final Condition greaterOrEqual(Object... values) {
+    public final Condition greaterOrEqual(Field<?>... values) {
         return greaterOrEqual(row(values));
     }
 
@@ -5476,8 +5476,8 @@ implements
     }
 
     @Override
-    public final Condition greaterOrEqual(Field<?>... f) {
-        return greaterOrEqual(row(f));
+    public final Condition ge(RowN row) {
+        return greaterOrEqual(row);
     }
 
     @Override
@@ -5591,8 +5591,8 @@ implements
     }
 
     @Override
-    public final Condition ge(RowN row) {
-        return greaterOrEqual(row);
+    public final Condition ge(Record record) {
+        return greaterOrEqual(record);
     }
 
     @Override
@@ -5706,8 +5706,8 @@ implements
     }
 
     @Override
-    public final Condition ge(Record record) {
-        return greaterOrEqual(record);
+    public final Condition ge(Object... values) {
+        return greaterOrEqual(values);
     }
 
     @Override
@@ -5821,7 +5821,7 @@ implements
     }
 
     @Override
-    public final Condition ge(Object... values) {
+    public final Condition ge(Field<?>... values) {
         return greaterOrEqual(values);
     }
 
@@ -5935,14 +5935,14 @@ implements
         return greaterOrEqual(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
     }
 
-    @Override
-    public final Condition ge(Field<?>... values) {
-        return greaterOrEqual(values);
-    }
-
     // ------------------------------------------------------------------------
     // [NOT] BETWEEN predicates
     // ------------------------------------------------------------------------
+
+    @Override
+    public final BetweenAndStepN between(Object... values) {
+        return between(row(values));
+    }
 
     @Override
     public final BetweenAndStep1<T1> between(T1 t1) {
@@ -6055,7 +6055,7 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN between(Object... values) {
+    public final BetweenAndStepN between(Field<?>... values) {
         return between(row(values));
     }
 
@@ -6170,8 +6170,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN between(Field<?>... f) {
-        return between(row(f));
+    public final BetweenAndStepN between(RowN row) {
+        return new RowBetweenCondition(this, row, false, false);
     }
 
     @Override
@@ -6285,8 +6285,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN between(RowN row) {
-        return new RowBetweenCondition(this, row, false, false);
+    public final BetweenAndStepN between(Record record) {
+        return between(record.valuesRow());
     }
 
     @Override
@@ -6400,9 +6400,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN between(Record record) {
-        RowN row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return between(row);
+    public final Condition between(RowN minValue, RowN maxValue) {
+        return between(minValue).and(maxValue);
     }
 
     @Override
@@ -6516,7 +6515,7 @@ implements
     }
 
     @Override
-    public final Condition between(RowN minValue, RowN maxValue) {
+    public final Condition between(Record minValue, Record maxValue) {
         return between(minValue).and(maxValue);
     }
 
@@ -6631,8 +6630,8 @@ implements
     }
 
     @Override
-    public final Condition between(Record minValue, Record maxValue) {
-        return between(minValue).and(maxValue);
+    public final BetweenAndStepN betweenSymmetric(Object... values) {
+        return betweenSymmetric(row(values));
     }
 
     @Override
@@ -6746,7 +6745,7 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN betweenSymmetric(Object... values) {
+    public final BetweenAndStepN betweenSymmetric(Field<?>... values) {
         return betweenSymmetric(row(values));
     }
 
@@ -6861,8 +6860,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN betweenSymmetric(Field<?>... f) {
-        return betweenSymmetric(row(f));
+    public final BetweenAndStepN betweenSymmetric(RowN row) {
+        return new RowBetweenCondition(this, row, false, true);
     }
 
     @Override
@@ -6976,8 +6975,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN betweenSymmetric(RowN row) {
-        return new RowBetweenCondition(this, row, false, true);
+    public final BetweenAndStepN betweenSymmetric(Record record) {
+        return betweenSymmetric(record.valuesRow());
     }
 
     @Override
@@ -7091,9 +7090,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN betweenSymmetric(Record record) {
-        RowN row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return betweenSymmetric(row);
+    public final Condition betweenSymmetric(RowN minValue, RowN maxValue) {
+        return betweenSymmetric(minValue).and(maxValue);
     }
 
     @Override
@@ -7207,7 +7205,7 @@ implements
     }
 
     @Override
-    public final Condition betweenSymmetric(RowN minValue, RowN maxValue) {
+    public final Condition betweenSymmetric(Record minValue, Record maxValue) {
         return betweenSymmetric(minValue).and(maxValue);
     }
 
@@ -7322,8 +7320,8 @@ implements
     }
 
     @Override
-    public final Condition betweenSymmetric(Record minValue, Record maxValue) {
-        return betweenSymmetric(minValue).and(maxValue);
+    public final BetweenAndStepN notBetween(Object... values) {
+        return notBetween(row(values));
     }
 
     @Override
@@ -7437,7 +7435,7 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN notBetween(Object... values) {
+    public final BetweenAndStepN notBetween(Field<?>... values) {
         return notBetween(row(values));
     }
 
@@ -7552,8 +7550,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN notBetween(Field<?>... f) {
-        return notBetween(row(f));
+    public final BetweenAndStepN notBetween(RowN row) {
+        return new RowBetweenCondition(this, row, true, false);
     }
 
     @Override
@@ -7667,8 +7665,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN notBetween(RowN row) {
-        return new RowBetweenCondition(this, row, true, false);
+    public final BetweenAndStepN notBetween(Record record) {
+        return notBetween(record.valuesRow());
     }
 
     @Override
@@ -7782,9 +7780,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN notBetween(Record record) {
-        RowN row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return notBetween(row);
+    public final Condition notBetween(RowN minValue, RowN maxValue) {
+        return notBetween(minValue).and(maxValue);
     }
 
     @Override
@@ -7898,7 +7895,7 @@ implements
     }
 
     @Override
-    public final Condition notBetween(RowN minValue, RowN maxValue) {
+    public final Condition notBetween(Record minValue, Record maxValue) {
         return notBetween(minValue).and(maxValue);
     }
 
@@ -8013,8 +8010,8 @@ implements
     }
 
     @Override
-    public final Condition notBetween(Record minValue, Record maxValue) {
-        return notBetween(minValue).and(maxValue);
+    public final BetweenAndStepN notBetweenSymmetric(Object... values) {
+        return notBetweenSymmetric(row(values));
     }
 
     @Override
@@ -8128,7 +8125,7 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN notBetweenSymmetric(Object... values) {
+    public final BetweenAndStepN notBetweenSymmetric(Field<?>... values) {
         return notBetweenSymmetric(row(values));
     }
 
@@ -8243,8 +8240,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN notBetweenSymmetric(Field<?>... f) {
-        return notBetweenSymmetric(row(f));
+    public final BetweenAndStepN notBetweenSymmetric(RowN row) {
+        return new RowBetweenCondition(this, row, true, true);
     }
 
     @Override
@@ -8358,8 +8355,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN notBetweenSymmetric(RowN row) {
-        return new RowBetweenCondition(this, row, true, true);
+    public final BetweenAndStepN notBetweenSymmetric(Record record) {
+        return notBetweenSymmetric(record.valuesRow());
     }
 
     @Override
@@ -8473,9 +8470,8 @@ implements
     }
 
     @Override
-    public final BetweenAndStepN notBetweenSymmetric(Record record) {
-        RowN row = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
-        return notBetweenSymmetric(row);
+    public final Condition notBetweenSymmetric(RowN minValue, RowN maxValue) {
+        return notBetweenSymmetric(minValue).and(maxValue);
     }
 
     @Override
@@ -8589,7 +8585,7 @@ implements
     }
 
     @Override
-    public final Condition notBetweenSymmetric(RowN minValue, RowN maxValue) {
+    public final Condition notBetweenSymmetric(Record minValue, Record maxValue) {
         return notBetweenSymmetric(minValue).and(maxValue);
     }
 
@@ -8703,11 +8699,6 @@ implements
         return notBetweenSymmetric(minValue).and(maxValue);
     }
 
-    @Override
-    public final Condition notBetweenSymmetric(Record minValue, Record maxValue) {
-        return notBetweenSymmetric(minValue).and(maxValue);
-    }
-
     // ------------------------------------------------------------------------
     // [NOT] DISTINCT predicates
     // ------------------------------------------------------------------------
@@ -8715,6 +8706,11 @@ implements
     // ------------------------------------------------------------------------
     // [NOT] IN predicates
     // ------------------------------------------------------------------------
+
+    @Override
+    public final Condition in(RowN... rows) {
+        return in(Arrays.asList(rows));
+    }
 
     @Override
     public final Condition in(Row1<T1>... rows) {
@@ -8827,8 +8823,14 @@ implements
     }
 
     @Override
-    public final Condition in(RowN... rows) {
-        return in(Arrays.asList(rows));
+    public final Condition in(Record... records) {
+        RowN[] rows = new RowN[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = (RowN) records[i].valuesRow();
+        }
+
+        return in(rows);
     }
 
     @Override
@@ -9074,14 +9076,8 @@ implements
     }
 
     @Override
-    public final Condition in(Record... records) {
-        RowN[] rows = new RowN[records.length];
-
-        for (int i = 0; i < records.length; i++) {
-            rows[i] = new RowImpl(Utils.fields(records[i].intoArray(), records[i].fields()));
-        }
-
-        return in(rows);
+    public final Condition notIn(RowN... rows) {
+        return notIn(Arrays.asList(rows));
     }
 
     @Override
@@ -9195,8 +9191,14 @@ implements
     }
 
     @Override
-    public final Condition notIn(RowN... rows) {
-        return notIn(Arrays.asList(rows));
+    public final Condition notIn(Record... records) {
+        RowN[] rows = new RowN[records.length];
+
+        for (int i = 0; i < records.length; i++) {
+            rows[i] = (RowN) records[i].valuesRow();
+        }
+
+        return notIn(rows);
     }
 
     @Override
@@ -9436,17 +9438,6 @@ implements
 
         for (int i = 0; i < records.length; i++) {
             rows[i] = records[i].valuesRow();
-        }
-
-        return notIn(rows);
-    }
-
-    @Override
-    public final Condition notIn(Record... records) {
-        RowN[] rows = new RowN[records.length];
-
-        for (int i = 0; i < records.length; i++) {
-            rows[i] = new RowImpl(Utils.fields(records[i].intoArray(), records[i].fields()));
         }
 
         return notIn(rows);

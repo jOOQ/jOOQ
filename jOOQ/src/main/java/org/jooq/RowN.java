@@ -91,7 +91,7 @@ public interface RowN extends Row {
      * @see #equal(RowN)
      */
     @Support
-    Condition equal(Field<?>... fields);
+    Condition equal(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for equality.
@@ -134,7 +134,7 @@ public interface RowN extends Row {
      * @see #equal(RowN)
      */
     @Support
-    Condition eq(Field<?>... fields);
+    Condition eq(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for equality.
@@ -180,7 +180,7 @@ public interface RowN extends Row {
      * @see #notEqual(RowN)
      */
     @Support
-    Condition notEqual(Field<?>... fields);
+    Condition notEqual(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for non-equality.
@@ -223,7 +223,7 @@ public interface RowN extends Row {
      * @see #notEqual(RowN)
      */
     @Support
-    Condition ne(Field<?>... fields);
+    Condition ne(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for non-equality.
@@ -273,7 +273,7 @@ public interface RowN extends Row {
      * @see #lessThan(RowN)
      */
     @Support
-    Condition lessThan(Field<?>... fields);
+    Condition lessThan(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for order.
@@ -316,7 +316,7 @@ public interface RowN extends Row {
      * @see #lessThan(RowN)
      */
     @Support
-    Condition lt(Field<?>... fields);
+    Condition lt(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for order.
@@ -362,7 +362,7 @@ public interface RowN extends Row {
      * @see #lessOrEqual(RowN)
      */
     @Support
-    Condition lessOrEqual(Field<?>... fields);
+    Condition lessOrEqual(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for order.
@@ -405,7 +405,7 @@ public interface RowN extends Row {
      * @see #lessOrEqual(RowN)
      */
     @Support
-    Condition le(Field<?>... fields);
+    Condition le(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for order.
@@ -451,7 +451,7 @@ public interface RowN extends Row {
      * @see #greaterThan(RowN)
      */
     @Support
-    Condition greaterThan(Field<?>... fields);
+    Condition greaterThan(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for order.
@@ -494,7 +494,7 @@ public interface RowN extends Row {
      * @see #greaterThan(RowN)
      */
     @Support
-    Condition gt(Field<?>... fields);
+    Condition gt(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for order.
@@ -540,7 +540,7 @@ public interface RowN extends Row {
      * @see #greaterOrEqual(RowN)
      */
     @Support
-    Condition greaterOrEqual(Field<?>... fields);
+    Condition greaterOrEqual(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for order.
@@ -583,7 +583,7 @@ public interface RowN extends Row {
      * @see #greaterOrEqual(RowN)
      */
     @Support
-    Condition ge(Field<?>... fields);
+    Condition ge(Field<?>... values);
 
     /**
      * Compare this row value expression with a subselect for order.

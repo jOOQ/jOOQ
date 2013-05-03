@@ -95,17 +95,17 @@ public interface Field<T> extends GroupField {
     Class<T> getType();
 
     /**
-     * The type of this field (might not be dialect-specific)
+     * The type of this field (might not be dialect-specific).
      */
     DataType<T> getDataType();
 
     /**
-     * The dialect-specific type of this field
+     * The dialect-specific type of this field.
      */
     DataType<T> getDataType(Configuration configuration);
 
     /**
-     * Create an alias for this field
+     * Create an alias for this field.
      * <p>
      * Note that the case-sensitivity of the returned field depends on
      * {@link Settings#getRenderNameStyle()}. By default, field aliases are
@@ -121,7 +121,7 @@ public interface Field<T> extends GroupField {
      * {@inheritDoc}
      * <p>
      * <strong>Watch out! This is {@link Object#equals(Object)}, not a jOOQ DSL
-     * feature! :-).</strong>
+     * feature!</strong>
      */
     @Override
     boolean equals(Object other);
@@ -154,7 +154,7 @@ public interface Field<T> extends GroupField {
     <Z> Field<Z> cast(DataType<Z> type);
 
     /**
-     * Cast this field to another type
+     * Cast this field to another type.
      * <p>
      * The actual cast may not be accurate as the {@link DataType} has to be
      * "guessed" from the jOOQ-configured data types. Use
@@ -173,7 +173,7 @@ public interface Field<T> extends GroupField {
     // ------------------------------------------------------------------------
 
     /**
-     * Create an ascending sort field from this field
+     * Create an ascending sort field from this field.
      * <p>
      * This is the same as calling {@link #sort(SortOrder)} with
      * {@link SortOrder#ASC}
@@ -184,7 +184,7 @@ public interface Field<T> extends GroupField {
     SortField<T> asc();
 
     /**
-     * Create a descending sort field from this field
+     * Create a descending sort field from this field.
      * <p>
      * This is the same as calling {@link #sort(SortOrder)} with
      * {@link SortOrder#DESC}
@@ -195,7 +195,7 @@ public interface Field<T> extends GroupField {
     SortField<T> desc();
 
     /**
-     * Create an ascending/descending sort field from this field
+     * Create an ascending/descending sort field from this field.
      *
      * @param order The sort order
      * @return This field as an ascending/descending sort field.
@@ -204,6 +204,8 @@ public interface Field<T> extends GroupField {
     SortField<T> sort(SortOrder order);
 
     /**
+     * Create an indirected sort field.
+     * <p>
      * Create a sort field of the form <code><pre>
      * CASE [this] WHEN [sortList.get(0)] THEN 0
      *             WHEN [sortList.get(1)] THEN 1
@@ -224,6 +226,8 @@ public interface Field<T> extends GroupField {
     SortField<Integer> sortAsc(Collection<T> sortList);
 
     /**
+     * Create an indirected sort field.
+     * <p>
      * Create a sort field of the form <code><pre>
      * CASE [this] WHEN [sortList[0]] THEN 0
      *             WHEN [sortList[1]] THEN 1
@@ -244,6 +248,8 @@ public interface Field<T> extends GroupField {
     SortField<Integer> sortAsc(T... sortList);
 
     /**
+     * Create an indirected sort field.
+     * <p>
      * Create a sort field of the form <code><pre>
      * CASE [this] WHEN [sortList.get(0)] THEN 0
      *             WHEN [sortList.get(1)] THEN 1
@@ -264,6 +270,8 @@ public interface Field<T> extends GroupField {
     SortField<Integer> sortDesc(Collection<T> sortList);
 
     /**
+     * Create an indirected sort field.
+     * <p>
      * Create a sort field of the form <code><pre>
      * CASE [this] WHEN [sortList[0]] THEN 0
      *             WHEN [sortList[1]] THEN 1
@@ -284,6 +292,8 @@ public interface Field<T> extends GroupField {
     SortField<Integer> sortDesc(T... sortList);
 
     /**
+     * Create an indirected sort field.
+     * <p>
      * Create a sort field of the form (in pseudo code)<code><pre>
      * CASE [this] WHEN [sortMap.key(0)] THEN sortMap.value(0)
      *             WHEN [sortMap.key(1)] THEN sortMap.value(1)
@@ -456,7 +466,7 @@ public interface Field<T> extends GroupField {
     Field<T> minus(Field<?> value);
 
     /**
-     * An arithmetic expression multiplying this with value
+     * An arithmetic expression multiplying this with value.
      * <p>
      * <ul>
      * <li>If this is a numeric field, then the result is a number of the same
@@ -469,7 +479,7 @@ public interface Field<T> extends GroupField {
     Field<T> mul(Number value);
 
     /**
-     * An arithmetic expression multiplying this with value
+     * An arithmetic expression multiplying this with value.
      * <p>
      * <ul>
      * <li>If this is a numeric field, then the result is a number of the same
@@ -498,7 +508,7 @@ public interface Field<T> extends GroupField {
     Field<T> multiply(Field<? extends Number> value);
 
     /**
-     * An arithmetic expression dividing this by value
+     * An arithmetic expression dividing this by value.
      * <p>
      * <ul>
      * <li>If this is a numeric field, then the result is a number of the same
@@ -511,7 +521,7 @@ public interface Field<T> extends GroupField {
     Field<T> div(Number value);
 
     /**
-     * An arithmetic expression dividing this by value
+     * An arithmetic expression dividing this by value.
      * <p>
      * <ul>
      * <li>If this is a numeric field, then the result is a number of the same
@@ -540,7 +550,7 @@ public interface Field<T> extends GroupField {
     Field<T> divide(Field<? extends Number> value);
 
     /**
-     * An arithmetic expression getting the modulo of this divided by value
+     * An arithmetic expression getting the modulo of this divided by value.
      * <p>
      * This renders the modulo operation where available:
      * <code><pre>[this] % [value]</pre></code> ... or the modulo function
@@ -550,7 +560,7 @@ public interface Field<T> extends GroupField {
     Field<T> mod(Number value);
 
     /**
-     * An arithmetic expression getting the modulo of this divided by value
+     * An arithmetic expression getting the modulo of this divided by value.
      * <p>
      * This renders the modulo operation where available:
      * <code><pre>[this] % [value]</pre></code> ... or the modulo function
@@ -601,7 +611,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to check if this field is <code>DISTINCT</code> from
-     * another value
+     * another value.
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
@@ -618,7 +628,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to check if this field is <code>DISTINCT</code> from
-     * another field
+     * another field.
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
@@ -635,7 +645,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to check if this field is <code>NOT DISTINCT</code>
-     * from another value
+     * from another value.
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
@@ -652,7 +662,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to check if this field is <code>NOT DISTINCT</code>
-     * from another field
+     * from another field.
      * <p>
      * If this is not supported by the underlying database, jOOQ will render
      * this instead: <code><pre>
@@ -672,7 +682,7 @@ public interface Field<T> extends GroupField {
     // ------------------------------------------------------------------------
 
     /**
-     * Create a condition to regex-pattern-check this field against a pattern
+     * Create a condition to regex-pattern-check this field against a pattern.
      * <p>
      * The SQL:2008 standard specifies a <code>&lt;regex like predicate></code>
      * of the following form: <code><pre>
@@ -798,7 +808,7 @@ public interface Field<T> extends GroupField {
     Condition likeRegex(String pattern);
 
     /**
-     * Create a condition to regex-pattern-check this field against a pattern
+     * Create a condition to regex-pattern-check this field against a pattern.
      * <p>
      * See {@link #likeRegex(String)} for more details
      *
@@ -808,7 +818,7 @@ public interface Field<T> extends GroupField {
     Condition likeRegex(Field<String> pattern);
 
     /**
-     * Create a condition to regex-pattern-check this field against a pattern
+     * Create a condition to regex-pattern-check this field against a pattern.
      * <p>
      * See {@link #likeRegex(String)} for more details
      *
@@ -818,7 +828,7 @@ public interface Field<T> extends GroupField {
     Condition notLikeRegex(String pattern);
 
     /**
-     * Create a condition to regex-pattern-check this field against a pattern
+     * Create a condition to regex-pattern-check this field against a pattern.
      * <p>
      * See {@link #likeRegex(String)} for more details
      *
@@ -832,7 +842,7 @@ public interface Field<T> extends GroupField {
     // ------------------------------------------------------------------------
 
     /**
-     * Create a condition to pattern-check this field against a value
+     * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this like value</code>
      */
@@ -840,7 +850,7 @@ public interface Field<T> extends GroupField {
     Condition like(Field<String> value);
 
     /**
-     * Create a condition to pattern-check this field against a value
+     * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this like value escape 'e'</code>
      */
@@ -848,7 +858,7 @@ public interface Field<T> extends GroupField {
     Condition like(Field<String> value, char escape);
 
     /**
-     * Create a condition to pattern-check this field against a value
+     * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this like value</code>
      */
@@ -856,7 +866,7 @@ public interface Field<T> extends GroupField {
     Condition like(String value);
 
     /**
-     * Create a condition to pattern-check this field against a value
+     * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this like value escape 'e'</code>
      */
@@ -865,7 +875,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a field
+     * a field.
      * <p>
      * This translates to <code>this ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
@@ -876,7 +886,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a field
+     * a field.
      * <p>
      * This translates to <code>this ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
@@ -887,7 +897,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a value
+     * a value.
      * <p>
      * This translates to <code>this ilike value</code> in
      * {@link SQLDialect#POSTGRES}, or to
@@ -898,7 +908,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a value
+     * a value.
      * <p>
      * This translates to <code>this ilike value</code> in
      * {@link SQLDialect#POSTGRES}, or to
@@ -908,7 +918,7 @@ public interface Field<T> extends GroupField {
     Condition likeIgnoreCase(String value, char escape);
 
     /**
-     * Create a condition to pattern-check this field against a field
+     * Create a condition to pattern-check this field against a field.
      * <p>
      * SQL: <code>this not like field</code>
      */
@@ -916,7 +926,7 @@ public interface Field<T> extends GroupField {
     Condition notLike(Field<String> field);
 
     /**
-     * Create a condition to pattern-check this field against a field
+     * Create a condition to pattern-check this field against a field.
      * <p>
      * SQL: <code>this not like field escape 'e'</code>
      */
@@ -924,7 +934,7 @@ public interface Field<T> extends GroupField {
     Condition notLike(Field<String> field, char escape);
 
     /**
-     * Create a condition to pattern-check this field against a value
+     * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this not like value</code>
      */
@@ -932,7 +942,7 @@ public interface Field<T> extends GroupField {
     Condition notLike(String value);
 
     /**
-     * Create a condition to pattern-check this field against a value
+     * Create a condition to pattern-check this field against a value.
      * <p>
      * SQL: <code>this not like value escape 'e'</code>
      */
@@ -941,7 +951,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a field
+     * a field.
      * <p>
      * This translates to <code>this not ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
@@ -952,7 +962,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a field
+     * a field.
      * <p>
      * This translates to <code>this not ilike field</code> in
      * {@link SQLDialect#POSTGRES}, or to
@@ -963,7 +973,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a value
+     * a value.
      * <p>
      * This translates to <code>this not ilike value</code> in
      * {@link SQLDialect#POSTGRES}, or to
@@ -974,7 +984,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to case-insensitively pattern-check this field against
-     * a value
+     * a value.
      * <p>
      * This translates to <code>this not ilike value</code> in
      * {@link SQLDialect#POSTGRES}, or to
@@ -985,7 +995,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping
+     * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
      * <p>
@@ -1012,7 +1022,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping
+     * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\') || '%') escape '\'</code>
      * <p>
@@ -1039,7 +1049,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping
+     * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
      * <p>
@@ -1054,7 +1064,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping
+     * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like (escape(value, '\') || '%') escape '\'</code>
      * <p>
@@ -1069,7 +1079,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping
+     * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
      * <p>
@@ -1084,7 +1094,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Convenience method for {@link #like(String, char)} including proper
-     * adding of wildcards and escaping
+     * adding of wildcards and escaping.
      * <p>
      * SQL: <code>this like ('%' || escape(value, '\')) escape '\'</code>
      * <p>
@@ -1102,7 +1112,7 @@ public interface Field<T> extends GroupField {
     // ------------------------------------------------------------------------
 
     /**
-     * Create a condition to check this field against several values
+     * Create a condition to check this field against several values.
      * <p>
      * SQL: <code>this in (values...)</code>
      */
@@ -1110,7 +1120,7 @@ public interface Field<T> extends GroupField {
     Condition in(Collection<T> values);
 
     /**
-     * Create a condition to check this field against several values
+     * Create a condition to check this field against several values.
      * <p>
      * SQL: <code>this in (values...)</code>
      */
@@ -1118,7 +1128,7 @@ public interface Field<T> extends GroupField {
     Condition in(T... values);
 
     /**
-     * Create a condition to check this field against several values
+     * Create a condition to check this field against several values.
      * <p>
      * SQL: <code>this in (values...)</code>
      */
@@ -1126,7 +1136,7 @@ public interface Field<T> extends GroupField {
     Condition in(Field<?>... values);
 
     /**
-     * Create a condition to check this field against a subquery
+     * Create a condition to check this field against a subquery.
      * <p>
      * Note that the subquery must return exactly one field. This is not checked
      * by jOOQ and will result in syntax errors in the database, if not used
@@ -1138,7 +1148,7 @@ public interface Field<T> extends GroupField {
     Condition in(Select<? extends Record1<T>> query);
 
     /**
-     * Create a condition to check this field against several values
+     * Create a condition to check this field against several values.
      * <p>
      * Note that if any of the passed values is <code>NULL</code>, then the
      * condition will be <code>NULL</code> (or <code>false</code>, depending on
@@ -1150,7 +1160,7 @@ public interface Field<T> extends GroupField {
     Condition notIn(Collection<T> values);
 
     /**
-     * Create a condition to check this field against several values
+     * Create a condition to check this field against several values.
      * <p>
      * Note that if any of the passed values is <code>NULL</code>, then the
      * condition will be <code>NULL</code> (or <code>false</code>, depending on
@@ -1162,7 +1172,7 @@ public interface Field<T> extends GroupField {
     Condition notIn(T... values);
 
     /**
-     * Create a condition to check this field against several values
+     * Create a condition to check this field against several values.
      * <p>
      * Note that if any of the passed values is <code>NULL</code>, then the
      * condition will be <code>NULL</code> (or <code>false</code>, depending on
@@ -1174,7 +1184,7 @@ public interface Field<T> extends GroupField {
     Condition notIn(Field<?>... values);
 
     /**
-     * Create a condition to check this field against a subquery
+     * Create a condition to check this field against a subquery.
      * <p>
      * Note that the subquery must return exactly one field. This is not checked
      * by jOOQ and will result in syntax errors in the database, if not used
@@ -1194,7 +1204,7 @@ public interface Field<T> extends GroupField {
     // ------------------------------------------------------------------------
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      * <p>
@@ -1204,7 +1214,7 @@ public interface Field<T> extends GroupField {
     Condition between(T minValue, T maxValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * This is the same as calling <code>between(minValue).and(maxValue)</code>
      * <p>
@@ -1214,7 +1224,7 @@ public interface Field<T> extends GroupField {
     Condition between(Field<T> minValue, Field<T> maxValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * This is the same as calling
      * <code>betweenSymmetric(minValue).and(maxValue)</code>
@@ -1225,7 +1235,7 @@ public interface Field<T> extends GroupField {
     Condition betweenSymmetric(T minValue, T maxValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * This is the same as calling
      * <code>betweenSymmetric(minValue).and(maxValue)</code>
@@ -1236,7 +1246,7 @@ public interface Field<T> extends GroupField {
     Condition betweenSymmetric(Field<T> minValue, Field<T> maxValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * This is the same as calling
      * <code>notBetween(minValue).and(maxValue)</code>
@@ -1247,7 +1257,7 @@ public interface Field<T> extends GroupField {
     Condition notBetween(T minValue, T maxValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * This is the same as calling
      * <code>notBetween(minValue).and(maxValue)</code>
@@ -1258,7 +1268,7 @@ public interface Field<T> extends GroupField {
     Condition notBetween(Field<T> minValue, Field<T> maxValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * This is the same as calling
      * <code>notBetweenSymmetric(minValue).and(maxValue)</code>
@@ -1269,7 +1279,7 @@ public interface Field<T> extends GroupField {
     Condition notBetweenSymmetric(T minValue, T maxValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * This is the same as calling
      * <code>notBetweenSymmetric(minValue).and(maxValue)</code>
@@ -1280,7 +1290,7 @@ public interface Field<T> extends GroupField {
     Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
@@ -1288,7 +1298,7 @@ public interface Field<T> extends GroupField {
     BetweenAndStep<T> between(T minValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * SQL: <code>this between minValue and maxValue</code>
      */
@@ -1296,7 +1306,7 @@ public interface Field<T> extends GroupField {
     BetweenAndStep<T> between(Field<T> minValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
@@ -1304,7 +1314,7 @@ public interface Field<T> extends GroupField {
     BetweenAndStep<T> betweenSymmetric(T minValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
@@ -1312,7 +1322,7 @@ public interface Field<T> extends GroupField {
     BetweenAndStep<T> betweenSymmetric(Field<T> minValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
@@ -1320,7 +1330,7 @@ public interface Field<T> extends GroupField {
     BetweenAndStep<T> notBetween(T minValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * SQL: <code>this not between minValue and maxValue</code>
      */
@@ -1328,7 +1338,7 @@ public interface Field<T> extends GroupField {
     BetweenAndStep<T> notBetween(Field<T> minValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
@@ -1336,7 +1346,7 @@ public interface Field<T> extends GroupField {
     BetweenAndStep<T> notBetweenSymmetric(T minValue);
 
     /**
-     * Create a condition to check this field against some bounds
+     * Create a condition to check this field against some bounds.
      * <p>
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
@@ -1348,7 +1358,7 @@ public interface Field<T> extends GroupField {
     // ------------------------------------------------------------------------
 
     /**
-     * Compare this field with a value using a dynamic comparator
+     * Compare this field with a value using a dynamic comparator.
      *
      * @param comparator The comparator to use for comparing this field with a
      *            value
@@ -1359,7 +1369,7 @@ public interface Field<T> extends GroupField {
     Condition compare(Comparator comparator, T value);
 
     /**
-     * Compare this field with another field using a dynamic comparator
+     * Compare this field with another field using a dynamic comparator.
      *
      * @param comparator The comparator to use for comparing this field with
      *            another field
@@ -1370,25 +1380,25 @@ public interface Field<T> extends GroupField {
     Condition compare(Comparator comparator, Field<T> field);
 
     /**
-     * <code>this = value</code>
+     * <code>this = value</code>.
      */
     @Support
     Condition equal(T value);
 
     /**
-     * <code>this = field</code>
+     * <code>this = field</code>.
      */
     @Support
     Condition equal(Field<T> field);
 
     /**
-     * <code>this = (Select<?> ...)</code>
+     * <code>this = (Select<?> ...)</code>.
      */
     @Support
     Condition equal(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this = [quantifier] (Select<?> ...)</code>
+     * <code>this = [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1401,7 +1411,7 @@ public interface Field<T> extends GroupField {
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this = value</code>
+     * <code>this = value</code>.
      *
      * @see #equal(Object)
      */
@@ -1409,7 +1419,7 @@ public interface Field<T> extends GroupField {
     Condition eq(T value);
 
     /**
-     * <code>this = field</code>
+     * <code>this = field</code>.
      *
      * @see #equal(Field)
      */
@@ -1417,7 +1427,7 @@ public interface Field<T> extends GroupField {
     Condition eq(Field<T> field);
 
     /**
-     * <code>this = (Select<?> ...)</code>
+     * <code>this = (Select<?> ...)</code>.
      *
      * @see #equal(Select)
      */
@@ -1425,7 +1435,7 @@ public interface Field<T> extends GroupField {
     Condition eq(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this = [quantifier] (Select<?> ...)</code>
+     * <code>this = [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1438,25 +1448,25 @@ public interface Field<T> extends GroupField {
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this != value</code>
+     * <code>this != value</code>.
      */
     @Support
     Condition notEqual(T value);
 
     /**
-     * <code>this != field</code>
+     * <code>this != field</code>.
      */
     @Support
     Condition notEqual(Field<T> field);
 
     /**
-     * <code>this != (Select<?> ...)</code>
+     * <code>this != (Select<?> ...)</code>.
      */
     @Support
     Condition notEqual(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this != [quantifier] (Select<?> ...)</code>
+     * <code>this != [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1469,7 +1479,7 @@ public interface Field<T> extends GroupField {
     Condition notEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this != value</code>
+     * <code>this != value</code>.
      *
      * @see #notEqual(Object)
      */
@@ -1477,7 +1487,7 @@ public interface Field<T> extends GroupField {
     Condition ne(T value);
 
     /**
-     * <code>this != field</code>
+     * <code>this != field</code>.
      *
      * @see #notEqual(Field)
      */
@@ -1485,7 +1495,7 @@ public interface Field<T> extends GroupField {
     Condition ne(Field<T> field);
 
     /**
-     * <code>this != (Select<?> ...)</code>
+     * <code>this != (Select<?> ...)</code>.
      *
      * @see #notEqual(Select)
      */
@@ -1493,7 +1503,7 @@ public interface Field<T> extends GroupField {
     Condition ne(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this != [quantifier] (Select<?> ...)</code>
+     * <code>this != [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1506,25 +1516,25 @@ public interface Field<T> extends GroupField {
     Condition ne(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this < value</code>
+     * <code>this < value</code>.
      */
     @Support
     Condition lessThan(T value);
 
     /**
-     * <code>this < field</code>
+     * <code>this < field</code>.
      */
     @Support
     Condition lessThan(Field<T> field);
 
     /**
-     * <code>this < (Select<?> ...)</code>
+     * <code>this < (Select<?> ...)</code>.
      */
     @Support
     Condition lessThan(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this < [quantifier] (Select<?> ...)</code>
+     * <code>this < [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1537,7 +1547,7 @@ public interface Field<T> extends GroupField {
     Condition lessThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this < value</code>
+     * <code>this < value</code>.
      *
      * @see #lessThan(Object)
      */
@@ -1545,7 +1555,7 @@ public interface Field<T> extends GroupField {
     Condition lt(T value);
 
     /**
-     * <code>this < field</code>
+     * <code>this < field</code>.
      *
      * @see #lessThan(Field)
      */
@@ -1553,7 +1563,7 @@ public interface Field<T> extends GroupField {
     Condition lt(Field<T> field);
 
     /**
-     * <code>this < (Select<?> ...)</code>
+     * <code>this < (Select<?> ...)</code>.
      *
      * @see #lessThan(Select)
      */
@@ -1561,7 +1571,7 @@ public interface Field<T> extends GroupField {
     Condition lt(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this < [quantifier] (Select<?> ...)</code>
+     * <code>this < [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1574,25 +1584,25 @@ public interface Field<T> extends GroupField {
     Condition lt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this <= value</code>
+     * <code>this <= value</code>.
      */
     @Support
     Condition lessOrEqual(T value);
 
     /**
-     * <code>this <= field</code>
+     * <code>this <= field</code>.
      */
     @Support
     Condition lessOrEqual(Field<T> field);
 
     /**
-     * <code>this <= (Select<?> ...)</code>
+     * <code>this <= (Select<?> ...)</code>.
      */
     @Support
     Condition lessOrEqual(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this <= [quantifier] (Select<?> ...)</code>
+     * <code>this <= [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1605,7 +1615,7 @@ public interface Field<T> extends GroupField {
     Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this <= value</code>
+     * <code>this <= value</code>.
      *
      * @see #lessOrEqual(Object)
      */
@@ -1613,7 +1623,7 @@ public interface Field<T> extends GroupField {
     Condition le(T value);
 
     /**
-     * <code>this <= field</code>
+     * <code>this <= field</code>.
      *
      * @see #lessOrEqual(Field)
      */
@@ -1621,7 +1631,7 @@ public interface Field<T> extends GroupField {
     Condition le(Field<T> field);
 
     /**
-     * <code>this <= (Select<?> ...)</code>
+     * <code>this <= (Select<?> ...)</code>.
      *
      * @see #lessOrEqual(Select)
      */
@@ -1629,7 +1639,7 @@ public interface Field<T> extends GroupField {
     Condition le(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this <= [quantifier] (Select<?> ...)</code>
+     * <code>this <= [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1642,25 +1652,25 @@ public interface Field<T> extends GroupField {
     Condition le(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this > value</code>
+     * <code>this > value</code>.
      */
     @Support
     Condition greaterThan(T value);
 
     /**
-     * <code>this > field</code>
+     * <code>this > field</code>.
      */
     @Support
     Condition greaterThan(Field<T> field);
 
     /**
-     * <code>this > (Select<?> ...)</code>
+     * <code>this > (Select<?> ...)</code>.
      */
     @Support
     Condition greaterThan(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this > [quantifier] (Select<?> ...)</code>
+     * <code>this > [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1673,7 +1683,7 @@ public interface Field<T> extends GroupField {
     Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this > value</code>
+     * <code>this > value</code>.
      *
      * @see #greaterThan(Object)
      */
@@ -1681,7 +1691,7 @@ public interface Field<T> extends GroupField {
     Condition gt(T value);
 
     /**
-     * <code>this > field</code>
+     * <code>this > field</code>.
      *
      * @see #greaterThan(Field)
      */
@@ -1689,7 +1699,7 @@ public interface Field<T> extends GroupField {
     Condition gt(Field<T> field);
 
     /**
-     * <code>this > (Select<?> ...)</code>
+     * <code>this > (Select<?> ...)</code>.
      *
      * @see #greaterThan(Select)
      */
@@ -1697,7 +1707,7 @@ public interface Field<T> extends GroupField {
     Condition gt(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this > [quantifier] (Select<?> ...)</code>
+     * <code>this > [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1710,25 +1720,25 @@ public interface Field<T> extends GroupField {
     Condition gt(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this >= value</code>
+     * <code>this >= value</code>.
      */
     @Support
     Condition greaterOrEqual(T value);
 
     /**
-     * <code>this >= field</code>
+     * <code>this >= field</code>.
      */
     @Support
     Condition greaterOrEqual(Field<T> field);
 
     /**
-     * <code>this >= (Select<?> ...)</code>
+     * <code>this >= (Select<?> ...)</code>.
      */
     @Support
     Condition greaterOrEqual(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this >= [quantifier] (Select<?> ...)</code>
+     * <code>this >= [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1741,7 +1751,7 @@ public interface Field<T> extends GroupField {
     Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
-     * <code>this >= value</code>
+     * <code>this >= value</code>.
      *
      * @see #greaterOrEqual(Object)
      */
@@ -1749,7 +1759,7 @@ public interface Field<T> extends GroupField {
     Condition ge(T value);
 
     /**
-     * <code>this >= field</code>
+     * <code>this >= field</code>.
      *
      * @see #greaterOrEqual(Field)
      */
@@ -1757,7 +1767,7 @@ public interface Field<T> extends GroupField {
     Condition ge(Field<T> field);
 
     /**
-     * <code>this >= (Select<?> ...)</code>
+     * <code>this >= (Select<?> ...)</code>.
      *
      * @see #greaterOrEqual(Select)
      */
@@ -1765,7 +1775,7 @@ public interface Field<T> extends GroupField {
     Condition ge(Select<? extends Record1<T>> query);
 
     /**
-     * <code>this >= [quantifier] (Select<?> ...)</code>
+     * <code>this >= [quantifier] (Select<?> ...)</code>.
      *
      * @see DSL#all(Field)
      * @see DSL#all(Select)
@@ -1779,7 +1789,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to check this field against known string literals for
-     * <code>true</code>
+     * <code>true</code>.
      * <p>
      * SQL:
      * <code>lcase(this) in ("1", "y", "yes", "true", "on", "enabled")</code>
@@ -1789,7 +1799,7 @@ public interface Field<T> extends GroupField {
 
     /**
      * Create a condition to check this field against known string literals for
-     * <code>false</code>
+     * <code>false</code>.
      * <p>
      * SQL:
      * <code>lcase(this) in ("0", "n", "no", "false", "off", "disabled")</code>
@@ -1798,25 +1808,25 @@ public interface Field<T> extends GroupField {
     Condition isFalse();
 
     /**
-     * <code>lower(this) = lower(value)</code>
+     * <code>lower(this) = lower(value)</code>.
      */
     @Support
     Condition equalIgnoreCase(String value);
 
     /**
-     * <code>lower(this) = lower(value)</code>
+     * <code>lower(this) = lower(value)</code>.
      */
     @Support
     Condition equalIgnoreCase(Field<String> value);
 
     /**
-     * <code>lower(this) != lower(value)</code>
+     * <code>lower(this) != lower(value)</code>.
      */
     @Support
     Condition notEqualIgnoreCase(String value);
 
     /**
-     * <code>lower(this) != lower(value)</code>
+     * <code>lower(this) != lower(value)</code>.
      */
     @Support
     Condition notEqualIgnoreCase(Field<String> value);

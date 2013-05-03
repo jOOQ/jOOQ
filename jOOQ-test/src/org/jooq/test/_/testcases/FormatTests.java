@@ -102,6 +102,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testFetchFromTXT() throws Exception {
+        Result<L> result = create().fetch(VLibrary());
+
+        assertEquals(result, create().fetchFromTXT(result.format()));
+    }
+
+    @Test
     public void testFormat() throws Exception {
         jOOQAbstractTest.reset = false;
 

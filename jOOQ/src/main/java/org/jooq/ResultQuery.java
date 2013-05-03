@@ -95,12 +95,14 @@ public interface ResultQuery<R extends Record> extends Query {
      * Execute the query and return the generated result as a JDBC
      * {@link ResultSet}.
      * <p>
-     * This will return the {@link ResultSet} returned by the JDBC driver,
-     * leaving it untouched. Use this method when you want to use jOOQ for query
-     * execution, but not for result fetching.
+     * This will return a {@link ResultSet} wrapping the JDBC driver's
+     * <code>ResultSet</code>. Closing this <code>ResultSet</code> may close the
+     * producing {@link Statement} or {@link PreparedStatement}, depending on
+     * your setting for {@link #keepStatement(boolean)}.
      * <p>
-     * The returned <code>ResultSet</code> can be used with
-     * {@link DSLContext#fetch(ResultSet)}
+     * You can use this method when you want to use jOOQ for query execution,
+     * but not for result fetching. The returned <code>ResultSet</code> can also
+     * be used with {@link DSLContext#fetch(ResultSet)}.
      *
      * @return The result.
      * @throws DataAccessException if something went wrong executing the query

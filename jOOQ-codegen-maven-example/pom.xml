@@ -132,7 +132,6 @@
                                     <deprecated>false</deprecated>
                                     <instanceFields>true</instanceFields>
                                     <pojos>true</pojos>
-                                    <globalObjectReferences>false</globalObjectReferences>
                                 </generate>
                                 <target>
                                     <packageName>org.jooq.maven.example.h2</packageName>

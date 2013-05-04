@@ -65,21 +65,25 @@ import org.jooq.exception.DataAccessException;
  */
 public class DataSourceConnectionProvider implements ConnectionProvider {
 
-    private final DataSource datasource;
+    private final DataSource dataSource;
     private Connection       connection;
 
-    public DataSourceConnectionProvider(DataSource datasource) {
-        this.datasource = datasource;
+    public DataSourceConnectionProvider(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public DataSource dataSource() {
+        return dataSource;
     }
 
     @Override
     public Connection acquire() {
         if (null == connection) {
             try {
-                connection = datasource.getConnection();
+                connection = dataSource.getConnection();
             }
             catch (SQLException e) {
-                throw new DataAccessException("Error getting connection from data source " + datasource, e);
+                throw new DataAccessException("Error getting connection from data source " + dataSource, e);
             }
         }
 

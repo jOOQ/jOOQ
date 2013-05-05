@@ -77,8 +77,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
-import org.jooq.DSLContext;
 import org.jooq.Converter;
+import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.InsertSetMoreStep;
@@ -86,6 +86,7 @@ import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
+import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
@@ -1613,5 +1614,33 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(uuid1, record.getValue(val)[0]);
             assertEquals(uuid2, record.getValue(val)[1]);
         }
+    }
+
+    @Test
+    public void testCoercion() throws Exception {
+        Field<Long> id1 = TBook_ID().coerce(Long.class);
+        Field<String> id2 = TBook_ID().coerce(String.class);
+
+        Result<Record4<Long, String, Short, String>> result =
+        create().select(
+                    id1,
+                    id2,
+                    val("1").coerce(Short.class),
+                    val(2).coerce(String.class))
+                .from(TBook())
+                .where(id1.in(1L, 2L))
+                .and(id2.in("1", "2"))
+                .orderBy(id1, id2)
+                .fetch();
+
+        assertEquals(2, result.size());
+        assertEquals(1L, result.getValue(0, 0));
+        assertEquals(2L, result.getValue(1, 0));
+        assertEquals("1", result.getValue(0, 1));
+        assertEquals("2", result.getValue(1, 1));
+        assertEquals((short) 1, result.getValue(0, 2));
+        assertEquals((short) 1, result.getValue(1, 2));
+        assertEquals("2", result.getValue(0, 3));
+        assertEquals("2", result.getValue(1, 3));
     }
  }

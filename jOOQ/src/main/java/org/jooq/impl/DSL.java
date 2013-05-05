@@ -3493,6 +3493,19 @@ public class DSL {
     }
 
     /**
+     * Cast a field to the type of another field.
+     *
+     * @param <T> The generic type of the cast field
+     * @param field The field to cast
+     * @param as The field whose type is used for the cast
+     * @return The cast field
+     */
+    @Support
+    public static <T> Field<T> cast(Field<?> field, Field<T> as) {
+        return nullSafe(field).cast(as);
+    }
+
+    /**
      * Cast null to the type of another field.
      *
      * @param <T> The generic type of the cast field
@@ -3518,6 +3531,19 @@ public class DSL {
     }
 
     /**
+     * Cast a field to another type.
+     *
+     * @param <T> The generic type of the cast field
+     * @param field The field to cast
+     * @param type The type that is used for the cast
+     * @return The cast field
+     */
+    @Support
+    public static <T> Field<T> cast(Field<?> field, Class<T> type) {
+        return nullSafe(field).cast(type);
+    }
+
+    /**
      * Cast null to a type.
      *
      * @param <T> The generic type of the cast field
@@ -3540,6 +3566,19 @@ public class DSL {
     @Support
     public static <T> Field<T> cast(Object value, DataType<T> type) {
         return Utils.field(value, type).cast(type);
+    }
+
+    /**
+     * Cast a field to another type.
+     *
+     * @param <T> The generic type of the cast field
+     * @param field The value to cast
+     * @param type The type that is used for the cast
+     * @return The cast field
+     */
+    @Support
+    public static <T> Field<T> cast(Field<?> field, DataType<T> type) {
+        return nullSafe(field).cast(type);
     }
 
     /**

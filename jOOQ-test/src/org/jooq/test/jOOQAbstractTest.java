@@ -1119,6 +1119,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testCoercion() throws Exception {
+        new DataTypeTests(this).testCoercion();
+    }
+
+    @Test
     public void testCastingToJavaClass() throws Exception {
         new DataTypeTests(this).testCastingToJavaClass();
     }

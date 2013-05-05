@@ -3378,6 +3378,108 @@ public class DSL {
     }
 
     /**
+     * Coerce this field to the type of another field.
+     * <p>
+     * Unlike with casting, coercing doesn't affect the way the database sees a
+     * <code>Field</code>'s type. This is how coercing affects your SQL:
+     * <h3>Bind values</h3> <code><pre>
+     * // This binds an int value to a JDBC PreparedStatement
+     * DSL.val(1).coerce(String.class);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(String.class);
+     * </pre></code>
+     * <h3>Other Field types</h3> <code><pre>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(String.class);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(String.class);
+     * </pre></code>
+     *
+     * @param <T> The generic type of the coerced field
+     * @param field The field to be coerced
+     * @param as The field whose type is used for the coercion
+     * @return The coerced field
+     * @see Field#coerce(DataType)
+     * @see Field#cast(Field)
+     */
+    @Support
+    public static <T> Field<T> coerce(Field<?> field, Field<T> as) {
+        return nullSafe(field).coerce(as);
+    }
+
+    /**
+     * Coerce this field to another type.
+     * <p>
+     * Unlike with casting, coercing doesn't affect the way the database sees a
+     * <code>Field</code>'s type. This is how coercing affects your SQL:
+     * <h3>Bind values</h3> <code><pre>
+     * // This binds an int value to a JDBC PreparedStatement
+     * DSL.val(1).coerce(String.class);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(String.class);
+     * </pre></code>
+     * <h3>Other Field types</h3> <code><pre>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(String.class);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(String.class);
+     * </pre></code>
+     *
+     * @param <T> The generic type of the coerced field
+     * @param field The field to be coerced
+     * @param as The type that is used for the coercion
+     * @return The coerced field
+     * @see Field#coerce(DataType)
+     * @see Field#cast(Class)
+     */
+    @Support
+    public static <T> Field<T> coerce(Field<?> field, Class<T> as) {
+        return nullSafe(field).coerce(as);
+    }
+
+    /**
+     * Coerce a field to another type.
+     * <p>
+     * Unlike with casting, coercing doesn't affect the way the database sees a
+     * <code>Field</code>'s type. This is how coercing affects your SQL:
+     * <h3>Bind values</h3> <code><pre>
+     * // This binds an int value to a JDBC PreparedStatement
+     * DSL.val(1).coerce(String.class);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(String.class);
+     * </pre></code>
+     * <h3>Other Field types</h3> <code><pre>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(String.class);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(String.class);
+     * </pre></code>
+     *
+     * @param <T> The generic type of the coerced field
+     * @param field The field to be coerced
+     * @param as The type that is used for the coercion
+     * @return The coerced field
+     * @see Field#coerce(DataType)
+     * @see Field#cast(DataType)
+     */
+    @Support
+    public static <T> Field<T> coerce(Field<?> field, DataType<T> as) {
+        return nullSafe(field).coerce(as);
+    }
+
+    /**
      * Cast a value to the type of another field.
      *
      * @param <T> The generic type of the cast field

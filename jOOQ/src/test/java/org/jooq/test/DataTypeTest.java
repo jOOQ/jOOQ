@@ -39,6 +39,7 @@ package org.jooq.test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.val;
 
 import java.sql.Timestamp;
 
@@ -281,5 +282,24 @@ public class DataTypeTest extends AbstractTest {
             assertEquals(m.getDays() * 24 * 60 + m.getHours() * 60 + m.getMinutes(),
                 m.getSign() * (int) m.getTotalMinutes());
         }
+    }
+
+    @Test
+    public void testCoercion() throws Exception {
+        Field<String> s = val(1).coerce(String.class);
+        Field<Integer> i = val("2").coerce(Integer.class);
+
+        assertEquals("?", r_ref().render(s));
+        assertEquals("?", r_ref().render(i));
+        assertEquals("1", r_refI().render(s));
+        assertEquals("'2'", r_refI().render(i));
+
+        context.checking(new Expectations() {{
+            oneOf(statement).setInt(1, 1);
+            oneOf(statement).setString(2, "2");
+        }});
+
+        assertEquals(3, b_ref().bind(s).bind(i).peekIndex());
+        context.assertIsSatisfied();
     }
 }

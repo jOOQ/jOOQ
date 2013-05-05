@@ -163,6 +163,33 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     }
 
     // ------------------------------------------------------------------------
+    // XXX: Type coercions
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final <Z> Field<Z> coerce(Field<Z> field) {
+        return coerce(field.getDataType());
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public final <Z> Field<Z> coerce(DataType<Z> type) {
+
+        // [#473] Prevent unnecessary coercions
+        if (getDataType().equals(type)) {
+            return (Field<Z>) this;
+        }
+        else {
+            return new Coerce<Z>(this, type);
+        }
+    }
+
+    @Override
+    public final <Z> Field<Z> coerce(Class<Z> type) {
+        return coerce(DefaultDataType.getDataType(null, type));
+    }
+
+    // ------------------------------------------------------------------------
     // XXX: Conversion of field into a sort field
     // ------------------------------------------------------------------------
 

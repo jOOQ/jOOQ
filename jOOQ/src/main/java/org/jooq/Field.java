@@ -148,7 +148,8 @@ public interface Field<T> extends GroupField {
      * Cast this field to a dialect-specific data type.
      *
      * @param <Z> The generic type of the cast field
-     * @param type
+     * @param type The data type that is used for the cast
+     * @return The cast field
      */
     @Support
     <Z> Field<Z> cast(DataType<Z> type);
@@ -167,6 +168,102 @@ public interface Field<T> extends GroupField {
      */
     @Support
     <Z> Field<Z> cast(Class<Z> type);
+
+    // ------------------------------------------------------------------------
+    // Type coercion
+    // ------------------------------------------------------------------------
+
+    /**
+     * Coerce this field to the type of another field.
+     * <p>
+     * Unlike with casting, coercing doesn't affect the way the database sees a
+     * <code>Field</code>'s type. This is how coercing affects your SQL:
+     * <h3>Bind values</h3> <code><pre>
+     * // This binds an int value to a JDBC PreparedStatement
+     * DSL.val(1).coerce(String.class);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(String.class);
+     * </pre></code>
+     * <h3>Other Field types</h3> <code><pre>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(String.class);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(String.class);
+     * </pre></code>
+     *
+     * @param <Z> The generic type of the coerced field
+     * @param field The field whose type is used for the coercion
+     * @return The coerced field
+     * @see #coerce(DataType)
+     * @see #cast(Field)
+     */
+    @Support
+    <Z> Field<Z> coerce(Field<Z> field);
+
+    /**
+     * Coerce this field to a dialect-specific data type.
+     * <p>
+     * Unlike with casting, coercing doesn't affect the way the database sees a
+     * <code>Field</code>'s type. This is how coercing affects your SQL:
+     * <h3>Bind values</h3> <code><pre>
+     * // This binds an int value to a JDBC PreparedStatement
+     * DSL.val(1).coerce(String.class);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(String.class);
+     * </pre></code>
+     * <h3>Other Field types</h3> <code><pre>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(String.class);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(String.class);
+     * </pre></code>
+     *
+     * @param <Z> The generic type of the coerced field
+     * @param type The data type that is used for the coercion
+     * @return The coerced field
+     * @see #cast(DataType)
+     */
+    @Support
+    <Z> Field<Z> coerce(DataType<Z> type);
+
+    /**
+     * Coerce this field to another type.
+     * <p>
+     * Unlike with casting, coercing doesn't affect the way the database sees a
+     * <code>Field</code>'s type. This is how coercing affects your SQL:
+     * <h3>Bind values</h3> <code><pre>
+     * // This binds an int value to a JDBC PreparedStatement
+     * DSL.val(1).coerce(String.class);
+     *
+     * // This binds an int value to a JDBC PreparedStatement
+     * // and casts it to VARCHAR in SQL
+     * DSL.val(1).cast(String.class);
+     * </pre></code>
+     * <h3>Other Field types</h3> <code><pre>
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * BOOK.ID.coerce(String.class);
+     *
+     * // This fetches a String value for the BOOK.ID field from JDBC
+     * // after casting it to VARCHAR in the database
+     * BOOK.ID.cast(String.class);
+     * </pre></code>
+     *
+     * @param <Z> The generic type of the coerced field
+     * @param type The type that is used for the coercion
+     * @return The coerced field
+     * @see #coerce(DataType)
+     * @see #cast(Class)
+     */
+    @Support
+    <Z> Field<Z> coerce(Class<Z> type);
 
     // ------------------------------------------------------------------------
     // Conversion of field into a sort field

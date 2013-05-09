@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1164514416;
+	private static final long serialVersionUID = -1123002764;
 
 	/**
 	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
@@ -42,7 +42,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	/**
 	 * The column <code>TEST.T_LANGUAGE.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
 
 	/**
 	 * No further instances allowed

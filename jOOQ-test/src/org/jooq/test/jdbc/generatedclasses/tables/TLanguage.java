@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1946839948;
+	private static final long serialVersionUID = 1196689021;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_LANGUAGE</code>
@@ -27,17 +27,17 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.genera
 	/**
 	 * The column <code>PUBLIC.T_LANGUAGE.CD</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE);
 
 	/**
 	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("DESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>PUBLIC.T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("DESCRIPTION_ENGLISH", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>PUBLIC.T_LANGUAGE.ID</code>. 

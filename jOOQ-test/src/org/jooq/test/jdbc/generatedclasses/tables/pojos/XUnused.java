@@ -9,11 +9,11 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -2121088892;
+	private static final long serialVersionUID = 1795967249;
 
 	private java.lang.Integer    id;
 	private java.lang.String     name;
-	private java.math.BigDecimal bigInteger;
+	private java.math.BigInteger bigInteger;
 	private java.lang.Integer    idRef;
 	private java.lang.String     nameRef;
 	private java.lang.Integer    class_;
@@ -49,12 +49,12 @@ public class XUnused implements org.jooq.test.jdbc.generatedclasses.tables.inter
 	}
 
 	@Override
-	public java.math.BigDecimal getBigInteger() {
+	public java.math.BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
 
 	@Override
-	public void setBigInteger(java.math.BigDecimal bigInteger) {
+	public void setBigInteger(java.math.BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
 	}
 

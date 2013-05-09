@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = -898536012;
+	private static final long serialVersionUID = 931907994;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
@@ -27,12 +27,12 @@ public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_BOOK_SALE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_SALE);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_BOOK_SALE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_SALE);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>. 
@@ -42,7 +42,7 @@ public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.sql.Date> SOLD_AT = createField("SOLD_AT", org.jooq.impl.SQLDataType.DATE.precision(7), T_BOOK_SALE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.sql.Date> SOLD_AT = createField("SOLD_AT", org.jooq.impl.SQLDataType.DATE, T_BOOK_SALE);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = 857672270;
+	private static final long serialVersionUID = -1027380115;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_725_LOB_TEST</code>
@@ -32,7 +32,7 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.gen
 	/**
 	 * The column <code>PUBLIC.T_725_LOB_TEST.LOB</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB.length(2147483647), T_725_LOB_TEST);
 
 	/**
 	 * No further instances allowed

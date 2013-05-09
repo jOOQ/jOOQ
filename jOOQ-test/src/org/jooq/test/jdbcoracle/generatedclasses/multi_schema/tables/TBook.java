@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -544499594;
+	private static final long serialVersionUID = 311837544;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK</code>
@@ -27,22 +27,22 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.gene
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.AUTHOR_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.CO_AUTHOR_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> CO_AUTHOR_ID = createField("CO_AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.DETAILS_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> DETAILS_ID = createField("DETAILS_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.TITLE</code>. 
@@ -52,12 +52,12 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.gene
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.PUBLISHED_IN</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.LANGUAGE_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK.CONTENT_TEXT</code>. 

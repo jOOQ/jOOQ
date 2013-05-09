@@ -119,6 +119,7 @@ import org.jooq.test._.testcases.FunctionTests;
 import org.jooq.test._.testcases.GeneralTests;
 import org.jooq.test._.testcases.GroupByTests;
 import org.jooq.test._.testcases.InsertUpdateTests;
+import org.jooq.test._.testcases.JDBCTests;
 import org.jooq.test._.testcases.JoinTests;
 import org.jooq.test._.testcases.LoaderTests;
 import org.jooq.test._.testcases.MetaDataTests;
@@ -2207,5 +2208,10 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCancelStatement() throws Exception {
         new StatementTests(this).testCancelStatement();
+    }
+
+    @Test
+    public void testDialectGuessing() throws Exception {
+        new JDBCTests(this).testDialectGuessing();
     }
 }

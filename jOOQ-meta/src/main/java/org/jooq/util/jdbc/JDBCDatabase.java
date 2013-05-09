@@ -41,7 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
@@ -69,10 +68,9 @@ public class JDBCDatabase extends AbstractDatabase {
 
     private List<Schema> schemas;
 
-    @SuppressWarnings("deprecation")
     @Override
     protected DSLContext create0() {
-        return DSL.using(getConnection(), SQLDialect.SQL99);
+        return DSL.using(getConnection());
     }
 
     @Override

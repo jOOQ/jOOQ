@@ -32,26 +32,6 @@ public class Tables {
 	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.VAuthorSynonym V_AUTHOR_SYNONYM = org.jooq.test.jdbcoracle.generatedclasses.test.tables.VAuthorSynonym.V_AUTHOR_SYNONYM;
 
 	/**
-	 * The table TEST.DR$I_BOOK_TITLE_CONTEXT$I
-	 */
-	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$i DR$I_BOOK_TITLE_CONTEXT$I = org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$i.DR$I_BOOK_TITLE_CONTEXT$I;
-
-	/**
-	 * The table TEST.DR$I_BOOK_TITLE_CONTEXT$K
-	 */
-	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$k DR$I_BOOK_TITLE_CONTEXT$K = org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$k.DR$I_BOOK_TITLE_CONTEXT$K;
-
-	/**
-	 * The table TEST.DR$I_BOOK_TITLE_CONTEXT$N
-	 */
-	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$n DR$I_BOOK_TITLE_CONTEXT$N = org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$n.DR$I_BOOK_TITLE_CONTEXT$N;
-
-	/**
-	 * The table TEST.DR$I_BOOK_TITLE_CONTEXT$R
-	 */
-	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$r DR$I_BOOK_TITLE_CONTEXT$R = org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$r.DR$I_BOOK_TITLE_CONTEXT$R;
-
-	/**
 	 * The table TEST.M_LIBRARY
 	 */
 	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary M_LIBRARY = org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary.M_LIBRARY;

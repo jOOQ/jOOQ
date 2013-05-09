@@ -30,26 +30,6 @@ public interface IXUnused extends java.io.Serializable {
 	public java.lang.String getName();
 
 	/**
-	 * Setter for <code>TEST.X_UNUSED.ID</code>. 
-	 */
-	public void setId(java.math.BigDecimal value);
-
-	/**
-	 * Getter for <code>TEST.X_UNUSED.ID</code>. 
-	 */
-	public java.math.BigDecimal getId();
-
-	/**
-	 * Setter for <code>TEST.X_UNUSED.NAME</code>. 
-	 */
-	public void setName(java.lang.String value);
-
-	/**
-	 * Getter for <code>TEST.X_UNUSED.NAME</code>. 
-	 */
-	public java.lang.String getName();
-
-	/**
 	 * Setter for <code>TEST.X_UNUSED.BIG_INTEGER</code>. 
 	 */
 	public void setBigInteger(java.math.BigDecimal value);

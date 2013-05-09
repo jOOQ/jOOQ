@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor implements org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 2076938082;
+	private static final long serialVersionUID = -870637557;
 
 	private java.math.BigDecimal id;
 	private java.lang.String     firstName;
@@ -17,72 +17,6 @@ public class TAuthor implements org.jooq.test.jdbcoracle.generatedclasses.multi_
 	private java.sql.Date        dateOfBirth;
 	private java.math.BigDecimal yearOfBirth;
 	private java.lang.Object     address;
-	private java.math.BigDecimal id;
-	private java.lang.String     firstName;
-	private java.lang.String     lastName;
-	private java.sql.Date        dateOfBirth;
-	private java.math.BigDecimal yearOfBirth;
-	private java.lang.Object     address;
-
-	@Override
-	public java.math.BigDecimal getId() {
-		return this.id;
-	}
-
-	@Override
-	public void setId(java.math.BigDecimal id) {
-		this.id = id;
-	}
-
-	@Override
-	public java.lang.String getFirstName() {
-		return this.firstName;
-	}
-
-	@Override
-	public void setFirstName(java.lang.String firstName) {
-		this.firstName = firstName;
-	}
-
-	@Override
-	public java.lang.String getLastName() {
-		return this.lastName;
-	}
-
-	@Override
-	public void setLastName(java.lang.String lastName) {
-		this.lastName = lastName;
-	}
-
-	@Override
-	public java.sql.Date getDateOfBirth() {
-		return this.dateOfBirth;
-	}
-
-	@Override
-	public void setDateOfBirth(java.sql.Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	@Override
-	public java.math.BigDecimal getYearOfBirth() {
-		return this.yearOfBirth;
-	}
-
-	@Override
-	public void setYearOfBirth(java.math.BigDecimal yearOfBirth) {
-		this.yearOfBirth = yearOfBirth;
-	}
-
-	@Override
-	public java.lang.Object getAddress() {
-		return this.address;
-	}
-
-	@Override
-	public void setAddress(java.lang.Object address) {
-		this.address = address;
-	}
 
 	@Override
 	public java.math.BigDecimal getId() {
@@ -153,12 +87,6 @@ public class TAuthor implements org.jooq.test.jdbcoracle.generatedclasses.multi_
 	 */
 	@Override
 	public void from(org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.interfaces.ITAuthor from) {
-		setId(from.getId());
-		setFirstName(from.getFirstName());
-		setLastName(from.getLastName());
-		setDateOfBirth(from.getDateOfBirth());
-		setYearOfBirth(from.getYearOfBirth());
-		setAddress(from.getAddress());
 		setId(from.getId());
 		setFirstName(from.getFirstName());
 		setLastName(from.getLastName());

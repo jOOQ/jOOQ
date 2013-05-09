@@ -66,10 +66,6 @@ import org.jooq.UDTRecord;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.types.Interval;
-import org.jooq.types.UByte;
-import org.jooq.types.UInteger;
-import org.jooq.types.ULong;
-import org.jooq.types.UShort;
 
 /**
  * A common base class for data types.
@@ -233,23 +229,7 @@ public class DefaultDataType<T> implements DataType<T> {
         this.castTypeName = castTypeName;
         this.castTypeBase = TYPE_NAME_PATTERN.matcher(castTypeName).replaceAll("").trim();
         this.arrayType = (Class<T[]>) Array.newInstance(type, 0).getClass();
-
-        if (type == Long.class || type == ULong.class) {
-            this.precision = LONG_PRECISION;
-        }
-        else if (type == Integer.class  || type == UInteger.class) {
-            this.precision = INTEGER_PRECISION;
-        }
-        else if (type == Short.class || type == UShort.class) {
-            this.precision = SHORT_PRECISION;
-        }
-        else if (type == Byte.class || type == UByte.class) {
-            this.precision = BYTE_PRECISION;
-        }
-        else {
-            this.precision = precision;
-        }
-
+        this.precision = precision;
         this.scale = scale;
         this.length = length;
 
@@ -305,7 +285,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasPrecision() {
-        return type == BigInteger.class || type == BigDecimal.class;
+        return isNumeric() || isDateTime();
     }
 
     @Override

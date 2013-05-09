@@ -258,7 +258,7 @@ class MetaImpl implements Meta, Serializable {
                 Field<String> tableName = fieldByName(String.class, "TABLE_NAME");
 
                 Map<Record, Result<Record>> groups =
-                getColumns0(null, "%").intoGroups(new Field[] {
+                getColumns0(schema, "%").intoGroups(new Field[] {
                     tableSchem,
                     tableName
                 });

@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TLanguage, java.lang.Integer> {
 
 	/**

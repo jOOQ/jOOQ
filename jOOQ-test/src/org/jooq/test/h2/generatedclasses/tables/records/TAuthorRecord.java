@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  *
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = -1821297339;
+	private static final long serialVersionUID = 227202504;
 
 	/**
 	 * Setter for <code>PUBLIC.T_AUTHOR.ID</code>. The author ID

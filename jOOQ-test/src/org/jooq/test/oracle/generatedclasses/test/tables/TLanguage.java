@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -645463111;
+	private static final long serialVersionUID = 1403887274;
 
 	/**
 	 * The singleton instance of <code>TEST.T_LANGUAGE</code>
@@ -44,7 +44,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gene
 	/**
 	 * The column <code>TEST.T_LANGUAGE.ID</code>. The language ID
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), this);
 
 	/**
 	 * Create a <code>TEST.T_LANGUAGE</code> table reference

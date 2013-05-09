@@ -256,7 +256,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     result = ctx.statement().executeUpdate();
                     listener.executeEnd(ctx);
 
-                    DSLContext create = DSL.using(ctx.connection(), SQLDialect.SQLITE, ctx.configuration().settings());
+                    DSLContext create = DSL.using(ctx.configuration());
                     returned =
                     create.select(returning)
                           .from(getInto())

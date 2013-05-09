@@ -8,8 +8,13 @@ package org.jooq.test.jdbc.generatedclasses;
  *
  * Convenience access to all tables in PUBLIC
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Tables {
+
+	/**
+	 * The table PUBLIC.T_2327_UK_ONLY
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.T_2327UkOnly T_2327_UK_ONLY = org.jooq.test.jdbc.generatedclasses.tables.T_2327UkOnly.T_2327_UK_ONLY;
 
 	/**
 	 * The table PUBLIC.T_639_NUMBERS_TABLE
@@ -67,6 +72,11 @@ public final class Tables {
 	public static final org.jooq.test.jdbc.generatedclasses.tables.TDates T_DATES = org.jooq.test.jdbc.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table PUBLIC.T_EXOTIC_TYPES
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.jdbc.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table PUBLIC.T_IDENTITY
 	 */
 	public static final org.jooq.test.jdbc.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.jdbc.generatedclasses.tables.TIdentity.T_IDENTITY;
@@ -85,6 +95,11 @@ public final class Tables {
 	 * The table PUBLIC.T_TRIGGERS
 	 */
 	public static final org.jooq.test.jdbc.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.jdbc.generatedclasses.tables.TTriggers.T_TRIGGERS;
+
+	/**
+	 * The table PUBLIC.X_TEST_CASE_2025
+	 */
+	public static final org.jooq.test.jdbc.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.jdbc.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
 
 	/**
 	 * The table PUBLIC.X_TEST_CASE_64_69
@@ -120,9 +135,4 @@ public final class Tables {
 	 * The table PUBLIC.V_LIBRARY
 	 */
 	public static final org.jooq.test.jdbc.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.jdbc.generatedclasses.tables.VLibrary.V_LIBRARY;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

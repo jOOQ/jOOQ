@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord> implements org.jooq.Package {
 
-	private static final long serialVersionUID = 580434275;
+	private static final long serialVersionUID = 1320183591;
 
 	/**
 	 * The singleton instance of <code>TEST.U_AUTHOR_TYPE</code>
@@ -27,7 +27,7 @@ public class UAuthorType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gene
 	/**
 	 * The attribute <code>TEST.U_AUTHOR_TYPE.ID</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), U_AUTHOR_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAuthorTypeRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, U_AUTHOR_TYPE);
 
 	/**
 	 * The attribute <code>TEST.U_AUTHOR_TYPE.FIRST_NAME</code>. 

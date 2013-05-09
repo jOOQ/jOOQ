@@ -9,13 +9,13 @@ package org.jooq.test.oracle.generatedclasses.test.udt.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UNumberLongTableRecord extends org.jooq.impl.ArrayRecordImpl<java.lang.Long> {
 
-	private static final long serialVersionUID = 1054535135;
+	private static final long serialVersionUID = 1851679342;
 
 	/**
 	 * Create a new <code>TEST.U_NUMBER_LONG_TABLE</code> record
 	 */
 	public UNumberLongTableRecord(org.jooq.Configuration configuration) {
-		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NUMBER_LONG_TABLE", org.jooq.impl.SQLDataType.BIGINT.precision(11), configuration);
+		super(org.jooq.test.oracle.generatedclasses.test.Test.TEST, "U_NUMBER_LONG_TABLE", org.jooq.impl.SQLDataType.BIGINT, configuration);
 	}
 
 	/**

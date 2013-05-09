@@ -143,6 +143,7 @@ import org.jooq.WindowOverStep;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
+import org.jooq.tools.jdbc.JDBCUtils;
 import org.jooq.types.DayToSecond;
 
 /**
@@ -228,6 +229,25 @@ public class DSL {
     }
 
     /**
+     * Create an executor with a connection configured.
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Configuration, jOOQ will use
+     * that connection directly for creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #using(Connection, Settings)}, guessing the {@link SQLDialect}
+     * using {@link JDBCUtils#dialect(Connection)}
+     *
+     * @param connection The connection to use with objects created from this
+     *            executor
+     * @see DefaultConnectionProvider
+     * @see JDBCUtils#dialect(Connection)
+     */
+    public static DSLContext using(Connection connection) {
+        return new DSLContextImpl(connection, JDBCUtils.dialect(connection), null);
+    }
+
+    /**
      * Create an executor with a connection and a dialect configured.
      * <p>
      * If you provide a JDBC connection to a jOOQ Configuration, jOOQ will use
@@ -244,6 +264,28 @@ public class DSL {
      */
     public static DSLContext using(Connection connection, SQLDialect dialect) {
         return new DSLContextImpl(connection, dialect, null);
+    }
+
+    /**
+     * Create an executor with a connection, a dialect and settings configured.
+     * <p>
+     * If you provide a JDBC connection to a jOOQ Configuration, jOOQ will use
+     * that connection directly for creating statements.
+     * <p>
+     * This is a convenience constructor for
+     * {@link #using(ConnectionProvider, SQLDialect, Settings)} using a
+     * {@link DefaultConnectionProvider} and guessing the {@link SQLDialect}
+     * using {@link JDBCUtils#dialect(Connection)}
+     *
+     * @param connection The connection to use with objects created from this
+     *            executor
+     * @param settings The runtime settings to apply to objects created from
+     *            this executor
+     * @see DefaultConnectionProvider
+     * @see JDBCUtils#dialect(Connection)
+     */
+    public static DSLContext using(Connection connection, Settings settings) {
+        return new DSLContextImpl(connection, JDBCUtils.dialect(connection), settings);
     }
 
     /**

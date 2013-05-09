@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.udt;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord> {
 
-	private static final long serialVersionUID = 1202463843;
+	private static final long serialVersionUID = 1293041685;
 
 	/**
 	 * The singleton instance of <code>TEST.U_ADDRESS_TYPE</code>
@@ -52,7 +52,7 @@ public class UAddressType extends org.jooq.impl.UDTImpl<org.jooq.test.oracle.gen
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.CODE</code>. 
 	 */
-	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.Integer> CODE = createField("CODE", org.jooq.impl.SQLDataType.INTEGER.precision(7), U_ADDRESS_TYPE);
+	public static final org.jooq.UDTField<org.jooq.test.oracle.generatedclasses.test.udt.records.UAddressTypeRecord, java.lang.Integer> CODE = createField("CODE", org.jooq.impl.SQLDataType.INTEGER, U_ADDRESS_TYPE);
 
 	/**
 	 * The attribute <code>TEST.U_ADDRESS_TYPE.F_1323</code>. 

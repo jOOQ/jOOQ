@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 262118938;
+	private static final long serialVersionUID = 615214297;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.V_AUTHOR</code>
@@ -27,7 +27,7 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedc
 	/**
 	 * The column <code>PUBLIC.V_AUTHOR.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(10), V_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
 	 * The column <code>PUBLIC.V_AUTHOR.FIRST_NAME</code>. 
@@ -42,12 +42,12 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.h2.generatedc
 	/**
 	 * The column <code>PUBLIC.V_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE.precision(8), V_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, V_AUTHOR);
 
 	/**
 	 * The column <code>PUBLIC.V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER.precision(10), V_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.h2.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
 	 * The column <code>PUBLIC.V_AUTHOR.ADDRESS</code>. 

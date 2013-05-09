@@ -8,10 +8,10 @@ package org.jooq.test.oracle.generatedclasses.test.packages;
  *
  * Convenience access to all stored procedures and functions in LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Library extends org.jooq.impl.PackageImpl {
 
-	private static final long serialVersionUID = -486595079;
+	private static final long serialVersionUID = -351540330;
 
 	/**
 	 * The singleton instance of <code>TEST.LIBRARY</code>

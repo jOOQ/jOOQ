@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables.daos;
  *
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorDao extends org.jooq.impl.DAOImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TAuthorRecord, org.jooq.test.oracle.generatedclasses.test.tables.pojos.TAuthor, java.lang.Integer> {
 
 	/**

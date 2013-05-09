@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.multi_schema;
  * A class modelling foreign key relationships between tables of the <code>MULTI_SCHEMA</code> 
  * schema
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
 	// -------------------------------------------------------------------------

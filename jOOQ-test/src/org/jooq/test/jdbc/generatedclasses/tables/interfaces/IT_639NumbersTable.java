@@ -102,12 +102,12 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
-	public void setBigInteger(java.math.BigDecimal value);
+	public void setBigInteger(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
-	public java.math.BigDecimal getBigInteger();
+	public java.math.BigInteger getBigInteger();
 
 	/**
 	 * Setter for <code>PUBLIC.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 

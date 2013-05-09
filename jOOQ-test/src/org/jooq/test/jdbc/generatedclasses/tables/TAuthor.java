@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 15558408;
+	private static final long serialVersionUID = -1522854204;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_AUTHOR</code>
@@ -32,12 +32,12 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generate
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.FIRST_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_AUTHOR);
 
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.LAST_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_AUTHOR);
 
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.DATE_OF_BIRTH</code>. 
@@ -52,7 +52,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generate
 	/**
 	 * The column <code>PUBLIC.T_AUTHOR.ADDRESS</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.TAuthorRecord, java.lang.String> ADDRESS = createField("ADDRESS", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_AUTHOR);
 
 	/**
 	 * No further instances allowed

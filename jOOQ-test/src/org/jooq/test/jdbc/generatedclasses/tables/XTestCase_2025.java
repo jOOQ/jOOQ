@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = 1069512987;
+	private static final long serialVersionUID = 1855740373;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_TEST_CASE_2025</code>
@@ -32,7 +32,7 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.jdbc.g
 	/**
 	 * The column <code>PUBLIC.X_TEST_CASE_2025.REF_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR, X_TEST_CASE_2025);
+	public static final org.jooq.TableField<org.jooq.test.jdbc.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("REF_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), X_TEST_CASE_2025);
 
 	/**
 	 * No further instances allowed

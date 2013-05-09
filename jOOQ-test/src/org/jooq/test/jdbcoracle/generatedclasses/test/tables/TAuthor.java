@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -207866280;
+	private static final long serialVersionUID = -131518764;
 
 	/**
 	 * The singleton instance of <code>TEST.T_AUTHOR</code>
@@ -27,7 +27,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	/**
 	 * The column <code>TEST.T_AUTHOR.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 
 	/**
 	 * The column <code>TEST.T_AUTHOR.FIRST_NAME</code>. 
@@ -42,12 +42,12 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	/**
 	 * The column <code>TEST.T_AUTHOR.DATE_OF_BIRTH</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE.precision(7), T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TAuthorRecord, java.sql.Date> DATE_OF_BIRTH = createField("DATE_OF_BIRTH", org.jooq.impl.SQLDataType.DATE, T_AUTHOR);
 
 	/**
 	 * The column <code>TEST.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 
 	/**
 	 * The column <code>TEST.T_AUTHOR.ADDRESS</code>. 

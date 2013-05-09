@@ -330,17 +330,9 @@ class MetaImpl implements Meta, Serializable {
                 try {
                     type = DefaultDataType.getDataType(configuration.dialect(), typeName, precision, scale);
 
-                    if (type.hasPrecision()) {
-                        type = type.precision(precision);
-                    }
-                    if (type.hasScale()) {
-                        type = type.scale(scale);
-                    }
-                    if (type.hasLength()) {
-
-                        // JDBC doesn't distinguish between precision and length
-                        type = type.length(precision);
-                    }
+                    // JDBC doesn't distinguish between precision and length
+                    type = type.precision(precision, scale);
+                    type = type.length(precision);
                 }
                 catch (SQLDialectNotSupportedException e) {
                     type = SQLDataType.OTHER;

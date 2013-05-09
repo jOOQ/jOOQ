@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable implements org.jooq.test.jdbc.generatedclasses.tables.interfaces.IT_639NumbersTable {
 
-	private static final long serialVersionUID = -282266260;
+	private static final long serialVersionUID = -300468103;
 
 	private java.lang.Integer    id;
 	private java.lang.Byte       byte_;
@@ -20,7 +20,7 @@ public class T_639NumbersTable implements org.jooq.test.jdbc.generatedclasses.ta
 	private java.lang.Short      shortDecimal;
 	private java.lang.Integer    integerDecimal;
 	private java.lang.Long       longDecimal;
-	private java.math.BigDecimal bigInteger;
+	private java.math.BigInteger bigInteger;
 	private java.math.BigDecimal bigDecimal;
 	private java.lang.Float      float_;
 	private java.lang.Double     double_;
@@ -116,12 +116,12 @@ public class T_639NumbersTable implements org.jooq.test.jdbc.generatedclasses.ta
 	}
 
 	@Override
-	public java.math.BigDecimal getBigInteger() {
+	public java.math.BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
 
 	@Override
-	public void setBigInteger(java.math.BigDecimal bigInteger) {
+	public void setBigInteger(java.math.BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
 	}
 

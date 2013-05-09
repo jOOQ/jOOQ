@@ -37,21 +37,26 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.fieldByName;
+import static org.jooq.impl.DSL.name;
 
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.jooq.Catalog;
 import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
+import org.jooq.Field;
 import org.jooq.Meta;
+import org.jooq.Name;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Schema;
@@ -186,10 +191,10 @@ class MetaImpl implements Meta, Serializable {
         /**
          * Generated UID
          */
-        private static final long                              serialVersionUID = -2621899850912554198L;
+        private static final long                            serialVersionUID = -2621899850912554198L;
 
-        private transient volatile List<Table<?>>              tableCache;
-        private transient volatile Map<String, Result<Record>> columnCache;
+        private transient volatile List<Table<?>>            tableCache;
+        private transient volatile Map<Name, Result<Record>> columnCache;
 
         MetaSchema(String name) {
             super(name);
@@ -215,10 +220,10 @@ class MetaImpl implements Meta, Serializable {
 
                 for (Record table : tables) {
 //                  String catalog = table.getValue(0, String.class);
-//                  String schema = table.getValue(1, String.class);
+                    String schema = table.getValue(1, String.class);
                     String name = table.getValue(2, String.class);
 
-                    result.add(new MetaTable(name, this, getColumns(name)));
+                    result.add(new MetaTable(name, this, getColumns(schema, name)));
 
 //                  TODO: Find a more efficient way to do this
 //                  Result<Record> pkColumns = executor.fetch(meta().getPrimaryKeys(catalog, schema, name))
@@ -234,25 +239,40 @@ class MetaImpl implements Meta, Serializable {
             }
         }
 
-        private final Result<Record> getColumns(String tableName) throws SQLException {
+        private final Result<Record> getColumns(String schema, String table) throws SQLException {
 
             // SQLite JDBC's DatabaseMetaData.getColumns() can only return a single
             // table's columns
             if (columnCache == null && configuration.dialect() != SQLITE) {
-                columnCache = getColumns0("%").intoGroups(fieldByName(String.class, "TABLE_NAME"));
+                Field<String> tableSchem = fieldByName(String.class, "TABLE_SCHEM");
+                Field<String> tableName = fieldByName(String.class, "TABLE_NAME");
+
+                Map<Record, Result<Record>> groups =
+                getColumns0(null, "%").intoGroups(new Field[] {
+                    tableSchem,
+                    tableName
+                });
+
+                columnCache = new LinkedHashMap<Name, Result<Record>>();
+
+                for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
+                    Record key = entry.getKey();
+                    Result<Record> value = entry.getValue();
+                    columnCache.put(name(key.getValue(tableSchem), key.getValue(tableName)), value);
+                }
             }
 
             if (columnCache != null) {
-                return columnCache.get(tableName);
+                return columnCache.get(name(schema, table));
             }
             else {
-                return getColumns0(tableName);
+                return getColumns0(schema, table);
             }
         }
 
-        private final Result<Record> getColumns0(String tableName) throws SQLException {
+        private final Result<Record> getColumns0(String schema, String table) throws SQLException {
             return create.fetch(
-                meta().getColumns(null, null, tableName, "%"),
+                meta().getColumns(null, schema, table, "%"),
 
                 // Work around a bug in the SQL Server JDBC driver by
                 // coercing data types to the expected types

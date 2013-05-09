@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = 1597961779;
+	private static final long serialVersionUID = 220588135;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -36,10 +36,6 @@ public class Test extends org.jooq.impl.SchemaImpl {
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TAuthorSynonym.T_AUTHOR_SYNONYM,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TAuthorSynonymSynonym.T_AUTHOR_SYNONYM_SYNONYM,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.VAuthorSynonym.V_AUTHOR_SYNONYM,
-			org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$i.DR$I_BOOK_TITLE_CONTEXT$I,
-			org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$k.DR$I_BOOK_TITLE_CONTEXT$K,
-			org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$n.DR$I_BOOK_TITLE_CONTEXT$N,
-			org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$r.DR$I_BOOK_TITLE_CONTEXT$R,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary.M_LIBRARY,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TArrays.T_ARRAYS,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TAuthor.T_AUTHOR,

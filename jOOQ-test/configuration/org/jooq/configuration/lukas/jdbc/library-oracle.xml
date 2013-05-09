@@ -10,7 +10,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.jdbc.JDBCDatabase</name>
-            <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|.*976.*|.*1358.*|U_SECOND_MAX</excludes>
+            <excludes>T_BOOK_DETAILS|S_TRIGGERS_SEQUENCE|.*976.*|.*1358.*|.*\$.*|U_SECOND_MAX</excludes>
             <dateAsTimestamp>false</dateAsTimestamp>
             <unsignedTypes>true</unsignedTypes>
             <schemata>

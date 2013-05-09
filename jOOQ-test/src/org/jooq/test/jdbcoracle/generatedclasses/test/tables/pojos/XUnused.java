@@ -9,10 +9,8 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -1814057184;
+	private static final long serialVersionUID = -530394920;
 
-	private java.math.BigDecimal id;
-	private java.lang.String     name;
 	private java.math.BigDecimal id;
 	private java.lang.String     name;
 	private java.math.BigDecimal bigInteger;
@@ -29,26 +27,6 @@ public class XUnused implements org.jooq.test.jdbcoracle.generatedclasses.test.t
 	private java.math.BigDecimal field_737;
 	private java.math.BigDecimal msUnusedIdRef;
 	private java.lang.String     msUnusedNameRef;
-
-	@Override
-	public java.math.BigDecimal getId() {
-		return this.id;
-	}
-
-	@Override
-	public void setId(java.math.BigDecimal id) {
-		this.id = id;
-	}
-
-	@Override
-	public java.lang.String getName() {
-		return this.name;
-	}
-
-	@Override
-	public void setName(java.lang.String name) {
-		this.name = name;
-	}
 
 	@Override
 	public java.math.BigDecimal getId() {
@@ -219,8 +197,6 @@ public class XUnused implements org.jooq.test.jdbcoracle.generatedclasses.test.t
 	 */
 	@Override
 	public void from(org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IXUnused from) {
-		setId(from.getId());
-		setName(from.getName());
 		setId(from.getId());
 		setName(from.getName());
 		setBigInteger(from.getBigInteger());

@@ -79,7 +79,7 @@ class MetaImpl implements Meta, Serializable {
      */
     private static final long                   serialVersionUID = 3582980783173033809L;
 
-    private final DSLContext                      create;
+    private final DSLContext                    create;
     private final Configuration                 configuration;
     private transient volatile DatabaseMetaData meta;
 
@@ -209,10 +209,18 @@ class MetaImpl implements Meta, Serializable {
             try {
                 String[] types = null;
 
-                // [#2323] SQLite JDBC drivers have a bug. They return other
-                // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
-                if (configuration.dialect() == SQLITE) {
-                    types = new String[] { "TABLE", "VIEW" };
+                switch (configuration.dialect()) {
+
+                    // [#2323] SQLite JDBC drivers have a bug. They return other
+                    // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68
+                    case SQLITE:
+                        types = new String[] { "TABLE", "VIEW" };
+                        break;
+
+                    // [#2448] Avoid returning Oracle table SYNONYMs
+                    case ORACLE:
+                        types = new String[] { "TABLE", "VIEW", "MATERIALIZED VIEW" };
+                        break;
                 }
 
                 List<Table<?>> result = new ArrayList<Table<?>>();

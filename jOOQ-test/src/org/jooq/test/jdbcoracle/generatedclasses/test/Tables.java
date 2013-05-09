@@ -17,11 +17,6 @@ public class Tables {
 	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary M_LIBRARY = org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary.M_LIBRARY;
 
 	/**
-	 * The table TEST.M_LIBRARY
-	 */
-	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary M_LIBRARY = org.jooq.test.jdbcoracle.generatedclasses.test.tables.MLibrary.M_LIBRARY;
-
-	/**
 	 * The table TEST.T_ARRAYS
 	 */
 	public static final org.jooq.test.jdbcoracle.generatedclasses.test.tables.TArrays T_ARRAYS = org.jooq.test.jdbcoracle.generatedclasses.test.tables.TArrays.T_ARRAYS;

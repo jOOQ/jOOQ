@@ -9,22 +9,22 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor implements org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = -870637557;
+	private static final long serialVersionUID = -1247009013;
 
-	private java.math.BigDecimal id;
-	private java.lang.String     firstName;
-	private java.lang.String     lastName;
-	private java.sql.Date        dateOfBirth;
-	private java.math.BigDecimal yearOfBirth;
-	private java.lang.Object     address;
+	private java.lang.Integer id;
+	private java.lang.String  firstName;
+	private java.lang.String  lastName;
+	private java.sql.Date     dateOfBirth;
+	private java.lang.Integer yearOfBirth;
+	private java.lang.Object  address;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
@@ -59,12 +59,12 @@ public class TAuthor implements org.jooq.test.jdbcoracle.generatedclasses.multi_
 	}
 
 	@Override
-	public java.math.BigDecimal getYearOfBirth() {
+	public java.lang.Integer getYearOfBirth() {
 		return this.yearOfBirth;
 	}
 
 	@Override
-	public void setYearOfBirth(java.math.BigDecimal yearOfBirth) {
+	public void setYearOfBirth(java.lang.Integer yearOfBirth) {
 		this.yearOfBirth = yearOfBirth;
 	}
 

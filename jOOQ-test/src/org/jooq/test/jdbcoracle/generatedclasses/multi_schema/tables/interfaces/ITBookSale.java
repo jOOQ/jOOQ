@@ -12,22 +12,22 @@ public interface ITBookSale extends java.io.Serializable {
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
 	 */
-	public void setBookId(java.math.BigDecimal value);
+	public void setBookId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
 	 */
-	public java.math.BigDecimal getBookId();
+	public java.lang.Integer getBookId();
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>. 

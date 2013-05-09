@@ -9,21 +9,21 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITArrays {
 
-	private static final long serialVersionUID = 441419188;
+	private static final long serialVersionUID = -1639284185;
 
-	private java.math.BigDecimal id;
-	private java.lang.Object     stringArray;
-	private java.lang.Object     numberArray;
-	private java.lang.Object     numberLongArray;
-	private java.lang.Object     dateArray;
+	private java.lang.Integer id;
+	private java.lang.Object  stringArray;
+	private java.lang.Object  numberArray;
+	private java.lang.Object  numberLongArray;
+	private java.lang.Object  dateArray;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 

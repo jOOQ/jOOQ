@@ -9,12 +9,12 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -411021720;
+	private static final long serialVersionUID = -1676410925;
 
-	private java.lang.String     cd;
-	private java.lang.String     description;
-	private java.lang.String     descriptionEnglish;
-	private java.math.BigDecimal id;
+	private java.lang.String  cd;
+	private java.lang.String  description;
+	private java.lang.String  descriptionEnglish;
+	private java.lang.Integer id;
 
 	@Override
 	public java.lang.String getCd() {
@@ -47,12 +47,12 @@ public class TLanguage implements org.jooq.test.jdbcoracle.generatedclasses.test
 	}
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 

@@ -9,18 +9,18 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IXTestCase_2025 {
 
-	private static final long serialVersionUID = 1583124950;
+	private static final long serialVersionUID = -985501723;
 
-	private java.math.BigDecimal refId;
-	private java.lang.String     refName;
+	private java.lang.Integer refId;
+	private java.lang.String  refName;
 
 	@Override
-	public java.math.BigDecimal getRefId() {
+	public java.lang.Integer getRefId() {
 		return this.refId;
 	}
 
 	@Override
-	public void setRefId(java.math.BigDecimal refId) {
+	public void setRefId(java.lang.Integer refId) {
 		this.refId = refId;
 	}
 

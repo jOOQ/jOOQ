@@ -9,24 +9,24 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITDates {
 
-	private static final long serialVersionUID = -1834175272;
+	private static final long serialVersionUID = 226136137;
 
-	private java.math.BigDecimal       id;
+	private java.lang.Integer          id;
 	private java.sql.Date              d;
 	private java.sql.Timestamp         t;
 	private java.sql.Timestamp         ts;
-	private java.math.BigDecimal       dInt;
-	private java.math.BigDecimal       tsBigint;
+	private java.lang.Integer          dInt;
+	private java.lang.Long             tsBigint;
 	private org.jooq.types.YearToMonth iY;
 	private org.jooq.types.DayToSecond iD;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
@@ -61,22 +61,22 @@ public class TDates implements org.jooq.test.jdbcoracle.generatedclasses.test.ta
 	}
 
 	@Override
-	public java.math.BigDecimal getDInt() {
+	public java.lang.Integer getDInt() {
 		return this.dInt;
 	}
 
 	@Override
-	public void setDInt(java.math.BigDecimal dInt) {
+	public void setDInt(java.lang.Integer dInt) {
 		this.dInt = dInt;
 	}
 
 	@Override
-	public java.math.BigDecimal getTsBigint() {
+	public java.lang.Long getTsBigint() {
 		return this.tsBigint;
 	}
 
 	@Override
-	public void setTsBigint(java.math.BigDecimal tsBigint) {
+	public void setTsBigint(java.lang.Long tsBigint) {
 		this.tsBigint = tsBigint;
 	}
 

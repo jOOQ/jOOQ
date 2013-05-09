@@ -12,32 +12,32 @@ public interface ITDirectory extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
-	public void setParentId(java.math.BigDecimal value);
+	public void setParentId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_DIRECTORY.PARENT_ID</code>. 
 	 */
-	public java.math.BigDecimal getParentId();
+	public java.lang.Integer getParentId();
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
-	public void setIsDirectory(java.math.BigDecimal value);
+	public void setIsDirectory(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_DIRECTORY.IS_DIRECTORY</code>. 
 	 */
-	public java.math.BigDecimal getIsDirectory();
+	public java.lang.Integer getIsDirectory();
 
 	/**
 	 * Setter for <code>TEST.T_DIRECTORY.name</code>. 

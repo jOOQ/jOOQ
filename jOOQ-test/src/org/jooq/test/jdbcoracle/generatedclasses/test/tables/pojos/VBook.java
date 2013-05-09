@@ -9,55 +9,55 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IVBook {
 
-	private static final long serialVersionUID = -2051020072;
+	private static final long serialVersionUID = -156503674;
 
-	private java.math.BigDecimal id;
-	private java.math.BigDecimal authorId;
-	private java.math.BigDecimal coAuthorId;
-	private java.math.BigDecimal detailsId;
-	private java.lang.String     title;
-	private java.math.BigDecimal publishedIn;
-	private java.math.BigDecimal languageId;
-	private java.lang.String     contentText;
-	private byte[]               contentPdf;
+	private java.lang.Integer id;
+	private java.lang.Integer authorId;
+	private java.lang.Integer coAuthorId;
+	private java.lang.Integer detailsId;
+	private java.lang.String  title;
+	private java.lang.Integer publishedIn;
+	private java.lang.Integer languageId;
+	private java.lang.String  contentText;
+	private byte[]            contentPdf;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
 	@Override
-	public java.math.BigDecimal getAuthorId() {
+	public java.lang.Integer getAuthorId() {
 		return this.authorId;
 	}
 
 	@Override
-	public void setAuthorId(java.math.BigDecimal authorId) {
+	public void setAuthorId(java.lang.Integer authorId) {
 		this.authorId = authorId;
 	}
 
 	@Override
-	public java.math.BigDecimal getCoAuthorId() {
+	public java.lang.Integer getCoAuthorId() {
 		return this.coAuthorId;
 	}
 
 	@Override
-	public void setCoAuthorId(java.math.BigDecimal coAuthorId) {
+	public void setCoAuthorId(java.lang.Integer coAuthorId) {
 		this.coAuthorId = coAuthorId;
 	}
 
 	@Override
-	public java.math.BigDecimal getDetailsId() {
+	public java.lang.Integer getDetailsId() {
 		return this.detailsId;
 	}
 
 	@Override
-	public void setDetailsId(java.math.BigDecimal detailsId) {
+	public void setDetailsId(java.lang.Integer detailsId) {
 		this.detailsId = detailsId;
 	}
 
@@ -72,22 +72,22 @@ public class VBook implements org.jooq.test.jdbcoracle.generatedclasses.test.tab
 	}
 
 	@Override
-	public java.math.BigDecimal getPublishedIn() {
+	public java.lang.Integer getPublishedIn() {
 		return this.publishedIn;
 	}
 
 	@Override
-	public void setPublishedIn(java.math.BigDecimal publishedIn) {
+	public void setPublishedIn(java.lang.Integer publishedIn) {
 		this.publishedIn = publishedIn;
 	}
 
 	@Override
-	public java.math.BigDecimal getLanguageId() {
+	public java.lang.Integer getLanguageId() {
 		return this.languageId;
 	}
 
 	@Override
-	public void setLanguageId(java.math.BigDecimal languageId) {
+	public void setLanguageId(java.lang.Integer languageId) {
 		this.languageId = languageId;
 	}
 

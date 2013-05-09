@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 768529075;
+	private static final long serialVersionUID = -65333786;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DATES</code>
@@ -27,32 +27,32 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.gen
 	/**
 	 * The column <code>TEST.T_DATES.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_DATES);
 
 	/**
 	 * The column <code>TEST.T_DATES.D</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Date> D = createField("D", org.jooq.impl.SQLDataType.DATE, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Date> D = createField("D", org.jooq.impl.SQLDataType.DATE.precision(7), T_DATES);
 
 	/**
 	 * The column <code>TEST.T_DATES.T</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Timestamp> T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Timestamp> T = createField("T", org.jooq.impl.SQLDataType.TIMESTAMP.precision(11), T_DATES);
 
 	/**
 	 * The column <code>TEST.T_DATES.TS</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.sql.Timestamp> TS = createField("TS", org.jooq.impl.SQLDataType.TIMESTAMP.precision(11), T_DATES);
 
 	/**
 	 * The column <code>TEST.T_DATES.D_INT</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.math.BigDecimal> D_INT = createField("D_INT", org.jooq.impl.SQLDataType.NUMERIC, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.lang.Integer> D_INT = createField("D_INT", org.jooq.impl.SQLDataType.INTEGER.precision(7), T_DATES);
 
 	/**
 	 * The column <code>TEST.T_DATES.TS_BIGINT</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.math.BigDecimal> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.NUMERIC, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TDatesRecord, java.lang.Long> TS_BIGINT = createField("TS_BIGINT", org.jooq.impl.SQLDataType.BIGINT.precision(18), T_DATES);
 
 	/**
 	 * The column <code>TEST.T_DATES.I_Y</code>. 

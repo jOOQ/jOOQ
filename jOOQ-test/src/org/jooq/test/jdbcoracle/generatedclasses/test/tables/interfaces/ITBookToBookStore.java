@@ -22,22 +22,22 @@ public interface ITBookToBookStore extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
-	public void setBookId(java.math.BigDecimal value);
+	public void setBookId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
-	public java.math.BigDecimal getBookId();
+	public java.lang.Integer getBookId();
 
 	/**
 	 * Setter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
-	public void setStock(java.math.BigDecimal value);
+	public void setStock(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
-	public java.math.BigDecimal getStock();
+	public java.lang.Integer getStock();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

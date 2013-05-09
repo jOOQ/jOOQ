@@ -12,12 +12,12 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.T_DATES.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_DATES.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.T_DATES.D</code>. 
@@ -52,22 +52,22 @@ public interface ITDates extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.T_DATES.D_INT</code>. 
 	 */
-	public void setDInt(java.math.BigDecimal value);
+	public void setDInt(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_DATES.D_INT</code>. 
 	 */
-	public java.math.BigDecimal getDInt();
+	public java.lang.Integer getDInt();
 
 	/**
 	 * Setter for <code>TEST.T_DATES.TS_BIGINT</code>. 
 	 */
-	public void setTsBigint(java.math.BigDecimal value);
+	public void setTsBigint(java.lang.Long value);
 
 	/**
 	 * Getter for <code>TEST.T_DATES.TS_BIGINT</code>. 
 	 */
-	public java.math.BigDecimal getTsBigint();
+	public java.lang.Long getTsBigint();
 
 	/**
 	 * Setter for <code>TEST.T_DATES.I_Y</code>. 

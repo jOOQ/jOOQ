@@ -9,28 +9,28 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IXTestCase_71 {
 
-	private static final long serialVersionUID = -1038725031;
+	private static final long serialVersionUID = 1357264979;
 
-	private java.math.BigDecimal id;
-	private java.math.BigDecimal testCase_64_69Id;
+	private java.lang.Integer id;
+	private java.lang.Short   testCase_64_69Id;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
 	@Override
-	public java.math.BigDecimal getTestCase_64_69Id() {
+	public java.lang.Short getTestCase_64_69Id() {
 		return this.testCase_64_69Id;
 	}
 
 	@Override
-	public void setTestCase_64_69Id(java.math.BigDecimal testCase_64_69Id) {
+	public void setTestCase_64_69Id(java.lang.Short testCase_64_69Id) {
 		this.testCase_64_69Id = testCase_64_69Id;
 	}
 

@@ -9,19 +9,19 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_785 implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IT_785 {
 
-	private static final long serialVersionUID = -1085132423;
+	private static final long serialVersionUID = 1398712512;
 
-	private java.math.BigDecimal id;
-	private java.lang.String     name;
-	private java.lang.String     value;
+	private java.lang.Integer id;
+	private java.lang.String  name;
+	private java.lang.String  value;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 

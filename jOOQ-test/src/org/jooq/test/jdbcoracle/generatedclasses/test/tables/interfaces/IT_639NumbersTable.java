@@ -12,102 +12,102 @@ public interface IT_639NumbersTable extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
-	public void setByte(java.math.BigDecimal value);
+	public void setByte(java.lang.Byte value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BYTE</code>. 
 	 */
-	public java.math.BigDecimal getByte();
+	public java.lang.Byte getByte();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
-	public void setShort(java.math.BigDecimal value);
+	public void setShort(java.lang.Short value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.SHORT</code>. 
 	 */
-	public java.math.BigDecimal getShort();
+	public java.lang.Short getShort();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
-	public void setInteger(java.math.BigDecimal value);
+	public void setInteger(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER</code>. 
 	 */
-	public java.math.BigDecimal getInteger();
+	public java.lang.Integer getInteger();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
-	public void setLong(java.math.BigDecimal value);
+	public void setLong(java.lang.Long value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.LONG</code>. 
 	 */
-	public java.math.BigDecimal getLong();
+	public java.lang.Long getLong();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
-	public void setByteDecimal(java.math.BigDecimal value);
+	public void setByteDecimal(java.lang.Byte value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BYTE_DECIMAL</code>. 
 	 */
-	public java.math.BigDecimal getByteDecimal();
+	public java.lang.Byte getByteDecimal();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
-	public void setShortDecimal(java.math.BigDecimal value);
+	public void setShortDecimal(java.lang.Short value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.SHORT_DECIMAL</code>. 
 	 */
-	public java.math.BigDecimal getShortDecimal();
+	public java.lang.Short getShortDecimal();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
-	public void setIntegerDecimal(java.math.BigDecimal value);
+	public void setIntegerDecimal(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.INTEGER_DECIMAL</code>. 
 	 */
-	public java.math.BigDecimal getIntegerDecimal();
+	public java.lang.Integer getIntegerDecimal();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
-	public void setLongDecimal(java.math.BigDecimal value);
+	public void setLongDecimal(java.lang.Long value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.LONG_DECIMAL</code>. 
 	 */
-	public java.math.BigDecimal getLongDecimal();
+	public java.lang.Long getLongDecimal();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
-	public void setBigInteger(java.math.BigDecimal value);
+	public void setBigInteger(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>TEST.T_639_NUMBERS_TABLE.BIG_INTEGER</code>. 
 	 */
-	public java.math.BigDecimal getBigInteger();
+	public java.math.BigInteger getBigInteger();
 
 	/**
 	 * Setter for <code>TEST.T_639_NUMBERS_TABLE.BIG_DECIMAL</code>. 

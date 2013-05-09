@@ -12,12 +12,12 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.V_AUTHOR.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.V_AUTHOR.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
@@ -52,12 +52,12 @@ public interface IVAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public void setYearOfBirth(java.math.BigDecimal value);
+	public void setYearOfBirth(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public java.math.BigDecimal getYearOfBirth();
+	public java.lang.Integer getYearOfBirth();
 
 	/**
 	 * Setter for <code>TEST.V_AUTHOR.ADDRESS</code>. 

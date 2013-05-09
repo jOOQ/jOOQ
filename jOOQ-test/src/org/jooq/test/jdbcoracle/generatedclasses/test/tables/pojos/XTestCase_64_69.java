@@ -9,28 +9,28 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IXTestCase_64_69 {
 
-	private static final long serialVersionUID = -1744576464;
+	private static final long serialVersionUID = -1530682390;
 
-	private java.math.BigDecimal id;
-	private java.math.BigDecimal unusedId;
+	private java.lang.Integer id;
+	private java.lang.Integer unusedId;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
 	@Override
-	public java.math.BigDecimal getUnusedId() {
+	public java.lang.Integer getUnusedId() {
 		return this.unusedId;
 	}
 
 	@Override
-	public void setUnusedId(java.math.BigDecimal unusedId) {
+	public void setUnusedId(java.lang.Integer unusedId) {
 		this.unusedId = unusedId;
 	}
 

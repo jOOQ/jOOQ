@@ -12,12 +12,12 @@ public interface IT_785 extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.T_785.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_785.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.T_785.NAME</code>. 

@@ -9,39 +9,39 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITTriggers {
 
-	private static final long serialVersionUID = 312588465;
+	private static final long serialVersionUID = 1685841118;
 
-	private java.math.BigDecimal idGenerated;
-	private java.math.BigDecimal id;
-	private java.math.BigDecimal counter;
+	private java.lang.Integer idGenerated;
+	private java.lang.Integer id;
+	private java.lang.Integer counter;
 
 	@Override
-	public java.math.BigDecimal getIdGenerated() {
+	public java.lang.Integer getIdGenerated() {
 		return this.idGenerated;
 	}
 
 	@Override
-	public void setIdGenerated(java.math.BigDecimal idGenerated) {
+	public void setIdGenerated(java.lang.Integer idGenerated) {
 		this.idGenerated = idGenerated;
 	}
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
 	@Override
-	public java.math.BigDecimal getCounter() {
+	public java.lang.Integer getCounter() {
 		return this.counter;
 	}
 
 	@Override
-	public void setCounter(java.math.BigDecimal counter) {
+	public void setCounter(java.lang.Integer counter) {
 		this.counter = counter;
 	}
 

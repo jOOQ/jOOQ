@@ -9,40 +9,40 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITDirectory {
 
-	private static final long serialVersionUID = -581221868;
+	private static final long serialVersionUID = 858893099;
 
-	private java.math.BigDecimal id;
-	private java.math.BigDecimal parentId;
-	private java.math.BigDecimal isDirectory;
-	private java.lang.String     name;
+	private java.lang.Integer id;
+	private java.lang.Integer parentId;
+	private java.lang.Integer isDirectory;
+	private java.lang.String  name;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
 	@Override
-	public java.math.BigDecimal getParentId() {
+	public java.lang.Integer getParentId() {
 		return this.parentId;
 	}
 
 	@Override
-	public void setParentId(java.math.BigDecimal parentId) {
+	public void setParentId(java.lang.Integer parentId) {
 		this.parentId = parentId;
 	}
 
 	@Override
-	public java.math.BigDecimal getIsDirectory() {
+	public java.lang.Integer getIsDirectory() {
 		return this.isDirectory;
 	}
 
 	@Override
-	public void setIsDirectory(java.math.BigDecimal isDirectory) {
+	public void setIsDirectory(java.lang.Integer isDirectory) {
 		this.isDirectory = isDirectory;
 	}
 

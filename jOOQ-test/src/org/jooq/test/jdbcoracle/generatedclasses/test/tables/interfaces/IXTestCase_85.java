@@ -12,22 +12,22 @@ public interface IXTestCase_85 extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
-	public void setXUnusedId(java.math.BigDecimal value);
+	public void setXUnusedId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 
 	 */
-	public java.math.BigDecimal getXUnusedId();
+	public java.lang.Integer getXUnusedId();
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_85.X_UNUSED_NAME</code>. 

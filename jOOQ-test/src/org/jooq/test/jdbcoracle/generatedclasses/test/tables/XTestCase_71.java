@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 420617573;
+	private static final long serialVersionUID = 1800320316;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_71</code>
@@ -27,12 +27,12 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.jdbcorac
 	/**
 	 * The column <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_71Record, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, X_TEST_CASE_71);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.precision(7), X_TEST_CASE_71);
 
 	/**
 	 * The column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_71Record, java.math.BigDecimal> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.NUMERIC, X_TEST_CASE_71);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XTestCase_71Record, java.lang.Short> TEST_CASE_64_69_ID = createField("TEST_CASE_64_69_ID", org.jooq.impl.SQLDataType.SMALLINT.precision(4), X_TEST_CASE_71);
 
 	/**
 	 * No further instances allowed

@@ -12,42 +12,42 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.V_BOOK.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.V_BOOK.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
 	 */
-	public void setAuthorId(java.math.BigDecimal value);
+	public void setAuthorId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.V_BOOK.AUTHOR_ID</code>. 
 	 */
-	public java.math.BigDecimal getAuthorId();
+	public java.lang.Integer getAuthorId();
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
-	public void setCoAuthorId(java.math.BigDecimal value);
+	public void setCoAuthorId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.V_BOOK.CO_AUTHOR_ID</code>. 
 	 */
-	public java.math.BigDecimal getCoAuthorId();
+	public java.lang.Integer getCoAuthorId();
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
 	 */
-	public void setDetailsId(java.math.BigDecimal value);
+	public void setDetailsId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.V_BOOK.DETAILS_ID</code>. 
 	 */
-	public java.math.BigDecimal getDetailsId();
+	public java.lang.Integer getDetailsId();
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.TITLE</code>. 
@@ -62,22 +62,22 @@ public interface IVBook extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
 	 */
-	public void setPublishedIn(java.math.BigDecimal value);
+	public void setPublishedIn(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.V_BOOK.PUBLISHED_IN</code>. 
 	 */
-	public java.math.BigDecimal getPublishedIn();
+	public java.lang.Integer getPublishedIn();
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
 	 */
-	public void setLanguageId(java.math.BigDecimal value);
+	public void setLanguageId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.V_BOOK.LANGUAGE_ID</code>. 
 	 */
-	public java.math.BigDecimal getLanguageId();
+	public java.lang.Integer getLanguageId();
 
 	/**
 	 * Setter for <code>TEST.V_BOOK.CONTENT_TEXT</code>. 

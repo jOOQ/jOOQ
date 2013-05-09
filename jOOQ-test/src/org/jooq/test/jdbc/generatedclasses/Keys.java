@@ -9,7 +9,7 @@ package org.jooq.test.jdbc.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>PUBLIC</code> 
  * schema
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
 	// -------------------------------------------------------------------------
@@ -26,11 +26,6 @@ public class Keys {
 	// FOREIGN KEY definitions
 	// -------------------------------------------------------------------------
 
-
-	/**
-	 * No further instances allowed
-	 */
-	private Keys() {}
 
 	// -------------------------------------------------------------------------
 	// [#1459] distribute members to avoid static initialisers > 64kb

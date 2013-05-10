@@ -2236,8 +2236,8 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testKeepRSWithUpdateOnChangeUnsuccessful() throws Exception {
-        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeUnsuccessful();
+    public void testKeepRSWithUpdateOnChangeFetchOne() throws Exception {
+        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeFetchOne();
     }
 
     @Test

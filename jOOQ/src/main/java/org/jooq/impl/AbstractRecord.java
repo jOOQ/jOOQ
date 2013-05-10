@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.KeepResultSetMode.UPDATE_ON_CHANGE;
 import static org.jooq.impl.Utils.getAnnotatedGetter;
 import static org.jooq.impl.Utils.getAnnotatedMembers;
 import static org.jooq.impl.Utils.getMatchingGetter;
@@ -56,6 +57,7 @@ import java.util.Map;
 import org.jooq.Attachable;
 import org.jooq.Converter;
 import org.jooq.Field;
+import org.jooq.KeepResultSetMode;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
@@ -82,6 +84,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     final RowImpl                   fields;
     final Value<?>[]                values;
+    transient KeepResultSetMode     keepResultSetMode;
     transient ResultSet             rs;
     transient int                   rsIndex;
 
@@ -272,10 +275,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> void setValue(Field<T> field, T value) {
+        Value<T> val = getValue0(field);
 
         // [#1846] Execute this first to fail early, when UPDATE_ON_CHANGE fails
-        if (rs != null) {
-            int columnIndex = fieldsRow().indexOf(field) + 1;
+        if (rs != null && keepResultSetMode == UPDATE_ON_CHANGE) {
+            int index = fieldsRow().indexOf(field);
+            int columnIndex = index + 1;
 
             if (log.isDebugEnabled()) {
                 log.debug("Updating Result", "Updating Result position " + rsIndex + ":" + columnIndex + " with value " + value);
@@ -295,29 +300,33 @@ abstract class AbstractRecord extends AbstractStore implements Record {
             catch (SQLException e) {
                 throw translate("Error when updating ResultSet", e);
             }
+
+            setValue(index, new Value<Object>(value));
         }
 
-        UniqueKey<?> key = getPrimaryKey();
-        Value<T> val = getValue0(field);
-
-        // Normal fields' changed flag is always set to true
-        if (key == null || !key.getFields().contains(field)) {
-            val.setValue(value);
-        }
-
-        // The primary key's changed flag might've been set previously
-        else if (val.isChanged()) {
-            val.setValue(value);
-        }
-
-        // [#979] If the primary key is being changed, all other fields' flags
-        // need to be set to true for in case this record is stored again, an
-        // INSERT statement will thus be issued
+        // [#1846] In all other cases, correctly handle changed flags
         else {
-            val.setValue(value, true);
+            UniqueKey<?> key = getPrimaryKey();
 
-            if (val.isChanged()) {
-                changed(true);
+            // Normal fields' changed flag is always set to true
+            if (key == null || !key.getFields().contains(field)) {
+                val.setValue(value);
+            }
+
+            // The primary key's changed flag might've been set previously
+            else if (val.isChanged()) {
+                val.setValue(value);
+            }
+
+            // [#979] If the primary key is being changed, all other fields' flags
+            // need to be set to true for in case this record is stored again, an
+            // INSERT statement will thus be issued
+            else {
+                val.setValue(value, true);
+
+                if (val.isChanged()) {
+                    changed(true);
+                }
             }
         }
     }

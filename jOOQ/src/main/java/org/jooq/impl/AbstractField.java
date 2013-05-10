@@ -35,6 +35,20 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.GREATER;
+import static org.jooq.Comparator.GREATER_OR_EQUAL;
+import static org.jooq.Comparator.IN;
+import static org.jooq.Comparator.IS_DISTINCT_FROM;
+import static org.jooq.Comparator.IS_NOT_DISTINCT_FROM;
+import static org.jooq.Comparator.LESS;
+import static org.jooq.Comparator.LESS_OR_EQUAL;
+import static org.jooq.Comparator.LIKE;
+import static org.jooq.Comparator.LIKE_IGNORE_CASE;
+import static org.jooq.Comparator.NOT_EQUALS;
+import static org.jooq.Comparator.NOT_IN;
+import static org.jooq.Comparator.NOT_LIKE;
+import static org.jooq.Comparator.NOT_LIKE_IGNORE_CASE;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.nullSafe;
@@ -415,7 +429,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition isDistinctFrom(Field<T> field) {
-        return compare(Comparator.IS_DISTINCT_FROM, field);
+        return compare(IS_DISTINCT_FROM, field);
     }
 
     @Override
@@ -425,7 +439,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition isNotDistinctFrom(Field<T> field) {
-        return compare(Comparator.IS_NOT_DISTINCT_FROM, field);
+        return compare(IS_NOT_DISTINCT_FROM, field);
     }
 
     @SuppressWarnings("unchecked")
@@ -478,12 +492,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition like(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.LIKE);
+        return new CompareCondition(this, nullSafe(field), LIKE);
     }
 
     @Override
     public final Condition like(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field), Comparator.LIKE, escape);
+        return new CompareCondition(this, nullSafe(field), LIKE, escape);
     }
 
     @Override
@@ -498,12 +512,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition likeIgnoreCase(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.LIKE_IGNORE_CASE);
+        return new CompareCondition(this, nullSafe(field), LIKE_IGNORE_CASE);
     }
 
     @Override
     public final Condition likeIgnoreCase(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field), Comparator.LIKE_IGNORE_CASE, escape);
+        return new CompareCondition(this, nullSafe(field), LIKE_IGNORE_CASE, escape);
     }
 
     @Override
@@ -528,12 +542,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notLike(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.NOT_LIKE);
+        return new CompareCondition(this, nullSafe(field), NOT_LIKE);
     }
 
     @Override
     public final Condition notLike(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field), Comparator.NOT_LIKE, escape);
+        return new CompareCondition(this, nullSafe(field), NOT_LIKE, escape);
     }
 
     @Override
@@ -548,12 +562,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notLikeIgnoreCase(Field<String> field) {
-        return new CompareCondition(this, nullSafe(field), Comparator.NOT_LIKE_IGNORE_CASE);
+        return new CompareCondition(this, nullSafe(field), NOT_LIKE_IGNORE_CASE);
     }
 
     @Override
     public final Condition notLikeIgnoreCase(Field<String> field, char escape) {
-        return new CompareCondition(this, nullSafe(field), Comparator.NOT_LIKE_IGNORE_CASE, escape);
+        return new CompareCondition(this, nullSafe(field), NOT_LIKE_IGNORE_CASE, escape);
     }
 
     @Override
@@ -611,7 +625,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
             return falseCondition();
         }
         else {
-            return new InCondition<T>(this, nullSafe(values), Comparator.IN);
+            return new InCondition<T>(this, nullSafe(values), IN);
         }
     }
 
@@ -628,7 +642,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition in(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, Comparator.IN);
+        return compare(IN, query);
     }
 
     @Override
@@ -643,7 +657,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notIn(Field<?>... values) {
-        return new InCondition<T>(this, nullSafe(values), Comparator.NOT_IN);
+        return new InCondition<T>(this, nullSafe(values), NOT_IN);
     }
 
     @Override
@@ -659,7 +673,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notIn(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, Comparator.NOT_IN);
+        return compare(NOT_IN, query);
     }
 
     @Override
@@ -869,7 +883,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition equal(Field<T> field) {
-        return compare(Comparator.EQUALS, nullSafe(field));
+        return compare(EQUALS, nullSafe(field));
     }
 
     @Override
@@ -884,12 +898,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition equal(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, Comparator.EQUALS);
+        return compare(EQUALS, query);
     }
 
     @Override
     public final Condition equal(QuantifiedSelect<? extends Record1<T>> query) {
-        return new QuantifiedComparisonCondition(query, this, Comparator.EQUALS);
+        return compare(EQUALS, query);
     }
 
     @Override
@@ -899,7 +913,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notEqual(Field<T> field) {
-        return compare(Comparator.NOT_EQUALS, nullSafe(field));
+        return compare(NOT_EQUALS, nullSafe(field));
     }
 
     @Override
@@ -914,12 +928,12 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, Comparator.NOT_EQUALS);
+        return compare(NOT_EQUALS, query);
     }
 
     @Override
     public final Condition notEqual(QuantifiedSelect<? extends Record1<T>> query) {
-        return new QuantifiedComparisonCondition(query, this, Comparator.NOT_EQUALS);
+        return compare(NOT_EQUALS, query);
     }
 
     @Override
@@ -929,17 +943,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessThan(Field<T> field) {
-        return compare(Comparator.LESS, nullSafe(field));
+        return compare(LESS, nullSafe(field));
     }
 
     @Override
     public final Condition lessThan(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, Comparator.LESS);
+        return compare(LESS, query);
     }
 
     @Override
     public final Condition lessThan(QuantifiedSelect<? extends Record1<T>> query) {
-        return new QuantifiedComparisonCondition(query, this, Comparator.LESS);
+        return compare(LESS, query);
     }
 
     @Override
@@ -949,17 +963,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessOrEqual(Field<T> field) {
-        return compare(Comparator.LESS_OR_EQUAL, nullSafe(field));
+        return compare(LESS_OR_EQUAL, nullSafe(field));
     }
 
     @Override
     public final Condition lessOrEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, Comparator.LESS_OR_EQUAL);
+        return compare(LESS_OR_EQUAL, query);
     }
 
     @Override
     public final Condition lessOrEqual(QuantifiedSelect<? extends Record1<T>> query) {
-        return new QuantifiedComparisonCondition(query, this, Comparator.LESS_OR_EQUAL);
+        return compare(LESS_OR_EQUAL, query);
     }
 
     @Override
@@ -969,17 +983,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterThan(Field<T> field) {
-        return compare(Comparator.GREATER, nullSafe(field));
+        return compare(GREATER, nullSafe(field));
     }
 
     @Override
     public final Condition greaterThan(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, Comparator.GREATER);
+        return compare(GREATER, query);
     }
 
     @Override
     public final Condition greaterThan(QuantifiedSelect<? extends Record1<T>> query) {
-        return new QuantifiedComparisonCondition(query, this, Comparator.GREATER);
+        return compare(GREATER, query);
     }
 
     @Override
@@ -989,17 +1003,17 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterOrEqual(Field<T> field) {
-        return compare(Comparator.GREATER_OR_EQUAL, nullSafe(field));
+        return compare(GREATER_OR_EQUAL, nullSafe(field));
     }
 
     @Override
     public final Condition greaterOrEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, Comparator.GREATER_OR_EQUAL);
+        return compare(GREATER_OR_EQUAL, query);
     }
 
     @Override
     public final Condition greaterOrEqual(QuantifiedSelect<? extends Record1<T>> query) {
-        return new QuantifiedComparisonCondition(query, this, Comparator.GREATER_OR_EQUAL);
+        return compare(GREATER_OR_EQUAL, query);
     }
 
     @Override
@@ -1017,6 +1031,16 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
             default:
                 return new CompareCondition(this, nullSafe(field), comparator);
         }
+    }
+
+    @Override
+    public final Condition compare(Comparator comparator, Select<? extends Record1<T>> query) {
+        return new SelectQueryAsSubQueryCondition(query, this, comparator);
+    }
+
+    @Override
+    public final Condition compare(Comparator comparator, QuantifiedSelect<? extends Record1<T>> query) {
+        return new QuantifiedComparisonCondition(query, this, comparator);
     }
 
     // ------------------------------------------------------------------------

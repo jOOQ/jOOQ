@@ -177,7 +177,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         // Before listener.resultStart(ctx)
         iterator();
 
-        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), fields);
+        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), closeAfterFetch() ? null : rs, fields);
         R record = null;
 
         ctx.result(result);

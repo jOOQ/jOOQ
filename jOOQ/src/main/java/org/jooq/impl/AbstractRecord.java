@@ -511,7 +511,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final ResultSet intoResultSet() {
-        ResultImpl<Record> result = new ResultImpl<Record>(configuration(), fields.fields.fields);
+        ResultImpl<Record> result = new ResultImpl<Record>(configuration(), rs, fields.fields.fields);
         result.add(this);
         return result.intoResultSet();
     }
@@ -654,7 +654,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public String toString() {
-        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), null, fields.fields.fields);
         result.add(this);
         return result.toString();
     }

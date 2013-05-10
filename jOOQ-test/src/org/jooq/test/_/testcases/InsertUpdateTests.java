@@ -151,15 +151,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .values(10)
                 .execute());
 
+        int firstId = create().select(max(id)).from(table).fetchOne(max(id));
+
         if (dialect() != POSTGRES &&
             dialect() != DB2) {
 
-            assertEquals(new BigInteger("1"), create().lastID());
+            assertEquals(new BigInteger("" + firstId), create().lastID());
         }
 
         R r1 = create().selectFrom(table).fetchOne();
 
-        assertEquals(1, (int) r1.getValue(id));
+        assertEquals(firstId, (int) r1.getValue(id));
         assertEquals(10, (int) r1.getValue(val));
 
         // INSERT .. RETURNING
@@ -173,11 +175,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         if (dialect() != POSTGRES &&
             dialect() != DB2) {
 
-            assertEquals(new BigInteger("2"), create().lastID());
-            assertEquals(new BigInteger("2"), create().lastID());
+            assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
+            assertEquals(new BigInteger("" + (firstId + 1)), create().lastID());
         }
 
-        assertEquals(2, (int) r2.getValue(id));
+        assertEquals(firstId + 1, (int) r2.getValue(id));
         assertEquals(11, (int) r2.getValue(val));
 
         // INSERT MULTIPLE .. RETURNING
@@ -207,8 +209,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(2, r3.size());
             assertNull(r3.getValue(0, val));
             assertNull(r3.getValue(1, val));
-            assertEquals(3, (int) r3.getValue(0, id));
-            assertEquals(4, (int) r3.getValue(1, id));
+            assertEquals(firstId + 2, (int) r3.getValue(0, id));
+            assertEquals(firstId + 3, (int) r3.getValue(1, id));
         }
     }
 

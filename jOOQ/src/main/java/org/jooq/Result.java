@@ -1083,6 +1083,10 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      */
     Result<R> intern(String... fieldNames);
 
+    // -------------------------------------------------------------------------
+    // Methods related to the underlying ResultSet (if applicable)
+    // -------------------------------------------------------------------------
+
     /**
      * Close the underlying JDBC {@link ResultSet}, if applicable.
      * <p>

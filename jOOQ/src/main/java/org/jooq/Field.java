@@ -1476,15 +1476,38 @@ public interface Field<T> extends GroupField {
     @Support
     Condition compare(Comparator comparator, Field<T> field);
 
-//    @Support
-//    Condition compare(Comparator comparator, Select<? extends Record1<T>> query);
-//
-//    @Support
-//    Condition compare(Comparator comparator, QuantifiedSelect<? extends Record1<T>> query);
-//
-//    // ------------------------------------------------------------------------
-//    // Comparison predicates
-//    // ------------------------------------------------------------------------
+    /**
+     * Compare this field with a subselect using a dynamic comparator.
+     * <p>
+     * Consider {@link Comparator#supportsSubselect()} to assess whether a
+     * comparator can be used with this method.
+     *
+     * @param comparator The comparator to use for comparing this field with a
+     *            subselect
+     * @param query The subselect to compare this field with
+     * @return A comparison predicate
+     */
+    @Support
+    Condition compare(Comparator comparator, Select<? extends Record1<T>> query);
+
+    /**
+     * Compare this field with a quantified subselect using a dynamic
+     * comparator.
+     * <p>
+     * Consider {@link Comparator#supportsQuantifier()} to assess whether a
+     * comparator can be used with this method.
+     *
+     * @param comparator The comparator to use for comparing this field with a
+     *            quantified subselect
+     * @param query The quantified subselect to compare this field with
+     * @return A comparison predicate
+     */
+    @Support
+    Condition compare(Comparator comparator, QuantifiedSelect<? extends Record1<T>> query);
+
+    // ------------------------------------------------------------------------
+    // Comparison predicates
+    // ------------------------------------------------------------------------
 
     /**
      * <code>this = value</code>.

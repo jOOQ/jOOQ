@@ -447,8 +447,9 @@ public abstract class jOOQAbstractTest<
 
         connection.close();
 
-        log.info("TEST STATISTICS");
-        log.info("---------------");
+        JooqLogger logStat = JooqLogger.getLogger(TestStatisticsListener.class);
+        logStat.info("TEST STATISTICS");
+        logStat.info("---------------");
 
         int total = 0;
         for (ExecuteType type : ExecuteType.values()) {
@@ -456,15 +457,17 @@ public abstract class jOOQAbstractTest<
             if (count == null) count = 0;
             total += count;
 
-            log.info(type.name(), count + " executions");
+            logStat.info(type.name(), count + " executions");
         }
 
-        log.info("---------------");
-        log.info("Total", total);
+        logStat.info("---------------");
+        logStat.info("Total", total);
 
-        log.info("");
-        log.info("EXECUTE LIFECYCLE STATS");
-        log.info("-----------------------");
+        logStat.info("");
+
+        JooqLogger logLife = JooqLogger.getLogger(LifecycleWatcherListener.class);
+        logLife.info("EXECUTE LIFECYCLE STATS");
+        logLife.info("-----------------------");
 
         int unbalanced = 0;
         for (Method m : LifecycleWatcherListener.START_COUNT.keySet()) {
@@ -474,7 +477,7 @@ public abstract class jOOQAbstractTest<
             if (!StringUtils.equals(starts, ends)) {
                 unbalanced++;
 
-                log.info(
+                logLife.info(
                     "Unbalanced", String.format("(start, end): (%1$3s, %2$3s) at %3$s",
                         starts,
                         ends == null ? 0 : ends,
@@ -482,7 +485,7 @@ public abstract class jOOQAbstractTest<
             }
         }
 
-        log.info("Unbalanced test: ", unbalanced);
+        logLife.info("Unbalanced test: ", unbalanced);
     }
 
     @SuppressWarnings("unused")

@@ -272,6 +272,31 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <T> void setValue(Field<T> field, T value) {
+
+        // [#1846] Execute this first to fail early, when UPDATE_ON_CHANGE fails
+        if (rs != null) {
+            int columnIndex = fieldsRow().indexOf(field) + 1;
+
+            if (log.isDebugEnabled()) {
+                log.debug("Updating Result", "Updating Result position " + rsIndex + ":" + columnIndex + " with value " + value);
+            }
+
+            try {
+                if (rs.getRow() != rsIndex) {
+                    rs.absolute(rsIndex);
+                }
+
+                // [#1846] TODO: Add more typesafety here
+                rs.updateObject(columnIndex, value);
+
+                // [#1846] TODO: Update only in case of KeepResultSetMode.UPDATE_ON_CHANGE
+                rs.updateRow();
+            }
+            catch (SQLException e) {
+                throw translate("Error when updating ResultSet", e);
+            }
+        }
+
         UniqueKey<?> key = getPrimaryKey();
         Value<T> val = getValue0(field);
 
@@ -293,23 +318,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
             if (val.isChanged()) {
                 changed(true);
-            }
-        }
-
-        if (rs != null) {
-            try {
-                if (rs.getRow() != rsIndex) {
-                    rs.absolute(rsIndex);
-                }
-
-                // [#1846] TODO: Add more typesafety here
-                rs.updateObject(fieldsRow().indexOf(field) + 1, value);
-
-                // [#1846] TODO: Update only in case of KeepResultSetMode.UPDATE_ON_CHANGE
-                rs.updateRow();
-            }
-            catch (SQLException e) {
-                throw translate("Error when updating ResultSet", e);
             }
         }
     }

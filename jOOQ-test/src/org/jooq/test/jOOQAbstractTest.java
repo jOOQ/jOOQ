@@ -2231,6 +2231,21 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testKeepRSWithUpdateOnChangeLazy() throws Exception {
+        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeLazy();
+    }
+
+    @Test
+    public void testKeepRSWithUpdateOnChangeUnsuccessful() throws Exception {
+        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeUnsuccessful();
+    }
+
+    @Test
+    public void testKeepRSWithUpdateOnChangeRemove() throws Exception {
+        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeRemove();
+    }
+
+    @Test
     public void testKeepStatement() throws Exception {
         new StatementTests(this).testKeepStatement();
     }

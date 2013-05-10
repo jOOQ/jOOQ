@@ -55,11 +55,24 @@ public enum KeepResultSetMode {
     /**
      * Close the JDBC {@link ResultSet} after consuming it (this is the
      * default).
+     * <p>
+     * If not explicitly overridden by
+     * {@link ResultQuery#resultSetConcurrency(int)} or
+     * {@link ResultQuery#resultSetType(int)}, this will apply
+     * {@link ResultSet#CONCUR_READ_ONLY} and
+     * {@link ResultSet#TYPE_FORWARD_ONLY}.
      */
     CLOSE_AFTER_FETCH,
 
     /**
      * Keep the JDBC {@link ResultSet} after consuming it.
+     * <p>
+     * If not explicitly overridden by
+     * {@link ResultQuery#resultSetConcurrency(int)} or
+     * {@link ResultQuery#resultSetType(int)}, this will apply
+     * {@link ResultSet#CONCUR_READ_ONLY} and
+     * {@link ResultSet#TYPE_SCROLL_SENSITIVE} (allowing for calls to
+     * {@link Record#refresh()} and {@link Result#refresh()}).
      * <p>
      * Client code must assure that the {@link ResultSet} is closed explicitly
      * to free database resources. Closing can be done through any of these
@@ -75,6 +88,12 @@ public enum KeepResultSetMode {
     /**
      * Keep the JDBC {@link ResultSet} after consuming it, updating the
      * <code>ResultSet</code> at every change of a {@link Record}.
+     * <p>
+     * If not explicitly overridden by
+     * {@link ResultQuery#resultSetConcurrency(int)} or
+     * {@link ResultQuery#resultSetType(int)}, this will apply
+     * {@link ResultSet#CONCUR_UPDATABLE} and
+     * {@link ResultSet#TYPE_SCROLL_SENSITIVE}.
      * <p>
      * TODO: More details here
      * <p>
@@ -93,6 +112,12 @@ public enum KeepResultSetMode {
      * Keep the JDBC {@link ResultSet} after consuming it, updating the
      * <code>ResultSet</code> at every call to {@link Record#store()}, or
      * {@link Result#store()} (<strong>This is not yet supported</strong>).
+     * <p>
+     * If not explicitly overridden by
+     * {@link ResultQuery#resultSetConcurrency(int)} or
+     * {@link ResultQuery#resultSetType(int)}, this will apply
+     * {@link ResultSet#CONCUR_UPDATABLE} and
+     * {@link ResultSet#TYPE_SCROLL_SENSITIVE}.
      * <p>
      * TODO: More details here
      * <p>

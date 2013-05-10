@@ -108,11 +108,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Result<B> b2 = create().selectFrom(TBook()).keepResultSet(CLOSE_AFTER_FETCH).fetch();
         assertNull(b2.resultSet());
 
+        // Changing a TITLE has no effect
+        b2.get(0).setValue(TBook_TITLE(), "XX");
+        assertTrue(b2.get(0).changed());
+        assertFalse(b2.get(0).original().equals(b2.get(0)));
+        assertEquals(BOOK_TITLES.get(0), getBook(1).getValue(TBook_TITLE()));
+
         Cursor<B> c1 = create().selectFrom(TBook()).keepResultSet(CLOSE_AFTER_FETCH).fetchLazy();
         assertTrue(c1.closesAfterFetch());
         while (c1.hasNext()) {
             Result<B> result = c1.fetch(1);
-            assertNotNull(result.get(0).resultSet());
+            assertNull(result.get(0).resultSet());
             assertNull(result.resultSet());
             assertNotNull(c1.resultSet());
         }
@@ -125,6 +131,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Result<B> b2 = create().selectFrom(TBook()).keepResultSet(KEEP_AFTER_FETCH).fetch();
         assertNotNull(b2.resultSet());
         testFailUpdateRow(b2.resultSet());
+
+        // Changing a TITLE has no effect
+        b2.get(0).setValue(TBook_TITLE(), "XX");
+        assertTrue(b2.get(0).changed());
+        assertFalse(b2.get(0).original().equals(b2.get(0)));
+        assertEquals(BOOK_TITLES.get(0), getBook(1).getValue(TBook_TITLE()));
+
         b2.close();
         assertNull(b2.resultSet());
 
@@ -205,7 +218,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
-    public void testKeepRSWithUpdateOnChangeUnsuccessful() throws Exception {
+    public void testKeepRSWithUpdateOnChangeFetchOne() throws Exception {
         jOOQAbstractTest.reset = false;
 
         B book =
@@ -215,10 +228,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .fetchOne();
 
         assertNotNull(book.resultSet());
+        assertFalse(book.changed());
+        assertEquals(book, book.original());
+
         book.setValue(TBook_AUTHOR_ID(), 2);
         assertEquals(2, (int) book.getValue(TBook_AUTHOR_ID()));
+        assertFalse(book.changed());
+        assertEquals(book, book.original());
+
         book.refresh();
         assertEquals(2, (int) book.getValue(TBook_AUTHOR_ID()));
+        assertFalse(book.changed());
+        assertEquals(book, book.original());
 
         try {
             book.setValue(TBook_AUTHOR_ID(), -1);
@@ -227,6 +248,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         catch (DataAccessException expected) {}
 
         assertEquals(2, (int) book.getValue(TBook_AUTHOR_ID()));
+        assertFalse(book.changed());
+        assertEquals(book, book.original());
+
         book.close();
         assertNull(book.resultSet());
     }
@@ -247,9 +271,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
      * - refresh() will pefrom a scan from the ResultSet
      *
      * [#1846] Add ResultQuery.keepResultSet() with UPDATE_ON_CHANGE
-     * - The successful setting of a value should modify the original() value.
      * - Implement all data types from ResultSet.updateXXX() (e.g. updateInt(), etc)
      * - Implement UPDATE_ON_STORE
-     * - Check if KEEP_AFTER_FETCH doesn't perform any operations on the ResultSet
+     * - refresh() should not execute a new query if a ResultSet is available
      */
 }

@@ -1202,7 +1202,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
                 for (Record record : this) {
                     if (record instanceof AbstractRecord) {
                         ((AbstractRecord) record).rs = null;
-                        ((AbstractRecord) record).rsIndex = 0;
                     }
                 }
             }

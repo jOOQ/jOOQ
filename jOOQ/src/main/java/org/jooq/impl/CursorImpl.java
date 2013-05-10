@@ -1288,6 +1288,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                     // [#1846] Add a reference to the Cursor's ResultSet if
                     // Updatable ResultSets are requested
                     if (!closesAfterFetch()) {
+                        record.keepResultSetMode = keepResultSetMode;
                         record.rs = rs;
                         record.rsIndex = rsIndex;
                     }

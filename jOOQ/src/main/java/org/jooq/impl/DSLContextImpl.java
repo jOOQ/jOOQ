@@ -637,7 +637,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     @Override
     public final Result<Record> fetchFromStringData(List<String[]> data) {
         if (data.size() == 0) {
-            return new ResultImpl<Record>(configuration);
+            return new ResultImpl<Record>(configuration, null);
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
@@ -646,7 +646,7 @@ class DSLContextImpl implements DSLContext, Serializable {
                 fields.add(fieldByName(String.class, name));
             }
 
-            Result<Record> result = new ResultImpl<Record>(configuration, fields);
+            Result<Record> result = new ResultImpl<Record>(configuration, null, fields);
 
             if (data.size() > 1) {
                 for (String[] values : data.subList(1, data.size())) {
@@ -1548,7 +1548,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     public final <R extends Record> Result<R> newResult(Table<R> table) {
-        return new ResultImpl<R>(configuration, table.fields());
+        return new ResultImpl<R>(configuration, null, table.fields());
     }
 
     // -------------------------------------------------------------------------

@@ -284,7 +284,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                     }
                 }
                 else {
-                    result = new ResultImpl<R>(ctx.configuration());
+                    result = new ResultImpl<R>(ctx.configuration(), null);
                 }
             }
 

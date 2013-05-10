@@ -276,6 +276,15 @@ public interface Cursor<R extends Record> extends Iterable<R> {
     <Z extends Record> Result<Z> fetchInto(Table<Z> table) throws DataAccessException, MappingException;
 
     /**
+     * Whether this <code>Cursor</code> closes itself after fetching all data.
+     * <p>
+     * By default, a <code>Cursor</code> will close itself after fetching all
+     * data. This behaviour can be overridden by
+     * {@link ResultQuery#keepResultSet(KeepResultSetMode)}, though.
+     */
+    boolean closesAfterFetch();
+
+    /**
      * Explicitly close the underlying {@link PreparedStatement} and
      * {@link ResultSet}.
      * <p>

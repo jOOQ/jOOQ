@@ -40,13 +40,16 @@ import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
 import static org.jooq.KeepResultSetMode.KEEP_AFTER_FETCH;
 import static org.jooq.KeepResultSetMode.UPDATE_ON_CHANGE;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 
 import org.jooq.Cursor;
 import org.jooq.Record1;
@@ -56,6 +59,7 @@ import org.jooq.Record6;
 import org.jooq.Result;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.exception.DataAccessException;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -105,8 +109,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(b2.resultSet());
 
         Cursor<B> c1 = create().selectFrom(TBook()).keepResultSet(CLOSE_AFTER_FETCH).fetchLazy();
+        assertTrue(c1.closesAfterFetch());
         while (c1.hasNext()) {
             Result<B> result = c1.fetch(1);
+            assertNotNull(result.get(0).resultSet());
             assertNull(result.resultSet());
             assertNotNull(c1.resultSet());
         }
@@ -123,8 +129,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(b2.resultSet());
 
         Cursor<B> c1 = create().selectFrom(TBook()).keepResultSet(KEEP_AFTER_FETCH).fetchLazy();
+        assertFalse(c1.closesAfterFetch());
         while (c1.hasNext()) {
             Result<B> result = c1.fetch(1);
+            assertNotNull(result.get(0).resultSet());
             assertNotNull(result.resultSet());
             assertNotNull(c1.resultSet());
         }
@@ -146,6 +154,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertNotNull(books.resultSet());
         for (int i = 0; i < books.size(); i++) {
+            assertNotNull(books.get(i).resultSet());
             books.get(i).setValue(TBook_TITLE(), "Title " + i);
         }
 
@@ -156,9 +165,91 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // After closing, setting values to records should no longer have any
         // effect
+        assertNotNull(books.resultSet());
         books.close();
         assertNull(books.resultSet());
         books.get(0).setValue(TBook_TITLE(), "XX");
         assertEquals("Title 0", getBook(1).getValue(TBook_TITLE()));
     }
+
+    @Test
+    public void testKeepRSWithUpdateOnChangeLazy() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        Cursor<B> books =
+        create().selectFrom(TBook())
+                .orderBy(TBook_ID())
+                .keepResultSet(UPDATE_ON_CHANGE)
+                .fetchLazy();
+
+        assertNotNull(books.resultSet());
+        assertFalse(books.closesAfterFetch());
+        while (books.hasNext()) {
+            B book = books.fetchOne();
+            assertNotNull(book.resultSet());
+            book.setValue(TBook_TITLE(), "Title X");
+        }
+
+        Result<B> booksTest = getBooks();
+        assertEquals(
+            Collections.nCopies(4, "Title X"),
+            booksTest.getValues(TBook_TITLE()));
+
+        // After closing, setting values to records should no longer have any
+        // effect
+        assertNotNull(books.resultSet());
+        assertFalse(books.isClosed());
+        books.close();
+        assertNull(books.resultSet());
+        assertTrue(books.isClosed());
+    }
+
+    @Test
+    public void testKeepRSWithUpdateOnChangeUnsuccessful() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        B book =
+        create().selectFrom(TBook())
+                .where(TBook_ID().eq(1))
+                .keepResultSet(UPDATE_ON_CHANGE)
+                .fetchOne();
+
+        assertNotNull(book.resultSet());
+        book.setValue(TBook_AUTHOR_ID(), 2);
+        assertEquals(2, (int) book.getValue(TBook_AUTHOR_ID()));
+        book.refresh();
+        assertEquals(2, (int) book.getValue(TBook_AUTHOR_ID()));
+
+        try {
+            book.setValue(TBook_AUTHOR_ID(), -1);
+            fail();
+        }
+        catch (DataAccessException expected) {}
+
+        assertEquals(2, (int) book.getValue(TBook_AUTHOR_ID()));
+        book.close();
+        assertNull(book.resultSet());
+    }
+
+    @Test
+    public void testKeepRSWithUpdateOnChangeRemove() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+    }
+
+    /*
+     * TODO: More tests:
+     * -----------------
+     *
+     * [#2265] Pull up store(), delete(), refresh() from UpdatableRecord
+     * - store() will perform a scan and update if UPDATE_ON_STORE is set. Otherwise: no-op
+     * - delete() will remove the record
+     * - refresh() will pefrom a scan from the ResultSet
+     *
+     * [#1846] Add ResultQuery.keepResultSet() with UPDATE_ON_CHANGE
+     * - The successful setting of a value should modify the original() value.
+     * - Implement all data types from ResultSet.updateXXX() (e.g. updateInt(), etc)
+     * - Implement UPDATE_ON_STORE
+     * - Check if KEEP_AFTER_FETCH doesn't perform any operations on the ResultSet
+     */
 }

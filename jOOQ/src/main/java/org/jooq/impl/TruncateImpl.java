@@ -41,12 +41,16 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
-import org.jooq.Truncate;
+import org.jooq.TruncateFinalStep;
+import org.jooq.TruncateIdentityStep;
 
 /**
  * @author Lukas Eder
  */
-class TruncateImpl<R extends Record> extends AbstractQuery implements Truncate<R> {
+class TruncateImpl<R extends Record> extends AbstractQuery implements
+
+    // Cascading interface implementations for Truncate behaviour
+    TruncateIdentityStep<R> {
 
     /**
      * Generated UID
@@ -54,11 +58,24 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements Truncate<R
     private static final long serialVersionUID = 8904572826501186329L;
 
     private final Table<R>    table;
+    private Boolean           cascade;
 
     public TruncateImpl(Configuration configuration, Table<R> table) {
         super(configuration);
 
         this.table = table;
+    }
+
+    @Override
+    public final TruncateFinalStep<R> cascade() {
+        cascade = true;
+        return this;
+    }
+
+    @Override
+    public final TruncateFinalStep<R> restrict() {
+        cascade = false;
+        return this;
     }
 
     @Override
@@ -84,6 +101,11 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements Truncate<R
 
                 break;
             }
+        }
+
+        if (cascade != null) {
+            context.sql(" ")
+                   .keyword(cascade ? "cascade" : "restrict");
         }
     }
 

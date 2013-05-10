@@ -182,7 +182,7 @@ import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
-import org.jooq.Truncate;
+import org.jooq.TruncateIdentityStep;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
@@ -1460,7 +1460,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends Record> Truncate<R> truncate(Table<R> table) {
+    public final <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
         return new TruncateImpl<R>(configuration, table);
     }
 

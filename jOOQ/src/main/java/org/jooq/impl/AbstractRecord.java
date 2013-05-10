@@ -42,9 +42,11 @@ import static org.jooq.impl.Utils.getAnnotatedMembers;
 import static org.jooq.impl.Utils.getMatchingGetter;
 import static org.jooq.impl.Utils.getMatchingMembers;
 import static org.jooq.impl.Utils.hasColumnAnnotations;
+import static org.jooq.impl.Utils.translate;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -78,6 +80,8 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     final RowImpl             fields;
     final Value<?>[]          values;
+    transient ResultSet       rs;
+    transient int             rsIndex;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(new RowImpl(fields));
@@ -287,6 +291,23 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
             if (val.isChanged()) {
                 changed(true);
+            }
+        }
+
+        if (rs != null) {
+            try {
+                if (rs.getRow() != rsIndex) {
+                    rs.absolute(rsIndex);
+                }
+
+                // [#1846] TODO: Add more typesafety here
+                rs.updateObject(fieldsRow().indexOf(field) + 1, value);
+
+                // [#1846] TODO: Update only in case of KeepResultSetMode.UPDATE_ON_CHANGE
+                rs.updateRow();
+            }
+            catch (SQLException e) {
+                throw translate("Error when updating ResultSet", e);
             }
         }
     }

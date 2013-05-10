@@ -306,7 +306,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
             finally {
 
                 // [#2385] Successful fetchLazy() needs to keep open resources
-                if (!keepResult() || ctx.exception() != null) {
+                if (!keepResultSet() || ctx.exception() != null) {
                     Utils.safeClose(listener, ctx, keepStatement());
                 }
 
@@ -329,7 +329,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
      * Default implementation to indicate whether this query should close the
      * {@link ResultSet} after execution. Subclasses may override this method.
      */
-    protected boolean keepResult() {
+    protected boolean keepResultSet() {
         return false;
     }
 

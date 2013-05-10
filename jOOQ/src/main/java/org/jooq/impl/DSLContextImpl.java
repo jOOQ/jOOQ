@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -561,7 +562,7 @@ class DSLContextImpl implements DSLContext, Serializable {
         ExecuteListener listener = new ExecuteListeners(ctx);
 
         ctx.resultSet(rs);
-        return new CursorImpl<Record>(ctx, listener, fields, null, true, false);
+        return new CursorImpl<Record>(ctx, listener, fields, null, false, true, CLOSE_AFTER_FETCH);
     }
 
     @Override

@@ -39,6 +39,9 @@ import static java.sql.ResultSet.CONCUR_UPDATABLE;
 import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
+import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
+import static org.jooq.KeepResultSetMode.UPDATE_ON_CHANGE;
+import static org.jooq.KeepResultSetMode.UPDATE_ON_STORE;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -63,6 +66,7 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.FutureResult;
+import org.jooq.KeepResultSetMode;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
@@ -88,6 +92,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractResultQuery.class);
 
     private int                     maxRows;
+    private KeepResultSetMode       keepResultSetMode;
     private int                     resultSetConcurrency;
     private int                     resultSetType;
     private int                     resultSetHoldability;
@@ -134,6 +139,15 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final ResultQuery<R> keepStatement(boolean k) {
         return (ResultQuery<R>) super.keepStatement(k);
+    }
+
+    @Override
+    public final ResultQuery<R> keepResultSet(KeepResultSetMode mode) {
+        if (mode == UPDATE_ON_STORE)
+            throw new UnsupportedOperationException("UPDATE_ON_STORE is not yet supported");
+
+        this.keepResultSetMode = mode;
+        return this;
     }
 
     @Override
@@ -210,6 +224,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             }
         }
 
+        // [#1846] When updatable Results are fetched
+        else if (keepResultSetMode == UPDATE_ON_CHANGE ||
+                 keepResultSetMode == UPDATE_ON_STORE) {
+            ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
+        }
+
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
         else if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect())) {
@@ -276,7 +296,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             if (!many) {
                 if (ctx.resultSet() != null) {
                     Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                    cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), lazy, keepStatement(), getRecordType());
+                    cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), keepStatement(), keepResultSet(), keepResultSetMode, getRecordType());
 
                     if (!lazy) {
                         result = cursor.fetch();
@@ -297,7 +317,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                     anyResults = true;
 
                     Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), false, true);
+                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), true, false, CLOSE_AFTER_FETCH);
                     results.add(c.fetch());
 
                     if (ctx.statement().getMoreResults()) {
@@ -328,8 +348,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    protected final boolean keepResult() {
-        return lazy;
+    protected final boolean keepResultSet() {
+        return lazy
+            || keepResultSetMode == UPDATE_ON_CHANGE
+            || keepResultSetMode == UPDATE_ON_STORE;
     }
 
     /**

@@ -94,12 +94,12 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6416154375799578362L;
+    private static final long   serialVersionUID = 6416154375799578362L;
 
-    private Configuration     configuration;
-    private ResultSet         rs;
-    private final Fields      fields;
-    private final List<R>     records;
+    private Configuration       configuration;
+    private transient ResultSet rs;
+    private final Fields        fields;
+    private final List<R>       records;
 
     ResultImpl(Configuration configuration, ResultSet rs, Collection<? extends Field<?>> fields) {
         this(configuration, rs, new Fields(fields));
@@ -1198,7 +1198,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             if (rs != null) {
                 rs.close();
                 rs = null;
-                
+
                 for (Record record : this) {
                     if (record instanceof AbstractRecord) {
                         ((AbstractRecord) record).rs = null;

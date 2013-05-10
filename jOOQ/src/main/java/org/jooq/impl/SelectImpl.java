@@ -56,6 +56,7 @@ import org.jooq.ForeignKey;
 import org.jooq.FutureResult;
 import org.jooq.GroupField;
 import org.jooq.JoinType;
+import org.jooq.KeepResultSetMode;
 import org.jooq.Operator;
 import org.jooq.Param;
 import org.jooq.QueryPart;
@@ -916,6 +917,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     @Override
     public final ResultQuery<R> maxRows(int rows) {
         return getDelegate().maxRows(rows);
+    }
+
+    @Override
+    public ResultQuery<R> keepResultSet(KeepResultSetMode mode) {
+        return getDelegate().keepResultSet(mode);
     }
 
     @Override

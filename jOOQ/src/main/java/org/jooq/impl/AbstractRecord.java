@@ -64,6 +64,7 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
+import org.jooq.tools.JooqLogger;
 
 /**
  * A general base class for all {@link Record} types
@@ -76,12 +77,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -6052512608911220404L;
+    private static final long       serialVersionUID = -6052512608911220404L;
+    private static final JooqLogger log              = JooqLogger.getLogger(AbstractRecord.class);
 
-    final RowImpl             fields;
-    final Value<?>[]          values;
-    transient ResultSet       rs;
-    transient int             rsIndex;
+    final RowImpl                   fields;
+    final Value<?>[]                values;
+    transient ResultSet             rs;
+    transient int                   rsIndex;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(new RowImpl(fields));
@@ -667,6 +669,28 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         else {
             Utils.setValue(this, field, member.get(source));
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX: Methods related to the underlying ResultSet (if applicable)
+    // -------------------------------------------------------------------------
+
+    @Override
+    public final void close() {
+        try {
+            if (rs != null) {
+                rs.close();
+                rs = null;
+            }
+        }
+        catch (SQLException e) {
+            throw translate("Cannot close ResultSet", e);
+        }
+    }
+
+    @Override
+    public final ResultSet resultSet() {
+        return rs;
     }
 
     // ------------------------------------------------------------------------

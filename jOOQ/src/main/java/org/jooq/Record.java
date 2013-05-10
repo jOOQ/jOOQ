@@ -48,6 +48,7 @@ import java.util.Map;
 
 import javax.persistence.Column;
 
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
@@ -1036,4 +1037,37 @@ public interface Record extends Attachable, Comparable<Record> {
      */
     @Override
     int compareTo(Record record);
+
+    // -------------------------------------------------------------------------
+    // Methods related to the underlying ResultSet (if applicable)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Close the underlying JDBC {@link ResultSet}, if applicable.
+     * <p>
+     * If this <code>Record</code> was created using
+     * {@link ResultQuery#keepResultSet(KeepResultSetMode)}, then it closes the
+     * underlying JDBC {@link ResultSet}. Otherwise, this method has no effect.
+     * <p>
+     * Note, this will close the <code>ResultSet</code> for all records that
+     * were fetched from the same <code>ResultQuery</code>.
+     *
+     * @throws DataAccessException If something went wrong closing the
+     *             underlying {@link ResultSet}
+     * @see #resultSet()
+     */
+    void close() throws DataAccessException;
+
+    /**
+     * Get the underlying JDBC {@link ResultSet}, if applicable.
+     * <p>
+     * This method returns the underlying JDBC {@link ResultSet}, if this
+     * <code>Record</code> was created using
+     * {@link ResultQuery#keepResultSet(KeepResultSetMode)}. Otherwise, this
+     * method returns <code>null</code>.
+     *
+     * @return The underlying JDBC <code>ResultSet</code>, or <code>null</code>
+     */
+    ResultSet resultSet();
+
 }

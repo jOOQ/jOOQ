@@ -795,6 +795,15 @@ public abstract class BaseTest<
                        .fetchOne();
     }
 
+    /**
+     * Convenience method to get a book
+     */
+    protected final Result<B> getBooks() {
+        return create().selectFrom(TBook())
+                       .orderBy(TBook_ID())
+                       .fetch();
+    }
+
     protected final String zeroDate() {
         return new Date(0).toString();
     }

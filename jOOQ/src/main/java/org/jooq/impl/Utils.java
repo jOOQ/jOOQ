@@ -1079,7 +1079,7 @@ final class Utils {
     /**
      * Safely close a statement
      */
-    static final void safeClose(ExecuteListener listener, ExecuteContext ctx, boolean keepStatement, boolean end) {
+    static final void safeClose(ExecuteListener listener, ExecuteContext ctx, boolean keepStatement, boolean keepResultSet) {
         JDBCUtils.safeClose(ctx.resultSet());
 
         // [#385] Close statements only if not requested to keep open
@@ -1087,7 +1087,7 @@ final class Utils {
             JDBCUtils.safeClose(ctx.statement());
 
         // [#1868] [#2373] Terminate ExecuteListener lifecycle, if needed
-        if (end)
+        if (keepResultSet)
             listener.end(ctx);
 
         // [#1326] Clean up any potentially remaining temporary lobs

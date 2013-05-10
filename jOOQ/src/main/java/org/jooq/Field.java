@@ -1451,7 +1451,7 @@ public interface Field<T> extends GroupField {
     BetweenAndStep<T> notBetweenSymmetric(Field<T> minValue);
 
     // ------------------------------------------------------------------------
-    // Comparison predicates
+    // Dynamic comparison predicates
     // ------------------------------------------------------------------------
 
     /**
@@ -1475,6 +1475,16 @@ public interface Field<T> extends GroupField {
      */
     @Support
     Condition compare(Comparator comparator, Field<T> field);
+
+//    @Support
+//    Condition compare(Comparator comparator, Select<? extends Record1<T>> query);
+//
+//    @Support
+//    Condition compare(Comparator comparator, QuantifiedSelect<? extends Record1<T>> query);
+//
+//    // ------------------------------------------------------------------------
+//    // Comparison predicates
+//    // ------------------------------------------------------------------------
 
     /**
      * <code>this = value</code>.

@@ -37,26 +37,26 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
+import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.Select;
-import org.jooq.SubqueryComparator;
 
 /**
  * @author Lukas Eder
  */
 class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
-    private static final long        serialVersionUID = -402776705884329740L;
+    private static final long serialVersionUID = -402776705884329740L;
 
-    private final Select<?>          query;
-    private final Field<?>           field;
-    private final SubqueryComparator operator;
+    private final Select<?>   query;
+    private final Field<?>    field;
+    private final Comparator  comparator;
 
-    SelectQueryAsSubQueryCondition(Select<?> query, Field<?> field, SubqueryComparator operator) {
+    SelectQueryAsSubQueryCondition(Select<?> query, Field<?> field, Comparator comparator) {
         this.query = query;
         this.field = field;
-        this.operator = operator;
+        this.comparator = comparator;
     }
 
     @Override
@@ -66,7 +66,7 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
         if (context.subquery()) {
             context.sql(field)
                    .sql(" ")
-                   .keyword(operator.toSQL())
+                   .keyword(comparator.toSQL())
                    .sql(" (")
                    .formatIndentStart()
                    .formatNewLine()
@@ -78,7 +78,7 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
         else {
             context.sql(field)
                    .sql(" ")
-                   .keyword(operator.toSQL())
+                   .keyword(comparator.toSQL())
                    .sql(" (")
                    .subquery(true)
                    .formatIndentStart()

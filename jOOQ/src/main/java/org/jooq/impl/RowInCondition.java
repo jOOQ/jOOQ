@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
@@ -45,12 +46,12 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
-import static org.jooq.SubqueryComparator.NOT_IN;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Operator;
@@ -58,7 +59,6 @@ import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.Row;
-import org.jooq.SubqueryComparator;
 
 /**
  * @author Lukas Eder
@@ -72,12 +72,12 @@ class RowInCondition extends AbstractCondition {
 
     private final Row                          left;
     private final QueryPartList<? extends Row> right;
-    private final SubqueryComparator           operator;
+    private final Comparator                   comparator;
 
-    RowInCondition(Row left, QueryPartList<? extends Row> right, SubqueryComparator operator) {
+    RowInCondition(Row left, QueryPartList<? extends Row> right, Comparator comparator) {
         this.left = left;
         this.right = right;
-        this.operator = operator;
+        this.comparator = comparator;
     }
 
     @Override
@@ -100,7 +100,7 @@ class RowInCondition extends AbstractCondition {
 
             Condition result = new CombinedCondition(Operator.OR, conditions);
 
-            if (operator == NOT_IN) {
+            if (comparator == NOT_IN) {
                 result = result.not();
             }
 
@@ -122,7 +122,7 @@ class RowInCondition extends AbstractCondition {
         public final void toSQL(RenderContext context) {
             context.sql(left)
                    .sql(" ")
-                   .keyword(operator.toSQL())
+                   .keyword(comparator.toSQL())
                    .sql(" (")
                    .sql(right)
                    .sql(")");

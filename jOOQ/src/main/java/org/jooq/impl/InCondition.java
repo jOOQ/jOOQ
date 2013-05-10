@@ -40,26 +40,26 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.RenderContext;
-import org.jooq.SubqueryComparator;
 
 /**
  * @author Lukas Eder
  */
 class InCondition<T> extends AbstractCondition {
 
-    private static final long        serialVersionUID = -1653924248576930761L;
-    private static final int         IN_LIMIT         = 1000;
+    private static final long serialVersionUID = -1653924248576930761L;
+    private static final int  IN_LIMIT         = 1000;
 
-    private final Field<T>           field;
-    private final Field<?>[]         values;
-    private final SubqueryComparator operator;
+    private final Field<T>    field;
+    private final Field<?>[]  values;
+    private final Comparator  comparator;
 
-    InCondition(Field<T> field, Field<?>[] values, SubqueryComparator operator) {
+    InCondition(Field<T> field, Field<?>[] values, Comparator comparator) {
         this.field = field;
         this.values = values;
-        this.operator = operator;
+        this.comparator = comparator;
     }
 
     @Override
@@ -88,7 +88,7 @@ class InCondition<T> extends AbstractCondition {
 
                             // [#1515] The connector depends on the IN / NOT IN
                             // operator
-                            if (operator == SubqueryComparator.IN) {
+                            if (comparator == Comparator.IN) {
                                 context.formatSeparator()
                                        .keyword("or ");
                             }
@@ -125,7 +125,7 @@ class InCondition<T> extends AbstractCondition {
     private void toSQLSubValues(RenderContext context, List<Field<?>> subValues) {
         context.sql(field)
                .sql(" ")
-               .keyword(operator.toSQL())
+               .keyword(comparator.toSQL())
                .sql(" (");
 
         if (subValues.size() > 1) {

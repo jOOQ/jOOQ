@@ -4284,12 +4284,15 @@ public interface DSLContext {
     /**
      * Create a new DSL truncate statement.
      * <p>
-     * Example: <code><pre>
+     * Example:
+     * <p>
+     * <code><pre>
      * DSLContext create = DSL.using(configuration);
      *
      * create.truncate(table)
      *       .execute();
      * </pre></code>
+     * <h3>Simulation of <code>TRUNCATE</code></h3>
      * <p>
      * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
      * supported, it is simulated using an equivalent <code>DELETE</code>
@@ -4299,12 +4302,23 @@ public interface DSLContext {
      * <li> {@link SQLDialect#INGRES}</li>
      * <li> {@link SQLDialect#SQLITE}</li>
      * </ul>
+     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
      * <p>
-     * Note, this statement is only supported in DSL mode. Immediate execution
-     * is omitted for future extensibility of this command.
+     * Some statements also support extensions of the <code>TRUNCATE</code>
+     * statement, such as Postgres:
+     * <p>
+     * <code><pre>
+     * create.truncate(table)
+     *       .restartIdentity()
+     *       .cascade()
+     *       .execute();
+     * </pre></code>
+     * <p>
+     * These vendor-specific extensions are currently not simulated for those
+     * dialects that do not support them natively.
      */
     @Support
-    <R extends Record> Truncate<R> truncate(Table<R> table);
+    <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table);
 
     // -------------------------------------------------------------------------
     // XXX Other queries for identites and sequences

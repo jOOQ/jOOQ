@@ -39,7 +39,6 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.fail;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -1230,25 +1229,5 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals("XX", author.getValue(TAuthor_LAST_NAME()));
         assertEquals("YY", book.getValue(TBook_TITLE()));
-    }
-
-    @Test
-    public void testTruncate() throws Exception {
-        jOOQAbstractTest.reset = false;
-
-        try {
-            create().truncate(TAuthor()).execute();
-
-            // The above should fail if foreign keys are supported
-            if (!Arrays.asList(CUBRID, FIREBIRD, INGRES, SQLITE).contains(dialect())) {
-                fail();
-            }
-        } catch (Exception expected) {
-        }
-
-        // This is being tested with an unreferenced table as some RDBMS don't
-        // Allow this
-        create().truncate(TDates()).execute();
-        assertEquals(0, create().fetch(TDates()).size());
     }
 }

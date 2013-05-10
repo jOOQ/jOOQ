@@ -137,6 +137,7 @@ import org.jooq.test._.testcases.SchemaAndMappingTests;
 import org.jooq.test._.testcases.SelectTests;
 import org.jooq.test._.testcases.StatementTests;
 import org.jooq.test._.testcases.ThreadSafetyTests;
+import org.jooq.test._.testcases.TruncateTests;
 import org.jooq.test._.testcases.ValuesConstructorTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
@@ -1026,7 +1027,12 @@ public abstract class jOOQAbstractTest<
 
     @Test
     public void testTruncate() throws Exception {
-        new InsertUpdateTests(this).testTruncate();
+        new TruncateTests(this).testTruncate();
+    }
+
+    @Test
+    public void testTruncateCascade() throws Exception {
+        new TruncateTests(this).testTruncateCascade();
     }
 
     @Test

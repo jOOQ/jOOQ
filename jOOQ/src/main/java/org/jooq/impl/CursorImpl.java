@@ -119,7 +119,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         }
     }
 
-    final boolean closeAfterFetch() {
+    @Override
+    public final boolean closesAfterFetch() {
         return keepResultSetMode == null || keepResultSetMode == CLOSE_AFTER_FETCH;
     }
 
@@ -186,7 +187,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         // Before listener.resultStart(ctx)
         iterator();
 
-        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), closeAfterFetch() ? null : rs, fields);
+        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), closesAfterFetch() ? null : rs, fields);
         R record = null;
 
         ctx.result(result);
@@ -1286,7 +1287,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
                     // [#1846] Add a reference to the Cursor's ResultSet if
                     // Updatable ResultSets are requested
-                    if (!closeAfterFetch()) {
+                    if (!closesAfterFetch()) {
                         record.rs = rs;
                         record.rsIndex = rsIndex;
                     }
@@ -1317,7 +1318,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             // the result is not eager-fetched.
             // [#1846] When fetching updatable Results, do not close the
             // Cursor's ResultSet!
-            if (record == null && closeAfterFetch()) {
+            if (record == null && closesAfterFetch()) {
                 CursorImpl.this.close();
             }
 

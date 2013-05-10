@@ -516,7 +516,9 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             return c.fetchOne();
         }
         finally {
-            c.close();
+            if (c.closesAfterFetch()) {
+                c.close();
+            }
         }
     }
 

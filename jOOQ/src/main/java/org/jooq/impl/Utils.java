@@ -754,7 +754,9 @@ final class Utils {
             return record;
         }
         finally {
-            cursor.close();
+            if (cursor.closesAfterFetch()) {
+                cursor.close();
+            }
         }
     }
 

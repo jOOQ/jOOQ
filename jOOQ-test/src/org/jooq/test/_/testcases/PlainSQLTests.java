@@ -421,6 +421,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(author, record);
         assertEquals(author, result.get(0));
         assertEquals(author, cursor.fetchOne());
+
+        cursor.close();
     }
 
     @Test

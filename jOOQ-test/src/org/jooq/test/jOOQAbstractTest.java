@@ -1036,6 +1036,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testTruncateRestartIdentity() throws Exception {
+        new TruncateTests(this).testTruncateRestartIdentity();
+    }
+
+    @Test
     public void testMetaModel() throws Exception {
         new MetaDataTests(this).testMetaModel();
     }

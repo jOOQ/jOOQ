@@ -45,6 +45,7 @@ import static org.jooq.SQLDialect.SQLITE;
 import java.sql.Date;
 import java.util.Arrays;
 
+import org.jooq.InsertResultStep;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -105,7 +106,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testTruncateCascade() throws Exception {
         switch (dialect()) {
+            case ASE:
             case CUBRID:
+            case DB2:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case HSQLDB:
+            case INGRES:
+            case MYSQL:
+            case ORACLE:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
                 log.info("SKIPPING", "TRUNCATE CASCADE tests");
                 return;
         }
@@ -126,5 +139,47 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .execute();
         assertEquals(0, create().fetch(TAuthor()).size());
         assertEquals(0, create().fetch(TBook()).size());
+    }
+
+    @Test
+    public void testTruncateRestartIdentity() throws Exception {
+        switch (dialect()) {
+            case ASE:
+            case CUBRID:
+            case DB2:
+            case DERBY:
+            case FIREBIRD:
+            case H2:
+            case INGRES:
+            case MYSQL:
+            case ORACLE:
+            case SQLITE:
+            case SQLSERVER:
+            case SYBASE:
+                log.info("SKIPPING", "RESTART IDENTITY tests");
+                return;
+        }
+
+        jOOQAbstractTest.reset = false;
+
+        InsertResultStep<I> insert =
+        create().insertInto(TIdentity(), TIdentity_VAL())
+                .values(1)
+                .returning(TIdentity_ID());
+        int id1 = insert.fetchOne().getValue(TIdentity_ID());
+
+
+        create().truncate(TIdentity())
+                .continueIdentity()
+                .execute();
+        int id2 = insert.fetchOne().getValue(TIdentity_ID());
+        assertEquals(id1 + 1, id2);
+
+
+        create().truncate(TIdentity())
+                .restartIdentity()
+                .execute();
+        int id3 = insert.fetchOne().getValue(TIdentity_ID());
+        assertEquals(1, id3);
     }
 }

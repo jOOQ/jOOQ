@@ -128,6 +128,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepRSWithKeepAfterFetch() throws Exception {
+        switch (dialect()) {
+            case SQLITE:
+                log.info("SKIPPING", "KeepResultSet tests");
+                return;
+        }
+
         Result<B> b2 = create().selectFrom(TBook()).keepResultSet(KEEP_AFTER_FETCH).fetch();
         assertNotNull(b2.resultSet());
         testFailUpdateRow(b2.resultSet());
@@ -157,6 +163,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepRSWithUpdateOnChange() throws Exception {
+        switch (dialect()) {
+            case SQLITE:
+                log.info("SKIPPING", "KeepResultSet tests");
+                return;
+        }
+
         jOOQAbstractTest.reset = false;
 
         Result<B> books =
@@ -187,6 +199,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepRSWithUpdateOnChangeLazy() throws Exception {
+        switch (dialect()) {
+            case SQLITE:
+                log.info("SKIPPING", "KeepResultSet tests");
+                return;
+        }
+
         jOOQAbstractTest.reset = false;
 
         Cursor<B> books =
@@ -219,6 +237,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepRSWithUpdateOnChangeFetchOne() throws Exception {
+        switch (dialect()) {
+            case SQLITE:
+                log.info("SKIPPING", "KeepResultSet tests");
+                return;
+        }
+
         jOOQAbstractTest.reset = false;
 
         B book =
@@ -257,6 +281,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepRSWithUpdateOnChangeRemove() throws Exception {
+        switch (dialect()) {
+            case SQLITE:
+                log.info("SKIPPING", "KeepResultSet tests");
+                return;
+        }
+
         jOOQAbstractTest.reset = false;
 
     }

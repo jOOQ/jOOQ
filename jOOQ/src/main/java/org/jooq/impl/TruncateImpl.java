@@ -41,6 +41,7 @@ import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
+import org.jooq.TruncateCascadeStep;
 import org.jooq.TruncateFinalStep;
 import org.jooq.TruncateIdentityStep;
 
@@ -59,6 +60,7 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
 
     private final Table<R>    table;
     private Boolean           cascade;
+    private Boolean           restartIdentity;
 
     public TruncateImpl(Configuration configuration, Table<R> table) {
         super(configuration);
@@ -75,6 +77,18 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final TruncateFinalStep<R> restrict() {
         cascade = false;
+        return this;
+    }
+
+    @Override
+    public final TruncateCascadeStep<R> restartIdentity() {
+        restartIdentity = true;
+        return this;
+    }
+
+    @Override
+    public final TruncateCascadeStep<R> continueIdentity() {
+        restartIdentity = false;
         return this;
     }
 
@@ -103,8 +117,13 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
             }
         }
 
+        if (restartIdentity != null) {
+            context.formatSeparator()
+                   .keyword(restartIdentity ? "restart identity" : "continue identity");
+        }
+
         if (cascade != null) {
-            context.sql(" ")
+            context.formatSeparator()
                    .keyword(cascade ? "cascade" : "restrict");
         }
     }

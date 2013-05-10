@@ -35,6 +35,9 @@
  */
 package org.jooq;
 
+import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.POSTGRES;
+
 /**
  * A {@link Query} that can truncate a table in the database.
  *
@@ -42,4 +45,17 @@ package org.jooq;
  */
 public interface TruncateIdentityStep<R extends Record> extends TruncateCascadeStep<R> {
 
+    /**
+     * Add the <code>RESTART IDENTITY</code> clause to the <code>TRUNCATE</code>
+     * statement.
+     */
+    @Support({ HSQLDB, POSTGRES })
+    TruncateCascadeStep<R> restartIdentity();
+
+    /**
+     * Add the <code>CONTINUE IDENTITY</code> clause to the
+     * <code>TRUNCATE</code> statement.
+     */
+    @Support({ HSQLDB, POSTGRES })
+    TruncateCascadeStep<R> continueIdentity();
 }

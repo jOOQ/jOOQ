@@ -36,16 +36,16 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.IN;
+import static org.jooq.Comparator.NOT_EQUALS;
+import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SubqueryComparator.EQUALS;
-import static org.jooq.SubqueryComparator.IN;
-import static org.jooq.SubqueryComparator.NOT_EQUALS;
-import static org.jooq.SubqueryComparator.NOT_IN;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.notExists;
@@ -57,6 +57,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -67,7 +68,6 @@ import org.jooq.Row;
 import org.jooq.RowN;
 import org.jooq.SQLDialect;
 import org.jooq.Select;
-import org.jooq.SubqueryComparator;
 
 /**
  * @author Lukas Eder
@@ -77,16 +77,16 @@ class RowSubqueryCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long        serialVersionUID = -1806139685201770706L;
+    private static final long serialVersionUID = -1806139685201770706L;
 
-    private final Row                left;
-    private final Select<?>          right;
-    private final SubqueryComparator operator;
+    private final Row         left;
+    private final Select<?>   right;
+    private final Comparator  comparator;
 
-    RowSubqueryCondition(Row left, Select<?> right, SubqueryComparator operator) {
+    RowSubqueryCondition(Row left, Select<?> right, Comparator comparator) {
         this.left = left;
         this.right = right;
-        this.operator = operator;
+        this.comparator = comparator;
     }
 
     @Override
@@ -111,7 +111,7 @@ class RowSubqueryCondition extends AbstractCondition {
         // [#2395] These dialects have native support for = and <>
         else if (
             asList(H2, HSQLDB, MYSQL, ORACLE, POSTGRES).contains(dialect) &&
-            asList(EQUALS, NOT_EQUALS).contains(operator)) {
+            asList(EQUALS, NOT_EQUALS).contains(comparator)) {
 
             return new Native();
         }
@@ -119,7 +119,7 @@ class RowSubqueryCondition extends AbstractCondition {
         // [#2395] These dialects have native support for IN and NOT IN
         else if (
             asList(H2, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES).contains(dialect) &&
-            asList(IN, NOT_IN).contains(operator)) {
+            asList(IN, NOT_IN).contains(comparator)) {
 
             return new Native();
         }
@@ -139,7 +139,7 @@ class RowSubqueryCondition extends AbstractCondition {
             }
 
             Condition condition;
-            switch (operator) {
+            switch (comparator) {
                 case GREATER:
                     condition = ((RowN) left).gt(row(fields));
                     break;
@@ -169,7 +169,7 @@ class RowSubqueryCondition extends AbstractCondition {
             select().from(right.asTable(table, names.toArray(new String[0])))
                     .where(condition);
 
-            switch (operator) {
+            switch (comparator) {
                 case NOT_IN:
                 case NOT_EQUALS:
                     return (QueryPartInternal) notExists(subselect);
@@ -197,7 +197,7 @@ class RowSubqueryCondition extends AbstractCondition {
 
             context.sql(left)
                    .sql(" ")
-                   .keyword(operator.toSQL())
+                   .keyword(comparator.toSQL())
                    .sql(" (")
                    .sql(extraParentheses ? "(" : "");
             context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);

@@ -36,65 +36,97 @@
 
 package org.jooq;
 
-
 /**
- * A comparator to be used in conditions.
+ * A comparator to be used in conditions to form comparison predicates.
  * <p>
  * Comparison operators listed here can be used to compare {@link Field} or
- * {@link Row} values with other {@link Field} or {@link Row} values. See
- * {@link SubqueryComparator} for comparing {@link Field} or {@link Row} values
- * with subselects.
+ * {@link Row} values with other {@link Field} or {@link Row} values, or with
+ * {@link Select} or {@link QuantifiedSelect} values.
+ * <p>
+ * The following flags indicate whether the comparator can be used as:
+ * <ul>
+ * <li>a quantified comparison operator: {@link #supportsQuantifier()}. Example:
+ * <code>X = ANY (A, B, C)</code></li>
+ * <li>a subselect comparison operator: {@link #supportsSubselect()}. Example:
+ * <code>X = (SELECT A)</code></li>
+ * </ul>
  *
  * @author Lukas Eder
- * @see SubqueryComparator
  */
 public enum Comparator {
 
     @Support
-    EQUALS("="),
+    IN("in", false, true),
 
     @Support
-    NOT_EQUALS("<>"),
+    NOT_IN("not in", false, true),
 
     @Support
-    LESS("<"),
+    EQUALS("=", true, true),
 
     @Support
-    LESS_OR_EQUAL("<="),
+    NOT_EQUALS("<>", true, true),
 
     @Support
-    GREATER(">"),
+    LESS("<", true, true),
 
     @Support
-    GREATER_OR_EQUAL(">="),
+    LESS_OR_EQUAL("<=", true, true),
 
     @Support
-    IS_DISTINCT_FROM("is distinct from"),
+    GREATER(">", true, true),
 
     @Support
-    IS_NOT_DISTINCT_FROM("is not distinct from"),
+    GREATER_OR_EQUAL(">=", true, true),
 
     @Support
-    LIKE("like"),
+    IS_DISTINCT_FROM("is distinct from", false, false),
 
     @Support
-    NOT_LIKE("not like"),
+    IS_NOT_DISTINCT_FROM("is not distinct from", false, false),
 
     @Support
-    LIKE_IGNORE_CASE("ilike"),
+    LIKE("like", false, false),
 
     @Support
-    NOT_LIKE_IGNORE_CASE("not ilike"),
+    NOT_LIKE("not like", false, false),
+
+    @Support
+    LIKE_IGNORE_CASE("ilike", false, false),
+
+    @Support
+    NOT_LIKE_IGNORE_CASE("not ilike", false, false),
 
     ;
 
-    private final String sql;
+    private final String  sql;
+    private final boolean supportsQuantifier;
+    private final boolean supportsSubselect;
 
-    private Comparator(String sql) {
+    private Comparator(String sql, boolean supportsQuantifier, boolean supportsSubselect) {
         this.sql = sql;
+        this.supportsQuantifier = supportsQuantifier;
+        this.supportsSubselect = supportsSubselect;
     }
 
+    /**
+     * A SQL rendition of this comparator.
+     */
     public String toSQL() {
         return sql;
+    }
+
+    /**
+     * Whether this comparator supports quantifiers on the right-hand side.
+     */
+    public boolean supportsQuantifier() {
+        return supportsQuantifier;
+    }
+
+    /**
+     * Whether this comparator supports subselects on the right-hand side.
+     */
+    public boolean supportsSubselect() {
+        return supportsSubselect;
     }
 }

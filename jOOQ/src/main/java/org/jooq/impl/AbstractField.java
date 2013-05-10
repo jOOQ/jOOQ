@@ -70,7 +70,6 @@ import org.jooq.RenderContext;
 import org.jooq.Select;
 import org.jooq.SortField;
 import org.jooq.SortOrder;
-import org.jooq.SubqueryComparator;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowPartitionByStep;
 import org.jooq.tools.Convert;
@@ -612,7 +611,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
             return falseCondition();
         }
         else {
-            return new InCondition<T>(this, nullSafe(values), SubqueryComparator.IN);
+            return new InCondition<T>(this, nullSafe(values), Comparator.IN);
         }
     }
 
@@ -629,7 +628,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition in(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubqueryComparator.IN);
+        return new SelectQueryAsSubQueryCondition(query, this, Comparator.IN);
     }
 
     @Override
@@ -644,7 +643,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notIn(Field<?>... values) {
-        return new InCondition<T>(this, nullSafe(values), SubqueryComparator.NOT_IN);
+        return new InCondition<T>(this, nullSafe(values), Comparator.NOT_IN);
     }
 
     @Override
@@ -660,7 +659,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notIn(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubqueryComparator.NOT_IN);
+        return new SelectQueryAsSubQueryCondition(query, this, Comparator.NOT_IN);
     }
 
     @Override
@@ -885,7 +884,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition equal(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubqueryComparator.EQUALS);
+        return new SelectQueryAsSubQueryCondition(query, this, Comparator.EQUALS);
     }
 
     @Override
@@ -915,7 +914,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition notEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubqueryComparator.NOT_EQUALS);
+        return new SelectQueryAsSubQueryCondition(query, this, Comparator.NOT_EQUALS);
     }
 
     @Override
@@ -935,7 +934,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessThan(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubqueryComparator.LESS);
+        return new SelectQueryAsSubQueryCondition(query, this, Comparator.LESS);
     }
 
     @Override
@@ -955,7 +954,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition lessOrEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubqueryComparator.LESS_OR_EQUAL);
+        return new SelectQueryAsSubQueryCondition(query, this, Comparator.LESS_OR_EQUAL);
     }
 
     @Override
@@ -975,7 +974,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterThan(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubqueryComparator.GREATER);
+        return new SelectQueryAsSubQueryCondition(query, this, Comparator.GREATER);
     }
 
     @Override
@@ -995,7 +994,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public final Condition greaterOrEqual(Select<? extends Record1<T>> query) {
-        return new SelectQueryAsSubQueryCondition(query, this, SubqueryComparator.GREATER_OR_EQUAL);
+        return new SelectQueryAsSubQueryCondition(query, this, Comparator.GREATER_OR_EQUAL);
     }
 
     @Override

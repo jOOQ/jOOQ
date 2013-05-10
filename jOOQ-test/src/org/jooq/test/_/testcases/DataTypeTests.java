@@ -1628,8 +1628,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     val("1").coerce(Short.class),
                     val(2).coerce(String.class))
                 .from(TBook())
-                .where(id1.in(1L, 2L))
-                .and(id2.in("1", "2"))
+                .where(id1.in(val(1).coerce(Long.class), val(2).coerce(Long.class)))
+                .and(id2.in(val(1).coerce(String.class), val(2).coerce(String.class)))
                 .orderBy(id1, id2)
                 .fetch();
 

@@ -121,7 +121,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
     }
 
-    private static void testFailUpdateRow(ResultSet rs) {
+    private void testFailUpdateRow(ResultSet rs) {
         try {
             rs.updateRow();
             fail();
@@ -130,7 +130,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     }
 
-    private static void testFailRefresh(Record record) {
+    private void testFailRefresh(Record record) {
         try {
             record.refresh();
             fail();
@@ -169,6 +169,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(c1.resultSet());
     }
 
+    private void testOriginalBook1(B book) {
+        assertEquals(BOOK_TITLES.get(0), book.getValue(TBook_TITLE()));
+        assertEquals(BOOK_AUTHOR_IDS.get(0), book.getValue(TBook_AUTHOR_ID()));
+        assertFalse(book.changed());
+        assertEquals(book.original(), book);
+        assertNotNull(book.resultSet());
+    }
+
+    private void testModifiedBook1(B book) {
+        book.setValue(TBook_TITLE(), "XX");
+        book.setValue(TBook_AUTHOR_ID(), 15);
+        assertEquals("XX", book.getValue(TBook_TITLE()));
+        assertEquals(15, (int) book.getValue(TBook_AUTHOR_ID()));
+        assertTrue(book.changed());
+        assertFalse(book.original().equals(book));
+    }
+
     @Test
     public void testKeepRSWithKeepAfterFetch() throws Exception {
         switch (dialect()) {
@@ -178,21 +195,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         DSLContext create = create(new NoSelectAfterRefreshListener());
-
-        // Use plain SQL to prevent fetching of UpdatableRecord
-        Result<Record> b2 = create.select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetch();
-        Record r = b2.get(0);
+        Result<B> b2 = create.selectFrom(TBook()).keepResultSet(KEEP_AFTER_FETCH).fetch();
+        B r = b2.get(0);
         assertNotNull(b2.resultSet());
         assertNotNull(r.resultSet());
         testFailUpdateRow(b2.resultSet());
 
-        // Changing a TITLE has no effect
-        r.setValue(TBook_TITLE(), "XX");
-        r.setValue(TBook_AUTHOR_ID(), 15);
-        assertEquals("XX", r.getValue(TBook_TITLE()));
-        assertEquals(15, (int) r.getValue(TBook_AUTHOR_ID()));
-        assertTrue(r.changed());
-        assertFalse(r.original().equals(r));
+        testModifiedBook1(r);
         B dbBook = getBook(1);
         assertEquals(BOOK_TITLES.get(0), dbBook.getValue(TBook_TITLE()));
         assertEquals(BOOK_AUTHOR_IDS.get(0), dbBook.getValue(TBook_AUTHOR_ID()));
@@ -205,14 +214,27 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertFalse(r.original().equals(r));
 
         r.refresh();
-        assertEquals(BOOK_TITLES.get(0), r.getValue(TBook_TITLE()));
-        assertEquals(BOOK_AUTHOR_IDS.get(0), r.getValue(TBook_AUTHOR_ID()));
-        assertFalse(r.changed());
-        assertEquals(r.original(), r);
+        testOriginalBook1(r);
 
         b2.close();
         assertNull(b2.resultSet());
-        testFailRefresh(r);
+
+        // Changing a TITLE still has no effect
+        testModifiedBook1(r);
+
+        // But refreshing should work through a new query (UpdatableRecord)
+        // For this, remove the NoSelectAfterRefreshListener
+        r.attach(create().configuration());
+        r.refresh();
+        testOriginalBook1(r);
+
+        // Further refreshing should again not trigger new SQL statements
+        r.attach(create.configuration());
+        testModifiedBook1(r);
+
+        r.refresh();
+        testOriginalBook1(r);
+        r.close();
 
         Cursor<Record> c1 = create.select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetchLazy();
         assertFalse(c1.closesAfterFetch());

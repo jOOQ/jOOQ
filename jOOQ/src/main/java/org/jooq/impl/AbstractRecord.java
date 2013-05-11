@@ -531,7 +531,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                     boolean isKeySet = true;
 
                     for (Field<?> field : key.getFields()) {
-                        isKeySet &= (field(field) != null);
+                        isKeySet = isKeySet && (field(field) != null);
                     }
 
                     if (isKeySet) {

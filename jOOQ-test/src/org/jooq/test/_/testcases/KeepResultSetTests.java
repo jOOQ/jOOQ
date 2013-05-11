@@ -101,6 +101,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     }
 
+    private void testFailRefresh(Record record) {
+        try {
+            record.refresh();
+            fail();
+        }
+        catch (DataAccessException expected) {}
+    }
+
     @Test
     public void testKeepRSWithCloseAfterFetch() throws Exception {
         Result<B> b1 = create().selectFrom(TBook()).fetch();
@@ -143,19 +151,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Changing a TITLE has no effect
         r.setValue(TBook_TITLE(), "XX");
+        r.setValue(TBook_AUTHOR_ID(), 15);
         assertEquals("XX", r.getValue(TBook_TITLE()));
+        assertEquals(15, (int) r.getValue(TBook_AUTHOR_ID()));
         assertTrue(r.changed());
         assertFalse(r.original().equals(r));
-        assertEquals(BOOK_TITLES.get(0), getBook(1).getValue(TBook_TITLE()));
+        B dbBook = getBook(1);
+        assertEquals(BOOK_TITLES.get(0), dbBook.getValue(TBook_TITLE()));
+        assertEquals(BOOK_AUTHOR_IDS.get(0), dbBook.getValue(TBook_AUTHOR_ID()));
 
         // Refresh the record
+        r.refresh(TBook_TITLE());
+        assertEquals(BOOK_TITLES.get(0), r.getValue(TBook_TITLE()));
+        assertEquals(15, (int) r.getValue(TBook_AUTHOR_ID()));
+        assertTrue(r.changed());
+        assertFalse(r.original().equals(r));
+
         r.refresh();
-        assertEquals("1984", r.getValue(TBook_TITLE()));
+        assertEquals(BOOK_TITLES.get(0), r.getValue(TBook_TITLE()));
+        assertEquals(BOOK_AUTHOR_IDS.get(0), r.getValue(TBook_AUTHOR_ID()));
         assertFalse(r.changed());
         assertEquals(r.original(), r);
 
         b2.close();
         assertNull(b2.resultSet());
+        testFailRefresh(r);
 
         Cursor<Record> c1 = create().select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetchLazy();
         assertFalse(c1.closesAfterFetch());
@@ -298,7 +318,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         jOOQAbstractTest.reset = false;
-
     }
 
     /*
@@ -308,12 +327,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
      * [#2265] Pull up store(), delete(), refresh() from UpdatableRecord
      * - store() will perform a scan and update if UPDATE_ON_STORE is set. Otherwise: no-op
      * - delete() will remove the record
-     * - refresh() will pefrom a scan from the ResultSet
+     * - refresh() should not execute a new query if a ResultSet is available
      *
      * [#1846] Add ResultQuery.keepResultSet() with UPDATE_ON_CHANGE
      * - Implement all data types from ResultSet.updateXXX() (e.g. updateInt(), etc)
      * - Implement UPDATE_ON_STORE
-     * - refresh() should not execute a new query if a ResultSet is available
-     * - TYPE_SCROLL_SENSITIVE should be active for KEEP_AFTER_FETCH (for refresh())
      */
 }

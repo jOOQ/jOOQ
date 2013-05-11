@@ -35,11 +35,13 @@
  */
 package org.jooq.impl;
 
+import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import static java.sql.ResultSet.CONCUR_UPDATABLE;
 import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
+import static org.jooq.KeepResultSetMode.KEEP_AFTER_FETCH;
 import static org.jooq.KeepResultSetMode.UPDATE_ON_CHANGE;
 import static org.jooq.KeepResultSetMode.UPDATE_ON_STORE;
 import static org.jooq.SQLDialect.ASE;
@@ -224,7 +226,12 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             }
         }
 
-        // [#1846] When updatable Results are fetched
+        // [#1846] When scrollable Results are fetched
+        else if (keepResultSetMode == KEEP_AFTER_FETCH) {
+            ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_READ_ONLY));
+        }
+
+        // [#1846] When scrollable and updatable Results are fetched
         else if (keepResultSetMode == UPDATE_ON_CHANGE ||
                  keepResultSetMode == UPDATE_ON_STORE) {
             ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
@@ -350,6 +357,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     protected final boolean keepResultSet() {
         return lazy
+            || keepResultSetMode == KEEP_AFTER_FETCH
             || keepResultSetMode == UPDATE_ON_CHANGE
             || keepResultSetMode == UPDATE_ON_STORE;
     }

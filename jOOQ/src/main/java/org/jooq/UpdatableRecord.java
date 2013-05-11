@@ -317,6 +317,7 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      *             record does not exist anymore in the database</li>
      *             </ul>
      */
+    @Override
     void refresh() throws DataAccessException;
 
     /**

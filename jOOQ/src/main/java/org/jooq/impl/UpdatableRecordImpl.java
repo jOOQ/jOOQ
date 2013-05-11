@@ -336,17 +336,29 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final void refresh(Field<?>... f) {
-        SelectQuery<?> select = create().selectQuery();
-        select.addSelect(f);
-        select.addFrom(getTable());
-        Utils.addConditions(select, this, getPrimaryKey().getFieldsArray());
-
-        if (select.execute() == 1) {
-            AbstractRecord record = (AbstractRecord) select.getResult().get(0);
-            setValues(f, record);
+        if (rs != null) {
+            super.refresh(f);
         }
         else {
-            throw new InvalidResultException("Exactly one row expected for refresh. Record does not exist in database.");
+
+            // [#2265] Even if rs was previously closed, re-fetch a new ResultSet
+            // and assign it to this record, if requested.
+            SelectQuery<?> select = create().selectQuery();
+            select.addSelect(f);
+            select.addFrom(getTable());
+            select.keepResultSet(keepResultSetMode);
+            Utils.addConditions(select, this, getPrimaryKey().getFieldsArray());
+
+            if (select.execute() == 1) {
+                AbstractRecord record = (AbstractRecord) select.getResult().get(0);
+                setValues(f, record);
+
+                rs = record.rs;
+                rsIndex = record.rsIndex;
+            }
+            else {
+                throw new InvalidResultException("Exactly one row expected for refresh. Record does not exist in database.");
+            }
         }
     }
 

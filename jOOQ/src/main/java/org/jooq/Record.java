@@ -1042,6 +1042,8 @@ public interface Record extends Attachable, Comparable<Record> {
     // Methods related to the underlying ResultSet (if applicable)
     // -------------------------------------------------------------------------
 
+    int delete() throws DataAccessException;
+
     /**
      * Refresh this record from the database.
      * <p>

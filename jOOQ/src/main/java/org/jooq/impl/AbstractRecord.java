@@ -66,6 +66,7 @@ import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.CursorImpl.CursorResultSet;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 
@@ -86,7 +87,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     final RowImpl                   fields;
     final Value<?>[]                values;
     transient KeepResultSetMode     keepResultSetMode;
-    transient ResultSet             rs;
+    transient CursorResultSet       rs;
     transient int                   rsIndex;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
@@ -699,6 +700,28 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // XXX: Methods related to the underlying ResultSet (if applicable)
     // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this
+     */
+    @Override
+    public int delete() {
+        checkRsAvailable("Cannot delete record. No ResultSet available");
+
+        try {
+
+            // [#2265] TODO: This code is prototypical.
+            rs.absolute(rsIndex - 1);
+            rs.deleteRow();
+
+            return 1;
+        }
+        catch (SQLException e) {
+            throw translate("Cannot delete record", e);
+        }
+    }
+
     @Override
     public final void refresh() {
         refresh(fields.fields.fields);
@@ -710,22 +733,25 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      * Subclasses may override this
      */
     @Override
-    public void refresh(Field<?>... f) throws DataAccessException {
-        if (rs != null) {
-            try {
+    public void refresh(Field<?>... f) {
+        checkRsAvailable("Cannot refresh record. No ResultSet available");
 
-                // [#2265] TODO: This code is prototypical. fetchLazy() is not
-                // the best way to fetch a record
-                rs.absolute(rsIndex - 1);
-                AbstractRecord record = (AbstractRecord) create().fetchLazy(rs).fetchOne();
-                setValues(f, record);
-            }
-            catch (SQLException e) {
-                throw translate("Cannot refresh record", e);
-            }
+        try {
+
+            // [#2265] TODO: This code is prototypical. fetchLazy() is not
+            // the best way to fetch a record
+            rs.absolute(rsIndex - 1);
+            AbstractRecord record = (AbstractRecord) create().fetchLazy(rs).fetchOne();
+            setValues(f, record);
         }
-        else {
-            throw new DataAccessException("Cannot refresh record. No ResultSet available");
+        catch (SQLException e) {
+            throw translate("Cannot refresh record", e);
+        }
+    }
+
+    private final void checkRsAvailable(String message) {
+        if (rs == null) {
+            throw new DataAccessException(message);
         }
     }
 

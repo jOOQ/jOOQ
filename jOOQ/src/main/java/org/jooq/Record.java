@@ -1077,21 +1077,40 @@ public interface Record extends Attachable, Comparable<Record> {
      */
     void refresh() throws DataAccessException;
 
-//    /**
-//     * Refresh this record from the database, based on the value of the primary
-//     * key or main unique key.
-//     * <p>
-//     * The executed statement is <code><pre>
-//     * SELECT [fields] FROM [table]
-//     * WHERE [primary key fields = primary key values]</pre></code>
-//     *
-//     * @throws DataAccessException This exception is thrown if
-//     *             <ul>
-//     *             <li>something went wrong executing the query</li> <li>the
-//     *             record does not exist anymore in the database</li>
-//     *             </ul>
-//     */
-//    void refresh(Field<?>... fields) throws DataAccessException;
+    /**
+     * Refresh parts of this record from the database.
+     * <p>
+     * A successful refresh results in the following:
+     * <ul>
+     * <li>{@link #valuesRow()} will have been restored to the respective values
+     * from the database</li>
+     * <li>{@link #original()} will match this record</li>
+     * <li>{@link #changed()} will be <code>false</code></li>
+     * </ul>
+     * <p>
+     * Refreshing can trigger any of the following actions:
+     * <ul>
+     * <li>Re-reading the underlying {@link #resultSet()}, if that
+     * <code>ResultSet</code> is available.</li>
+     * <li>Executing a new <code>SELECT</code> statement, if this is an
+     * {@link UpdatableRecord}.</li>
+     * <li>Failing, otherwise</li>
+     * </ul>
+     * <p>
+     * This is the same as calling <code>record.refresh(record.fields())</code>
+     *
+     * @throws DataAccessException This exception is thrown if
+     *             <ul>
+     *             <li>something went wrong executing the query</li> <li>the
+     *             {@link #resultSet()} is not available, or is in
+     *             {@link ResultSet#TYPE_FORWARD_ONLY} mode, such that
+     *             refreshing is not possible.</li><li>the record does not exist
+     *             anymore in the database</li>
+     *             </ul>
+     * @see UpdatableRecord#refresh()
+     * @see ResultQuery#keepResultSet(KeepResultSetMode)
+     */
+    void refresh(Field<?>... fields) throws DataAccessException;
 
     /**
      * Close the underlying JDBC {@link ResultSet}, if applicable.

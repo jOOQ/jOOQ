@@ -694,17 +694,27 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // -------------------------------------------------------------------------
 
     @Override
-    public void refresh() {
+    public final void refresh() {
+        refresh(fields.fields.fields);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this
+     */
+    @Override
+    public void refresh(Field<?>... f) throws DataAccessException {
         if (rs != null) {
             try {
 
                 // [#2265] TODO: This code is prototypical. fetchLazy() is not
                 // the best way to fetch a record
                 rs.absolute(rsIndex - 1);
-                Record record = create().fetchLazy(rs).fetchOne();
+                AbstractRecord record = (AbstractRecord) create().fetchLazy(rs).fetchOne();
 
-                for (int i = 0; i < record.size(); i++) {
-                    setValue(i, new Value<Object>(record.getValue(i)));
+                for (Field<?> field : f) {
+                    setValue(field, record.getValue0(field));
                 }
             }
             catch (SQLException e) {

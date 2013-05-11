@@ -339,11 +339,6 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    public final void refresh() {
-        refresh(fields.fields.fields());
-    }
-
-    @Override
     public final void refresh(Field<?>... f) {
         SelectQuery<?> select = create().selectQuery();
         select.addSelect(f);

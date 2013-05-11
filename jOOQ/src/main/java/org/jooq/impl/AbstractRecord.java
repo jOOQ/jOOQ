@@ -63,6 +63,7 @@ import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
+import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
@@ -691,6 +692,29 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // -------------------------------------------------------------------------
     // XXX: Methods related to the underlying ResultSet (if applicable)
     // -------------------------------------------------------------------------
+
+    @Override
+    public void refresh() {
+        if (rs != null) {
+            try {
+
+                // [#2265] TODO: This code is prototypical. fetchLazy() is not
+                // the best way to fetch a record
+                rs.absolute(rsIndex - 1);
+                Record record = create().fetchLazy(rs).fetchOne();
+
+                for (int i = 0; i < record.size(); i++) {
+                    setValue(i, new Value<Object>(record.getValue(i)));
+                }
+            }
+            catch (SQLException e) {
+                throw translate("Cannot refresh record", e);
+            }
+        }
+        else {
+            throw new DataAccessException("Cannot refresh record. No ResultSet available");
+        }
+    }
 
     @Override
     public final void close() {

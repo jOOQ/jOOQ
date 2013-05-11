@@ -52,6 +52,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 
 import org.jooq.Cursor;
+import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
@@ -134,23 +135,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        Result<B> b2 = create().selectFrom(TBook()).keepResultSet(KEEP_AFTER_FETCH).fetch();
+        Result<Record> b2 = create().select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetch();
+        Record r = b2.get(0);
         assertNotNull(b2.resultSet());
+        assertNotNull(r.resultSet());
         testFailUpdateRow(b2.resultSet());
 
         // Changing a TITLE has no effect
-        b2.get(0).setValue(TBook_TITLE(), "XX");
-        assertTrue(b2.get(0).changed());
-        assertFalse(b2.get(0).original().equals(b2.get(0)));
+        r.setValue(TBook_TITLE(), "XX");
+        assertEquals("XX", r.getValue(TBook_TITLE()));
+        assertTrue(r.changed());
+        assertFalse(r.original().equals(r));
         assertEquals(BOOK_TITLES.get(0), getBook(1).getValue(TBook_TITLE()));
+
+        // Refresh the record
+        r.refresh();
+        assertEquals("1984", r.getValue(TBook_TITLE()));
+        assertFalse(r.changed());
+        assertEquals(r.original(), r);
 
         b2.close();
         assertNull(b2.resultSet());
 
-        Cursor<B> c1 = create().selectFrom(TBook()).keepResultSet(KEEP_AFTER_FETCH).fetchLazy();
+        Cursor<Record> c1 = create().select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetchLazy();
         assertFalse(c1.closesAfterFetch());
         while (c1.hasNext()) {
-            Result<B> result = c1.fetch(1);
+            Result<Record> result = c1.fetch(1);
             assertNotNull(result.get(0).resultSet());
             assertNotNull(result.resultSet());
             assertNotNull(c1.resultSet());
@@ -304,5 +314,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
      * - Implement all data types from ResultSet.updateXXX() (e.g. updateInt(), etc)
      * - Implement UPDATE_ON_STORE
      * - refresh() should not execute a new query if a ResultSet is available
+     * - TYPE_SCROLL_SENSITIVE should be active for KEEP_AFTER_FETCH (for refresh())
      */
 }

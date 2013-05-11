@@ -100,10 +100,10 @@ class Value<T> implements Serializable {
 
             // [#945] Be sure that isChanged is never reset to false
             if (value == null) {
-                isChanged |= val != null;
+                isChanged = isChanged || (val != null);
             }
             else {
-                isChanged |= !value.equals(val);
+                isChanged = isChanged || (!value.equals(val));
             }
         }
 

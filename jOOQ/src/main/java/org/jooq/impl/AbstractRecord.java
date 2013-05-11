@@ -68,7 +68,6 @@ import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
 import org.jooq.impl.CursorImpl.CursorResultSet;
 import org.jooq.tools.Convert;
-import org.jooq.tools.JooqLogger;
 
 /**
  * A general base class for all {@link Record} types
@@ -81,14 +80,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     /**
      * Generated UID
      */
-    private static final long       serialVersionUID = -6052512608911220404L;
-    private static final JooqLogger log              = JooqLogger.getLogger(AbstractRecord.class);
+    private static final long   serialVersionUID = -6052512608911220404L;
 
-    final RowImpl                   fields;
-    final Value<?>[]                values;
-    transient KeepResultSetMode     keepResultSetMode;
-    transient CursorResultSet       rs;
-    transient int                   rsIndex;
+    final RowImpl               fields;
+    final Value<?>[]            values;
+    transient KeepResultSetMode keepResultSetMode;
+    transient CursorResultSet   rs;
+    transient int               rsIndex;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(new RowImpl(fields));
@@ -283,10 +281,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         if (rs != null && keepResultSetMode == UPDATE_ON_CHANGE) {
             int index = fieldsRow().indexOf(field);
             int columnIndex = index + 1;
-
-            if (log.isDebugEnabled()) {
-                log.debug("Updating Result", "Updating Result position " + rsIndex + ":" + columnIndex + " with value " + value);
-            }
 
             try {
                 if (rs.getRow() != rsIndex) {

@@ -92,7 +92,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
-    private void testFailUpdateRow(ResultSet rs) {
+    private static void testFailUpdateRow(ResultSet rs) {
         try {
             rs.updateRow();
             fail();
@@ -101,7 +101,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     }
 
-    private void testFailRefresh(Record record) {
+    private static void testFailRefresh(Record record) {
         try {
             record.refresh();
             fail();
@@ -114,19 +114,21 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Result<B> b1 = create().selectFrom(TBook()).fetch();
         assertNull(b1.resultSet());
 
-        Result<B> b2 = create().selectFrom(TBook()).keepResultSet(CLOSE_AFTER_FETCH).fetch();
+        Result<Record> b2 = create().select().from(TBook().getName()).keepResultSet(CLOSE_AFTER_FETCH).fetch();
         assertNull(b2.resultSet());
 
         // Changing a TITLE has no effect
-        b2.get(0).setValue(TBook_TITLE(), "XX");
-        assertTrue(b2.get(0).changed());
-        assertFalse(b2.get(0).original().equals(b2.get(0)));
+        Record r = b2.get(0);
+        r.setValue(TBook_TITLE(), "XX");
+        assertTrue(r.changed());
+        assertFalse(r.original().equals(r));
         assertEquals(BOOK_TITLES.get(0), getBook(1).getValue(TBook_TITLE()));
+        testFailRefresh(r);
 
-        Cursor<B> c1 = create().selectFrom(TBook()).keepResultSet(CLOSE_AFTER_FETCH).fetchLazy();
+        Cursor<Record> c1 = create().select().from(TBook().getName()).keepResultSet(CLOSE_AFTER_FETCH).fetchLazy();
         assertTrue(c1.closesAfterFetch());
         while (c1.hasNext()) {
-            Result<B> result = c1.fetch(1);
+            Result<Record> result = c1.fetch(1);
             assertNull(result.get(0).resultSet());
             assertNull(result.resultSet());
             assertNotNull(c1.resultSet());

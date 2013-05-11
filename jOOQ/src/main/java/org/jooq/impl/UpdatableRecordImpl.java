@@ -302,35 +302,40 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int delete() {
-        TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
+        if (rs != null) {
+            return super.delete();
+        }
+        else {
+            TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
 
-        try {
-            DeleteQuery<R> delete1 = create().deleteQuery(getTable());
-            Utils.addConditions(delete1, this, keys);
+            try {
+                DeleteQuery<R> delete1 = create().deleteQuery(getTable());
+                Utils.addConditions(delete1, this, keys);
 
-            if (isExecuteWithOptimisticLocking()) {
+                if (isExecuteWithOptimisticLocking()) {
 
-                // [#1596] Add additional conditions for version and/or timestamp columns
-                if (isTimestampOrVersionAvailable()) {
-                    addConditionForVersionAndTimestamp(delete1);
+                    // [#1596] Add additional conditions for version and/or timestamp columns
+                    if (isTimestampOrVersionAvailable()) {
+                        addConditionForVersionAndTimestamp(delete1);
+                    }
+
+                    // [#1547] Try fetching the Record again first, and compare this
+                    // Record's original values with the ones in the database
+                    else {
+                        checkIfChanged(keys);
+                    }
                 }
 
-                // [#1547] Try fetching the Record again first, and compare this
-                // Record's original values with the ones in the database
-                else {
-                    checkIfChanged(keys);
-                }
+                int result = delete1.execute();
+                checkIfChanged(result, null, null);
+                return result;
             }
 
-            int result = delete1.execute();
-            checkIfChanged(result, null, null);
-            return result;
-        }
-
-        // [#673] If store() is called after delete(), a new INSERT should
-        // be executed and the record should be recreated
-        finally {
-            changed(true);
+            // [#673] If store() is called after delete(), a new INSERT should
+            // be executed and the record should be recreated
+            finally {
+                changed(true);
+            }
         }
     }
 

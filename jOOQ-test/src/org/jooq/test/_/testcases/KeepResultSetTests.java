@@ -53,7 +53,9 @@ import java.util.Collections;
 
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
+import org.jooq.Delete;
 import org.jooq.ExecuteContext;
+import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -100,21 +102,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
      * This listener is used to check if a <code>SELECT</code> statement is
      * issued after a call to {@link Record#refresh()}.
      */
-    private static class NoSelectAfterRefreshListener extends DefaultExecuteListener {
+    private static class NoStatementAfterCRUDListener extends DefaultExecuteListener {
 
         /**
          * Default UID
          */
-        private static final long serialVersionUID = 1L;
+        private static final long            serialVersionUID = 1L;
+
+        private final Class<? extends Query> type;
+        private final String                 crudMethod;
+
+        NoStatementAfterCRUDListener(Class<? extends Query> type, String crudMethod) {
+            this.type = type;
+            this.crudMethod = crudMethod;
+        }
 
         @Override
         public void start(ExecuteContext ctx) {
             super.start(ctx);
 
-            if (ctx.query() instanceof Select) {
-                for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
-                    if (e.getMethodName().equals("refresh")) {
-                        fail("Record.refresh() should not execute any queries");
+            if (ctx.query() != null) {
+                if (type.isAssignableFrom(ctx.query().getClass())) {
+                    for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
+                        if (e.getMethodName().equals(crudMethod)) {
+                            fail("Record." + crudMethod + "() should not execute any " + type.getName() + " queries");
+                        }
                     }
                 }
             }
@@ -140,7 +152,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepRSWithCloseAfterFetch() throws Exception {
-        DSLContext create = create(new NoSelectAfterRefreshListener());
+        DSLContext create = create(new NoStatementAfterCRUDListener(Select.class, "refresh"));
 
         Result<B> b1 = create.selectFrom(TBook()).fetch();
         assertNull(b1.resultSet());
@@ -194,7 +206,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        DSLContext create = create(new NoSelectAfterRefreshListener());
+        DSLContext create = create(new NoStatementAfterCRUDListener(Select.class, "refresh"));
         Result<B> b2 = create.selectFrom(TBook()).keepResultSet(KEEP_AFTER_FETCH).fetch();
         B r = b2.get(0);
         assertNotNull(b2.resultSet());
@@ -259,7 +271,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         jOOQAbstractTest.reset = false;
-        DSLContext create = create(new NoSelectAfterRefreshListener());
+        DSLContext create = create(new NoStatementAfterCRUDListener(Select.class, "refresh"));
 
         // Use plain SQL to prevent fetching of UpdatableRecord
         Result<B> books =
@@ -297,7 +309,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         jOOQAbstractTest.reset = false;
-        DSLContext create = create(new NoSelectAfterRefreshListener());
+        DSLContext create = create(new NoStatementAfterCRUDListener(Select.class, "refresh"));
 
         Cursor<B> books =
         create.selectFrom(TBook())
@@ -337,7 +349,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        DSLContext create = create(new NoSelectAfterRefreshListener());
+        DSLContext create = create(new NoStatementAfterCRUDListener(Select.class, "refresh"));
         Record book =
         create.select()
               .from(TBook().getName())
@@ -374,7 +386,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
-    public void testKeepRSWithUpdateOnChangeRemove() throws Exception {
+    public void testKeepRSWithUpdateOnChangeDelete() throws Exception {
         switch (dialect()) {
             case SQLITE:
                 log.info("SKIPPING", "KeepResultSet tests");
@@ -382,6 +394,24 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         jOOQAbstractTest.reset = false;
+
+        DSLContext create = create(new NoStatementAfterCRUDListener(Delete.class, "delete"));
+        Result<B> books =
+        create.selectFrom(TBook())
+              .orderBy(TBook_ID())
+              .keepResultSet(UPDATE_ON_CHANGE)
+              .fetch();
+
+        B b2 = books.get(1);
+        assertEquals(1, b2.delete());
+        ResultSet rs = b2.resultSet();
+        rs.beforeFirst();
+        assertTrue(rs.next());
+        assertTrue(rs.next());
+        assertTrue(rs.next());
+        assertFalse(rs.next());
+
+        System.out.println(books);
     }
 
     /*

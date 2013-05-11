@@ -2241,8 +2241,8 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testKeepRSWithUpdateOnChangeRemove() throws Exception {
-        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeRemove();
+    public void testKeepRSWithUpdateOnChangeDelete() throws Exception {
+        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeDelete();
     }
 
     @Test

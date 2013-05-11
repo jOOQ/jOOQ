@@ -52,15 +52,19 @@ import java.sql.SQLException;
 import java.util.Collections;
 
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
+import org.jooq.ExecuteContext;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.Select;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
+import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
@@ -92,6 +96,31 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         super(delegate);
     }
 
+    /**
+     * This listener is used to check if a <code>SELECT</code> statement is
+     * issued after a call to {@link Record#refresh()}.
+     */
+    private static class NoSelectAfterRefreshListener extends DefaultExecuteListener {
+
+        /**
+         * Default UID
+         */
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void start(ExecuteContext ctx) {
+            super.start(ctx);
+
+            if (ctx.query() instanceof Select) {
+                for (StackTraceElement e : Thread.currentThread().getStackTrace()) {
+                    if (e.getMethodName().equals("refresh")) {
+                        fail("Record.refresh() should not execute any queries");
+                    }
+                }
+            }
+        }
+    }
+
     private static void testFailUpdateRow(ResultSet rs) {
         try {
             rs.updateRow();
@@ -111,10 +140,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testKeepRSWithCloseAfterFetch() throws Exception {
-        Result<B> b1 = create().selectFrom(TBook()).fetch();
+        DSLContext create = create(new NoSelectAfterRefreshListener());
+
+        Result<B> b1 = create.selectFrom(TBook()).fetch();
         assertNull(b1.resultSet());
 
-        Result<Record> b2 = create().select().from(TBook().getName()).keepResultSet(CLOSE_AFTER_FETCH).fetch();
+        // Use plain SQL to prevent fetching of UpdatableRecord
+        Result<Record> b2 = create.select().from(TBook().getName()).keepResultSet(CLOSE_AFTER_FETCH).fetch();
         assertNull(b2.resultSet());
 
         // Changing a TITLE has no effect
@@ -125,7 +157,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_TITLES.get(0), getBook(1).getValue(TBook_TITLE()));
         testFailRefresh(r);
 
-        Cursor<Record> c1 = create().select().from(TBook().getName()).keepResultSet(CLOSE_AFTER_FETCH).fetchLazy();
+        Cursor<Record> c1 = create.select().from(TBook().getName()).keepResultSet(CLOSE_AFTER_FETCH).fetchLazy();
         assertTrue(c1.closesAfterFetch());
         while (c1.hasNext()) {
             Result<Record> result = c1.fetch(1);
@@ -145,7 +177,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        Result<Record> b2 = create().select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetch();
+        DSLContext create = create(new NoSelectAfterRefreshListener());
+
+        // Use plain SQL to prevent fetching of UpdatableRecord
+        Result<Record> b2 = create.select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetch();
         Record r = b2.get(0);
         assertNotNull(b2.resultSet());
         assertNotNull(r.resultSet());
@@ -179,7 +214,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(b2.resultSet());
         testFailRefresh(r);
 
-        Cursor<Record> c1 = create().select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetchLazy();
+        Cursor<Record> c1 = create.select().from(TBook().getName()).keepResultSet(KEEP_AFTER_FETCH).fetchLazy();
         assertFalse(c1.closesAfterFetch());
         while (c1.hasNext()) {
             Result<Record> result = c1.fetch(1);
@@ -202,12 +237,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         jOOQAbstractTest.reset = false;
+        DSLContext create = create(new NoSelectAfterRefreshListener());
 
+        // Use plain SQL to prevent fetching of UpdatableRecord
         Result<B> books =
-        create().selectFrom(TBook())
-                .orderBy(TBook_ID())
-                .keepResultSet(UPDATE_ON_CHANGE)
-                .fetch();
+        create.selectFrom(TBook())
+              .orderBy(TBook_ID())
+              .keepResultSet(UPDATE_ON_CHANGE)
+              .fetch();
 
         assertNotNull(books.resultSet());
         for (int i = 0; i < books.size(); i++) {
@@ -238,12 +275,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         jOOQAbstractTest.reset = false;
+        DSLContext create = create(new NoSelectAfterRefreshListener());
 
         Cursor<B> books =
-        create().selectFrom(TBook())
-                .orderBy(TBook_ID())
-                .keepResultSet(UPDATE_ON_CHANGE)
-                .fetchLazy();
+        create.selectFrom(TBook())
+              .orderBy(TBook_ID())
+              .keepResultSet(UPDATE_ON_CHANGE)
+              .fetchLazy();
 
         assertNotNull(books.resultSet());
         assertFalse(books.closesAfterFetch());
@@ -277,11 +315,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         jOOQAbstractTest.reset = false;
 
-        B book =
-        create().selectFrom(TBook())
-                .where(TBook_ID().eq(1))
-                .keepResultSet(UPDATE_ON_CHANGE)
-                .fetchOne();
+        DSLContext create = create(new NoSelectAfterRefreshListener());
+        Record book =
+        create.select()
+              .from(TBook().getName())
+              .where(TBook_ID().eq(1))
+              .keepResultSet(UPDATE_ON_CHANGE)
+              .fetchOne();
 
         assertNotNull(book.resultSet());
         assertFalse(book.changed());
@@ -329,7 +369,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
      * [#2265] Pull up store(), delete(), refresh() from UpdatableRecord
      * - store() will perform a scan and update if UPDATE_ON_STORE is set. Otherwise: no-op
      * - delete() will remove the record
-     * - refresh() should not execute a new query if a ResultSet is available
      *
      * [#1846] Add ResultQuery.keepResultSet() with UPDATE_ON_CHANGE
      * - Implement all data types from ResultSet.updateXXX() (e.g. updateInt(), etc)

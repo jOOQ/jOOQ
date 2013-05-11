@@ -87,11 +87,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public Record key() {
         RecordImpl result = new RecordImpl(getPrimaryKey().getFields());
-
-        for (Field<?> field : result.fields.fields) {
-            result.setValue(field, getValue0(field));
-        }
-
+        result.setValues(result.fields.fields.fields, this);
         return result;
     }
 
@@ -347,10 +343,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         if (select.execute() == 1) {
             AbstractRecord record = (AbstractRecord) select.getResult().get(0);
-
-            for (Field<?> field : f) {
-                setValue(field, record.getValue0(field));
-            }
+            setValues(f, record);
         }
         else {
             throw new InvalidResultException("Exactly one row expected for refresh. Record does not exist in database.");

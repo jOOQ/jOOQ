@@ -337,6 +337,12 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         setValue(field, converter.to(value));
     }
 
+    final void setValues(Field<?>[] fields, AbstractRecord record) {
+        for (Field<?> field : fields) {
+            setValue(field, record.getValue0(field));
+        }
+    }
+
     final void setValue(Field<?> field, Value<?> value) {
         setValue(fieldsRow().indexOf(field), value);
     }
@@ -712,10 +718,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
                 // the best way to fetch a record
                 rs.absolute(rsIndex - 1);
                 AbstractRecord record = (AbstractRecord) create().fetchLazy(rs).fetchOne();
-
-                for (Field<?> field : f) {
-                    setValue(field, record.getValue0(field));
-                }
+                setValues(f, record);
             }
             catch (SQLException e) {
                 throw translate("Cannot refresh record", e);

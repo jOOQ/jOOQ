@@ -1042,8 +1042,6 @@ public interface Record extends Attachable, Comparable<Record> {
     // Methods related to the underlying ResultSet (if applicable)
     // -------------------------------------------------------------------------
 
-    int delete() throws DataAccessException;
-
     /**
      * Refresh this record from the database.
      * <p>
@@ -1068,11 +1066,12 @@ public interface Record extends Attachable, Comparable<Record> {
      *
      * @throws DataAccessException This exception is thrown if
      *             <ul>
-     *             <li>something went wrong executing the query</li> <li>the
-     *             {@link #resultSet()} is not available, or is in
+     *             <li>the underlying {@link #resultSet()} is in
      *             {@link ResultSet#TYPE_FORWARD_ONLY} mode, such that
-     *             refreshing is not possible.</li><li>the record does not exist
-     *             anymore in the database</li>
+     *             refreshing is not possible.</li> <li>something went wrong
+     *             executing the refresh <code>SELECT</code> statement, if this
+     *             is an {@link UpdatableRecord}.</li> <li>the record does not
+     *             exist anymore in the database</li>
      *             </ul>
      * @see UpdatableRecord#refresh()
      * @see ResultQuery#keepResultSet(KeepResultSetMode)
@@ -1103,11 +1102,12 @@ public interface Record extends Attachable, Comparable<Record> {
      *
      * @throws DataAccessException This exception is thrown if
      *             <ul>
-     *             <li>something went wrong executing the query</li> <li>the
-     *             {@link #resultSet()} is not available, or is in
+     *             <li>the underlying {@link #resultSet()} is in
      *             {@link ResultSet#TYPE_FORWARD_ONLY} mode, such that
-     *             refreshing is not possible.</li><li>the record does not exist
-     *             anymore in the database</li>
+     *             refreshing is not possible.</li> <li>something went wrong
+     *             executing the refresh <code>SELECT</code> statement, if this
+     *             is an {@link UpdatableRecord}.</li> <li>the record does not
+     *             exist anymore in the database</li>
      *             </ul>
      * @see UpdatableRecord#refresh()
      * @see ResultQuery#keepResultSet(KeepResultSetMode)

@@ -298,7 +298,6 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * @throws DataChangedException If optimistic locking is enabled and the
      *             record has already been changed/deleted in the database
      */
-    @Override
     int delete() throws DataAccessException, DataChangedException;
 
     /**

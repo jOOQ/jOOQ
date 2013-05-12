@@ -694,28 +694,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     // XXX: Methods related to the underlying ResultSet (if applicable)
     // -------------------------------------------------------------------------
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses may override this
-     */
-    @Override
-    public int delete() {
-        checkRsAvailable("Cannot delete record. No ResultSet available");
-
-        try {
-
-            // [#2265] TODO: This code is prototypical.
-            rs.absolute(rsIndex - 1);
-            rs.deleteRow();
-
-            return 1;
-        }
-        catch (SQLException e) {
-            throw translate("Cannot delete record", e);
-        }
-    }
-
     @Override
     public final void refresh() {
         refresh(fields.fields.fields);

@@ -100,7 +100,7 @@ class LoaderImpl<R extends TableRecord<R>> implements
 
     // Configuration data
     // ------------------
-    private final DSLContext          create;
+    private final DSLContext        create;
     private final Configuration     configuration;
     private final Table<R>          table;
     private int                     onDuplicate             = ON_DUPLICATE_KEY_ERROR;

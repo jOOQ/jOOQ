@@ -39,7 +39,7 @@
     </scm>
 
     <issueManagement>
-        <system>Trac</system>
+        <system>GitHub</system>
         <url>http://github.com/jOOQ/jOOQ/issues</url>
     </issueManagement>
 

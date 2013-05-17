@@ -171,6 +171,7 @@ yourself heard to many database users!
           lineWidth: 4,
           pointSize: 8,
           chartArea: {
+            left: '70',
             width: '85%',
             height: '80%'
           },

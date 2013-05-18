@@ -71,6 +71,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      *
      * @see DSL#condition(String)
      */
+    @Support
     DeleteConditionStep<R> and(String sql);
 
     /**
@@ -84,6 +85,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      *
      * @see DSL#condition(String, Object...)
      */
+    @Support
     DeleteConditionStep<R> and(String sql, Object... bindings);
 
     /**
@@ -97,18 +99,21 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      *
      * @see DSL#condition(String, QueryPart...)
      */
+    @Support
     DeleteConditionStep<R> and(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#AND} operator
      */
+    @Support
     DeleteConditionStep<R> andNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#AND} operator
      */
+    @Support
     DeleteConditionStep<R> andExists(Select<?> select);
 
     /**
@@ -121,6 +126,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#OR} operator
      */
+    @Support
     DeleteConditionStep<R> or(Condition condition);
 
     /**
@@ -134,6 +140,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      *
      * @see DSL#condition(String)
      */
+    @Support
     DeleteConditionStep<R> or(String sql);
 
     /**
@@ -147,6 +154,7 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      *
      * @see DSL#condition(String, Object...)
      */
+    @Support
     DeleteConditionStep<R> or(String sql, Object... bindings);
 
     /**
@@ -160,23 +168,27 @@ public interface DeleteConditionStep<R extends Record> extends DeleteFinalStep<R
      *
      * @see DSL#condition(String, QueryPart...)
      */
+    @Support
     DeleteConditionStep<R> or(String sql, QueryPart... parts);
 
     /**
      * Combine the currently assembled conditions with a negated other one using
      * the {@link Operator#OR} operator
      */
+    @Support
     DeleteConditionStep<R> orNot(Condition condition);
 
     /**
      * Combine the currently assembled conditions with an EXISTS clause using
      * the {@link Operator#OR} operator
      */
+    @Support
     DeleteConditionStep<R> orExists(Select<?> select);
 
     /**
      * Combine the currently assembled conditions with a NOT EXISTS clause using
      * the {@link Operator#OR} operator
      */
+    @Support
     DeleteConditionStep<R> orNotExists(Select<?> select);
 }

@@ -84,7 +84,7 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * <code>WHEN NOT MATCHED</INSERT> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    <T> MergeMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
+    <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
      * Set multiple values for <code>INSERT</code> in the <code>MERGE</code>

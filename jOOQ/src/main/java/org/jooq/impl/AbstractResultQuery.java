@@ -577,7 +577,8 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     public final Object[] fetchOneArray() {
-        return fetchOne().intoArray();
+        R record = fetchOne();
+        return record == null ? null : record.intoArray();
     }
 
     @Override

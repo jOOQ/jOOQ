@@ -220,7 +220,7 @@ public class DSL {
         args = "SQLDialect"
     )
     public static DSLContext using(SQLDialect dialect) {
-        return new DSLContextImpl(dialect, null);
+        return new DefaultDSLContext(dialect, null);
     }
 
     /**
@@ -241,7 +241,7 @@ public class DSL {
         }
     )
     public static DSLContext using(SQLDialect dialect, Settings settings) {
-        return new DSLContextImpl(dialect, settings);
+        return new DefaultDSLContext(dialect, settings);
     }
 
     /**
@@ -264,7 +264,7 @@ public class DSL {
         args = "Connection"
     )
     public static DSLContext using(Connection connection) {
-        return new DSLContextImpl(connection, JDBCUtils.dialect(connection), null);
+        return new DefaultDSLContext(connection, JDBCUtils.dialect(connection), null);
     }
 
     /**
@@ -290,7 +290,7 @@ public class DSL {
         }
     )
     public static DSLContext using(Connection connection, SQLDialect dialect) {
-        return new DSLContextImpl(connection, dialect, null);
+        return new DefaultDSLContext(connection, dialect, null);
     }
 
     /**
@@ -319,7 +319,7 @@ public class DSL {
         }
     )
     public static DSLContext using(Connection connection, Settings settings) {
-        return new DSLContextImpl(connection, JDBCUtils.dialect(connection), settings);
+        return new DefaultDSLContext(connection, JDBCUtils.dialect(connection), settings);
     }
 
     /**
@@ -348,7 +348,7 @@ public class DSL {
         }
     )
     public static DSLContext using(Connection connection, SQLDialect dialect, Settings settings) {
-        return new DSLContextImpl(connection, dialect, settings);
+        return new DefaultDSLContext(connection, dialect, settings);
     }
 
     /**
@@ -374,7 +374,7 @@ public class DSL {
         }
     )
     public static DSLContext using(DataSource datasource, SQLDialect dialect) {
-        return new DSLContextImpl(datasource, dialect);
+        return new DefaultDSLContext(datasource, dialect);
     }
 
     /**
@@ -403,7 +403,7 @@ public class DSL {
         }
     )
     public static DSLContext using(DataSource datasource, SQLDialect dialect, Settings settings) {
-        return new DSLContextImpl(datasource, dialect, settings);
+        return new DefaultDSLContext(datasource, dialect, settings);
     }
 
     /**
@@ -422,7 +422,7 @@ public class DSL {
         }
     )
     public static DSLContext using(ConnectionProvider connectionProvider, SQLDialect dialect) {
-        return new DSLContextImpl(connectionProvider, dialect);
+        return new DefaultDSLContext(connectionProvider, dialect);
     }
 
     /**
@@ -444,7 +444,7 @@ public class DSL {
         }
     )
     public static DSLContext using(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
-        return new DSLContextImpl(connectionProvider, dialect, settings);
+        return new DefaultDSLContext(connectionProvider, dialect, settings);
     }
 
     /**
@@ -457,7 +457,7 @@ public class DSL {
         args = "Configuration"
     )
     public static DSLContext using(Configuration configuration) {
-        return new DSLContextImpl(configuration);
+        return new DefaultDSLContext(configuration);
     }
 
     // -------------------------------------------------------------------------

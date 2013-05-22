@@ -1801,6 +1801,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testAliasingDelete() throws Exception {
+        new AliasTests(this).testAliasingDelete();
+    }
+
+    @Test
     public void testAliasingPivot() throws Exception {
         new ExoticTests(this).testAliasingPivot();
     }

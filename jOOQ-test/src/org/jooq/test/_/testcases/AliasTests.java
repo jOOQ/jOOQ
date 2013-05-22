@@ -38,6 +38,7 @@ package org.jooq.test._.testcases;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.selectZero;
 import static org.jooq.impl.DSL.table;
@@ -188,5 +189,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, r1.getValue("a"));
         assertEquals(0, r1.getValue("b"));
 
+    }
+
+    @Test
+    public void testAliasingDelete() throws Exception {
+        jOOQAbstractTest.reset = false;
+        Table<B2S> b = TBookToBookStore().as("b");
+
+        assertEquals(2, create().delete(b).where(b.field(TBookToBookStore_BOOK_ID()).eq(1)).execute());
+        assertEquals(4, create().fetchCount(selectFrom(TBookToBookStore())));
+
+        assertEquals(4, create().delete(b).execute());
+        assertEquals(0, create().fetchCount(selectFrom(TBookToBookStore())));
     }
 }

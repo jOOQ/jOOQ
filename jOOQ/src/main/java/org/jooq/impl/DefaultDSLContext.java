@@ -200,7 +200,7 @@ import org.jooq.tools.csv.CSVReader;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })
-class DSLContextImpl implements DSLContext, Serializable {
+public class DefaultDSLContext implements DSLContext, Serializable {
 
     /**
      * Generated UID
@@ -212,39 +212,39 @@ class DSLContextImpl implements DSLContext, Serializable {
     // XXX Constructors
     // -------------------------------------------------------------------------
 
-    DSLContextImpl(SQLDialect dialect) {
+    public DefaultDSLContext(SQLDialect dialect) {
         this(dialect, null);
     }
 
-    DSLContextImpl(SQLDialect dialect, Settings settings) {
+    public DefaultDSLContext(SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new NoConnectionProvider(), null, dialect, settings, null));
     }
 
-    DSLContextImpl(Connection connection, SQLDialect dialect) {
+    public DefaultDSLContext(Connection connection, SQLDialect dialect) {
         this(connection, dialect, null);
     }
 
-    DSLContextImpl(Connection connection, SQLDialect dialect, Settings settings) {
+    public DefaultDSLContext(Connection connection, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, dialect, settings, null));
     }
 
-    DSLContextImpl(DataSource datasource, SQLDialect dialect) {
+    public DefaultDSLContext(DataSource datasource, SQLDialect dialect) {
         this(datasource, dialect, null);
     }
 
-    DSLContextImpl(DataSource datasource, SQLDialect dialect, Settings settings) {
+    public DefaultDSLContext(DataSource datasource, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, dialect, settings, null));
     }
 
-    DSLContextImpl(ConnectionProvider connectionProvider, SQLDialect dialect) {
+    public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect) {
         this(connectionProvider, dialect, null);
     }
 
-    DSLContextImpl(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
+    public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
         this(new DefaultConfiguration(connectionProvider, null, dialect, settings, null));
     }
 
-    DSLContextImpl(Configuration configuration) {
+    public DefaultDSLContext(Configuration configuration) {
 
         // The Configuration can be null when unattached Query objects are
         // executed or when unattached Records are stored...
@@ -260,17 +260,17 @@ class DSLContextImpl implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    public final Configuration configuration() {
+    public Configuration configuration() {
         return configuration;
     }
 
     @Override
-    public final Schema map(Schema schema) {
+    public Schema map(Schema schema) {
         return Utils.getMappedSchema(configuration, schema);
     }
 
     @Override
-    public final <R extends Record> Table<R> map(Table<R> table) {
+    public <R extends Record> Table<R> map(Table<R> table) {
         return Utils.getMappedTable(configuration, table);
     }
 
@@ -279,7 +279,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    public final Meta meta() {
+    public Meta meta() {
         return new MetaImpl(configuration);
     }
 
@@ -288,27 +288,27 @@ class DSLContextImpl implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    public final RenderContext renderContext() {
+    public RenderContext renderContext() {
         return new DefaultRenderContext(configuration);
     }
 
     @Override
-    public final String render(QueryPart part) {
+    public String render(QueryPart part) {
         return renderContext().render(part);
     }
 
     @Override
-    public final String renderNamedParams(QueryPart part) {
+    public String renderNamedParams(QueryPart part) {
         return renderContext().paramType(NAMED).render(part);
     }
 
     @Override
-    public final String renderInlined(QueryPart part) {
+    public String renderInlined(QueryPart part) {
         return renderContext().paramType(INLINED).render(part);
     }
 
     @Override
-    public final List<Object> extractBindValues(QueryPart part) {
+    public List<Object> extractBindValues(QueryPart part) {
         List<Object> result = new ArrayList<Object>();
 
         for (Param<?> param : extractParams(part).values()) {
@@ -319,24 +319,24 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     @Override
-    public final Map<String, Param<?>> extractParams(QueryPart part) {
+    public Map<String, Param<?>> extractParams(QueryPart part) {
         ParamCollector collector = new ParamCollector(configuration);
         collector.bind(part);
         return Collections.unmodifiableMap(collector.result);
     }
 
     @Override
-    public final Param<?> extractParam(QueryPart part, String name) {
+    public Param<?> extractParam(QueryPart part, String name) {
         return extractParams(part).get(name);
     }
 
     @Override
-    public final BindContext bindContext(PreparedStatement stmt) {
+    public BindContext bindContext(PreparedStatement stmt) {
         return new DefaultBindContext(configuration, stmt);
     }
 
     @Override
-    public final int bind(QueryPart part, PreparedStatement stmt) {
+    public int bind(QueryPart part, PreparedStatement stmt) {
         return bindContext(stmt).bind(part).peekIndex();
     }
 
@@ -345,12 +345,12 @@ class DSLContextImpl implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    public final void attach(Attachable... attachables) {
+    public void attach(Attachable... attachables) {
         attach(Arrays.asList(attachables));
     }
 
     @Override
-    public final void attach(Collection<? extends Attachable> attachables) {
+    public void attach(Collection<? extends Attachable> attachables) {
         for (Attachable attachable : attachables) {
             attachable.attach(configuration);
         }
@@ -362,133 +362,133 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
+    public <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
         return new LoaderImpl<R>(configuration, table);
     }
 
     @Override
     @Support
-    public final Query query(String sql) {
+    public Query query(String sql) {
         return query(sql, new Object[0]);
     }
 
     @Override
     @Support
-    public final Query query(String sql, Object... bindings) {
+    public Query query(String sql, Object... bindings) {
         return new SQLQuery(configuration, sql, bindings);
     }
 
     @Override
     @Support
-    public final Query query(String sql, QueryPart... parts) {
+    public Query query(String sql, QueryPart... parts) {
         return new SQLQuery(configuration, sql, parts);
     }
 
     @Override
     @Support
-    public final Result<Record> fetch(String sql) throws DataAccessException {
+    public Result<Record> fetch(String sql) throws DataAccessException {
         return resultQuery(sql).fetch();
     }
 
     @Override
     @Support
-    public final Result<Record> fetch(String sql, Object... bindings) throws DataAccessException {
+    public Result<Record> fetch(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetch();
     }
 
     @Override
     @Support
-    public final Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException {
+    public Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetch();
     }
 
     @Override
     @Support
-    public final Cursor<Record> fetchLazy(String sql) throws DataAccessException {
+    public Cursor<Record> fetchLazy(String sql) throws DataAccessException {
         return resultQuery(sql).fetchLazy();
     }
 
     @Override
     @Support
-    public final Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
+    public Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetchLazy();
     }
 
     @Override
     @Support
-    public final Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException {
+    public Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetchLazy();
     }
 
     @Override
     @Support
-    public final List<Result<Record>> fetchMany(String sql) throws DataAccessException {
+    public List<Result<Record>> fetchMany(String sql) throws DataAccessException {
         return resultQuery(sql).fetchMany();
     }
 
     @Override
     @Support
-    public final List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException {
+    public List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetchMany();
     }
 
     @Override
     @Support
-    public final List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException {
+    public List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetchMany();
     }
 
     @Override
     @Support
-    public final Record fetchOne(String sql) throws DataAccessException, InvalidResultException {
+    public Record fetchOne(String sql) throws DataAccessException, InvalidResultException {
         return resultQuery(sql).fetchOne();
     }
 
     @Override
     @Support
-    public final Record fetchOne(String sql, Object... bindings) throws DataAccessException, InvalidResultException {
+    public Record fetchOne(String sql, Object... bindings) throws DataAccessException, InvalidResultException {
         return resultQuery(sql, bindings).fetchOne();
     }
 
     @Override
     @Support
-    public final Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException {
+    public Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException {
         return resultQuery(sql, parts).fetchOne();
     }
 
     @Override
     @Support
-    public final int execute(String sql) throws DataAccessException {
+    public int execute(String sql) throws DataAccessException {
         return query(sql).execute();
     }
 
     @Override
     @Support
-    public final int execute(String sql, Object... bindings) throws DataAccessException {
+    public int execute(String sql, Object... bindings) throws DataAccessException {
         return query(sql, bindings).execute();
     }
 
     @Override
     @Support
-    public final int execute(String sql, QueryPart... parts) throws DataAccessException {
+    public int execute(String sql, QueryPart... parts) throws DataAccessException {
         return query(sql, parts).execute();
     }
 
     @Override
     @Support
-    public final ResultQuery<Record> resultQuery(String sql) {
+    public ResultQuery<Record> resultQuery(String sql) {
         return resultQuery(sql, new Object[0]);
     }
 
     @Override
     @Support
-    public final ResultQuery<Record> resultQuery(String sql, Object... bindings) {
+    public ResultQuery<Record> resultQuery(String sql, Object... bindings) {
         return new SQLResultQuery(configuration, sql, bindings);
     }
 
     @Override
     @Support
-    public final ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
+    public ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
         return new SQLResultQuery(configuration, sql, parts);
     }
 
@@ -498,55 +498,55 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final Result<Record> fetch(ResultSet rs) throws DataAccessException {
+    public Result<Record> fetch(ResultSet rs) throws DataAccessException {
         return fetchLazy(rs).fetch();
     }
 
     @Override
     @Support
-    public final Result<Record> fetch(ResultSet rs, Field<?>... fields) throws DataAccessException {
+    public Result<Record> fetch(ResultSet rs, Field<?>... fields) throws DataAccessException {
         return fetchLazy(rs, fields).fetch();
     }
 
     @Override
     @Support
-    public final Result<Record> fetch(ResultSet rs, DataType<?>... types) throws DataAccessException {
+    public Result<Record> fetch(ResultSet rs, DataType<?>... types) throws DataAccessException {
         return fetchLazy(rs, types).fetch();
     }
 
     @Override
     @Support
-    public final Result<Record> fetch(ResultSet rs, Class<?>... types) throws DataAccessException {
+    public Result<Record> fetch(ResultSet rs, Class<?>... types) throws DataAccessException {
         return fetchLazy(rs, types).fetch();
     }
 
     @Override
     @Support
-    public final Record fetchOne(ResultSet rs) throws DataAccessException, InvalidResultException {
+    public Record fetchOne(ResultSet rs) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(rs));
     }
 
     @Override
     @Support
-    public final Record fetchOne(ResultSet rs, Field<?>... fields) throws DataAccessException, InvalidResultException {
+    public Record fetchOne(ResultSet rs, Field<?>... fields) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(rs, fields));
     }
 
     @Override
     @Support
-    public final Record fetchOne(ResultSet rs, DataType<?>... types) throws DataAccessException, InvalidResultException {
+    public Record fetchOne(ResultSet rs, DataType<?>... types) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(rs, types));
     }
 
     @Override
     @Support
-    public final Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, InvalidResultException {
+    public Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(rs, types));
     }
 
     @Override
     @Support
-    public final Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException {
+    public Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException {
         try {
             return fetchLazy(rs, new MetaDataFieldProvider(configuration, rs.getMetaData()).getFields());
         }
@@ -557,7 +557,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) throws DataAccessException {
+    public Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) throws DataAccessException {
         ExecuteContext ctx = new DefaultExecuteContext(configuration);
         ExecuteListener listener = new ExecuteListeners(ctx);
 
@@ -567,7 +567,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final Cursor<Record> fetchLazy(ResultSet rs, DataType<?>... types) throws DataAccessException {
+    public Cursor<Record> fetchLazy(ResultSet rs, DataType<?>... types) throws DataAccessException {
         try {
             Field<?>[] fields = new Field[types.length];
             ResultSetMetaData meta = rs.getMetaData();
@@ -586,31 +586,31 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException {
+    public Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException {
         return fetchLazy(rs, Utils.getDataTypes(types));
     }
 
     @Override
     @Support
-    public final Result<Record> fetchFromTXT(String string) throws DataAccessException {
+    public Result<Record> fetchFromTXT(String string) throws DataAccessException {
         return fetchFromTXT(string, "{null}");
     }
 
     @Override
     @Support
-    public final Result<Record> fetchFromTXT(String string, String nullLiteral) throws DataAccessException {
+    public Result<Record> fetchFromTXT(String string, String nullLiteral) throws DataAccessException {
         return fetchFromStringData(Utils.parseTXT(string, nullLiteral));
     }
 
     @Override
     @Support
-    public final Result<Record> fetchFromCSV(String string) throws DataAccessException {
+    public Result<Record> fetchFromCSV(String string) throws DataAccessException {
         return fetchFromCSV(string, ',');
     }
 
     @Override
     @Support
-    public final Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException {
+    public Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException {
         CSVReader reader = new CSVReader(new StringReader(string), delimiter);
         List<String[]> data = null;
 
@@ -631,12 +631,12 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     @Override
-    public final Result<Record> fetchFromStringData(String[]... data) {
+    public Result<Record> fetchFromStringData(String[]... data) {
         return fetchFromStringData(list(data));
     }
 
     @Override
-    public final Result<Record> fetchFromStringData(List<String[]> data) {
+    public Result<Record> fetchFromStringData(List<String[]> data) {
         if (data.size() == 0) {
             return new ResultImpl<Record>(configuration, null);
         }
@@ -671,7 +671,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
+    public <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
         SelectWhereStep<R> result = DSL.selectFrom(table);
         result.attach(configuration);
         return result;
@@ -679,7 +679,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
+    public SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
         SelectSelectStep<Record> result = DSL.select(fields);
         result.attach(configuration);
         return result;
@@ -687,7 +687,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final SelectSelectStep<Record> select(Field<?>... fields) {
+    public SelectSelectStep<Record> select(Field<?>... fields) {
         SelectSelectStep<Record> result = DSL.select(fields);
         result.attach(configuration);
         return result;
@@ -697,133 +697,133 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1) {
+    public <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1) {
         return (SelectSelectStep) select(new Field[] { field1 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2) {
+    public <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2) {
         return (SelectSelectStep) select(new Field[] { field1, field2 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+    public <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+    public <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+    public <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+    public <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+    public <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
@@ -831,7 +831,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
+    public SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
         SelectSelectStep<Record> result = DSL.selectDistinct(fields);
         result.attach(configuration);
         return result;
@@ -839,7 +839,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
+    public SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
         SelectSelectStep<Record> result = DSL.selectDistinct(fields);
         result.attach(configuration);
         return result;
@@ -849,133 +849,133 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1) {
+    public <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2) {
+    public <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+    public <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+    public <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+    public <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+    public <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+    public <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+    public <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
 
@@ -983,7 +983,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final SelectSelectStep<Record1<Integer>> selectZero() {
+    public SelectSelectStep<Record1<Integer>> selectZero() {
         SelectSelectStep<Record1<Integer>> result = DSL.selectZero();
         result.attach(configuration);
         return result;
@@ -991,7 +991,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final SelectSelectStep<Record1<Integer>> selectOne() {
+    public SelectSelectStep<Record1<Integer>> selectOne() {
         SelectSelectStep<Record1<Integer>> result = DSL.selectOne();
         result.attach(configuration);
         return result;
@@ -999,7 +999,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final SelectSelectStep<Record1<Integer>> selectCount() {
+    public SelectSelectStep<Record1<Integer>> selectCount() {
         SelectSelectStep<Record1<Integer>> result = DSL.selectCount();
         result.attach(configuration);
         return result;
@@ -1007,25 +1007,25 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final SelectQuery<Record> selectQuery() {
+    public SelectQuery<Record> selectQuery() {
         return new SelectQueryImpl(configuration);
     }
 
     @Override
     @Support
-    public final <R extends Record> SelectQuery<R> selectQuery(TableLike<R> table) {
+    public <R extends Record> SelectQuery<R> selectQuery(TableLike<R> table) {
         return new SelectQueryImpl<R>(configuration, table);
     }
 
     @Override
     @Support
-    public final <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
+    public <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
         return new InsertQueryImpl<R>(configuration, into);
     }
 
     @Override
     @Support
-    public final <R extends Record> InsertSetStep<R> insertInto(Table<R> into) {
+    public <R extends Record> InsertSetStep<R> insertInto(Table<R> into) {
         return new InsertImpl(configuration, into, Collections.<Field<?>>emptyList());
     }
 
@@ -1033,133 +1033,133 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1) {
+    public <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2> InsertValuesStep2<R, T1, T2> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2) {
+    public <R extends Record, T1, T2> InsertValuesStep2<R, T1, T2> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+    public <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+    public <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+    public <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 }));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return new InsertImpl(configuration, into, Arrays.asList(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 }));
     }
 
@@ -1167,31 +1167,31 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
+    public <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
         return new InsertImpl(configuration, into, Arrays.asList(fields));
     }
 
     @Override
     @Support
-    public final <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
+    public <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
         return new InsertImpl(configuration, into, fields);
     }
 
     @Override
     @Support
-    public final <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
+    public <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
         return new UpdateQueryImpl<R>(configuration, table);
     }
 
     @Override
     @Support
-    public final <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
+    public <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
         return new UpdateImpl<R>(configuration, table);
     }
 
     @Override
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    public final <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
+    public <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return new MergeImpl(configuration, table);
     }
 
@@ -1199,133 +1199,133 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
+    public <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
         return new MergeImpl(configuration, table, Arrays.asList(field1));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
+    public <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+    public <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+    public <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+    public <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21));
     }
 
     @Generated("This method was generated using jOOQ-tools")
     @Override
-    public final <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+    public <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return new MergeImpl(configuration, table, Arrays.asList(field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22));
     }
 
@@ -1333,25 +1333,25 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    public final <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
+    public <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
         return mergeInto(table, Arrays.asList(fields));
     }
 
     @Override
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
-    public final <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
+    public <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
         return new MergeImpl(configuration, table, fields);
     }
 
     @Override
     @Support
-    public final <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
+    public <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
         return new DeleteQueryImpl<R>(configuration, table);
     }
 
     @Override
     @Support
-    public final <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
+    public <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
         return new DeleteImpl<R>(configuration, table);
     }
 
@@ -1361,13 +1361,13 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final Batch batch(Query... queries) {
+    public Batch batch(Query... queries) {
         return new BatchMultiple(configuration, queries);
     }
 
     @Override
     @Support
-    public final Batch batch(String... queries) {
+    public Batch batch(String... queries) {
         Query[] result = new Query[queries.length];
 
         for (int i = 0; i < queries.length; i++) {
@@ -1379,79 +1379,79 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final Batch batch(Collection<? extends Query> queries) {
+    public Batch batch(Collection<? extends Query> queries) {
         return batch(queries.toArray(new Query[queries.size()]));
     }
 
     @Override
     @Support
-    public final BatchBindStep batch(Query query) {
+    public BatchBindStep batch(Query query) {
         return new BatchSingle(configuration, query);
     }
 
     @Override
     @Support
-    public final BatchBindStep batch(String sql) {
+    public BatchBindStep batch(String sql) {
         return batch(query(sql));
     }
 
     @Override
     @Support
-    public final Batch batch(Query query, Object[]... bindings) {
+    public Batch batch(Query query, Object[]... bindings) {
         return batch(query).bind(bindings);
     }
 
     @Override
     @Support
-    public final Batch batch(String sql, Object[]... bindings) {
+    public Batch batch(String sql, Object[]... bindings) {
         return batch(query(sql), bindings);
     }
 
     @Override
     @Support
-    public final Batch batchStore(UpdatableRecord<?>... records) {
+    public Batch batchStore(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.STORE, records);
     }
 
     @Override
     @Support
-    public final Batch batchStore(Collection<? extends UpdatableRecord<?>> records) {
+    public Batch batchStore(Collection<? extends UpdatableRecord<?>> records) {
         return batchStore(records.toArray(new UpdatableRecord[records.size()]));
     }
 
     @Override
     @Support
-    public final Batch batchInsert(UpdatableRecord<?>... records) {
+    public Batch batchInsert(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.INSERT, records);
     }
 
     @Override
     @Support
-    public final Batch batchInsert(Collection<? extends UpdatableRecord<?>> records) {
+    public Batch batchInsert(Collection<? extends UpdatableRecord<?>> records) {
         return batchInsert(records.toArray(new UpdatableRecord[records.size()]));
     }
 
     @Override
     @Support
-    public final Batch batchUpdate(UpdatableRecord<?>... records) {
+    public Batch batchUpdate(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.UPDATE, records);
     }
 
     @Override
     @Support
-    public final Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records) {
+    public Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records) {
         return batchUpdate(records.toArray(new UpdatableRecord[records.size()]));
     }
 
     @Override
     @Support
-    public final Batch batchDelete(UpdatableRecord<?>... records) {
+    public Batch batchDelete(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.DELETE, records);
     }
 
     @Override
     @Support
-    public final Batch batchDelete(Collection<? extends UpdatableRecord<?>> records) {
+    public Batch batchDelete(Collection<? extends UpdatableRecord<?>> records) {
         return batchDelete(records.toArray(new UpdatableRecord[records.size()]));
     }
 
@@ -1461,7 +1461,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
+    public <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
         return new TruncateImpl<R>(configuration, table);
     }
 
@@ -1471,7 +1471,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support({ ASE, CUBRID, DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE, SQLSERVER, SYBASE })
-    public final BigInteger lastID() throws DataAccessException {
+    public BigInteger lastID() throws DataAccessException {
         switch (configuration.dialect()) {
             case DERBY: {
                 Field<BigInteger> field = field("identity_val_local()", BigInteger.class);
@@ -1514,14 +1514,14 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
-    public final <T extends Number> T nextval(Sequence<T> sequence) {
+    public <T extends Number> T nextval(Sequence<T> sequence) {
         Field<T> nextval = sequence.nextval();
         return select(nextval).fetchOne(nextval);
     }
 
     @Override
     @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SYBASE })
-    public final <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException {
+    public <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException {
         Field<T> currval = sequence.currval();
         return select(currval).fetchOne(currval);
     }
@@ -1531,24 +1531,24 @@ class DSLContextImpl implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
+    public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
         return Utils.newRecord(type, configuration);
     }
 
     @Override
-    public final <R extends Record> R newRecord(Table<R> table) {
+    public <R extends Record> R newRecord(Table<R> table) {
         return Utils.newRecord(table, configuration);
     }
 
     @Override
-    public final <R extends Record> R newRecord(Table<R> table, Object source) {
+    public <R extends Record> R newRecord(Table<R> table, Object source) {
         R result = newRecord(table);
         result.from(source);
         return result;
     }
 
     @Override
-    public final <R extends Record> Result<R> newResult(Table<R> table) {
+    public <R extends Record> Result<R> newResult(Table<R> table) {
         return new ResultImpl<R>(configuration, null, table.fields());
     }
 
@@ -1557,7 +1557,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    public final <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException {
+    public <R extends Record> Result<R> fetch(ResultQuery<R> query) throws DataAccessException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -1570,7 +1570,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     @Override
-    public final <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException {
+    public <R extends Record> Cursor<R> fetchLazy(ResultQuery<R> query) throws DataAccessException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -1583,7 +1583,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     @Override
-    public final <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) throws DataAccessException {
+    public <R extends Record> List<Result<Record>> fetchMany(ResultQuery<R> query) throws DataAccessException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -1596,7 +1596,7 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     @Override
-    public final <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, InvalidResultException {
+    public <R extends Record> R fetchOne(ResultQuery<R> query) throws DataAccessException, InvalidResultException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -1609,12 +1609,12 @@ class DSLContextImpl implements DSLContext, Serializable {
     }
 
     @Override
-    public final int fetchCount(Select<?> query) throws DataAccessException {
+    public int fetchCount(Select<?> query) throws DataAccessException {
         return selectCount().from(query).fetchOne(0, int.class);
     }
 
     @Override
-    public final int execute(Query query) throws DataAccessException {
+    public int execute(Query query) throws DataAccessException {
         final Configuration previous = Utils.getConfiguration(query);
 
         try {
@@ -1632,55 +1632,55 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends Record> Result<R> fetch(Table<R> table) throws DataAccessException {
+    public <R extends Record> Result<R> fetch(Table<R> table) throws DataAccessException {
         return fetch(table, trueCondition());
     }
 
     @Override
     @Support
-    public final <R extends Record> Result<R> fetch(Table<R> table, Condition condition) throws DataAccessException {
+    public <R extends Record> Result<R> fetch(Table<R> table, Condition condition) throws DataAccessException {
         return selectFrom(table).where(condition).fetch();
     }
 
     @Override
     @Support
-    public final <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, InvalidResultException {
+    public <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(table));
     }
 
     @Override
     @Support
-    public final <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, InvalidResultException {
+    public <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(table, condition));
     }
 
     @Override
     @Support
-    public final <R extends Record> R fetchAny(Table<R> table) throws DataAccessException {
+    public <R extends Record> R fetchAny(Table<R> table) throws DataAccessException {
         return Utils.filterOne(selectFrom(table).limit(1).fetch());
     }
 
     @Override
     @Support
-    public final <R extends Record> R fetchAny(Table<R> table, Condition condition) throws DataAccessException {
+    public <R extends Record> R fetchAny(Table<R> table, Condition condition) throws DataAccessException {
         return Utils.filterOne(selectFrom(table).where(condition).limit(1).fetch());
     }
 
     @Override
     @Support
-    public final <R extends Record> Cursor<R> fetchLazy(Table<R> table) throws DataAccessException {
+    public <R extends Record> Cursor<R> fetchLazy(Table<R> table) throws DataAccessException {
         return fetchLazy(table, trueCondition());
     }
 
     @Override
     @Support
-    public final <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException {
+    public <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException {
         return selectFrom(table).where(condition).fetchLazy();
     }
 
     @Override
     @Support
-    public final <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException {
+    public <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException {
         InsertQuery<R> insert = insertQuery(record.getTable());
         insert.setRecord(record);
         return insert.execute();
@@ -1688,7 +1688,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException {
+    public <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException {
         UpdateQuery<R> update = updateQuery(record.getTable());
         Utils.addConditions(update, record, record.getTable().getPrimaryKey().getFieldsArray());
         update.setRecord(record);
@@ -1697,7 +1697,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) throws DataAccessException {
+    public <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) throws DataAccessException {
         UpdateQuery<R> update = updateQuery(record.getTable());
         update.addConditions(condition);
         update.setRecord(record);
@@ -1706,7 +1706,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends UpdatableRecord<R>> int executeDelete(R record) throws DataAccessException {
+    public <R extends UpdatableRecord<R>> int executeDelete(R record) throws DataAccessException {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
         Utils.addConditions(delete, record, record.getTable().getPrimaryKey().getFieldsArray());
         return delete.execute();
@@ -1714,7 +1714,7 @@ class DSLContextImpl implements DSLContext, Serializable {
 
     @Override
     @Support
-    public final <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException {
+    public <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
         delete.addConditions(condition);
         return delete.execute();

@@ -49,6 +49,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -91,6 +94,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectForUpdateStep<R extends Record> extends SelectFinalStep<R> {
 
     /**
@@ -106,6 +110,9 @@ public interface SelectForUpdateStep<R extends Record> extends SelectFinalStep<R
      *      details
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "FOR UPDATE"
+    )
     SelectForUpdateOfStep<R> forUpdate();
 
     /**
@@ -115,6 +122,9 @@ public interface SelectForUpdateStep<R extends Record> extends SelectFinalStep<R
      *      details
      */
     @Support({ MYSQL, POSTGRES })
+    @Transition(
+        name = "FOR SHARE"
+    )
     SelectFinalStep<R> forShare();
 
 }

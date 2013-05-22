@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+
 /**
  * A participant of a quantified comparison predicate
  * <p>
@@ -48,6 +50,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
+@State(terminal = true)
 public interface QuantifiedSelect<R extends Record> extends QueryPart {
 
 }

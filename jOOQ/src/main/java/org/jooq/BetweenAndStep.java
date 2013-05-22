@@ -35,23 +35,37 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * An intermediate DSL type for the construction of a <code>BETWEEN</code>
  * predicate.
  *
  * @author Lukas Eder
  */
+@State
 public interface BetweenAndStep<T> {
 
     /**
      * Create a condition to check this field against some bounds
      */
     @Support
+    @Transition(
+        name = "AND",
+        args = "Field",
+        to = "BetweenPredicate"
+    )
     Condition and(T value);
 
     /**
      * Create a condition to check this field against some bounds
      */
     @Support
+    @Transition(
+        name = "AND",
+        args = "Field",
+        to = "BetweenPredicate"
+    )
     Condition and(Field<T> field);
 }

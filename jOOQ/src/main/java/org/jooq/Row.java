@@ -35,6 +35,9 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * A model type for a row value expression.
  * <p>
@@ -44,6 +47,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
+@State(terminal = true)
 public interface Row extends QueryPart {
 
     /**
@@ -164,6 +168,10 @@ public interface Row extends QueryPart {
      * equivalent to <code>A IS NULL AND B IS NULL</code>
      */
     @Support
+    @Transition(
+        name = "IS NULL",
+        to = "NullPredicate"
+    )
     Condition isNull();
 
     /**
@@ -182,6 +190,10 @@ public interface Row extends QueryPart {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "IS NOT NULL",
+        to = "NullPredicate"
+    )
     Condition isNotNull();
 
 }

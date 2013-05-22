@@ -42,6 +42,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -58,12 +61,17 @@ import static org.jooq.SQLDialect.SYBASE;
  * @param <T> The function return type
  * @author Lukas Eder
  */
+@State
 public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
 
     /**
      * Add a <code>PARTITION BY</code> clause to the window functions.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "PARTITION BY",
+        args = "Field+"
+    )
     WindowOrderByStep<T> partitionBy(Field<?>... fields);
 
     /**
@@ -74,6 +82,9 @@ public interface WindowPartitionByStep<T> extends WindowOrderByStep<T> {
      * If you use it, jOOQ will simply ignore it.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "PARTITION BY ONE"
+    )
     WindowOrderByStep<T> partitionByOne();
 
 }

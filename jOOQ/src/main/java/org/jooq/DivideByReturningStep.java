@@ -37,22 +37,38 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * An intermediate type for the construction of a relational division
  *
  * @author Lukas Eder
  */
+@State(
+    name = "DivideByReturningStep"
+)
 public interface DivideByReturningStep {
 
     /**
      * Specify the fields that you want the division to return from the dividend
      */
     @Support
+    @Transition(
+        name = "RETURNING",
+        args = "Field+",
+        to = "DividedTable"
+    )
     Table<Record> returning(Field<?>... fields);
 
     /**
      * Specify the fields that you want the division to return from the dividend
      */
     @Support
+    @Transition(
+        name = "RETURNING",
+        args = "Field+",
+        to = "DividedTable"
+    )
     Table<Record> returning(Collection<? extends Field<?>> fields);
 }

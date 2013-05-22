@@ -44,6 +44,9 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -63,6 +66,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeNotMatchedValuesStepN<R extends Record> {
 
     /**
@@ -70,6 +74,10 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "VALUES",
+        args = "Object+"
+    )
     MergeNotMatchedWhereStep<R> values(Object... values);
 
     /**
@@ -77,6 +85,10 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "VALUES",
+        args = "Field+"
+    )
     MergeNotMatchedWhereStep<R> values(Field<?>... values);
 
     /**
@@ -84,5 +96,9 @@ public interface MergeNotMatchedValuesStepN<R extends Record> {
      * statement's <code>WHEN NOT MATCHED THEN INSERT</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "VALUES",
+        args = "Field+"
+    )
     MergeNotMatchedWhereStep<R> values(Collection<?> values);
 }

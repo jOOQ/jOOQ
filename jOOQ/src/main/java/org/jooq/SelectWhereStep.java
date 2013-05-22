@@ -37,6 +37,8 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 /**
@@ -81,18 +83,27 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R> {
 
     /**
      * Add a <code>WHERE</code> clause to the query
      */
     @Support
+    @Transition(
+        name = "WHERE",
+        args = "Condition+"
+    )
     SelectConditionStep<R> where(Condition... conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query
      */
     @Support
+    @Transition(
+        name = "WHERE",
+        args = "Condition+"
+    )
     SelectConditionStep<R> where(Collection<Condition> conditions);
 
     /**

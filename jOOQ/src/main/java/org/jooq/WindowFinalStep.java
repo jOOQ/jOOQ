@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -54,6 +56,10 @@ package org.jooq;
  * @param <T> The function return type
  * @author Lukas Eder
  */
+@State(
+    name = "WindowFunction",
+    terminal = true
+)
 public interface WindowFinalStep<T> extends Field<T> {
 
 }

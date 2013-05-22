@@ -92,6 +92,10 @@ class DSLContext extends Generators {
                  */
                 «generatedMethod»
                 @Support
+                @Transition(
+                    name = "SELECT",
+                    args = "Field+"
+                )
                 <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> select(«Field_TN_fieldn(degree)»);
             ''');
             
@@ -150,6 +154,10 @@ class DSLContext extends Generators {
                  */
                 «generatedMethod»
                 @Support
+                @Transition(
+                    name = "SELECT DISTINCT",
+                    args = "Field+"
+                )
                 <«TN(degree)»> SelectSelectStep<Record«degree»<«TN(degree)»>> selectDistinct(«Field_TN_fieldn(degree)»);
             ''');
             

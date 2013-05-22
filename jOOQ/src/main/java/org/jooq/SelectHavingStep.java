@@ -37,6 +37,8 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 /**
@@ -81,18 +83,27 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R> {
 
     /**
      * Add a <code>HAVING</code> clause to the query
      */
     @Support
+    @Transition(
+        name = "HAVING",
+        args = "Condition+"
+    )
     SelectHavingConditionStep<R> having(Condition... conditions);
 
     /**
      * Add a <code>HAVING</code> clause to the query
      */
     @Support
+    @Transition(
+        name = "HAVING",
+        args = "Condition+"
+    )
     SelectHavingConditionStep<R> having(Collection<Condition> conditions);
 
     /**

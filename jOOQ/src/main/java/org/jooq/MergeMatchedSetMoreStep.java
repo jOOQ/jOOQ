@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -54,6 +56,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeMatchedSetMoreStep<R extends Record>
    extends
        MergeMatchedSetStep<R>,

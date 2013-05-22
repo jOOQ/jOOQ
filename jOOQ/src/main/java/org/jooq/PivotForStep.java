@@ -37,12 +37,18 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.ORACLE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the Oracle <code>PIVOT</code> clause DSL API, pivoting
  * {@link Table} objects to new tables.
  *
  * @author Lukas Eder
  */
+@State(
+    name = "PivotForStep"
+)
 public interface PivotForStep {
 
     /**
@@ -55,5 +61,9 @@ public interface PivotForStep {
      * @return A DSL object to create the <code>PIVOT</code> expression
      */
     @Support({ ORACLE })
+    @Transition(
+        name = "FOR",
+        args = "Field"
+    )
     <T> PivotInStep<T> on(Field<T> field);
 }

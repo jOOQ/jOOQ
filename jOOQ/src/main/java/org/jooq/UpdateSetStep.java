@@ -37,6 +37,9 @@ package org.jooq;
 
 import java.util.Map;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -52,24 +55,46 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
+@State
 public interface UpdateSetStep<R extends Record> {
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
+    @Transition(
+        name = "SET",
+        args = {
+            "Field",
+            "Object"
+        }
+    )
     <T> UpdateSetMoreStep<R> set(Field<T> field, T value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
+    @Transition(
+        name = "SET",
+        args = {
+            "Field",
+            "Field"
+        }
+    )
     <T> UpdateSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
      * Set a value for a field in the <code>UPDATE</code> statement.
      */
     @Support
+    @Transition(
+        name = "SET",
+        args = {
+            "Field",
+            "Select"
+        }
+    )
     <T> UpdateSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**
@@ -91,4 +116,5 @@ public interface UpdateSetStep<R extends Record> {
      * @see #set(Map)
      */
     @Support
-    UpdateSetMoreStep<R> set(Record record);}
+    UpdateSetMoreStep<R> set(Record record);
+}

@@ -38,6 +38,8 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 /**
@@ -82,12 +84,17 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep<R> {
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "CONNECT BY",
+        args = "Condition"
+    )
     SelectConnectByConditionStep<R> connectBy(Condition condition);
 
     /**
@@ -134,6 +141,10 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
      * query
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "CONNECT BY NOCYCLE",
+        args = "Condition"
+    )
     SelectConnectByConditionStep<R> connectByNoCycle(Condition condition);
 
     /**

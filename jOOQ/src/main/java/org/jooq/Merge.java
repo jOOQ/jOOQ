@@ -35,11 +35,14 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+
 /**
  * A {@link Query} that can merge data in the database.
  *
  * @author Lukas Eder
  */
+@State(terminal = true)
 public interface Merge<R extends Record> extends Query {
 
 }

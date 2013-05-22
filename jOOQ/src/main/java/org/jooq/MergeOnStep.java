@@ -42,6 +42,8 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 /**
@@ -63,12 +65,17 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeOnStep<R extends Record> {
 
     /**
      * Provide join conditions and proceed to the next step
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ON",
+        args = "Condition+"
+    )
     MergeOnConditionStep<R> on(Condition... conditions);
 
     /**

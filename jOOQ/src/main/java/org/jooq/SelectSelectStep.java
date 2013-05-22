@@ -37,6 +37,8 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -80,6 +82,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectSelectStep<R extends Record> extends SelectFromStep<R> {
 
     /**

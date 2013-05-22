@@ -42,6 +42,9 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -61,6 +64,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
 
     /**
@@ -68,6 +72,10 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * statement
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "USING",
+        args = "Table"
+    )
     MergeOnStep<R> using(TableLike<?> table);
 
     /**
@@ -79,5 +87,8 @@ public interface MergeUsingStep<R extends Record> extends MergeKeyStepN<R> {
      * Server, where derived tables need to be aliased.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "USING DUAL"
+    )
     MergeOnStep<R> usingDual();
 }

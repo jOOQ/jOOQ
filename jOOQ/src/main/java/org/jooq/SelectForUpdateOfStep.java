@@ -47,6 +47,9 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -89,6 +92,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdateWaitStep<R> {
 
     /**
@@ -99,6 +103,10 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *      details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "OF",
+        args = "Field+"
+    )
     SelectForUpdateWaitStep<R> of(Field<?>... fields);
 
     /**
@@ -109,6 +117,10 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *      more details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "OF",
+        args = "Field+"
+    )
     SelectForUpdateWaitStep<R> of(Collection<Field<?>> fields);
 
     /**
@@ -119,6 +131,10 @@ public interface SelectForUpdateOfStep<R extends Record> extends SelectForUpdate
      *      details
      */
     @Support({ DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "OF",
+        args = "Table+"
+    )
     SelectForUpdateWaitStep<R> of(Table<?>... tables);
 
 }

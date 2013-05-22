@@ -35,6 +35,7 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
 import org.jooq.impl.DSL;
 
 /**
@@ -43,6 +44,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface DivideByOnConditionStep extends DivideByReturningStep {
 
     /**

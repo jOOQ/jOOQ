@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.MYSQL;
+
 import java.util.Collection;
 
 import org.jooq.BindContext;
@@ -101,7 +103,16 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     public final void toSQL(RenderContext context) {
         boolean declare = context.declareTables();
 
-        context.keyword("delete from ");
+        context.keyword("delete ");
+
+        // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
+        // DELETE t1 FROM my_table AS t1
+        if (getFrom() instanceof TableAlias && context.configuration().dialect() == MYSQL) {
+            context.sql(getFrom())
+                   .sql(" ");
+        }
+
+        context.keyword("from ");
         context.declareTables(true)
                .sql(getFrom())
                .declareTables(declare);

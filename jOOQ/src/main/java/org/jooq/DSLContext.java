@@ -4194,6 +4194,8 @@ public interface DSLContext {
      *       .where(field1.greaterThan(100))
      *       .execute();
      * </pre></code>
+     * <p>
+     * Some but not all databases support aliased tables in delete statements.
      */
     @Support
     @Transition(

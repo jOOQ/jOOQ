@@ -49,7 +49,6 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -74,7 +73,6 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.ResultQuery;
-import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.exception.DataTypeException;
 import org.jooq.tools.Convert;
@@ -266,88 +264,62 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     protected final int execute(ExecuteContext ctx, ExecuteListener listener) throws SQLException {
-        Connection connection = ctx.connection();
-        boolean autoCommit = false;
+        listener.executeStart(ctx);
 
-        // [#706] Postgres requires two separate queries running in the same
-        // transaction to be executed when fetching refcursor types
-        if (ctx.configuration().dialect() == SQLDialect.POSTGRES && isSelectingRefCursor()) {
-            autoCommit = connection.getAutoCommit();
+        // JTDS doesn't seem to implement PreparedStatement.execute()
+        // correctly, at least not for sp_help
+        if (ctx.configuration().dialect() == ASE) {
+            ctx.resultSet(ctx.statement().executeQuery());
+        }
 
-            if (autoCommit) {
-                if (log.isDebugEnabled())
-                    log.debug("Unsetting auto-commit", false);
+        // [#1232] Avoid executeQuery() in order to handle queries that may
+        // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
+        else if (ctx.statement().execute()) {
+            ctx.resultSet(ctx.statement().getResultSet());
+        }
 
-                connection.setAutoCommit(false);
+        listener.executeEnd(ctx);
+
+        // Fetch a single result set
+        if (!many) {
+            if (ctx.resultSet() != null) {
+                Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
+                cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), keepStatement(), keepResultSet(), keepResultSetMode, getRecordType());
+
+                if (!lazy) {
+                    result = cursor.fetch();
+                    cursor = null;
+                }
+            }
+            else {
+                result = new ResultImpl<R>(ctx.configuration(), null);
             }
         }
 
-        try {
-            listener.executeStart(ctx);
+        // Fetch several result sets
+        else {
+            results = new ArrayList<Result<Record>>();
+            boolean anyResults = false;
 
-            // JTDS doesn't seem to implement PreparedStatement.execute()
-            // correctly, at least not for sp_help
-            if (ctx.configuration().dialect() == ASE) {
-                ctx.resultSet(ctx.statement().executeQuery());
-            }
+            while (ctx.resultSet() != null) {
+                anyResults = true;
 
-            // [#1232] Avoid executeQuery() in order to handle queries that may
-            // not return a ResultSet, e.g. SQLite's pragma foreign_key_list(table)
-            else if (ctx.statement().execute()) {
-                ctx.resultSet(ctx.statement().getResultSet());
-            }
+                Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
+                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), true, false, CLOSE_AFTER_FETCH);
+                results.add(c.fetch());
 
-            listener.executeEnd(ctx);
-
-            // Fetch a single result set
-            if (!many) {
-                if (ctx.resultSet() != null) {
-                    Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                    cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), keepStatement(), keepResultSet(), keepResultSetMode, getRecordType());
-
-                    if (!lazy) {
-                        result = cursor.fetch();
-                        cursor = null;
-                    }
+                if (ctx.statement().getMoreResults()) {
+                    ctx.resultSet(ctx.statement().getResultSet());
                 }
                 else {
-                    result = new ResultImpl<R>(ctx.configuration(), null);
+                    ctx.resultSet(null);
                 }
             }
 
-            // Fetch several result sets
-            else {
-                results = new ArrayList<Result<Record>>();
-                boolean anyResults = false;
-
-                while (ctx.resultSet() != null) {
-                    anyResults = true;
-
-                    Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                    Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), true, false, CLOSE_AFTER_FETCH);
-                    results.add(c.fetch());
-
-                    if (ctx.statement().getMoreResults()) {
-                        ctx.resultSet(ctx.statement().getResultSet());
-                    }
-                    else {
-                        ctx.resultSet(null);
-                    }
-                }
-
-                // Call this only when there was at least one ResultSet.
-                // Otherwise, this call is not supported by ojdbc...
-                if (anyResults) {
-                    ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
-                }
-            }
-        }
-        finally {
-            if (autoCommit) {
-                if (log.isDebugEnabled())
-                    log.debug("Resetting auto-commit", autoCommit);
-
-                connection.setAutoCommit(autoCommit);
+            // Call this only when there was at least one ResultSet.
+            // Otherwise, this call is not supported by ojdbc...
+            if (anyResults) {
+                ctx.statement().getMoreResults(Statement.CLOSE_ALL_RESULTS);
             }
         }
 

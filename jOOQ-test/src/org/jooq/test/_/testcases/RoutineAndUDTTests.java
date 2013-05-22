@@ -1207,178 +1207,190 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
         }
 
-        // ---------------------------------------------------------------------
-        // The one cursor function
-        // ---------------------------------------------------------------------
-        {
-            Object integerArray = null;
+        // [#706] [#2324] Postgres JDBC needs two separate queries to fetch a
+        // cursor from a result set. This is only possible in a single
+        // transaction. This was previously fixed by jOOQ, but jOOQ's the wrong
+        // place to fix such things.
+        boolean autoCommit = getConnection().getAutoCommit();
+        try {
+            getConnection().setAutoCommit(false);
 
-            // Get an empty cursor
-            // -------------------
-            Result<Record> bFromCursor = invoke(cRoutines(), "fGetOneCursor", create().configuration(), integerArray);
+            // ---------------------------------------------------------------------
+            // The one cursor function
+            // ---------------------------------------------------------------------
+            {
+                Object integerArray = null;
 
-            assertNotNull(bFromCursor);
-            assertTrue(bFromCursor.isEmpty());
-            assertEquals(0, bFromCursor.size());
+                // Get an empty cursor
+                // -------------------
+                Result<Record> bFromCursor = invoke(cRoutines(), "fGetOneCursor", create().configuration(), integerArray);
 
-            // Get a filled cursor
-            // -------------------
-            if (TArrays_STRING_R() != null) {
-                ArrayRecord<Integer> i = newNUMBER_R();
-                i.set(1, 2, 4, 6);
-                integerArray = i;
-            }
-            else if (TArrays_STRING() != null) {
-                integerArray = new Integer[] { 1, 2, 4, 6 };
-            }
+                assertNotNull(bFromCursor);
+                assertTrue(bFromCursor.isEmpty());
+                assertEquals(0, bFromCursor.size());
 
-            bFromCursor = invoke(cRoutines(), "fGetOneCursor", create().configuration(), integerArray);
+                // Get a filled cursor
+                // -------------------
+                if (TArrays_STRING_R() != null) {
+                    ArrayRecord<Integer> i = newNUMBER_R();
+                    i.set(1, 2, 4, 6);
+                    integerArray = i;
+                }
+                else if (TArrays_STRING() != null) {
+                    integerArray = new Integer[] { 1, 2, 4, 6 };
+                }
 
-            Result<B> bFromTable = create()
-                .selectFrom(TBook())
-                .where(TBook_ID().in(1, 2, 4))
-                .orderBy(TBook_ID()).fetch();
+                bFromCursor = invoke(cRoutines(), "fGetOneCursor", create().configuration(), integerArray);
 
-            assertNotNull(bFromCursor);
-            assertFalse(bFromCursor.isEmpty());
-            assertEquals(3, bFromCursor.size());
+                Result<B> bFromTable = create()
+                    .selectFrom(TBook())
+                    .where(TBook_ID().in(1, 2, 4))
+                    .orderBy(TBook_ID()).fetch();
 
-            compareBookResults(bFromCursor, bFromTable);
-        }
+                assertNotNull(bFromCursor);
+                assertFalse(bFromCursor.isEmpty());
+                assertEquals(3, bFromCursor.size());
 
-        // ---------------------------------------------------------------------
-        // The one cursor function used in SQL
-        // ---------------------------------------------------------------------
-        {
-
-            // Get an empty cursor
-            // -------------------
-            Field<Result<Record>> field = FGetOneCursorField(null);
-            Result<Record> bFromCursor;
-
-            switch (dialect()) {
-                case HSQLDB:
-                    bFromCursor = create().select().from(table(field)).fetch();
-                    break;
-
-                default:
-                    bFromCursor = create().select(field).fetchOne(field);
-                    break;
+                compareBookResults(bFromCursor, bFromTable);
             }
 
-            assertNotNull(bFromCursor);
-            assertTrue(bFromCursor.isEmpty());
-            assertEquals(0, bFromCursor.size());
+            // ---------------------------------------------------------------------
+            // The one cursor function used in SQL
+            // ---------------------------------------------------------------------
+            {
 
-            // Get a filled cursor
-            // -------------------
-            field = FGetOneCursorField(new Integer[] { 1, 2, 4, 6 });
+                // Get an empty cursor
+                // -------------------
+                Field<Result<Record>> field = FGetOneCursorField(null);
+                Result<Record> bFromCursor;
 
-            switch (dialect()) {
-                case HSQLDB:
-                    bFromCursor = create().select().from(table(field)).fetch();
-                    break;
+                switch (dialect()) {
+                    case HSQLDB:
+                        bFromCursor = create().select().from(table(field)).fetch();
+                        break;
 
-                default:
-                    bFromCursor = create().select(field).fetchOne(field);
-                    break;
+                    default:
+                        bFromCursor = create().select(field).fetchOne(field);
+                        break;
+                }
+
+                assertNotNull(bFromCursor);
+                assertTrue(bFromCursor.isEmpty());
+                assertEquals(0, bFromCursor.size());
+
+                // Get a filled cursor
+                // -------------------
+                field = FGetOneCursorField(new Integer[] { 1, 2, 4, 6 });
+
+                switch (dialect()) {
+                    case HSQLDB:
+                        bFromCursor = create().select().from(table(field)).fetch();
+                        break;
+
+                    default:
+                        bFromCursor = create().select(field).fetchOne(field);
+                        break;
+                }
+
+                Result<B> bFromTable = create()
+                    .selectFrom(TBook())
+                    .where(TBook_ID().in(1, 2, 4))
+                    .orderBy(TBook_ID()).fetch();
+
+                assertNotNull(bFromCursor);
+                assertFalse(bFromCursor.isEmpty());
+                assertEquals(3, bFromCursor.size());
+
+                compareBookResults(bFromCursor, bFromTable);
             }
 
-            Result<B> bFromTable = create()
-                .selectFrom(TBook())
-                .where(TBook_ID().in(1, 2, 4))
-                .orderBy(TBook_ID()).fetch();
-
-            assertNotNull(bFromCursor);
-            assertFalse(bFromCursor.isEmpty());
-            assertEquals(3, bFromCursor.size());
-
-            compareBookResults(bFromCursor, bFromTable);
-        }
-
-        if (dialect() == SQLDialect.HSQLDB) {
-            log.info("SKIPPING", "Cursor OUT parameter tests");
-            return;
-        }
-
-        // ---------------------------------------------------------------------
-        // The one cursor procedure
-        // ---------------------------------------------------------------------
-        if (supportsOUTParameters()) {
-            Object integerArray = null;
-
-            // Get an empty cursor
-            // -------------------
-            Object result = invoke(cRoutines(), "pGetOneCursor", create().configuration(), integerArray);
-
-            assertNotNull(result);
-            assertEquals("0", "" + invoke(result, "getTotal"));
-
-            Result<Record> bFromCursor = invoke(result, "getBooks");
-            assertTrue(bFromCursor.isEmpty());
-            assertEquals(0, bFromCursor.size());
-
-            // Get a filled cursor
-            // -------------------
-            if (TArrays_STRING_R() != null) {
-                ArrayRecord<Integer> i = newNUMBER_R();
-                i.set(1, 2, 4, 6);
-                integerArray = i;
-            }
-            else if (TArrays_STRING() != null) {
-                integerArray = new Integer[] { 1, 2, 4, 6 };
+            if (dialect() == SQLDialect.HSQLDB) {
+                log.info("SKIPPING", "Cursor OUT parameter tests");
+                return;
             }
 
-            result = invoke(cRoutines(), "pGetOneCursor", create().configuration(), integerArray);
+            // ---------------------------------------------------------------------
+            // The one cursor procedure
+            // ---------------------------------------------------------------------
+            if (supportsOUTParameters()) {
+                Object integerArray = null;
 
-            assertEquals("3", "" + invoke(result, "getTotal"));
-            bFromCursor = invoke(result, "getBooks");
+                // Get an empty cursor
+                // -------------------
+                Object result = invoke(cRoutines(), "pGetOneCursor", create().configuration(), integerArray);
 
-            Result<B> bFromTable = create()
-                .selectFrom(TBook())
-                .where(TBook_ID().in(1, 2, 4))
-                .orderBy(TBook_ID()).fetch();
+                assertNotNull(result);
+                assertEquals("0", "" + invoke(result, "getTotal"));
 
-            assertNotNull(bFromCursor);
-            assertFalse(bFromCursor.isEmpty());
-            assertEquals(3, bFromCursor.size());
+                Result<Record> bFromCursor = invoke(result, "getBooks");
+                assertTrue(bFromCursor.isEmpty());
+                assertEquals(0, bFromCursor.size());
 
-            compareBookResults(bFromCursor, bFromTable);
+                // Get a filled cursor
+                // -------------------
+                if (TArrays_STRING_R() != null) {
+                    ArrayRecord<Integer> i = newNUMBER_R();
+                    i.set(1, 2, 4, 6);
+                    integerArray = i;
+                }
+                else if (TArrays_STRING() != null) {
+                    integerArray = new Integer[] { 1, 2, 4, 6 };
+                }
+
+                result = invoke(cRoutines(), "pGetOneCursor", create().configuration(), integerArray);
+
+                assertEquals("3", "" + invoke(result, "getTotal"));
+                bFromCursor = invoke(result, "getBooks");
+
+                Result<B> bFromTable = create()
+                    .selectFrom(TBook())
+                    .where(TBook_ID().in(1, 2, 4))
+                    .orderBy(TBook_ID()).fetch();
+
+                assertNotNull(bFromCursor);
+                assertFalse(bFromCursor.isEmpty());
+                assertEquals(3, bFromCursor.size());
+
+                compareBookResults(bFromCursor, bFromTable);
+            }
+            else {
+                log.info("SKIPPING", "One cursor OUT parameter test");
+            }
+
+            // ---------------------------------------------------------------------
+            // The two cursor procedure
+            // ---------------------------------------------------------------------
+            if (dialect() == SQLDialect.POSTGRES) {
+
+                // TODO [#707] This fails for Postgres, as UDT's are not correctly
+                // deserialised
+                log.info("SKIPPING", "UDT/Enum types returned in refcursor (see [#707])");
+            }
+            else if (supportsOUTParameters()) {
+                Object result = invoke(cRoutines(), "pGetTwoCursors", create().configuration());
+                assertNotNull(result);
+
+                Result<A> aFromTable = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
+                Result<B> bFromTable = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
+
+                Result<Record> aFromCursor = invoke(result, "getAuthors");
+                Result<Record> bFromCursor = invoke(result, "getBooks");
+                assertNotNull(aFromCursor);
+                assertNotNull(bFromCursor);
+                assertEquals(2, aFromCursor.size());
+                assertEquals(4, bFromCursor.size());
+                assertFalse(aFromCursor.isEmpty());
+                assertFalse(bFromCursor.isEmpty());
+
+                compareAuthorResults(aFromCursor, aFromTable);
+                compareBookResults(bFromCursor, bFromTable);
+            }
+            else {
+                log.info("SKIPPING", "Two cursor OUT parameter test");
+            }
         }
-        else {
-            log.info("SKIPPING", "One cursor OUT parameter test");
-        }
-
-        // ---------------------------------------------------------------------
-        // The two cursor procedure
-        // ---------------------------------------------------------------------
-        if (dialect() == SQLDialect.POSTGRES) {
-
-            // TODO [#707] This fails for Postgres, as UDT's are not correctly
-            // deserialised
-            log.info("SKIPPING", "UDT/Enum types returned in refcursor (see [#707])");
-        }
-        else if (supportsOUTParameters()) {
-            Object result = invoke(cRoutines(), "pGetTwoCursors", create().configuration());
-            assertNotNull(result);
-
-            Result<A> aFromTable = create().selectFrom(TAuthor()).orderBy(TAuthor_ID()).fetch();
-            Result<B> bFromTable = create().selectFrom(TBook()).orderBy(TBook_ID()).fetch();
-
-            Result<Record> aFromCursor = invoke(result, "getAuthors");
-            Result<Record> bFromCursor = invoke(result, "getBooks");
-            assertNotNull(aFromCursor);
-            assertNotNull(bFromCursor);
-            assertEquals(2, aFromCursor.size());
-            assertEquals(4, bFromCursor.size());
-            assertFalse(aFromCursor.isEmpty());
-            assertFalse(bFromCursor.isEmpty());
-
-            compareAuthorResults(aFromCursor, aFromTable);
-            compareBookResults(bFromCursor, bFromTable);
-        }
-        else {
-            log.info("SKIPPING", "Two cursor OUT parameter test");
+        finally {
+            getConnection().setAutoCommit(autoCommit);
         }
     }
 

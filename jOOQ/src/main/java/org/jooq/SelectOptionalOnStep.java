@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -77,6 +79,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectOptionalOnStep<R extends Record> extends SelectJoinStep<R>, SelectJoinPartitionByStep<R> {
 
 }

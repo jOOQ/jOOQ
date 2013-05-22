@@ -39,6 +39,9 @@ import static org.jooq.SQLDialect.ORACLE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * An intermediate type for the construction of a partitioned
  * {@link SQLDialect#ORACLE} <code>OUTER JOIN</code> clause.
@@ -52,6 +55,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface TablePartitionByStep extends TableOnStep {
 
     /**
@@ -59,6 +63,10 @@ public interface TablePartitionByStep extends TableOnStep {
      * <code>OUTER JOIN</code> keywords
      */
     @Support(ORACLE)
+    @Transition(
+        name = "PARTITION BY",
+        args = "Field+"
+    )
     TableOnStep partitionBy(Field<?>... fields);
 
     /**
@@ -66,5 +74,9 @@ public interface TablePartitionByStep extends TableOnStep {
      * <code>OUTER JOIN</code> keywords
      */
     @Support(ORACLE)
+    @Transition(
+        name = "PARTITION BY",
+        args = "Field+"
+    )
     TableOnStep partitionBy(Collection<? extends Field<?>> fields);
 }

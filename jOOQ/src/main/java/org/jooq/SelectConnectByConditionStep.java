@@ -38,6 +38,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
+import org.jooq.api.annotation.State;
 import org.jooq.impl.DSL;
 
 /**
@@ -82,6 +83,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectConnectByConditionStep<R extends Record> extends SelectStartWithStep<R> {
 
     /**

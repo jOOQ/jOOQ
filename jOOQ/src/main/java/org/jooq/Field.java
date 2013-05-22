@@ -55,6 +55,8 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.types.Interval;
@@ -69,6 +71,24 @@ import org.jooq.util.oracle.OracleDSL;
  * @param <T> The field type
  * @author Lukas Eder
  */
+@State(
+    name = "Field",
+    aliases = {
+        "AliasedField",
+        "ConstantExpression",
+        "ArithmeticExpression",
+        "StringFunction",
+        "DateFunction",
+        "MathFunction",
+        "SystemFunction",
+        "GroupingFunction",
+        "Function",
+        "WindowFunction",
+        "ConnectByExpression",
+        "BitwiseOperation"
+    },
+    terminal = true
+)
 public interface Field<T> extends GroupField {
 
     // ------------------------------------------------------------------------
@@ -115,6 +135,11 @@ public interface Field<T> extends GroupField {
      * @return The field alias
      */
     @Support
+    @Transition(
+        name = "AS",
+        args = "String",
+        to = "AliasedField"
+    )
     Field<T> as(String alias);
 
     /**
@@ -278,6 +303,9 @@ public interface Field<T> extends GroupField {
      * @return This field as an ascending sort field
      */
     @Support
+    @Transition(
+        name = "ASC"
+    )
     SortField<T> asc();
 
     /**
@@ -289,6 +317,9 @@ public interface Field<T> extends GroupField {
      * @return This field as a descending sort field
      */
     @Support
+    @Transition(
+        name = "DESC"
+    )
     SortField<T> desc();
 
     /**
@@ -420,6 +451,10 @@ public interface Field<T> extends GroupField {
      * This renders the same on all dialects: <code><pre>-[this]</pre></code>
      */
     @Support
+    @Transition(
+        name = "NEG",
+        to = "ArithmeticExpression"
+    )
     Field<T> neg();
 
     /**
@@ -428,6 +463,11 @@ public interface Field<T> extends GroupField {
      * @see #add(Field)
      */
     @Support
+    @Transition(
+        name = "ADD",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> add(Number value);
 
     /**
@@ -463,6 +503,11 @@ public interface Field<T> extends GroupField {
      * </table>
      */
     @Support
+    @Transition(
+        name = "ADD",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> add(Field<?> value);
 
     /**
@@ -471,6 +516,11 @@ public interface Field<T> extends GroupField {
      * @see #add(Number)
      */
     @Support
+    @Transition(
+        name = "PLUS",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> plus(Number value);
 
     /**
@@ -479,6 +529,11 @@ public interface Field<T> extends GroupField {
      * @see #add(Field)
      */
     @Support
+    @Transition(
+        name = "PLUS",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> plus(Field<?> value);
 
     /**
@@ -487,6 +542,11 @@ public interface Field<T> extends GroupField {
      * @see #sub(Field)
      */
     @Support
+    @Transition(
+        name = "SUB",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> sub(Number value);
 
     /**
@@ -528,6 +588,11 @@ public interface Field<T> extends GroupField {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "SUB",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> sub(Field<?> value);
 
     /**
@@ -536,6 +601,11 @@ public interface Field<T> extends GroupField {
      * @see #sub(Number)
      */
     @Support
+    @Transition(
+        name = "SUBTRACT",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> subtract(Number value);
 
     /**
@@ -544,6 +614,11 @@ public interface Field<T> extends GroupField {
      * @see #sub(Field)
      */
     @Support
+    @Transition(
+        name = "SUBTRACT",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> subtract(Field<?> value);
 
     /**
@@ -552,6 +627,11 @@ public interface Field<T> extends GroupField {
      * @see #sub(Number)
      */
     @Support
+    @Transition(
+        name = "MINUS",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> minus(Number value);
 
     /**
@@ -560,6 +640,11 @@ public interface Field<T> extends GroupField {
      * @see #sub(Field)
      */
     @Support
+    @Transition(
+        name = "MINUS",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> minus(Field<?> value);
 
     /**
@@ -573,6 +658,11 @@ public interface Field<T> extends GroupField {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "MUL",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> mul(Number value);
 
     /**
@@ -586,6 +676,11 @@ public interface Field<T> extends GroupField {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "MUL",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> mul(Field<? extends Number> value);
 
     /**
@@ -594,6 +689,11 @@ public interface Field<T> extends GroupField {
      * @see #mul(Number)
      */
     @Support
+    @Transition(
+        name = "MULTIPLY",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> multiply(Number value);
 
     /**
@@ -602,6 +702,11 @@ public interface Field<T> extends GroupField {
      * @see #mul(Field)
      */
     @Support
+    @Transition(
+        name = "MULTIPLY",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> multiply(Field<? extends Number> value);
 
     /**
@@ -615,6 +720,11 @@ public interface Field<T> extends GroupField {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "DIV",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> div(Number value);
 
     /**
@@ -628,6 +738,11 @@ public interface Field<T> extends GroupField {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "DIV",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> div(Field<? extends Number> value);
 
     /**
@@ -636,6 +751,11 @@ public interface Field<T> extends GroupField {
      * @see #div(Number)
      */
     @Support
+    @Transition(
+        name = "DIVIDE",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> divide(Number value);
 
     /**
@@ -644,6 +764,11 @@ public interface Field<T> extends GroupField {
      * @see #div(Field)
      */
     @Support
+    @Transition(
+        name = "DIVIDE",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> divide(Field<? extends Number> value);
 
     /**
@@ -654,6 +779,11 @@ public interface Field<T> extends GroupField {
      * elsewhere: <code><pre>mod([this], [value])</pre></code>
      */
     @Support
+    @Transition(
+        name = "MOD",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> mod(Number value);
 
     /**
@@ -664,6 +794,11 @@ public interface Field<T> extends GroupField {
      * elsewhere: <code><pre>mod([this], [value])</pre></code>
      */
     @Support
+    @Transition(
+        name = "MOD",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> mod(Field<? extends Number> value);
 
     /**
@@ -672,6 +807,11 @@ public interface Field<T> extends GroupField {
      * @see #mod(Number)
      */
     @Support
+    @Transition(
+        name = "MODULO",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> modulo(Number value);
 
     /**
@@ -680,6 +820,11 @@ public interface Field<T> extends GroupField {
      * @see #mod(Field)
      */
     @Support
+    @Transition(
+        name = "MODULO",
+        args = "Field",
+        to = "ArithmeticExpression"
+    )
     Field<T> modulo(Field<? extends Number> value);
 
     // ------------------------------------------------------------------------
@@ -692,6 +837,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this is null</code>
      */
     @Support
+    @Transition(
+        name = "IS NULL",
+        to = "NullPredicate"
+    )
     Condition isNull();
 
     /**
@@ -700,6 +849,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this is not null</code>
      */
     @Support
+    @Transition(
+        name = "IS NOT NULL",
+        to = "NullPredicate"
+    )
     Condition isNotNull();
 
     // ------------------------------------------------------------------------
@@ -721,6 +874,11 @@ public interface Field<T> extends GroupField {
      * </pre></code> SQL: <code>this is distinct from value</code>
      */
     @Support
+    @Transition(
+        name = "IS DISTINCT FROM",
+        args = "Field",
+        to = "DistinctPredicate"
+    )
     Condition isDistinctFrom(T value);
 
     /**
@@ -738,6 +896,11 @@ public interface Field<T> extends GroupField {
      * </pre></code> SQL: <code>this is distinct from field</code>
      */
     @Support
+    @Transition(
+        name = "IS DISTINCT FROM",
+        args = "Field",
+        to = "DistinctPredicate"
+    )
     Condition isDistinctFrom(Field<T> field);
 
     /**
@@ -755,6 +918,11 @@ public interface Field<T> extends GroupField {
      * </pre></code> SQL: <code>this is not distinct from value</code>
      */
     @Support
+    @Transition(
+        name = "IS NOT DISTINCT FROM",
+        args = "Field",
+        to = "DistinctPredicate"
+    )
     Condition isNotDistinctFrom(T value);
 
     /**
@@ -772,6 +940,11 @@ public interface Field<T> extends GroupField {
      * </pre></code> SQL: <code>this is not distinct from field</code>
      */
     @Support
+    @Transition(
+        name = "IS NOT DISTINCT FROM",
+        args = "Field",
+        to = "DistinctPredicate"
+    )
     Condition isNotDistinctFrom(Field<T> field);
 
     // ------------------------------------------------------------------------
@@ -902,6 +1075,11 @@ public interface Field<T> extends GroupField {
      * @see #likeRegex(String)
      */
     @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Transition(
+        name = "LIKE_REGEX",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition likeRegex(String pattern);
 
     /**
@@ -912,6 +1090,11 @@ public interface Field<T> extends GroupField {
      * @see #likeRegex(String)
      */
     @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Transition(
+        name = "LIKE_REGEX",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition likeRegex(Field<String> pattern);
 
     /**
@@ -922,6 +1105,11 @@ public interface Field<T> extends GroupField {
      * @see #likeRegex(String)
      */
     @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Transition(
+        name = "NOT LIKE_REGEX",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition notLikeRegex(String pattern);
 
     /**
@@ -932,6 +1120,11 @@ public interface Field<T> extends GroupField {
      * @see #likeRegex(Field)
      */
     @Support({ CUBRID, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLITE, SYBASE })
+    @Transition(
+        name = "NOT LIKE_REGEX",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition notLikeRegex(Field<String> pattern);
 
     // ------------------------------------------------------------------------
@@ -944,6 +1137,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this like value</code>
      */
     @Support
+    @Transition(
+        name = "LIKE",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition like(Field<String> value);
 
     /**
@@ -952,6 +1150,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this like value escape 'e'</code>
      */
     @Support
+    @Transition(
+        name = "LIKE",
+        args = {
+            "Field",
+            "Character",
+        },
+        to = "LikePredicate"
+    )
     Condition like(Field<String> value, char escape);
 
     /**
@@ -960,6 +1166,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this like value</code>
      */
     @Support
+    @Transition(
+        name = "LIKE",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition like(String value);
 
     /**
@@ -968,6 +1179,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this like value escape 'e'</code>
      */
     @Support
+    @Transition(
+        name = "LIKE",
+        args = {
+            "Field",
+            "Character",
+        },
+        to = "LikePredicate"
+    )
     Condition like(String value, char escape);
 
     /**
@@ -979,6 +1198,11 @@ public interface Field<T> extends GroupField {
      * <code>lower(this) like lower(field)</code> in all other dialects.
      */
     @Support
+    @Transition(
+        name = "LIKE IGNORE CASE",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition likeIgnoreCase(Field<String> field);
 
     /**
@@ -990,6 +1214,14 @@ public interface Field<T> extends GroupField {
      * <code>lower(this) like lower(field)</code> in all other dialects.
      */
     @Support
+    @Transition(
+        name = "LIKE IGNORE CASE",
+        args = {
+            "Field",
+            "Character"
+        },
+        to = "LikePredicate"
+    )
     Condition likeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -1001,6 +1233,11 @@ public interface Field<T> extends GroupField {
      * <code>lower(this) like lower(value)</code> in all other dialects.
      */
     @Support
+    @Transition(
+        name = "LIKE IGNORE CASE",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition likeIgnoreCase(String value);
 
     /**
@@ -1012,6 +1249,14 @@ public interface Field<T> extends GroupField {
      * <code>lower(this) like lower(value)</code> in all other dialects.
      */
     @Support
+    @Transition(
+        name = "LIKE IGNORE CASE",
+        args = {
+            "Field",
+            "Character"
+        },
+        to = "LikePredicate"
+    )
     Condition likeIgnoreCase(String value, char escape);
 
     /**
@@ -1020,6 +1265,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not like field</code>
      */
     @Support
+    @Transition(
+        name = "NOT LIKE",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition notLike(Field<String> field);
 
     /**
@@ -1028,6 +1278,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not like field escape 'e'</code>
      */
     @Support
+    @Transition(
+        name = "NOT LIKE",
+        args = {
+            "Field",
+            "Character"
+        },
+        to = "LikePredicate"
+    )
     Condition notLike(Field<String> field, char escape);
 
     /**
@@ -1036,6 +1294,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not like value</code>
      */
     @Support
+    @Transition(
+        name = "NOT LIKE",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition notLike(String value);
 
     /**
@@ -1044,6 +1307,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not like value escape 'e'</code>
      */
     @Support
+    @Transition(
+        name = "NOT LIKE",
+        args = {
+            "Field",
+            "Character"
+        },
+        to = "LikePredicate"
+    )
     Condition notLike(String value, char escape);
 
     /**
@@ -1055,6 +1326,11 @@ public interface Field<T> extends GroupField {
      * <code>lower(this) not like lower(field)</code> in all other dialects.
      */
     @Support
+    @Transition(
+        name = "NOT LIKE IGNORE CASE",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition notLikeIgnoreCase(Field<String> field);
 
     /**
@@ -1066,6 +1342,14 @@ public interface Field<T> extends GroupField {
      * <code>lower(this) not like lower(field)</code> in all other dialects.
      */
     @Support
+    @Transition(
+        name = "NOT LIKE IGNORE CASE",
+        args = {
+            "Field",
+            "Character"
+        },
+        to = "LikePredicate"
+    )
     Condition notLikeIgnoreCase(Field<String> field, char escape);
 
     /**
@@ -1077,6 +1361,11 @@ public interface Field<T> extends GroupField {
      * <code>lower(this) not like lower(value)</code> in all other dialects.
      */
     @Support
+    @Transition(
+        name = "NOT LIKE IGNORE CASE",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition notLikeIgnoreCase(String value);
 
     /**
@@ -1088,6 +1377,14 @@ public interface Field<T> extends GroupField {
      * <code>lower(this) not like lower(value)</code> in all other dialects.
      */
     @Support
+    @Transition(
+        name = "NOT LIKE IGNORE CASE",
+        args = {
+            "Field",
+            "Character"
+        },
+        to = "LikePredicate"
+    )
     Condition notLikeIgnoreCase(String value, char escape);
 
     /**
@@ -1115,6 +1412,11 @@ public interface Field<T> extends GroupField {
      * @see #like(String, char)
      */
     @Support
+    @Transition(
+        name = "CONTAINS",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition contains(T value);
 
     /**
@@ -1142,6 +1444,11 @@ public interface Field<T> extends GroupField {
      * @see #like(Field, char)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "CONTAINS",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition contains(Field<T> value);
 
     /**
@@ -1157,6 +1464,11 @@ public interface Field<T> extends GroupField {
      * @see #like(String, char)
      */
     @Support
+    @Transition(
+        name = "STARTS WITH",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition startsWith(T value);
 
     /**
@@ -1172,6 +1484,11 @@ public interface Field<T> extends GroupField {
      * @see #like(Field, char)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "STARTS WITH",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition startsWith(Field<T> value);
 
     /**
@@ -1187,6 +1504,11 @@ public interface Field<T> extends GroupField {
      * @see #like(String, char)
      */
     @Support
+    @Transition(
+        name = "ENDS WITH",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition endsWith(T value);
 
     /**
@@ -1202,6 +1524,11 @@ public interface Field<T> extends GroupField {
      * @see #like(Field, char)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "ENDS WITH",
+        args = "Field",
+        to = "LikePredicate"
+    )
     Condition endsWith(Field<T> value);
 
     // ------------------------------------------------------------------------
@@ -1214,6 +1541,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this in (values...)</code>
      */
     @Support
+    @Transition(
+        name = "IN",
+        args = "Field+",
+        to = "InPredicate"
+    )
     Condition in(Collection<T> values);
 
     /**
@@ -1222,6 +1554,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this in (values...)</code>
      */
     @Support
+    @Transition(
+        name = "IN",
+        args = "Field+",
+        to = "InPredicate"
+    )
     Condition in(T... values);
 
     /**
@@ -1230,6 +1567,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this in (values...)</code>
      */
     @Support
+    @Transition(
+        name = "IN",
+        args = "Field+",
+        to = "InPredicate"
+    )
     Condition in(Field<?>... values);
 
     /**
@@ -1242,6 +1584,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this in (select...)</code>
      */
     @Support
+    @Transition(
+        name = "IN",
+        args = "Select",
+        to = "InPredicate"
+    )
     Condition in(Select<? extends Record1<T>> query);
 
     /**
@@ -1254,6 +1601,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not in (values...)</code>
      */
     @Support
+    @Transition(
+        name = "NOT IN",
+        args = "Field+",
+        to = "InPredicate"
+    )
     Condition notIn(Collection<T> values);
 
     /**
@@ -1266,6 +1618,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not in (values...)</code>
      */
     @Support
+    @Transition(
+        name = "NOT IN",
+        args = "Field+",
+        to = "InPredicate"
+    )
     Condition notIn(T... values);
 
     /**
@@ -1278,6 +1635,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not in (values...)</code>
      */
     @Support
+    @Transition(
+        name = "NOT IN",
+        args = "Field+",
+        to = "InPredicate"
+    )
     Condition notIn(Field<?>... values);
 
     /**
@@ -1294,6 +1656,11 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not in (select...)</code>
      */
     @Support
+    @Transition(
+        name = "NOT IN",
+        args = "Select",
+        to = "InPredicate"
+    )
     Condition notIn(Select<? extends Record1<T>> query);
 
     // ------------------------------------------------------------------------
@@ -1308,6 +1675,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this between minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "BETWEEN",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BetweenPredicate"
+    )
     Condition between(T minValue, T maxValue);
 
     /**
@@ -1318,6 +1693,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this between minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "BETWEEN",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BetweenPredicate"
+    )
     Condition between(Field<T> minValue, Field<T> maxValue);
 
     /**
@@ -1329,6 +1712,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "BETWEEN SYMMETRIC",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BetweenPredicate"
+    )
     Condition betweenSymmetric(T minValue, T maxValue);
 
     /**
@@ -1340,6 +1731,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "BETWEEN SYMMETRIC",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BetweenPredicate"
+    )
     Condition betweenSymmetric(Field<T> minValue, Field<T> maxValue);
 
     /**
@@ -1351,6 +1750,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not between minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "NOT BETWEEN",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BetweenPredicate"
+    )
     Condition notBetween(T minValue, T maxValue);
 
     /**
@@ -1362,6 +1769,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not between minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "NOT BETWEEN",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BetweenPredicate"
+    )
     Condition notBetween(Field<T> minValue, Field<T> maxValue);
 
     /**
@@ -1373,6 +1788,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "NOT BETWEEN SYMMETRIC",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BetweenPredicate"
+    )
     Condition notBetweenSymmetric(T minValue, T maxValue);
 
     /**
@@ -1384,6 +1807,14 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "NOT BETWEEN SYMMETRIC",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BetweenPredicate"
+    )
     Condition notBetweenSymmetric(Field<T> minValue, Field<T> maxValue);
 
     /**
@@ -1392,6 +1823,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this between minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "BETWEEN",
+        args = "Field"
+    )
     BetweenAndStep<T> between(T minValue);
 
     /**
@@ -1400,6 +1835,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this between minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "BETWEEN",
+        args = "Field"
+    )
     BetweenAndStep<T> between(Field<T> minValue);
 
     /**
@@ -1408,6 +1847,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "BETWEEN SYMMETRIC",
+        args = "Field"
+    )
     BetweenAndStep<T> betweenSymmetric(T minValue);
 
     /**
@@ -1416,6 +1859,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this between symmetric minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "BETWEEN SYMMETRIC",
+        args = "Field"
+    )
     BetweenAndStep<T> betweenSymmetric(Field<T> minValue);
 
     /**
@@ -1424,6 +1871,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not between minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "NOT BETWEEN",
+        args = "Field"
+    )
     BetweenAndStep<T> notBetween(T minValue);
 
     /**
@@ -1432,6 +1883,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not between minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "NOT BETWEEN",
+        args = "Field"
+    )
     BetweenAndStep<T> notBetween(Field<T> minValue);
 
     /**
@@ -1440,6 +1895,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "NOT BETWEEN SYMMETRIC",
+        args = "Field"
+    )
     BetweenAndStep<T> notBetweenSymmetric(T minValue);
 
     /**
@@ -1448,6 +1907,10 @@ public interface Field<T> extends GroupField {
      * SQL: <code>this not between symmetric minValue and maxValue</code>
      */
     @Support
+    @Transition(
+        name = "NOT BETWEEN SYMMETRIC",
+        args = "Field"
+    )
     BetweenAndStep<T> notBetweenSymmetric(Field<T> minValue);
 
     // ------------------------------------------------------------------------
@@ -1513,18 +1976,33 @@ public interface Field<T> extends GroupField {
      * <code>this = value</code>.
      */
     @Support
+    @Transition(
+        name = "EQUAL",
+        args = "Field",
+        to = "ComparisonPredicate"
+    )
     Condition equal(T value);
 
     /**
      * <code>this = field</code>.
      */
     @Support
+    @Transition(
+        name = "EQUAL",
+        args = "Field",
+        to = "ComparisonPredicate"
+    )
     Condition equal(Field<T> field);
 
     /**
      * <code>this = (Select<?> ...)</code>.
      */
     @Support
+    @Transition(
+        name = "EQUAL",
+        args = "Select",
+        to = "ComparisonPredicate"
+    )
     Condition equal(Select<? extends Record1<T>> query);
 
     /**
@@ -1538,6 +2016,11 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "EQUAL",
+        args = "QuantifiedSelect",
+        to = "ComparisonPredicate"
+    )
     Condition equal(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1546,6 +2029,11 @@ public interface Field<T> extends GroupField {
      * @see #equal(Object)
      */
     @Support
+    @Transition(
+        name = "EQ",
+        args = "Field",
+        to = "ComparisonPredicate"
+    )
     Condition eq(T value);
 
     /**
@@ -1554,6 +2042,11 @@ public interface Field<T> extends GroupField {
      * @see #equal(Field)
      */
     @Support
+    @Transition(
+        name = "EQ",
+        args = "Field",
+        to = "ComparisonPredicate"
+    )
     Condition eq(Field<T> field);
 
     /**
@@ -1562,6 +2055,11 @@ public interface Field<T> extends GroupField {
      * @see #equal(Select)
      */
     @Support
+    @Transition(
+        name = "EQ",
+        args = "Select",
+        to = "ComparisonPredicate"
+    )
     Condition eq(Select<? extends Record1<T>> query);
 
     /**
@@ -1575,6 +2073,11 @@ public interface Field<T> extends GroupField {
      * @see DSL#any(Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "EQ",
+        args = "QuantifiedSelect",
+        to = "ComparisonPredicate"
+    )
     Condition eq(QuantifiedSelect<? extends Record1<T>> query);
 
     /**
@@ -1622,6 +2125,11 @@ public interface Field<T> extends GroupField {
      * @see #notEqual(Field)
      */
     @Support
+    @Transition(
+        name = "NE",
+        args = "Field",
+        to = "ComparisonPredicate"
+    )
     Condition ne(Field<T> field);
 
     /**
@@ -2562,6 +3070,10 @@ public interface Field<T> extends GroupField {
      * @see DSL#upper(Field)
      */
     @Support
+    @Transition(
+        name = "UPPER",
+        to = "StringFunction"
+    )
     Field<String> upper();
 
     /**
@@ -2572,6 +3084,10 @@ public interface Field<T> extends GroupField {
      * @see DSL#lower(Field)
      */
     @Support
+    @Transition(
+        name = "LOWER",
+        to = "StringFunction"
+    )
     Field<String> lower();
 
     /**

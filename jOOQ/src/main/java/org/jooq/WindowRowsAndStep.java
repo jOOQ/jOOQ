@@ -40,6 +40,9 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -59,6 +62,7 @@ import static org.jooq.SQLDialect.SYBASE;
  * @param <T> The function return type
  * @author Lukas Eder
  */
+@State
 public interface WindowRowsAndStep<T> {
 
     /**
@@ -66,6 +70,9 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "AND UNBOUNDED PRECEDING"
+    )
     WindowFinalStep<T> andUnboundedPreceding();
 
     /**
@@ -73,6 +80,10 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "AND PRECEDING",
+        args = "Integer"
+    )
     WindowFinalStep<T> andPreceding(int number);
 
     /**
@@ -80,6 +91,9 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "AND CURRENT ROW"
+    )
     WindowFinalStep<T> andCurrentRow();
 
     /**
@@ -87,6 +101,9 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "AND UNBOUNDED FOLLOWING"
+    )
     WindowFinalStep<T> andUnboundedFollowing();
 
     /**
@@ -94,5 +111,9 @@ public interface WindowRowsAndStep<T> {
      * function.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "AND FOLLOWING",
+        args = "Integer"
+    )
     WindowFinalStep<T> andFollowing(int number);
 }

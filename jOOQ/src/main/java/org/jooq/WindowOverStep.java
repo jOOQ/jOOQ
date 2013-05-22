@@ -45,6 +45,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -64,12 +67,16 @@ import static org.jooq.SQLDialect.SYBASE;
  * @param <T> The function return type
  * @author Lukas Eder
  */
+@State
 public interface WindowOverStep<T> {
 
     /**
      * Add an <code>OVER</code> clause
      */
     @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OVER"
+    )
     WindowPartitionByStep<T> over();
 
 }

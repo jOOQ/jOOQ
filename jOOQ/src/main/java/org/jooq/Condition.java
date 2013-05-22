@@ -36,6 +36,8 @@
 
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 
@@ -44,6 +46,20 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State(
+    name = "Condition",
+    aliases = {
+        "CombinedPredicate",
+        "ComparisonPredicate",
+        "LikePredicate",
+        "InPredicate",
+        "ExistsPredicate",
+        "NullPredicate",
+        "DistinctPredicate",
+        "BetweenPredicate"
+    },
+    terminal = true
+)
 public interface Condition extends QueryPart {
 
     /**
@@ -54,6 +70,11 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      */
     @Support
+    @Transition(
+        name = "AND",
+        args = "Condition",
+        to = "CombinedPredicate"
+    )
     Condition and(Condition other);
 
     /**
@@ -116,6 +137,11 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      */
     @Support
+    @Transition(
+        name = "AND NOT",
+        args = "Condition",
+        to = "CombinedPredicate"
+    )
     Condition andNot(Condition other);
 
     /**
@@ -126,6 +152,11 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      */
     @Support
+    @Transition(
+        name = "AND EXISTS",
+        args = "Select",
+        to = "CombinedPredicate"
+    )
     Condition andExists(Select<?> select);
 
     /**
@@ -136,6 +167,11 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      */
     @Support
+    @Transition(
+        name = "AND NOT EXISTS",
+        args = "Select",
+        to = "CombinedPredicate"
+    )
     Condition andNotExists(Select<?> select);
 
     /**
@@ -146,6 +182,11 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      */
     @Support
+    @Transition(
+        name = "OR",
+        args = "Condition",
+        to = "CombinedPredicate"
+    )
     Condition or(Condition other);
 
     /**
@@ -208,6 +249,11 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      */
     @Support
+    @Transition(
+        name = "OR NOT",
+        args = "Condition",
+        to = "CombinedPredicate"
+    )
     Condition orNot(Condition other);
 
     /**
@@ -218,6 +264,11 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      */
     @Support
+    @Transition(
+        name = "OR EXISTS",
+        args = "Select",
+        to = "CombinedPredicate"
+    )
     Condition orExists(Select<?> select);
 
     /**
@@ -228,6 +279,11 @@ public interface Condition extends QueryPart {
      * @return The combined condition
      */
     @Support
+    @Transition(
+        name = "OR NOT EXISTS",
+        args = "Select",
+        to = "CombinedPredicate"
+    )
     Condition orNotExists(Select<?> select);
 
     /**
@@ -238,5 +294,9 @@ public interface Condition extends QueryPart {
      * @return This condition, inverted
      */
     @Support
+    @Transition(
+        name = "NOT",
+        to = "CombinedPredicate"
+    )
     Condition not();
 }

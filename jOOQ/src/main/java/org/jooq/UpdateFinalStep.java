@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -50,6 +52,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
+@State
 public interface UpdateFinalStep<R extends Record> extends Update<R> {
 
 }

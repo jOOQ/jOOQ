@@ -41,6 +41,7 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import org.jooq.api.annotation.State;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.Settings;
 import org.jooq.conf.StatementType;
@@ -53,6 +54,10 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State(
+    name = "Query",
+    terminal = true
+)
 public interface Query extends QueryPart, Attachable {
 
     /**

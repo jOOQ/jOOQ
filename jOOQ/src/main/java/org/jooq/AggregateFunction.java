@@ -44,6 +44,9 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * An aggregate function is a special field that is usually used in a
  * <code>GROUP BY</code> context. It is also the base for window function
@@ -51,6 +54,14 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State(
+    aliases = {
+        "StatisticalFunction",
+        "OrderedAggregateFunction",
+        "LinearRegressionFunction"
+    },
+    terminal = true
+)
 public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
 
     /**
@@ -65,6 +76,9 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      */
     @Override
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OVER"
+    )
     WindowPartitionByStep<T> over();
 
     /**
@@ -78,6 +92,10 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
+    @Transition(
+        name = "KEEP DENSE_RANK FIRST ORDER BY",
+        args = "Field+"
+    )
     WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Field<?>... fields);
 
     /**
@@ -91,6 +109,10 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
+    @Transition(
+        name = "KEEP DENSE_RANK FIRST ORDER BY",
+        args = "SortField+"
+    )
     WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(SortField<?>... fields);
 
     /**
@@ -104,6 +126,10 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
+    @Transition(
+        name = "KEEP DENSE_RANK FIRST ORDER BY",
+        args = "SortField+"
+    )
     WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<SortField<?>> fields);
 
     /**
@@ -117,6 +143,10 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
+    @Transition(
+        name = "KEEP DENSE_RANK LAST ORDER BY",
+        args = "Field+"
+    )
     WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Field<?>... fields);
 
     /**
@@ -130,6 +160,10 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
+    @Transition(
+        name = "KEEP DENSE_RANK LAST ORDER BY",
+        args = "SortField+"
+    )
     WindowBeforeOverStep<T> keepDenseRankLastOrderBy(SortField<?>... fields);
 
     /**
@@ -143,5 +177,9 @@ public interface AggregateFunction<T> extends Field<T>, WindowOverStep<T> {
      * <code>MIN, MAX, SUM, AVG, COUNT, VARIANCE, or STDDEV</code> functions.
      */
     @Support(ORACLE)
+    @Transition(
+        name = "KEEP DENSE_RANK LAST ORDER BY",
+        args = "SortField+"
+    )
     WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<SortField<?>> fields);
 }

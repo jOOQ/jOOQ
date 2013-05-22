@@ -45,6 +45,9 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
@@ -59,6 +62,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
 
     /**
@@ -68,6 +72,10 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * <code>PRIMARY KEY</code>.
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "KEY",
+        args = "Field+"
+    )
     MergeValuesStepN<R> key(Field<?>... keys);
 
     /**
@@ -77,5 +85,9 @@ public interface MergeKeyStepN<R extends Record> extends MergeValuesStepN<R> {
      * <code>PRIMARY KEY</code>.
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "KEY",
+        args = "Field+"
+    )
     MergeValuesStepN<R> key(Collection<? extends Field<?>> keys);
 }

@@ -44,6 +44,8 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 /**
@@ -52,11 +54,16 @@ import org.jooq.impl.DSL;
  * @author Lukas Eder
  * @see DSL#listAgg(Field)
  */
+@State
 public interface GroupConcatSeparatorStep extends AggregateFunction<String> {
 
     /**
      * Specify the separator on the <code>GROUP_CONCAT</code> function
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Transition(
+        name = "SEPARATOR",
+        args = "String"
+    )
     AggregateFunction<String> separator(String separator);
 }

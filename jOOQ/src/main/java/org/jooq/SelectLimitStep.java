@@ -49,6 +49,9 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -91,6 +94,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R> {
 
     /**
@@ -104,6 +108,10 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * calling <code>.limit(numberOfRows).offset(0)</code>
      */
     @Support
+    @Transition(
+        name = "LIMIT",
+        args = "Integer"
+    )
     SelectOffsetStep<R> limit(int numberOfRows);
 
     /**
@@ -136,6 +144,13 @@ public interface SelectLimitStep<R extends Record> extends SelectForUpdateStep<R
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LIMIT",
+        args = {
+            "Integer",
+            "Integer"
+        }
+    )
     SelectForUpdateStep<R> limit(int offset, int numberOfRows);
 
     /**

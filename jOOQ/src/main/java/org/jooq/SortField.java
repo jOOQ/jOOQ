@@ -35,6 +35,9 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * A wrapper for a {@link Field} and a {@link SortField}
  *
@@ -43,6 +46,9 @@ package org.jooq;
  * @see Field#asc()
  * @see Field#desc()
  */
+@State(
+    terminal = true
+)
 public interface SortField<T> extends QueryPart {
 
     /**
@@ -59,12 +65,18 @@ public interface SortField<T> extends QueryPart {
      * Add a <code>NULLS FIRST</code> clause to this sort field
      */
     @Support
+    @Transition(
+        name = "NULLS FIRST"
+    )
     SortField<T> nullsFirst();
 
     /**
      * Add a <code>NULLS LAST</code> clause to this sort field
      */
     @Support
+    @Transition(
+        name = "NULLS LAST"
+    )
     SortField<T> nullsLast();
 
 }

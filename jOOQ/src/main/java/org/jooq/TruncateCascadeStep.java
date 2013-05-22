@@ -37,11 +37,15 @@ package org.jooq;
 
 import static org.jooq.SQLDialect.POSTGRES;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * A {@link Query} that can truncate a table in the database.
  *
  * @author Lukas Eder
  */
+@State
 public interface TruncateCascadeStep<R extends Record> extends TruncateFinalStep<R> {
 
     /**
@@ -49,6 +53,9 @@ public interface TruncateCascadeStep<R extends Record> extends TruncateFinalStep
      * statement.
      */
     @Support(POSTGRES)
+    @Transition(
+        name = "CASCADE"
+    )
     TruncateFinalStep<R> cascade();
 
     /**
@@ -56,5 +63,8 @@ public interface TruncateCascadeStep<R extends Record> extends TruncateFinalStep
      * statement.
      */
     @Support(POSTGRES)
+    @Transition(
+        name = "RESTRICT"
+    )
     TruncateFinalStep<R> restrict();
 }

@@ -42,6 +42,9 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -61,6 +64,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<R> {
 
     /**
@@ -68,5 +72,8 @@ public interface MergeMatchedStep<R extends Record> extends MergeNotMatchedStep<
      * <code>MERGE</code> statement
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "WHEN MATCHED THEN UPDATE"
+    )
     MergeMatchedSetStep<R> whenMatchedThenUpdate();
 }

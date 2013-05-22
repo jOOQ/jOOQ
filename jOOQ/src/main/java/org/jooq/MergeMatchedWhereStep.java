@@ -38,6 +38,9 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.ORACLE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -57,6 +60,7 @@ import static org.jooq.SQLDialect.ORACLE;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatchedStep<R> {
 
     /**
@@ -72,5 +76,9 @@ public interface MergeMatchedWhereStep<R extends Record> extends MergeNotMatched
      * htm</a> for a full definition of the Oracle <code>MERGE</code> statement
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "WHERE",
+        args = "Condition"
+    )
     MergeMatchedDeleteStep<R> where(Condition condition);
 }

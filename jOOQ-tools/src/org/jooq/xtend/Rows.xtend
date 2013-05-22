@@ -61,6 +61,8 @@ class Rows extends Generators {
             package org.jooq;
 
             import org.jooq.Comparator;
+            import org.jooq.api.annotation.State;
+            import org.jooq.api.annotation.Transition;
 
             import java.util.Collection;
 
@@ -76,6 +78,7 @@ class Rows extends Generators {
              * @author Lukas Eder
              */
             «generatedAnnotation»
+            @State
             public interface Row«typeSuffix» extends Row {
             «IF degree > 0»
             

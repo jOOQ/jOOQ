@@ -40,6 +40,9 @@ import static org.jooq.SQLDialect.ORACLE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -82,24 +85,37 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> {
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
+    @Transition(
+        name = "ORDER BY",
+        args = "Field+"
+    )
     SelectLimitStep<R> orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
+    @Transition(
+        name = "ORDER BY",
+        args = "SortField+"
+    )
     SelectLimitStep<R> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support
+    @Transition(
+        name = "ORDER BY",
+        args = "SortField+"
+    )
     SelectLimitStep<R> orderBy(Collection<SortField<?>> fields);
 
     /**
@@ -112,6 +128,10 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * ordering
      */
     @Support
+    @Transition(
+        name = "ORDER BY",
+        args = "Integer+"
+    )
     SelectLimitStep<R> orderBy(int... fieldIndexes);
 
     /**
@@ -122,6 +142,10 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "ORDER SIBLINGS BY",
+        args = "Field+"
+    )
     SelectLimitStep<R> orderSiblingsBy(Field<?>... fields);
 
     /**
@@ -132,6 +156,10 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "ORDER SIBLINGS BY",
+        args = "SortField+"
+    )
     SelectLimitStep<R> orderSiblingsBy(SortField<?>... fields);
 
     /**
@@ -142,6 +170,10 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * and elements of each hierarchy should be ordered among themselves.
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "ORDER SIBLINGS BY",
+        args = "SortField+"
+    )
     SelectLimitStep<R> orderSiblingsBy(Collection<SortField<?>> fields);
 
     /**
@@ -158,5 +190,9 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
      * ordering
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "ORDER SIBLINGS BY",
+        args = "Integer+"
+    )
     SelectLimitStep<R> orderSiblingsBy(int... fieldIndexes);
 }

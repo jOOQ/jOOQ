@@ -37,6 +37,8 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
@@ -48,12 +50,18 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface TableOnStep {
 
     /**
      * Add an <code>ON</code> clause to the <code>JOIN</code>.
      */
     @Support
+    @Transition(
+        name = "ON",
+        args = "Condition+",
+        to = "JoinedTable"
+    )
     TableOnConditionStep on(Condition... conditions);
 
     /**
@@ -102,6 +110,11 @@ public interface TableOnStep {
      * this behaviour using the information provided in this query.
      */
     @Support
+    @Transition(
+        name = "USING",
+        args = "Field+",
+        to = "JoinedTable"
+    )
     Table<Record> using(Field<?>... fields);
 
     /**

@@ -44,6 +44,9 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -60,23 +63,36 @@ import java.util.Collection;
  * @param <T> The function return type
  * @author Lukas Eder
  */
+@State
 public interface WindowOrderByStep<T> extends WindowFinalStep<T> {
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ORDER BY",
+        args = "Field+"
+    )
     WindowRowsStep<T> orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ORDER BY",
+        args = "SortField+"
+    )
     WindowRowsStep<T> orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the window function.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ORDER BY",
+        args = "SortField+"
+    )
     WindowRowsStep<T> orderBy(Collection<SortField<?>> fields);
 }

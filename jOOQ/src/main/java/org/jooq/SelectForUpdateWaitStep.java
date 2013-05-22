@@ -38,6 +38,9 @@ package org.jooq;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -80,6 +83,7 @@ import static org.jooq.SQLDialect.POSTGRES;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalStep<R> {
 
     /**
@@ -91,15 +95,22 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalSt
      * @see SelectQuery#setForUpdateWait(int) see LockProvider for more details
      */
     @Support(ORACLE)
+    @Transition(
+        name = "WAIT",
+        args = "Integer"
+    )
     SelectFinalStep<R> wait(int seconds);
 
     /**
-     * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
+     * Add a <code>NOWAIT</code> clause to the <code>FOR UPDATE</code> clause at
      * the end of the query.
      *
      * @see SelectQuery#setForUpdateNoWait() see LockProvider for more details
      */
     @Support({ ORACLE, POSTGRES })
+    @Transition(
+        name = "NOWAIT"
+    )
     SelectFinalStep<R> noWait();
 
     /**
@@ -110,5 +121,8 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalSt
      *      details
      */
     @Support(ORACLE)
+    @Transition(
+        name = "SKIP LOCKED"
+    )
     SelectFinalStep<R> skipLocked();
 }

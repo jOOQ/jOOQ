@@ -39,6 +39,9 @@ import static org.jooq.SQLDialect.ORACLE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * An ordered aggregate function.
  * <p>
@@ -62,6 +65,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface OrderedAggregateFunction<T> {
 
     /**
@@ -69,6 +73,11 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @Support(ORACLE)
+    @Transition(
+        name = "WITHIN GROUP ORDER BY",
+        args = "Field+",
+        to = "OrderedAggregateFunction"
+    )
     AggregateFunction<T> withinGroupOrderBy(Field<?>... fields);
 
     /**
@@ -76,6 +85,11 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @Support(ORACLE)
+    @Transition(
+        name = "WITHIN GROUP ORDER BY",
+        args = "SortField+",
+        to = "OrderedAggregateFunction"
+    )
     AggregateFunction<T> withinGroupOrderBy(SortField<?>... fields);
 
     /**
@@ -83,5 +97,10 @@ public interface OrderedAggregateFunction<T> {
      * aggregate function
      */
     @Support(ORACLE)
+    @Transition(
+        name = "WITHIN GROUP ORDER BY",
+        args = "SortField+",
+        to = "OrderedAggregateFunction"
+    )
     AggregateFunction<T> withinGroupOrderBy(Collection<SortField<?>> fields);
 }

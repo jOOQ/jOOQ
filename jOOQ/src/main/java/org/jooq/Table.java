@@ -53,6 +53,8 @@ import static org.jooq.SQLDialect.SYBASE;
 import java.util.Collection;
 import java.util.List;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 
@@ -62,6 +64,17 @@ import org.jooq.impl.DSL;
  * @param <R> The record type associated with this table
  * @author Lukas Eder
  */
+@State(
+    name = "Table",
+    aliases = {
+        "AliasedTable",
+        "JoinedTable",
+        "PivotTable",
+        "DividedTable",
+        "UnnestedTable"
+    },
+    terminal = true
+)
 public interface Table<R extends Record> extends TableLike<R> {
 
     /**
@@ -90,6 +103,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @return The table alias
      */
     @Support
+    @Transition(
+        name = "AS",
+        to = "AliasedTable",
+        args = "String"
+    )
     Table<R> as(String alias);
 
     /**
@@ -144,6 +162,14 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @return The table alias
      */
     @Support
+    @Transition(
+        name = "AS",
+        to = "AliasedTable",
+        args = {
+            "String",
+            "String+"
+        }
+    )
     Table<R> as(String alias, String... fieldAliases);
 
     /**
@@ -287,6 +313,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see SelectQuery#addHint(String)
      */
     @Support({ SQLSERVER, SYBASE })
+    @Transition(
+        name = "WITH",
+        args = "String"
+    )
     Table<R> with(String hint);
 
     /**
@@ -305,6 +335,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @return A DSL object to create the <code>PIVOT</code> expression
      */
     @Support({ ORACLE })
+    @Transition(
+        name = "PIVOT",
+        args = "Field+"
+    )
     PivotForStep pivot(Field<?>... aggregateFunctions);
 
     /**
@@ -318,6 +352,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see #pivot(Field...)
      */
     @Support({ ORACLE })
+    @Transition(
+        name = "PIVOT",
+        args = "Field+"
+    )
     PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
 
     /**
@@ -373,6 +411,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * This has been observed to work with all dialects
      */
     @Support
+    @Transition(
+        name = "DIVIDE BY",
+        args = "Table"
+    )
     DivideByOnStep divideBy(Table<?> divisor);
 
     /**
@@ -391,6 +433,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <code>INNER JOIN</code> a table to this table.
      */
     @Support
+    @Transition(
+        name = "JOIN",
+        args = "Table"
+    )
     TableOnStep join(TableLike<?> table);
 
     /**
@@ -404,6 +450,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @Transition(
+        name = "JOIN",
+        args = "Table"
+    )
     TableOnStep join(String sql);
 
     /**
@@ -417,6 +467,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @Transition(
+        name = "JOIN",
+        args = "Table"
+    )
     TableOnStep join(String sql, Object... bindings);
 
     /**
@@ -430,12 +484,20 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @Transition(
+        name = "JOIN",
+        args = "Table"
+    )
     TableOnStep join(String sql, QueryPart... parts);
 
     /**
      * <code>LEFT OUTER JOIN</code> a table to this table.
      */
     @Support
+    @Transition(
+        name = "LEFT OUTER JOIN",
+        args = "Table"
+    )
     TablePartitionByStep leftOuterJoin(TableLike<?> table);
 
     /**
@@ -449,6 +511,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @Transition(
+        name = "LEFT OUTER JOIN",
+        args = "Table"
+    )
     TablePartitionByStep leftOuterJoin(String sql);
 
     /**
@@ -462,6 +528,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @Transition(
+        name = "LEFT OUTER JOIN",
+        args = "Table"
+    )
     TablePartitionByStep leftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -475,6 +545,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @Transition(
+        name = "LEFT OUTER JOIN",
+        args = "Table"
+    )
     TablePartitionByStep leftOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -483,6 +557,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RIGHT OUTER JOIN",
+        args = "Table"
+    )
     TablePartitionByStep rightOuterJoin(TableLike<?> table);
 
     /**
@@ -498,6 +576,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RIGHT OUTER JOIN",
+        args = "Table"
+    )
     TablePartitionByStep rightOuterJoin(String sql);
 
     /**
@@ -513,6 +595,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RIGHT OUTER JOIN",
+        args = "Table"
+    )
     TablePartitionByStep rightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -528,6 +614,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RIGHT OUTER JOIN",
+        args = "Table"
+    )
     TablePartitionByStep rightOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -536,6 +626,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * This is only possible where the underlying RDBMS supports it
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "FULL OUTER JOIN",
+        args = "Table"
+    )
     TableOnStep fullOuterJoin(TableLike<?> table);
 
     /**
@@ -551,6 +645,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "FULL OUTER JOIN",
+        args = "Table"
+    )
     TableOnStep fullOuterJoin(String sql);
 
     /**
@@ -566,6 +664,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "FULL OUTER JOIN",
+        args = "Table"
+    )
     TableOnStep fullOuterJoin(String sql, Object... bindings);
 
     /**
@@ -581,6 +683,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ DB2, FIREBIRD, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "FULL OUTER JOIN",
+        args = "Table"
+    )
     TableOnStep fullOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -594,6 +700,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * </pre></code>
      */
     @Support
+    @Transition(
+        name = "CROSS JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> crossJoin(TableLike<?> table);
 
     /**
@@ -614,6 +725,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @Transition(
+        name = "CROSS JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> crossJoin(String sql);
 
     /**
@@ -634,6 +750,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @Transition(
+        name = "CROSS JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> crossJoin(String sql, Object... bindings);
 
     /**
@@ -654,6 +775,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @Transition(
+        name = "CROSS JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> crossJoin(String sql, QueryPart... parts);
 
     /**
@@ -663,6 +789,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * this behaviour using the information provided in this query.
      */
     @Support
+    @Transition(
+        name = "NATURAL JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalJoin(TableLike<?> table);
 
     /**
@@ -679,6 +810,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @Transition(
+        name = "NATURAL JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalJoin(String sql);
 
     /**
@@ -695,6 +831,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @Transition(
+        name = "NATURAL JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalJoin(String sql, Object... bindings);
 
     /**
@@ -711,6 +852,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @Transition(
+        name = "NATURAL JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalJoin(String sql, QueryPart... parts);
 
     /**
@@ -720,6 +866,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * this behaviour using the information provided in this query.
      */
     @Support
+    @Transition(
+        name = "NATURAL LEFT OUTER JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalLeftOuterJoin(TableLike<?> table);
 
     /**
@@ -736,6 +887,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support
+    @Transition(
+        name = "NATURAL LEFT OUTER JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalLeftOuterJoin(String sql);
 
     /**
@@ -752,6 +908,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support
+    @Transition(
+        name = "NATURAL LEFT OUTER JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalLeftOuterJoin(String sql, Object... bindings);
 
     /**
@@ -768,6 +929,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support
+    @Transition(
+        name = "NATURAL LEFT OUTER JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalLeftOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -777,6 +943,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * this behaviour using the information provided in this query.
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "NATURAL RIGHT OUTER JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -793,6 +964,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "NATURAL RIGHT OUTER JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalRightOuterJoin(String sql);
 
     /**
@@ -809,6 +985,11 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, Object...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "NATURAL RIGHT OUTER JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalRightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -825,5 +1006,10 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @see DSL#table(String, QueryPart...)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "NATURAL RIGHT OUTER JOIN",
+        args = "Table",
+        to = "JoinedTable"
+    )
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
 }

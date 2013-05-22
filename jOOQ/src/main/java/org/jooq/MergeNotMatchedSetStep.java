@@ -44,6 +44,9 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Map;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Merge}'s DSL API.
  * <p>
@@ -63,6 +66,7 @@ import java.util.Map;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeNotMatchedSetStep<R extends Record> {
 
     /**
@@ -70,6 +74,13 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * <code>WHEN NOT MATCHED</code> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SET",
+        args = {
+            "Field",
+            "Object"
+        }
+    )
     <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, T value);
 
     /**
@@ -77,6 +88,13 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * <code>WHEN NOT MATCHED</INSERT> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SET",
+        args = {
+            "Field",
+            "Field"
+        }
+    )
     <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, Field<T> value);
 
     /**
@@ -84,6 +102,13 @@ public interface MergeNotMatchedSetStep<R extends Record> {
      * <code>WHEN NOT MATCHED</INSERT> clause.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SET",
+        args = {
+            "Field",
+            "Select"
+        }
+    )
     <T> MergeNotMatchedSetMoreStep<R> set(Field<T> field, Select<? extends Record1<T>> value);
 
     /**

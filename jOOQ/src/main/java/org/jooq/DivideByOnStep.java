@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 
@@ -43,12 +45,19 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State(
+    name = "DivideByOnStep"
+)
 public interface DivideByOnStep {
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
      */
     @Support
+    @Transition(
+        name = "ON",
+        args = "Condition+"
+    )
     DivideByOnConditionStep on(Condition... conditions);
 
     /**

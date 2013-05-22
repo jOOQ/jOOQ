@@ -64,6 +64,9 @@ class MergeDSL extends Generators {
         import static org.jooq.SQLDialect.SQLSERVER;
         import static org.jooq.SQLDialect.SYBASE;
         
+        import org.jooq.api.annotation.State;
+        import org.jooq.api.annotation.Transition;
+        
         import java.util.Collection;
         
         import javax.annotation.Generated;
@@ -88,6 +91,7 @@ class MergeDSL extends Generators {
          * @author Lukas Eder
          */
         «generatedAnnotation»
+        @State
         public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R> {
         
             /**
@@ -100,6 +104,9 @@ class MergeDSL extends Generators {
              * <code>INSERT SET a = x, b = y</code> syntax.
              */
             @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+            @Transition(
+                name = "WHEN NOT MATCHED THEN INSERT"
+            )
             MergeNotMatchedSetStep<R> whenNotMatchedThenInsert();
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
@@ -116,6 +123,10 @@ class MergeDSL extends Generators {
              * <code>MERGE</code> statement
              */
             @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+            @Transition(
+                name = "WHEN NOT MATCHED THEN INSERT",
+                args = "Field+"
+            )
             MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Field<?>... fields);
         
             /**
@@ -123,6 +134,10 @@ class MergeDSL extends Generators {
              * <code>MERGE</code> statement
              */
             @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+            @Transition(
+                name = "WHEN NOT MATCHED THEN INSERT",
+                args = "Field+"
+            )
             MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
         }
         ''');

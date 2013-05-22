@@ -37,6 +37,9 @@ package org.jooq;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -79,6 +82,7 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R> {
 
     /**
@@ -88,6 +92,10 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
      * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
+    @Transition(
+        name = "GROUP BY",
+        args = "GroupField+"
+    )
     SelectHavingStep<R> groupBy(GroupField... fields);
 
     /**
@@ -97,5 +105,9 @@ public interface SelectGroupByStep<R extends Record> extends SelectHavingStep<R>
      * <code>GROUP BY ()</code> clause being rendered.
      */
     @Support
+    @Transition(
+        name = "GROUP BY",
+        args = "GroupField+"
+    )
     SelectHavingStep<R> groupBy(Collection<? extends GroupField> fields);
 }

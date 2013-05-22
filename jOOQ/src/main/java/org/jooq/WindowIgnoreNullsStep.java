@@ -39,6 +39,9 @@ import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the window function DSL API.
  * <p>
@@ -55,6 +58,7 @@ import static org.jooq.SQLDialect.SYBASE;
  * @param <T> The function return type
  * @author Lukas Eder
  */
+@State
 public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
 
     /**
@@ -62,6 +66,9 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @Support({ DB2, ORACLE, SYBASE })
+    @Transition(
+        name = "IGNORE NULLS"
+    )
     WindowOverStep<T> ignoreNulls();
 
     /**
@@ -69,5 +76,8 @@ public interface WindowIgnoreNullsStep<T> extends WindowOverStep<T> {
      * might not be supported by all dialects.
      */
     @Support({ DB2, ORACLE, SYBASE })
+    @Transition(
+        name = "RESPECT NULLS"
+    )
     WindowOverStep<T> respectNulls();
 }

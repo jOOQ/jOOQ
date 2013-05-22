@@ -42,6 +42,9 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 import java.util.Collection;
 
 import javax.annotation.Generated;
@@ -66,6 +69,7 @@ import javax.annotation.Generated;
  * @author Lukas Eder
  */
 @Generated("This class was generated using jOOQ-tools")
+@State
 public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R> {
 
     /**
@@ -78,6 +82,9 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>INSERT SET a = x, b = y</code> syntax.
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "WHEN NOT MATCHED THEN INSERT"
+    )
     MergeNotMatchedSetStep<R> whenNotMatchedThenInsert();
 
     /**
@@ -239,6 +246,10 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>MERGE</code> statement
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "WHEN NOT MATCHED THEN INSERT",
+        args = "Field+"
+    )
     MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Field<?>... fields);
 
     /**
@@ -246,5 +257,9 @@ public interface MergeNotMatchedStep<R extends Record> extends MergeFinalStep<R>
      * <code>MERGE</code> statement
      */
     @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "WHEN NOT MATCHED THEN INSERT",
+        args = "Field+"
+    )
     MergeNotMatchedValuesStepN<R> whenNotMatchedThenInsert(Collection<? extends Field<?>> fields);
 }

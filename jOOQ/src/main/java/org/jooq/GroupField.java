@@ -35,12 +35,17 @@
  */
 package org.jooq;
 
+import org.jooq.api.annotation.State;
+
 /**
  * A <code>QueryPart</code> to be used exclusively in <code>GROUP BY</code>
  * clauses
  *
  * @author Lukas Eder
  */
+@State(
+    terminal = true
+)
 public interface GroupField extends QueryPart {
 
 }

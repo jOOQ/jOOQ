@@ -46,6 +46,8 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.impl.DSL;
 
 
@@ -55,23 +57,36 @@ import org.jooq.impl.DSL;
  * @author Lukas Eder
  * @see DSL#listAgg(Field)
  */
+@State
 public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Transition(
+        name = "ORDER BY",
+        args = "Field+"
+    )
     GroupConcatSeparatorStep orderBy(Field<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Transition(
+        name = "ORDER BY",
+        args = "SortField+"
+    )
     GroupConcatSeparatorStep orderBy(SortField<?>... fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Transition(
+        name = "ORDER BY",
+        args = "SortField+"
+    )
     GroupConcatSeparatorStep orderBy(Collection<SortField<?>> fields);
 }

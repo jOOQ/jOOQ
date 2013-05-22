@@ -140,6 +140,8 @@ import org.jooq.Table;
 import org.jooq.UDTRecord;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.exception.SQLDialectNotSupportedException;
@@ -196,6 +198,9 @@ import org.jooq.types.DayToSecond;
  * @author Lukas Eder
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
+@State(
+    name = ""
+)
 public class DSL {
 
     // -------------------------------------------------------------------------
@@ -210,6 +215,10 @@ public class DSL {
      *
      * @param dialect The dialect to use with objects created from this executor
      */
+    @Transition(
+        name = "USING",
+        args = "SQLDialect"
+    )
     public static DSLContext using(SQLDialect dialect) {
         return new DSLContextImpl(dialect, null);
     }
@@ -224,6 +233,13 @@ public class DSL {
      * @param settings The runtime settings to apply to objects created from
      *            this executor
      */
+    @Transition(
+        name = "USING",
+        args = {
+            "SQLDialect",
+            "Settings"
+        }
+    )
     public static DSLContext using(SQLDialect dialect, Settings settings) {
         return new DSLContextImpl(dialect, settings);
     }
@@ -243,6 +259,10 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(Connection)
      */
+    @Transition(
+        name = "USING",
+        args = "Connection"
+    )
     public static DSLContext using(Connection connection) {
         return new DSLContextImpl(connection, JDBCUtils.dialect(connection), null);
     }
@@ -262,6 +282,13 @@ public class DSL {
      * @param dialect The dialect to use with objects created from this executor
      * @see DefaultConnectionProvider
      */
+    @Transition(
+        name = "USING",
+        args = {
+            "Connection",
+            "SQLDialect"
+        }
+    )
     public static DSLContext using(Connection connection, SQLDialect dialect) {
         return new DSLContextImpl(connection, dialect, null);
     }
@@ -284,6 +311,13 @@ public class DSL {
      * @see DefaultConnectionProvider
      * @see JDBCUtils#dialect(Connection)
      */
+    @Transition(
+        name = "USING",
+        args = {
+            "Connection",
+            "Settings"
+        }
+    )
     public static DSLContext using(Connection connection, Settings settings) {
         return new DSLContextImpl(connection, JDBCUtils.dialect(connection), settings);
     }
@@ -305,6 +339,14 @@ public class DSL {
      *            this executor
      * @see DefaultConnectionProvider
      */
+    @Transition(
+        name = "USING",
+        args = {
+            "Connection",
+            "SQLDialect",
+            "Settings"
+        }
+    )
     public static DSLContext using(Connection connection, SQLDialect dialect, Settings settings) {
         return new DSLContextImpl(connection, dialect, settings);
     }
@@ -324,6 +366,13 @@ public class DSL {
      * @param dialect The dialect to use with objects created from this executor
      * @see DataSourceConnectionProvider
      */
+    @Transition(
+        name = "USING",
+        args = {
+            "DataSource",
+            "SQLDialect"
+        }
+    )
     public static DSLContext using(DataSource datasource, SQLDialect dialect) {
         return new DSLContextImpl(datasource, dialect);
     }
@@ -345,6 +394,14 @@ public class DSL {
      *            this executor
      * @see DataSourceConnectionProvider
      */
+    @Transition(
+        name = "USING",
+        args = {
+            "DataSource",
+            "SQLDialect",
+            "Settings"
+        }
+    )
     public static DSLContext using(DataSource datasource, SQLDialect dialect, Settings settings) {
         return new DSLContextImpl(datasource, dialect, settings);
     }
@@ -357,6 +414,13 @@ public class DSL {
      *            JDBC connections
      * @param dialect The dialect to use with objects created from this executor
      */
+    @Transition(
+        name = "USING",
+        args = {
+            "ConnectionProvider",
+            "SQLDialect"
+        }
+    )
     public static DSLContext using(ConnectionProvider connectionProvider, SQLDialect dialect) {
         return new DSLContextImpl(connectionProvider, dialect);
     }
@@ -371,6 +435,14 @@ public class DSL {
      * @param settings The runtime settings to apply to objects created from
      *            this executor
      */
+    @Transition(
+        name = "USING",
+        args = {
+            "ConnectionProvider",
+            "SQLDialect",
+            "Settings"
+        }
+    )
     public static DSLContext using(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
         return new DSLContextImpl(connectionProvider, dialect, settings);
     }
@@ -380,6 +452,10 @@ public class DSL {
      *
      * @param configuration The configuration
      */
+    @Transition(
+        name = "USING",
+        args = "Configuration"
+    )
     public static DSLContext using(Configuration configuration) {
         return new DSLContextImpl(configuration);
     }
@@ -415,6 +491,10 @@ public class DSL {
      * @see DSLContext#select(Collection)
      */
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
         return new SelectImpl<Record>(new DefaultConfiguration()).select(fields);
     }
@@ -446,6 +526,10 @@ public class DSL {
      * @see DSLContext#select(Field...)
      */
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static SelectSelectStep<Record> select(Field<?>... fields) {
         return new SelectImpl<Record>(new DefaultConfiguration()).select(fields);
     }
@@ -506,6 +590,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1> SelectSelectStep<Record1<T1>> select(Field<T1> field1) {
         return (SelectSelectStep) select(new Field[] { field1 });
     }
@@ -544,6 +632,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2> SelectSelectStep<Record2<T1, T2>> select(Field<T1> field1, Field<T2> field2) {
         return (SelectSelectStep) select(new Field[] { field1, field2 });
     }
@@ -582,6 +674,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3 });
     }
@@ -620,6 +716,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4 });
     }
@@ -658,6 +758,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5 });
     }
@@ -696,6 +800,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6 });
     }
@@ -734,6 +842,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
     }
@@ -772,6 +884,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
@@ -810,6 +926,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
@@ -848,6 +968,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
@@ -886,6 +1010,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
@@ -924,6 +1052,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
@@ -962,6 +1094,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
@@ -1000,6 +1136,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
@@ -1038,6 +1178,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
@@ -1076,6 +1220,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
@@ -1114,6 +1262,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
@@ -1152,6 +1304,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
@@ -1190,6 +1346,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
@@ -1228,6 +1388,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
@@ -1266,6 +1430,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
@@ -1304,6 +1472,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return (SelectSelectStep) select(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
@@ -1337,6 +1509,11 @@ public class DSL {
      * @see DSLContext#selectDistinct(Collection)
      */
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+",
+        to = "SelectSelectStep"
+    )
     public static SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
         return new SelectImpl<Record>(new DefaultConfiguration(), true).select(fields);
     }
@@ -1368,6 +1545,11 @@ public class DSL {
      * @see DSLContext#selectDistinct(Field...)
      */
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+",
+        to = "SelectSelectStep"
+    )
     public static SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
         return new SelectImpl<Record>(new DefaultConfiguration(), true).select(fields);
     }
@@ -1407,6 +1589,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1> SelectSelectStep<Record1<T1>> selectDistinct(Field<T1> field1) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1 });
     }
@@ -1445,6 +1631,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2> SelectSelectStep<Record2<T1, T2>> selectDistinct(Field<T1> field1, Field<T2> field2) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2 });
     }
@@ -1483,6 +1673,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3> SelectSelectStep<Record3<T1, T2, T3>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3 });
     }
@@ -1521,6 +1715,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4> SelectSelectStep<Record4<T1, T2, T3, T4>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4 });
     }
@@ -1559,6 +1757,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5> SelectSelectStep<Record5<T1, T2, T3, T4, T5>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5 });
     }
@@ -1597,6 +1799,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6> SelectSelectStep<Record6<T1, T2, T3, T4, T5, T6>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6 });
     }
@@ -1635,6 +1841,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7> SelectSelectStep<Record7<T1, T2, T3, T4, T5, T6, T7>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7 });
     }
@@ -1673,6 +1883,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8> SelectSelectStep<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
     }
@@ -1711,6 +1925,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> SelectSelectStep<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
     }
@@ -1749,6 +1967,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> SelectSelectStep<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
     }
@@ -1787,6 +2009,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> SelectSelectStep<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
     }
@@ -1825,6 +2051,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> SelectSelectStep<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
     }
@@ -1863,6 +2093,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> SelectSelectStep<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
     }
@@ -1901,6 +2135,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> SelectSelectStep<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
     }
@@ -1939,6 +2177,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> SelectSelectStep<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
     }
@@ -1977,6 +2219,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> SelectSelectStep<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
     }
@@ -2015,6 +2261,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> SelectSelectStep<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
     }
@@ -2053,6 +2303,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> SelectSelectStep<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
     }
@@ -2091,6 +2345,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> SelectSelectStep<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
     }
@@ -2129,6 +2387,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> SelectSelectStep<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
     }
@@ -2167,6 +2429,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> SelectSelectStep<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
     }
@@ -2205,6 +2471,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "SELECT DISTINCT",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> SelectSelectStep<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> selectDistinct(Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
         return (SelectSelectStep) selectDistinct(new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
     }
@@ -2239,6 +2509,9 @@ public class DSL {
      * @see DSLContext#selectZero()
      */
     @Support
+    @Transition(
+        name = "SELECT ZERO"
+    )
     public static SelectSelectStep<Record1<Integer>> selectZero() {
         return new SelectImpl<Record1<Integer>>(new DefaultConfiguration()).select(zero());
     }
@@ -2271,6 +2544,9 @@ public class DSL {
      * @see DSLContext#selectOne()
      */
     @Support
+    @Transition(
+        name = "SELECT ONE"
+    )
     public static SelectSelectStep<Record1<Integer>> selectOne() {
         return new SelectImpl<Record1<Integer>>(new DefaultConfiguration()).select(one());
     }
@@ -2303,6 +2579,9 @@ public class DSL {
      * @see DSLContext#selectCount()
      */
     @Support
+    @Transition(
+        name = "SELECT COUNT"
+    )
     public static SelectSelectStep<Record1<Integer>> selectCount() {
         return new SelectImpl<Record1<Integer>>(new DefaultConfiguration()).select(count());
     }
@@ -2323,6 +2602,10 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ALL",
+        args = "Select"
+    )
     public static <R extends Record> QuantifiedSelect<R> all(Select<R> select) {
         return new QuantifiedSelectImpl<R>(Quantifier.ALL, select);
     }
@@ -2342,6 +2625,10 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ALL",
+        args = "Field+"
+    )
     public static <T> QuantifiedSelect<Record1<T>> all(T... array) {
         return all(val(array));
     }
@@ -2361,6 +2648,10 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ H2, HSQLDB, POSTGRES })
+    @Transition(
+        name = "ALL",
+        args = "Field+"
+    )
     public static <T> QuantifiedSelect<Record1<T>> all(Field<T[]> array) {
         return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ALL, array);
     }
@@ -2377,6 +2668,10 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ANY",
+        args = "Select"
+    )
     public static <R extends Record> QuantifiedSelect<R> any(Select<R> select) {
         return new QuantifiedSelectImpl<R>(Quantifier.ANY, select);
     }
@@ -2396,6 +2691,10 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ANY",
+        args = "Field+"
+    )
     public static <T> QuantifiedSelect<Record1<T>> any(T... array) {
         return any(val(array));
     }
@@ -2415,6 +2714,10 @@ public class DSL {
      * @see Field#lessOrEqual(QuantifiedSelect)
      */
     @Support({ H2, HSQLDB, POSTGRES })
+    @Transition(
+        name = "ANY",
+        args = "Field+"
+    )
     public static <T> QuantifiedSelect<Record1<T>> any(Field<T[]> array) {
         return new QuantifiedSelectImpl<Record1<T>>(Quantifier.ANY, array);
     }
@@ -2429,6 +2732,11 @@ public class DSL {
      *
      * @see Select#asTable()
      */
+    @Transition(
+        name = "TABLE",
+        args = "Select",
+        to = "UnnestedTable"
+    )
     public static <R extends Record> Table<R> table(Select<R> select) {
         return select.asTable();
     }
@@ -2439,6 +2747,11 @@ public class DSL {
      * @see #unnest(List)
      */
     @Support
+    @Transition(
+        name = "TABLE",
+        args = "Object+",
+        to = "UnnestedTable"
+    )
     public static Table<?> table(List<?> list) {
         return table(list.toArray());
     }
@@ -2449,6 +2762,11 @@ public class DSL {
      * @see #unnest(Object[])
      */
     @Support
+    @Transition(
+        name = "TABLE",
+        args = "Object+",
+        to = "UnnestedTable"
+    )
     public static Table<?> table(Object[] array) {
         return table(val(array));
     }
@@ -2459,6 +2777,11 @@ public class DSL {
      * @see #unnest(ArrayRecord)
      */
     @Support(ORACLE)
+    @Transition(
+        name = "TABLE",
+        args = "Array",
+        to = "UnnestedTable"
+    )
     public static Table<?> table(ArrayRecord<?> array) {
         return table(val(array));
     }
@@ -2469,6 +2792,11 @@ public class DSL {
      * @see #unnest(Field)
      */
     @Support({ H2, HSQLDB, POSTGRES, ORACLE })
+    @Transition(
+        name = "TABLE",
+        args = "Field",
+        to = "UnnestedTable"
+    )
     public static Table<?> table(Field<?> cursor) {
         return unnest(cursor);
     }
@@ -2486,6 +2814,11 @@ public class DSL {
      * <code>UNION ALL</code> connected subqueries.
      */
     @Support
+    @Transition(
+        name = "UNNEST",
+        args = "Object+",
+        to = "UnnestedTable"
+    )
     public static Table<?> unnest(List<?> list) {
         return unnest(list.toArray());
     }
@@ -2503,6 +2836,11 @@ public class DSL {
      * <code>UNION ALL</code> connected subqueries.
      */
     @Support
+    @Transition(
+        name = "UNNEST",
+        args = "Object+",
+        to = "UnnestedTable"
+    )
     public static Table<?> unnest(Object[] array) {
         return unnest(val(array));
     }
@@ -2514,6 +2852,11 @@ public class DSL {
      * Oracle. Currently, only Oracle knows typed arrays
      */
     @Support(ORACLE)
+    @Transition(
+        name = "UNNEST",
+        args = "Array",
+        to = "UnnestedTable"
+    )
     public static Table<?> unnest(ArrayRecord<?> array) {
         return unnest(val(array));
     }
@@ -2540,6 +2883,11 @@ public class DSL {
      * simulated using several <code>UNION ALL</code> connected subqueries.
      */
     @Support({ H2, HSQLDB, POSTGRES, ORACLE })
+    @Transition(
+        name = "UNNEST",
+        args = "Field",
+        to = "UnnestedTable"
+    )
     public static Table<?> unnest(Field<?> cursor) {
         if (cursor == null) {
             throw new IllegalArgumentException();
@@ -3281,6 +3629,9 @@ public class DSL {
      * Return a <code>Condition</code> that will always evaluate to true.
      */
     @Support
+    @Transition(
+        name = "TRUE"
+    )
     public static Condition trueCondition() {
         return new TrueCondition();
     }
@@ -3289,6 +3640,9 @@ public class DSL {
      * Return a <code>Condition</code> that will always evaluate to false.
      */
     @Support
+    @Transition(
+        name = "FALSE"
+    )
     public static Condition falseCondition() {
         return new FalseCondition();
     }
@@ -3299,6 +3653,11 @@ public class DSL {
      * <code>EXISTS ([query])</code>
      */
     @Support
+    @Transition(
+        name = "EXISTS",
+        args = "Select",
+        to = "ExistsPredicate"
+    )
     public static Condition exists(Select<?> query) {
         return new SelectQueryAsExistsCondition(query, ExistsOperator.EXISTS);
     }
@@ -3309,6 +3668,11 @@ public class DSL {
      * <code>NOT EXISTS ([query])</code>
      */
     @Support
+    @Transition(
+        name = "NOT EXISTS",
+        args = "Select",
+        to = "ExistsPredicate"
+    )
     public static Condition notExists(Select<?> query) {
         return new SelectQueryAsExistsCondition(query, ExistsOperator.NOT_EXISTS);
     }
@@ -3319,6 +3683,11 @@ public class DSL {
      * This is the same as calling {@link Condition#not()}
      */
     @Support
+    @Transition(
+        name = "NOT",
+        args = "Condition",
+        to = "CombinedPredicate"
+    )
     public static Condition not(Condition condition) {
         return condition.not();
     }
@@ -3660,6 +4029,14 @@ public class DSL {
      * @see #coalesce(Field, Field...)
      */
     @Support
+    @Transition(
+        name = "COALESCE",
+        args = {
+            "Field",
+            "Field+"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> coalesce(T value, T... values) {
         return coalesce(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
     }
@@ -3676,6 +4053,14 @@ public class DSL {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "COALESCE",
+        args = {
+            "Field",
+            "Field+"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> coalesce(Field<T> field, Field<?>... fields) {
         return function("coalesce", nullSafeDataType(field), nullSafe(combine(field, fields)));
     }
@@ -3686,6 +4071,14 @@ public class DSL {
      * @see #nvl(Field, Field)
      */
     @Support
+    @Transition(
+        name = "NVL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> nvl(T value, T defaultValue) {
         return nvl(Utils.field(value), Utils.field(defaultValue));
     }
@@ -3696,6 +4089,14 @@ public class DSL {
      * @see #nvl(Field, Field)
      */
     @Support
+    @Transition(
+        name = "NVL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> nvl(T value, Field<T> defaultValue) {
         return nvl(Utils.field(value), nullSafe(defaultValue));
     }
@@ -3706,6 +4107,14 @@ public class DSL {
      * @see #nvl(Field, Field)
      */
     @Support
+    @Transition(
+        name = "NVL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> nvl(Field<T> value, T defaultValue) {
         return nvl(nullSafe(value), Utils.field(defaultValue));
     }
@@ -3739,6 +4148,14 @@ public class DSL {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "NVL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> nvl(Field<T> value, Field<T> defaultValue) {
         return new Nvl<T>(nullSafe(value), nullSafe(defaultValue));
     }
@@ -3749,6 +4166,15 @@ public class DSL {
      * @see #nvl2(Field, Field, Field)
      */
     @Support
+    @Transition(
+        name = "NVL2",
+        args = {
+            "Field",
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Z valueIfNull) {
         return nvl2(nullSafe(value), Utils.field(valueIfNotNull), Utils.field(valueIfNull));
     }
@@ -3759,6 +4185,15 @@ public class DSL {
      * @see #nvl2(Field, Field, Field)
      */
     @Support
+    @Transition(
+        name = "NVL2",
+        args = {
+            "Field",
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <Z> Field<Z> nvl2(Field<?> value, Z valueIfNotNull, Field<Z> valueIfNull) {
         return nvl2(nullSafe(value), Utils.field(valueIfNotNull), nullSafe(valueIfNull));
     }
@@ -3769,6 +4204,15 @@ public class DSL {
      * @see #nvl2(Field, Field, Field)
      */
     @Support
+    @Transition(
+        name = "NVL2",
+        args = {
+            "Field",
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Z valueIfNull) {
         return nvl2(nullSafe(value), nullSafe(valueIfNotNull), Utils.field(valueIfNull));
     }
@@ -3786,6 +4230,15 @@ public class DSL {
      * <code>CASE WHEN [value] IS NULL THEN [valueIfNull] ELSE [valueIfNotNull] END</code>
      */
     @Support
+    @Transition(
+        name = "NVL2",
+        args = {
+            "Field",
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <Z> Field<Z> nvl2(Field<?> value, Field<Z> valueIfNotNull, Field<Z> valueIfNull) {
         return new Nvl2<Z>(nullSafe(value), nullSafe(valueIfNotNull), nullSafe(valueIfNull));
     }
@@ -3796,6 +4249,14 @@ public class DSL {
      * @see #nullif(Field, Field)
      */
     @Support
+    @Transition(
+        name = "NULLIF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> nullif(T value, T other) {
         return nullif(Utils.field(value), Utils.field(other));
     }
@@ -3806,6 +4267,14 @@ public class DSL {
      * @see #nullif(Field, Field)
      */
     @Support
+    @Transition(
+        name = "NULLIF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> nullif(T value, Field<T> other) {
         return nullif(Utils.field(value), nullSafe(other));
     }
@@ -3816,6 +4285,14 @@ public class DSL {
      * @see #nullif(Field, Field)
      */
     @Support
+    @Transition(
+        name = "NULLIF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> nullif(Field<T> value, T other) {
         return nullif(nullSafe(value), Utils.field(other));
     }
@@ -3831,6 +4308,14 @@ public class DSL {
      * <p>
      */
     @Support
+    @Transition(
+        name = "NULLIF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> nullif(Field<T> value, Field<T> other) {
         return function("nullif", nullSafeDataType(value), nullSafe(value), nullSafe(other));
     }
@@ -3845,6 +4330,11 @@ public class DSL {
      * @see #upper(Field)
      */
     @Support
+    @Transition(
+        name = "UPPER",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> upper(String value) {
         return upper(Utils.field(value));
     }
@@ -3856,6 +4346,11 @@ public class DSL {
      * <code><pre>upper([field])</pre></code>
      */
     @Support
+    @Transition(
+        name = "UPPER",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> upper(Field<String> field) {
         return function("upper", SQLDataType.VARCHAR, nullSafe(field));
     }
@@ -3866,6 +4361,11 @@ public class DSL {
      * @see #lower(Field)
      */
     @Support
+    @Transition(
+        name = "LOWER",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> lower(String value) {
         return lower(Utils.field(value, String.class));
     }
@@ -3877,6 +4377,11 @@ public class DSL {
      * <code><pre>lower([field])</pre></code>
      */
     @Support
+    @Transition(
+        name = "LOWER",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> lower(Field<String> value) {
         return function("lower", SQLDataType.VARCHAR, nullSafe(value));
     }
@@ -3887,6 +4392,11 @@ public class DSL {
      * @see #trim(Field)
      */
     @Support
+    @Transition(
+        name = "TRIM",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> trim(String value) {
         return trim(Utils.field(value, String.class));
     }
@@ -3899,6 +4409,11 @@ public class DSL {
      * rtrim and ltrim: <code><pre>ltrim(rtrim([field]))</pre></code>
      */
     @Support
+    @Transition(
+        name = "TRIM",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> trim(Field<String> field) {
         return new Trim(nullSafe(field));
     }
@@ -3909,6 +4424,11 @@ public class DSL {
      * @see #rtrim(Field)
      */
     @Support
+    @Transition(
+        name = "RTRIM",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> rtrim(String value) {
         return rtrim(Utils.field(value));
     }
@@ -3920,6 +4440,11 @@ public class DSL {
      * <code><pre>rtrim([field])</pre></code>
      */
     @Support
+    @Transition(
+        name = "RTRIM",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> rtrim(Field<String> field) {
         return new RTrim(nullSafe(field));
     }
@@ -3930,6 +4455,11 @@ public class DSL {
      * @see #ltrim(Field)
      */
     @Support
+    @Transition(
+        name = "LTRIM",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> ltrim(String value) {
         return ltrim(Utils.field(value, String.class));
     }
@@ -3941,6 +4471,11 @@ public class DSL {
      * <code><pre>ltrim([field])</pre></code>
      */
     @Support
+    @Transition(
+        name = "LTRIM",
+        args = "Field",
+        to = "StringFunction"
+    )
     public static Field<String> ltrim(Field<String> field) {
         return new LTrim(nullSafe(field));
     }
@@ -3951,6 +4486,14 @@ public class DSL {
      * @see #rpad(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RPAD",
+        args = {
+            "Field",
+            "Integer"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> rpad(Field<String> field, int length) {
         return rpad(nullSafe(field), Utils.field(length));
     }
@@ -3965,6 +4508,14 @@ public class DSL {
      * <code><pre>concat([field], repeat(' ', [length] - length([field])))</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RPAD",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length) {
         return new Rpad(nullSafe(field), nullSafe(length));
     }
@@ -3975,6 +4526,15 @@ public class DSL {
      * @see #rpad(Field, Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RPAD",
+        args = {
+            "Field",
+            "Integer",
+            "Character"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> rpad(Field<String> field, int length, char character) {
         return rpad(field, length, Character.toString(character));
     }
@@ -3985,6 +4545,15 @@ public class DSL {
      * @see #rpad(Field, Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RPAD",
+        args = {
+            "Field",
+            "Integer",
+            "String"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> rpad(Field<String> field, int length, String character) {
         return rpad(nullSafe(field), Utils.field(length), Utils.field(character, String.class));
     }
@@ -4002,6 +4571,15 @@ public class DSL {
      * <code><pre>[field] || replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RPAD",
+        args = {
+            "Field",
+            "Field",
+            "Field"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> rpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Rpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
@@ -4012,6 +4590,14 @@ public class DSL {
      * @see #lpad(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LPAD",
+        args = {
+            "Field",
+            "Integer"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> lpad(Field<String> field, int length) {
         return lpad(nullSafe(field), Utils.field(length));
     }
@@ -4026,6 +4612,14 @@ public class DSL {
      * <code><pre>concat(repeat(' ', [length] - length([field])), [field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LPAD",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length) {
         return new Lpad(nullSafe(field), nullSafe(length));
     }
@@ -4036,6 +4630,15 @@ public class DSL {
      * @see #lpad(Field, Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LPAD",
+        args = {
+            "Field",
+            "Integer",
+            "Character"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> lpad(Field<String> field, int length, char character) {
         return lpad(field, length, Character.toString(character));
     }
@@ -4046,6 +4649,15 @@ public class DSL {
      * @see #lpad(Field, Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LPAD",
+        args = {
+            "Field",
+            "Integer",
+            "String"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> lpad(Field<String> field, int length, String character) {
         return lpad(nullSafe(field), Utils.field(length), Utils.field(character, String.class));
     }
@@ -4063,6 +4675,15 @@ public class DSL {
      * <code><pre>replace(replace(substr(quote(zeroblob(([length] + 1) / 2)), 3, ([length] - length([field]))), '''', ''), '0', [character]) || [field]</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LPAD",
+        args = {
+            "Field",
+            "Field",
+            "Field"
+        },
+        to = "StringFunction"
+    )
     public static Field<String> lpad(Field<String> field, Field<? extends Number> length, Field<String> character) {
         return new Lpad(nullSafe(field), nullSafe(length), nullSafe(character));
     }
@@ -4482,6 +5103,10 @@ public class DSL {
      * This translates into any dialect
      */
     @Support
+    @Transition(
+        name = "CURRENT_DATE",
+        to = "SystemFunction"
+    )
     public static Field<Date> currentDate() {
         return new CurrentDate();
     }
@@ -4492,6 +5117,10 @@ public class DSL {
      * This translates into any dialect
      */
     @Support
+    @Transition(
+        name = "CURRENT_TIME",
+        to = "SystemFunction"
+    )
     public static Field<Time> currentTime() {
         return new CurrentTime();
     }
@@ -4502,6 +5131,10 @@ public class DSL {
      * This translates into any dialect
      */
     @Support
+    @Transition(
+        name = "CURRENT_TIMESTAMP",
+        to = "SystemFunction"
+    )
     public static Field<Timestamp> currentTimestamp() {
         return new CurrentTimestamp();
     }
@@ -4514,6 +5147,14 @@ public class DSL {
      * @see Field#sub(Field)
      */
     @Support
+    @Transition(
+        name = "DATE_DIFF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<Integer> dateDiff(Date date1, Date date2) {
         return dateDiff(Utils.field(date1), Utils.field(date2));
     }
@@ -4526,6 +5167,14 @@ public class DSL {
      * @see Field#sub(Field)
      */
     @Support
+    @Transition(
+        name = "DATE_DIFF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<Integer> dateDiff(Field<Date> date1, Date date2) {
         return dateDiff(nullSafe(date1), Utils.field(date2));
     }
@@ -4538,6 +5187,14 @@ public class DSL {
      * @see Field#add(Number)
      */
     @Support
+    @Transition(
+        name = "DATE_ADD",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<Date> dateAdd(Date date, Number interval) {
         return dateAdd(Utils.field(date), Utils.field(interval));
     }
@@ -4550,6 +5207,14 @@ public class DSL {
      * @see Field#add(Field)
      */
     @Support
+    @Transition(
+        name = "DATE_ADD",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<Date> dateAdd(Field<Date> date, Field<? extends Number> interval) {
         return nullSafe(date).add(interval);
     }
@@ -4562,6 +5227,14 @@ public class DSL {
      * @see Field#sub(Field)
      */
     @Support
+    @Transition(
+        name = "DATE_DIFF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<Integer> dateDiff(Date date1, Field<Date> date2) {
         return dateDiff(Utils.field(date1), nullSafe(date2));
     }
@@ -4574,6 +5247,14 @@ public class DSL {
      * @see Field#sub(Field)
      */
     @Support
+    @Transition(
+        name = "DATE_DIFF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<Integer> dateDiff(Field<Date> date1, Field<Date> date2) {
         return new DateDiff(nullSafe(date1), nullSafe(date2));
     }
@@ -4586,6 +5267,14 @@ public class DSL {
      * @see Field#add(Number)
      */
     @Support
+    @Transition(
+        name = "TIMESTAMP_ADD",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<Timestamp> timestampAdd(Timestamp timestamp, Number interval) {
         return timestampAdd(Utils.field(timestamp), Utils.field(interval));
     }
@@ -4598,6 +5287,14 @@ public class DSL {
      * @see Field#add(Field)
      */
     @Support
+    @Transition(
+        name = "TIMESTAMP_ADD",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<Timestamp> timestampAdd(Field<Timestamp> timestamp, Field<? extends Number> interval) {
         return nullSafe(timestamp).add(interval);
     }
@@ -4611,6 +5308,14 @@ public class DSL {
      * @see Field#sub(Field)
      */
     @Support
+    @Transition(
+        name = "TIMESTAMP_DIFF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Timestamp timestamp2) {
         return timestampDiff(Utils.field(timestamp1), Utils.field(timestamp2));
     }
@@ -4624,6 +5329,14 @@ public class DSL {
      * @see Field#sub(Field)
      */
     @Support
+    @Transition(
+        name = "TIMESTAMP_DIFF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Timestamp timestamp2) {
         return timestampDiff(nullSafe(timestamp1), Utils.field(timestamp2));
     }
@@ -4637,6 +5350,14 @@ public class DSL {
      * @see Field#sub(Field)
      */
     @Support
+    @Transition(
+        name = "TIMESTAMP_DIFF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<DayToSecond> timestampDiff(Timestamp timestamp1, Field<Timestamp> timestamp2) {
         return timestampDiff(Utils.field(timestamp1), nullSafe(timestamp2));
     }
@@ -4650,6 +5371,14 @@ public class DSL {
      * @see Field#sub(Field)
      */
     @Support
+    @Transition(
+        name = "TIMESTAMP_DIFF",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "DateFunction"
+    )
     public static Field<DayToSecond> timestampDiff(Field<Timestamp> timestamp1, Field<Timestamp> timestamp2) {
         return new TimestampDiff(nullSafe(timestamp1), nullSafe(timestamp2));
     }
@@ -4709,6 +5438,14 @@ public class DSL {
      * This translates into any dialect
      */
     @Support
+    @Transition(
+        name = "EXTRACT",
+        args = {
+            "Field",
+            "DatePart"
+        },
+        to = "DateFunction"
+    )
     public static Field<Integer> extract(java.util.Date value, DatePart datePart) {
         return extract(Utils.field(value), datePart);
     }
@@ -4719,6 +5456,14 @@ public class DSL {
      * This translates into any dialect
      */
     @Support
+    @Transition(
+        name = "EXTRACT",
+        args = {
+            "Field",
+            "DatePart"
+        },
+        to = "DateFunction"
+    )
     public static Field<Integer> extract(Field<? extends java.util.Date> field, DatePart datePart) {
         return new Extract(nullSafe(field), datePart);
     }
@@ -4730,6 +5475,11 @@ public class DSL {
      * with {@link DatePart#YEAR}
      */
     @Support
+    @Transition(
+        name = "YEAR",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> year(java.util.Date value) {
         return extract(value, DatePart.YEAR);
     }
@@ -4741,6 +5491,11 @@ public class DSL {
      * with {@link DatePart#YEAR}
      */
     @Support
+    @Transition(
+        name = "YEAR",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> year(Field<? extends java.util.Date> field) {
         return extract(field, DatePart.YEAR);
     }
@@ -4752,6 +5507,11 @@ public class DSL {
      * with {@link DatePart#MONTH}
      */
     @Support
+    @Transition(
+        name = "MONTH",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> month(java.util.Date value) {
         return extract(value, DatePart.MONTH);
     }
@@ -4763,6 +5523,11 @@ public class DSL {
      * with {@link DatePart#MONTH}
      */
     @Support
+    @Transition(
+        name = "MONTH",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> month(Field<? extends java.util.Date> field) {
         return extract(field, DatePart.MONTH);
     }
@@ -4774,6 +5539,11 @@ public class DSL {
      * with {@link DatePart#DAY}
      */
     @Support
+    @Transition(
+        name = "DAY",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> day(java.util.Date value) {
         return extract(value, DatePart.DAY);
     }
@@ -4785,6 +5555,11 @@ public class DSL {
      * with {@link DatePart#DAY}
      */
     @Support
+    @Transition(
+        name = "DAY",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> day(Field<? extends java.util.Date> field) {
         return extract(field, DatePart.DAY);
     }
@@ -4796,6 +5571,11 @@ public class DSL {
      * with {@link DatePart#HOUR}
      */
     @Support
+    @Transition(
+        name = "HOUR",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> hour(java.util.Date value) {
         return extract(value, DatePart.HOUR);
     }
@@ -4807,6 +5587,11 @@ public class DSL {
      * with {@link DatePart#HOUR}
      */
     @Support
+    @Transition(
+        name = "HOUR",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> hour(Field<? extends java.util.Date> field) {
         return extract(field, DatePart.HOUR);
     }
@@ -4818,6 +5603,11 @@ public class DSL {
      * with {@link DatePart#MINUTE}
      */
     @Support
+    @Transition(
+        name = "MINUTE",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> minute(java.util.Date value) {
         return extract(value, DatePart.MINUTE);
     }
@@ -4829,6 +5619,11 @@ public class DSL {
      * with {@link DatePart#MINUTE}
      */
     @Support
+    @Transition(
+        name = "MINUTE",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> minute(Field<? extends java.util.Date> field) {
         return extract(field, DatePart.MINUTE);
     }
@@ -4840,6 +5635,11 @@ public class DSL {
      * with {@link DatePart#SECOND}
      */
     @Support
+    @Transition(
+        name = "SECOND",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> second(java.util.Date value) {
         return extract(value, DatePart.SECOND);
     }
@@ -4851,6 +5651,11 @@ public class DSL {
      * with {@link DatePart#SECOND}
      */
     @Support
+    @Transition(
+        name = "SECOND",
+        args = "Field",
+        to = "DateFunction"
+    )
     public static Field<Integer> second(Field<? extends java.util.Date> field) {
         return extract(field, DatePart.SECOND);
     }
@@ -4883,6 +5688,10 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ CUBRID, DB2, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ROLLUP",
+        args = "Field+"
+    )
     public static GroupField rollup(Field<?>... fields) {
         return new Rollup(nullSafe(fields));
     }
@@ -4909,6 +5718,10 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "CUBE",
+        args = "Field+"
+    )
     public static GroupField cube(Field<?>... fields) {
         return function("cube", Object.class, nullSafe(fields));
     }
@@ -4936,6 +5749,10 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "GROUPING SETS",
+        args = "Field+"
+    )
     public static GroupField groupingSets(Field<?>... fields) {
         List<Field<?>>[] array = new List[fields.length];
 
@@ -4969,6 +5786,10 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "GROUPING SETS",
+        args = "Field+"
+    )
     public static GroupField groupingSets(Field<?>[]... fieldSets) {
         List<Field<?>>[] array = new List[fieldSets.length];
 
@@ -5002,6 +5823,10 @@ public class DSL {
      * @return A field to be used in a <code>GROUP BY</code> clause
      */
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "GROUPING SETS",
+        args = "Field+"
+    )
     public static GroupField groupingSets(Collection<? extends Field<?>>... fieldSets) {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
@@ -5031,6 +5856,11 @@ public class DSL {
      * @see #rollup(Field...)
      */
     @Support({ DB2, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "GROUPING",
+        args = "Field",
+        to = "GroupingFunction"
+    )
     public static Field<Integer> grouping(Field<?> field) {
         return function("grouping", Integer.class, nullSafe(field));
     }
@@ -5052,6 +5882,11 @@ public class DSL {
      * @see #rollup(Field...)
      */
     @Support({ ORACLE, SQLSERVER})
+    @Transition(
+        name = "GROUPING_ID",
+        args = "Field",
+        to = "GroupingFunction"
+    )
     public static Field<Integer> groupingId(Field<?>... fields) {
         return function("grouping_id", Integer.class, nullSafe(fields));
     }
@@ -5067,6 +5902,11 @@ public class DSL {
      * @see #bitCount(Field)
      */
     @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_COUNT",
+        args = "Field",
+        to = "BitwiseOperation"
+    )
     public static Field<Integer> bitCount(Number value) {
         return bitCount(Utils.field(value));
     }
@@ -5089,6 +5929,11 @@ public class DSL {
      * More efficient algorithms are very welcome
      */
     @Support({ CUBRID, FIREBIRD, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_COUNT",
+        args = "Field",
+        to = "BitwiseOperation"
+    )
     public static Field<Integer> bitCount(Field<? extends Number> field) {
         return new BitCount(nullSafe(field));
     }
@@ -5099,6 +5944,11 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NOT",
+        args = "Field",
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNot(T value) {
         return bitNot(Utils.field(value));
     }
@@ -5110,6 +5960,11 @@ public class DSL {
      * simulates this operator in some dialects using <code>-[field] - 1</code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NOT",
+        args = "Field",
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNot(Field<T> field) {
         return new Neg<T>(nullSafe(field), ExpressionOperator.BIT_NOT);
     }
@@ -5120,6 +5975,14 @@ public class DSL {
      * @see #bitAnd(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_AND",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitAnd(T value1, T value2) {
         return bitAnd(Utils.field(value1), Utils.field(value2));
     }
@@ -5130,6 +5993,14 @@ public class DSL {
      * @see #bitAnd(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_AND",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitAnd(T value1, Field<T> value2) {
         return bitAnd(Utils.field(value1), nullSafe(value2));
     }
@@ -5140,6 +6011,14 @@ public class DSL {
      * @see #bitAnd(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_AND",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitAnd(Field<T> value1, T value2) {
         return bitAnd(nullSafe(value1), Utils.field(value2));
     }
@@ -5155,6 +6034,14 @@ public class DSL {
      * <code><pre>bitand([field1], [field2])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_AND",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitAnd(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_AND, nullSafe(field1), nullSafe(field2));
     }
@@ -5166,6 +6053,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NAND",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNand(T value1, T value2) {
         return bitNand(Utils.field(value1), Utils.field(value2));
     }
@@ -5177,6 +6072,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NAND",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNand(T value1, Field<T> value2) {
         return bitNand(Utils.field(value1), nullSafe(value2));
     }
@@ -5188,6 +6091,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NAND",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNand(Field<T> value1, T value2) {
         return bitNand(nullSafe(value1), Utils.field(value2));
     }
@@ -5205,6 +6116,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NAND",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNand(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_NAND, nullSafe(field1), nullSafe(field2));
     }
@@ -5215,6 +6134,14 @@ public class DSL {
      * @see #bitOr(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_OR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitOr(T value1, T value2) {
         return bitOr(Utils.field(value1), Utils.field(value2));
     }
@@ -5225,6 +6152,14 @@ public class DSL {
      * @see #bitOr(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_OR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitOr(T value1, Field<T> value2) {
         return bitOr(Utils.field(value1), nullSafe(value2));
     }
@@ -5235,6 +6170,14 @@ public class DSL {
      * @see #bitOr(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_OR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitOr(Field<T> value1, T value2) {
         return bitOr(nullSafe(value1), Utils.field(value2));
     }
@@ -5250,6 +6193,14 @@ public class DSL {
      * <code><pre>bitor([field1], [field2])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_OR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitOr(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_OR, nullSafe(field1), nullSafe(field2));
     }
@@ -5261,6 +6212,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNor(T value1, T value2) {
         return bitNor(Utils.field(value1), Utils.field(value2));
     }
@@ -5271,6 +6230,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNor(T value1, Field<T> value2) {
         return bitNor(Utils.field(value1), nullSafe(value2));
     }
@@ -5281,6 +6248,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNor(Field<T> value1, T value2) {
         return bitNor(nullSafe(value1), Utils.field(value2));
     }
@@ -5298,6 +6273,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_NOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitNor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_NOR, nullSafe(field1), nullSafe(field2));
     }
@@ -5308,6 +6291,14 @@ public class DSL {
      * @see #bitXor(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_XOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitXor(T value1, T value2) {
         return bitXor(Utils.field(value1), Utils.field(value2));
     }
@@ -5318,6 +6309,14 @@ public class DSL {
      * @see #bitXor(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_XOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitXor(T value1, Field<T> value2) {
         return bitXor(Utils.field(value1), nullSafe(value2));
     }
@@ -5328,6 +6327,14 @@ public class DSL {
      * @see #bitXor(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_XOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitXor(Field<T> value1, T value2) {
         return bitXor(nullSafe(value1), Utils.field(value2));
     }
@@ -5343,6 +6350,14 @@ public class DSL {
      * <code><pre>bitxor([field1], [field2])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_XOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitXor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_XOR, nullSafe(field1), nullSafe(field2));
     }
@@ -5354,6 +6369,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_XNOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitXNor(T value1, T value2) {
         return bitXNor(Utils.field(value1), Utils.field(value2));
     }
@@ -5365,6 +6388,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_XNOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitXNor(T value1, Field<T> value2) {
         return bitXNor(Utils.field(value1), nullSafe(value2));
     }
@@ -5376,6 +6407,14 @@ public class DSL {
      * @see #bitNot(Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_XNOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitXNor(Field<T> value1, T value2) {
         return bitXNor(nullSafe(value1), Utils.field(value2));
     }
@@ -5391,6 +6430,14 @@ public class DSL {
      * <code><pre>bitnot(bitxor([field1], [field2]))</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "BIT_XNOR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> bitXNor(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.BIT_XNOR, nullSafe(field1), nullSafe(field2));
     }
@@ -5402,6 +6449,14 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "SHL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> shl(T value1, T value2) {
         return shl(Utils.field(value1), Utils.field(value2));
     }
@@ -5413,6 +6468,14 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "SHL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> shl(T value1, Field<T> value2) {
         return shl(Utils.field(value1), nullSafe(value2));
     }
@@ -5424,6 +6487,14 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "SHL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> shl(Field<T>value1, T value2) {
         return shl(nullSafe(value1), Utils.field(value2));
     }
@@ -5438,6 +6509,14 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "SHL",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> shl(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.SHL, nullSafe(field1), nullSafe(field2));
     }
@@ -5449,6 +6528,14 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "SHR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> shr(T value1, T value2) {
         return shr(Utils.field(value1), Utils.field(value2));
     }
@@ -5460,6 +6547,14 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "SHR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> shr(T value1, Field<T> value2) {
         return shr(Utils.field(value1), nullSafe(value2));
     }
@@ -5471,6 +6566,14 @@ public class DSL {
      * @see #power(Field, Number)
      */
     @Support({ ASE, CUBRID, DB2, FIREBIRD, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "SHR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> shr(Field<T> value1, T value2) {
         return shr(nullSafe(value1), Utils.field(value2));
     }
@@ -5485,6 +6588,14 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, H2, FIREBIRD, HSQLDB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE, SQLITE })
+    @Transition(
+        name = "SHR",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "BitwiseOperation"
+    )
     public static <T extends Number> Field<T> shr(Field<T> field1, Field<T> field2) {
         return new Expression<T>(ExpressionOperator.SHR, nullSafe(field1), nullSafe(field2));
     }
@@ -5497,6 +6608,10 @@ public class DSL {
      * Get the rand() function.
      */
     @Support
+    @Transition(
+        name = "RAND",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> rand() {
         return new Rand();
     }
@@ -5513,6 +6628,14 @@ public class DSL {
      * @see #greatest(Field, Field...)
      */
     @Support
+    @Transition(
+        name = "GREATEST",
+        args = {
+            "Field",
+            "Field+"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> greatest(T value, T... values) {
         return greatest(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
     }
@@ -5527,6 +6650,14 @@ public class DSL {
      * welcome.
      */
     @Support
+    @Transition(
+        name = "GREATEST",
+        args = {
+            "Field",
+            "Field+"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> greatest(Field<T> field, Field<?>... others) {
         return new Greatest<T>(nullSafeDataType(field), nullSafe(combine(field, others)));
     }
@@ -5543,6 +6674,14 @@ public class DSL {
      * @see #least(Field, Field...)
      */
     @Support
+    @Transition(
+        name = "LEAST",
+        args = {
+            "Field",
+            "Field+"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> least(T value, T... values) {
         return least(Utils.field(value), Utils.fields(values).toArray(new Field[0]));
     }
@@ -5557,6 +6696,14 @@ public class DSL {
      * welcome.
      */
     @Support
+    @Transition(
+        name = "LEAST",
+        args = {
+            "Field",
+            "Field+"
+        },
+        to = "Function"
+    )
     public static <T> Field<T> least(Field<T> field, Field<?>... others) {
         return new Least<T>(nullSafeDataType(field), nullSafe(combine(field, others)));
     }
@@ -5567,6 +6714,11 @@ public class DSL {
      * @see #sign(Field)
      */
     @Support
+    @Transition(
+        name = "SIGN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<Integer> sign(Number value) {
         return sign(Utils.field(value));
     }
@@ -5584,6 +6736,11 @@ public class DSL {
      * END
      */
     @Support
+    @Transition(
+        name = "SIGN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<Integer> sign(Field<? extends Number> field) {
         return new Sign(nullSafe(field));
     }
@@ -5594,6 +6751,11 @@ public class DSL {
      * @see #abs(Field)
      */
     @Support
+    @Transition(
+        name = "ABS",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> abs(T value) {
         return abs(Utils.field(value));
     }
@@ -5605,6 +6767,11 @@ public class DSL {
      * <code><pre>abs([field])</pre></code>
      */
     @Support
+    @Transition(
+        name = "ABS",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> abs(Field<T> field) {
         return function("abs", nullSafeDataType(field), nullSafe(field));
     }
@@ -5615,6 +6782,11 @@ public class DSL {
      * @see #round(Field)
      */
     @Support
+    @Transition(
+        name = "ROUND",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> round(T value) {
         return round(Utils.field(value));
     }
@@ -5628,6 +6800,11 @@ public class DSL {
      * ... or simulates it elsewhere using floor and ceil
      */
     @Support
+    @Transition(
+        name = "ROUND",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> round(Field<T> field) {
         return new Round<T>(nullSafe(field));
     }
@@ -5638,6 +6815,14 @@ public class DSL {
      * @see #round(Field, int)
      */
     @Support
+    @Transition(
+        name = "ROUND",
+        args = {
+            "Field",
+            "Integer"
+        },
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> round(T value, int decimals) {
         return round(Utils.field(value), decimals);
     }
@@ -5650,6 +6835,14 @@ public class DSL {
      * ... or simulates it elsewhere using floor and ceil
      */
     @Support
+    @Transition(
+        name = "ROUND",
+        args = {
+            "Field",
+            "Integer"
+        },
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> round(Field<T> field, int decimals) {
         return new Round<T>(nullSafe(field), decimals);
     }
@@ -5660,6 +6853,11 @@ public class DSL {
      * @see #floor(Field)
      */
     @Support
+    @Transition(
+        name = "FLOOR",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> floor(T value) {
         return floor(Utils.field(value));
     }
@@ -5673,6 +6871,11 @@ public class DSL {
      * <code><pre>round([this] - 0.499999999999999)</pre></code>
      */
     @Support
+    @Transition(
+        name = "FLOOR",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> floor(Field<T> field) {
         return new Floor<T>(nullSafe(field));
     }
@@ -5683,6 +6886,11 @@ public class DSL {
      * @see #ceil(Field)
      */
     @Support
+    @Transition(
+        name = "CEIL",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> ceil(T value) {
         return ceil(Utils.field(value));
     }
@@ -5697,6 +6905,11 @@ public class DSL {
      * <code><pre>round([field] + 0.499999999999999)</pre></code>
      */
     @Support
+    @Transition(
+        name = "CEIL",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> ceil(Field<T> field) {
         return new Ceil<T>(nullSafe(field));
     }
@@ -5707,6 +6920,11 @@ public class DSL {
      * @see #trunc(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TRUNC",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> trunc(T number) {
         return trunc(Utils.field(number), inline(0));
     }
@@ -5717,6 +6935,14 @@ public class DSL {
      * @see #trunc(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TRUNC",
+        args = {
+            "Field",
+            "Integer"
+        },
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> trunc(T number, int decimals) {
         return trunc(Utils.field(number), inline(decimals));
     }
@@ -5727,6 +6953,14 @@ public class DSL {
      * @see #trunc(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TRUNC",
+        args = {
+            "Field",
+            "Integer"
+        },
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> trunc(Field<T> number, int decimals) {
         return trunc(nullSafe(number), inline(decimals));
     }
@@ -5737,6 +6971,14 @@ public class DSL {
      * @see #trunc(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TRUNC",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> trunc(T number, Field<Integer> decimals) {
         return trunc(Utils.field(number), nullSafe(decimals));
     }
@@ -5785,6 +7027,14 @@ public class DSL {
      * @see #trunc(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TRUNC",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static <T extends Number> Field<T> trunc(Field<T> number, Field<Integer> decimals) {
         return new Trunc<T>(nullSafe(number), nullSafe(decimals));
     }
@@ -5795,6 +7045,11 @@ public class DSL {
      * @see #sqrt(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SQRT",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> sqrt(Number value) {
         return sqrt(Utils.field(value));
     }
@@ -5808,6 +7063,11 @@ public class DSL {
      * <code><pre>power([field], 0.5)</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SQRT",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> sqrt(Field<? extends Number> field) {
         return new Sqrt(nullSafe(field));
     }
@@ -5818,6 +7078,11 @@ public class DSL {
      * @see #exp(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "EXP",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> exp(Number value) {
         return exp(Utils.field(value));
     }
@@ -5829,6 +7094,11 @@ public class DSL {
      * <code><pre>exp([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "EXP",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> exp(Field<? extends Number> field) {
         return function("exp", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -5839,6 +7109,11 @@ public class DSL {
      * @see #ln(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> ln(Number value) {
         return ln(Utils.field(value));
     }
@@ -5851,6 +7126,11 @@ public class DSL {
      * log([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> ln(Field<? extends Number> field) {
         return new Ln(nullSafe(field));
     }
@@ -5861,6 +7141,14 @@ public class DSL {
      * @see #log(Field, int)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LOG",
+        args = {
+            "Field",
+            "Integer"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> log(Number value, int base) {
         return log(Utils.field(value), base);
     }
@@ -5874,6 +7162,14 @@ public class DSL {
      * <code><pre>ln([field]) / ln([base])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "LOG",
+        args = {
+            "Field",
+            "Integer"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> log(Field<? extends Number> field, int base) {
         return new Ln(nullSafe(field), base);
     }
@@ -5884,6 +7180,14 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "POWER",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> power(Number value, Number exponent) {
         return power(Utils.field(value), Utils.field(exponent));
     }
@@ -5894,6 +7198,14 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "POWER",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> power(Field<? extends Number> field, Number exponent) {
         return power(nullSafe(field), Utils.field(exponent));
     }
@@ -5904,6 +7216,14 @@ public class DSL {
      * @see #power(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "POWER",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> power(Number value, Field<? extends Number> exponent) {
         return power(Utils.field(value), nullSafe(exponent));
     }
@@ -5917,6 +7237,14 @@ public class DSL {
      * <code><pre>exp(ln([field]) * [exponent])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "POWER",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> power(Field<? extends Number> field, Field<? extends Number> exponent) {
         return new Power(nullSafe(field), nullSafe(exponent));
     }
@@ -5927,6 +7255,11 @@ public class DSL {
      * @see #acos(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ACOS",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> acos(Number value) {
         return acos(Utils.field(value));
     }
@@ -5938,6 +7271,11 @@ public class DSL {
      * <code><pre>acos([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ACOS",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> acos(Field<? extends Number> field) {
         return function("acos", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -5948,6 +7286,11 @@ public class DSL {
      * @see #asin(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ASIN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> asin(Number value) {
         return asin(Utils.field(value));
     }
@@ -5959,6 +7302,11 @@ public class DSL {
      * <code><pre>asin([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ASIN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> asin(Field<? extends Number> field) {
         return function("asin", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -5969,6 +7317,11 @@ public class DSL {
      * @see #atan(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ATAN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> atan(Number value) {
         return atan(Utils.field(value));
     }
@@ -5980,6 +7333,11 @@ public class DSL {
      * <code><pre>atan([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ATAN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> atan(Field<? extends Number> field) {
         return function("atan", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -5990,6 +7348,14 @@ public class DSL {
      * @see #atan2(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ATAN2",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> atan2(Number x, Number y) {
         return atan2(Utils.field(x), Utils.field(y));
     }
@@ -6000,6 +7366,14 @@ public class DSL {
      * @see #atan2(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ATAN2",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> atan2(Number x, Field<? extends Number> y) {
         return atan2(Utils.field(x), nullSafe(y));
     }
@@ -6010,6 +7384,14 @@ public class DSL {
      * @see #atan2(Field, Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ATAN2",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Number y) {
         return atan2(nullSafe(x), Utils.field(y));
     }
@@ -6022,6 +7404,14 @@ public class DSL {
      * atn2([x], [y])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ATAN2",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> atan2(Field<? extends Number> x, Field<? extends Number> y) {
         return new Function<BigDecimal>(Term.ATAN2, SQLDataType.NUMERIC, nullSafe(x), nullSafe(y));
     }
@@ -6032,6 +7422,11 @@ public class DSL {
      * @see #cos(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "COS",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> cos(Number value) {
         return cos(Utils.field(value));
     }
@@ -6043,6 +7438,11 @@ public class DSL {
      * <code><pre>cos([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "COS",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> cos(Field<? extends Number> field) {
         return function("cos", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6053,6 +7453,11 @@ public class DSL {
      * @see #sin(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SIN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> sin(Number value) {
         return sin(Utils.field(value));
     }
@@ -6064,6 +7469,11 @@ public class DSL {
      * <code><pre>sin([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SIN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> sin(Field<? extends Number> field) {
         return function("sin", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6074,6 +7484,11 @@ public class DSL {
      * @see #tan(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TAN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> tan(Number value) {
         return tan(Utils.field(value));
     }
@@ -6085,6 +7500,11 @@ public class DSL {
      * <code><pre>tan([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TAN",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> tan(Field<? extends Number> field) {
         return function("tan", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6095,6 +7515,11 @@ public class DSL {
      * @see #cot(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "COT",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> cot(Number value) {
         return cot(Utils.field(value));
     }
@@ -6107,6 +7532,11 @@ public class DSL {
      * sin and cos: <code><pre>cos([field]) / sin([field])</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "COT",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> cot(Field<? extends Number> field) {
         return new Cot(nullSafe(field));
     }
@@ -6117,6 +7547,11 @@ public class DSL {
      * @see #sinh(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SINH",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> sinh(Number value) {
         return sinh(Utils.field(value));
     }
@@ -6129,6 +7564,11 @@ public class DSL {
      * exp: <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2))</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SINH",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> sinh(Field<? extends Number> field) {
         return new Sinh(nullSafe(field));
     }
@@ -6139,6 +7579,11 @@ public class DSL {
      * @see #cosh(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "COSH",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> cosh(Number value) {
         return cosh(Utils.field(value));
     }
@@ -6151,6 +7596,11 @@ public class DSL {
      * exp: <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2))</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "COSH",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> cosh(Field<? extends Number> field) {
         return new Cosh(nullSafe(field));
     }
@@ -6161,6 +7611,11 @@ public class DSL {
      * @see #tanh(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TANH",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> tanh(Number value) {
         return tanh(Utils.field(value));
     }
@@ -6174,6 +7629,11 @@ public class DSL {
      * <code><pre>(exp([field] * 2) - 1) / (exp([field] * 2) + 1)</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "TANH",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> tanh(Field<? extends Number> field) {
         return new Tanh(nullSafe(field));
     }
@@ -6184,6 +7644,11 @@ public class DSL {
      * @see #coth(Field)
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "COTH",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> coth(Number value) {
         return coth(Utils.field(value));
     }
@@ -6195,6 +7660,11 @@ public class DSL {
      * <code><pre>(exp([field] * 2) + 1) / (exp([field] * 2) - 1)</pre></code>
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "COTH",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> coth(Field<? extends Number> field) {
         field = nullSafe(field);
         return exp(field.mul(2)).add(1).div(exp(field.mul(2)).sub(1));
@@ -6206,6 +7676,11 @@ public class DSL {
      * @see #deg(Field)
      */
     @Support
+    @Transition(
+        name = "DEG",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> deg(Number value) {
         return deg(Utils.field(value));
     }
@@ -6218,6 +7693,11 @@ public class DSL {
      * <code><pre>[field] * 180 / PI</pre></code>
      */
     @Support
+    @Transition(
+        name = "DEG",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> deg(Field<? extends Number> field) {
         return new Degrees(nullSafe(field));
     }
@@ -6228,6 +7708,11 @@ public class DSL {
      * @see #rad(Field)
      */
     @Support
+    @Transition(
+        name = "RAD",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> rad(Number value) {
         return rad(Utils.field(value));
     }
@@ -6240,6 +7725,11 @@ public class DSL {
      * <code><pre>[field] * PI / 180</pre></code>
      */
     @Support
+    @Transition(
+        name = "RAD",
+        args = "Field",
+        to = "MathFunction"
+    )
     public static Field<BigDecimal> rad(Field<? extends Number> field) {
         return new Radians(nullSafe(field));
     }
@@ -6253,6 +7743,10 @@ public class DSL {
      * along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "LEVEL",
+        to = "ConnectByExpression"
+    )
     public static Field<Integer> level() {
         return field("level", Integer.class);
     }
@@ -6262,6 +7756,10 @@ public class DSL {
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "CONNECT_BY_ISCYCLE",
+        to = "ConnectByExpression"
+    )
     public static Field<Boolean> connectByIsCycle() {
         return field("connect_by_iscycle", Boolean.class);
     }
@@ -6271,6 +7769,10 @@ public class DSL {
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "CONNECT_BY_ISLEAF",
+        to = "ConnectByExpression"
+    )
     public static Field<Boolean> connectByIsLeaf() {
         return field("connect_by_isleaf", Boolean.class);
     }
@@ -6280,6 +7782,11 @@ public class DSL {
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "CONNECT_BY_ROOT",
+        args = "Field",
+        to = "ConnectByExpression"
+    )
     public static <T> Field<T> connectByRoot(Field<T> field) {
         return field("{connect_by_root} {0}", nullSafe(field).getDataType(), field);
     }
@@ -6290,6 +7797,14 @@ public class DSL {
      * along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "SYS_CONNECT_BY_PATH",
+        args = {
+            "Field",
+            "String"
+        },
+        to = "ConnectByExpression"
+    )
     public static Field<String> sysConnectByPath(Field<?> field, String separator) {
         return field("{sys_connect_by_path}({0}, {1})", String.class, field, inline(separator));
     }
@@ -6299,6 +7814,11 @@ public class DSL {
      * (to be used along with <code>CONNECT BY</code> clauses).
      */
     @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "PRIOR",
+        args = "Field",
+        to = "ConnectByExpression"
+    )
     public static <T> Field<T> prior(Field<T> field) {
         return field("{prior} {0}", nullSafe(field).getDataType(), field);
     }
@@ -6311,6 +7831,9 @@ public class DSL {
      * Get the count(*) function.
      */
     @Support
+    @Transition(
+        name = "COUNT(*)"
+    )
     public static AggregateFunction<Integer> count() {
         return count(field("*", Integer.class));
     }
@@ -6319,6 +7842,10 @@ public class DSL {
      * Get the count(field) function.
      */
     @Support
+    @Transition(
+        name = "COUNT",
+        args = "Field"
+    )
     public static AggregateFunction<Integer> count(Field<?> field) {
         return new Function<Integer>("count", SQLDataType.INTEGER, nullSafe(field));
     }
@@ -6327,6 +7854,10 @@ public class DSL {
      * Get the count(distinct field) function.
      */
     @Support
+    @Transition(
+        name = "COUNT DISTINCT",
+        args = "Field"
+    )
     public static AggregateFunction<Integer> countDistinct(Field<?> field) {
         return new Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(field));
     }
@@ -6337,6 +7868,10 @@ public class DSL {
      * Some dialects support several expressions in the <code>COUNT(DISTINCT expr1, expr2)</code> aggregate function.
      */
     @Support({ HSQLDB, MYSQL })
+    @Transition(
+        name = "COUNT DISTINCT",
+        args = "Field+"
+    )
     public static AggregateFunction<Integer> countDistinct(Field<?>... fields) {
         return new Function<Integer>("count", true, SQLDataType.INTEGER, nullSafe(fields));
     }
@@ -6345,6 +7880,10 @@ public class DSL {
      * Get the max value over a field: max(field).
      */
     @Support
+    @Transition(
+        name = "MAX",
+        args = "Field"
+    )
     public static <T> AggregateFunction<T> max(Field<T> field) {
         return new Function<T>("max", nullSafeDataType(field), nullSafe(field));
     }
@@ -6353,6 +7892,10 @@ public class DSL {
      * Get the max value over a field: max(distinct field).
      */
     @Support
+    @Transition(
+        name = "MAX DISTINCT",
+        args = "Field"
+    )
     public static <T> AggregateFunction<T> maxDistinct(Field<T> field) {
         return new Function<T>("max", true, nullSafeDataType(field), nullSafe(field));
     }
@@ -6361,6 +7904,10 @@ public class DSL {
      * Get the min value over a field: min(field).
      */
     @Support
+    @Transition(
+        name = "MIN",
+        args = "Field"
+    )
     public static <T> AggregateFunction<T> min(Field<T> field) {
         return new Function<T>("min", nullSafeDataType(field), nullSafe(field));
     }
@@ -6369,6 +7916,10 @@ public class DSL {
      * Get the min value over a field: min(distinct field).
      */
     @Support
+    @Transition(
+        name = "MIN DISTINCT",
+        args = "Field"
+    )
     public static <T> AggregateFunction<T> minDistinct(Field<T> field) {
         return new Function<T>("min", true, nullSafeDataType(field), nullSafe(field));
     }
@@ -6377,6 +7928,10 @@ public class DSL {
      * Get the sum over a numeric field: sum(field).
      */
     @Support
+    @Transition(
+        name = "SUM",
+        args = "Field"
+    )
     public static AggregateFunction<BigDecimal> sum(Field<? extends Number> field) {
         return new Function<BigDecimal>("sum", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6385,6 +7940,10 @@ public class DSL {
      * Get the sum over a numeric field: sum(distinct field).
      */
     @Support
+    @Transition(
+        name = "SUM DISTINCT",
+        args = "Field"
+    )
     public static AggregateFunction<BigDecimal> sumDistinct(Field<? extends Number> field) {
         return new Function<BigDecimal>("sum", true, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6393,6 +7952,10 @@ public class DSL {
      * Get the average over a numeric field: avg(field).
      */
     @Support
+    @Transition(
+        name = "AVG",
+        args = "Field"
+    )
     public static AggregateFunction<BigDecimal> avg(Field<? extends Number> field) {
         return new Function<BigDecimal>("avg", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6401,6 +7964,10 @@ public class DSL {
      * Get the average over a numeric field: avg(distinct field).
      */
     @Support
+    @Transition(
+        name = "AVG DISTINCT",
+        args = "Field"
+    )
     public static AggregateFunction<BigDecimal> avgDistinct(Field<? extends Number> field) {
         return new Function<BigDecimal>("avg", true, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6409,6 +7976,11 @@ public class DSL {
      * Get the median over a numeric field: median(field).
      */
     @Support({ HSQLDB, ORACLE, SYBASE })
+    @Transition(
+        name = "MEDIAN",
+        args = "Field",
+        to = "StatisticalFunction"
+    )
     public static AggregateFunction<BigDecimal> median(Field<? extends Number> field) {
         return new Function<BigDecimal>("median", SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6417,6 +7989,11 @@ public class DSL {
      * Get the population standard deviation of a numeric field: stddev_pop(field).
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "STDDEV_POP",
+        args = "Field",
+        to = "StatisticalFunction"
+    )
     public static AggregateFunction<BigDecimal> stddevPop(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.STDDEV_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6425,6 +8002,11 @@ public class DSL {
      * Get the sample standard deviation of a numeric field: stddev_samp(field).
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "STDDEV_SAMP",
+        args = "Field",
+        to = "StatisticalFunction"
+    )
     public static AggregateFunction<BigDecimal> stddevSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.STDDEV_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6433,6 +8015,11 @@ public class DSL {
      * Get the population variance of a numeric field: var_pop(field).
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "VAR_POP",
+        args = "Field",
+        to = "StatisticalFunction"
+    )
     public static AggregateFunction<BigDecimal> varPop(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_POP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6441,6 +8028,11 @@ public class DSL {
      * Get the sample variance of a numeric field: var_samp(field).
      */
     @Support({ ASE, CUBRID, DB2, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "VAR_SAMP",
+        args = "Field",
+        to = "StatisticalFunction"
+    )
     public static AggregateFunction<BigDecimal> varSamp(Field<? extends Number> field) {
         return new Function<BigDecimal>(Term.VAR_SAMP, SQLDataType.NUMERIC, nullSafe(field));
     }
@@ -6456,6 +8048,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_SLOPE",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrSlope(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_slope", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6471,6 +8071,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_INTERCEPT",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrIntercept(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_intercept", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6486,6 +8094,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_COUNT",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrCount(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_count", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6501,6 +8117,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_R2",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrR2(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_r2", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6516,6 +8140,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_AVGX",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrAvgX(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_avgx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6531,6 +8163,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_AVGY",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrAvgY(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_avgy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6546,6 +8186,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_SXX",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrSXX(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_sxx", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6561,6 +8209,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_SYY",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrSYY(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_syy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6576,6 +8232,14 @@ public class DSL {
      * window functions.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "REGR_SXY",
+        args = {
+            "Field",
+            "Field"
+        },
+        to = "LinearRegressionFunction"
+    )
     public static AggregateFunction<BigDecimal> regrSXY(Field<? extends Number> y, Field<? extends Number> x) {
         return new Function<BigDecimal>("regr_sxy", SQLDataType.NUMERIC, nullSafe(y), nullSafe(x));
     }
@@ -6598,6 +8262,10 @@ public class DSL {
      * @see #groupConcat(Field)
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Transition(
+        name = "LISTAGG",
+        args = "Field"
+    )
     public static OrderedAggregateFunction<String> listAgg(Field<?> field) {
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field));
     }
@@ -6620,6 +8288,13 @@ public class DSL {
      * @see #groupConcat(Field)
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Transition(
+        name = "LISTAGG",
+        args = {
+            "Field",
+            "String"
+        }
+    )
     public static OrderedAggregateFunction<String> listAgg(Field<?> field, String separator) {
         return new Function<String>(Term.LIST_AGG, SQLDataType.VARCHAR, nullSafe(field), inline(separator));
     }
@@ -6646,6 +8321,10 @@ public class DSL {
      * @see #listAgg(Field)
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Transition(
+        name = "GROUP_CONCAT",
+        args = "Field"
+    )
     public static GroupConcatOrderByStep groupConcat(Field<?> field) {
         return new GroupConcat(nullSafe(field));
     }
@@ -6670,6 +8349,10 @@ public class DSL {
      * @see #listAgg(Field)
      */
     @Support({ CUBRID, H2, HSQLDB, MYSQL, POSTGRES, SYBASE })
+    @Transition(
+        name = "GROUP_CONCAT DISTINCT",
+        args = "Field"
+    )
     public static GroupConcatOrderByStep groupConcatDistinct(Field<?> field) {
         return new GroupConcat(nullSafe(field), true);
     }
@@ -6691,6 +8374,9 @@ public class DSL {
      * <code>ROWNUM()</code>
      */
     @Support({ CUBRID, DB2, DERBY, H2, HSQLDB, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ROW_NUMBER"
+    )
     public static WindowOverStep<Integer> rowNumber() {
         return new Function<Integer>(ROW_NUMBER, SQLDataType.INTEGER);
     }
@@ -6702,6 +8388,9 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "RANK"
+    )
     public static WindowOverStep<Integer> rank() {
         return new Function<Integer>("rank", SQLDataType.INTEGER);
     }
@@ -6713,6 +8402,9 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "DENSE_RANK"
+    )
     public static WindowOverStep<Integer> denseRank() {
         return new Function<Integer>("dense_rank", SQLDataType.INTEGER);
     }
@@ -6724,6 +8416,9 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "PERCENT_RANK"
+    )
     public static WindowOverStep<BigDecimal> percentRank() {
         return new Function<BigDecimal>("percent_rank", SQLDataType.NUMERIC);
     }
@@ -6735,6 +8430,9 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "CUME_DIST"
+    )
     public static WindowOverStep<BigDecimal> cumeDist() {
         return new Function<BigDecimal>("cume_dist", SQLDataType.NUMERIC);
     }
@@ -6746,6 +8444,10 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, POSTGRES, ORACLE, SQLSERVER })
+    @Transition(
+        name = "NTILE",
+        args = "Integer"
+    )
     public static WindowOverStep<Integer> ntile(int number) {
         return new Function<Integer>("ntile", SQLDataType.INTEGER, inline(number));
     }
@@ -6757,6 +8459,10 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "FIRST_VALUE",
+        args = "Field"
+    )
     public static <T> WindowIgnoreNullsStep<T> firstValue(Field<T> field) {
         return new Function<T>("first_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -6768,6 +8474,10 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Transition(
+        name = "LAST_VALUE",
+        args = "Field"
+    )
     public static <T> WindowIgnoreNullsStep<T> lastValue(Field<T> field) {
         return new Function<T>("last_value", nullSafeDataType(field), nullSafe(field));
     }
@@ -6779,6 +8489,10 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Transition(
+        name = "LEAD",
+        args = "Field"
+    )
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field));
     }
@@ -6790,6 +8504,13 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Transition(
+        name = "LEAD",
+        args = {
+            "Field",
+            "Integer"
+        }
+    )
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), inline(offset));
     }
@@ -6803,6 +8524,14 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Transition(
+        name = "LEAD",
+        args = {
+            "Field",
+            "Integer",
+            "Object"
+        }
+    )
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, T defaultValue) {
         return lead(nullSafe(field), offset, Utils.field(defaultValue));
     }
@@ -6816,6 +8545,14 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Transition(
+        name = "LEAD",
+        args = {
+            "Field",
+            "Integer",
+            "Field"
+        }
+    )
     public static <T> WindowIgnoreNullsStep<T> lead(Field<T> field, int offset, Field<T> defaultValue) {
         return new Function<T>("lead", nullSafeDataType(field), nullSafe(field), inline(offset), nullSafe(defaultValue));
     }
@@ -6827,6 +8564,10 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Transition(
+        name = "LAG",
+        args = "Field"
+    )
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field));
     }
@@ -6838,6 +8579,13 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Transition(
+        name = "LAG",
+        args = {
+            "Field",
+            "Integer"
+        }
+    )
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), inline(offset));
     }
@@ -6851,6 +8599,14 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Transition(
+        name = "LAG",
+        args = {
+            "Field",
+            "Integer",
+            "Object"
+        }
+    )
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, T defaultValue) {
         return lag(nullSafe(field), offset, Utils.field(defaultValue));
     }
@@ -6864,6 +8620,14 @@ public class DSL {
      * Server and Sybase.
      */
     @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Transition(
+        name = "LAG",
+        args = {
+            "Field",
+            "Integer",
+            "Field"
+        }
+    )
     public static <T> WindowIgnoreNullsStep<T> lag(Field<T> field, int offset, Field<T> defaultValue) {
         return new Function<T>("lag", nullSafeDataType(field), nullSafe(field), inline(offset), nullSafe(defaultValue));
     }
@@ -7240,6 +9004,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1> Row1<T1> row(T1 t1) {
         return row(Utils.field(t1));
     }
@@ -7253,6 +9021,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2> Row2<T1, T2> row(T1 t1, T2 t2) {
         return row(Utils.field(t1), Utils.field(t2));
     }
@@ -7266,6 +9038,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3> Row3<T1, T2, T3> row(T1 t1, T2 t2, T3 t3) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3));
     }
@@ -7279,6 +9055,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(T1 t1, T2 t2, T3 t3, T4 t4) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4));
     }
@@ -7292,6 +9072,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5));
     }
@@ -7305,6 +9089,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6));
     }
@@ -7318,6 +9106,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7));
     }
@@ -7331,6 +9123,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8));
     }
@@ -7344,6 +9140,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9));
     }
@@ -7357,6 +9157,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10));
     }
@@ -7370,6 +9174,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11));
     }
@@ -7383,6 +9191,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12));
     }
@@ -7396,6 +9208,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13));
     }
@@ -7409,6 +9225,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14));
     }
@@ -7422,6 +9242,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15));
     }
@@ -7435,6 +9259,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16));
     }
@@ -7448,6 +9276,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17));
     }
@@ -7461,6 +9293,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18));
     }
@@ -7474,6 +9310,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19));
     }
@@ -7487,6 +9327,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20));
     }
@@ -7500,6 +9344,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20), Utils.field(t21));
     }
@@ -7513,6 +9361,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5, T6 t6, T7 t7, T8 t8, T9 t9, T10 t10, T11 t11, T12 t12, T13 t13, T14 t14, T15 t15, T16 t16, T17 t17, T18 t18, T19 t19, T20 t20, T21 t21, T22 t22) {
         return row(Utils.field(t1), Utils.field(t2), Utils.field(t3), Utils.field(t4), Utils.field(t5), Utils.field(t6), Utils.field(t7), Utils.field(t8), Utils.field(t9), Utils.field(t10), Utils.field(t11), Utils.field(t12), Utils.field(t13), Utils.field(t14), Utils.field(t15), Utils.field(t16), Utils.field(t17), Utils.field(t18), Utils.field(t19), Utils.field(t20), Utils.field(t21), Utils.field(t22));
     }
@@ -7541,6 +9393,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1> Row1<T1> row(Field<T1> t1) {
         return new RowImpl(t1);
     }
@@ -7554,6 +9410,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2> Row2<T1, T2> row(Field<T1> t1, Field<T2> t2) {
         return new RowImpl(t1, t2);
     }
@@ -7567,6 +9427,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3> Row3<T1, T2, T3> row(Field<T1> t1, Field<T2> t2, Field<T3> t3) {
         return new RowImpl(t1, t2, t3);
     }
@@ -7580,6 +9444,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4> Row4<T1, T2, T3, T4> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4) {
         return new RowImpl(t1, t2, t3, t4);
     }
@@ -7593,6 +9461,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5> Row5<T1, T2, T3, T4, T5> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5) {
         return new RowImpl(t1, t2, t3, t4, t5);
     }
@@ -7606,6 +9478,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6> Row6<T1, T2, T3, T4, T5, T6> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6) {
         return new RowImpl(t1, t2, t3, t4, t5, t6);
     }
@@ -7619,6 +9495,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7> Row7<T1, T2, T3, T4, T5, T6, T7> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7);
     }
@@ -7632,6 +9512,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Row8<T1, T2, T3, T4, T5, T6, T7, T8> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8);
     }
@@ -7645,6 +9529,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9);
     }
@@ -7658,6 +9546,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10);
     }
@@ -7671,6 +9563,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11);
     }
@@ -7684,6 +9580,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
     }
@@ -7697,6 +9597,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13);
     }
@@ -7710,6 +9614,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14);
     }
@@ -7723,6 +9631,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15);
     }
@@ -7736,6 +9648,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16);
     }
@@ -7749,6 +9665,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
     }
@@ -7762,6 +9682,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18);
     }
@@ -7775,6 +9699,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19);
     }
@@ -7788,6 +9716,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20);
     }
@@ -7801,6 +9733,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21);
     }
@@ -7814,6 +9750,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "ROW",
+        args = "Field+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row(Field<T1> t1, Field<T2> t2, Field<T3> t3, Field<T4> t4, Field<T5> t5, Field<T6> t6, Field<T7> t7, Field<T8> t8, Field<T9> t9, Field<T10> t10, Field<T11> t11, Field<T12> t12, Field<T13> t13, Field<T14> t14, Field<T15> t15, Field<T16> t16, Field<T17> t17, Field<T18> t18, Field<T19> t19, Field<T20> t20, Field<T21> t21, Field<T22> t22) {
         return new RowImpl(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18, t19, t20, t21, t22);
     }
@@ -7865,6 +9805,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1> Table<Record1<T1>> values(Row1<T1>... rows) {
         return new Values<Record1<T1>>(rows).as("v", "c1");
     }
@@ -7897,6 +9841,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2> Table<Record2<T1, T2>> values(Row2<T1, T2>... rows) {
         return new Values<Record2<T1, T2>>(rows).as("v", "c1", "c2");
     }
@@ -7929,6 +9877,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3> Table<Record3<T1, T2, T3>> values(Row3<T1, T2, T3>... rows) {
         return new Values<Record3<T1, T2, T3>>(rows).as("v", "c1", "c2", "c3");
     }
@@ -7961,6 +9913,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4> Table<Record4<T1, T2, T3, T4>> values(Row4<T1, T2, T3, T4>... rows) {
         return new Values<Record4<T1, T2, T3, T4>>(rows).as("v", "c1", "c2", "c3", "c4");
     }
@@ -7993,6 +9949,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5> Table<Record5<T1, T2, T3, T4, T5>> values(Row5<T1, T2, T3, T4, T5>... rows) {
         return new Values<Record5<T1, T2, T3, T4, T5>>(rows).as("v", "c1", "c2", "c3", "c4", "c5");
     }
@@ -8025,6 +9985,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6> Table<Record6<T1, T2, T3, T4, T5, T6>> values(Row6<T1, T2, T3, T4, T5, T6>... rows) {
         return new Values<Record6<T1, T2, T3, T4, T5, T6>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6");
     }
@@ -8057,6 +10021,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7> Table<Record7<T1, T2, T3, T4, T5, T6, T7>> values(Row7<T1, T2, T3, T4, T5, T6, T7>... rows) {
         return new Values<Record7<T1, T2, T3, T4, T5, T6, T7>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7");
     }
@@ -8089,6 +10057,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8> Table<Record8<T1, T2, T3, T4, T5, T6, T7, T8>> values(Row8<T1, T2, T3, T4, T5, T6, T7, T8>... rows) {
         return new Values<Record8<T1, T2, T3, T4, T5, T6, T7, T8>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8");
     }
@@ -8121,6 +10093,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9> Table<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> values(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9>... rows) {
         return new Values<Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9");
     }
@@ -8153,6 +10129,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> Table<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> values(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>... rows) {
         return new Values<Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10");
     }
@@ -8185,6 +10165,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> Table<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> values(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>... rows) {
         return new Values<Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11");
     }
@@ -8217,6 +10201,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> Table<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> values(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>... rows) {
         return new Values<Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12");
     }
@@ -8249,6 +10237,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> Table<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> values(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>... rows) {
         return new Values<Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13");
     }
@@ -8281,6 +10273,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> Table<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> values(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>... rows) {
         return new Values<Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14");
     }
@@ -8313,6 +10309,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> Table<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> values(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>... rows) {
         return new Values<Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15");
     }
@@ -8345,6 +10345,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> Table<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> values(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>... rows) {
         return new Values<Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16");
     }
@@ -8377,6 +10381,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> Table<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> values(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>... rows) {
         return new Values<Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17");
     }
@@ -8409,6 +10417,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> Table<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> values(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>... rows) {
         return new Values<Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18");
     }
@@ -8441,6 +10453,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> Table<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> values(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>... rows) {
         return new Values<Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19");
     }
@@ -8473,6 +10489,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> Table<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> values(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>... rows) {
         return new Values<Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20");
     }
@@ -8505,6 +10525,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> Table<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> values(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>... rows) {
         return new Values<Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20", "c21");
     }
@@ -8537,6 +10561,10 @@ public class DSL {
      */
     @Generated("This method was generated using jOOQ-tools")
     @Support
+    @Transition(
+        name = "VALUES",
+        args = "Row+"
+    )
     public static <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> Table<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> values(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>... rows) {
         return new Values<Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>>(rows).as("v", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20", "c21", "c22");
     }
@@ -8592,6 +10620,10 @@ public class DSL {
      * @return A <code>0</code> literal as a <code>Field</code>
      */
     @Support
+    @Transition(
+        name = "ZERO",
+        to = "ConstantExpression"
+    )
     public static Field<Integer> zero() {
         return inline(0);
     }
@@ -8607,6 +10639,10 @@ public class DSL {
      * @return A <code>1</code> literal as a <code>Field</code>
      */
     @Support
+    @Transition(
+        name = "ONE",
+        to = "ConstantExpression"
+    )
     public static Field<Integer> one() {
         return inline(1);
     }
@@ -8620,6 +10656,10 @@ public class DSL {
      * @return A <code>2</code> literal as a <code>Field</code>
      */
     @Support
+    @Transition(
+        name = "TWO",
+        to = "ConstantExpression"
+    )
     public static Field<Integer> two() {
         return inline(2);
     }
@@ -8634,6 +10674,10 @@ public class DSL {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "PI",
+        to = "ConstantExpression"
+    )
     public static Field<BigDecimal> pi() {
         return new Pi();
     }
@@ -8648,6 +10692,10 @@ public class DSL {
      * </ul>
      */
     @Support
+    @Transition(
+        name = "E",
+        to = "ConstantExpression"
+    )
     public static Field<BigDecimal> e() {
         return new Euler();
     }
@@ -8662,6 +10710,10 @@ public class DSL {
      * This translates into any dialect
      */
     @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Transition(
+        name = "CURRENT_USER",
+        to = "SystemFunction"
+    )
     public static Field<String> currentUser() {
         return new CurrentUser();
     }

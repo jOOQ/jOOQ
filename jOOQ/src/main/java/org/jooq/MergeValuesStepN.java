@@ -45,6 +45,9 @@ import static org.jooq.SQLDialect.SYBASE;
 
 import java.util.Collection;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the H2-specific variant of the {@link Merge}'s DSL API.
  * <p>
@@ -59,24 +62,37 @@ import java.util.Collection;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeValuesStepN<R extends Record> {
 
     /**
      * Specify a <code>VALUES</code> clause
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "VALUES",
+        args = "Object+"
+    )
     Merge<R> values(Object... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "VALUES",
+        args = "Field+"
+    )
     Merge<R> values(Field<?>... values);
 
     /**
      * Specify a <code>VALUES</code> clause
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "VALUES",
+        args = "Field+"
+    )
     Merge<R> values(Collection<?> values);
 
     /**
@@ -90,5 +106,9 @@ public interface MergeValuesStepN<R extends Record> {
      * {@link DSLContext#mergeInto(Table, Collection)}
      */
     @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "SELECT",
+        args = "Select"
+    )
     Merge<R> select(Select<?> select);
 }

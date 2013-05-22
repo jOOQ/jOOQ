@@ -44,6 +44,9 @@ import static org.jooq.SQLDialect.POSTGRES;
 
 import javax.annotation.Generated;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Update}'s DSL API.
  * <p>
@@ -59,6 +62,7 @@ import javax.annotation.Generated;
  * @author Lukas Eder
  */
 @Generated("This class was generated using jOOQ-tools")
+@State
 public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
 
     /**
@@ -68,6 +72,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1> UpdateWhereStep<R> set(Row1<T1> row, Row1<T1> value);
 
     /**
@@ -77,6 +88,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2> UpdateWhereStep<R> set(Row2<T1, T2> row, Row2<T1, T2> value);
 
     /**
@@ -86,6 +104,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3> UpdateWhereStep<R> set(Row3<T1, T2, T3> row, Row3<T1, T2, T3> value);
 
     /**
@@ -95,6 +120,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4> UpdateWhereStep<R> set(Row4<T1, T2, T3, T4> row, Row4<T1, T2, T3, T4> value);
 
     /**
@@ -104,6 +136,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5> UpdateWhereStep<R> set(Row5<T1, T2, T3, T4, T5> row, Row5<T1, T2, T3, T4, T5> value);
 
     /**
@@ -113,6 +152,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6> UpdateWhereStep<R> set(Row6<T1, T2, T3, T4, T5, T6> row, Row6<T1, T2, T3, T4, T5, T6> value);
 
     /**
@@ -122,6 +168,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7> UpdateWhereStep<R> set(Row7<T1, T2, T3, T4, T5, T6, T7> row, Row7<T1, T2, T3, T4, T5, T6, T7> value);
 
     /**
@@ -131,6 +184,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8> UpdateWhereStep<R> set(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Row8<T1, T2, T3, T4, T5, T6, T7, T8> value);
 
     /**
@@ -140,6 +200,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateWhereStep<R> set(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row, Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> value);
 
     /**
@@ -149,6 +216,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateWhereStep<R> set(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row, Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> value);
 
     /**
@@ -158,6 +232,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateWhereStep<R> set(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row, Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> value);
 
     /**
@@ -167,6 +248,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateWhereStep<R> set(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row, Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> value);
 
     /**
@@ -176,6 +264,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateWhereStep<R> set(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row, Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> value);
 
     /**
@@ -185,6 +280,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateWhereStep<R> set(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row, Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> value);
 
     /**
@@ -194,6 +296,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateWhereStep<R> set(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row, Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> value);
 
     /**
@@ -203,6 +312,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateWhereStep<R> set(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row, Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> value);
 
     /**
@@ -212,6 +328,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateWhereStep<R> set(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row, Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> value);
 
     /**
@@ -221,6 +344,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateWhereStep<R> set(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row, Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> value);
 
     /**
@@ -230,6 +360,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateWhereStep<R> set(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row, Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> value);
 
     /**
@@ -239,6 +376,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateWhereStep<R> set(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row, Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> value);
 
     /**
@@ -248,6 +392,13 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateWhereStep<R> set(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row, Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> value);
 
     /**
@@ -257,138 +408,299 @@ public interface UpdateSetFirstStep<R extends Record> extends UpdateSetStep<R> {
      * value expressions aren't supported.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE, POSTGRES })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Row"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateWhereStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> value);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1> UpdateWhereStep<R> set(Row1<T1> row, Select<? extends Record1<T1>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2> UpdateWhereStep<R> set(Row2<T1, T2> row, Select<? extends Record2<T1, T2>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3> UpdateWhereStep<R> set(Row3<T1, T2, T3> row, Select<? extends Record3<T1, T2, T3>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4> UpdateWhereStep<R> set(Row4<T1, T2, T3, T4> row, Select<? extends Record4<T1, T2, T3, T4>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5> UpdateWhereStep<R> set(Row5<T1, T2, T3, T4, T5> row, Select<? extends Record5<T1, T2, T3, T4, T5>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6> UpdateWhereStep<R> set(Row6<T1, T2, T3, T4, T5, T6> row, Select<? extends Record6<T1, T2, T3, T4, T5, T6>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7> UpdateWhereStep<R> set(Row7<T1, T2, T3, T4, T5, T6, T7> row, Select<? extends Record7<T1, T2, T3, T4, T5, T6, T7>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8> UpdateWhereStep<R> set(Row8<T1, T2, T3, T4, T5, T6, T7, T8> row, Select<? extends Record8<T1, T2, T3, T4, T5, T6, T7, T8>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9> UpdateWhereStep<R> set(Row9<T1, T2, T3, T4, T5, T6, T7, T8, T9> row, Select<? extends Record9<T1, T2, T3, T4, T5, T6, T7, T8, T9>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> UpdateWhereStep<R> set(Row10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> row, Select<? extends Record10<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> UpdateWhereStep<R> set(Row11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> row, Select<? extends Record11<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> UpdateWhereStep<R> set(Row12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> row, Select<? extends Record12<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> UpdateWhereStep<R> set(Row13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> row, Select<? extends Record13<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> UpdateWhereStep<R> set(Row14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> row, Select<? extends Record14<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> UpdateWhereStep<R> set(Row15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> row, Select<? extends Record15<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> UpdateWhereStep<R> set(Row16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> row, Select<? extends Record16<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> UpdateWhereStep<R> set(Row17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> row, Select<? extends Record17<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> UpdateWhereStep<R> set(Row18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> row, Select<? extends Record18<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> UpdateWhereStep<R> set(Row19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> row, Select<? extends Record19<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> UpdateWhereStep<R> set(Row20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> row, Select<? extends Record20<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> UpdateWhereStep<R> set(Row21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> row, Select<? extends Record21<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21>> select);
 
     /**
      * Specify a multi-column set clause for the <code>UPDATE</code> statement.
      */
     @Support({ DB2, H2, HSQLDB, INGRES, ORACLE })
+    @Transition(
+        name = "SET",
+        args = {
+        	"Row",
+        	"Select"
+    	}
+    )
     <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> UpdateWhereStep<R> set(Row22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> row, Select<? extends Record22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>> select);
 
 }

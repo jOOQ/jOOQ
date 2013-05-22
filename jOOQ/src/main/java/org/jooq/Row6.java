@@ -36,6 +36,8 @@
 package org.jooq;
 
 import org.jooq.Comparator;
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
 
 import java.util.Collection;
 
@@ -51,6 +53,7 @@ import javax.annotation.Generated;
  * @author Lukas Eder
  */
 @Generated("This class was generated using jOOQ-tools")
+@State
 public interface Row6<T1, T2, T3, T4, T5, T6> extends Row {
 
     // ------------------------------------------------------------------------

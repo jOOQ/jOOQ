@@ -49,6 +49,9 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
+import org.jooq.api.annotation.Transition;
+
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
  * {@link Record} types.
@@ -91,6 +94,7 @@ import static org.jooq.SQLDialect.SYBASE;
  *
  * @author Lukas Eder
  */
+@State
 public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<R> {
 
     /**
@@ -102,6 +106,10 @@ public interface SelectOffsetStep<R extends Record> extends SelectForUpdateStep<
      * <code>SELECT</code> statements.
      */
     @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "OFFSET",
+        args = "Integer"
+    )
     SelectForUpdateStep<R> offset(int offset);
 
     /**

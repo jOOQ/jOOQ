@@ -42,6 +42,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import org.jooq.api.annotation.State;
 import org.jooq.impl.DSL;
 
 /**
@@ -63,6 +64,7 @@ import org.jooq.impl.DSL;
  *
  * @author Lukas Eder
  */
+@State
 public interface MergeOnConditionStep<R extends Record> extends MergeMatchedStep<R> {
 
     /**

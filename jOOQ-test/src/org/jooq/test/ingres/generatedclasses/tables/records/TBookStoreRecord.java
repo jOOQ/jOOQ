@@ -8,37 +8,23 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  *
  * A book store
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord> implements org.jooq.Record1<java.lang.String> {
 
-	private static final long serialVersionUID = 1707165063;
+	private static final long serialVersionUID = 423418438;
 
 	/**
 	 * Setter for <code>test.t_book_store.name</code>. The books store name
 	 */
 	public void setName(java.lang.String value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TBookStore.NAME, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_book_store.name</code>. The books store name
 	 */
 	public java.lang.String getName() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TBookStore.NAME);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>test.t_book_to_book_store</code> referencing this <code>test.t_book_store</code>
-	 */
-	public org.jooq.Result<org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord> fetchTBookToBookStoreList() {
-		return create()
-			.selectFrom(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.T_BOOK_TO_BOOK_STORE)
-			.where(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME.equal(getValue(org.jooq.test.ingres.generatedclasses.tables.TBookStore.NAME)))
-			.fetch();
+		return (java.lang.String) getValue(0);
 	}
 
 	// -------------------------------------------------------------------------
@@ -62,7 +48,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.String> fieldsRow() {
-		return org.jooq.impl.DSL.row(field1());
+		return (org.jooq.Row1) super.fieldsRow();
 	}
 
 	/**
@@ -70,7 +56,7 @@ public class TBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq
 	 */
 	@Override
 	public org.jooq.Row1<java.lang.String> valuesRow() {
-		return org.jooq.impl.DSL.row(value1());
+		return (org.jooq.Row1) super.valuesRow();
 	}
 
 	/**

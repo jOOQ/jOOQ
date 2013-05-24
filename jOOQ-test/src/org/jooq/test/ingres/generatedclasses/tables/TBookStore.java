@@ -8,10 +8,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
  *
  * A book store
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1299629079;
+	private static final long serialVersionUID = 1679363134;
 
 	/**
 	 * The singleton instance of <code>test.t_book_store</code>
@@ -29,7 +29,7 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.ingres.gen
 	/**
 	 * The column <code>test.t_book_store.name</code>. The books store name
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_STORE);
 
 	/**
 	 * No further instances allowed

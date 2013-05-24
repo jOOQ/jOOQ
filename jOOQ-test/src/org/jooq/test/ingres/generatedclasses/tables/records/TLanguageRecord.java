@@ -8,79 +8,65 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 571541095;
+	private static final long serialVersionUID = -1202108970;
 
 	/**
 	 * Setter for <code>test.t_language.cd</code>. The language ISO code
 	 */
 	public void setCd(java.lang.String value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.CD, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_language.cd</code>. The language ISO code
 	 */
 	public java.lang.String getCd() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.CD);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.t_language.description</code>. The language description
 	 */
 	public void setDescription(java.lang.String value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.DESCRIPTION, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_language.description</code>. The language description
 	 */
 	public java.lang.String getDescription() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.DESCRIPTION);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test.t_language.description_english</code>. 
 	 */
 	public void setDescriptionEnglish(java.lang.String value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_language.description_english</code>. 
 	 */
 	public java.lang.String getDescriptionEnglish() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.DESCRIPTION_ENGLISH);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>test.t_language.id</code>. The language ID
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.ID, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_language.id</code>. The language ID
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.ID);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>test.t_book</code> referencing this <code>test.t_language</code>
-	 */
-	public org.jooq.Result<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> fetchTBookList() {
-		return create()
-			.selectFrom(org.jooq.test.ingres.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.ingres.generatedclasses.tables.TBook.LANGUAGE_ID.equal(getValue(org.jooq.test.ingres.generatedclasses.tables.TLanguage.ID)))
-			.fetch();
+		return (java.lang.Integer) getValue(3);
 	}
 
 	// -------------------------------------------------------------------------
@@ -104,7 +90,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4());
+		return (org.jooq.Row4) super.fieldsRow();
 	}
 
 	/**
@@ -112,7 +98,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Row4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4());
+		return (org.jooq.Row4) super.valuesRow();
 	}
 
 	/**

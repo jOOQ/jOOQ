@@ -8,10 +8,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
  *
  * An entity holding books
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1169979217;
+	private static final long serialVersionUID = -95713706;
 
 	/**
 	 * The singleton instance of <code>test.t_book</code>
@@ -49,7 +49,7 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generate
 	/**
 	 * The column <code>test.t_book.title</code>. The book's title
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK);
 
 	/**
 	 * The column <code>test.t_book.published_in</code>. The year the book was published in

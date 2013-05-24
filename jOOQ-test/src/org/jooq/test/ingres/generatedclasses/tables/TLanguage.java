@@ -8,10 +8,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -734628008;
+	private static final long serialVersionUID = 843283841;
 
 	/**
 	 * The singleton instance of <code>test.t_language</code>
@@ -29,17 +29,17 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.ingres.gene
 	/**
 	 * The column <code>test.t_language.cd</code>. The language ISO code
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE);
 
 	/**
 	 * The column <code>test.t_language.description</code>. The language description
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>test.t_language.description_english</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCRIPTION_ENGLISH = createField("description_english", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>test.t_language.id</code>. The language ID

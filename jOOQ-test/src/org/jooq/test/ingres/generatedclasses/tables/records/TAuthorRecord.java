@@ -8,117 +8,93 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  *
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = 220697470;
+	private static final long serialVersionUID = 1255660622;
 
 	/**
 	 * Setter for <code>test.t_author.id</code>. The author ID
 	 */
 	public void setId(java.lang.Integer value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.ID, value);
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_author.id</code>. The author ID
 	 */
 	public java.lang.Integer getId() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.ID);
+		return (java.lang.Integer) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.t_author.first_name</code>. The author's first name
 	 */
 	public void setFirstName(java.lang.String value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.FIRST_NAME, value);
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_author.first_name</code>. The author's first name
 	 */
 	public java.lang.String getFirstName() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.FIRST_NAME);
+		return (java.lang.String) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test.t_author.last_name</code>. The author's last name
 	 */
 	public void setLastName(java.lang.String value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.LAST_NAME, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_author.last_name</code>. The author's last name
 	 */
 	public java.lang.String getLastName() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.LAST_NAME);
+		return (java.lang.String) getValue(2);
 	}
 
 	/**
 	 * Setter for <code>test.t_author.date_of_birth</code>. The author's date of birth
 	 */
 	public void setDateOfBirth(java.sql.Date value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.DATE_OF_BIRTH, value);
+		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_author.date_of_birth</code>. The author's date of birth
 	 */
 	public java.sql.Date getDateOfBirth() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.DATE_OF_BIRTH);
+		return (java.sql.Date) getValue(3);
 	}
 
 	/**
 	 * Setter for <code>test.t_author.year_of_birth</code>. The author's year of birth
 	 */
 	public void setYearOfBirth(java.lang.Integer value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH, value);
+		setValue(4, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_author.year_of_birth</code>. The author's year of birth
 	 */
 	public java.lang.Integer getYearOfBirth() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.YEAR_OF_BIRTH);
+		return (java.lang.Integer) getValue(4);
 	}
 
 	/**
 	 * Setter for <code>test.t_author.address</code>. The author's address
 	 */
 	public void setAddress(java.lang.String value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.ADDRESS, value);
+		setValue(5, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_author.address</code>. The author's address
 	 */
 	public java.lang.String getAddress() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.ADDRESS);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a list of <code>test.t_book</code> referencing this <code>test.t_author</code>
-	 */
-	public org.jooq.Result<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> fetchTBookListByAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.ingres.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.ingres.generatedclasses.tables.TBook.AUTHOR_ID.equal(getValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.ID)))
-			.fetch();
-	}
-
-	/**
-	 * Fetch a list of <code>test.t_book</code> referencing this <code>test.t_author</code>
-	 */
-	public org.jooq.Result<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> fetchTBookListByCoAuthorId() {
-		return create()
-			.selectFrom(org.jooq.test.ingres.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.ingres.generatedclasses.tables.TBook.CO_AUTHOR_ID.equal(getValue(org.jooq.test.ingres.generatedclasses.tables.TAuthor.ID)))
-			.fetch();
+		return (java.lang.String) getValue(5);
 	}
 
 	// -------------------------------------------------------------------------
@@ -142,7 +118,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> fieldsRow() {
-		return org.jooq.impl.DSL.row(field1(), field2(), field3(), field4(), field5(), field6());
+		return (org.jooq.Row6) super.fieldsRow();
 	}
 
 	/**
@@ -150,7 +126,7 @@ public class TAuthorRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	@Override
 	public org.jooq.Row6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> valuesRow() {
-		return org.jooq.impl.DSL.row(value1(), value2(), value3(), value4(), value5(), value6());
+		return (org.jooq.Row6) super.valuesRow();
 	}
 
 	/**

@@ -8,8 +8,8 @@ package org.jooq.test.ingres.generatedclasses;
  *
  * Convenience access to all tables in test
  */
-@java.lang.SuppressWarnings("all")
-public final class Tables {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Tables {
 
 	/**
 	 * The table test.t_639_numbers_table
@@ -57,6 +57,11 @@ public final class Tables {
 	public static final org.jooq.test.ingres.generatedclasses.tables.TDates T_DATES = org.jooq.test.ingres.generatedclasses.tables.TDates.T_DATES;
 
 	/**
+	 * The table test.t_exotic_types
+	 */
+	public static final org.jooq.test.ingres.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.ingres.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
+
+	/**
 	 * The table test.t_identity
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.TIdentity T_IDENTITY = org.jooq.test.ingres.generatedclasses.tables.TIdentity.T_IDENTITY;
@@ -77,6 +82,11 @@ public final class Tables {
 	public static final org.jooq.test.ingres.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.ingres.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
+	 * The table test.t_unsigned
+	 */
+	public static final org.jooq.test.ingres.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.ingres.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+
+	/**
 	 * The table test.v_author
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.VAuthor V_AUTHOR = org.jooq.test.ingres.generatedclasses.tables.VAuthor.V_AUTHOR;
@@ -90,6 +100,11 @@ public final class Tables {
 	 * The table test.v_library
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.VLibrary V_LIBRARY = org.jooq.test.ingres.generatedclasses.tables.VLibrary.V_LIBRARY;
+
+	/**
+	 * The table test.x_test_case_2025
+	 */
+	public static final org.jooq.test.ingres.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.ingres.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
 
 	/**
 	 * The table test.x_test_case_64_69
@@ -107,12 +122,7 @@ public final class Tables {
 	public static final org.jooq.test.ingres.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.ingres.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
 
 	/**
-	 * An unused table in the same schema.
+	 * An unused table in the same schema. Note: Ingres suddenly could not handle composite self-references anymore... CONSTRAINT fk_x_unused_self FOREIGN KEY(ID_REF, NAME_REF) REFERENCES X_UNUSED(ID, NAME)
 	 */
 	public static final org.jooq.test.ingres.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.ingres.generatedclasses.tables.XUnused.X_UNUSED;
-
-	/**
-	 * No further instances allowed
-	 */
-	private Tables() {}
 }

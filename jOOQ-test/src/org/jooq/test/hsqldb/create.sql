@@ -62,6 +62,7 @@ DROP TABLE IF EXISTS string/
 DROP TABLE IF EXISTS big_decimal/
 DROP TABLE IF EXISTS connection/
 DROP TABLE IF EXISTS prepared_statement/
+DROP TABLE IF EXISTS t_unsigned/
 DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
@@ -108,6 +109,14 @@ CREATE TABLE t_booleans (
   n_boolean int,
 
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_unsigned (
+  u_byte smallint,
+  u_short int,
+  u_int bigint,
+  u_long decimal(20)
 )
 /
 

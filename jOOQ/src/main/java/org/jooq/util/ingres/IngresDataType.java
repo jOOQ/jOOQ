@@ -47,6 +47,10 @@ import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * Supported data types for the {@link SQLDialect#INGRES} dialect
@@ -108,8 +112,12 @@ public class IngresDataType {
     // Compatibility types for supported SQLDialect.INGRES, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    public static final DataType<Boolean>    BIT                          = new DefaultDataType<Boolean>(SQLDialect.INGRES, SQLDataType.BIT, "boolean");
-    public static final DataType<BigDecimal> NUMERIC                      = new DefaultDataType<BigDecimal>(SQLDialect.INGRES, SQLDataType.NUMERIC, "decimal", "decimal(38, 19)");
+    public static final DataType<Boolean>     BIT                         = new DefaultDataType<Boolean>(SQLDialect.INGRES, SQLDataType.BIT, "boolean");
+    public static final DataType<BigDecimal>  NUMERIC                     = new DefaultDataType<BigDecimal>(SQLDialect.INGRES, SQLDataType.NUMERIC, "decimal", "decimal(38, 19)");
+    protected static final DataType<UByte>    __TINYINTUNSIGNED           = new DefaultDataType<UByte>(SQLDialect.INGRES, SQLDataType.TINYINTUNSIGNED, "smallint");
+    protected static final DataType<UShort>   __SMALLINTUNSIGNED          = new DefaultDataType<UShort>(SQLDialect.INGRES, SQLDataType.SMALLINTUNSIGNED, "integer");
+    protected static final DataType<UInteger> __INTEGERUNSIGNED           = new DefaultDataType<UInteger>(SQLDialect.INGRES, SQLDataType.INTEGERUNSIGNED, "bigint");
+    protected static final DataType<ULong>    __BIGINTUNSIGNED            = new DefaultDataType<ULong>(SQLDialect.INGRES, SQLDataType.BIGINTUNSIGNED, "decimal", "decimal(20)");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

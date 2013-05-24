@@ -47,6 +47,10 @@ import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * Supported data types for the {@link SQLDialect#DERBY} dialect
@@ -99,6 +103,10 @@ public class DerbyDataType {
     protected static final DataType<String>     __NVARCHAR              = new DefaultDataType<String>(SQLDialect.DERBY, SQLDataType.NVARCHAR, "varchar", "varchar(32672)");
     protected static final DataType<Byte>       __TINYINT               = new DefaultDataType<Byte>(SQLDialect.DERBY, SQLDataType.TINYINT, "smallint");
     protected static final DataType<byte[]>     __VARBINARY             = new DefaultDataType<byte[]>(SQLDialect.DERBY, SQLDataType.VARBINARY, "blob");
+    protected static final DataType<UByte>      __TINYINTUNSIGNED       = new DefaultDataType<UByte>(SQLDialect.DERBY, SQLDataType.TINYINTUNSIGNED, "smallint");
+    protected static final DataType<UShort>     __SMALLINTUNSIGNED      = new DefaultDataType<UShort>(SQLDialect.DERBY, SQLDataType.SMALLINTUNSIGNED, "int");
+    protected static final DataType<UInteger>   __INTEGERUNSIGNED       = new DefaultDataType<UInteger>(SQLDialect.DERBY, SQLDataType.INTEGERUNSIGNED, "bigint");
+    protected static final DataType<ULong>      __BIGINTUNSIGNED        = new DefaultDataType<ULong>(SQLDialect.DERBY, SQLDataType.BIGINTUNSIGNED, "decimal", "decimal(20)");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

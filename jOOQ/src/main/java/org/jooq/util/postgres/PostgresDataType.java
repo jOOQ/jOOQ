@@ -50,6 +50,10 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 
 /**
@@ -105,6 +109,10 @@ public class PostgresDataType {
     protected static final DataType<String>     __NVARCHAR              = new DefaultDataType<String>(SQLDialect.POSTGRES, SQLDataType.NVARCHAR, "varchar");
     protected static final DataType<Byte>       __TINYINT               = new DefaultDataType<Byte>(SQLDialect.POSTGRES, SQLDataType.TINYINT, "smallint");
     protected static final DataType<byte[]>     __VARBINARY             = new DefaultDataType<byte[]>(SQLDialect.POSTGRES, SQLDataType.VARBINARY, "bytea");
+    protected static final DataType<UByte>      __TINYINTUNSIGNED       = new DefaultDataType<UByte>(SQLDialect.POSTGRES, SQLDataType.TINYINTUNSIGNED, "smallint");
+    protected static final DataType<UShort>     __SMALLINTUNSIGNED      = new DefaultDataType<UShort>(SQLDialect.POSTGRES, SQLDataType.SMALLINTUNSIGNED, "int");
+    protected static final DataType<UInteger>   __INTEGERUNSIGNED       = new DefaultDataType<UInteger>(SQLDialect.POSTGRES, SQLDataType.INTEGERUNSIGNED, "bigint");
+    protected static final DataType<ULong>      __BIGINTUNSIGNED        = new DefaultDataType<ULong>(SQLDialect.POSTGRES, SQLDataType.BIGINTUNSIGNED, "decimal");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

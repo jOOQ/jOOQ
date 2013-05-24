@@ -68,6 +68,7 @@ import static org.jooq.test.oracle.generatedclasses.test.Tables.T_DATES;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_DIRECTORY;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.T_TRIGGERS;
+import static org.jooq.test.oracle.generatedclasses.test.Tables.T_UNSIGNED;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.V_AUTHOR;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.V_BOOK;
 import static org.jooq.test.oracle.generatedclasses.test.Tables.V_LIBRARY;
@@ -131,6 +132,7 @@ import org.jooq.test.oracle.generatedclasses.test.tables.records.TDatesRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TExoticTypesRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.TTriggersRecord;
+import org.jooq.test.oracle.generatedclasses.test.tables.records.TUnsignedRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_725LobTestRecord;
 import org.jooq.test.oracle.generatedclasses.test.tables.records.T_785Record;
@@ -185,7 +187,7 @@ public class OracleTest extends jOOQAbstractTest<
         TBooleansRecord,
         TDirectoryRecord,
         TTriggersRecord,
-        XUnusedRecord,
+        TUnsignedRecord,
         TExoticTypesRecord,
         XUnusedRecord,
         XUnusedRecord,
@@ -349,28 +351,28 @@ public class OracleTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<XUnusedRecord> TUnsigned() {
-        return null;
+    protected Table<TUnsignedRecord> TUnsigned() {
+        return T_UNSIGNED;
     }
 
     @Override
-    protected TableField<XUnusedRecord, UByte> TUnsigned_U_BYTE() {
-        return null;
+    protected TableField<TUnsignedRecord, UByte> TUnsigned_U_BYTE() {
+        return T_UNSIGNED.U_BYTE;
     }
 
     @Override
-    protected TableField<XUnusedRecord, UShort> TUnsigned_U_SHORT() {
-        return null;
+    protected TableField<TUnsignedRecord, UShort> TUnsigned_U_SHORT() {
+        return T_UNSIGNED.U_SHORT;
     }
 
     @Override
-    protected TableField<XUnusedRecord, UInteger> TUnsigned_U_INT() {
-        return null;
+    protected TableField<TUnsignedRecord, UInteger> TUnsigned_U_INT() {
+        return T_UNSIGNED.U_INT;
     }
 
     @Override
-    protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
-        return null;
+    protected TableField<TUnsignedRecord, ULong> TUnsigned_U_LONG() {
+        return T_UNSIGNED.U_LONG;
     }
 
     @Override

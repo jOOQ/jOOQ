@@ -43,6 +43,7 @@ DROP TABLE t_658_22/
 DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
+DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
 
 DROP TABLE multi_schema_unused.x_unused/
@@ -371,6 +372,14 @@ CREATE TABLE t_booleans (
   n_boolean number(7),
 
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_unsigned (
+  u_byte number(3),
+  u_short number(5),
+  u_int number(10),
+  u_long number(20)
 )
 /
 

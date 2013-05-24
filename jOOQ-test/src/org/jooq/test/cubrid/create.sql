@@ -32,6 +32,7 @@ DROP TABLE t_658_32/
 DROP TABLE t_725_lob_test/
 DROP TABLE t_785/
 DROP TABLE t_959/
+DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
 DROP TABLE t_identity/
 DROP TABLE t_identity_pk/
@@ -89,6 +90,14 @@ CREATE TABLE t_959 (
 	                 'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
 	                 'transient', 'true', 'try', 'void', 'volatile', 'while'),
   special_characters enum('enum(', '(', ')', ',', '''', ')enum')
+)
+/
+
+CREATE TABLE t_unsigned (
+  u_byte smallint,
+  u_short int,
+  u_int bigint,
+  u_long decimal(20)
 )
 /
 

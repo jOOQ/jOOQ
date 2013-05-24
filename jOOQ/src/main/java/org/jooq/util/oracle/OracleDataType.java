@@ -49,6 +49,10 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 
 /**
@@ -101,12 +105,16 @@ public class OracleDataType {
     protected static final DataType<Time>      __TIME                 = new DefaultDataType<Time>(SQLDialect.ORACLE, SQLDataType.TIME, "timestamp");
     protected static final DataType<Byte>      __TINYINT              = new DefaultDataType<Byte>(SQLDialect.ORACLE, SQLDataType.TINYINT, "number", "number(3)");
     protected static final DataType<byte[]>    __VARBINARY            = new DefaultDataType<byte[]>(SQLDialect.ORACLE, SQLDataType.VARBINARY, "blob");
+    protected static final DataType<UByte>     __TINYINTUNSIGNED      = new DefaultDataType<UByte>(SQLDialect.ORACLE, SQLDataType.TINYINTUNSIGNED, "number", "number(3)");
+    protected static final DataType<UShort>    __SMALLINTUNSIGNED     = new DefaultDataType<UShort>(SQLDialect.ORACLE, SQLDataType.SMALLINTUNSIGNED, "number", "number(5)");
+    protected static final DataType<UInteger>  __INTEGERUNSIGNED      = new DefaultDataType<UInteger>(SQLDialect.ORACLE, SQLDataType.INTEGERUNSIGNED, "number", "number(10)");
+    protected static final DataType<ULong>     __BIGINTUNSIGNED       = new DefaultDataType<ULong>(SQLDialect.ORACLE, SQLDataType.BIGINTUNSIGNED, "number", "number(20)");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DataType<BigInteger>   __BIGINTEGER        = new DefaultDataType<BigInteger>(SQLDialect.ORACLE, SQLDataType.DECIMAL_INTEGER, "number");
+    protected static final DataType<BigInteger> __BIGINTEGER          = new DefaultDataType<BigInteger>(SQLDialect.ORACLE, SQLDataType.DECIMAL_INTEGER, "number");
     protected static final DataType<UUID>       __UUID                = new DefaultDataType<UUID>(SQLDialect.ORACLE, SQLDataType.UUID, "varchar2", "varchar2(36)");
 
     // -------------------------------------------------------------------------

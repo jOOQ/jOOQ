@@ -34,6 +34,7 @@ DROP TABLE T_937/
 DROP TABLE "T_941"/
 DROP TABLE "t_941"/
 DROP TABLE T_943/
+DROP TABLE t_unsigned/
 DROP TABLE t_booleans/
 
 
@@ -68,6 +69,14 @@ CREATE TABLE t_booleans (
   n_boolean int,
 
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_unsigned (
+  u_byte smallint,
+  u_short int,
+  u_int bigint,
+  u_long varchar(20)
 )
 /
 

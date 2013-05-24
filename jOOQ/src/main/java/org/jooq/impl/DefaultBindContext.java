@@ -70,7 +70,10 @@ import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.Convert;
 import org.jooq.tools.JooqLogger;
 import org.jooq.types.DayToSecond;
-import org.jooq.types.UNumber;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 
 /**
@@ -259,8 +262,17 @@ class DefaultBindContext extends AbstractBindContext {
                 stmt.setString(nextIndex(), value.toString());
             }
         }
-        else if (UNumber.class.isAssignableFrom(type)) {
-            stmt.setString(nextIndex(), value.toString());
+        else if (type == UByte.class) {
+            stmt.setShort(nextIndex(), ((UByte) value).shortValue());
+        }
+        else if (type == UShort.class) {
+            stmt.setInt(nextIndex(), ((UShort) value).intValue());
+        }
+        else if (type == UInteger.class) {
+            stmt.setLong(nextIndex(), ((UInteger) value).longValue());
+        }
+        else if (type == ULong.class) {
+            stmt.setBigDecimal(nextIndex(), new BigDecimal(value.toString()));
         }
         else if (type == UUID.class) {
             switch (dialect) {

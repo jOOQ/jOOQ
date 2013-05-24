@@ -303,6 +303,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @Test
     public void testKeepRSWithUpdateOnChangeLazy() throws Exception {
         switch (dialect()) {
+            // There's a critical bug in Derby. When this test is executed, the
+            // connection is killed
+            // https://issues.apache.org/jira/browse/DERBY-6228
+            case DERBY:
             case SQLITE:
                 log.info("SKIPPING", "KeepResultSet tests");
                 return;

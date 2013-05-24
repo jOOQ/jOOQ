@@ -46,6 +46,10 @@ import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * Supported data types for the {@link SQLDialect#SQLSERVER} dialect
@@ -59,7 +63,7 @@ public class SQLServerDataType {
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<Byte>       TINYINT          = new DefaultDataType<Byte>(SQLDialect.SQLSERVER, SQLDataType.TINYINT, "tinyint");
+    public static final DataType<UByte>      TINYINT          = new DefaultDataType<UByte>(SQLDialect.SQLSERVER, SQLDataType.TINYINTUNSIGNED, "tinyint");
     public static final DataType<Short>      SMALLINT         = new DefaultDataType<Short>(SQLDialect.SQLSERVER, SQLDataType.SMALLINT, "smallint");
     public static final DataType<Integer>    INT              = new DefaultDataType<Integer>(SQLDialect.SQLSERVER, SQLDataType.INTEGER, "int");
     public static final DataType<Long>       BIGINT           = new DefaultDataType<Long>(SQLDialect.SQLSERVER, SQLDataType.BIGINT, "bigint");
@@ -91,12 +95,16 @@ public class SQLServerDataType {
     protected static final DataType<String>  __LONGVARCHAR    = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGVARCHAR, "varchar");
     protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NCLOB, "text");
     protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGNVARCHAR, "varchar");
+    protected static final DataType<Byte>    __BYTE           = new DefaultDataType<Byte>(SQLDialect.SQLSERVER, SQLDataType.TINYINT, "signed tinyint");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DataType<BigInteger> __BIGINTEGER  = new DefaultDataType<BigInteger>(SQLDialect.SQLSERVER, SQLDataType.DECIMAL_INTEGER, "numeric");
+    protected static final DataType<BigInteger> __BIGINTEGER       = new DefaultDataType<BigInteger>(SQLDialect.SQLSERVER, SQLDataType.DECIMAL_INTEGER, "numeric");
+    protected static final DataType<UShort>     __SMALLINTUNSIGNED = new DefaultDataType<UShort>(SQLDialect.SQLSERVER, SQLDataType.SMALLINTUNSIGNED, "int");
+    protected static final DataType<UInteger>   __INTEGERUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.SQLSERVER, SQLDataType.INTEGERUNSIGNED, "bigint");
+    protected static final DataType<ULong>      __BIGINTUNSIGNED   = new DefaultDataType<ULong>(SQLDialect.SQLSERVER, SQLDataType.BIGINTUNSIGNED, "numeric");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

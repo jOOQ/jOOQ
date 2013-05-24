@@ -35,16 +35,15 @@
  */
 package org.jooq.util.ingres;
 
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.trim;
 import static org.jooq.util.ingres.ingres.Tables.IICONSTRAINTS;
-import static org.jooq.util.ingres.ingres.Tables.IICONSTRAINT_INDEXES;
 import static org.jooq.util.ingres.ingres.Tables.IIDB_COMMENTS;
-import static org.jooq.util.ingres.ingres.Tables.IIINDEXES;
-import static org.jooq.util.ingres.ingres.Tables.IIINDEX_COLUMNS;
 import static org.jooq.util.ingres.ingres.Tables.IIREF_CONSTRAINTS;
 import static org.jooq.util.ingres.ingres.Tables.IISCHEMA;
 import static org.jooq.util.ingres.ingres.Tables.IISEQUENCES;
 import static org.jooq.util.ingres.ingres.Tables.IITABLES;
+import static org.jooq.util.ingres.ingres.tables.Iikeys.IIKEYS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -70,11 +69,9 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
-import org.jooq.util.ingres.ingres.tables.IiconstraintIndexes;
 import org.jooq.util.ingres.ingres.tables.Iiconstraints;
 import org.jooq.util.ingres.ingres.tables.IidbComments;
-import org.jooq.util.ingres.ingres.tables.IiindexColumns;
-import org.jooq.util.ingres.ingres.tables.Iiindexes;
+import org.jooq.util.ingres.ingres.tables.Iikeys;
 import org.jooq.util.ingres.ingres.tables.IirefConstraints;
 import org.jooq.util.ingres.ingres.tables.Iischema;
 import org.jooq.util.ingres.ingres.tables.Iisequences;
@@ -96,7 +93,7 @@ public class IngresDatabase extends AbstractDatabase {
             SchemaDefinition schema = getSchema(record.getValue(trim(Iiconstraints.SCHEMA_NAME)));
             String key = record.getValue(trim(Iiconstraints.CONSTRAINT_NAME));
             String tableName = record.getValue(trim(Iiconstraints.TABLE_NAME));
-            String columnName = record.getValue(trim(IiindexColumns.COLUMN_NAME));
+            String columnName = record.getValue(trim(Iikeys.COLUMN_NAME));
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -111,7 +108,7 @@ public class IngresDatabase extends AbstractDatabase {
             SchemaDefinition schema = getSchema(record.getValue(trim(Iiconstraints.SCHEMA_NAME)));
             String key = record.getValue(trim(Iiconstraints.CONSTRAINT_NAME));
             String tableName = record.getValue(trim(Iiconstraints.TABLE_NAME));
-            String columnName = record.getValue(trim(IiindexColumns.COLUMN_NAME));
+            String columnName = record.getValue(trim(Iikeys.COLUMN_NAME));
 
             TableDefinition table = getTable(schema, tableName);
             if (table != null) {
@@ -125,24 +122,18 @@ public class IngresDatabase extends AbstractDatabase {
                     trim(Iiconstraints.SCHEMA_NAME),
                     trim(Iiconstraints.TABLE_NAME),
                     trim(Iiconstraints.CONSTRAINT_NAME),
-                    trim(IiindexColumns.COLUMN_NAME))
+                    trim(Iikeys.COLUMN_NAME))
                 .from(IICONSTRAINTS)
-                .join(IICONSTRAINT_INDEXES)
-                .on(Iiconstraints.CONSTRAINT_NAME.equal(IiconstraintIndexes.CONSTRAINT_NAME))
-                .and(Iiconstraints.SCHEMA_NAME.equal(IiconstraintIndexes.SCHEMA_NAME))
-                .join(IIINDEXES)
-                .on(IiconstraintIndexes.INDEX_NAME.equal(Iiindexes.INDEX_NAME))
-                .and(IiconstraintIndexes.SCHEMA_NAME.equal(Iiindexes.INDEX_OWNER))
-                .join(IIINDEX_COLUMNS)
-                .on(Iiindexes.INDEX_NAME.equal(IiindexColumns.INDEX_NAME))
-                .and(Iiindexes.INDEX_OWNER.equal(IiindexColumns.INDEX_OWNER))
+                .join(IIKEYS)
+                .on(row(Iiconstraints.CONSTRAINT_NAME, Iiconstraints.SCHEMA_NAME)
+                    .eq(Iikeys.CONSTRAINT_NAME, Iikeys.SCHEMA_NAME))
                 .where(Iiconstraints.SCHEMA_NAME.in(getInputSchemata()))
-                .and(Iiconstraints.CONSTRAINT_TYPE.equal(constraintType))
+                .and(Iiconstraints.CONSTRAINT_TYPE.trim().equal(constraintType))
                 .orderBy(
                     Iiconstraints.SCHEMA_NAME.asc(),
                     Iiconstraints.TABLE_NAME.asc(),
-                    IiindexColumns.INDEX_NAME.asc(),
-                    IiindexColumns.KEY_SEQUENCE.asc())
+                    Iiconstraints.CONSTRAINT_NAME.asc(),
+                    Iikeys.KEY_POSITION.asc())
                 .fetch();
     }
 
@@ -155,27 +146,21 @@ public class IngresDatabase extends AbstractDatabase {
                 trim(IirefConstraints.UNIQUE_CONSTRAINT_NAME),
                 trim(IirefConstraints.UNIQUE_SCHEMA_NAME),
                 trim(IirefConstraints.REF_TABLE_NAME),
-                trim(IiindexColumns.COLUMN_NAME))
+                trim(Iikeys.COLUMN_NAME))
             .from(IICONSTRAINTS)
             .join(IIREF_CONSTRAINTS)
-            .on(Iiconstraints.CONSTRAINT_NAME.equal(IirefConstraints.REF_CONSTRAINT_NAME))
-            .and(Iiconstraints.SCHEMA_NAME.equal(IirefConstraints.REF_SCHEMA_NAME))
-            .join(IICONSTRAINT_INDEXES)
-            .on(Iiconstraints.CONSTRAINT_NAME.equal(IiconstraintIndexes.CONSTRAINT_NAME))
-            .and(Iiconstraints.SCHEMA_NAME.equal(IiconstraintIndexes.SCHEMA_NAME))
-            .join(IIINDEXES)
-            .on(IiconstraintIndexes.INDEX_NAME.equal(Iiindexes.INDEX_NAME))
-            .and(IiconstraintIndexes.SCHEMA_NAME.equal(Iiindexes.INDEX_OWNER))
-            .join(IIINDEX_COLUMNS)
-            .on(Iiindexes.INDEX_NAME.equal(IiindexColumns.INDEX_NAME))
-            .and(Iiindexes.INDEX_OWNER.equal(IiindexColumns.INDEX_OWNER))
-            .where(IirefConstraints.REF_SCHEMA_NAME.in(getInputSchemata()))
+            .on(row(Iiconstraints.CONSTRAINT_NAME, Iiconstraints.SCHEMA_NAME)
+                .eq(IirefConstraints.REF_CONSTRAINT_NAME, IirefConstraints.REF_SCHEMA_NAME))
+            .join(IIKEYS)
+            .on(row(IirefConstraints.REF_CONSTRAINT_NAME, IirefConstraints.REF_SCHEMA_NAME)
+                .eq(Iikeys.CONSTRAINT_NAME, Iikeys.SCHEMA_NAME))
+            .where(Iiconstraints.SCHEMA_NAME.in(getInputSchemata()))
             .and(Iiconstraints.CONSTRAINT_TYPE.equal("R"))
             .orderBy(
                 IirefConstraints.REF_SCHEMA_NAME.asc(),
                 IirefConstraints.REF_TABLE_NAME.asc(),
                 IirefConstraints.REF_CONSTRAINT_NAME.asc(),
-                IiindexColumns.KEY_SEQUENCE.asc())
+                Iikeys.KEY_POSITION.asc())
             .fetch();
 
         for (Record record : result) {
@@ -184,7 +169,7 @@ public class IngresDatabase extends AbstractDatabase {
 
             String foreignKey = record.getValue(trim(IirefConstraints.REF_CONSTRAINT_NAME));
             String foreignKeyTable = record.getValue(trim(IirefConstraints.REF_TABLE_NAME));
-            String foreignKeyColumn = record.getValue(trim(IiindexColumns.COLUMN_NAME));
+            String foreignKeyColumn = record.getValue(trim(Iikeys.COLUMN_NAME));
             String uniqueKey = record.getValue(trim(IirefConstraints.UNIQUE_CONSTRAINT_NAME));
 
             TableDefinition referencingTable = getTable(foreignKeySchema, foreignKeyTable);

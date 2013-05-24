@@ -359,12 +359,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Sybase ASE's is at 2000...
         assertEquals(1, (int) create().select(count)
             .from(TBook())
-            .where(TBook_ID().in(Collections.nCopies(3000, 1)))
+            .where(TBook_ID().in(Collections.nCopies(2500, 1)))
             .fetchOne(count));
 
         assertEquals(3, (int) create().select(count)
             .from(TBook())
-            .where(TBook_ID().notIn(Collections.nCopies(3000, 1)))
+            .where(TBook_ID().notIn(Collections.nCopies(2500, 1)))
             .fetchOne(count));
 
         // [#1520] Any database should be able to handle lots of inlined
@@ -372,7 +372,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(3, (int) create(new Settings().withStatementType(STATIC_STATEMENT))
             .select(count)
             .from(TBook())
-            .where(TBook_ID().notIn(Collections.nCopies(3000, 1)))
+            .where(TBook_ID().notIn(Collections.nCopies(2500, 1)))
             .fetchOne(count));
 
         // [#1515] Check correct splitting of NOT IN

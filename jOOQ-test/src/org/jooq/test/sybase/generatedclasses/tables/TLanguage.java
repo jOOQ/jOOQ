@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 824824036;
+	private static final long serialVersionUID = 359982849;
 
 	/**
 	 * The singleton instance of <code>DBA.t_language</code>

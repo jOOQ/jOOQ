@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  *
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -543498014;
+	private static final long serialVersionUID = 2044894757;
 
 	/**
 	 * The singleton instance of <code>DBA.t_book</code>

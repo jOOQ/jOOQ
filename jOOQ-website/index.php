@@ -177,7 +177,7 @@ insertInto(t, t.a, t.b).values(1, 2);
 <ul>
     <li>CUBRID 8.4.1 and 9.1.0</li>
     <li>DB2 9.7</li>
-    <li>Derby 10.8</li>
+    <li>Derby 10.10</li>
     <li>Firebird 2.5.1</li>
     <li>H2 1.3.161</li>
     <li>HSQLDB 2.2.5</li>

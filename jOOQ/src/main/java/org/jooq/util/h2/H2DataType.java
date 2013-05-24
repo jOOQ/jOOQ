@@ -48,6 +48,10 @@ import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * Supported data types for the {@link SQLDialect#H2} dialect
@@ -115,6 +119,10 @@ public class H2DataType {
     // -------------------------------------------------------------------------
 
     protected static final DataType<BigInteger> __BIGINTEGER       = new DefaultDataType<BigInteger>(SQLDialect.H2, SQLDataType.DECIMAL_INTEGER, "decimal");
+    protected static final DataType<UByte> __TINYINTUNSIGNED       = new DefaultDataType<UByte>(SQLDialect.H2, SQLDataType.TINYINTUNSIGNED, "smallint");
+    protected static final DataType<UShort> __SMALLINTUNSIGNED     = new DefaultDataType<UShort>(SQLDialect.H2, SQLDataType.SMALLINTUNSIGNED, "int");
+    protected static final DataType<UInteger> __INTEGERUNSIGNED    = new DefaultDataType<UInteger>(SQLDialect.H2, SQLDataType.INTEGERUNSIGNED, "bigint");
+    protected static final DataType<ULong> __BIGINTUNSIGNED        = new DefaultDataType<ULong>(SQLDialect.H2, SQLDataType.BIGINTUNSIGNED, "number");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof

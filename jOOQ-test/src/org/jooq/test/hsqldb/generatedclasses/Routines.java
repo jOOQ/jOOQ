@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in PUBLIC
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Routines {
 
 	/**

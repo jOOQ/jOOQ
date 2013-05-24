@@ -8,7 +8,7 @@ package org.jooq.test.cubrid.generatedclasses;
  *
  * Convenience access to all tables in 
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
@@ -100,6 +100,11 @@ public class Tables {
 	 * The table t_triggers
 	 */
 	public static final org.jooq.test.cubrid.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.cubrid.generatedclasses.tables.TTriggers.T_TRIGGERS;
+
+	/**
+	 * The table t_unsigned
+	 */
+	public static final org.jooq.test.cubrid.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.cubrid.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table v_author

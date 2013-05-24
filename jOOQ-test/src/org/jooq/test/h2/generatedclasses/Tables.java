@@ -140,4 +140,9 @@ public class Tables {
 	 * The table PUBLIC.V_BOOK
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.VBook V_BOOK = org.jooq.test.h2.generatedclasses.tables.VBook.V_BOOK;
+
+	/**
+	 * The table PUBLIC.Ää
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.Ää ÄÄ = org.jooq.test.h2.generatedclasses.tables.Ää.ÄÄ;
 }

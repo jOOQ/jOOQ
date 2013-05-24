@@ -101,10 +101,10 @@ CREATE TABLE t_booleans (
 /
 
 CREATE TABLE t_unsigned (
-  u_byte tinyint unsigned,
-  u_short smallint unsigned,
-  u_int int unsigned,
-  u_long bigint unsigned
+  u_byte smallint,
+  u_short int,
+  u_int bigint,
+  u_long number
 )
 /
 

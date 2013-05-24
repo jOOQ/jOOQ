@@ -48,6 +48,10 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
 import org.jooq.types.DayToSecond;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
 
 /**
@@ -94,16 +98,20 @@ public class FirebirdDataType {
     // Compatibility types for supported SQLDialect.FIREBIRD, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final DataType<byte[]>  __BINARY               = new DefaultDataType<byte[]>(SQLDialect.FIREBIRD, SQLDataType.BINARY, "blob");
-    protected static final DataType<Double>  __FLOAT                = new DefaultDataType<Double>(SQLDialect.FIREBIRD, SQLDataType.FLOAT, "double precision");
-    protected static final DataType<String>  __LONGNVARCHAR         = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.LONGNVARCHAR, "blob sub_type text");
-    protected static final DataType<byte[]>  __LONGVARBINARY        = new DefaultDataType<byte[]>(SQLDialect.FIREBIRD, SQLDataType.LONGVARBINARY, "blob");
-    protected static final DataType<String>  __LONGVARCHAR          = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.LONGVARCHAR, "varchar", "varchar(4000)");
-    protected static final DataType<String>  __NCHAR                = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.NCHAR, "char");
-    protected static final DataType<String>  __NCLOB                = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.NCLOB, "clob");
-    protected static final DataType<String>  __NVARCHAR             = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.NVARCHAR, "varchar", "varchar(4000)");
-    protected static final DataType<Byte>    __TINYINT              = new DefaultDataType<Byte>(SQLDialect.FIREBIRD, SQLDataType.TINYINT, "smallint");
-    protected static final DataType<byte[]>  __VARBINARY            = new DefaultDataType<byte[]>(SQLDialect.FIREBIRD, SQLDataType.VARBINARY, "blob");
+    protected static final DataType<byte[]>   __BINARY              = new DefaultDataType<byte[]>(SQLDialect.FIREBIRD, SQLDataType.BINARY, "blob");
+    protected static final DataType<Double>   __FLOAT               = new DefaultDataType<Double>(SQLDialect.FIREBIRD, SQLDataType.FLOAT, "double precision");
+    protected static final DataType<String>   __LONGNVARCHAR        = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.LONGNVARCHAR, "blob sub_type text");
+    protected static final DataType<byte[]>   __LONGVARBINARY       = new DefaultDataType<byte[]>(SQLDialect.FIREBIRD, SQLDataType.LONGVARBINARY, "blob");
+    protected static final DataType<String>   __LONGVARCHAR         = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.LONGVARCHAR, "varchar", "varchar(4000)");
+    protected static final DataType<String>   __NCHAR               = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.NCHAR, "char");
+    protected static final DataType<String>   __NCLOB               = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.NCLOB, "clob");
+    protected static final DataType<String>   __NVARCHAR            = new DefaultDataType<String>(SQLDialect.FIREBIRD, SQLDataType.NVARCHAR, "varchar", "varchar(4000)");
+    protected static final DataType<Byte>     __TINYINT             = new DefaultDataType<Byte>(SQLDialect.FIREBIRD, SQLDataType.TINYINT, "smallint");
+    protected static final DataType<byte[]>   __VARBINARY           = new DefaultDataType<byte[]>(SQLDialect.FIREBIRD, SQLDataType.VARBINARY, "blob");
+    protected static final DataType<UByte>    __TINYINTUNSIGNED     = new DefaultDataType<UByte>(SQLDialect.FIREBIRD, SQLDataType.TINYINTUNSIGNED, "smallint");
+    protected static final DataType<UShort>   __SMALLINTUNSIGNED    = new DefaultDataType<UShort>(SQLDialect.FIREBIRD, SQLDataType.SMALLINTUNSIGNED, "int");
+    protected static final DataType<UInteger> __INTEGERUNSIGNED     = new DefaultDataType<UInteger>(SQLDialect.FIREBIRD, SQLDataType.INTEGERUNSIGNED, "bigint");
+    protected static final DataType<ULong>    __BIGINTUNSIGNED      = new DefaultDataType<ULong>(SQLDialect.FIREBIRD, SQLDataType.BIGINTUNSIGNED, "decimal", "varchar(20)"); // There are no large numbers in firebird...?
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

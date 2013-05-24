@@ -46,6 +46,10 @@ import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * Supported data types for the {@link SQLDialect#SQLITE} dialect
@@ -94,23 +98,27 @@ public class SQLiteDataType {
     // Compatibility types for supported SQLDialect.SQLITE, SQLDataTypes
     // -------------------------------------------------------------------------
 
-    protected static final DataType<byte[]>  __BINARY         = new DefaultDataType<byte[]>(SQLDialect.SQLITE, SQLDataType.BINARY, "longvarbinary");
-    protected static final DataType<Boolean> __BIT            = new DefaultDataType<Boolean>(SQLDialect.SQLITE, SQLDataType.BIT, "boolean");
-    protected static final DataType<Double>  __FLOAT          = new DefaultDataType<Double>(SQLDialect.SQLITE, SQLDataType.FLOAT, "double");
-    protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.NCLOB, "nclob");
-    protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.LONGNVARCHAR, "nvarchar");
-    protected static final DataType<Time>    __TIME           = new DefaultDataType<Time>(SQLDialect.SQLITE, SQLDataType.TIME, "datetime");
-    protected static final DataType<byte[]>  __VARBINARY      = new DefaultDataType<byte[]>(SQLDialect.SQLITE, SQLDataType.VARBINARY, "longvarbinary");
+    protected static final DataType<byte[]>   __BINARY           = new DefaultDataType<byte[]>(SQLDialect.SQLITE, SQLDataType.BINARY, "longvarbinary");
+    protected static final DataType<Boolean>  __BIT              = new DefaultDataType<Boolean>(SQLDialect.SQLITE, SQLDataType.BIT, "boolean");
+    protected static final DataType<Double>   __FLOAT            = new DefaultDataType<Double>(SQLDialect.SQLITE, SQLDataType.FLOAT, "double");
+    protected static final DataType<String>   __NCLOB            = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.NCLOB, "nclob");
+    protected static final DataType<String>   __LONGNVARCHAR     = new DefaultDataType<String>(SQLDialect.SQLITE, SQLDataType.LONGNVARCHAR, "nvarchar");
+    protected static final DataType<Time>     __TIME             = new DefaultDataType<Time>(SQLDialect.SQLITE, SQLDataType.TIME, "datetime");
+    protected static final DataType<byte[]>   __VARBINARY        = new DefaultDataType<byte[]>(SQLDialect.SQLITE, SQLDataType.VARBINARY, "longvarbinary");
+    protected static final DataType<UByte>    __TINYINTUNSIGNED  = new DefaultDataType<UByte>(SQLDialect.SQLITE, SQLDataType.TINYINTUNSIGNED, "smallint");
+    protected static final DataType<UShort>   __SMALLINTUNSIGNED = new DefaultDataType<UShort>(SQLDialect.SQLITE, SQLDataType.SMALLINTUNSIGNED, "int");
+    protected static final DataType<UInteger> __INTEGERUNSIGNED  = new DefaultDataType<UInteger>(SQLDialect.SQLITE, SQLDataType.INTEGERUNSIGNED, "bigint");
+    protected static final DataType<ULong>    __BIGINTUNSIGNED   = new DefaultDataType<ULong>(SQLDialect.SQLITE, SQLDataType.BIGINTUNSIGNED, "numeric");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types
     // -------------------------------------------------------------------------
 
-    protected static final DataType<UUID>    __UUID           = new DefaultDataType<UUID>(SQLDialect.SQLITE, SQLDataType.UUID, "varchar");
+    protected static final DataType<UUID>     __UUID             = new DefaultDataType<UUID>(SQLDialect.SQLITE, SQLDataType.UUID, "varchar");
 
     // -------------------------------------------------------------------------
     // Dialect-specific data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<Object>     NULL             = new DefaultDataType<Object>(SQLDialect.SQLITE, SQLDataType.OTHER, "null");
+    public static final DataType<Object>     NULL                = new DefaultDataType<Object>(SQLDialect.SQLITE, SQLDataType.OTHER, "null");
 }

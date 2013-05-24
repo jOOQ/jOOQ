@@ -8,7 +8,7 @@ package org.jooq.test.derby.generatedclasses;
  *
  * Convenience access to all sequences in TEST
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences {
 
 	/**

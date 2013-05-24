@@ -8,7 +8,7 @@ package org.jooq.test.hsqldb.generatedclasses;
  *
  * Convenience access to all tables in PUBLIC
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
@@ -135,6 +135,11 @@ public class Tables {
 	 * The table PUBLIC.T_TRIGGERS
 	 */
 	public static final org.jooq.test.hsqldb.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.hsqldb.generatedclasses.tables.TTriggers.T_TRIGGERS;
+
+	/**
+	 * The table PUBLIC.T_UNSIGNED
+	 */
+	public static final org.jooq.test.hsqldb.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.hsqldb.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table PUBLIC.V_AUTHOR

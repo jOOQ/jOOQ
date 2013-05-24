@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses;
  *
  * Convenience access to all tables in public
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
@@ -105,6 +105,11 @@ public class Tables {
 	 * The table public.t_triggers
 	 */
 	public static final org.jooq.test.postgres.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.postgres.generatedclasses.tables.TTriggers.T_TRIGGERS;
+
+	/**
+	 * The table public.t_unsigned
+	 */
+	public static final org.jooq.test.postgres.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.postgres.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table public.v_author

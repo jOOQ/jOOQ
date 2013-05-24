@@ -8,16 +8,11 @@ package org.jooq.test.ingres.generatedclasses;
  *
  * Convenience access to all sequences in test
  */
-@java.lang.SuppressWarnings("all")
-public final class Sequences {
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
+public class Sequences {
 
 	/**
 	 * The sequence <code>test.s_author_id</code>
 	 */
 	public static final org.jooq.Sequence<java.lang.Long> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.lang.Long>("s_author_id", org.jooq.test.ingres.generatedclasses.Test.TEST, org.jooq.impl.SQLDataType.BIGINT);
-
-	/**
-	 * No further instances allowed
-	 */
-	private Sequences() {}
 }

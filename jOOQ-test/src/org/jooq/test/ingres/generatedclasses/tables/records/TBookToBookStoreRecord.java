@@ -8,99 +8,51 @@ package org.jooq.test.ingres.generatedclasses.tables.records;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = -1272409565;
+	private static final long serialVersionUID = -303888412;
 
 	/**
 	 * Setter for <code>test.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
 	public void setBookStoreName(java.lang.String value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord}
-	 */
-	public void setBookStoreName(org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, null);
-		}
-		else {
-			setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME, value.getValue(org.jooq.test.ingres.generatedclasses.tables.TBookStore.NAME));
-		}
+		setValue(0, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
 	public java.lang.String getBookStoreName() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME);
+		return (java.lang.String) getValue(0);
 	}
 
 	/**
 	 * Setter for <code>test.t_book_to_book_store.book_id</code>. The book ID
 	 */
 	public void setBookId(java.lang.Integer value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_ID, value);
-	}
-
-	/**
-	 * Link this record to a given {@link org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord}
-	 */
-	public void setBookId(org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord value) {
-		if (value == null) {
-			setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_ID, null);
-		}
-		else {
-			setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_ID, value.getValue(org.jooq.test.ingres.generatedclasses.tables.TBook.ID));
-		}
+		setValue(1, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_book_to_book_store.book_id</code>. The book ID
 	 */
 	public java.lang.Integer getBookId() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_ID);
+		return (java.lang.Integer) getValue(1);
 	}
 
 	/**
 	 * Setter for <code>test.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
 	public void setStock(java.lang.Integer value) {
-		setValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.STOCK, value);
+		setValue(2, value);
 	}
 
 	/**
 	 * Getter for <code>test.t_book_to_book_store.stock</code>. The number of books on stock
 	 */
 	public java.lang.Integer getStock() {
-		return getValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.STOCK);
-	}
-
-	// -------------------------------------------------------------------------
-	// Foreign key navigation methods
-	// -------------------------------------------------------------------------
-
-	/**
-	 * Fetch a <code>test.t_book_store</code> referenced by this <code>test.t_book_to_book_store</code>
-	 */
-	public org.jooq.test.ingres.generatedclasses.tables.records.TBookStoreRecord fetchTBookStore() {
-		return create()
-			.selectFrom(org.jooq.test.ingres.generatedclasses.tables.TBookStore.T_BOOK_STORE)
-			.where(org.jooq.test.ingres.generatedclasses.tables.TBookStore.NAME.equal(getValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_STORE_NAME)))
-			.fetchOne();
-	}
-
-	/**
-	 * Fetch a <code>test.t_book</code> referenced by this <code>test.t_book_to_book_store</code>
-	 */
-	public org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord fetchTBook() {
-		return create()
-			.selectFrom(org.jooq.test.ingres.generatedclasses.tables.TBook.T_BOOK)
-			.where(org.jooq.test.ingres.generatedclasses.tables.TBook.ID.equal(getValue(org.jooq.test.ingres.generatedclasses.tables.TBookToBookStore.BOOK_ID)))
-			.fetchOne();
+		return (java.lang.Integer) getValue(2);
 	}
 
 	// -------------------------------------------------------------------------
@@ -124,7 +76,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.String, java.lang.Integer, java.lang.Integer> fieldsRow() {
-		return org.jooq.impl.DSL.row(field1(), field2(), field3());
+		return (org.jooq.Row3) super.fieldsRow();
 	}
 
 	/**
@@ -132,7 +84,7 @@ public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<or
 	 */
 	@Override
 	public org.jooq.Row3<java.lang.String, java.lang.Integer, java.lang.Integer> valuesRow() {
-		return org.jooq.impl.DSL.row(value1(), value2(), value3());
+		return (org.jooq.Row3) super.valuesRow();
 	}
 
 	/**

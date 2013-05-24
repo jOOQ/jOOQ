@@ -8,10 +8,10 @@ package org.jooq.test.ingres.generatedclasses.tables;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 191288365;
+	private static final long serialVersionUID = -1880625428;
 
 	/**
 	 * The singleton instance of <code>test.t_book_to_book_store</code>
@@ -29,7 +29,7 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.ingr
 	/**
 	 * The column <code>test.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_TO_BOOK_STORE);
 
 	/**
 	 * The column <code>test.t_book_to_book_store.book_id</code>. The book ID

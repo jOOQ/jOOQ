@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>DBA</code> 
  * schema
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
 	// -------------------------------------------------------------------------

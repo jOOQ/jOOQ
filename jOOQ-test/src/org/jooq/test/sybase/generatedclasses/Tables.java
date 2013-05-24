@@ -8,7 +8,7 @@ package org.jooq.test.sybase.generatedclasses;
  *
  * Convenience access to all tables in DBA
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
@@ -30,6 +30,11 @@ public class Tables {
 	 * The table DBA.t_booleans
 	 */
 	public static final org.jooq.test.sybase.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.sybase.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
+	 * The table DBA.t_unsigned
+	 */
+	public static final org.jooq.test.sybase.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.sybase.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table DBA.t_triggers

@@ -40,6 +40,7 @@ DROP TABLE IF EXISTS t_658_22/
 DROP TABLE IF EXISTS t_658_32/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
+DROP TABLE IF EXISTS t_unsigned/
 DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
@@ -84,6 +85,14 @@ CREATE TABLE t_booleans (
   n_boolean int null,
 
   CONSTRAINT pk_t_booleans PRIMARY KEY (id)
+)
+/
+
+CREATE TABLE t_unsigned (
+  u_byte unsigned tinyint null,
+  u_short unsigned smallint null,
+  u_int unsigned int null,
+  u_long unsigned bigint null
 )
 /
 

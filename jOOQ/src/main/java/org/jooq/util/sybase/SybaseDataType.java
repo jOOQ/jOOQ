@@ -41,6 +41,10 @@ import org.jooq.DataType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DefaultDataType;
 import org.jooq.impl.SQLDataType;
+import org.jooq.types.UByte;
+import org.jooq.types.UInteger;
+import org.jooq.types.ULong;
+import org.jooq.types.UShort;
 
 /**
  * Supported data types for the {@link SQLDialect#SYBASE} dialect
@@ -54,14 +58,15 @@ public class SybaseDataType {
     // Default SQL data types and synonyms thereof
     // -------------------------------------------------------------------------
 
-    public static final DataType<Byte>       TINYINT                    = new DefaultDataType<Byte>(SQLDialect.SYBASE, SQLDataType.TINYINT, "tinyint");
+    public static final DataType<UByte>      UNSIGNEDTINYINT            = new DefaultDataType<UByte>(SQLDialect.SYBASE, SQLDataType.TINYINTUNSIGNED, "unsigned tinyint");
+    public static final DataType<UByte>      TINYINT                    = new DefaultDataType<UByte>(SQLDialect.SYBASE, SQLDataType.TINYINTUNSIGNED, "tinyint");
     public static final DataType<Short>      SMALLINT                   = new DefaultDataType<Short>(SQLDialect.SYBASE, SQLDataType.SMALLINT, "smallint");
-    public static final DataType<Short>      UNSIGNEDSMALLLINT          = new DefaultDataType<Short>(SQLDialect.SYBASE, SQLDataType.SMALLINT, "unsignedsmallint");
+    public static final DataType<UShort>     UNSIGNEDSMALLLINT          = new DefaultDataType<UShort>(SQLDialect.SYBASE, SQLDataType.SMALLINTUNSIGNED, "unsigned smallint");
     public static final DataType<Integer>    INT                        = new DefaultDataType<Integer>(SQLDialect.SYBASE, SQLDataType.INTEGER, "int");
     public static final DataType<Integer>    INTEGER                    = new DefaultDataType<Integer>(SQLDialect.SYBASE, SQLDataType.INTEGER, "integer");
-    public static final DataType<Integer>    UNSIGNEDINT                = new DefaultDataType<Integer>(SQLDialect.SYBASE, SQLDataType.INTEGER, "unsignedint");
+    public static final DataType<UInteger>   UNSIGNEDINT                = new DefaultDataType<UInteger>(SQLDialect.SYBASE, SQLDataType.INTEGERUNSIGNED, "unsigned int");
     public static final DataType<Long>       BIGINT                     = new DefaultDataType<Long>(SQLDialect.SYBASE, SQLDataType.BIGINT, "bigint");
-    public static final DataType<Long>       UNSIGNEDBIGINT             = new DefaultDataType<Long>(SQLDialect.SYBASE, SQLDataType.BIGINT, "unsignedbigint");
+    public static final DataType<ULong>      UNSIGNEDBIGINT             = new DefaultDataType<ULong>(SQLDialect.SYBASE, SQLDataType.BIGINTUNSIGNED, "unsigned bigint");
     public static final DataType<Double>     DOUBLE                     = new DefaultDataType<Double>(SQLDialect.SYBASE, SQLDataType.DOUBLE, "double");
     public static final DataType<Double>     FLOAT                      = new DefaultDataType<Double>(SQLDialect.SYBASE, SQLDataType.FLOAT, "float");
     public static final DataType<Float>      REAL                       = new DefaultDataType<Float>(SQLDialect.SYBASE, SQLDataType.REAL, "real");
@@ -90,6 +95,8 @@ public class SybaseDataType {
 
     protected static final DataType<byte[]>  __BLOB                     = new DefaultDataType<byte[]>(SQLDialect.SYBASE, SQLDataType.BLOB, "binary");
     protected static final DataType<Boolean> __BOOLEAN                  = new DefaultDataType<Boolean>(SQLDialect.SYBASE, SQLDataType.BOOLEAN, "bit");
+    protected static final DataType<Byte>    __BYTE                     = new DefaultDataType<Byte>(SQLDialect.SYBASE, SQLDataType.TINYINT, "tinyint");
+    protected static final DataType<Byte>    __BYTESIGNED               = new DefaultDataType<Byte>(SQLDialect.SYBASE, SQLDataType.TINYINT, "signed tinyint");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

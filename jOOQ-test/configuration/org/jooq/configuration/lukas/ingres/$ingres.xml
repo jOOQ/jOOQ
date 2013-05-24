@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.ingres.IngresDatabase</name>
-            <includes>iischema|iitables|iicolumns|iiconstraints|iiconstraint_indexes|iiindexes|iiindex_columns|iiref_constraints|iisequences|iidb_comments|iidb_subcomments</includes>
+            <includes>iischema|iitables|iicolumns|iiconstraints|iikeys|iiref_constraints|iisequences|iidb_comments|iidb_subcomments</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

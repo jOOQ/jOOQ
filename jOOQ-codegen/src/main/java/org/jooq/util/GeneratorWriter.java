@@ -36,7 +36,9 @@
 package org.jooq.util;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -81,9 +83,9 @@ public abstract class GeneratorWriter<W extends GeneratorWriter<W>> {
 
         this.file = file;
         try {
-            this.writer = new PrintWriter(file);
+            this.writer = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
         }
-        catch (FileNotFoundException e) {
+        catch (IOException e) {
             throw new GeneratorException("Error writing " + file.getAbsolutePath());
         }
         this.sb = new StringBuilder();

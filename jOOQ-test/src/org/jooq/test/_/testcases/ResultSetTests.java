@@ -148,9 +148,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     @SuppressWarnings("serial")
     @Test
     public void testResultSetConcurrency() throws Exception {
-        if (asList(SQLITE).contains(dialect())) {
-            log.info("SKIPPING", "ResultSet concurrency tests");
-            return;
+        switch (dialect()) {
+            case SQLITE:
+                log.info("SKIPPING", "ResultSet concurrency tests");
+                return;
         }
 
         jOOQAbstractTest.reset = false;
@@ -175,7 +176,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             })
             .select(TBook_ID(), TBook_TITLE())
             .from(TBook())
-            .orderBy(TBook_ID())
+            // Derby doesn't support ORDER BY when using CONCUR_UPDATABLE
+            // https://issues.apache.org/jira/browse/DERBY-4138
+            // .orderBy(TBook_ID())
+            .resultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)
             .resultSetConcurrency(ResultSet.CONCUR_UPDATABLE)
             .fetch(TBook_TITLE()));
     }

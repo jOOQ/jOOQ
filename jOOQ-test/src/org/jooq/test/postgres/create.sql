@@ -59,6 +59,7 @@ DROP TABLE IF EXISTS t_658_32/
 DROP TABLE IF EXISTS t_725_lob_test/
 DROP TABLE IF EXISTS t_785/
 DROP TABLE IF EXISTS t_959/
+DROP TABLE IF EXISTS t_unsigned/
 DROP TABLE IF EXISTS t_booleans/
 DROP TABLE IF EXISTS t_identity/
 DROP TABLE IF EXISTS t_identity_pk/
@@ -162,6 +163,14 @@ CREATE TABLE t_booleans (
 
 CREATE TABLE t_959 (
   java_keywords u_959
+)
+/
+
+CREATE TABLE t_unsigned (
+  u_byte smallint,
+  u_short int,
+  u_int bigint,
+  u_long decimal(20)
 )
 /
 

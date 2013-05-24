@@ -37,6 +37,11 @@ public class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS;
 
 	/**
+	 * The table PUBLIC.T_UNSIGNED
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.h2.generatedclasses.tables.TUnsigned.T_UNSIGNED;
+
+	/**
 	 * The table PUBLIC.T_TRIGGERS
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS;

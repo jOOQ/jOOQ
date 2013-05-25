@@ -47,6 +47,11 @@ public final class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.TTriggers T_TRIGGERS = org.jooq.test.h2.generatedclasses.tables.TTriggers.T_TRIGGERS;
 
 	/**
+	 * The table PUBLIC.T_658_REF
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.T_658Ref T_658_REF = org.jooq.test.h2.generatedclasses.tables.T_658Ref.T_658_REF;
+
+	/**
 	 * The table PUBLIC.T_725_LOB_TEST
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_725LobTest T_725_LOB_TEST = org.jooq.test.h2.generatedclasses.tables.T_725LobTest.T_725_LOB_TEST;
@@ -92,11 +97,6 @@ public final class Tables {
 	public static final org.jooq.test.h2.generatedclasses.tables.XUnused X_UNUSED = org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED;
 
 	/**
-	 * The table PUBLIC.T_EXOTIC_TYPES
-	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.TExoticTypes T_EXOTIC_TYPES = org.jooq.test.h2.generatedclasses.tables.TExoticTypes.T_EXOTIC_TYPES;
-
-	/**
 	 * The table PUBLIC.T_639_NUMBERS_TABLE
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable T_639_NUMBERS_TABLE = org.jooq.test.h2.generatedclasses.tables.T_639NumbersTable.T_639_NUMBERS_TABLE;
@@ -115,11 +115,6 @@ public final class Tables {
 	 * The table PUBLIC.X_TEST_CASE_85
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.XTestCase_85 X_TEST_CASE_85 = org.jooq.test.h2.generatedclasses.tables.XTestCase_85.X_TEST_CASE_85;
-
-	/**
-	 * The table PUBLIC.X_TEST_CASE_2025
-	 */
-	public static final org.jooq.test.h2.generatedclasses.tables.XTestCase_2025 X_TEST_CASE_2025 = org.jooq.test.h2.generatedclasses.tables.XTestCase_2025.X_TEST_CASE_2025;
 
 	/**
 	 * The table PUBLIC.V_LIBRARY

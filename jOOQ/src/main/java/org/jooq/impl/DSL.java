@@ -3621,6 +3621,25 @@ public class DSL {
         return new SQLCondition(sql, parts);
     }
 
+    /**
+     * Create a condition from a boolean field.
+     * <p>
+     * Databases that support boolean data types can use boolean expressions
+     * as predicates or as columns interchangeably. This extends to any type
+     * of field, including functions. A Postgres example:
+     * <p>
+     * <code><pre>
+     * select 1 where texteq('a', 'a');
+     * </pre></code>
+     *
+     * @param field The boolean expression.
+     * @return A condition wrapping the boolean expression
+     */
+    @Support
+    public static Condition condition(Field<Boolean> field) {
+        return new FieldCondition(field);
+    }
+
     // -------------------------------------------------------------------------
     // XXX Global Condition factory
     // -------------------------------------------------------------------------

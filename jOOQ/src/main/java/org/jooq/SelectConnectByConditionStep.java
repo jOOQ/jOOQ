@@ -90,8 +90,15 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator and proceed to the next step.
      */
-    @Support({CUBRID, ORACLE})
+    @Support({ CUBRID, ORACLE })
     SelectConnectByConditionStep<R> and(Condition condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator and proceed to the next step.
+     */
+    @Support({ CUBRID, ORACLE })
+    SelectConnectByConditionStep<R> and(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -104,7 +111,7 @@ public interface SelectConnectByConditionStep<R extends Record> extends SelectSt
      *
      * @see DSL#condition(String)
      */
-    @Support({CUBRID, ORACLE})
+    @Support({ CUBRID, ORACLE })
     SelectConnectByConditionStep<R> and(String sql);
 
     /**

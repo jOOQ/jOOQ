@@ -559,6 +559,11 @@ implements
     }
 
     @Override
+    public final MergeOnConditionStep<R> on(Field<Boolean> condition) {
+        return on(condition(condition));
+    }
+
+    @Override
     public final MergeImpl on(String sql) {
         return on(condition(sql));
     }
@@ -577,6 +582,11 @@ implements
     public final MergeImpl and(Condition condition) {
         on.addConditions(condition);
         return this;
+    }
+
+    @Override
+    public final MergeImpl and(Field<Boolean> condition) {
+        return and(condition(condition));
     }
 
     @Override
@@ -600,6 +610,11 @@ implements
     }
 
     @Override
+    public final MergeImpl andNot(Field<Boolean> condition) {
+        return and(condition(condition));
+    }
+
+    @Override
     public final MergeImpl andExists(Select<?> select) {
         return and(exists(select));
     }
@@ -613,6 +628,11 @@ implements
     public final MergeImpl or(Condition condition) {
         on.addConditions(Operator.OR, condition);
         return this;
+    }
+
+    @Override
+    public final MergeImpl or(Field<Boolean> condition) {
+        return and(condition(condition));
     }
 
     @Override
@@ -633,6 +653,11 @@ implements
     @Override
     public final MergeImpl orNot(Condition condition) {
         return or(condition.not());
+    }
+
+    @Override
+    public final MergeImpl orNot(Field<Boolean> condition) {
+        return and(condition(condition));
     }
 
     @Override
@@ -871,9 +896,19 @@ implements
     }
 
     @Override
+    public final MergeMatchedDeleteStep<R> where(Field<Boolean> condition) {
+        return where(condition(condition));
+    }
+
+    @Override
     public final MergeImpl deleteWhere(Condition condition) {
         matchedDeleteWhere = condition;
         return this;
+    }
+
+    @Override
+    public final MergeImpl deleteWhere(Field<Boolean> condition) {
+        return deleteWhere(condition(condition));
     }
 
     // -------------------------------------------------------------------------

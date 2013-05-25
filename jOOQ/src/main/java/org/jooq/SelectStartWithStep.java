@@ -89,7 +89,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause
+     * <code>CONNECT BY</code> clause.
      */
     @Support({ CUBRID, ORACLE })
     @Transition(
@@ -100,7 +100,18 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause
+     * <code>CONNECT BY</code> clause.
+     */
+    @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "START WITH",
+        args = "Condition"
+    )
+    SelectGroupByStep<R> startWith(Field<Boolean> condition);
+
+    /**
+     * Add an Oracle-specific <code>START WITH</code> clause to the query's
+     * <code>CONNECT BY</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -114,7 +125,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause
+     * <code>CONNECT BY</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -128,7 +139,7 @@ public interface SelectStartWithStep<R extends Record> extends SelectGroupByStep
 
     /**
      * Add an Oracle-specific <code>START WITH</code> clause to the query's
-     * <code>CONNECT BY</code> clause
+     * <code>CONNECT BY</code> clause.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

@@ -44,6 +44,7 @@ import java.util.Collection;
 import org.jooq.BindContext;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
+import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
@@ -130,6 +131,11 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
+    public final Condition and(Field<Boolean> other) {
+        return getWhere().and(other);
+    }
+
+    @Override
     public final Condition and(String sql) {
         return getWhere().and(sql);
     }
@@ -150,6 +156,11 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
+    public final Condition andNot(Field<Boolean> other) {
+        return getWhere().andNot(other);
+    }
+
+    @Override
     public final Condition andExists(Select<?> select) {
         return getWhere().andExists(select);
     }
@@ -161,6 +172,11 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
     @Override
     public final Condition or(Condition other) {
+        return getWhere().or(other);
+    }
+
+    @Override
+    public final Condition or(Field<Boolean> other) {
         return getWhere().or(other);
     }
 
@@ -181,6 +197,11 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
     @Override
     public final Condition orNot(Condition other) {
+        return getWhere().orNot(other);
+    }
+
+    @Override
+    public final Condition orNot(Field<Boolean> other) {
         return getWhere().orNot(other);
     }
 

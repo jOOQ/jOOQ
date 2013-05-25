@@ -88,7 +88,7 @@ import org.jooq.impl.DSL;
 public interface SelectOnStep<R extends Record> {
 
     /**
-     * Add an <code>ON</code> clause to the previous <code>JOIN</code>
+     * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
      */
     @Support
     @Transition(
@@ -98,7 +98,17 @@ public interface SelectOnStep<R extends Record> {
     SelectOnConditionStep<R> on(Condition... conditions);
 
     /**
-     * Add an <code>ON</code> clause to the previous <code>JOIN</code>
+     * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
+     */
+    @Support
+    @Transition(
+        name = "ON",
+        args = "Condition"
+    )
+    SelectOnConditionStep<R> on(Field<Boolean> condition);
+
+    /**
+     * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -111,7 +121,7 @@ public interface SelectOnStep<R extends Record> {
     SelectOnConditionStep<R> on(String sql);
 
     /**
-     * Add an <code>ON</code> clause to the previous <code>JOIN</code>
+     * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -124,7 +134,7 @@ public interface SelectOnStep<R extends Record> {
     SelectOnConditionStep<R> on(String sql, Object... bindings);
 
     /**
-     * Add an <code>ON</code> clause to the previous <code>JOIN</code>
+     * Add an <code>ON</code> clause to the previous <code>JOIN</code>.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -175,7 +185,7 @@ public interface SelectOnStep<R extends Record> {
 
     /**
      * Join the previous table with the <code>USING(column [, column...])</code>
-     * syntax
+     * syntax.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
@@ -189,7 +199,7 @@ public interface SelectOnStep<R extends Record> {
 
     /**
      * Join the previous table with the <code>USING(column [, column...])</code>
-     * syntax
+     * syntax.
      * <p>
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.

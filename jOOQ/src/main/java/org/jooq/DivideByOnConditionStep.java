@@ -57,6 +57,13 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     /**
      * Combine the currently assembled conditions with another one using the
      * {@link Operator#AND} operator.
+     */
+    @Support
+    DivideByOnConditionStep and(Field<Boolean> condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#AND} operator.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -104,6 +111,13 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
     DivideByOnConditionStep andNot(Condition condition);
 
     /**
+     * Combine the currently assembled conditions with a negated other one using
+     * the {@link Operator#AND} operator.
+     */
+    @Support
+    DivideByOnConditionStep andNot(Field<Boolean> condition);
+
+    /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>
      * clause using the {@link Operator#AND} operator.
      */
@@ -123,6 +137,13 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      */
     @Support
     DivideByOnConditionStep or(Condition condition);
+
+    /**
+     * Combine the currently assembled conditions with another one using the
+     * {@link Operator#OR} operator.
+     */
+    @Support
+    DivideByOnConditionStep or(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with another one using the
@@ -172,6 +193,13 @@ public interface DivideByOnConditionStep extends DivideByReturningStep {
      */
     @Support
     DivideByOnConditionStep orNot(Condition condition);
+
+    /**
+     * Combine the currently assembled conditions with a negated other one using
+     * the {@link Operator#OR} operator.
+     */
+    @Support
+    DivideByOnConditionStep orNot(Field<Boolean> condition);
 
     /**
      * Combine the currently assembled conditions with an <code>EXISTS</code>

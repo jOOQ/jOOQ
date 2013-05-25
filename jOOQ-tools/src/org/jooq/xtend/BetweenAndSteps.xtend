@@ -174,7 +174,17 @@ class BetweenAndSteps extends Generators {
             // ------------------------------------------------------------------------
             // XXX: BetweenAndStep API
             // ------------------------------------------------------------------------
-            «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+            
+            @Override
+            public final Condition and(Field f) {
+                if (maxValue == null) {
+                    return and(row(f));
+                }
+                else {
+                    return super.and(f);
+                }
+            }
+            «FOR degree : (2..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Condition and(«Field_TN_tn(degree)») {

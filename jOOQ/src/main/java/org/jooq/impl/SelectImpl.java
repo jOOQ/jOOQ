@@ -229,6 +229,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final SelectImpl<R> where(Field<Boolean> condition) {
+        return where(condition(condition));
+    }
+
+    @Override
     public final SelectImpl<R> where(String sql) {
         return where(condition(sql));
     }
@@ -276,6 +281,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final SelectImpl<R> and(Field<Boolean> condition) {
+        return and(condition(condition));
+    }
+
+    @Override
     public final SelectImpl<R> and(String sql) {
         return and(condition(sql));
     }
@@ -293,6 +303,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     @Override
     public final SelectImpl<R> andNot(Condition condition) {
         return and(condition.not());
+    }
+
+    @Override
+    public final SelectImpl<R> andNot(Field<Boolean> condition) {
+        return andNot(condition(condition));
     }
 
     @Override
@@ -325,6 +340,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final SelectImpl<R> or(Field<Boolean> condition) {
+        return or(condition(condition));
+    }
+
+    @Override
     public final SelectImpl<R> or(String sql) {
         return or(condition(sql));
     }
@@ -345,6 +365,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final SelectImpl<R> orNot(Field<Boolean> condition) {
+        return orNot(condition(condition));
+    }
+
+    @Override
     public final SelectImpl<R> orExists(Select<?> select) {
         return or(exists(select));
     }
@@ -359,6 +384,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         conditionStep = ConditionStep.CONNECT_BY;
         getQuery().addConnectBy(condition);
         return this;
+    }
+
+    @Override
+    public final SelectImpl<R> connectBy(Field<Boolean> condition) {
+        return connectBy(condition(condition));
     }
 
     @Override
@@ -384,6 +414,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final SelectImpl<R> connectByNoCycle(Field<Boolean> condition) {
+        return connectByNoCycle(condition(condition));
+    }
+
+    @Override
     public final SelectImpl<R> connectByNoCycle(String sql) {
         return connectByNoCycle(condition(sql));
     }
@@ -402,6 +437,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     public final SelectImpl<R> startWith(Condition condition) {
         getQuery().setConnectByStartWith(condition);
         return this;
+    }
+
+    @Override
+    public final SelectImpl<R> startWith(Field<Boolean> condition) {
+        return startWith(condition(condition));
     }
 
     @Override
@@ -630,6 +670,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final SelectImpl<R> having(Field<Boolean> condition) {
+        return having(condition(condition));
+    }
+
+    @Override
     public final SelectImpl<R> having(String sql) {
         return having(condition(sql));
     }
@@ -654,6 +699,11 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
         joinPartitionBy = null;
         joinType = null;
         return this;
+    }
+
+    @Override
+    public final SelectImpl<R> on(Field<Boolean> condition) {
+        return on(condition(condition));
     }
 
     @Override

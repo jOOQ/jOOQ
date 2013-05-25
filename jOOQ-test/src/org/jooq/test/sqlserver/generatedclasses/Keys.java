@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses;
  * A class modelling foreign key relationships between tables of the <code>dbo</code> 
  * schema
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
 	// -------------------------------------------------------------------------

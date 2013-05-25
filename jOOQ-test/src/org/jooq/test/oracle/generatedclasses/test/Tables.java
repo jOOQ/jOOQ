@@ -8,7 +8,7 @@ package org.jooq.test.oracle.generatedclasses.test;
  *
  * Convenience access to all tables in TEST
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
@@ -70,6 +70,11 @@ public class Tables {
 	 * The table TEST.T_TRIGGERS
 	 */
 	public static final org.jooq.test.oracle.generatedclasses.test.tables.TTriggers T_TRIGGERS = org.jooq.test.oracle.generatedclasses.test.tables.TTriggers.T_TRIGGERS;
+
+	/**
+	 * The table TEST.T_UNSIGNED
+	 */
+	public static final org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned T_UNSIGNED = org.jooq.test.oracle.generatedclasses.test.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table TEST.T_639_NUMBERS_TABLE

@@ -8,7 +8,7 @@ package org.jooq.test.postgres.generatedclasses;
  *
  * Convenience access to all sequences in public
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sequences {
 
 	/**

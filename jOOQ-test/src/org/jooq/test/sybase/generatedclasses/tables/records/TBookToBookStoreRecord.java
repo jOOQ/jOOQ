@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables.records;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStoreRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.sybase.generatedclasses.tables.records.TBookToBookStoreRecord> implements org.jooq.Record3<java.lang.String, java.lang.Integer, java.lang.Integer> {
 
-	private static final long serialVersionUID = 489033635;
+	private static final long serialVersionUID = -1306561728;
 
 	/**
 	 * Setter for <code>DBA.t_book_to_book_store.book_store_name</code>. 

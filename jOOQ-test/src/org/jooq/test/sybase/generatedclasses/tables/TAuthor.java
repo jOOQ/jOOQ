@@ -8,10 +8,10 @@ package org.jooq.test.sybase.generatedclasses.tables;
  *
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 2011911305;
+	private static final long serialVersionUID = 2099791014;
 
 	/**
 	 * The singleton instance of <code>DBA.t_author</code>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-2.1.0.xsd">
-    <jdbc>
+<jdbc>
         <driver>cubrid.jdbc.driver.CUBRIDDriver</driver>
         <url>jdbc:cubrid:localhost:33000:test:::</url>
         <schema></schema>
         <user>dba</user>
-        <password></password>
+        <password>1234</password>
     </jdbc>
     <generator>
         <name>org.jooq.util.DefaultGenerator</name>

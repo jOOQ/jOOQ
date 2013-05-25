@@ -37,6 +37,9 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
@@ -58,25 +61,26 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     /**
      * Generated UID
      */
-    private static final long    serialVersionUID   = -8358225526567622252L;
-    private static final Pattern NEWLINE            = Pattern.compile("[\\n\\r]");
-    private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
+    private static final long        serialVersionUID   = -8358225526567622252L;
+    private static final Pattern     IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
+    private static final Pattern     NEWLINE            = Pattern.compile("[\\n\\r]");
+    private static final Set<String> SQLITE_KEYWORDS;
 
-    private final StringBuilder  sql;
-    private boolean              inline;
-    private boolean              renderNamedParams;
-    private boolean              qualify            = true;
-    private int                  alias;
-    private CastMode             castMode           = CastMode.DEFAULT;
-    private SQLDialect[]         castDialects;
-    private int                  indent;
-    private Stack<Integer>       indentLock         = new Stack<Integer>();
-    private int                  printMargin        = 80;
+    private final StringBuilder      sql;
+    private boolean                  inline;
+    private boolean                  renderNamedParams;
+    private boolean                  qualify            = true;
+    private int                      alias;
+    private CastMode                 castMode           = CastMode.DEFAULT;
+    private SQLDialect[]             castDialects;
+    private int                      indent;
+    private Stack<Integer>           indentLock         = new Stack<Integer>();
+    private int                      printMargin        = 80;
 
     // [#1632] Cached values from Settings
-    private RenderKeywordStyle   cachedRenderKeywordStyle;
-    private RenderNameStyle      cachedRenderNameStyle;
-    private boolean              cachedRenderFormatted;
+    private RenderKeywordStyle       cachedRenderKeywordStyle;
+    private RenderNameStyle          cachedRenderNameStyle;
+    private boolean                  cachedRenderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
@@ -258,9 +262,24 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         }
 
         // Quoting is needed when explicitly requested...
-        boolean needsQuote = RenderNameStyle.QUOTED == cachedRenderNameStyle
-        // ... or when an identifier contains special characters [#1982]
-            || !IDENTIFIER_PATTERN.matcher(literal).matches();
+        boolean needsQuote =
+            (RenderNameStyle.QUOTED == cachedRenderNameStyle
+
+        // [#2367] ... but in SQLite, quoting "normal" literals is generally
+        // asking for trouble, as SQLite bends the rules here, see
+        // http://www.sqlite.org/lang_keywords.html for details ...
+            && configuration.getDialect() != SQLDialect.SQLITE)
+
+        ||
+
+        // [#2367] ... yet, do quote when an identifier is a SQLite keyword
+            (configuration.getDialect() == SQLDialect.SQLITE
+            && SQLITE_KEYWORDS.contains(literal.toUpperCase()))
+
+        ||
+
+        // [#1982] ... yet, do quote when an identifier contains special characters
+            (!IDENTIFIER_PATTERN.matcher(literal).matches());
 
         if (RenderNameStyle.LOWER == cachedRenderNameStyle) {
             literal = literal.toLowerCase();
@@ -280,12 +299,6 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
                     break;
 
-                // SQLite is supposed to support all sorts of delimiters, but it
-                // seems too buggy
-                case SQLITE:
-                    sql(literal);
-                    break;
-
                 // T-SQL databases use brackets
                 case ASE:
                 case SQLSERVER:
@@ -294,6 +307,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     break;
 
                 // Most dialects implement the SQL standard, using double quotes
+                case SQLITE:
                 case CUBRID:
                 case DB2:
                 case DERBY:
@@ -430,5 +444,138 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
         toString(sb);
         return sb.toString();
+    }
+
+    // ------------------------------------------------------------------------
+    // Static initialisation
+    // ------------------------------------------------------------------------
+
+    static {
+        SQLITE_KEYWORDS = new HashSet<String>();
+
+        // [#2367] Taken from http://www.sqlite.org/lang_keywords.html
+        SQLITE_KEYWORDS.addAll(Arrays.asList(
+            "ABORT",
+            "ACTION",
+            "ADD",
+            "AFTER",
+            "ALL",
+            "ALTER",
+            "ANALYZE",
+            "AND",
+            "AS",
+            "ASC",
+            "ATTACH",
+            "AUTOINCREMENT",
+            "BEFORE",
+            "BEGIN",
+            "BETWEEN",
+            "BY",
+            "CASCADE",
+            "CASE",
+            "CAST",
+            "CHECK",
+            "COLLATE",
+            "COLUMN",
+            "COMMIT",
+            "CONFLICT",
+            "CONSTRAINT",
+            "CREATE",
+            "CROSS",
+            "CURRENT_DATE",
+            "CURRENT_TIME",
+            "CURRENT_TIMESTAMP",
+            "DATABASE",
+            "DEFAULT",
+            "DEFERRABLE",
+            "DEFERRED",
+            "DELETE",
+            "DESC",
+            "DETACH",
+            "DISTINCT",
+            "DROP",
+            "EACH",
+            "ELSE",
+            "END",
+            "ESCAPE",
+            "EXCEPT",
+            "EXCLUSIVE",
+            "EXISTS",
+            "EXPLAIN",
+            "FAIL",
+            "FOR",
+            "FOREIGN",
+            "FROM",
+            "FULL",
+            "GLOB",
+            "GROUP",
+            "HAVING",
+            "IF",
+            "IGNORE",
+            "IMMEDIATE",
+            "IN",
+            "INDEX",
+            "INDEXED",
+            "INITIALLY",
+            "INNER",
+            "INSERT",
+            "INSTEAD",
+            "INTERSECT",
+            "INTO",
+            "IS",
+            "ISNULL",
+            "JOIN",
+            "KEY",
+            "LEFT",
+            "LIKE",
+            "LIMIT",
+            "MATCH",
+            "NATURAL",
+            "NO",
+            "NOT",
+            "NOTNULL",
+            "NULL",
+            "OF",
+            "OFFSET",
+            "ON",
+            "OR",
+            "ORDER",
+            "OUTER",
+            "PLAN",
+            "PRAGMA",
+            "PRIMARY",
+            "QUERY",
+            "RAISE",
+            "REFERENCES",
+            "REGEXP",
+            "REINDEX",
+            "RELEASE",
+            "RENAME",
+            "REPLACE",
+            "RESTRICT",
+            "RIGHT",
+            "ROLLBACK",
+            "ROW",
+            "SAVEPOINT",
+            "SELECT",
+            "SET",
+            "TABLE",
+            "TEMP",
+            "TEMPORARY",
+            "THEN",
+            "TO",
+            "TRANSACTION",
+            "TRIGGER",
+            "UNION",
+            "UNIQUE",
+            "UPDATE",
+            "USING",
+            "VACUUM",
+            "VALUES",
+            "VIEW",
+            "VIRTUAL",
+            "WHEN",
+            "WHERE"
+        ));
     }
 }

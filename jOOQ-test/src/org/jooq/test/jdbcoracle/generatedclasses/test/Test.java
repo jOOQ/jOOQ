@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Test extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -273729069;
+	private static final long serialVersionUID = 1987845438;
 
 	/**
 	 * The singleton instance of <code>TEST</code>
@@ -32,10 +32,6 @@ public class Test extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
-			org.jooq.test.jdbcoracle.generatedclasses.test.tables.PUnusedSynonym.P_UNUSED_SYNONYM,
-			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TAuthorSynonym.T_AUTHOR_SYNONYM,
-			org.jooq.test.jdbcoracle.generatedclasses.test.tables.TAuthorSynonymSynonym.T_AUTHOR_SYNONYM_SYNONYM,
-			org.jooq.test.jdbcoracle.generatedclasses.test.tables.VAuthorSynonym.V_AUTHOR_SYNONYM,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$i.DR$I_BOOK_TITLE_CONTEXT$I,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$k.DR$I_BOOK_TITLE_CONTEXT$K,
 			org.jooq.test.jdbcoracle.generatedclasses.test.tables.Dr$iBookTitleContext$n.DR$I_BOOK_TITLE_CONTEXT$N,

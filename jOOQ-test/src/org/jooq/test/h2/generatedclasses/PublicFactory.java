@@ -9,10 +9,10 @@ package org.jooq.test.h2.generatedclasses;
  * @deprecated - [#1866] - 2.6.0 - Schema-specific factories will no longer 
  * be generated in the future. Do not reuse.
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PublicFactory extends org.jooq.util.h2.H2Factory {
 
-	private static final long serialVersionUID = -197887569;
+	private static final long serialVersionUID = -1552597230;
 
 	/**
 	 * Create a factory with a connection

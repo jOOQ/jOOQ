@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in PUBLIC
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public final class Routines {
 
 	/**

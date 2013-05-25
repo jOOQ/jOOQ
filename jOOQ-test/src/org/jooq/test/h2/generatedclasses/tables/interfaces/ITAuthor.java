@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
  *
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public interface ITAuthor extends java.io.Serializable {
 
 	/**

@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.daos;
  *
  * A book store
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStoreDao extends org.jooq.impl.DAOImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord, org.jooq.test.h2.generatedclasses.tables.pojos.TBookStore, java.lang.String> {
 
 	/**

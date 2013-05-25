@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITAuthor {
 
-	private static final long serialVersionUID = 1234286625;
+	private static final long serialVersionUID = 1523594314;
 
 	private java.lang.Integer id;
 	private java.lang.String  firstName;

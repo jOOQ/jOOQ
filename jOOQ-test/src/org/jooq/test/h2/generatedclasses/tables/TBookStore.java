@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables;
  *
  * A book store
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.h2.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1398538142;
+	private static final long serialVersionUID = -1377543841;
 
 	/**
 	 * The singleton instance of PUBLIC.T_BOOK_STORE

@@ -3512,7 +3512,7 @@ public class DefaultGenerator extends AbstractGenerator {
 
         out.print("@");
         out.print(SuppressWarnings.class);
-        out.println("(\"all\")");
+        out.println("({ \"all\", \"unchecked\", \"rawtypes\" })");
     }
 
     /**

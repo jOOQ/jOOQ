@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 982690057;
+	private static final long serialVersionUID = 1610772527;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>
@@ -23,16 +23,6 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	public java.lang.Class<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord> getRecordType() {
 		return org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord.class;
 	}
-
-	/**
-	 * The column <code>TEST.X_UNUSED.ID</code>. 
-	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, X_UNUSED);
-
-	/**
-	 * The column <code>TEST.X_UNUSED.NAME</code>. 
-	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, X_UNUSED);
 
 	/**
 	 * The column <code>TEST.X_UNUSED.ID</code>. 

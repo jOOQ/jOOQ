@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses;
  *
  * Convenience access to all tables in PUBLIC
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**
@@ -35,6 +35,11 @@ public class Tables {
 	 * The table PUBLIC.T_BOOLEANS
 	 */
 	public static final org.jooq.test.h2.generatedclasses.tables.TBooleans T_BOOLEANS = org.jooq.test.h2.generatedclasses.tables.TBooleans.T_BOOLEANS;
+
+	/**
+	 * The table PUBLIC.T_UNSIGNED
+	 */
+	public static final org.jooq.test.h2.generatedclasses.tables.TUnsigned T_UNSIGNED = org.jooq.test.h2.generatedclasses.tables.TUnsigned.T_UNSIGNED;
 
 	/**
 	 * The table PUBLIC.T_TRIGGERS

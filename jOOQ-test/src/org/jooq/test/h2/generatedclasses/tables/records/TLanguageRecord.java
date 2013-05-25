@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.records;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.ITLanguage {
 
-	private static final long serialVersionUID = -1079080222;
+	private static final long serialVersionUID = 453676031;
 
 	/**
 	 * Setter for <code>PUBLIC.T_LANGUAGE.CD</code>. The language ISO code

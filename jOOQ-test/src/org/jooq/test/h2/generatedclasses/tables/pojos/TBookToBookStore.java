@@ -8,10 +8,10 @@ package org.jooq.test.h2.generatedclasses.tables.pojos;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore implements org.jooq.test.h2.generatedclasses.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 1855322720;
+	private static final long serialVersionUID = 280855587;
 
 	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;

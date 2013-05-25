@@ -8,7 +8,7 @@ package org.jooq.test.h2.generatedclasses.tables.interfaces;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public interface ITLanguage extends java.io.Serializable {
 
 	/**

@@ -87,7 +87,7 @@ import org.jooq.impl.DSL;
 public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R> {
 
     /**
-     * Add a <code>WHERE</code> clause to the query
+     * Add a <code>WHERE</code> clause to the query.
      */
     @Support
     @Transition(
@@ -97,7 +97,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     SelectConditionStep<R> where(Condition... conditions);
 
     /**
-     * Add a <code>WHERE</code> clause to the query
+     * Add a <code>WHERE</code> clause to the query.
      */
     @Support
     @Transition(
@@ -107,7 +107,17 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     SelectConditionStep<R> where(Collection<Condition> conditions);
 
     /**
-     * Add a <code>WHERE</code> clause to the query
+     * Add a <code>WHERE</code> clause to the query.
+     */
+    @Support
+    @Transition(
+        name = "WHERE",
+        args = "Condition"
+    )
+    SelectConditionStep<R> where(Field<Boolean> field);
+
+    /**
+     * Add a <code>WHERE</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -120,7 +130,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     SelectConditionStep<R> where(String sql);
 
     /**
-     * Add a <code>WHERE</code> clause to the query
+     * Add a <code>WHERE</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -133,7 +143,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     SelectConditionStep<R> where(String sql, Object... bindings);
 
     /**
-     * Add a <code>WHERE</code> clause to the query
+     * Add a <code>WHERE</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -146,13 +156,13 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
     SelectConditionStep<R> where(String sql, QueryPart... parts);
 
     /**
-     * Add a <code>WHERE EXISTS</code> clause to the query
+     * Add a <code>WHERE EXISTS</code> clause to the query.
      */
     @Support
     SelectConditionStep<R> whereExists(Select<?> select);
 
     /**
-     * Add a <code>WHERE NOT EXISTS</code> clause to the query
+     * Add a <code>WHERE NOT EXISTS</code> clause to the query.
      */
     @Support
     SelectConditionStep<R> whereNotExists(Select<?> select);

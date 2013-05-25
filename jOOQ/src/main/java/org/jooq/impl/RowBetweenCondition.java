@@ -180,10 +180,15 @@ implements
     // ------------------------------------------------------------------------
     // XXX: BetweenAndStep API
     // ------------------------------------------------------------------------
-
+    
     @Override
-    public final Condition and(Field<T1> t1) {
-        return and(row(t1));
+    public final Condition and(Field f) {
+        if (maxValue == null) {
+            return and(row(f));
+        }
+        else {
+            return super.and(f);
+        }
     }
 
     @Override

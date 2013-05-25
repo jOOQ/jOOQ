@@ -58,7 +58,7 @@ import org.jooq.impl.DSL;
 public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
 
     /**
-     * Add conditions to the query
+     * Add conditions to the query.
      */
     @Support
     @Transition(
@@ -68,7 +68,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
     DeleteConditionStep<R> where(Condition... conditions);
 
     /**
-     * Add conditions to the query
+     * Add conditions to the query.
      */
     @Support
     @Transition(
@@ -78,7 +78,17 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
     DeleteConditionStep<R> where(Collection<Condition> conditions);
 
     /**
-     * Add conditions to the query
+     * Add conditions to the query.
+     */
+    @Support
+    @Transition(
+        name = "WHERE",
+        args = "Condition"
+    )
+    DeleteConditionStep<R> where(Field<Boolean> condition);
+
+    /**
+     * Add conditions to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -91,7 +101,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
     DeleteConditionStep<R> where(String sql);
 
     /**
-     * Add conditions to the query
+     * Add conditions to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -104,7 +114,7 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
     DeleteConditionStep<R> where(String sql, Object... bindings);
 
     /**
-     * Add conditions to the query
+     * Add conditions to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -117,13 +127,13 @@ public interface DeleteWhereStep<R extends Record> extends DeleteFinalStep<R> {
     DeleteConditionStep<R> where(String sql, QueryPart... parts);
 
     /**
-     * Add an EXISTS clause to the query
+     * Add an EXISTS clause to the query.
      */
     @Support
     DeleteConditionStep<R> whereExists(Select<?> select);
 
     /**
-     * Add a NOT EXISTS clause to the query
+     * Add a NOT EXISTS clause to the query.
      */
     @Support
     DeleteConditionStep<R> whereNotExists(Select<?> select);

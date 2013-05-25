@@ -83,10 +83,16 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
         return and(val(value));
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public final Condition and(Field<T> f) {
-        this.maxValue = f;
-        return this;
+    public final Condition and(Field f) {
+        if (maxValue == null) {
+            this.maxValue = f;
+            return this;
+        }
+        else {
+            return super.and(f);
+        }
     }
 
     @Override

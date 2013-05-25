@@ -99,6 +99,16 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
+     */
+    @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "CONNECT BY",
+        args = "Condition"
+    )
+    SelectConnectByConditionStep<R> connectBy(Field<Boolean> condition);
+
+    /**
+     * Add an Oracle-specific <code>CONNECT BY</code> clause to the query
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -146,6 +156,17 @@ public interface SelectConnectByStep<R extends Record> extends SelectGroupByStep
         args = "Condition"
     )
     SelectConnectByConditionStep<R> connectByNoCycle(Condition condition);
+
+    /**
+     * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the
+     * query
+     */
+    @Support({ CUBRID, ORACLE })
+    @Transition(
+        name = "CONNECT BY NOCYCLE",
+        args = "Condition"
+    )
+    SelectConnectByConditionStep<R> connectByNoCycle(Field<Boolean> condition);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY NOCYCLE</code> clause to the

@@ -62,6 +62,16 @@ public interface DivideByOnStep {
 
     /**
      * Add a division condition to the <code>DIVIDE BY</code> clause
+     */
+    @Support
+    @Transition(
+        name = "ON",
+        args = "Condition"
+    )
+    DivideByOnConditionStep on(Field<Boolean> condition);
+
+    /**
+     * Add a division condition to the <code>DIVIDE BY</code> clause
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

@@ -87,7 +87,7 @@ import org.jooq.impl.DSL;
 public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R> {
 
     /**
-     * Add a <code>HAVING</code> clause to the query
+     * Add a <code>HAVING</code> clause to the query.
      */
     @Support
     @Transition(
@@ -97,7 +97,7 @@ public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R>
     SelectHavingConditionStep<R> having(Condition... conditions);
 
     /**
-     * Add a <code>HAVING</code> clause to the query
+     * Add a <code>HAVING</code> clause to the query.
      */
     @Support
     @Transition(
@@ -107,7 +107,17 @@ public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R>
     SelectHavingConditionStep<R> having(Collection<Condition> conditions);
 
     /**
-     * Add a <code>HAVING</code> clause to the query
+     * Add a <code>HAVING</code> clause to the query.
+     */
+    @Support
+    @Transition(
+        name = "HAVING",
+        args = "Condition"
+    )
+    SelectHavingConditionStep<R> having(Field<Boolean> condition);
+
+    /**
+     * Add a <code>HAVING</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -120,7 +130,7 @@ public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R>
     SelectHavingConditionStep<R> having(String sql);
 
     /**
-     * Add a <code>HAVING</code> clause to the query
+     * Add a <code>HAVING</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of
@@ -133,7 +143,7 @@ public interface SelectHavingStep<R extends Record> extends SelectOrderByStep<R>
     SelectHavingConditionStep<R> having(String sql, Object... bindings);
 
     /**
-     * Add a <code>HAVING</code> clause to the query
+     * Add a <code>HAVING</code> clause to the query.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

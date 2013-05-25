@@ -327,6 +327,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @Override
+    public final JoinTable on(Field<Boolean> c) {
+        return on(condition(c));
+    }
+
+    @Override
     public final JoinTable on(String sql) {
         and(sql);
         return this;
@@ -418,6 +423,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @Override
+    public final JoinTable and(Field<Boolean> c) {
+        return and(condition(c));
+    }
+
+    @Override
     public final JoinTable and(String sql) {
         return and(condition(sql));
     }
@@ -438,6 +448,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @Override
+    public final JoinTable andNot(Field<Boolean> c) {
+        return andNot(condition(c));
+    }
+
+    @Override
     public final JoinTable andExists(Select<?> select) {
         return and(exists(select));
     }
@@ -451,6 +466,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     public final JoinTable or(Condition c) {
         condition.addConditions(Operator.OR, c);
         return this;
+    }
+
+    @Override
+    public final JoinTable or(Field<Boolean> c) {
+        return or(condition(c));
     }
 
     @Override
@@ -471,6 +491,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     @Override
     public final JoinTable orNot(Condition c) {
         return or(c.not());
+    }
+
+    @Override
+    public final JoinTable orNot(Field<Boolean> c) {
+        return orNot(condition(c));
     }
 
     @Override

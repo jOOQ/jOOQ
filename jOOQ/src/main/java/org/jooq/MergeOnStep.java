@@ -80,6 +80,16 @@ public interface MergeOnStep<R extends Record> {
 
     /**
      * Provide join conditions and proceed to the next step
+     */
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "ON",
+        args = "Condition"
+    )
+    MergeOnConditionStep<R> on(Field<Boolean> condition);
+
+    /**
+     * Provide join conditions and proceed to the next step
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
      * guarantee syntax integrity. You may also create the possibility of

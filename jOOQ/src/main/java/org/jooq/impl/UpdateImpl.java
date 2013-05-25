@@ -480,6 +480,11 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final UpdateImpl<R> where(Field<Boolean> condition) {
+        return where(condition(condition));
+    }
+
+    @Override
     public final UpdateImpl<R> where(String sql) {
         return where(condition(sql));
     }
@@ -511,6 +516,11 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final UpdateImpl<R> and(Field<Boolean> condition) {
+        return and(condition(condition));
+    }
+
+    @Override
     public final UpdateImpl<R> and(String sql) {
         return and(condition(sql));
     }
@@ -531,6 +541,11 @@ final class UpdateImpl<R extends Record>
     }
 
     @Override
+    public final UpdateImpl<R> andNot(Field<Boolean> condition) {
+        return andNot(condition(condition));
+    }
+
+    @Override
     public final UpdateImpl<R> andExists(Select<?> select) {
         return and(exists(select));
     }
@@ -544,6 +559,11 @@ final class UpdateImpl<R extends Record>
     public final UpdateImpl<R> or(Condition condition) {
         getDelegate().addConditions(Operator.OR, condition);
         return this;
+    }
+
+    @Override
+    public final UpdateImpl<R> or(Field<Boolean> condition) {
+        return or(condition(condition));
     }
 
     @Override
@@ -564,6 +584,11 @@ final class UpdateImpl<R extends Record>
     @Override
     public final UpdateImpl<R> orNot(Condition condition) {
         return or(condition.not());
+    }
+
+    @Override
+    public final UpdateImpl<R> orNot(Field<Boolean> condition) {
+        return orNot(condition(condition));
     }
 
     @Override

@@ -42,6 +42,7 @@ import static org.jooq.impl.DSL.notExists;
 import java.util.Arrays;
 
 import org.jooq.Condition;
+import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
 import org.jooq.Select;
@@ -63,9 +64,23 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
         return new CombinedCondition(Operator.AND, Arrays.asList(this, other));
     }
 
+    /*
+     * Subclasses may override this implementation when implementing
+     * A BETWEEN B AND C
+     */
+    @Override
+    public Condition and(Field<Boolean> other) {
+        return and(condition(other));
+    }
+
     @Override
     public final Condition or(Condition other) {
         return new CombinedCondition(Operator.OR, Arrays.asList(this, other));
+    }
+
+    @Override
+    public final Condition or(Field<Boolean> other) {
+        return or(condition(other));
     }
 
     @Override
@@ -104,8 +119,18 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     }
 
     @Override
+    public final Condition andNot(Field<Boolean> other) {
+        return andNot(condition(other));
+    }
+
+    @Override
     public final Condition orNot(Condition other) {
         return or(other.not());
+    }
+
+    @Override
+    public final Condition orNot(Field<Boolean> other) {
+        return orNot(condition(other));
     }
 
     @Override

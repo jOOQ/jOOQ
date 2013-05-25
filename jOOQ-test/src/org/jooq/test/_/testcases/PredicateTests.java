@@ -45,6 +45,7 @@ import static org.jooq.impl.DSL.all;
 import static org.jooq.impl.DSL.any;
 import static org.jooq.impl.DSL.castNull;
 import static org.jooq.impl.DSL.concat;
+import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.escape;
 import static org.jooq.impl.DSL.field;
@@ -56,6 +57,7 @@ import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.zero;
+import static org.junit.Assert.assertNull;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -65,6 +67,7 @@ import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Record2;
@@ -488,6 +491,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(false, record.getValue(0));
         assertEquals(true, record.getValue(1));
+    }
+
+    @Test
+    public void testFieldsAsConditions() throws Exception {
+        Param<Boolean> t = val(true);
+        Param<Boolean> f = val(false);
+
+        assertEquals(1, create().selectOne().where(condition(t)).fetchOne(0));
+        assertNull(create().selectOne().where(condition(f)).fetchOne());
+        assertEquals(1, create().selectOne().where(t).fetchOne(0));
+        assertNull(create().selectOne().where(f).fetchOne());
+        assertEquals(1, create().selectOne().where(trueCondition().andNot(f)).fetchOne(0));
+        assertNull(create().selectOne().where(trueCondition().andNot(t)).fetchOne());
     }
 
     @Test

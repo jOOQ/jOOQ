@@ -60,22 +60,23 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
      */
     private static final long    serialVersionUID   = -8358225526567622252L;
     private static final Pattern NEWLINE            = Pattern.compile("[\\n\\r]");
+    private static final Pattern IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
 
-    private final StringBuilder      sql;
-    private boolean                  inline;
-    private boolean                  renderNamedParams;
-    private boolean                  qualify          = true;
-    private int                      alias;
-    private CastMode                 castMode         = CastMode.DEFAULT;
-    private SQLDialect[]             castDialects;
-    private int                      indent;
-    private Stack<Integer>           indentLock       = new Stack<Integer>();
-    private int                      printMargin      = 80;
+    private final StringBuilder  sql;
+    private boolean              inline;
+    private boolean              renderNamedParams;
+    private boolean              qualify            = true;
+    private int                  alias;
+    private CastMode             castMode           = CastMode.DEFAULT;
+    private SQLDialect[]         castDialects;
+    private int                  indent;
+    private Stack<Integer>       indentLock         = new Stack<Integer>();
+    private int                  printMargin        = 80;
 
     // [#1632] Cached values from Settings
-    private final RenderKeywordStyle cachedRenderKeywordStyle;
-    private final RenderNameStyle    cachedRenderNameStyle;
-    private final boolean            cachedRenderFormatted;
+    private RenderKeywordStyle   cachedRenderKeywordStyle;
+    private RenderNameStyle      cachedRenderNameStyle;
+    private boolean              cachedRenderFormatted;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
@@ -256,17 +257,25 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             return this;
         }
 
+        // Quoting is needed when explicitly requested...
+        boolean needsQuote = RenderNameStyle.QUOTED == cachedRenderNameStyle
+        // ... or when an identifier contains special characters [#1982]
+            || !IDENTIFIER_PATTERN.matcher(literal).matches();
+
         if (RenderNameStyle.LOWER == cachedRenderNameStyle) {
-            sql(literal.toLowerCase());
+            literal = literal.toLowerCase();
         }
         else if (RenderNameStyle.UPPER == cachedRenderNameStyle) {
-            sql(literal.toUpperCase());
+            literal = literal.toUpperCase();
         }
-        else if (RenderNameStyle.AS_IS == cachedRenderNameStyle) {
+
+        if (!needsQuote) {
             sql(literal);
         }
         else {
             switch (configuration.getDialect()) {
+
+                // MySQL supports backticks and double quotes
                 case MYSQL:
                     sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
                     break;

@@ -2498,6 +2498,25 @@ public class BasicTest extends AbstractTest {
     }
 
     @Test
+    public void testRenderNameStyleWithSpecialCharacters() {
+        Query q = create.select(val(1).as("Aa \"Bb\" Cc")).from(TABLE1.as("Xx ''Yy''\\ Zz"));
+
+        RenderContext r_refI = r_refI();
+
+        r_refI.getSettings().setRenderNameStyle(RenderNameStyle.AS_IS);
+        assertEquals("select 1 \"Aa \"\"Bb\"\" Cc\" from TABLE1 \"Xx ''Yy''\\ Zz\"", r_refI.render(q));
+
+        r_refI.getSettings().setRenderNameStyle(RenderNameStyle.LOWER);
+        assertEquals("select 1 \"aa \"\"bb\"\" cc\" from table1 \"xx ''yy''\\ zz\"", r_refI.render(q));
+
+        r_refI.getSettings().setRenderNameStyle(RenderNameStyle.UPPER);
+        assertEquals("select 1 \"AA \"\"BB\"\" CC\" from TABLE1 \"XX ''YY''\\ ZZ\"", r_refI.render(q));
+
+        r_refI.getSettings().setRenderNameStyle(RenderNameStyle.QUOTED);
+        assertEquals("select 1 \"Aa \"\"Bb\"\" Cc\" from \"TABLE1\" \"Xx ''Yy''\\ Zz\"", r_refI.render(q));
+    }
+
+    @Test
     public void testRenderKeywordStyle() {
         Query q = create.select(val(1)).from(TABLE1).where(FIELD_ID1.equal(2));
 

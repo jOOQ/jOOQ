@@ -178,9 +178,12 @@ abstract class AbstractQueryPart implements QueryPartInternal {
 
     @Override
     public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+
         // This is a working default implementation. It should be overridden by
         // concrete subclasses, to improve performance
-
         if (that instanceof QueryPart) {
             String sql1 = create().renderInlined(this);
             String sql2 = create().renderInlined((QueryPart) that);

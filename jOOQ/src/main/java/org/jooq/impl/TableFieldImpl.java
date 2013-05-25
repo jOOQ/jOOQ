@@ -95,6 +95,9 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     @Override
     public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
 
         // [#2144] TableFieldImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

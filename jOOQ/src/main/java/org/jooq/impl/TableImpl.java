@@ -168,6 +168,9 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
 
         // [#2144] TableImpl equality can be decided without executing the
         // rather expensive implementation of AbstractQueryPart.equals()

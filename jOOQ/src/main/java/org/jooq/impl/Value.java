@@ -120,6 +120,10 @@ class Value<T> implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
         if (obj instanceof Value<?>) {
             Value<?> other = (Value<?>) obj;
 

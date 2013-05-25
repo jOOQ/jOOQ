@@ -180,6 +180,8 @@ public final class ULong extends UNumber implements Comparable<ULong> {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
         if (obj instanceof ULong) {
             return value.equals(((ULong) obj).value);
         }

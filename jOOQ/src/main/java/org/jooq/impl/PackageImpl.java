@@ -40,6 +40,7 @@ import org.jooq.Package;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
+import org.jooq.tools.StringUtils;
 
 /**
  * A default implementation for packages (containers of stored procedures and
@@ -79,6 +80,23 @@ public class PackageImpl extends AbstractSchemaProviderQueryPart implements Pack
 
         // [#1938] This is a much more efficient hashCode() implementation
         // compared to that of standard QueryParts
-        return getName().hashCode();
+        return getName() != null ? getName().hashCode() : 0;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+
+        // [#1626] PackageImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof PackageImpl) {
+            return
+                StringUtils.equals(getSchema(), ((PackageImpl) that).getSchema()) &&
+                StringUtils.equals(getName(), ((PackageImpl) that).getName());
+        }
+
+        return super.equals(that);
     }
 }

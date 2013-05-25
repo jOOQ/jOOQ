@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import java.util.Arrays;
+
 import org.jooq.BindContext;
 import org.jooq.Name;
 import org.jooq.RenderContext;
@@ -73,5 +75,29 @@ class NameImpl extends AbstractQueryPart implements Name {
     @Override
     public final String[] getName() {
         return qualifiedName;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: Object API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(getName());
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+
+        // [#1626] NameImpl equality can be decided without executing the
+        // rather expensive implementation of AbstractQueryPart.equals()
+        if (that instanceof NameImpl) {
+            return Arrays.equals(getName(), (((NameImpl) that).getName()));
+        }
+
+        return super.equals(that);
     }
 }

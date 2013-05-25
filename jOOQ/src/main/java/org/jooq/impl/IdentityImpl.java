@@ -75,6 +75,10 @@ class IdentityImpl<R extends Record, T> implements Identity<R, T> {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
         if (obj instanceof Identity) {
             return toString().equals(obj.toString());
         }

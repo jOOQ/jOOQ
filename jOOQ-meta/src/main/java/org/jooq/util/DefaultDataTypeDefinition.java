@@ -152,6 +152,9 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
         if (obj instanceof DefaultDataTypeDefinition) {
             DefaultDataTypeDefinition other = (DefaultDataTypeDefinition) obj;
 

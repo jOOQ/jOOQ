@@ -49,7 +49,7 @@
       <dependency>
           <groupId>org.jooq</groupId>
           <artifactId>jooq</artifactId>
-          <version>3.0.0</version>
+          <version>3.0.1</version>
           <type>jar</type>
           <scope>compile</scope>
       </dependency>

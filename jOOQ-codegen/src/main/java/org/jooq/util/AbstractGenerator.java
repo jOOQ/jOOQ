@@ -80,7 +80,9 @@ abstract class AbstractGenerator implements Generator {
 
     @Override
     public boolean generateRelations() {
-        return generateRelations;
+
+        // [#2294] When DAOs are generated, relations must be generated, too
+        return generateRelations || generateDaos;
     }
 
     @Override

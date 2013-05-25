@@ -165,7 +165,8 @@ public class DefaultGenerator extends AbstractGenerator {
         log.info("  immutable pojos", generateImmutablePojos());
         log.info("  interfaces", generateInterfaces());
         log.info("  daos", generateDaos());
-        log.info("  relations", generateRelations());
+        log.info("  relations", generateRelations()
+            + ((!generateRelations && generateDaos) ? " (forced to true because of <daos/>)" : ""));
         log.info("----------------------------------------------------------");
 
         String targetPackage = getTargetPackage();

@@ -13,11 +13,15 @@ public interface ITBookStore extends java.io.Serializable {
 
 	/**
 	 * The books store name
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public void setName(java.lang.String value);
 
 	/**
 	 * The books store name
+	 * <p>
+	 * This column is part of the table's PRIMARY KEY
 	 */
 	public java.lang.String getName();
 }

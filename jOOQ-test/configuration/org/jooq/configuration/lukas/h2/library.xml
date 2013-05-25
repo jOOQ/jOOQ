@@ -114,15 +114,19 @@
             </forcedTypes>
         </database>
         <generate>
-            <relations>true</relations>
+        	<!-- [#2294] daos=true should enforce relations=true -->
+            <relations>false</relations>
+            <daos>true</daos>
+
+			<!-- [#1280] daos=true should enforce records=true and pojos=true -->            
+            <records>false</records>
+            <pojos>false</pojos>
+
             <navigationMethods>true</navigationMethods>
             <deprecated>true</deprecated>
             <instanceFields>false</instanceFields>
             <generatedAnnotation>false</generatedAnnotation>
-            <records>false</records>
-            <pojos>false</pojos>
             <interfaces>true</interfaces>
-            <daos>true</daos>
             <jpaAnnotations>false</jpaAnnotations>
         </generate>
         <target>

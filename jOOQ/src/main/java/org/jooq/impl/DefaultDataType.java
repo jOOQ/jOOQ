@@ -290,11 +290,8 @@ public class DefaultDataType<T> implements DataType<T> {
         if (precision == p && scale == s) {
             return this;
         }
-        else if (hasPrecision() && (s == 0 || hasScale())) {
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, s, length);
-        }
         else {
-            return this;
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, s, length);
         }
     }
 
@@ -305,7 +302,7 @@ public class DefaultDataType<T> implements DataType<T> {
 
     @Override
     public final boolean hasPrecision() {
-        return isNumeric() || isDateTime();
+        return type == BigInteger.class || type == BigDecimal.class;
     }
 
     @Override
@@ -313,11 +310,8 @@ public class DefaultDataType<T> implements DataType<T> {
         if (scale == s) {
             return this;
         }
-        else if (hasScale()) {
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length);
-        }
         else {
-            return this;
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length);
         }
     }
 
@@ -336,11 +330,8 @@ public class DefaultDataType<T> implements DataType<T> {
         if (length == l) {
             return this;
         }
-        else if (hasLength()) {
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l);
-        }
         else {
-            return this;
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l);
         }
     }
 

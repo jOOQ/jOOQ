@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables.records;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = 81745831;
+	private static final long serialVersionUID = -390206486;
 
 	/**
 	 * The author ID

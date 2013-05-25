@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.enums;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public enum TLanguage implements org.jooq.MasterDataType<java.lang.Integer> {
 
 	/**

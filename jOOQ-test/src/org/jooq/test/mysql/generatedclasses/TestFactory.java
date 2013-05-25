@@ -9,10 +9,10 @@ package org.jooq.test.mysql.generatedclasses;
  * @deprecated - [#1866] - 2.6.0 - Schema-specific factories will no longer 
  * be generated in the future. Do not reuse.
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TestFactory extends org.jooq.util.mysql.MySQLFactory {
 
-	private static final long serialVersionUID = 533151250;
+	private static final long serialVersionUID = 1028916319;
 
 	/**
 	 * Create a factory with a connection

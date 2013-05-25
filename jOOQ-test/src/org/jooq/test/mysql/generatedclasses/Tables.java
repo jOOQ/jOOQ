@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses;
  *
  * Convenience access to all tables in test
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public final class Tables {
 
 	/**

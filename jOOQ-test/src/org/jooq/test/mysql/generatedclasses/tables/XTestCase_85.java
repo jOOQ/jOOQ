@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.UpdatableTableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1529742883;
+	private static final long serialVersionUID = -260887858;
 
 	/**
 	 * The singleton instance of test.x_test_case_85

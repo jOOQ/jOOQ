@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses;
  *
  * Convenience access to all stored procedures and functions in test
  */
-@java.lang.SuppressWarnings("all")
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public final class Routines {
 
 	/**
@@ -243,6 +243,17 @@ public final class Routines {
 
 		p.execute(configuration);
 		return p;
+	}
+
+	/**
+	 * Call test.test_multi_sets
+	 *
+	 * @throws org.jooq.exception.DataAccessException if something went wrong executing the query
+	 */
+	public static void testMultiSets(org.jooq.Configuration configuration) {
+		org.jooq.test.mysql.generatedclasses.routines.TestMultiSets p = new org.jooq.test.mysql.generatedclasses.routines.TestMultiSets();
+
+		p.execute(configuration);
 	}
 
 	/**

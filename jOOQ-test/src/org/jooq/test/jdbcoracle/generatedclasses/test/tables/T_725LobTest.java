@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1331024183;
+	private static final long serialVersionUID = 1454879306;
 
 	/**
 	 * The singleton instance of <code>TEST.T_725_LOB_TEST</code>
@@ -27,12 +27,12 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.jdbcorac
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_725_LOB_TEST);
 
 	/**
 	 * The column <code>TEST.T_725_LOB_TEST.LOB</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB, T_725_LOB_TEST);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.T_725LobTestRecord, byte[]> LOB = createField("LOB", org.jooq.impl.SQLDataType.BLOB.length(4000), T_725_LOB_TEST);
 
 	/**
 	 * No further instances allowed

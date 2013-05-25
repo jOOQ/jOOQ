@@ -12,32 +12,32 @@ public interface ITTriggers extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
-	public void setIdGenerated(java.math.BigDecimal value);
+	public void setIdGenerated(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
-	public java.math.BigDecimal getIdGenerated();
+	public java.lang.Integer getIdGenerated();
 
 	/**
 	 * Setter for <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
-	public void setCounter(java.math.BigDecimal value);
+	public void setCounter(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
-	public java.math.BigDecimal getCounter();
+	public java.lang.Integer getCounter();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

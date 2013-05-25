@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord> {
 
-	private static final long serialVersionUID = -1863412020;
+	private static final long serialVersionUID = 1805007690;
 
 	/**
 	 * The singleton instance of <code>TEST.T_UNSIGNED</code>
@@ -27,22 +27,22 @@ public class TUnsigned extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	/**
 	 * The column <code>TEST.T_UNSIGNED.U_BYTE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord, java.math.BigDecimal> U_BYTE = createField("U_BYTE", org.jooq.impl.SQLDataType.NUMERIC, T_UNSIGNED);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord, java.lang.Short> U_BYTE = createField("U_BYTE", org.jooq.impl.SQLDataType.SMALLINT, T_UNSIGNED);
 
 	/**
 	 * The column <code>TEST.T_UNSIGNED.U_SHORT</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord, java.math.BigDecimal> U_SHORT = createField("U_SHORT", org.jooq.impl.SQLDataType.NUMERIC, T_UNSIGNED);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord, java.lang.Integer> U_SHORT = createField("U_SHORT", org.jooq.impl.SQLDataType.INTEGER, T_UNSIGNED);
 
 	/**
 	 * The column <code>TEST.T_UNSIGNED.U_INT</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord, java.math.BigDecimal> U_INT = createField("U_INT", org.jooq.impl.SQLDataType.NUMERIC, T_UNSIGNED);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord, java.lang.Long> U_INT = createField("U_INT", org.jooq.impl.SQLDataType.BIGINT, T_UNSIGNED);
 
 	/**
 	 * The column <code>TEST.T_UNSIGNED.U_LONG</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord, java.math.BigDecimal> U_LONG = createField("U_LONG", org.jooq.impl.SQLDataType.NUMERIC, T_UNSIGNED);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TUnsignedRecord, java.math.BigInteger> U_LONG = createField("U_LONG", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(20), T_UNSIGNED);
 
 	/**
 	 * No further instances allowed

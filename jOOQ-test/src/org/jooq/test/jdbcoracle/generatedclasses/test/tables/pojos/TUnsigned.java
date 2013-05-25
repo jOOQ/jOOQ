@@ -9,50 +9,50 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TUnsigned implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITUnsigned {
 
-	private static final long serialVersionUID = -1369677075;
+	private static final long serialVersionUID = 1786441765;
 
-	private java.math.BigDecimal uByte;
-	private java.math.BigDecimal uShort;
-	private java.math.BigDecimal uInt;
-	private java.math.BigDecimal uLong;
+	private java.lang.Short      uByte;
+	private java.lang.Integer    uShort;
+	private java.lang.Long       uInt;
+	private java.math.BigInteger uLong;
 
 	@Override
-	public java.math.BigDecimal getUByte() {
+	public java.lang.Short getUByte() {
 		return this.uByte;
 	}
 
 	@Override
-	public void setUByte(java.math.BigDecimal uByte) {
+	public void setUByte(java.lang.Short uByte) {
 		this.uByte = uByte;
 	}
 
 	@Override
-	public java.math.BigDecimal getUShort() {
+	public java.lang.Integer getUShort() {
 		return this.uShort;
 	}
 
 	@Override
-	public void setUShort(java.math.BigDecimal uShort) {
+	public void setUShort(java.lang.Integer uShort) {
 		this.uShort = uShort;
 	}
 
 	@Override
-	public java.math.BigDecimal getUInt() {
+	public java.lang.Long getUInt() {
 		return this.uInt;
 	}
 
 	@Override
-	public void setUInt(java.math.BigDecimal uInt) {
+	public void setUInt(java.lang.Long uInt) {
 		this.uInt = uInt;
 	}
 
 	@Override
-	public java.math.BigDecimal getULong() {
+	public java.math.BigInteger getULong() {
 		return this.uLong;
 	}
 
 	@Override
-	public void setULong(java.math.BigDecimal uLong) {
+	public void setULong(java.math.BigInteger uLong) {
 		this.uLong = uLong;
 	}
 

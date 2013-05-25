@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = 1699808014;
+	private static final long serialVersionUID = -927787867;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_STORE</code>
@@ -27,7 +27,7 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle
 	/**
 	 * The column <code>TEST.T_BOOK_STORE.NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_STORE);
 
 	/**
 	 * No further instances allowed

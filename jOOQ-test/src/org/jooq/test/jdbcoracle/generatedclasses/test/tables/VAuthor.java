@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -631369174;
+	private static final long serialVersionUID = 2014136788;
 
 	/**
 	 * The singleton instance of <code>TEST.V_AUTHOR</code>
@@ -27,17 +27,17 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	/**
 	 * The column <code>TEST.V_AUTHOR.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, V_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
 	 * The column <code>TEST.V_AUTHOR.FIRST_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), V_AUTHOR);
 
 	/**
 	 * The column <code>TEST.V_AUTHOR.LAST_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, V_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), V_AUTHOR);
 
 	/**
 	 * The column <code>TEST.V_AUTHOR.DATE_OF_BIRTH</code>. 
@@ -47,7 +47,7 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	/**
 	 * The column <code>TEST.V_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord, java.math.BigDecimal> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.NUMERIC, V_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.VAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, V_AUTHOR);
 
 	/**
 	 * The column <code>TEST.V_AUTHOR.ADDRESS</code>. 

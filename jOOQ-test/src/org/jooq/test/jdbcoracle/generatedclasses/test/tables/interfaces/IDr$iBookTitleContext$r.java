@@ -12,12 +12,12 @@ public interface IDr$iBookTitleContext$r extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$R.ROW_NO</code>. 
 	 */
-	public void setRowNo(java.math.BigDecimal value);
+	public void setRowNo(java.lang.Short value);
 
 	/**
 	 * Getter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$R.ROW_NO</code>. 
 	 */
-	public java.math.BigDecimal getRowNo();
+	public java.lang.Short getRowNo();
 
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$R.DATA</code>. 

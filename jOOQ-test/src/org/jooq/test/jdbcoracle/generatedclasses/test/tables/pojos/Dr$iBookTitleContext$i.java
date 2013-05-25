@@ -9,14 +9,14 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dr$iBookTitleContext$i implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IDr$iBookTitleContext$i {
 
-	private static final long serialVersionUID = -743481023;
+	private static final long serialVersionUID = -2131960915;
 
-	private java.lang.String     tokenText;
-	private java.math.BigDecimal tokenType;
-	private java.math.BigDecimal tokenFirst;
-	private java.math.BigDecimal tokenLast;
-	private java.math.BigDecimal tokenCount;
-	private byte[]               tokenInfo;
+	private java.lang.String tokenText;
+	private java.lang.Long   tokenType;
+	private java.lang.Long   tokenFirst;
+	private java.lang.Long   tokenLast;
+	private java.lang.Long   tokenCount;
+	private byte[]           tokenInfo;
 
 	@Override
 	public java.lang.String getTokenText() {
@@ -29,42 +29,42 @@ public class Dr$iBookTitleContext$i implements org.jooq.test.jdbcoracle.generate
 	}
 
 	@Override
-	public java.math.BigDecimal getTokenType() {
+	public java.lang.Long getTokenType() {
 		return this.tokenType;
 	}
 
 	@Override
-	public void setTokenType(java.math.BigDecimal tokenType) {
+	public void setTokenType(java.lang.Long tokenType) {
 		this.tokenType = tokenType;
 	}
 
 	@Override
-	public java.math.BigDecimal getTokenFirst() {
+	public java.lang.Long getTokenFirst() {
 		return this.tokenFirst;
 	}
 
 	@Override
-	public void setTokenFirst(java.math.BigDecimal tokenFirst) {
+	public void setTokenFirst(java.lang.Long tokenFirst) {
 		this.tokenFirst = tokenFirst;
 	}
 
 	@Override
-	public java.math.BigDecimal getTokenLast() {
+	public java.lang.Long getTokenLast() {
 		return this.tokenLast;
 	}
 
 	@Override
-	public void setTokenLast(java.math.BigDecimal tokenLast) {
+	public void setTokenLast(java.lang.Long tokenLast) {
 		this.tokenLast = tokenLast;
 	}
 
 	@Override
-	public java.math.BigDecimal getTokenCount() {
+	public java.lang.Long getTokenCount() {
 		return this.tokenCount;
 	}
 
 	@Override
-	public void setTokenCount(java.math.BigDecimal tokenCount) {
+	public void setTokenCount(java.lang.Long tokenCount) {
 		this.tokenCount = tokenCount;
 	}
 

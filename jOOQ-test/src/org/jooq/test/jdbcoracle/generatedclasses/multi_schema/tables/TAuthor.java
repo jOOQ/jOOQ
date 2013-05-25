@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1843905057;
+	private static final long serialVersionUID = -545521385;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_AUTHOR</code>
@@ -27,17 +27,17 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.FIRST_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> FIRST_NAME = createField("FIRST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_AUTHOR);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.LAST_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_AUTHOR);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.DATE_OF_BIRTH</code>. 
@@ -47,7 +47,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.ge
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.math.BigDecimal> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.NUMERIC, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TAuthorRecord, java.lang.Integer> YEAR_OF_BIRTH = createField("YEAR_OF_BIRTH", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_AUTHOR.ADDRESS</code>. 

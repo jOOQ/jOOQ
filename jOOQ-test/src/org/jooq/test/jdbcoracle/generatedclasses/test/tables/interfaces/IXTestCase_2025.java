@@ -12,12 +12,12 @@ public interface IXTestCase_2025 extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
 	 */
-	public void setRefId(java.math.BigDecimal value);
+	public void setRefId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_TEST_CASE_2025.REF_ID</code>. 
 	 */
-	public java.math.BigDecimal getRefId();
+	public java.lang.Integer getRefId();
 
 	/**
 	 * Setter for <code>TEST.X_TEST_CASE_2025.REF_NAME</code>. 

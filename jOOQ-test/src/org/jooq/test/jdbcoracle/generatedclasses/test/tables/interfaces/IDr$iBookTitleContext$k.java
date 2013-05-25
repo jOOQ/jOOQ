@@ -12,12 +12,12 @@ public interface IDr$iBookTitleContext$k extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$K.DOCID</code>. 
 	 */
-	public void setDocid(java.math.BigDecimal value);
+	public void setDocid(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$K.DOCID</code>. 
 	 */
-	public java.math.BigDecimal getDocid();
+	public java.math.BigInteger getDocid();
 
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$K.TEXTKEY</code>. 

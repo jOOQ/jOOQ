@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -161588701;
+	private static final long serialVersionUID = 1902552759;
 
 	/**
 	 * The singleton instance of <code>TEST.T_TRIGGERS</code>
@@ -27,17 +27,17 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	/**
 	 * The column <code>TEST.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord, java.math.BigDecimal> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.NUMERIC, T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
 	 * The column <code>TEST.T_TRIGGERS.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
 	 * The column <code>TEST.T_TRIGGERS.COUNTER</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord, java.math.BigDecimal> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.NUMERIC, T_TRIGGERS);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TTriggersRecord, java.lang.Integer> COUNTER = createField("COUNTER", org.jooq.impl.SQLDataType.INTEGER, T_TRIGGERS);
 
 	/**
 	 * No further instances allowed

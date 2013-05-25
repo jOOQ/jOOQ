@@ -9,32 +9,32 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = -530394920;
+	private static final long serialVersionUID = 684128552;
 
-	private java.math.BigDecimal id;
+	private java.lang.Integer    id;
 	private java.lang.String     name;
-	private java.math.BigDecimal bigInteger;
-	private java.math.BigDecimal idRef;
-	private java.math.BigDecimal class_;
-	private java.math.BigDecimal fields;
-	private java.math.BigDecimal configuration;
-	private java.math.BigDecimal uDT;
-	private java.math.BigDecimal metaData;
-	private java.math.BigDecimal type0;
-	private java.math.BigDecimal primaryKey;
-	private java.math.BigDecimal primarykey;
+	private java.math.BigInteger bigInteger;
+	private java.lang.Integer    idRef;
+	private java.lang.Integer    class_;
+	private java.lang.Integer    fields;
+	private java.lang.Integer    configuration;
+	private java.lang.Integer    uDT;
+	private java.lang.Integer    metaData;
+	private java.lang.Integer    type0;
+	private java.lang.Integer    primaryKey;
+	private java.lang.Integer    primarykey;
 	private java.lang.String     nameRef;
 	private java.math.BigDecimal field_737;
-	private java.math.BigDecimal msUnusedIdRef;
+	private java.lang.Integer    msUnusedIdRef;
 	private java.lang.String     msUnusedNameRef;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 
@@ -49,102 +49,102 @@ public class XUnused implements org.jooq.test.jdbcoracle.generatedclasses.test.t
 	}
 
 	@Override
-	public java.math.BigDecimal getBigInteger() {
+	public java.math.BigInteger getBigInteger() {
 		return this.bigInteger;
 	}
 
 	@Override
-	public void setBigInteger(java.math.BigDecimal bigInteger) {
+	public void setBigInteger(java.math.BigInteger bigInteger) {
 		this.bigInteger = bigInteger;
 	}
 
 	@Override
-	public java.math.BigDecimal getIdRef() {
+	public java.lang.Integer getIdRef() {
 		return this.idRef;
 	}
 
 	@Override
-	public void setIdRef(java.math.BigDecimal idRef) {
+	public void setIdRef(java.lang.Integer idRef) {
 		this.idRef = idRef;
 	}
 
 	@Override
-	public java.math.BigDecimal getClass_() {
+	public java.lang.Integer getClass_() {
 		return this.class_;
 	}
 
 	@Override
-	public void setClass_(java.math.BigDecimal class_) {
+	public void setClass_(java.lang.Integer class_) {
 		this.class_ = class_;
 	}
 
 	@Override
-	public java.math.BigDecimal getFields() {
+	public java.lang.Integer getFields() {
 		return this.fields;
 	}
 
 	@Override
-	public void setFields(java.math.BigDecimal fields) {
+	public void setFields(java.lang.Integer fields) {
 		this.fields = fields;
 	}
 
 	@Override
-	public java.math.BigDecimal getConfiguration() {
+	public java.lang.Integer getConfiguration() {
 		return this.configuration;
 	}
 
 	@Override
-	public void setConfiguration(java.math.BigDecimal configuration) {
+	public void setConfiguration(java.lang.Integer configuration) {
 		this.configuration = configuration;
 	}
 
 	@Override
-	public java.math.BigDecimal getUDT() {
+	public java.lang.Integer getUDT() {
 		return this.uDT;
 	}
 
 	@Override
-	public void setUDT(java.math.BigDecimal uDT) {
+	public void setUDT(java.lang.Integer uDT) {
 		this.uDT = uDT;
 	}
 
 	@Override
-	public java.math.BigDecimal getMetaData() {
+	public java.lang.Integer getMetaData() {
 		return this.metaData;
 	}
 
 	@Override
-	public void setMetaData(java.math.BigDecimal metaData) {
+	public void setMetaData(java.lang.Integer metaData) {
 		this.metaData = metaData;
 	}
 
 	@Override
-	public java.math.BigDecimal getType0() {
+	public java.lang.Integer getType0() {
 		return this.type0;
 	}
 
 	@Override
-	public void setType0(java.math.BigDecimal type0) {
+	public void setType0(java.lang.Integer type0) {
 		this.type0 = type0;
 	}
 
 	@Override
-	public java.math.BigDecimal getPrimaryKey_() {
+	public java.lang.Integer getPrimaryKey_() {
 		return this.primaryKey;
 	}
 
 	@Override
-	public void setPrimaryKey_(java.math.BigDecimal primaryKey) {
+	public void setPrimaryKey_(java.lang.Integer primaryKey) {
 		this.primaryKey = primaryKey;
 	}
 
 	@Override
-	public java.math.BigDecimal getPrimarykey() {
+	public java.lang.Integer getPrimarykey() {
 		return this.primarykey;
 	}
 
 	@Override
-	public void setPrimarykey(java.math.BigDecimal primarykey) {
+	public void setPrimarykey(java.lang.Integer primarykey) {
 		this.primarykey = primarykey;
 	}
 
@@ -169,12 +169,12 @@ public class XUnused implements org.jooq.test.jdbcoracle.generatedclasses.test.t
 	}
 
 	@Override
-	public java.math.BigDecimal getMsUnusedIdRef() {
+	public java.lang.Integer getMsUnusedIdRef() {
 		return this.msUnusedIdRef;
 	}
 
 	@Override
-	public void setMsUnusedIdRef(java.math.BigDecimal msUnusedIdRef) {
+	public void setMsUnusedIdRef(java.lang.Integer msUnusedIdRef) {
 		this.msUnusedIdRef = msUnusedIdRef;
 	}
 

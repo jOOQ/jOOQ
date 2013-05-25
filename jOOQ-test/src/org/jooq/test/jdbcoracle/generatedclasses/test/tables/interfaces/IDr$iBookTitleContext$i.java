@@ -22,42 +22,42 @@ public interface IDr$iBookTitleContext$i extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_TYPE</code>. 
 	 */
-	public void setTokenType(java.math.BigDecimal value);
+	public void setTokenType(java.lang.Long value);
 
 	/**
 	 * Getter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_TYPE</code>. 
 	 */
-	public java.math.BigDecimal getTokenType();
+	public java.lang.Long getTokenType();
 
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_FIRST</code>. 
 	 */
-	public void setTokenFirst(java.math.BigDecimal value);
+	public void setTokenFirst(java.lang.Long value);
 
 	/**
 	 * Getter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_FIRST</code>. 
 	 */
-	public java.math.BigDecimal getTokenFirst();
+	public java.lang.Long getTokenFirst();
 
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_LAST</code>. 
 	 */
-	public void setTokenLast(java.math.BigDecimal value);
+	public void setTokenLast(java.lang.Long value);
 
 	/**
 	 * Getter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_LAST</code>. 
 	 */
-	public java.math.BigDecimal getTokenLast();
+	public java.lang.Long getTokenLast();
 
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_COUNT</code>. 
 	 */
-	public void setTokenCount(java.math.BigDecimal value);
+	public void setTokenCount(java.lang.Long value);
 
 	/**
 	 * Getter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_COUNT</code>. 
 	 */
-	public java.math.BigDecimal getTokenCount();
+	public java.lang.Long getTokenCount();
 
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$I.TOKEN_INFO</code>. 

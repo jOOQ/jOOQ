@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -1619775485;
+	private static final long serialVersionUID = 1259908709;
 
 	/**
 	 * The singleton instance of <code>TEST.T_EXOTIC_TYPES</code>
@@ -27,7 +27,7 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.jdbcorac
 	/**
 	 * The column <code>TEST.T_EXOTIC_TYPES.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TExoticTypesRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, T_EXOTIC_TYPES);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_EXOTIC_TYPES);
 
 	/**
 	 * The column <code>TEST.T_EXOTIC_TYPES.UU</code>. 

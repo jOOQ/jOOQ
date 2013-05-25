@@ -12,12 +12,12 @@ public interface IDr$iBookTitleContext$n extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$N.NLT_DOCID</code>. 
 	 */
-	public void setNltDocid(java.math.BigDecimal value);
+	public void setNltDocid(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$N.NLT_DOCID</code>. 
 	 */
-	public java.math.BigDecimal getNltDocid();
+	public java.math.BigInteger getNltDocid();
 
 	/**
 	 * Setter for <code>TEST.DR$I_BOOK_TITLE_CONTEXT$N.NLT_MARK</code>. 

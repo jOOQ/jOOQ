@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dr$iBookTitleContext$n extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$nRecord> {
 
-	private static final long serialVersionUID = 662222438;
+	private static final long serialVersionUID = 1420365142;
 
 	/**
 	 * The singleton instance of <code>TEST.DR$I_BOOK_TITLE_CONTEXT$N</code>
@@ -27,12 +27,12 @@ public class Dr$iBookTitleContext$n extends org.jooq.impl.TableImpl<org.jooq.tes
 	/**
 	 * The column <code>TEST.DR$I_BOOK_TITLE_CONTEXT$N.NLT_DOCID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$nRecord, java.math.BigDecimal> NLT_DOCID = createField("NLT_DOCID", org.jooq.impl.SQLDataType.NUMERIC, DR$I_BOOK_TITLE_CONTEXT$N);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$nRecord, java.math.BigInteger> NLT_DOCID = createField("NLT_DOCID", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38), DR$I_BOOK_TITLE_CONTEXT$N);
 
 	/**
 	 * The column <code>TEST.DR$I_BOOK_TITLE_CONTEXT$N.NLT_MARK</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$nRecord, java.lang.String> NLT_MARK = createField("NLT_MARK", org.jooq.impl.SQLDataType.CHAR, DR$I_BOOK_TITLE_CONTEXT$N);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$nRecord, java.lang.String> NLT_MARK = createField("NLT_MARK", org.jooq.impl.SQLDataType.CHAR.length(1), DR$I_BOOK_TITLE_CONTEXT$N);
 
 	/**
 	 * No further instances allowed

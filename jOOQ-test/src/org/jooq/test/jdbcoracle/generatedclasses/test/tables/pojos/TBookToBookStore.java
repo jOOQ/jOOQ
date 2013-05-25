@@ -9,11 +9,11 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITBookToBookStore {
 
-	private static final long serialVersionUID = 1644851853;
+	private static final long serialVersionUID = 591735285;
 
-	private java.lang.String     bookStoreName;
-	private java.math.BigDecimal bookId;
-	private java.math.BigDecimal stock;
+	private java.lang.String  bookStoreName;
+	private java.lang.Integer bookId;
+	private java.lang.Integer stock;
 
 	@Override
 	public java.lang.String getBookStoreName() {
@@ -26,22 +26,22 @@ public class TBookToBookStore implements org.jooq.test.jdbcoracle.generatedclass
 	}
 
 	@Override
-	public java.math.BigDecimal getBookId() {
+	public java.lang.Integer getBookId() {
 		return this.bookId;
 	}
 
 	@Override
-	public void setBookId(java.math.BigDecimal bookId) {
+	public void setBookId(java.lang.Integer bookId) {
 		this.bookId = bookId;
 	}
 
 	@Override
-	public java.math.BigDecimal getStock() {
+	public java.lang.Integer getStock() {
 		return this.stock;
 	}
 
 	@Override
-	public void setStock(java.math.BigDecimal stock) {
+	public void setStock(java.lang.Integer stock) {
 		this.stock = stock;
 	}
 

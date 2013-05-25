@@ -12,12 +12,12 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_AUTHOR.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.FIRST_NAME</code>. 
@@ -52,12 +52,12 @@ public interface ITAuthor extends java.io.Serializable {
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public void setYearOfBirth(java.math.BigDecimal value);
+	public void setYearOfBirth(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>MULTI_SCHEMA.T_AUTHOR.YEAR_OF_BIRTH</code>. 
 	 */
-	public java.math.BigDecimal getYearOfBirth();
+	public java.lang.Integer getYearOfBirth();
 
 	/**
 	 * Setter for <code>MULTI_SCHEMA.T_AUTHOR.ADDRESS</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord> {
 
-	private static final long serialVersionUID = -1504297883;
+	private static final long serialVersionUID = 931907994;
 
 	/**
 	 * The singleton instance of <code>MULTI_SCHEMA.T_BOOK_SALE</code>
@@ -27,17 +27,17 @@ public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.math.BigDecimal> ID = createField("ID", org.jooq.impl.SQLDataType.NUMERIC, T_BOOK_SALE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_SALE);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.math.BigDecimal> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.NUMERIC, T_BOOK_SALE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_SALE);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.BOOK_STORE_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR, T_BOOK_SALE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_SALE);
 
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_AT</code>. 
@@ -47,7 +47,7 @@ public class TBookSale extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.
 	/**
 	 * The column <code>MULTI_SCHEMA.T_BOOK_SALE.SOLD_FOR</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.math.BigDecimal> SOLD_FOR = createField("SOLD_FOR", org.jooq.impl.SQLDataType.NUMERIC, T_BOOK_SALE);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.multi_schema.tables.records.TBookSaleRecord, java.math.BigDecimal> SOLD_FOR = createField("SOLD_FOR", org.jooq.impl.SQLDataType.NUMERIC.precision(10, 2), T_BOOK_SALE);
 
 	/**
 	 * No further instances allowed

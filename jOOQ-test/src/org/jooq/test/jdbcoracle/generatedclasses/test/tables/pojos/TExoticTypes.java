@@ -9,18 +9,18 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITExoticTypes {
 
-	private static final long serialVersionUID = -2115418141;
+	private static final long serialVersionUID = 2068258028;
 
-	private java.math.BigDecimal id;
-	private java.util.UUID       uu;
+	private java.lang.Integer id;
+	private java.util.UUID    uu;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 

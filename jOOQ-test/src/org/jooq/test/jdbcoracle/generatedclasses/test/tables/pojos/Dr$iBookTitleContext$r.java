@@ -9,18 +9,18 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dr$iBookTitleContext$r implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IDr$iBookTitleContext$r {
 
-	private static final long serialVersionUID = -1104518280;
+	private static final long serialVersionUID = 1755676437;
 
-	private java.math.BigDecimal rowNo;
-	private byte[]               data;
+	private java.lang.Short rowNo;
+	private byte[]          data;
 
 	@Override
-	public java.math.BigDecimal getRowNo() {
+	public java.lang.Short getRowNo() {
 		return this.rowNo;
 	}
 
 	@Override
-	public void setRowNo(java.math.BigDecimal rowNo) {
+	public void setRowNo(java.lang.Short rowNo) {
 		this.rowNo = rowNo;
 	}
 

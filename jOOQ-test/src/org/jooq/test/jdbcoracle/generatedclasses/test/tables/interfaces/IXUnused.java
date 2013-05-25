@@ -12,12 +12,12 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID</code>. 
 	 */
-	public void setId(java.math.BigDecimal value);
+	public void setId(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.ID</code>. 
 	 */
-	public java.math.BigDecimal getId();
+	public java.lang.Integer getId();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.NAME</code>. 
@@ -32,102 +32,102 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.X_UNUSED.BIG_INTEGER</code>. 
 	 */
-	public void setBigInteger(java.math.BigDecimal value);
+	public void setBigInteger(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.BIG_INTEGER</code>. 
 	 */
-	public java.math.BigDecimal getBigInteger();
+	public java.math.BigInteger getBigInteger();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.ID_REF</code>. 
 	 */
-	public void setIdRef(java.math.BigDecimal value);
+	public void setIdRef(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.ID_REF</code>. 
 	 */
-	public java.math.BigDecimal getIdRef();
+	public java.lang.Integer getIdRef();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.CLASS</code>. 
 	 */
-	public void setClass_(java.math.BigDecimal value);
+	public void setClass_(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.CLASS</code>. 
 	 */
-	public java.math.BigDecimal getClass_();
+	public java.lang.Integer getClass_();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.FIELDS</code>. 
 	 */
-	public void setFields(java.math.BigDecimal value);
+	public void setFields(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.FIELDS</code>. 
 	 */
-	public java.math.BigDecimal getFields();
+	public java.lang.Integer getFields();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.CONFIGURATION</code>. 
 	 */
-	public void setConfiguration(java.math.BigDecimal value);
+	public void setConfiguration(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.CONFIGURATION</code>. 
 	 */
-	public java.math.BigDecimal getConfiguration();
+	public java.lang.Integer getConfiguration();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.U_D_T</code>. 
 	 */
-	public void setUDT(java.math.BigDecimal value);
+	public void setUDT(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.U_D_T</code>. 
 	 */
-	public java.math.BigDecimal getUDT();
+	public java.lang.Integer getUDT();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.META_DATA</code>. 
 	 */
-	public void setMetaData(java.math.BigDecimal value);
+	public void setMetaData(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.META_DATA</code>. 
 	 */
-	public java.math.BigDecimal getMetaData();
+	public java.lang.Integer getMetaData();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.TYPE0</code>. 
 	 */
-	public void setType0(java.math.BigDecimal value);
+	public void setType0(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.TYPE0</code>. 
 	 */
-	public java.math.BigDecimal getType0();
+	public java.lang.Integer getType0();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.PRIMARY_KEY</code>. 
 	 */
-	public void setPrimaryKey_(java.math.BigDecimal value);
+	public void setPrimaryKey_(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.PRIMARY_KEY</code>. 
 	 */
-	public java.math.BigDecimal getPrimaryKey_();
+	public java.lang.Integer getPrimaryKey_();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.PRIMARYKEY</code>. 
 	 */
-	public void setPrimarykey(java.math.BigDecimal value);
+	public void setPrimarykey(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.PRIMARYKEY</code>. 
 	 */
-	public java.math.BigDecimal getPrimarykey();
+	public java.lang.Integer getPrimarykey();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.NAME_REF</code>. 
@@ -152,12 +152,12 @@ public interface IXUnused extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>. 
 	 */
-	public void setMsUnusedIdRef(java.math.BigDecimal value);
+	public void setMsUnusedIdRef(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.X_UNUSED.MS_UNUSED_ID_REF</code>. 
 	 */
-	public java.math.BigDecimal getMsUnusedIdRef();
+	public java.lang.Integer getMsUnusedIdRef();
 
 	/**
 	 * Setter for <code>TEST.X_UNUSED.MS_UNUSED_NAME_REF</code>. 

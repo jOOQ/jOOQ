@@ -9,9 +9,9 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.ITBooleans {
 
-	private static final long serialVersionUID = -1387471934;
+	private static final long serialVersionUID = 896358333;
 
-	private java.math.BigDecimal                         id;
+	private java.lang.Integer                            id;
 	private org.jooq.test._.converters.Boolean_10        oneZero;
 	private org.jooq.test._.converters.Boolean_TF_LC     trueFalseLc;
 	private org.jooq.test._.converters.Boolean_TF_UC     trueFalseUc;
@@ -24,12 +24,12 @@ public class TBooleans implements org.jooq.test.jdbcoracle.generatedclasses.test
 	private java.lang.Boolean                            nBoolean;
 
 	@Override
-	public java.math.BigDecimal getId() {
+	public java.lang.Integer getId() {
 		return this.id;
 	}
 
 	@Override
-	public void setId(java.math.BigDecimal id) {
+	public void setId(java.lang.Integer id) {
 		this.id = id;
 	}
 

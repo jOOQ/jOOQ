@@ -9,18 +9,18 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dr$iBookTitleContext$n implements org.jooq.test.jdbcoracle.generatedclasses.test.tables.interfaces.IDr$iBookTitleContext$n {
 
-	private static final long serialVersionUID = 708268348;
+	private static final long serialVersionUID = -1694644599;
 
-	private java.math.BigDecimal nltDocid;
+	private java.math.BigInteger nltDocid;
 	private java.lang.String     nltMark;
 
 	@Override
-	public java.math.BigDecimal getNltDocid() {
+	public java.math.BigInteger getNltDocid() {
 		return this.nltDocid;
 	}
 
 	@Override
-	public void setNltDocid(java.math.BigDecimal nltDocid) {
+	public void setNltDocid(java.math.BigInteger nltDocid) {
 		this.nltDocid = nltDocid;
 	}
 

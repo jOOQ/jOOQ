@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dr$iBookTitleContext$k extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$kRecord> {
 
-	private static final long serialVersionUID = -168103789;
+	private static final long serialVersionUID = 2066606575;
 
 	/**
 	 * The singleton instance of <code>TEST.DR$I_BOOK_TITLE_CONTEXT$K</code>
@@ -27,7 +27,7 @@ public class Dr$iBookTitleContext$k extends org.jooq.impl.TableImpl<org.jooq.tes
 	/**
 	 * The column <code>TEST.DR$I_BOOK_TITLE_CONTEXT$K.DOCID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$kRecord, java.math.BigDecimal> DOCID = createField("DOCID", org.jooq.impl.SQLDataType.NUMERIC, DR$I_BOOK_TITLE_CONTEXT$K);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$kRecord, java.math.BigInteger> DOCID = createField("DOCID", org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38), DR$I_BOOK_TITLE_CONTEXT$K);
 
 	/**
 	 * The column <code>TEST.DR$I_BOOK_TITLE_CONTEXT$K.TEXTKEY</code>. 

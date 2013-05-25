@@ -9,7 +9,7 @@ package org.jooq.test.jdbcoracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Dr$iBookTitleContext$r extends org.jooq.impl.TableImpl<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$rRecord> {
 
-	private static final long serialVersionUID = -1709845226;
+	private static final long serialVersionUID = -315152919;
 
 	/**
 	 * The singleton instance of <code>TEST.DR$I_BOOK_TITLE_CONTEXT$R</code>
@@ -27,12 +27,12 @@ public class Dr$iBookTitleContext$r extends org.jooq.impl.TableImpl<org.jooq.tes
 	/**
 	 * The column <code>TEST.DR$I_BOOK_TITLE_CONTEXT$R.ROW_NO</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$rRecord, java.math.BigDecimal> ROW_NO = createField("ROW_NO", org.jooq.impl.SQLDataType.NUMERIC, DR$I_BOOK_TITLE_CONTEXT$R);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$rRecord, java.lang.Short> ROW_NO = createField("ROW_NO", org.jooq.impl.SQLDataType.SMALLINT, DR$I_BOOK_TITLE_CONTEXT$R);
 
 	/**
 	 * The column <code>TEST.DR$I_BOOK_TITLE_CONTEXT$R.DATA</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$rRecord, byte[]> DATA = createField("DATA", org.jooq.impl.SQLDataType.BLOB, DR$I_BOOK_TITLE_CONTEXT$R);
+	public static final org.jooq.TableField<org.jooq.test.jdbcoracle.generatedclasses.test.tables.records.Dr$iBookTitleContext$rRecord, byte[]> DATA = createField("DATA", org.jooq.impl.SQLDataType.BLOB.length(4000), DR$I_BOOK_TITLE_CONTEXT$R);
 
 	/**
 	 * No further instances allowed

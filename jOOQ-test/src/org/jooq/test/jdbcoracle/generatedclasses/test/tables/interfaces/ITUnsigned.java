@@ -12,42 +12,42 @@ public interface ITUnsigned extends java.io.Serializable {
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_BYTE</code>. 
 	 */
-	public void setUByte(java.math.BigDecimal value);
+	public void setUByte(java.lang.Short value);
 
 	/**
 	 * Getter for <code>TEST.T_UNSIGNED.U_BYTE</code>. 
 	 */
-	public java.math.BigDecimal getUByte();
+	public java.lang.Short getUByte();
 
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_SHORT</code>. 
 	 */
-	public void setUShort(java.math.BigDecimal value);
+	public void setUShort(java.lang.Integer value);
 
 	/**
 	 * Getter for <code>TEST.T_UNSIGNED.U_SHORT</code>. 
 	 */
-	public java.math.BigDecimal getUShort();
+	public java.lang.Integer getUShort();
 
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_INT</code>. 
 	 */
-	public void setUInt(java.math.BigDecimal value);
+	public void setUInt(java.lang.Long value);
 
 	/**
 	 * Getter for <code>TEST.T_UNSIGNED.U_INT</code>. 
 	 */
-	public java.math.BigDecimal getUInt();
+	public java.lang.Long getUInt();
 
 	/**
 	 * Setter for <code>TEST.T_UNSIGNED.U_LONG</code>. 
 	 */
-	public void setULong(java.math.BigDecimal value);
+	public void setULong(java.math.BigInteger value);
 
 	/**
 	 * Getter for <code>TEST.T_UNSIGNED.U_LONG</code>. 
 	 */
-	public java.math.BigDecimal getULong();
+	public java.math.BigInteger getULong();
 
 	// -------------------------------------------------------------------------
 	// FROM and INTO

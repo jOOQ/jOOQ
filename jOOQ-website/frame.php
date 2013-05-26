@@ -76,7 +76,7 @@ function manualHeader($isSingle, $forVersion) {
 		</script>
 		<!-- End of Woopra Code -->
 		<?php } ?>
-
+		<script type="text/javascript" src="https://www.catincan.com/ribbon/right/1/jOOQ.js" defer="defer"></script>
 		<script>
 		$(document).ready(function() {
 		    $("a").filter("[href*='http']").filter(":not([href*='jooq.org'])").attr("target", "_blank");
@@ -183,9 +183,11 @@ function manualHeader($isSingle, $forVersion) {
 		</div>
 		</div>
 
+		<!--
 		<a href="https://github.com/jOOQ/jOOQ"> <img
 			alt="Fork me on GitHub" src="<?=$root?>/img/forkme.png"
 			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>
+		-->
 		<div style="display: none">
 			<img src="/img/logo.png" alt="The jOOQ Logo" title="jOOQ Logo"/>
 	</body>

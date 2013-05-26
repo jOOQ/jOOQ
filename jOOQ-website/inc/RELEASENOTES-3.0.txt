@@ -10,6 +10,35 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.0.1 - May 25, 2013
+================================================================================
+
+This is a patch release with some useful fixes for the 3.0 branch
+
+Bug fixes
+---------
+#2323 - NullPointerException when calling Schema.getTables() on a meta schema 
+        with SQLite
+#2401 - Bad package name generated when <packageName/> contents are not trimmed
+#2413 - Suppress warnings in generated code (@SuppressWarnings("all") doesn't 
+        suppress "rawtypes" warnings with javac)
+#2418 - RenderContext.data() is not passed on to QueryParts when being rendered
+#2424 - Integration-test jOOQ with the SQLite xerial driver
+#2432 - Manual refers to a package-private DefaultConfiguration constructor
+#2445 - JDBCDatabase doesn't recognise Oracle's VARCHAR2 data type (and other 
+        vendor-specific data types)
+#2447 - Tables collected through DSLContext.meta() return duplicate columns if
+        multi-schema environments contain identical tables
+#2448 - DSLContext.meta() returns Table objects for Oracle SYNONYMS, without
+        providing columns
+#2449 - JDBCDatabase doesn't use DataType.length(), precision(), and scale()
+#2450 - Cannot set precision on TINYINT, SMALLINT, INT, BIGINT data types
+#2464 - Bad SQL rendered from DELETE statements with aliased tables
+#2469 - NullPointerException in AbstractResultQuery.fetchOneMap()
+#2477 - MySQL's unsigned types cannot be used in other dialects
+#2478 - IngresDatabase erroneously joins IIINDEXES to get constraint columns,
+        rather than using IIKEYS
+
 Version 3.0.0 - April 28, 2013
 ================================================================================
 

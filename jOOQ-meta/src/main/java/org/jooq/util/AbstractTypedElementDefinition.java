@@ -101,8 +101,24 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
     }
 
     static DataTypeDefinition mapDefinedType(Definition container, Definition child, DataTypeDefinition definedType) {
-        DataTypeDefinition result = null;
+        DataTypeDefinition result = definedType;
         Database db = container.getDatabase();
+
+        // [#976] Mapping DATE as TIMESTAMP
+        if (db.dateAsTimestamp()) {
+            DataType<?> dataType = null;
+
+            try {
+                dataType = DefaultDataType.getDataType(db.getDialect(), result.getType(), 0, 0);
+            } catch (SQLDialectNotSupportedException ignore) {}
+
+            if (dataType != null) {
+                if (dataType.getSQLType() == Types.DATE) {
+                    DataType<?> forcedDataType = DefaultDataType.getDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
+                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0);
+                }
+            }
+        }
 
         // [#677] Forced types for matching regular expressions
         ForcedType forcedType = db.getConfiguredForcedType(child);
@@ -110,10 +126,10 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             log.debug("Forcing type", child + " into " + forcedType.getName());
             DataType<?> forcedDataType = null;
 
-            String t = definedType.getType();
-            int l = definedType.getLength();
-            int p = definedType.getPrecision();
-            int s = definedType.getScale();
+            String t = result.getType();
+            int l = result.getLength();
+            int p = result.getPrecision();
+            int s = result.getScale();
 
             try {
                 forcedDataType = DefaultDataType.getDataType(db.getDialect(), forcedType.getName(), p, s);
@@ -128,27 +144,6 @@ abstract class AbstractTypedElementDefinition<T extends Definition>
             else {
                 result = new DefaultDataTypeDefinition(db, child.getSchema(), t, l, p, s, forcedType.getName());
             }
-        }
-
-        // [#976] Mapping DATE as TIMESTAMP
-        if (db.dateAsTimestamp()) {
-            DataType<?> dataType = null;
-
-            try {
-                dataType = DefaultDataType.getDataType(db.getDialect(), definedType.getType(), 0, 0);
-            } catch (SQLDialectNotSupportedException ignore) {}
-
-            if (dataType != null) {
-                if (dataType.getSQLType() == Types.DATE) {
-                    DataType<?> forcedDataType = DefaultDataType.getDataType(db.getDialect(), SQLDataType.TIMESTAMP.getTypeName(), 0, 0);
-                    result = new DefaultDataTypeDefinition(db, child.getSchema(), forcedDataType.getTypeName(), 0, 0, 0);
-                }
-            }
-        }
-
-        // If not yet set, use the default defined type
-        if (result == null) {
-            result = definedType;
         }
 
         return result;

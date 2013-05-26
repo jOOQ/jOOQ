@@ -32,7 +32,7 @@
                 </customType>
             </customTypes>
 
-            <!-- Then, associate custom types with database columns -->
+            <!-- [#2404] Then, associate custom types with database columns -->
             <forcedTypes>
                 <forcedType>
                     <name>java.util.GregorianCalendar</name>

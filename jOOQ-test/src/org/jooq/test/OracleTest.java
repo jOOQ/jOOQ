@@ -77,6 +77,7 @@ import static org.jooq.test.oracle.generatedclasses.test.UDTs.U_AUTHOR_TYPE;
 import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.countBooks;
 import static org.jooq.test.oracle.generatedclasses.test.udt.UAuthorType.load;
 import static org.jooq.test.oracle2.generatedclasses.Tables.DATE_AS_TIMESTAMP_T_976;
+import static org.jooq.test.oracle2.generatedclasses.Tables.DATE_AS_TIMESTAMP_T_DATES;
 import static org.jooq.test.oracle2.generatedclasses.udt.DateAsTimestampT_976ObjectType.DATE_AS_TIMESTAMP_T_976_OBJECT_TYPE;
 import static org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEMA;
 import static org.jooq.util.oracle.OracleDSL.contains;
@@ -88,7 +89,9 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -159,6 +162,7 @@ import org.jooq.test.oracle.generatedclasses.test.udt.records.UNumberTableRecord
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStreetTypeRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.records.UStringArrayRecord;
 import org.jooq.test.oracle.generatedclasses.test.udt.u_author_type.GetBooks;
+import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampTDatesRecord;
 import org.jooq.test.oracle2.generatedclasses.tables.records.DateAsTimestampT_976Record;
 import org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976ObjectTypeRecord;
 import org.jooq.test.oracle2.generatedclasses.udt.records.DateAsTimestampT_976VarrayTypeRecord;
@@ -1150,8 +1154,15 @@ public class OracleTest extends jOOQAbstractTest<
 
     @Test
     public void testOracleDateAsTimestamp() throws Exception {
+        jOOQAbstractTest.reset = false;
+
         Timestamp now = new Timestamp(System.currentTimeMillis() / 1000 * 1000);
         Timestamp later = new Timestamp(System.currentTimeMillis() / 1000 * 1000 + 1000);
+
+        GregorianCalendar calNow = new GregorianCalendar();
+        GregorianCalendar calLater = new GregorianCalendar();
+        calNow.setTime(now);
+        calLater.setTime(later);
 
         // A record with nulls
         // -------------------
@@ -1201,6 +1212,34 @@ public class OracleTest extends jOOQAbstractTest<
         assertEquals(now, org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976.p_976(create().configuration(), now));
         assertEquals(now, org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976.f_976(create().configuration(), now));
         assertEquals(now, create().select(org.jooq.test.oracle2.generatedclasses.packages.DateAsTimestampPkg_976.f_976(now)).fetchOne(0));
+
+        // [#2404] Some tests combining DATE as TIMESTAMP with converters
+        DateAsTimestampTDatesRecord dates = create().newRecord(DATE_AS_TIMESTAMP_T_DATES);
+        dates.setTs(calNow);
+        dates.setD(calNow);
+        dates.setT(calNow);
+        dates.setId(1);
+        assertEquals(1, dates.store());
+
+        // This test might break again, depending on CET / CEST
+        dates = create().newRecord(DATE_AS_TIMESTAMP_T_DATES);
+        dates.setId(1);
+        dates.refresh();
+        assertEqualCalendar(calNow, dates.getTs(),
+            Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH,
+            Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND,
+            Calendar.MILLISECOND);
+        assertEqualCalendar(calNow, dates.getD(),
+            Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH);
+        assertEqualCalendar(calNow, dates.getT(),
+            Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND,
+            Calendar.MILLISECOND);
+    }
+
+    private void assertEqualCalendar(Calendar c1, Calendar c2, int... fields) {
+        for (int field : fields) {
+            assertEquals(c1.get(field), c2.get(field));
+        }
     }
 
     @Test

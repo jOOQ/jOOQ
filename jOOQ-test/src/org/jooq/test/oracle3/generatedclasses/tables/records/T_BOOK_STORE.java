@@ -8,12 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  *
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_STORE")
 public class T_BOOK_STORE extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable, org.jooq.Record1<java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.T_BOOK_STORE_INTERFACE {
 
-	private static final long serialVersionUID = -985393337;
+	private static final long serialVersionUID = -1368266268;
 
 	/**
 	 * Setter for <code>T_BOOK_STORE.NAME</code>. The books store name

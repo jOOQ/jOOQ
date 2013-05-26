@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  *
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "M_LIBRARY")
 public interface M_LIBRARY_INTERFACE extends java.io.Serializable, java.lang.Cloneable {

@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_LANGUAGE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_LANGUAGE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = 1592232654;
+	private static final long serialVersionUID = -499003477;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>

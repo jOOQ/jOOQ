@@ -8,12 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  *
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "M_LIBRARY")
 public class M_LIBRARY_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = -1866468611;
+	private static final long serialVersionUID = 608504832;
 
 	private java.lang.String AUTHOR;
 	private java.lang.String TITLE;

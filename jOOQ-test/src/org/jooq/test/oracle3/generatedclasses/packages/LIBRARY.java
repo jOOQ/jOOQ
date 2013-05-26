@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.packages;
  *
  * Convenience access to all stored procedures and functions in LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class LIBRARY extends org.jooq.impl.PackageImpl implements java.io.Serializable, java.lang.Cloneable {
 
-	private static final long serialVersionUID = -97439831;
+	private static final long serialVersionUID = 535039046;
 
 	/**
 	 * The singleton instance of <code>LIBRARY</code>

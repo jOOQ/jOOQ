@@ -8,14 +8,14 @@ package org.jooq.test.oracle3.generatedclasses.tables.pojos;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "X_UNUSED", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"ID", "NAME"})
 })
 public class X_UNUSED_POJO extends java.lang.ThreadDeath implements java.lang.Cloneable, org.jooq.test.oracle3.generatedclasses.tables.interfaces.X_UNUSED_INTERFACE {
 
-	private static final long serialVersionUID = -1914831094;
+	private static final long serialVersionUID = -1081703897;
 
 	private java.lang.Integer    ID;
 	private java.lang.String     NAME;

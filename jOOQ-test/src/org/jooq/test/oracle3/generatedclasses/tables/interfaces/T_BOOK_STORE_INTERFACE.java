@@ -8,7 +8,7 @@ package org.jooq.test.oracle3.generatedclasses.tables.interfaces;
  *
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "T_BOOK_STORE")
 public interface T_BOOK_STORE_INTERFACE extends java.lang.Cloneable, java.io.Serializable {

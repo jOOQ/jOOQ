@@ -8,12 +8,12 @@ package org.jooq.test.oracle3.generatedclasses.tables.records;
  *
  * snapshot table for snapshot TEST.M_LIBRARY
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "M_LIBRARY")
 public class M_LIBRARY extends org.jooq.impl.TableRecordImpl<org.jooq.test.oracle3.generatedclasses.tables.records.M_LIBRARY> implements java.io.Serializable, java.lang.Cloneable, org.jooq.Record2<java.lang.String, java.lang.String>, org.jooq.test.oracle3.generatedclasses.tables.interfaces.M_LIBRARY_INTERFACE {
 
-	private static final long serialVersionUID = 410370561;
+	private static final long serialVersionUID = -1456437730;
 
 	/**
 	 * Setter for <code>M_LIBRARY.AUTHOR</code>. 

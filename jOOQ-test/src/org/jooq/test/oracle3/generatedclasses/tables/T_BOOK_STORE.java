@@ -8,10 +8,10 @@ package org.jooq.test.oracle3.generatedclasses.tables;
  *
  * A book store
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_BOOK_STORE extends org.jooq.impl.TableImpl<org.jooq.test.oracle3.generatedclasses.tables.records.T_BOOK_STORE> implements java.lang.Cloneable {
 
-	private static final long serialVersionUID = -970662302;
+	private static final long serialVersionUID = 568384895;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_STORE</code>

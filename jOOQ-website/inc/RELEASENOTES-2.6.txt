@@ -10,6 +10,29 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 2.6.4 - May 25, 2013
+================================================================================
+
+This is a patch release with some useful fixes for the 2.6 branch
+
+Bug fixes
+---------
+#1883 - Derby OVERLAPS predicate doesn't work for (DATE, INTERVAL) tuples
+#1982 - Change RenderNameStyle.UPPER, LOWER, AS_IS to quote literals if needed
+#2271 - jOOQ Unit tests fail when not run in CET / CEST
+#2294 - Compilation errors when code generator is configured with 
+        <daos>true</daos> and <relations>false</relations>
+#2298 - Suppress warnings in generated code (@SuppressWarnings("all") doesn't
+        work with javac)
+#2312 - Annotate org.jooq.Support with java.lang.annotation.Documented to make
+        it part of the public API (in Javadoc)
+#2314 - Outdated GenerationTool Javadoc
+#2347 - Let equals() implementations succeed early on identity
+#2368 - Table names should be quoted correctly to prevent problems when using
+        keywords as table names
+#2401 - Bad package name generated when <packageName/> contents are not trimmed
+#2469 - NullPointerException in AbstractResultQuery.fetchOneMap()
+
 Version 2.6.3 - February 25, 2013
 ================================================================================
 

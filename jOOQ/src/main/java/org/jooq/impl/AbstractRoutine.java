@@ -271,20 +271,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             registerOutParameters(configuration, (CallableStatement) ctx.statement());
             listener.bindEnd(ctx);
 
-            // Postgres requires two separate queries running in the same
-            // transaction to be executed when fetching refcursor types
-            boolean autoCommit = connection.getAutoCommit();
-            if (autoCommit && configuration.dialect() == SQLDialect.POSTGRES) {
-                connection.setAutoCommit(false);
-            }
-
             listener.executeStart(ctx);
             ctx.statement().execute();
             listener.executeEnd(ctx);
-
-            if (autoCommit && configuration.dialect() == SQLDialect.POSTGRES) {
-                connection.setAutoCommit(autoCommit);
-            }
 
             fetchOutParameters(ctx);
             return 0;

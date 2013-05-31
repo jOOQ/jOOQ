@@ -11,6 +11,9 @@ DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
 DELETE FROM t_triggers/
 
+DROP SEQUENCE s_author_id;/
+CREATE SEQUENCE s_author_id START WITH 1;/
+
 INSERT INTO t_language (id, cd, description, description_english) VALUES (1, 'en', 'English', 'English')/
 INSERT INTO t_language (id, cd, description, description_english) VALUES (2, 'de', 'Deutsch', 'German')/
 INSERT INTO t_language (id, cd, description, description_english) VALUES (3, 'fr', 'Français', 'French')/
@@ -18,8 +21,8 @@ INSERT INTO t_language (id, cd, description, description_english) VALUES (4, 'pt
 /
 
 INSERT INTO t_author (id, first_name, last_name, date_of_birth, year_of_birth, address)
-VALUES (1, 'George', 'Orwell', '1903-06-25', 1903, null),
-       (2, 'Paulo',  'Coelho', '1947-08-24', 1947, null)
+VALUES (next value for s_author_id, 'George', 'Orwell', '1903-06-25', 1903, null),
+       (next value for s_author_id, 'Paulo',  'Coelho', '1947-08-24', 1947, null)
 /
 
 INSERT INTO t_book (id, author_id, co_author_id, details_id, title, published_in, language_id, content_text, content_pdf)

@@ -81,6 +81,7 @@ import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.sqlserver.generatedclasses.Keys;
 import org.jooq.test.sqlserver.generatedclasses.Routines;
+import org.jooq.test.sqlserver.generatedclasses.Sequences;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TAuthorRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookRecord;
 import org.jooq.test.sqlserver.generatedclasses.tables.records.TBookStoreRecord;
@@ -722,7 +723,7 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Override
     protected Class<?> cSequences() {
-        return null;
+        return Sequences.class;
     }
 
     @Override

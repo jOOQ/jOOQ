@@ -40,12 +40,12 @@ import static org.jooq.util.sqlserver.information_schema.Tables.KEY_COLUMN_USAGE
 import static org.jooq.util.sqlserver.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
 import static org.jooq.util.sqlserver.information_schema.Tables.ROUTINES;
 import static org.jooq.util.sqlserver.information_schema.Tables.SCHEMATA;
+import static org.jooq.util.sqlserver.information_schema.Tables.SEQUENCES;
 import static org.jooq.util.sqlserver.information_schema.Tables.TABLES;
 import static org.jooq.util.sqlserver.information_schema.Tables.TABLE_CONSTRAINTS;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.jooq.DSLContext;
@@ -57,7 +57,10 @@ import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
+import org.jooq.util.DefaultSequenceDefinition;
 import org.jooq.util.EnumDefinition;
 import org.jooq.util.PackageDefinition;
 import org.jooq.util.RoutineDefinition;
@@ -75,6 +78,18 @@ import org.jooq.util.UDTDefinition;
  * @author Lukas Eder
  */
 public class SQLServerDatabase extends AbstractDatabase {
+
+    private static Boolean is2012;
+
+    private boolean is2012() {
+        if (is2012 == null) {
+            is2012 = create().selectCount()
+                             .from(SEQUENCES)
+                             .fetchOne(0, boolean.class);
+        }
+
+        return is2012;
+    }
 
     @Override
     protected DSLContext create0() {
@@ -189,7 +204,31 @@ public class SQLServerDatabase extends AbstractDatabase {
 
     @Override
     protected List<SequenceDefinition> getSequences0() throws SQLException {
-        return Collections.emptyList();
+        List<SequenceDefinition> result = new ArrayList<SequenceDefinition>();
+
+        if (is2012()) {
+            for (Record record : create()
+                    .select(
+                        SEQUENCES.SEQUENCE_SCHEMA,
+                        SEQUENCES.SEQUENCE_NAME,
+                        SEQUENCES.DATA_TYPE)
+                    .from(SEQUENCES)
+                    .where(SEQUENCES.SEQUENCE_SCHEMA.in(getInputSchemata()))
+                    .fetch()) {
+
+                SchemaDefinition schema = getSchema(record.getValue(SEQUENCES.SEQUENCE_SCHEMA));
+
+                DataTypeDefinition type = new DefaultDataTypeDefinition(
+                    this,
+                    schema,
+                    record.getValue(SEQUENCES.DATA_TYPE), 0, 0, 0);
+
+                result.add(new DefaultSequenceDefinition(
+                    schema, record.getValue(SEQUENCES.SEQUENCE_NAME), type));
+            }
+        }
+
+        return result;
     }
 
     @Override

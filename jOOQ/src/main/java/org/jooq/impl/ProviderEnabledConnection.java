@@ -71,7 +71,11 @@ class ProviderEnabledConnection extends DefaultConnection {
 
     @Override
     public final void close() throws SQLException {
-        connectionProvider.release(getDelegate());
+        Connection connection = getDelegate();
+
+        if (connection != null) {
+            connectionProvider.release(connection);
+        }
     }
 
     // ------------------------------------------------------------------------

@@ -38,6 +38,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
 import org.jooq.api.annotation.State;
@@ -69,7 +70,7 @@ public interface WindowRowsAndStep<T> {
      * Add a <code>... AND UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "AND UNBOUNDED PRECEDING"
     )
@@ -79,7 +80,7 @@ public interface WindowRowsAndStep<T> {
      * Add a <code>... AND [number] PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "AND PRECEDING",
         args = "Integer"
@@ -90,7 +91,7 @@ public interface WindowRowsAndStep<T> {
      * Add a <code>... AND CURRENT ROW</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "AND CURRENT ROW"
     )
@@ -100,7 +101,7 @@ public interface WindowRowsAndStep<T> {
      * Add a <code>... AND UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "AND UNBOUNDED FOLLOWING"
     )
@@ -110,7 +111,7 @@ public interface WindowRowsAndStep<T> {
      * Add a <code>... AND [number] FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "AND FOLLOWING",
         args = "Integer"

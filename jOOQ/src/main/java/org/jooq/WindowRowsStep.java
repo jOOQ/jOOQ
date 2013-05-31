@@ -38,6 +38,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
 import org.jooq.api.annotation.State;
@@ -69,7 +70,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS UNBOUNDED PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS UNBOUNDED PRECEDING"
     )
@@ -79,7 +80,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS [number] PRECEDING</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS PRECEDING",
         args = "Integer"
@@ -89,7 +90,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
     /**
      * Add a <code>ROWS CURRENT ROW</code> frame clause to the window function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS CURRENT ROW"
     )
@@ -99,7 +100,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS UNBOUNDED FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS UNBOUNDED FOLLOWING"
     )
@@ -109,7 +110,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS [number] FOLLOWING</code> frame clause to the window
      * function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS FOLLOWING",
         args = "Integer"
@@ -120,7 +121,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN UNBOUNDED PRECEDING ...</code> frame clause to
      * the window function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS BETWEEN UNBOUNDED PRECEDING"
     )
@@ -130,7 +131,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN [number] PRECEDING ...</code> frame clause to
      * the window function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS BETWEEN PRECEDING",
         args = "Integer"
@@ -141,7 +142,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN CURRENT ROW ...</code> frame clause to
      * the window function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS BETWEEN CURRENT ROW"
     )
@@ -151,7 +152,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN UNBOUNDED FOLLOWING ...</code> frame clause to
      * the window function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS BETWEEN UNBOUNDED FOLLOWING"
     )
@@ -161,7 +162,7 @@ public interface WindowRowsStep<T> extends WindowFinalStep<T> {
      * Add a <code>ROWS BETWEEN [number] FOLLOWING ...</code> frame clause to
      * the window function.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "ROWS BETWEEN FOLLOWING",
         args = "Integer"

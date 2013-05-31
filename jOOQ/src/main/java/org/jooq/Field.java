@@ -2916,7 +2916,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#firstValue(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowIgnoreNullsStep<T> firstValue();
 
     /**
@@ -2927,7 +2927,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lastValue(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     WindowIgnoreNullsStep<T> lastValue();
 
     /**
@@ -2938,7 +2938,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lead(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
     WindowIgnoreNullsStep<T> lead();
 
     /**
@@ -2949,7 +2949,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lead(Field, int)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
     WindowIgnoreNullsStep<T> lead(int offset);
 
     /**
@@ -2960,7 +2960,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lead(Field, int, Object)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
     WindowIgnoreNullsStep<T> lead(int offset, T defaultValue);
 
     /**
@@ -2971,7 +2971,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lead(Field, int, Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
     WindowIgnoreNullsStep<T> lead(int offset, Field<T> defaultValue);
 
     /**
@@ -2982,7 +2982,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lag(Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
     WindowIgnoreNullsStep<T> lag();
 
     /**
@@ -2993,7 +2993,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lag(Field, int)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
     WindowIgnoreNullsStep<T> lag(int offset);
 
     /**
@@ -3004,7 +3004,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lag(Field, int, Object)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
     WindowIgnoreNullsStep<T> lag(int offset, T defaultValue);
 
     /**
@@ -3015,7 +3015,7 @@ public interface Field<T> extends GroupField {
      * @see DSL#lag(Field, int, Field)
      * @see AggregateFunction#over()
      */
-    @Support({ DB2, POSTGRES, ORACLE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER })
     WindowIgnoreNullsStep<T> lag(int offset, Field<T> defaultValue);
 
     /**

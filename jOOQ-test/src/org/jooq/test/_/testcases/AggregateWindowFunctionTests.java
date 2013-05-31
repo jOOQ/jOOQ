@@ -521,7 +521,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         switch (dialect()) {
             case CUBRID:
             case DB2:
-            case SQLSERVER:
                 log.info("SKIPPING", "PERCENT_RANK() and CUME_DIST() window function tests");
                 break;
 
@@ -543,30 +542,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
                 // Ordered PERCENT_RANK()
                 column++;
-                assertEquals("1", result.get(0).getValue(column, String.class));
+                assertEquals("1", result.get(0).getValue(column, String.class).substring(0, 1));
                 assertEquals("0.6", result.get(1).getValue(column, String.class).substring(0, 3));
                 assertEquals("0.3", result.get(2).getValue(column, String.class).substring(0, 3));
-                assertEquals("0", result.get(3).getValue(column, String.class));
+                assertEquals("0", result.get(3).getValue(column, String.class).substring(0, 1));
 
                 // Partitioned and ordered PERCENT_RANK()
                 column++;
-                assertEquals("1", result.get(0).getValue(column, String.class));
-                assertEquals("0", result.get(1).getValue(column, String.class));
-                assertEquals("1", result.get(2).getValue(column, String.class));
-                assertEquals("0", result.get(3).getValue(column, String.class));
+                assertEquals("1", result.get(0).getValue(column, String.class).substring(0, 1));
+                assertEquals("0", result.get(1).getValue(column, String.class).substring(0, 1));
+                assertEquals("1", result.get(2).getValue(column, String.class).substring(0, 1));
+                assertEquals("0", result.get(3).getValue(column, String.class).substring(0, 1));
 
                 // Ordered CUME_DIST()
                 column++;
-                assertEquals("1", result.get(0).getValue(column, String.class));
+                assertEquals("1", result.get(0).getValue(column, String.class).substring(0, 1));
                 assertEquals("0.75", result.get(1).getValue(column, String.class));
                 assertEquals("0.5", result.get(2).getValue(column, String.class));
                 assertEquals("0.25", result.get(3).getValue(column, String.class));
 
                 // Partitioned and ordered CUME_DIST()
                 column++;
-                assertEquals("1", result.get(0).getValue(column, String.class));
+                assertEquals("1", result.get(0).getValue(column, String.class).substring(0, 1));
                 assertEquals("0.5", result.get(1).getValue(column, String.class));
-                assertEquals("1", result.get(2).getValue(column, String.class));
+                assertEquals("1", result.get(2).getValue(column, String.class).substring(0, 1));
                 assertEquals("0.5", result.get(3).getValue(column, String.class));
 
                 break;
@@ -657,7 +656,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         column = 0;
-        if (asList(CUBRID, SQLSERVER).contains(dialect())) {
+        if (asList(CUBRID).contains(dialect())) {
             log.info("SKIPPING", "ROWS UNBOUNDED PRECEDING and similar tests");
         }
         else {

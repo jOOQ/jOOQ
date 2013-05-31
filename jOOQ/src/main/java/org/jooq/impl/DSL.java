@@ -8434,7 +8434,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "PERCENT_RANK"
     )
@@ -8448,7 +8448,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ POSTGRES, ORACLE, SYBASE })
+    @Support({ POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "CUME_DIST"
     )
@@ -8477,7 +8477,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "FIRST_VALUE",
         args = "Field"
@@ -8492,7 +8492,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ DB2, POSTGRES, ORACLE, SYBASE })
+    @Support({ DB2, POSTGRES, ORACLE, SQLSERVER, SYBASE })
     @Transition(
         name = "LAST_VALUE",
         args = "Field"
@@ -8507,7 +8507,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER, ORACLE })
     @Transition(
         name = "LEAD",
         args = "Field"
@@ -8522,7 +8522,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER, ORACLE })
     @Transition(
         name = "LEAD",
         args = {
@@ -8542,7 +8542,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER, ORACLE })
     @Transition(
         name = "LEAD",
         args = {
@@ -8563,7 +8563,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER, ORACLE })
     @Transition(
         name = "LEAD",
         args = {
@@ -8582,7 +8582,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER, ORACLE })
     @Transition(
         name = "LAG",
         args = "Field"
@@ -8597,7 +8597,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER, ORACLE })
     @Transition(
         name = "LAG",
         args = {
@@ -8617,7 +8617,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER, ORACLE })
     @Transition(
         name = "LAG",
         args = {
@@ -8638,7 +8638,7 @@ public class DSL {
      * Window functions are supported in CUBRID, DB2, Postgres, Oracle, SQL
      * Server and Sybase.
      */
-    @Support({ CUBRID, DB2, POSTGRES, ORACLE })
+    @Support({ CUBRID, DB2, POSTGRES, SQLSERVER, ORACLE })
     @Transition(
         name = "LAG",
         args = {

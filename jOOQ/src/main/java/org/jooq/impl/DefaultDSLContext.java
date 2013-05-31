@@ -37,18 +37,11 @@
 package org.jooq.impl;
 
 import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
-import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.ParamType.INLINED;
@@ -1470,7 +1463,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    @Support({ ASE, CUBRID, DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE, SQLSERVER, SYBASE })
     public BigInteger lastID() throws DataAccessException {
         switch (configuration.dialect()) {
             case DERBY: {
@@ -1513,15 +1505,13 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SYBASE })
     public <T extends Number> T nextval(Sequence<T> sequence) {
         Field<T> nextval = sequence.nextval();
         return select(nextval).fetchOne(nextval);
     }
 
     @Override
-    @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SYBASE })
-    public <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException {
+    public <T extends Number> T currval(Sequence<T> sequence) {
         Field<T> currval = sequence.currval();
         return select(currval).fetchOne(currval);
     }

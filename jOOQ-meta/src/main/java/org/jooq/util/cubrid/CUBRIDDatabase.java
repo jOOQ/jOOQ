@@ -160,7 +160,9 @@ public class CUBRIDDatabase extends AbstractDatabase {
             }
         }
         finally {
-            provider.release(connection);
+            if (connection != null) {
+                provider.release(connection);
+            }
         }
     }
 

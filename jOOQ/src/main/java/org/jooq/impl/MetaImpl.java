@@ -101,7 +101,9 @@ class MetaImpl implements Meta, Serializable {
                 throw new DataAccessException("Error while accessing DatabaseMetaData", e);
             }
             finally {
-                provider.release(connection);
+                if (connection != null) {
+                    provider.release(connection);
+                }
             }
         }
 

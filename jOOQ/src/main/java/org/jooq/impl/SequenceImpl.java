@@ -37,7 +37,9 @@ package org.jooq.impl;
 
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.select;
 
 import org.jooq.Configuration;
 import org.jooq.DataType;
@@ -137,13 +139,24 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
 
                 case FIREBIRD:
                 case DERBY:
-                case HSQLDB: {
+                case HSQLDB:
+                case SQLSERVER: {
                     if ("nextval".equals(method)) {
                         String field = "next value for " + getQualifiedName(configuration);
                         return field(field, getDataType());
                     }
                     else if (dialect == FIREBIRD) {
                         return field("gen_id(" + getQualifiedName(configuration) + ", 0)", getDataType());
+                    }
+                    else if (dialect == SQLSERVER) {
+                        return select(field("current_value"))
+                               .from("sys.sequences sq")
+                               .join("sys.schemas sc")
+                               .on("sq.schema_id = sc.schema_id")
+                               .where("sq.name = ?", name)
+                               .and("sc.name = ?", schema.getName())
+                               .asField()
+                               .cast(type);
                     }
                     else {
                         throw new SQLDialectNotSupportedException("The sequence's current value functionality is not supported for the " + dialect + " dialect.");

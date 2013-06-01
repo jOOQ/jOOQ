@@ -309,7 +309,7 @@ class Val<T> extends AbstractParam<T> {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private final void toSQL(RenderContext context, Object val, Class<?> type) {
-        SQLDialect dialect = context.configuration().dialect();
+        SQLDialect family = context.configuration().dialect().family();
 
         // [#650] Check first, if we have a converter for the supplied type
         Converter<?, ?> converter = DataTypes.converter(type);
@@ -331,7 +331,7 @@ class Val<T> extends AbstractParam<T> {
 
                 // [#1153] Some dialects don't support boolean literals
                 // TRUE and FALSE
-                if (asList(ASE, DB2, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect)) {
+                if (asList(ASE, DB2, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(family)) {
                     context.sql(((Boolean) val) ? "1" : "0");
                 }
                 else {
@@ -343,27 +343,27 @@ class Val<T> extends AbstractParam<T> {
             else if (type == byte[].class) {
                 byte[] binary = (byte[]) val;
 
-                if (asList(ASE, SQLSERVER, SYBASE).contains(dialect)) {
+                if (asList(ASE, SQLSERVER, SYBASE).contains(family)) {
                     context.sql("0x")
                            .sql(convertBytesToHex(binary));
                 }
-                else if (dialect == DB2) {
+                else if (family == DB2) {
                     context.keyword("blob")
                            .sql("(X'")
                            .sql(convertBytesToHex(binary))
                            .sql("')");
                 }
-                else if (asList(DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE).contains(dialect)) {
+                else if (asList(DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE).contains(family)) {
                     context.sql("X'")
                            .sql(convertBytesToHex(binary))
                            .sql("'");
                 }
-                else if (asList(ORACLE).contains(dialect)) {
+                else if (asList(ORACLE).contains(family)) {
                     context.keyword("hextoraw('")
                            .sql(convertBytesToHex(binary))
                            .sql("')");
                 }
-                else if (dialect == POSTGRES) {
+                else if (family == POSTGRES) {
                     context.sql("E'")
                            .sql(convertBytesToPostgresOctal(binary))
                            .keyword("'::bytea");
@@ -395,12 +395,12 @@ class Val<T> extends AbstractParam<T> {
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement date literals
-                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
+                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
 
                 // [#1253] Derby doesn't support the standard literal
-                else if (dialect == DERBY) {
+                else if (family == DERBY) {
                     context.keyword("date('").sql(escape(val)).sql("')");
                 }
 
@@ -413,17 +413,17 @@ class Val<T> extends AbstractParam<T> {
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement timestamp literals
-                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
+                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
 
                 // [#1253] Derby doesn't support the standard literal
-                else if (dialect == DERBY) {
+                else if (family == DERBY) {
                     context.keyword("timestamp('").sql(escape(val)).sql("')");
                 }
 
                 // CUBRID timestamps have no fractional seconds
-                else if (dialect == CUBRID) {
+                else if (family == CUBRID) {
                     context.keyword("datetime '").sql(escape(val)).sql("'");
                 }
 
@@ -436,17 +436,17 @@ class Val<T> extends AbstractParam<T> {
 
                 // The SQLite JDBC driver does not implement the escape syntax
                 // [#1253] SQL Server and Sybase do not implement time literals
-                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(dialect)) {
+                if (asList(ASE, SQLITE, SQLSERVER, SYBASE).contains(family)) {
                     context.sql("'").sql(escape(val)).sql("'");
                 }
 
                 // [#1253] Derby doesn't support the standard literal
-                else if (dialect == DERBY) {
+                else if (family == DERBY) {
                     context.keyword("time('").sql(escape(val)).sql("')");
                 }
 
                 // [#1253] Oracle doesn't know time literals
-                else if (dialect == ORACLE) {
+                else if (family == ORACLE) {
                     context.keyword("timestamp '1970-01-01 ").sql(escape(val)).sql("'");
                 }
 
@@ -459,7 +459,7 @@ class Val<T> extends AbstractParam<T> {
                 String separator = "";
 
                 // H2 renders arrays as rows
-                if (dialect == H2) {
+                if (family == H2) {
                     context.sql("(");
 
                     for (Object o : ((Object[]) val)) {
@@ -508,13 +508,13 @@ class Val<T> extends AbstractParam<T> {
 
         // In Postgres, some additional casting must be done in some cases...
         // TODO: Improve this implementation with [#215] (cast support)
-        else if (dialect == SQLDialect.POSTGRES) {
+        else if (family == SQLDialect.POSTGRES) {
 
             // Postgres needs explicit casting for array types
             if (type.isArray() && byte[].class != type) {
                 context.sql(getBindVariable(context));
                 context.sql("::");
-                context.keyword(DefaultDataType.getDataType(dialect, type).getCastTypeName(context.configuration()));
+                context.keyword(DefaultDataType.getDataType(family, type).getCastTypeName(context.configuration()));
             }
 
             // ... and also for enum types

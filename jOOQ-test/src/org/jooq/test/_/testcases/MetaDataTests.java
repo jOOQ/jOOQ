@@ -333,7 +333,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     && dialect() != SQLDialect.ORACLE
                     && dialect() != SQLDialect.POSTGRES
                     && dialect() != SQLDialect.SQLITE
-                    && dialect() != SQLDialect.SQLSERVER) {
+                    && dialect().family() != SQLDialect.SQLSERVER) {
 
                 assertEquals(BigDecimal.class, field.getType());
                 assertEquals(SQLDataType.DECIMAL.getType(), field.getDataType().getType());
@@ -378,7 +378,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#746] TODO: Fix this, too
             else if ("DOUBLE".equalsIgnoreCase(field.getName())
-                    && dialect() != SQLDialect.SQLSERVER
+                    && dialect().family() != SQLDialect.SQLSERVER
                     && dialect() != SQLDialect.ASE) {
 
                 assertEquals(Double.class, field.getType());

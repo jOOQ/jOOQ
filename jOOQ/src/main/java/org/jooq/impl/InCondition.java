@@ -74,7 +74,7 @@ class InCondition<T> extends AbstractCondition {
         if (list.size() > IN_LIMIT) {
             // [#798] Oracle and some other dialects can only hold 1000 values
             // in an IN (...) clause
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
                 case FIREBIRD:
                 case INGRES:
                 case ORACLE:

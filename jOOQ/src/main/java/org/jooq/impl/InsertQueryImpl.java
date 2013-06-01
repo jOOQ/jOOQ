@@ -135,7 +135,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
         if (onDuplicateKeyUpdate) {
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
@@ -173,7 +173,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY IGNORE clause
         // ------------------------------
         else if (onDuplicateKeyIgnore) {
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
 
                 // MySQL has a nice, native syntax for this
                 case MYSQL: {
@@ -230,7 +230,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY UPDATE clause
         // ------------------------------
         if (onDuplicateKeyUpdate) {
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
@@ -264,7 +264,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ON DUPLICATE KEY IGNORE clause
         // ------------------------------
         else if (onDuplicateKeyIgnore) {
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
 
                 // MySQL has a nice, native syntax for this
                 case MYSQL: {

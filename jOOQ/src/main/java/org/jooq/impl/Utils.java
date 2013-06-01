@@ -1889,7 +1889,7 @@ final class Utils {
             return (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.configuration().dialect().family()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type
@@ -2190,7 +2190,7 @@ final class Utils {
             return (T) (string == null ? null : ULong.valueOf(string));
         }
         else if (type == UUID.class) {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.configuration().dialect().family()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type

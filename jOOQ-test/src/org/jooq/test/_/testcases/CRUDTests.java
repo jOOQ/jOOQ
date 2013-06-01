@@ -564,7 +564,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Amazon", store.getValue(TBookStore_NAME()));
         assertEquals(null, create().fetchOne(TBookStore(), TBookStore_NAME().equal("Amazon")));
 
-        switch (dialect()) {
+        switch (dialect().family()) {
             // Sybase ASE and SQL server do not allow for explicitly setting
             // values on IDENTITY columns
             case ASE:

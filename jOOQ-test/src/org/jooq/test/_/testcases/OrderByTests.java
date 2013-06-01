@@ -39,12 +39,8 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.lower;
@@ -278,9 +274,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testLimit() throws Exception {
 
         // Some dialects don't support LIMIT 0 / TOP 0
-        int lower = asList(DB2, DERBY, HSQLDB, INGRES, SYBASE).contains(dialect()) ? 1 : 0;
-
-        for (int i = lower; i < 6; i++) {
+        for (int i = 1; i < 6; i++) {
             assertEquals(Math.min(i, 4),
                 create().selectFrom(TBook()).limit(i).fetch().size());
             assertEquals(Math.min(i, 4),
@@ -292,7 +286,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             return;
         }
 
-        for (int i = lower; i < 6; i++) {
+        for (int i = 1; i < 6; i++) {
             assertEquals(Math.min(i, 3),
                 create().selectFrom(TBook()).limit(1, i).fetch().size());
             assertEquals(Math.min(i, 3),
@@ -315,7 +309,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLimitAliased() throws Exception {
-        if (asList(ASE, SQLSERVER).contains(dialect())) {
+        if (asList(ASE, SQLSERVER).contains(dialect().family())) {
             log.info("SKIPPING", "LIMIT .. OFFSET tests");
             return;
         }
@@ -387,9 +381,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         // Some dialects don't support LIMIT 0 / TOP 0
-        int lower = asList(DB2, DERBY, HSQLDB, SYBASE).contains(dialect()) ? 1 : 0;
-
-        for (int i = lower; i < 6; i++) {
+        for (int i = 1; i < 6; i++) {
             Select<?> s1 = create().selectFrom(TBook()).limit(param("limit", i));
             Select<?> s2 = create().select().from(TBook()).limit(param("limit", i));
 
@@ -399,7 +391,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(Math.min(i + 1, 4), s2.bind("limit", i + 1).fetch().size());
         }
 
-        for (int i = lower; i < 6; i++) {
+        for (int i = 1; i < 6; i++) {
             Select<?> s1a = create().selectFrom(TBook()).limit(param("offset", 1), i);
             Select<?> s1b = create().selectFrom(TBook()).limit(1, param("limit", i));
             Select<?> s1c = create().selectFrom(TBook()).limit(param("offset", 1), param("limit", i));

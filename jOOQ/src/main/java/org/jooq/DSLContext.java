@@ -48,6 +48,7 @@ import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SQLSERVER2012;
 import static org.jooq.SQLDialect.SYBASE;
 
 import java.math.BigInteger;
@@ -4554,7 +4555,7 @@ public interface DSLContext {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     <T extends Number> T nextval(Sequence<T> sequence) throws DataAccessException;
 
     /**
@@ -4563,7 +4564,7 @@ public interface DSLContext {
      *
      * @throws DataAccessException if something went wrong executing the query
      */
-    @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLSERVER2012, SYBASE })
     <T extends Number> T currval(Sequence<T> sequence) throws DataAccessException;
 
     // -------------------------------------------------------------------------

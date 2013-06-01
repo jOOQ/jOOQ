@@ -37,13 +37,6 @@
 package org.jooq.impl;
 
 import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.DSL.field;
@@ -172,7 +165,6 @@ import org.jooq.SelectQuery;
 import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Sequence;
-import org.jooq.Support;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
@@ -354,133 +346,111 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    @Support
     public <R extends TableRecord<R>> LoaderOptionsStep<R> loadInto(Table<R> table) {
         return new LoaderImpl<R>(configuration, table);
     }
 
     @Override
-    @Support
     public Query query(String sql) {
         return query(sql, new Object[0]);
     }
 
     @Override
-    @Support
     public Query query(String sql, Object... bindings) {
         return new SQLQuery(configuration, sql, bindings);
     }
 
     @Override
-    @Support
     public Query query(String sql, QueryPart... parts) {
         return new SQLQuery(configuration, sql, parts);
     }
 
     @Override
-    @Support
     public Result<Record> fetch(String sql) throws DataAccessException {
         return resultQuery(sql).fetch();
     }
 
     @Override
-    @Support
     public Result<Record> fetch(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetch();
     }
 
     @Override
-    @Support
     public Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetch();
     }
 
     @Override
-    @Support
     public Cursor<Record> fetchLazy(String sql) throws DataAccessException {
         return resultQuery(sql).fetchLazy();
     }
 
     @Override
-    @Support
     public Cursor<Record> fetchLazy(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetchLazy();
     }
 
     @Override
-    @Support
     public Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetchLazy();
     }
 
     @Override
-    @Support
     public List<Result<Record>> fetchMany(String sql) throws DataAccessException {
         return resultQuery(sql).fetchMany();
     }
 
     @Override
-    @Support
     public List<Result<Record>> fetchMany(String sql, Object... bindings) throws DataAccessException {
         return resultQuery(sql, bindings).fetchMany();
     }
 
     @Override
-    @Support
     public List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException {
         return resultQuery(sql, parts).fetchMany();
     }
 
     @Override
-    @Support
     public Record fetchOne(String sql) throws DataAccessException, InvalidResultException {
         return resultQuery(sql).fetchOne();
     }
 
     @Override
-    @Support
     public Record fetchOne(String sql, Object... bindings) throws DataAccessException, InvalidResultException {
         return resultQuery(sql, bindings).fetchOne();
     }
 
     @Override
-    @Support
     public Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException {
         return resultQuery(sql, parts).fetchOne();
     }
 
     @Override
-    @Support
     public int execute(String sql) throws DataAccessException {
         return query(sql).execute();
     }
 
     @Override
-    @Support
     public int execute(String sql, Object... bindings) throws DataAccessException {
         return query(sql, bindings).execute();
     }
 
     @Override
-    @Support
     public int execute(String sql, QueryPart... parts) throws DataAccessException {
         return query(sql, parts).execute();
     }
 
     @Override
-    @Support
     public ResultQuery<Record> resultQuery(String sql) {
         return resultQuery(sql, new Object[0]);
     }
 
     @Override
-    @Support
     public ResultQuery<Record> resultQuery(String sql, Object... bindings) {
         return new SQLResultQuery(configuration, sql, bindings);
     }
 
     @Override
-    @Support
     public ResultQuery<Record> resultQuery(String sql, QueryPart... parts) {
         return new SQLResultQuery(configuration, sql, parts);
     }
@@ -490,55 +460,46 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    @Support
     public Result<Record> fetch(ResultSet rs) throws DataAccessException {
         return fetchLazy(rs).fetch();
     }
 
     @Override
-    @Support
     public Result<Record> fetch(ResultSet rs, Field<?>... fields) throws DataAccessException {
         return fetchLazy(rs, fields).fetch();
     }
 
     @Override
-    @Support
     public Result<Record> fetch(ResultSet rs, DataType<?>... types) throws DataAccessException {
         return fetchLazy(rs, types).fetch();
     }
 
     @Override
-    @Support
     public Result<Record> fetch(ResultSet rs, Class<?>... types) throws DataAccessException {
         return fetchLazy(rs, types).fetch();
     }
 
     @Override
-    @Support
     public Record fetchOne(ResultSet rs) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(rs));
     }
 
     @Override
-    @Support
     public Record fetchOne(ResultSet rs, Field<?>... fields) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(rs, fields));
     }
 
     @Override
-    @Support
     public Record fetchOne(ResultSet rs, DataType<?>... types) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(rs, types));
     }
 
     @Override
-    @Support
     public Record fetchOne(ResultSet rs, Class<?>... types) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(rs, types));
     }
 
     @Override
-    @Support
     public Cursor<Record> fetchLazy(ResultSet rs) throws DataAccessException {
         try {
             return fetchLazy(rs, new MetaDataFieldProvider(configuration, rs.getMetaData()).getFields());
@@ -549,7 +510,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public Cursor<Record> fetchLazy(ResultSet rs, Field<?>... fields) throws DataAccessException {
         ExecuteContext ctx = new DefaultExecuteContext(configuration);
         ExecuteListener listener = new ExecuteListeners(ctx);
@@ -559,7 +519,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public Cursor<Record> fetchLazy(ResultSet rs, DataType<?>... types) throws DataAccessException {
         try {
             Field<?>[] fields = new Field[types.length];
@@ -578,31 +537,26 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public Cursor<Record> fetchLazy(ResultSet rs, Class<?>... types) throws DataAccessException {
         return fetchLazy(rs, Utils.getDataTypes(types));
     }
 
     @Override
-    @Support
     public Result<Record> fetchFromTXT(String string) throws DataAccessException {
         return fetchFromTXT(string, "{null}");
     }
 
     @Override
-    @Support
     public Result<Record> fetchFromTXT(String string, String nullLiteral) throws DataAccessException {
         return fetchFromStringData(Utils.parseTXT(string, nullLiteral));
     }
 
     @Override
-    @Support
     public Result<Record> fetchFromCSV(String string) throws DataAccessException {
         return fetchFromCSV(string, ',');
     }
 
     @Override
-    @Support
     public Result<Record> fetchFromCSV(String string, char delimiter) throws DataAccessException {
         CSVReader reader = new CSVReader(new StringReader(string), delimiter);
         List<String[]> data = null;
@@ -663,7 +617,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    @Support
     public <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
         SelectWhereStep<R> result = DSL.selectFrom(table);
         result.attach(configuration);
@@ -671,7 +624,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public SelectSelectStep<Record> select(Collection<? extends Field<?>> fields) {
         SelectSelectStep<Record> result = DSL.select(fields);
         result.attach(configuration);
@@ -679,7 +631,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public SelectSelectStep<Record> select(Field<?>... fields) {
         SelectSelectStep<Record> result = DSL.select(fields);
         result.attach(configuration);
@@ -823,7 +774,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 // [jooq-tools] END [select]
 
     @Override
-    @Support
     public SelectSelectStep<Record> selectDistinct(Collection<? extends Field<?>> fields) {
         SelectSelectStep<Record> result = DSL.selectDistinct(fields);
         result.attach(configuration);
@@ -831,7 +781,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public SelectSelectStep<Record> selectDistinct(Field<?>... fields) {
         SelectSelectStep<Record> result = DSL.selectDistinct(fields);
         result.attach(configuration);
@@ -975,7 +924,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 // [jooq-tools] END [selectDistinct]
 
     @Override
-    @Support
     public SelectSelectStep<Record1<Integer>> selectZero() {
         SelectSelectStep<Record1<Integer>> result = DSL.selectZero();
         result.attach(configuration);
@@ -983,7 +931,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public SelectSelectStep<Record1<Integer>> selectOne() {
         SelectSelectStep<Record1<Integer>> result = DSL.selectOne();
         result.attach(configuration);
@@ -991,7 +938,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public SelectSelectStep<Record1<Integer>> selectCount() {
         SelectSelectStep<Record1<Integer>> result = DSL.selectCount();
         result.attach(configuration);
@@ -999,25 +945,21 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public SelectQuery<Record> selectQuery() {
         return new SelectQueryImpl(configuration);
     }
 
     @Override
-    @Support
     public <R extends Record> SelectQuery<R> selectQuery(TableLike<R> table) {
         return new SelectQueryImpl<R>(configuration, table);
     }
 
     @Override
-    @Support
     public <R extends Record> InsertQuery<R> insertQuery(Table<R> into) {
         return new InsertQueryImpl<R>(configuration, into);
     }
 
     @Override
-    @Support
     public <R extends Record> InsertSetStep<R> insertInto(Table<R> into) {
         return new InsertImpl(configuration, into, Collections.<Field<?>>emptyList());
     }
@@ -1159,31 +1101,26 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 // [jooq-tools] END [insert]
 
     @Override
-    @Support
     public <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
         return new InsertImpl(configuration, into, Arrays.asList(fields));
     }
 
     @Override
-    @Support
     public <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
         return new InsertImpl(configuration, into, fields);
     }
 
     @Override
-    @Support
     public <R extends Record> UpdateQuery<R> updateQuery(Table<R> table) {
         return new UpdateQueryImpl<R>(configuration, table);
     }
 
     @Override
-    @Support
     public <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
         return new UpdateImpl<R>(configuration, table);
     }
 
     @Override
-    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
         return new MergeImpl(configuration, table);
     }
@@ -1325,25 +1262,21 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 // [jooq-tools] END [merge]
 
     @Override
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
         return mergeInto(table, Arrays.asList(fields));
     }
 
     @Override
-    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
     public <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
         return new MergeImpl(configuration, table, fields);
     }
 
     @Override
-    @Support
     public <R extends Record> DeleteQuery<R> deleteQuery(Table<R> table) {
         return new DeleteQueryImpl<R>(configuration, table);
     }
 
     @Override
-    @Support
     public <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
         return new DeleteImpl<R>(configuration, table);
     }
@@ -1353,13 +1286,11 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    @Support
     public Batch batch(Query... queries) {
         return new BatchMultiple(configuration, queries);
     }
 
     @Override
-    @Support
     public Batch batch(String... queries) {
         Query[] result = new Query[queries.length];
 
@@ -1371,79 +1302,66 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public Batch batch(Collection<? extends Query> queries) {
         return batch(queries.toArray(new Query[queries.size()]));
     }
 
     @Override
-    @Support
     public BatchBindStep batch(Query query) {
         return new BatchSingle(configuration, query);
     }
 
     @Override
-    @Support
     public BatchBindStep batch(String sql) {
         return batch(query(sql));
     }
 
     @Override
-    @Support
     public Batch batch(Query query, Object[]... bindings) {
         return batch(query).bind(bindings);
     }
 
     @Override
-    @Support
     public Batch batch(String sql, Object[]... bindings) {
         return batch(query(sql), bindings);
     }
 
     @Override
-    @Support
     public Batch batchStore(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.STORE, records);
     }
 
     @Override
-    @Support
     public Batch batchStore(Collection<? extends UpdatableRecord<?>> records) {
         return batchStore(records.toArray(new UpdatableRecord[records.size()]));
     }
 
     @Override
-    @Support
     public Batch batchInsert(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.INSERT, records);
     }
 
     @Override
-    @Support
     public Batch batchInsert(Collection<? extends UpdatableRecord<?>> records) {
         return batchInsert(records.toArray(new UpdatableRecord[records.size()]));
     }
 
     @Override
-    @Support
     public Batch batchUpdate(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.UPDATE, records);
     }
 
     @Override
-    @Support
     public Batch batchUpdate(Collection<? extends UpdatableRecord<?>> records) {
         return batchUpdate(records.toArray(new UpdatableRecord[records.size()]));
     }
 
     @Override
-    @Support
     public Batch batchDelete(UpdatableRecord<?>... records) {
         return new BatchCRUD(configuration, Action.DELETE, records);
     }
 
     @Override
-    @Support
     public Batch batchDelete(Collection<? extends UpdatableRecord<?>> records) {
         return batchDelete(records.toArray(new UpdatableRecord[records.size()]));
     }
@@ -1453,7 +1371,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    @Support
     public <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
         return new TruncateImpl<R>(configuration, table);
     }
@@ -1464,7 +1381,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public BigInteger lastID() throws DataAccessException {
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
             case DERBY: {
                 Field<BigInteger> field = field("identity_val_local()", BigInteger.class);
                 return select(field).fetchOne(field);
@@ -1621,55 +1538,46 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     // -------------------------------------------------------------------------
 
     @Override
-    @Support
     public <R extends Record> Result<R> fetch(Table<R> table) throws DataAccessException {
         return fetch(table, trueCondition());
     }
 
     @Override
-    @Support
     public <R extends Record> Result<R> fetch(Table<R> table, Condition condition) throws DataAccessException {
         return selectFrom(table).where(condition).fetch();
     }
 
     @Override
-    @Support
     public <R extends Record> R fetchOne(Table<R> table) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(table));
     }
 
     @Override
-    @Support
     public <R extends Record> R fetchOne(Table<R> table, Condition condition) throws DataAccessException, InvalidResultException {
         return Utils.fetchOne(fetchLazy(table, condition));
     }
 
     @Override
-    @Support
     public <R extends Record> R fetchAny(Table<R> table) throws DataAccessException {
         return Utils.filterOne(selectFrom(table).limit(1).fetch());
     }
 
     @Override
-    @Support
     public <R extends Record> R fetchAny(Table<R> table, Condition condition) throws DataAccessException {
         return Utils.filterOne(selectFrom(table).where(condition).limit(1).fetch());
     }
 
     @Override
-    @Support
     public <R extends Record> Cursor<R> fetchLazy(Table<R> table) throws DataAccessException {
         return fetchLazy(table, trueCondition());
     }
 
     @Override
-    @Support
     public <R extends Record> Cursor<R> fetchLazy(Table<R> table, Condition condition) throws DataAccessException {
         return selectFrom(table).where(condition).fetchLazy();
     }
 
     @Override
-    @Support
     public <R extends TableRecord<R>> int executeInsert(R record) throws DataAccessException {
         InsertQuery<R> insert = insertQuery(record.getTable());
         insert.setRecord(record);
@@ -1677,7 +1585,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public <R extends UpdatableRecord<R>> int executeUpdate(R record) throws DataAccessException {
         UpdateQuery<R> update = updateQuery(record.getTable());
         Utils.addConditions(update, record, record.getTable().getPrimaryKey().getFieldsArray());
@@ -1686,7 +1593,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public <R extends TableRecord<R>, T> int executeUpdate(R record, Condition condition) throws DataAccessException {
         UpdateQuery<R> update = updateQuery(record.getTable());
         update.addConditions(condition);
@@ -1695,7 +1601,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public <R extends UpdatableRecord<R>> int executeDelete(R record) throws DataAccessException {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
         Utils.addConditions(delete, record, record.getTable().getPrimaryKey().getFieldsArray());
@@ -1703,7 +1608,6 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
-    @Support
     public <R extends TableRecord<R>, T> int executeDelete(R record, Condition condition) throws DataAccessException {
         DeleteQuery<R> delete = deleteQuery(record.getTable());
         delete.addConditions(condition);

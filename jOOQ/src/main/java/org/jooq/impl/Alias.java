@@ -104,7 +104,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
             // [#1801] Some databases don't allow "derived column names" in
             // "simple class specifications". Hence, wrap the table reference in
             // a subselect
-            if (fieldAliases != null && asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(dialect) && wrapped instanceof TableImpl) {
+            if (fieldAliases != null && asList(CUBRID, FIREBIRD, SQLSERVER, SYBASE).contains(dialect.family()) && wrapped instanceof TableImpl) {
 
                 @SuppressWarnings("unchecked")
                 Select<Record> select =

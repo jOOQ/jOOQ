@@ -35,10 +35,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.impl.ExpressionOperator.ADD;
-import static org.jooq.impl.ExpressionOperator.CONCAT;
 import static org.jooq.impl.DSL.castAll;
 import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.ExpressionOperator.ADD;
+import static org.jooq.impl.ExpressionOperator.CONCAT;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -73,7 +73,7 @@ class Concat extends AbstractFunction<String> {
         Field<String>[] others = new Field[cast.length - 1];
         System.arraycopy(cast, 1, others, 0, others.length);
 
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
             case MYSQL:
                 return function("concat", SQLDataType.VARCHAR, cast);
 

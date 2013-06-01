@@ -117,7 +117,9 @@ class Limit extends AbstractQueryPart {
                 break;
             }
 
-            case DERBY: {
+            case DERBY:
+            case SQLSERVER:
+            case SQLSERVER2012: {
 
                 // Casts are not supported here...
                 context.castMode(NEVER)
@@ -181,7 +183,7 @@ class Limit extends AbstractQueryPart {
             }
 
             case ASE:
-            case SQLSERVER: {
+            case SQLSERVER2008: {
                 if (offset != null) {
                     throw new DataAccessException("Offsets in TOP clause not supported");
                 }
@@ -216,7 +218,9 @@ class Limit extends AbstractQueryPart {
 
             // OFFSET .. LIMIT support provided by the following dialects
             // ----------------------------------------------------------
-            case DERBY: {
+            case DERBY:
+            case SQLSERVER:
+            case SQLSERVER2012: {
                 context.bind(offsetOrZero);
                 context.bind(numberOfRows);
                 break;
@@ -276,7 +280,7 @@ class Limit extends AbstractQueryPart {
             // These dialects don't allow bind variables in their TOP clauses
             // --------------------------------------------------------------
             case DB2:
-            case SQLSERVER: {
+            case SQLSERVER2008: {
 
                 // TOP clauses without bind variables
                 if (offset == null && !rendersParams) {

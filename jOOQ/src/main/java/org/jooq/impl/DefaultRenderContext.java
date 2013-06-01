@@ -309,7 +309,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             sql(literal);
         }
         else {
-            switch (configuration.dialect()) {
+            switch (configuration.dialect().family()) {
 
                 // MySQL supports backticks and double quotes
                 case MYSQL:
@@ -383,7 +383,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             if (((Param<?>) part).isInline())
                 return;
 
-            switch (configuration().dialect()) {
+            switch (configuration().dialect().family()) {
                 case ASE:
                     checkForceInline(2000);
                     return;

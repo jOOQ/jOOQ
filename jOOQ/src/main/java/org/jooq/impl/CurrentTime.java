@@ -59,7 +59,7 @@ class CurrentTime extends AbstractFunction<Time> {
 
     @Override
     final Field<Time> getFunction0(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
             case ORACLE:
                 return field("sysdate", SQLDataType.TIME);
 

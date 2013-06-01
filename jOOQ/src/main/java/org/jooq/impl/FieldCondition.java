@@ -70,7 +70,7 @@ class FieldCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
 
             // [#2485] These don't work nicely, yet
             case CUBRID:

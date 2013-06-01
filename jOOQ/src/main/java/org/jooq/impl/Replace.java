@@ -61,7 +61,7 @@ class Replace extends AbstractFunction<String> {
         Field<?>[] args = getArguments();
 
         // [#861] Most dialects don't ship with a two-argument replace function:
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
             case ASE: {
                 if (args.length == 2) {
                     return function("str_replace", VARCHAR, args[0], args[1], val(null));

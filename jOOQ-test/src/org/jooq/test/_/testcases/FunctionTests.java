@@ -598,7 +598,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testFunctionsOnStrings_HashFunctions() throws Exception {
 
         // MD5
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case CUBRID:
             case DB2:
@@ -1021,7 +1021,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Field<Integer> bitCount = bitCount(3);
 
         // TODO [#896] This somehow doesn't work on some dialects
-        if (asList(ASE, DB2, SQLSERVER).contains(dialect())) {
+        if (asList(ASE, DB2, SQLSERVER).contains(dialect().family())) {
             bitCount = val(2);
         }
 

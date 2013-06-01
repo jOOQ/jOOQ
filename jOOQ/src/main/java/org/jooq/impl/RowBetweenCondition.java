@@ -52,14 +52,6 @@ import static org.jooq.impl.DSL.row;
 import javax.annotation.Generated;
 
 import org.jooq.BetweenAndStep1;
-import org.jooq.BetweenAndStep2;
-import org.jooq.BetweenAndStep3;
-import org.jooq.BetweenAndStep4;
-import org.jooq.BetweenAndStep5;
-import org.jooq.BetweenAndStep6;
-import org.jooq.BetweenAndStep7;
-import org.jooq.BetweenAndStep8;
-import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStep10;
 import org.jooq.BetweenAndStep11;
 import org.jooq.BetweenAndStep12;
@@ -70,9 +62,17 @@ import org.jooq.BetweenAndStep16;
 import org.jooq.BetweenAndStep17;
 import org.jooq.BetweenAndStep18;
 import org.jooq.BetweenAndStep19;
+import org.jooq.BetweenAndStep2;
 import org.jooq.BetweenAndStep20;
 import org.jooq.BetweenAndStep21;
 import org.jooq.BetweenAndStep22;
+import org.jooq.BetweenAndStep3;
+import org.jooq.BetweenAndStep4;
+import org.jooq.BetweenAndStep5;
+import org.jooq.BetweenAndStep6;
+import org.jooq.BetweenAndStep7;
+import org.jooq.BetweenAndStep8;
+import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStepN;
 import org.jooq.BindContext;
 import org.jooq.Condition;
@@ -81,14 +81,6 @@ import org.jooq.Field;
 import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Record2;
-import org.jooq.Record3;
-import org.jooq.Record4;
-import org.jooq.Record5;
-import org.jooq.Record6;
-import org.jooq.Record7;
-import org.jooq.Record8;
-import org.jooq.Record9;
 import org.jooq.Record10;
 import org.jooq.Record11;
 import org.jooq.Record12;
@@ -99,20 +91,20 @@ import org.jooq.Record16;
 import org.jooq.Record17;
 import org.jooq.Record18;
 import org.jooq.Record19;
+import org.jooq.Record2;
 import org.jooq.Record20;
 import org.jooq.Record21;
 import org.jooq.Record22;
+import org.jooq.Record3;
+import org.jooq.Record4;
+import org.jooq.Record5;
+import org.jooq.Record6;
+import org.jooq.Record7;
+import org.jooq.Record8;
+import org.jooq.Record9;
 import org.jooq.RenderContext;
 import org.jooq.Row;
 import org.jooq.Row1;
-import org.jooq.Row2;
-import org.jooq.Row3;
-import org.jooq.Row4;
-import org.jooq.Row5;
-import org.jooq.Row6;
-import org.jooq.Row7;
-import org.jooq.Row8;
-import org.jooq.Row9;
 import org.jooq.Row10;
 import org.jooq.Row11;
 import org.jooq.Row12;
@@ -123,9 +115,17 @@ import org.jooq.Row16;
 import org.jooq.Row17;
 import org.jooq.Row18;
 import org.jooq.Row19;
+import org.jooq.Row2;
 import org.jooq.Row20;
 import org.jooq.Row21;
 import org.jooq.Row22;
+import org.jooq.Row3;
+import org.jooq.Row4;
+import org.jooq.Row5;
+import org.jooq.Row6;
+import org.jooq.Row7;
+import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.RowN;
 
 /**
@@ -180,7 +180,7 @@ implements
     // ------------------------------------------------------------------------
     // XXX: BetweenAndStep API
     // ------------------------------------------------------------------------
-    
+
     @Override
     public final Condition and(Field f) {
         if (maxValue == null) {
@@ -669,11 +669,11 @@ implements
         RowN r = new RowImpl(Utils.fields(record.intoArray(), record.fields()));
         return and(r);
     }
-    
+
     // ------------------------------------------------------------------------
     // XXX: QueryPart API
     // ------------------------------------------------------------------------
-    
+
     @Override
     public final void bind(BindContext context) {
         delegate(context.configuration()).bind(context);
@@ -691,7 +691,7 @@ implements
         RowN max = (RowN) maxValue;
 
         // These dialects don't support the SYMMETRIC keyword at all
-        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect())) {
+        if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
             if (not) {
                 return (QueryPartInternal) r.notBetween(min, max).and(r.notBetween(max, min));
             }
@@ -702,7 +702,7 @@ implements
 
         // These dialects either don't support row value expressions, or they
         // Can't handle row value expressions with the BETWEEN predicate
-        else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect())) {
+        else if (row.size() > 1 && asList(CUBRID, DERBY, FIREBIRD, MYSQL, ORACLE, SQLITE, SQLSERVER, SYBASE).contains(configuration.dialect().family())) {
             Condition result = r.ge(min).and(r.le(max));
 
             if (not) {

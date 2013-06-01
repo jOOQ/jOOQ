@@ -1367,7 +1367,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             dialect() == H2 ||
             dialect() == INGRES || // [#1285] TODO: Fix this for Ingres
             dialect() == MYSQL ||
-            dialect() == SQLSERVER ||
+            dialect().family() == SQLSERVER ||
             dialect() == SQLITE ||
             dialect() == SYBASE) {
 
@@ -1623,14 +1623,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Result<Record4<Long, String, Short, String>> result =
         create().select(
-                    id1,
-                    id2,
+                    id1.as("id1"),
+                    id2.as("id2"),
                     val("1").coerce(Short.class),
                     val(2).coerce(String.class))
                 .from(TBook())
                 .where(id1.in(val(1).coerce(Long.class), val(2).coerce(Long.class)))
                 .and(id2.in(val(1).coerce(String.class), val(2).coerce(String.class)))
-                .orderBy(id1, id2)
+                .orderBy(id1.as("id1"), id2.as("id2"))
                 .fetch();
 
         assertEquals(2, result.size());

@@ -60,7 +60,7 @@ class Substring extends AbstractFunction<String> {
     final Field<String> getFunction0(Configuration configuration) {
         String functionName = "substring";
 
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
 
             // Sybase ASE and SQL Server requires 3 arguments
             case ASE:

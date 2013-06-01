@@ -47,6 +47,8 @@ import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
+import static org.jooq.SQLDialect.SQLSERVER2008;
+import static org.jooq.SQLDialect.SQLSERVER2012;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.name;
@@ -197,7 +199,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                     // "OFFSET" has to be simulated
                     else {
-                        toSQLReferenceLimitDB2SQLServerSybase(context);
+                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
                     }
 
                     break;
@@ -206,7 +208,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 // Sybase ASE and SQL Server support a TOP clause without OFFSET
                 // OFFSET can be simulated in SQL Server, not in ASE
                 case ASE:
-                case SQLSERVER: {
+                case SQLSERVER2008: {
 
                     // Native TOP support, without OFFSET and without bind values
                     if (getLimit().offsetZero() && !getLimit().rendersParams()) {
@@ -215,7 +217,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                     // OFFSET simulation
                     else {
-                        toSQLReferenceLimitDB2SQLServerSybase(context);
+                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
                     }
 
                     break;
@@ -232,7 +234,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                     // OFFSET simulation
                     else {
-                        toSQLReferenceLimitDB2SQLServerSybase(context);
+                        toSQLReferenceLimitDB2SQLServer2008Sybase(context);
                     }
 
                     break;
@@ -252,7 +254,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         // [#1296] FOR UPDATE is simulated in some dialects using ResultSet.CONCUR_UPDATABLE
-        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.configuration().dialect())) {
+        if (forUpdate && !asList(CUBRID, SQLSERVER).contains(context.configuration().dialect().family())) {
             context.formatSeparator()
                    .keyword("for update");
 
@@ -320,12 +322,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     /**
      * Simulate the LIMIT / OFFSET clause in the {@link SQLDialect#DB2},
-     * {@link SQLDialect#SQLSERVER} and {@link SQLDialect#SYBASE} dialects
+     * {@link SQLDialect#SQLSERVER2008} and {@link SQLDialect#SYBASE} dialects
      */
-    private final void toSQLReferenceLimitDB2SQLServerSybase(RenderContext context) {
+    private final void toSQLReferenceLimitDB2SQLServer2008Sybase(RenderContext context) {
 
         // [#1954] Render enclosed SELECT first to obtain a "unique" hash code
         RenderContext tmpLocal = new DefaultRenderContext(context);
+        tmpLocal.subquery(true);
         toSQLReference0(tmpLocal);
         String tmpEnclosed = tmpLocal.render();
 
@@ -335,6 +338,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // Render enclosed SELECT again, adding an additional ROW_NUMBER() OVER()
         // window function, calculating row numbers for the LIMIT .. OFFSET clause
         RenderContext local = new DefaultRenderContext(context);
+        local.subquery(true);
         toSQLReference0(local, rowNumber().over().orderBy(getNonEmptyOrderBy()).as(rownumName));
         String enclosed = local.render();
 
@@ -428,20 +432,27 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         // Sybase and SQL Server have leading TOP clauses
-        switch (dialect) {
+        switch (dialect.family()) {
             case ASE:
             case SQLSERVER: {
 
                 // If we have a TOP clause, it needs to be rendered here
-                if (getLimit().isApplicable() && getLimit().offsetZero() && !getLimit().rendersParams()) {
+                if (asList(ASE, SQLSERVER2008).contains(dialect)
+                        && getLimit().isApplicable()
+                        && getLimit().offsetZero()
+                        && !getLimit().rendersParams()) {
+
                     context.sql(getLimit()).sql(" ");
                 }
 
-                // If we don't have a limit, some subqueries still need a "TOP" clause
-                else if (dialect == SQLSERVER && !getOrderBy().isEmpty()) {
+                // [#759] SQL Server needs a TOP clause in ordered subqueries
+                else if (dialect.family() == SQLSERVER
+                        && context.subquery()
+                        && !getOrderBy().isEmpty()) {
 
-                    // [#759] The TOP 100% is only rendered in subqueries
-                    if (context.subquery() || getLimit().isApplicable()) {
+                    // [#2423] SQL Server 2012 will render an OFFSET .. FETCH
+                    // clause if there is an applicable limit
+                    if (dialect == SQLSERVER2008 || !getLimit().isApplicable()) {
                         context.keyword("top 100 percent ");
                     }
                 }
@@ -584,6 +595,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .keyword(orderBySiblings ? "siblings " : "")
                    .keyword("by ")
                    .sql(getOrderBy());
+        }
+
+        // [#2423] SQL Server 2012 requires an ORDER BY clause, along with
+        // OFFSET .. FETCH
+        else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)){
+            context.formatSeparator()
+                   .keyword("order by 1");
         }
     }
 

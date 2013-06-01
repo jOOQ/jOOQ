@@ -300,7 +300,7 @@ class LocalStatementExecutor implements QueryExecutor {
                 } else {
                     queryExecutionResult = new QueryExecutionMessageResult(Utils.formatDuration(executionDuration) + "> " + updateCount + " row(s) affected.", false);
                 }
-                if(executorContext.getSQLDialect() == SQLDialect.SQLSERVER) {
+                if(executorContext.getSQLDialect().family() == SQLDialect.SQLSERVER) {
                     try {
                         executeResult = stmt.getMoreResults(Statement.KEEP_CURRENT_RESULT);
                     } catch(Exception e) {

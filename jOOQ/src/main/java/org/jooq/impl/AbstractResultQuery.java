@@ -237,7 +237,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
-        else if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect())) {
+        else if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect().family())) {
             ctx.data(DATA_LOCK_ROWS_FOR_UPDATE, true);
             ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
         }

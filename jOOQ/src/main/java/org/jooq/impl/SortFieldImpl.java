@@ -89,7 +89,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
     @Override
     public final void toSQL(RenderContext context) {
         if (nullsFirst || nullsLast) {
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
 
                 // DB2 supports NULLS FIRST/LAST only in OLAP (window) functions
                 case DB2:
@@ -144,7 +144,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         // [#1667] Some dialects simulate NULLS { FIRST | LAST } clauses. They
         // will need to bind the sort field twice
         if (nullsFirst || nullsLast) {
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
                 case DB2:
                 case ASE:
                 case CUBRID:

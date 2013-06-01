@@ -52,10 +52,17 @@ import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 
 /**
- * Supported data types for the {@link SQLDialect#SQLSERVER} dialect
+ * Supported data types for the {@link SQLDialect#SQLSERVER} dialect family.
+ * <p>
+ * This includes the
+ * <ul>
+ * <li>{@link org.jooq.SQLDialect#SQLSERVER2008} dialect</li>
+ * <li>{@link org.jooq.SQLDialect#SQLSERVER2012} dialect</li>
+ * </ul>
  *
  * @author Lukas Eder
- * @see <a href="http://msdn.microsoft.com/en-us/library/aa258271%28v=sql.80%29.aspx">http://msdn.microsoft.com/en-us/library/aa258271%28v=sql.80%29.aspx</a>
+ * @see <a
+ *      href="http://msdn.microsoft.com/en-us/library/aa258271%28v=sql.80%29.aspx">http://msdn.microsoft.com/en-us/library/aa258271%28v=sql.80%29.aspx</a>
  */
 public class SQLServerDataType {
 

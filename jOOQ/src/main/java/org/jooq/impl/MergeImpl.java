@@ -919,7 +919,7 @@ implements
      * Return a standard MERGE statement simulating the H2-specific syntax
      */
     private final QueryPart getStandardMerge(Configuration config) {
-        switch (config.dialect()) {
+        switch (config.dialect().family()) {
             case CUBRID:
             case DB2:
             case HSQLDB:
@@ -1080,7 +1080,7 @@ implements
                .formatIndentEnd()
                .declareTables(false);
 
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case SQLSERVER:
             case SYBASE: {
                 if (using instanceof Select) {
@@ -1150,7 +1150,7 @@ implements
                    .sql(notMatchedWhere);
         }
 
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case SQLSERVER:
                 context.sql(";");
                 break;

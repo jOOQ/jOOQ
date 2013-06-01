@@ -101,7 +101,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
     private final QueryPartInternal delegate(Configuration configuration) {
 
         // These dialects need to simulate the IS DISTINCT FROM operator
-        if (asList(ASE, CUBRID, DB2, DERBY, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect())) {
+        if (asList(ASE, CUBRID, DB2, DERBY, INGRES, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
             if (caseExpression == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {
                     caseExpression = (QueryPartInternal) decode()

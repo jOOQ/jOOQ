@@ -48,6 +48,15 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
+import static org.jooq.impl.DSL.bitAnd;
+import static org.jooq.impl.DSL.bitNot;
+import static org.jooq.impl.DSL.bitOr;
+import static org.jooq.impl.DSL.bitXor;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.function;
+import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.two;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.ExpressionOperator.ADD;
 import static org.jooq.impl.ExpressionOperator.BIT_AND;
 import static org.jooq.impl.ExpressionOperator.BIT_NAND;
@@ -58,15 +67,6 @@ import static org.jooq.impl.ExpressionOperator.BIT_XOR;
 import static org.jooq.impl.ExpressionOperator.SHL;
 import static org.jooq.impl.ExpressionOperator.SHR;
 import static org.jooq.impl.ExpressionOperator.SUBTRACT;
-import static org.jooq.impl.DSL.bitAnd;
-import static org.jooq.impl.DSL.bitNot;
-import static org.jooq.impl.DSL.bitOr;
-import static org.jooq.impl.DSL.bitXor;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-import static org.jooq.impl.DSL.inline;
-import static org.jooq.impl.DSL.two;
-import static org.jooq.impl.DSL.val;
 
 import java.sql.Timestamp;
 
@@ -165,10 +165,10 @@ class Expression<T> extends AbstractFunction<T> {
         }
 
         // Many dialects don't support shifts. Use multiplication/division instead
-        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
+        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect.family())) {
             return lhs.mul(DSL.power(two(), rhsAsNumber()));
         }
-        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect)) {
+        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect.family())) {
             return lhs.div(DSL.power(two(), rhsAsNumber()));
         }
 
@@ -288,7 +288,7 @@ class Expression<T> extends AbstractFunction<T> {
             SQLDialect dialect = configuration.dialect();
             int sign = (operator == ADD) ? 1 : -1;
 
-            switch (dialect) {
+            switch (dialect.family()) {
                 case ASE:
                 case SYBASE:
                 case SQLSERVER: {
@@ -436,7 +436,7 @@ class Expression<T> extends AbstractFunction<T> {
          * Return the expression to be rendered when the RHS is a number type
          */
         private final Field<T> getNumberExpression(Configuration configuration) {
-            switch (configuration.dialect()) {
+            switch (configuration.dialect().family()) {
                 case ASE:
                 case FIREBIRD:
                 case SQLSERVER:

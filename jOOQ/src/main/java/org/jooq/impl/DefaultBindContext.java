@@ -147,7 +147,7 @@ class DefaultBindContext extends AbstractBindContext {
 
             // [#725] For SQL Server, unknown types should be set to null
             // explicitly, too
-            else if (configuration.dialect() == SQLSERVER) {
+            else if (configuration.dialect().family() == SQLSERVER) {
                 stmt.setNull(nextIndex(), sqlType);
             }
 
@@ -268,7 +268,7 @@ class DefaultBindContext extends AbstractBindContext {
             stmt.setBigDecimal(nextIndex(), new BigDecimal(value.toString()));
         }
         else if (type == UUID.class) {
-            switch (dialect) {
+            switch (dialect.family()) {
 
                 // [#1624] Some JDBC drivers natively support the
                 // java.util.UUID data type

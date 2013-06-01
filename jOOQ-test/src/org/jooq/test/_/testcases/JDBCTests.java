@@ -85,8 +85,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Connection c = cp.acquire();
 
         try {
-            assertEquals(create().configuration().dialect(), JDBCUtils.dialect(getConnection()));
-            assertEquals(create().configuration().dialect(), JDBCUtils.dialect(c));
+            assertEquals(create().configuration().dialect().family(), JDBCUtils.dialect(getConnection()).family());
+            assertEquals(create().configuration().dialect().family(), JDBCUtils.dialect(c).family());
         }
         finally {
             cp.release(c);

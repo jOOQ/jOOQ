@@ -130,7 +130,7 @@ public class SQLServerTest extends jOOQAbstractTest<
 
     @Override
     protected DSLContext create0(Settings settings) {
-        return DSL.using(getConnection(), SQLDialect.SQLSERVER, settings);
+        return DSL.using(getConnection(), SQLDialect.SQLSERVER2012, settings);
     }
 
     @Override

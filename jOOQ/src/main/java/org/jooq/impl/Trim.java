@@ -60,7 +60,7 @@ class Trim extends AbstractFunction<String> {
 
     @Override
     final Field<String> getFunction0(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
             case ASE:
             case INGRES:
             case SQLSERVER:

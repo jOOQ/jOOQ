@@ -37,14 +37,22 @@
 package org.jooq;
 
 /**
- * This enumeration lists all supported dialects.
+ * Dialects and dialect families as supported by jOOQ.
+ * <p>
+ * jOOQ supports a variety of dialects, which are grouped into dialect families.
+ * For instance, the SQL Server dialect family {@link #SQLSERVER} is specialised
+ * by its dialects
+ * <ul>
+ * <li> {@link #SQLSERVER2008}</li>
+ * <li> {@link #SQLSERVER2012}</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
 public enum SQLDialect {
 
     /**
-     * The standard SQL dialect.
+     * The standard SQL dialect family.
      *
      * @deprecated - Do not reference this pseudo-dialect. It is only used for
      *             unit testing
@@ -53,79 +61,109 @@ public enum SQLDialect {
     SQL99(null),
 
     /**
-     * The Sybase Adaptive Server SQL dialect
+     * The Sybase Adaptive Server SQL dialect family.
      */
     ASE("ASE"),
 
     /**
-     * The CUBRID SQL dialect
+     * The CUBRID SQL dialect family.
      */
     CUBRID("CUBRID"),
 
     /**
-     * The IBM DB2 SQL dialect
+     * The IBM DB2 SQL dialect family.
      */
     DB2("DB2"),
 
     /**
-     * The Apache Derby SQL dialect
+     * The Apache Derby SQL dialect family.
      */
     DERBY("Derby"),
 
     /**
-     * The Firebird SQL dialect
+     * The Firebird SQL dialect family.
      */
     FIREBIRD("Firebird"),
 
     /**
-     * The H2 SQL dialect
+     * The H2 SQL dialect family.
      */
     H2("H2"),
 
     /**
-     * The Hypersonic SQL dialect
+     * The Hypersonic SQL dialect family.
      */
     HSQLDB("HSQLDB"),
 
     /**
-     * The Ingres dialect
+     * The Ingres dialect family.
      */
     INGRES("Ingres"),
 
     /**
-     * The MySQL dialect
+     * The MySQL dialect family.
      */
     MYSQL("MySQL"),
 
     /**
-     * The Oracle dialect
+     * The Oracle dialect family.
      */
     ORACLE("Oracle"),
 
     /**
-     * The PostGres dialect
+     * The PostgreSQL dialect family.
      */
     POSTGRES("Postgres"),
 
     /**
-     * The SQLite dialect
+     * The SQLite dialect family.
      */
     SQLITE("SQLite"),
 
     /**
-     * The SQL Server dialect
+     * The SQL Server dialect family.
      */
     SQLSERVER("SQLServer"),
 
     /**
-     * The Sybase dialect
+     * The SQL Server 2008 dialect.
+     */
+    SQLSERVER2008("SQLServer", SQLSERVER),
+
+    /**
+     * The SQL Server 2012 dialect.
+     */
+    SQLSERVER2012("SQLServer", SQLSERVER),
+
+    /**
+     * The Sybase SQL Anywhere dialect family.
      */
     SYBASE("Sybase");
 
-    private final String name;
+    private final String     name;
+    private final SQLDialect family;
 
     private SQLDialect(String name) {
+        this(name, null);
+    }
+
+    private SQLDialect(String name, SQLDialect family) {
         this.name = name;
+        this.family = family;
+    }
+
+    /**
+     * The dialect family.
+     * <p>
+     * This returns the dialect itself, if it has no "parent family". E.g.
+     * <code><pre>
+     * SQLSERVER == SQLSERVER2012.family();
+     * SQLSERVER == SQLSERVER2008.family();
+     * SQLSERVER == SQLSERVER.family();
+     * </pre></code>
+     */
+    public final SQLDialect family() {
+        return family == null ? this : family;
     }
 
     /**
@@ -143,7 +181,7 @@ public enum SQLDialect {
     }
 
     /**
-     * The name of this dialect as it appears in related enum values
+     * The name of this dialect as it appears in related enum values.
      */
     public final String getNameUC() {
         return name.toUpperCase();

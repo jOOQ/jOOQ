@@ -157,7 +157,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // Some dialects don't support a median function or a simulation thereof
         // Use AVG instead, as in this example the values of MEDIAN and AVG
         // are the same
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case CUBRID:
             case DERBY:
@@ -307,7 +307,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1728] COUNT(DISTINCT expr1, expr2, ...)
         // -----------------------------------------
-        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect())) {
+        if (asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, INGRES, ORACLE, POSTGRES, SQLITE, SQLSERVER, SYBASE).contains(dialect().family())) {
             log.info("SKIPPING", "Multi-expression COUNT(DISTINCT) test");
         }
         else {
@@ -320,7 +320,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testLinearRegressionFunctions() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case CUBRID:
             case DERBY:
@@ -716,7 +716,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(Integer.valueOf(3), result.getValue(3, column));
         }
 
-        switch (dialect()) {
+        switch (dialect().family()) {
             case CUBRID:
             case POSTGRES:
             case SQLSERVER:
@@ -893,7 +893,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testListAgg() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case DERBY:
             case INGRES:

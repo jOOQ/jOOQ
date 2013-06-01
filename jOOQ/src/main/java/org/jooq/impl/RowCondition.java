@@ -103,7 +103,7 @@ class RowCondition extends AbstractCondition {
 
         // Regular comparison predicate simulation
         if (asList(EQUALS, NOT_EQUALS).contains(comparator) &&
-            asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect)) {
+            asList(ASE, DERBY, FIREBIRD, INGRES, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
             List<Condition> conditions = new ArrayList<Condition>();
 
             Field<?>[] leftFields = left.fields();
@@ -124,7 +124,7 @@ class RowCondition extends AbstractCondition {
 
         // Ordering comparison predicate simulation
         else if (asList(GREATER, GREATER_OR_EQUAL, LESS, LESS_OR_EQUAL).contains(comparator) &&
-                 asList(DERBY, CUBRID, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect)) {
+                 asList(DERBY, CUBRID, FIREBIRD, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(dialect.family())) {
 
             // The order component of the comparator (stripping the equal component)
             Comparator order

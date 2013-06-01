@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
@@ -66,7 +67,6 @@ import org.jooq.Parameter;
 import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Routine;
-import org.jooq.SQLDialect;
 import org.jooq.Schema;
 import org.jooq.UDTField;
 import org.jooq.UDTRecord;
@@ -353,7 +353,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 Field<?> value = getInValues().get(parameter);
 
                 // Disambiguate overloaded procedure signatures
-                if (SQLDialect.POSTGRES == context.configuration().dialect() && isOverloaded()) {
+                if (POSTGRES == context.configuration().dialect() && isOverloaded()) {
                     value = value.cast(parameter.getType());
                 }
 
@@ -705,7 +705,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             for (Parameter<?> p : getInParameters()) {
 
                 // Disambiguate overloaded function signatures
-                if (SQLDialect.POSTGRES == c.dialect() && isOverloaded()) {
+                if (POSTGRES == c.dialect() && isOverloaded()) {
                     array[i] = getInValues().get(p).cast(p.getType());
                 }
                 else {

@@ -84,7 +84,7 @@ class Trunc<T> extends AbstractFunction<T> {
     }
 
     private final Field<T> getNumericFunction(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
             case ASE:
             case DERBY: {
                 Field<BigDecimal> power;

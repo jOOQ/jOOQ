@@ -70,7 +70,7 @@ class Dual extends AbstractTable<Record> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case ASE:
             case POSTGRES:
             case SQLITE:

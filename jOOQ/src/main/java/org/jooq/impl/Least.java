@@ -64,7 +64,7 @@ class Least<T> extends AbstractFunction<T> {
             return (Field<T>) getArguments()[0];
         }
 
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
             // This implementation has O(2^n) complexity. Better implementations
             // are very welcome
 

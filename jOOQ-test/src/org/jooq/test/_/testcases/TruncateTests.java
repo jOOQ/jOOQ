@@ -105,7 +105,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testTruncateCascade() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case CUBRID:
             case DB2:
@@ -143,7 +143,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testTruncateRestartIdentity() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case CUBRID:
             case DB2:

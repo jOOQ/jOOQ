@@ -48,7 +48,7 @@ enum Term {
     ATAN2 {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case ASE:
                 case SQLSERVER:
                     return "atn2";
@@ -60,7 +60,7 @@ enum Term {
     BIT_LENGTH {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case ASE:
                     return "8 * datalength";
 
@@ -84,7 +84,7 @@ enum Term {
     CHAR_LENGTH {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case DB2:
                 case DERBY:
                 case INGRES:
@@ -103,7 +103,7 @@ enum Term {
     LIST_AGG {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case CUBRID:
                 case H2:
                 case HSQLDB:
@@ -131,7 +131,7 @@ enum Term {
     OCTET_LENGTH {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case DB2:
                 case DERBY:
                 case INGRES:
@@ -152,7 +152,7 @@ enum Term {
     ROW_NUMBER {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case HSQLDB:
                     return "rownum";
             }
@@ -163,7 +163,7 @@ enum Term {
     STDDEV_POP {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case DB2:
                     return "stddev";
 
@@ -177,7 +177,7 @@ enum Term {
     STDDEV_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case DB2:
                     return "stddev";
 
@@ -191,7 +191,7 @@ enum Term {
     VAR_POP {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case DB2:
                     return "variance";
 
@@ -205,7 +205,7 @@ enum Term {
     VAR_SAMP {
         @Override
         public String translate(SQLDialect dialect) {
-            switch (dialect) {
+            switch (dialect.family()) {
                 case DB2:
                     return "variance";
 

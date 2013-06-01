@@ -190,7 +190,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         // TODO ... and then, think about Ingres, H2 and Derby as well
         if (dialect() == CUBRID ||
             dialect() == SYBASE ||
-            dialect() == SQLSERVER ||
+            dialect().family() == SQLSERVER ||
             dialect() == INGRES ||
             dialect() == H2 ||
             dialect() == DERBY ||
@@ -470,7 +470,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateWithRowValueExpression() throws Exception {
-        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(dialect())) {
+        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(dialect().family())) {
             log.info("SKIPPING", "UPDATE with row value expression tests");
             return;
         }
@@ -625,7 +625,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertNull(returned.getValue(TTriggers_ID()));
         assertNull(returned.getValue(TTriggers_COUNTER()));
 
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             // TODO [#1260] This should work eventually, when CUBRID fixes this
             // JDBC bug
@@ -731,7 +731,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateReturning() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case CUBRID:
             case DB2:
@@ -981,7 +981,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testMergeWithOracleSyntaxExtension() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case DB2:
             case DERBY:
@@ -1204,7 +1204,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateJoin() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case DB2:
             case DERBY:
             case FIREBIRD:

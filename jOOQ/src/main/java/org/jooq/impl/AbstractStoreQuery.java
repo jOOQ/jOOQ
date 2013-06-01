@@ -198,7 +198,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
 
         // Values should be returned from the INSERT
         else {
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.configuration().dialect().family()) {
 
                 // Postgres uses the RETURNING clause in SQL
                 case FIREBIRD:
@@ -249,7 +249,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         else {
             int result = 1;
             ResultSet rs;
-            switch (ctx.configuration().dialect()) {
+            switch (ctx.configuration().dialect().family()) {
 
                 // SQLite can select _rowid_ after the insert
                 case SQLITE: {

@@ -34,51 +34,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
+package org.jooq.test;
 
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.DSLContext;
+import org.jooq.SQLDialect;
+import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
 
 /**
  * @author Lukas Eder
  */
-class Position extends AbstractFunction<Integer> {
-
-    private static final long   serialVersionUID = 3544690069533526544L;
-
-    private final Field<String> search;
-    private final Field<?>      in;
-
-    Position(Field<String> search, Field<?> in) {
-        super("position", SQLDataType.INTEGER, search, in);
-
-        this.search = search;
-        this.in = in;
-    }
+public class SQLServer2008Test extends SQLServerTest {
 
     @Override
-    final Field<Integer> getFunction0(Configuration configuration) {
-        switch (configuration.dialect().family()) {
-            case DB2:    // No break
-            case DERBY:
-                return function("locate", SQLDataType.INTEGER, search, in);
-
-            case INGRES: // No break
-            case SYBASE:
-                return function("locate", SQLDataType.INTEGER, in, search);
-
-            case ORACLE:
-                return function("instr", SQLDataType.INTEGER, in, search);
-
-            case ASE:
-            case SQLSERVER:
-                return function("charindex", SQLDataType.INTEGER, search, in);
-
-            default:
-                return field("{position}({0} {in} {1})", SQLDataType.INTEGER, search, in);
-        }
+    protected DSLContext create0(Settings settings) {
+        return DSL.using(getConnection(), SQLDialect.SQLSERVER2008, settings);
     }
 }

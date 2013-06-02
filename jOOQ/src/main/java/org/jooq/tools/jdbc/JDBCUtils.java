@@ -159,7 +159,7 @@ public class JDBCUtils {
     }
 
     /**
-     * Safely close a statement
+     * Safely close a statement.
      * <p>
      * This method will silently ignore if <code>statement</code> is
      * <code>null</code>, or if {@link Statement#close()} throws an exception.
@@ -174,7 +174,7 @@ public class JDBCUtils {
     }
 
     /**
-     * Safely close a result set
+     * Safely close a result set.
      * <p>
      * This method will silently ignore if <code>resultSet</code> is
      * <code>null</code>, or if {@link ResultSet#close()} throws an exception.
@@ -189,7 +189,7 @@ public class JDBCUtils {
     }
 
     /**
-     * Safely close a result set and / or a statement
+     * Safely close a result set and / or a statement.
      * <p>
      * This method will silently ignore if <code>resultSet</code> or
      * <code>statement</code> is <code>null</code>, or if
@@ -202,7 +202,7 @@ public class JDBCUtils {
     }
 
     /**
-     * Safely free a blob
+     * Safely free a blob.
      * <p>
      * This method will silently ignore if <code>blob</code> is
      * <code>null</code>, or if {@link Blob#free()} throws an exception.
@@ -217,7 +217,7 @@ public class JDBCUtils {
     }
 
     /**
-     * Safely free a clob
+     * Safely free a clob.
      * <p>
      * This method will silently ignore if <code>clob</code> is
      * <code>null</code>, or if {@link Clob#free()} throws an exception.
@@ -232,7 +232,7 @@ public class JDBCUtils {
     }
 
     /**
-     * Convenient way to check if a JDBC-originated record was null
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
      * <p>
      * This is useful to check if primitive types obtained from the JDBC API
      * were actually SQL NULL values.
@@ -247,7 +247,7 @@ public class JDBCUtils {
     }
 
     /**
-     * Convenient way to check if a JDBC-originated record was null
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
      * <p>
      * This is useful to check if primitive types obtained from the JDBC API
      * were actually SQL NULL values.
@@ -262,7 +262,7 @@ public class JDBCUtils {
     }
 
     /**
-     * Convenient way to check if a JDBC-originated record was null
+     * Convenient way to check if a JDBC-originated record was <code>null</code>.
      * <p>
      * This is useful to check if primitive types obtained from the JDBC API
      * were actually SQL NULL values.
@@ -277,7 +277,7 @@ public class JDBCUtils {
     }
 
     /**
-     * No instances
+     * No instances.
      */
     private JDBCUtils() {}
 }

@@ -11,6 +11,22 @@ function printContent() {
     global $minorVersion;
 	global $version;
 ?>
+<iframe style="float: right; width: 324px; height: 402px; overflow: hidden; border: 0px none; margin-left: 10px; margin-bottom: 10px" src="https://www.catincan.com/catincan-embed/472"></iframe>
+
+<h2>Crowd-Fund jOOQ features on Catincan</h2>
+<p>
+Some features might need a little funding to get started first. For example adding MS Access support to jOOQ.
+</p>
+<p>
+In order to provide official support for MS Access in jOOQ, an MS Access license needs to be purchased from Microsoft. 
+</p>
+<p>
+You might have other ideas about features that could be funded in jOOQ. For more info, please refer to Catincan:
+</p>
+<p>
+<a href="https://www.catincan.com/projects/close/jooq" title="Crowd Funding features in jOOQ through Catincan">https://www.catincan.com/projects/close/jooq</a>
+</p>
+
 
 <h2>Get your geeky jOOQ t-shirt or mug from the shop</h2>
 <p>

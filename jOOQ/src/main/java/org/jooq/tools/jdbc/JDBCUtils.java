@@ -159,6 +159,21 @@ public class JDBCUtils {
     }
 
     /**
+     * Safely close a connection.
+     * <p>
+     * This method will silently ignore if <code>connection</code> is
+     * <code>null</code>, or if {@link Connection#close()} throws an exception.
+     */
+    public static final void safeClose(Connection connection) {
+        if (connection != null) {
+            try {
+                connection.close();
+            }
+            catch (Exception ignore) {}
+        }
+    }
+
+    /**
      * Safely close a statement.
      * <p>
      * This method will silently ignore if <code>statement</code> is

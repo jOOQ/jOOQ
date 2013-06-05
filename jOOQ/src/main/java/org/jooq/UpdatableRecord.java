@@ -301,15 +301,63 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     int delete() throws DataAccessException, DataChangedException;
 
     /**
-     * {@inheritDoc}
+     * Refresh this record from the database.
+     * <p>
+     * A successful refresh results in the following:
+     * <ul>
+     * <li>{@link #valuesRow()} will have been restored to the respective values
+     * from the database</li>
+     * <li>{@link #original()} will match this record</li>
+     * <li>{@link #changed()} will be <code>false</code></li>
+     * </ul>
+     * <p>
+     * Refreshing can trigger any of the following actions:
+     * <ul>
+     * <li>Executing a new <code>SELECT</code> statement, if this is an
+     * {@link UpdatableRecord}.</li>
+     * <li>Failing, otherwise</li>
+     * </ul>
+     * <p>
+     * This is the same as calling <code>record.refresh(record.fields())</code>
+     *
+     * @throws DataAccessException This exception is thrown if
+     *             <ul>
+     *             <li>something went wrong executing the refresh <code>SELECT
+     *             </code> statement, if this is an {@link UpdatableRecord}.
+     *             </li> <li>the record does not exist anymore in the database
+     *             </li>
+     *             </ul>
      */
-    @Override
     void refresh() throws DataAccessException;
 
     /**
-     * {@inheritDoc}
+     * Refresh parts of this record from the database.
+     * <p>
+     * A successful refresh results in the following:
+     * <ul>
+     * <li>{@link #valuesRow()} will have been restored to the respective values
+     * from the database</li>
+     * <li>{@link #original()} will match this record</li>
+     * <li>{@link #changed()} will be <code>false</code></li>
+     * </ul>
+     * <p>
+     * Refreshing can trigger any of the following actions:
+     * <ul>
+     * <li>Executing a new <code>SELECT</code> statement, if this is an
+     * {@link UpdatableRecord}.</li>
+     * <li>Failing, otherwise</li>
+     * </ul>
+     * <p>
+     * This is the same as calling <code>record.refresh(record.fields())</code>
+     *
+     * @throws DataAccessException This exception is thrown if
+     *             <ul>
+     *             <li>something went wrong
+     *             executing the refresh <code>SELECT</code> statement, if this
+     *             is an {@link UpdatableRecord}.</li> <li>the record does not
+     *             exist anymore in the database</li>
+     *             </ul>
      */
-    @Override
     void refresh(Field<?>... fields) throws DataAccessException;
 
     /**

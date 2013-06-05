@@ -121,7 +121,6 @@ import org.jooq.test._.testcases.GroupByTests;
 import org.jooq.test._.testcases.InsertUpdateTests;
 import org.jooq.test._.testcases.JDBCTests;
 import org.jooq.test._.testcases.JoinTests;
-import org.jooq.test._.testcases.KeepResultSetTests;
 import org.jooq.test._.testcases.LoaderTests;
 import org.jooq.test._.testcases.MetaDataTests;
 import org.jooq.test._.testcases.OrderByTests;
@@ -2223,36 +2222,6 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testBenchmarkSelect() throws Exception {
         new BenchmarkTests(this).testBenchmarkSelect();
-    }
-
-    @Test
-    public void testKeepRSWithCloseAfterFetch() throws Exception {
-        new KeepResultSetTests(this).testKeepRSWithCloseAfterFetch();
-    }
-
-    @Test
-    public void testKeepRSWithKeepAfterFetch() throws Exception {
-        new KeepResultSetTests(this).testKeepRSWithKeepAfterFetch();
-    }
-
-    @Test
-    public void testKeepRSWithUpdateOnChange() throws Exception {
-        new KeepResultSetTests(this).testKeepRSWithUpdateOnChange();
-    }
-
-    @Test
-    public void testKeepRSWithUpdateOnChangeLazy() throws Exception {
-        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeLazy();
-    }
-
-    @Test
-    public void testKeepRSWithUpdateOnChangeFetchOne() throws Exception {
-        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeFetchOne();
-    }
-
-    @Test
-    public void testKeepRSWithUpdateOnChangeDelete() throws Exception {
-        new KeepResultSetTests(this).testKeepRSWithUpdateOnChangeDelete();
     }
 
     @Test

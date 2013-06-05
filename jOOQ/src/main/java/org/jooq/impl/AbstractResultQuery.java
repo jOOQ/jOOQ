@@ -35,15 +35,10 @@
  */
 package org.jooq.impl;
 
-import static java.sql.ResultSet.CONCUR_READ_ONLY;
 import static java.sql.ResultSet.CONCUR_UPDATABLE;
 import static java.sql.ResultSet.TYPE_SCROLL_SENSITIVE;
 import static java.util.Arrays.asList;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
-import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
-import static org.jooq.KeepResultSetMode.KEEP_AFTER_FETCH;
-import static org.jooq.KeepResultSetMode.UPDATE_ON_CHANGE;
-import static org.jooq.KeepResultSetMode.UPDATE_ON_STORE;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -67,7 +62,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.FutureResult;
-import org.jooq.KeepResultSetMode;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
@@ -92,7 +86,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     private static final JooqLogger log              = JooqLogger.getLogger(AbstractResultQuery.class);
 
     private int                     maxRows;
-    private KeepResultSetMode       keepResultSetMode;
     private int                     resultSetConcurrency;
     private int                     resultSetType;
     private int                     resultSetHoldability;
@@ -139,15 +132,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     @Override
     public final ResultQuery<R> keepStatement(boolean k) {
         return (ResultQuery<R>) super.keepStatement(k);
-    }
-
-    @Override
-    public final ResultQuery<R> keepResultSet(KeepResultSetMode mode) {
-        if (mode == UPDATE_ON_STORE)
-            throw new UnsupportedOperationException("UPDATE_ON_STORE is not yet supported");
-
-        this.keepResultSetMode = mode;
-        return this;
     }
 
     @Override
@@ -224,17 +208,6 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             }
         }
 
-        // [#1846] When scrollable Results are fetched
-        else if (keepResultSetMode == KEEP_AFTER_FETCH) {
-            ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_READ_ONLY));
-        }
-
-        // [#1846] When scrollable and updatable Results are fetched
-        else if (keepResultSetMode == UPDATE_ON_CHANGE ||
-                 keepResultSetMode == UPDATE_ON_STORE) {
-            ctx.statement(ctx.connection().prepareStatement(ctx.sql(), TYPE_SCROLL_SENSITIVE, CONCUR_UPDATABLE));
-        }
-
         // [#1296] These dialects do not implement FOR UPDATE. But the same
         // effect can be achieved using ResultSet.CONCUR_UPDATABLE
         else if (isForUpdate() && asList(CUBRID, SQLSERVER).contains(ctx.configuration().dialect().family())) {
@@ -284,7 +257,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
         if (!many) {
             if (ctx.resultSet() != null) {
                 Field<?>[] fields = getFields(ctx.resultSet().getMetaData());
-                cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), keepStatement(), keepResultSet(), keepResultSetMode, getRecordType());
+                cursor = new CursorImpl<R>(ctx, listener, fields, internIndexes(fields), keepStatement(), keepResultSet(), getRecordType());
 
                 if (!lazy) {
                     result = cursor.fetch();
@@ -292,7 +265,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 }
             }
             else {
-                result = new ResultImpl<R>(ctx.configuration(), null);
+                result = new ResultImpl<R>(ctx.configuration());
             }
         }
 
@@ -305,7 +278,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
                 anyResults = true;
 
                 Field<?>[] fields = new MetaDataFieldProvider(ctx.configuration(), ctx.resultSet().getMetaData()).getFields();
-                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), true, false, CLOSE_AFTER_FETCH);
+                Cursor<Record> c = new CursorImpl<Record>(ctx, listener, fields, internIndexes(fields), true, false);
                 results.add(c.fetch());
 
                 if (ctx.statement().getMoreResults()) {
@@ -328,10 +301,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
 
     @Override
     protected final boolean keepResultSet() {
-        return lazy
-            || keepResultSetMode == KEEP_AFTER_FETCH
-            || keepResultSetMode == UPDATE_ON_CHANGE
-            || keepResultSetMode == UPDATE_ON_STORE;
+        return lazy;
     }
 
     /**
@@ -496,9 +466,7 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             return c.fetchOne();
         }
         finally {
-            if (c.closesAfterFetch()) {
-                c.close();
-            }
+            c.close();
         }
     }
 

@@ -992,18 +992,6 @@ public interface ResultQuery<R extends Record> extends Query {
     ResultQuery<R> keepStatement(boolean keepStatement);
 
     /**
-     * Indicate how to deal with the JDBC {@link ResultSet} when fetching data
-     * into jOOQ {@link Result} or {@link Cursor} objects.
-     * <p>
-     * TODO: More info here.
-     * <p>
-     * <strong>Note:</strong> If JDBC <code>ResultSet</code> references are kept
-     * open after fetching data through jOOQ, you must explicitly close them
-     * using either {@link Result#close()}, or {@link Cursor#close()}
-     */
-    ResultQuery<R> keepResultSet(KeepResultSetMode mode);
-
-    /**
      * Specify the maximum number of rows returned by the underlying
      * {@link Statement}.
      * <p>

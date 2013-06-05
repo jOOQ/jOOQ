@@ -38,14 +38,12 @@ package org.jooq.impl;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static org.jooq.impl.Utils.translate;
 import static org.jooq.tools.StringUtils.abbreviate;
 import static org.jooq.tools.StringUtils.leftPad;
 import static org.jooq.tools.StringUtils.rightPad;
 
 import java.lang.reflect.Array;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -97,22 +95,20 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     private static final long   serialVersionUID = 6416154375799578362L;
 
     private Configuration       configuration;
-    private transient ResultSet rs;
     private final Fields        fields;
     private final List<R>       records;
 
-    ResultImpl(Configuration configuration, ResultSet rs, Collection<? extends Field<?>> fields) {
-        this(configuration, rs, new Fields(fields));
+    ResultImpl(Configuration configuration, Collection<? extends Field<?>> fields) {
+        this(configuration, new Fields(fields));
     }
 
-    ResultImpl(Configuration configuration, ResultSet rs, Field<?>... fields) {
-        this(configuration, rs, new Fields(fields));
+    ResultImpl(Configuration configuration, Field<?>... fields) {
+        this(configuration, new Fields(fields));
     }
 
-    ResultImpl(Configuration configuration, ResultSet rs, Fields fields) {
+    ResultImpl(Configuration configuration, Fields fields) {
         this.configuration = configuration;
         this.fields = fields;
-        this.rs = rs;
         this.records = new ArrayList<R>();
     }
 
@@ -863,7 +859,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             Result<R> result = map.get(val);
 
             if (result == null) {
-                result = new ResultImpl<R>(configuration, rs, fields);
+                result = new ResultImpl<R>(configuration, fields);
                 map.put(val, result);
             }
 
@@ -915,7 +911,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
             Result<R> result = map.get(key);
             if (result == null) {
-                result = new ResultImpl<R>(configuration(), rs, this.fields);
+                result = new ResultImpl<R>(configuration(), this.fields);
                 map.put(key, result);
             }
 
@@ -1059,7 +1055,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <Z extends Record> Result<Z> into(Table<Z> table) {
-        Result<Z> list = new ResultImpl<Z>(configuration(), rs, table.fields());
+        Result<Z> list = new ResultImpl<Z>(configuration(), table.fields());
 
         for (R record : this) {
             list.add(record.into(table));
@@ -1190,30 +1186,6 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final Result<R> intern(String... fieldNames) {
         return intern(fields.indexesOf(fieldNames));
-    }
-
-    @Override
-    public final void close() {
-        try {
-            if (rs != null) {
-                rs.close();
-                rs = null;
-
-                for (Record record : this) {
-                    if (record instanceof AbstractRecord) {
-                        ((AbstractRecord) record).rs = null;
-                    }
-                }
-            }
-        }
-        catch (SQLException e) {
-            throw translate("Cannot close ResultSet", e);
-        }
-    }
-
-    @Override
-    public final ResultSet resultSet() {
-        return rs;
     }
 
     /**

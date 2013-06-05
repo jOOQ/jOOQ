@@ -41,7 +41,6 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
@@ -1082,33 +1081,4 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @see String#intern()
      */
     Result<R> intern(String... fieldNames);
-
-    // -------------------------------------------------------------------------
-    // Methods related to the underlying ResultSet (if applicable)
-    // -------------------------------------------------------------------------
-
-    /**
-     * Close the underlying JDBC {@link ResultSet}, if applicable.
-     * <p>
-     * If this <code>Result</code> was created using
-     * {@link ResultQuery#keepResultSet(KeepResultSetMode)}, then it closes the
-     * underlying JDBC {@link ResultSet}. Otherwise, this method has no effect.
-     *
-     * @throws DataAccessException If something went wrong closing the
-     *             underlying {@link ResultSet}
-     * @see #resultSet()
-     */
-    void close() throws DataAccessException;
-
-    /**
-     * Get the underlying JDBC {@link ResultSet}, if applicable.
-     * <p>
-     * This method returns the underlying JDBC {@link ResultSet}, if this
-     * <code>Result</code> was created using
-     * {@link ResultQuery#keepResultSet(KeepResultSetMode)}. Otherwise, this
-     * method returns <code>null</code>.
-     *
-     * @return The underlying JDBC <code>ResultSet</code>, or <code>null</code>
-     */
-    ResultSet resultSet();
 }

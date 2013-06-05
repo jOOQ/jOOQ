@@ -36,7 +36,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.DSL.field;
@@ -515,7 +514,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         ExecuteListener listener = new ExecuteListeners(ctx);
 
         ctx.resultSet(rs);
-        return new CursorImpl<Record>(ctx, listener, fields, null, false, true, CLOSE_AFTER_FETCH);
+        return new CursorImpl<Record>(ctx, listener, fields, null, false, true);
     }
 
     @Override
@@ -585,7 +584,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public Result<Record> fetchFromStringData(List<String[]> data) {
         if (data.size() == 0) {
-            return new ResultImpl<Record>(configuration, null);
+            return new ResultImpl<Record>(configuration);
         }
         else {
             List<Field<?>> fields = new ArrayList<Field<?>>();
@@ -594,7 +593,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
                 fields.add(fieldByName(String.class, name));
             }
 
-            Result<Record> result = new ResultImpl<Record>(configuration, null, fields);
+            Result<Record> result = new ResultImpl<Record>(configuration, fields);
 
             if (data.size() > 1) {
                 for (String[] values : data.subList(1, data.size())) {
@@ -1456,7 +1455,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public <R extends Record> Result<R> newResult(Table<R> table) {
-        return new ResultImpl<R>(configuration, null, table.fields());
+        return new ResultImpl<R>(configuration, table.fields());
     }
 
     // -------------------------------------------------------------------------

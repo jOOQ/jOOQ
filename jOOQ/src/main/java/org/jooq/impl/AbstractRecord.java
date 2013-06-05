@@ -37,17 +37,14 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.KeepResultSetMode.UPDATE_ON_CHANGE;
 import static org.jooq.impl.Utils.getAnnotatedGetter;
 import static org.jooq.impl.Utils.getAnnotatedMembers;
 import static org.jooq.impl.Utils.getMatchingGetter;
 import static org.jooq.impl.Utils.getMatchingMembers;
 import static org.jooq.impl.Utils.hasColumnAnnotations;
-import static org.jooq.impl.Utils.translate;
 
 import java.lang.reflect.Method;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -57,16 +54,13 @@ import java.util.Map;
 import org.jooq.Attachable;
 import org.jooq.Converter;
 import org.jooq.Field;
-import org.jooq.KeepResultSetMode;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.UniqueKey;
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
-import org.jooq.impl.CursorImpl.CursorResultSet;
 import org.jooq.tools.Convert;
 
 /**
@@ -84,9 +78,6 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     final RowImpl               fields;
     final Value<?>[]            values;
-    transient KeepResultSetMode keepResultSetMode;
-    transient CursorResultSet   rs;
-    transient int               rsIndex;
 
     AbstractRecord(Collection<? extends Field<?>> fields) {
         this(new RowImpl(fields));
@@ -276,53 +267,26 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public final <T> void setValue(Field<T> field, T value) {
         Value<T> val = getValue0(field);
+        UniqueKey<?> key = getPrimaryKey();
 
-        // [#1846] Execute this first to fail early, when UPDATE_ON_CHANGE fails
-        if (rs != null && keepResultSetMode == UPDATE_ON_CHANGE) {
-            int index = fieldsRow().indexOf(field);
-            int columnIndex = index + 1;
-
-            try {
-                if (rs.getRow() != rsIndex) {
-                    rs.absolute(rsIndex);
-                }
-
-                // [#1846] TODO: Add more typesafety here
-                rs.updateObject(columnIndex, value);
-
-                // [#1846] TODO: Update only in case of KeepResultSetMode.UPDATE_ON_CHANGE
-                rs.updateRow();
-            }
-            catch (SQLException e) {
-                throw translate("Error when updating ResultSet", e);
-            }
-
-            setValue(index, new Value<Object>(value));
+        // Normal fields' changed flag is always set to true
+        if (key == null || !key.getFields().contains(field)) {
+            val.setValue(value);
         }
 
-        // [#1846] In all other cases, correctly handle changed flags
+        // The primary key's changed flag might've been set previously
+        else if (val.isChanged()) {
+            val.setValue(value);
+        }
+
+        // [#979] If the primary key is being changed, all other fields' flags
+        // need to be set to true for in case this record is stored again, an
+        // INSERT statement will thus be issued
         else {
-            UniqueKey<?> key = getPrimaryKey();
+            val.setValue(value, true);
 
-            // Normal fields' changed flag is always set to true
-            if (key == null || !key.getFields().contains(field)) {
-                val.setValue(value);
-            }
-
-            // The primary key's changed flag might've been set previously
-            else if (val.isChanged()) {
-                val.setValue(value);
-            }
-
-            // [#979] If the primary key is being changed, all other fields' flags
-            // need to be set to true for in case this record is stored again, an
-            // INSERT statement will thus be issued
-            else {
-                val.setValue(value, true);
-
-                if (val.isChanged()) {
-                    changed(true);
-                }
+            if (val.isChanged()) {
+                changed(true);
             }
         }
     }
@@ -553,7 +517,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final ResultSet intoResultSet() {
-        ResultImpl<Record> result = new ResultImpl<Record>(configuration(), rs, fields.fields.fields);
+        ResultImpl<Record> result = new ResultImpl<Record>(configuration(), fields.fields.fields);
         result.add(this);
         return result.intoResultSet();
     }
@@ -690,68 +654,13 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         }
     }
 
-    // -------------------------------------------------------------------------
-    // XXX: Methods related to the underlying ResultSet (if applicable)
-    // -------------------------------------------------------------------------
-
-    @Override
-    public final void refresh() {
-        refresh(fields.fields.fields);
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Subclasses may override this
-     */
-    @Override
-    public void refresh(Field<?>... f) {
-        checkRsAvailable("Cannot refresh record. No ResultSet available");
-
-        try {
-
-            // [#2265] TODO: This code is prototypical. fetchLazy() is not
-            // the best way to fetch a record
-            rs.absolute(rsIndex - 1);
-            AbstractRecord record = (AbstractRecord) create().fetchLazy(rs).fetchOne();
-            setValues(f, record);
-        }
-        catch (SQLException e) {
-            throw translate("Cannot refresh record", e);
-        }
-    }
-
-    private final void checkRsAvailable(String message) {
-        if (rs == null) {
-            throw new DataAccessException(message);
-        }
-    }
-
-    @Override
-    public final void close() {
-        try {
-            if (rs != null) {
-                rs.close();
-                rs = null;
-            }
-        }
-        catch (SQLException e) {
-            throw translate("Cannot close ResultSet", e);
-        }
-    }
-
-    @Override
-    public final ResultSet resultSet() {
-        return rs;
-    }
-
     // ------------------------------------------------------------------------
     // XXX: Object and Comparable API
     // ------------------------------------------------------------------------
 
     @Override
     public String toString() {
-        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), null, fields.fields.fields);
+        Result<AbstractRecord> result = new ResultImpl<AbstractRecord>(configuration(), fields.fields.fields);
         result.add(this);
         return result.toString();
     }

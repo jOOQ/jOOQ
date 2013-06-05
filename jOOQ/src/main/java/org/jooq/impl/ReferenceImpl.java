@@ -104,7 +104,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     @Override
     public final Result<O> fetchParents(Collection<? extends R> records) {
         if (records == null || records.size() == 0) {
-            return new ResultImpl<O>(new DefaultConfiguration(), null, key.getFields());
+            return new ResultImpl<O>(new DefaultConfiguration(), key.getFields());
         }
         else {
             return fetch(records, key.getTable(), key.getFieldsArray(), getFieldsArray());
@@ -114,7 +114,7 @@ class ReferenceImpl<R extends Record, O extends Record> extends AbstractKey<R> i
     @Override
     public final Result<R> fetchChildren(Collection<? extends O> records) {
         if (records == null || records.size() == 0) {
-            return new ResultImpl<R>(new DefaultConfiguration(), null, getFields());
+            return new ResultImpl<R>(new DefaultConfiguration(), getFields());
         }
         else {
             return fetch(records, getTable(), getFieldsArray(), key.getFieldsArray());

@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
@@ -143,7 +142,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
     @Override
     public final Result<R> getReturnedRecords() {
         if (returned == null) {
-            returned = new ResultImpl<R>(configuration(), null, returning);
+            returned = new ResultImpl<R>(configuration(), returning);
         }
 
         return returned;
@@ -345,7 +344,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
             ExecuteListener listener2 = new ExecuteListeners(ctx2);
 
             ctx2.resultSet(rs);
-            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, false, true, CLOSE_AFTER_FETCH).fetch().into(getInto());
+            returned = new CursorImpl<R>(ctx2, listener2, fieldArray(returning), null, false, true).fetch().into(getInto());
             return result;
         }
     }

@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
-import static org.jooq.KeepResultSetMode.CLOSE_AFTER_FETCH;
 import static org.jooq.impl.Utils.DATA_LOCK_ROWS_FOR_UPDATE;
 
 import java.io.InputStream;
@@ -67,7 +66,6 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.KeepResultSetMode;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
@@ -90,7 +88,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private final Field<?>[]          fields;
     private final boolean[]           intern;
     private final boolean             keepResultSet;
-    private final KeepResultSetMode   keepResultSetMode;
     private final boolean             keepStatement;
     private final Class<? extends R>  type;
     private boolean                   isClosed;
@@ -100,18 +97,17 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private transient Iterator<R>     iterator;
 
     @SuppressWarnings("unchecked")
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, KeepResultSetMode keepResultSetMode) {
-        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, keepResultSetMode, (Class<? extends R>) RecordImpl.class);
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet) {
+        this(ctx, listener, fields, internIndexes, keepStatement, keepResultSet, (Class<? extends R>) RecordImpl.class);
     }
 
-    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, KeepResultSetMode keepResultSetMode, Class<? extends R> type) {
+    CursorImpl(ExecuteContext ctx, ExecuteListener listener, Field<?>[] fields, int[] internIndexes, boolean keepStatement, boolean keepResultSet, Class<? extends R> type) {
         this.ctx = ctx;
         this.listener = (listener != null ? listener : new ExecuteListeners(ctx));
         this.fields = fields;
         this.type = type;
         this.keepStatement = keepStatement;
         this.keepResultSet = keepResultSet;
-        this.keepResultSetMode = keepResultSetMode;
         this.rs = new CursorResultSet();
         this.intern = new boolean[fields.length];
 
@@ -120,11 +116,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 intern[i] = true;
             }
         }
-    }
-
-    @Override
-    public final boolean closesAfterFetch() {
-        return keepResultSetMode == null || keepResultSetMode == CLOSE_AFTER_FETCH;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -190,7 +181,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         // Before listener.resultStart(ctx)
         iterator();
 
-        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), closesAfterFetch() ? null : rs, fields);
+        ResultImpl<R> result = new ResultImpl<R>(ctx.configuration(), fields);
         R record = null;
 
         ctx.result(result);
@@ -1402,14 +1393,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
                     record = (AbstractRecord) Utils.newRecord(type, fields, ctx.configuration());
 
-                    // [#1846] Add a reference to the Cursor's ResultSet if
-                    // Updatable ResultSets are requested
-                    if (!closesAfterFetch()) {
-                        record.keepResultSetMode = keepResultSetMode;
-                        record.rs = rs;
-                        record.rsIndex = rsIndex;
-                    }
-
                     ctx.record(record);
                     listener.recordStart(ctx);
 
@@ -1434,9 +1417,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             // [#1868] [#2373] [#2385] This calls through to Utils.safeClose()
             // if necessary, lazy-terminating the ExecuteListener lifecycle if
             // the result is not eager-fetched.
-            // [#1846] When fetching updatable Results, do not close the
-            // Cursor's ResultSet!
-            if (record == null && closesAfterFetch()) {
+            if (record == null) {
                 CursorImpl.this.close();
             }
 

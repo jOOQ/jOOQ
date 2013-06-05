@@ -48,7 +48,6 @@ import java.util.Map;
 
 import javax.persistence.Column;
 
-import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
 import org.jooq.tools.Convert;
@@ -1037,109 +1036,5 @@ public interface Record extends Attachable, Comparable<Record> {
      */
     @Override
     int compareTo(Record record);
-
-    // -------------------------------------------------------------------------
-    // Methods related to the underlying ResultSet (if applicable)
-    // -------------------------------------------------------------------------
-
-    /**
-     * Refresh this record from the database.
-     * <p>
-     * A successful refresh results in the following:
-     * <ul>
-     * <li>{@link #valuesRow()} will have been restored to the respective values
-     * from the database</li>
-     * <li>{@link #original()} will match this record</li>
-     * <li>{@link #changed()} will be <code>false</code></li>
-     * </ul>
-     * <p>
-     * Refreshing can trigger any of the following actions:
-     * <ul>
-     * <li>Re-reading the underlying {@link #resultSet()}, if that
-     * <code>ResultSet</code> is available.</li>
-     * <li>Executing a new <code>SELECT</code> statement, if this is an
-     * {@link UpdatableRecord}.</li>
-     * <li>Failing, otherwise</li>
-     * </ul>
-     * <p>
-     * This is the same as calling <code>record.refresh(record.fields())</code>
-     *
-     * @throws DataAccessException This exception is thrown if
-     *             <ul>
-     *             <li>the underlying {@link #resultSet()} is in
-     *             {@link ResultSet#TYPE_FORWARD_ONLY} mode, such that
-     *             refreshing is not possible.</li> <li>something went wrong
-     *             executing the refresh <code>SELECT</code> statement, if this
-     *             is an {@link UpdatableRecord}.</li> <li>the record does not
-     *             exist anymore in the database</li>
-     *             </ul>
-     * @see UpdatableRecord#refresh()
-     * @see ResultQuery#keepResultSet(KeepResultSetMode)
-     */
-    void refresh() throws DataAccessException;
-
-    /**
-     * Refresh parts of this record from the database.
-     * <p>
-     * A successful refresh results in the following:
-     * <ul>
-     * <li>{@link #valuesRow()} will have been restored to the respective values
-     * from the database</li>
-     * <li>{@link #original()} will match this record</li>
-     * <li>{@link #changed()} will be <code>false</code></li>
-     * </ul>
-     * <p>
-     * Refreshing can trigger any of the following actions:
-     * <ul>
-     * <li>Re-reading the underlying {@link #resultSet()}, if that
-     * <code>ResultSet</code> is available.</li>
-     * <li>Executing a new <code>SELECT</code> statement, if this is an
-     * {@link UpdatableRecord}.</li>
-     * <li>Failing, otherwise</li>
-     * </ul>
-     * <p>
-     * This is the same as calling <code>record.refresh(record.fields())</code>
-     *
-     * @throws DataAccessException This exception is thrown if
-     *             <ul>
-     *             <li>the underlying {@link #resultSet()} is in
-     *             {@link ResultSet#TYPE_FORWARD_ONLY} mode, such that
-     *             refreshing is not possible.</li> <li>something went wrong
-     *             executing the refresh <code>SELECT</code> statement, if this
-     *             is an {@link UpdatableRecord}.</li> <li>the record does not
-     *             exist anymore in the database</li>
-     *             </ul>
-     * @see UpdatableRecord#refresh()
-     * @see ResultQuery#keepResultSet(KeepResultSetMode)
-     */
-    void refresh(Field<?>... fields) throws DataAccessException;
-
-    /**
-     * Close the underlying JDBC {@link ResultSet}, if applicable.
-     * <p>
-     * If this <code>Record</code> was created using
-     * {@link ResultQuery#keepResultSet(KeepResultSetMode)}, then it closes the
-     * underlying JDBC {@link ResultSet}. Otherwise, this method has no effect.
-     * <p>
-     * Note, this will close the <code>ResultSet</code> for all records that
-     * were fetched from the same <code>ResultQuery</code>.
-     *
-     * @throws DataAccessException If something went wrong closing the
-     *             underlying {@link ResultSet}
-     * @see #resultSet()
-     */
-    void close() throws DataAccessException;
-
-    /**
-     * Get the underlying JDBC {@link ResultSet}, if applicable.
-     * <p>
-     * This method returns the underlying JDBC {@link ResultSet}, if this
-     * <code>Record</code> was created using
-     * {@link ResultQuery#keepResultSet(KeepResultSetMode)}. Otherwise, this
-     * method returns <code>null</code>.
-     *
-     * @return The underlying JDBC <code>ResultSet</code>, or <code>null</code>
-     */
-    ResultSet resultSet();
 
 }

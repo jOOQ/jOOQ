@@ -9,8 +9,6 @@ function getActiveMenu() {
 }
 function printContent() {
 ?>
-<h2 id="News"><a href="#News" name="News">#</a> News</h2>
-<p>Join the <a href="http://www.jug.ch/html/events/2013/jooq_lu.html">JUGS in Lucerne, Switzerland</a> on June 5, 2013 for an introductory session on jOOQ!</p>
 <h2 id="Philosophy"><a href="#Philosophy" name="Philosophy">#</a> Philosophy</h2>
 <p>SQL was never meant to be abstracted. To be confined in the narrow boundaries
 			of heavy mappers, hiding the beauty and simplicity of relational data.

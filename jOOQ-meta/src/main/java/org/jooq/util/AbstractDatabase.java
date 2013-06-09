@@ -74,7 +74,7 @@ public abstract class AbstractDatabase implements Database {
 
     private SQLDialect                                                  dialect;
     private Connection                                                  connection;
-    private DSLContext                                                    create;
+    private DSLContext                                                  create;
     private String[]                                                    excludes;
     private String[]                                                    includes;
     private String[]                                                    recordVersionFields;

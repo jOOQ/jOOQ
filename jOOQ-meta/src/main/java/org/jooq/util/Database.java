@@ -54,135 +54,137 @@ import org.jooq.util.jaxb.Schema;
 public interface Database {
 
     /**
-     * The schemata generated from this database
+     * The schemata generated from this database.
      */
     List<SchemaDefinition> getSchemata();
 
     /**
-     * Get a schema defined in this database by name
+     * Get a schema defined in this database by name.
      */
     SchemaDefinition getSchema(String name);
 
     /**
-     * Retrieve the schema's primary key / foreign key relations
+     * Retrieve the schema's primary key / foreign key relations.
      */
     Relations getRelations();
 
     /**
-     * The sequences contained in this database
+     * The sequences contained in this database.
      */
     List<SequenceDefinition> getSequences(SchemaDefinition schema);
 
     /**
-     * The identities contained in this database
+     * The identities contained in this database.
      */
     List<IdentityDefinition> getIdentities(SchemaDefinition schema);
 
     /**
-     * The unique keys contained in this database
+     * The unique keys contained in this database.
      */
     List<UniqueKeyDefinition> getUniqueKeys(SchemaDefinition schema);
 
     /**
-     * The unique keys contained in this database
+     * The foreign keys contained in this database.
      */
     List<ForeignKeyDefinition> getForeignKeys(SchemaDefinition schema);
 
     /**
-     * The tables contained in this database
+     * The tables contained in this database.
      */
     List<TableDefinition> getTables(SchemaDefinition schema);
 
     /**
-     * Get a table in this database by name
+     * Get a table in this database by name.
      */
     TableDefinition getTable(SchemaDefinition schema, String name);
 
     /**
-     * Get a table in this database by name
+     * Get a table in this database by name.
      */
     TableDefinition getTable(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
-     * The enum UDTs defined in this database
+     * The enum UDTs defined in this database.
      */
     List<EnumDefinition> getEnums(SchemaDefinition schema);
 
     /**
-     * Get an enum UDT defined in this database by name
+     * Get an enum UDT defined in this database by name.
      */
     EnumDefinition getEnum(SchemaDefinition schema, String name);
 
     /**
-     * Get an enum UDT defined in this database by name
+     * Get an enum UDT defined in this database by name.
      */
     EnumDefinition getEnum(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
-     * The UDTs defined in this database
+     * The UDTs defined in this database.
      */
     List<UDTDefinition> getUDTs(SchemaDefinition schema);
 
     /**
-     * Get a UDT defined in this database by name
+     * Get a UDT defined in this database by name.
      */
     UDTDefinition getUDT(SchemaDefinition schema, String name);
 
     /**
-     * Get a UDT defined in this database by name
+     * Get a UDT defined in this database by name.
      */
     UDTDefinition getUDT(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
-     * The Arrays defined in this database
+     * The Arrays defined in this database.
      */
     List<ArrayDefinition> getArrays(SchemaDefinition schema);
 
     /**
-     * Get a ARRAY defined in this database by name
+     * Get a ARRAY defined in this database by name.
      */
     ArrayDefinition getArray(SchemaDefinition schema, String name);
 
     /**
-     * Get a ARRAY defined in this database by name
+     * Get a ARRAY defined in this database by name.
      */
     ArrayDefinition getArray(SchemaDefinition schema, String name, boolean ignoreCase);
 
     /**
-     * The stored routines (procedures and functions) contained in this database
+     * The stored routines (procedures and functions) contained in this
+     * database.
      */
     List<RoutineDefinition> getRoutines(SchemaDefinition schema);
 
     /**
-     * The packages contained in this database
+     * The packages contained in this database.
      */
     List<PackageDefinition> getPackages(SchemaDefinition schema);
 
     /**
-     * Initialise a connection to this database
+     * Initialise a connection to this database.
      */
     void setConnection(Connection connection);
 
     /**
-     * The database connection
+     * The database connection.
      */
     Connection getConnection();
 
     /**
-     * The input schemata are the schemata that jooq-meta is reading data from
+     * The input schemata are the schemata that jooq-meta is reading data from.
      */
     List<String> getInputSchemata();
 
     /**
-     * The output schema is the schema used by jooq-codegen in class names
+     * The output schema is the schema used by jooq-codegen in class names.
      *
-     * @deprecated - 2.0.5 - This will be implemented in each {@link Definition#getOutputName()}
+     * @deprecated - 2.0.5 - This will be implemented in each
+     *             {@link Definition#getOutputName()}
      */
     @Deprecated
     String getOutputSchema(String inputSchema);
 
     /**
-     * The input and output schemata
+     * The input and output schemata.
      */
     void setConfiguredSchemata(List<Schema> schemata);
 
@@ -212,66 +214,66 @@ public interface Database {
 
     /**
      * Table columns matching these regular expressions will be considered as
-     * record version fields in generated code
+     * record version fields in generated code.
      */
     void setRecordVersionFields(String[] recordVersionFields);
 
     /**
      * Table columns matching these regular expressions will be considered as
-     * record version fields in generated code
+     * record version fields in generated code.
      */
     String[] getRecordVersionFields();
 
     /**
      * Table columns matching these regular expressions will be considered as
-     * record timestamp fields in generated code
+     * record timestamp fields in generated code.
      */
     void setRecordTimestampFields(String[] recordTimestampFields);
 
     /**
      * Table columns matching these regular expressions will be considered as
-     * record timestamp fields in generated code
+     * record timestamp fields in generated code.
      */
     String[] getRecordTimestampFields();
 
     /**
      * Database objects matching any of these field names will be generated as
-     * custom types
+     * custom types.
      */
     void setConfiguredCustomTypes(List<CustomType> types);
 
     /**
      * Database objects matching any of these field names will be generated as
-     * custom types
+     * custom types.
      */
     List<CustomType> getConfiguredCustomTypes();
 
     /**
-     * Get a specific configured custom type by its name
+     * Get a specific configured custom type by its name.
      */
     CustomType getConfiguredCustomType(String name);
 
     /**
      * Database objects matching any of these field names will be generated as
-     * enum types
+     * enum types.
      */
     void setConfiguredEnumTypes(List<EnumType> types);
 
     /**
      * Database objects matching any of these field names will be generated as
-     * enum types
+     * enum types.
      */
     List<EnumType> getConfiguredEnumTypes();
 
     /**
      * Database objects matching any of these field names will be generated as
-     * forced types
+     * forced types.
      */
     void setConfiguredForcedTypes(List<ForcedType> types);
 
     /**
      * Database objects matching any of these field names will be generated as
-     * forced types
+     * forced types.
      */
     List<ForcedType> getConfiguredForcedTypes();
 
@@ -282,37 +284,37 @@ public interface Database {
     ForcedType getConfiguredForcedType(Definition definition);
 
     /**
-     * Get the dialect for this database
+     * Get the dialect for this database.
      */
     SQLDialect getDialect();
 
     /**
-     * Create the factory for this database
+     * Create the factory for this database.
      */
     DSLContext create();
 
     /**
-     * Check whether a type is an array type
+     * Check whether a type is an array type.
      */
     boolean isArrayType(String dataType);
 
     /**
-     * Whether this database supports unsigned types
+     * Whether this database supports unsigned types.
      */
     void setSupportsUnsignedTypes(boolean supportsUnsignedTypes);
 
     /**
-     * Whether this database supports unsigned types
+     * Whether this database supports unsigned types.
      */
     boolean supportsUnsignedTypes();
 
     /**
-     * Whether DATE columns should be treated as TIMESTAMP columns
+     * Whether DATE columns should be treated as TIMESTAMP columns.
      */
     void setDateAsTimestamp(boolean dateAsTimestamp);
 
     /**
-     * Whether DATE columns should be treated as TIMESTAMP columns
+     * Whether DATE columns should be treated as TIMESTAMP columns.
      */
     boolean dateAsTimestamp();
 }

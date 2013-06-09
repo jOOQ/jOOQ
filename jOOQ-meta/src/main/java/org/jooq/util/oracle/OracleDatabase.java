@@ -64,6 +64,7 @@ import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultArrayDefinition;
+import org.jooq.util.DefaultCheckConstraintDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
@@ -74,6 +75,7 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
+import org.jooq.util.oracle.sys.tables.AllConstraints;
 
 /**
  * @author Lukas Eder
@@ -174,6 +176,36 @@ public class OracleDatabase extends AbstractDatabase {
             if (referencingTable != null) {
                 ColumnDefinition column = referencingTable.getColumn(foreignKeyColumnName);
                 relations.addForeignKey(foreignKeyName, uniqueKeyName, column, uniqueKeySchema);
+            }
+        }
+    }
+
+    @Override
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        AllConstraints ac = ALL_CONSTRAINTS.as("ac");
+
+        for (Record record : create()
+                .select(
+                    ac.OWNER,
+                    ac.TABLE_NAME,
+                    ac.CONSTRAINT_NAME,
+                    ac.SEARCH_CONDITION
+                )
+                .from(ac)
+                .where(ac.CONSTRAINT_TYPE.eq("C"))
+                .and(ac.OWNER.upper().in(getInputSchemata()))
+                .fetch()) {
+
+            SchemaDefinition schema = getSchema(record.getValue(ac.OWNER));
+            TableDefinition table = getTable(schema, record.getValue(ac.TABLE_NAME));
+
+            if (table != null) {
+                relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                    schema,
+                    table,
+                    record.getValue(ac.CONSTRAINT_NAME),
+                    record.getValue(ac.SEARCH_CONDITION)
+                ));
             }
         }
     }

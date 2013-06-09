@@ -53,12 +53,13 @@ public abstract class AbstractTableDefinition
 extends AbstractElementContainerDefinition<ColumnDefinition>
 implements TableDefinition {
 
-    private List<UniqueKeyDefinition>  uniqueKeys;
-    private List<ForeignKeyDefinition> foreignKeys;
-    private boolean                    primaryKeyLoaded;
-    private UniqueKeyDefinition        primaryKey;
-    private boolean                    identityLoaded;
-    private IdentityDefinition         identity;
+    private List<UniqueKeyDefinition>       uniqueKeys;
+    private List<ForeignKeyDefinition>      foreignKeys;
+    private List<CheckConstraintDefinition> checkConstraints;
+    private boolean                         primaryKeyLoaded;
+    private UniqueKeyDefinition             primaryKey;
+    private boolean                         identityLoaded;
+    private IdentityDefinition              identity;
 
     public AbstractTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
@@ -97,6 +98,15 @@ implements TableDefinition {
         }
 
         return foreignKeys;
+    }
+
+    @Override
+    public final List<CheckConstraintDefinition> getCheckConstraints() {
+        if (checkConstraints == null) {
+            checkConstraints = getDatabase().getRelations().getCheckConstraints(this);
+        }
+
+        return checkConstraints;
     }
 
     @Override

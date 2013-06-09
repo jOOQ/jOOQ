@@ -217,6 +217,11 @@ public class ASEDatabase extends AbstractDatabase {
     }
 
     @Override
+    protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
+        // Currently not supported
+    }
+
+    @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 

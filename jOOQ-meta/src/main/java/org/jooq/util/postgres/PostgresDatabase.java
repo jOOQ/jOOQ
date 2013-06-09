@@ -44,6 +44,7 @@ import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.upper;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.util.postgres.information_schema.Tables.ATTRIBUTES;
+import static org.jooq.util.postgres.information_schema.Tables.CHECK_CONSTRAINTS;
 import static org.jooq.util.postgres.information_schema.Tables.KEY_COLUMN_USAGE;
 import static org.jooq.util.postgres.information_schema.Tables.PARAMETERS;
 import static org.jooq.util.postgres.information_schema.Tables.REFERENTIAL_CONSTRAINTS;
@@ -70,6 +71,7 @@ import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
+import org.jooq.util.DefaultCheckConstraintDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultEnumDefinition;
 import org.jooq.util.DefaultRelations;
@@ -82,7 +84,9 @@ import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
 import org.jooq.util.hsqldb.HSQLDBDatabase;
+import org.jooq.util.postgres.information_schema.tables.CheckConstraints;
 import org.jooq.util.postgres.information_schema.tables.Routines;
+import org.jooq.util.postgres.information_schema.tables.TableConstraints;
 
 /**
  * Postgres uses the ANSI default INFORMATION_SCHEMA, but unfortunately ships
@@ -183,6 +187,38 @@ public class PostgresDatabase extends AbstractDatabase {
                 // name. In Postgres, foreign key names are only unique per table
                 ColumnDefinition referencingColumn = referencingTable.getColumn(foreignKeyColumn);
                 relations.addForeignKey(foreignKeyTable + "__" + foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
+            }
+        }
+    }
+
+    @Override
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+        TableConstraints tc = TABLE_CONSTRAINTS.as("tc");
+        CheckConstraints cc = CHECK_CONSTRAINTS.as("cc");
+
+        for (Record record : create()
+                .select(
+                    tc.TABLE_SCHEMA,
+                    tc.TABLE_NAME,
+                    cc.CONSTRAINT_NAME,
+                    cc.CHECK_CLAUSE
+                 )
+                .from(tc)
+                .join(cc)
+                .using(tc.CONSTRAINT_CATALOG, tc.CONSTRAINT_SCHEMA, tc.CONSTRAINT_NAME)
+                .where(tc.TABLE_SCHEMA.in(getInputSchemata()))
+                .fetch()) {
+
+            SchemaDefinition schema = getSchema(record.getValue(tc.TABLE_SCHEMA));
+            TableDefinition table = getTable(schema, record.getValue(tc.TABLE_NAME));
+
+            if (table != null) {
+                relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                    schema,
+                    table,
+                    record.getValue(cc.CONSTRAINT_NAME),
+                    record.getValue(cc.CHECK_CLAUSE)
+                ));
             }
         }
     }

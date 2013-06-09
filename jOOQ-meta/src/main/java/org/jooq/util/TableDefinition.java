@@ -84,6 +84,11 @@ public interface TableDefinition extends Definition {
     List<ForeignKeyDefinition> getForeignKeys();
 
     /**
+     * Get the <code>CHECK</code> constraints for this table.
+     */
+    List<CheckConstraintDefinition> getCheckConstraints();
+
+    /**
      * Get the <code>IDENTITY</code> column of this table, or <code>null</code>,
      * if no such column exists.
      */

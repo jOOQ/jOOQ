@@ -89,6 +89,11 @@ public interface Database {
     List<ForeignKeyDefinition> getForeignKeys(SchemaDefinition schema);
 
     /**
+     * The check constraints contained in this database.
+     */
+    List<CheckConstraintDefinition> getCheckConstraints(SchemaDefinition schema);
+
+    /**
      * The tables contained in this database.
      */
     List<TableDefinition> getTables(SchemaDefinition schema);

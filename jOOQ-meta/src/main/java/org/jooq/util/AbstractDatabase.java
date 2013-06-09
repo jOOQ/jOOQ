@@ -66,54 +66,56 @@ import org.jooq.util.oracle.OracleDatabase;
  */
 public abstract class AbstractDatabase implements Database {
 
-    private static final JooqLogger                                     log = JooqLogger.getLogger(AbstractDatabase.class);
+    private static final JooqLogger                                          log = JooqLogger.getLogger(AbstractDatabase.class);
 
     // -------------------------------------------------------------------------
     // Configuration elements
     // -------------------------------------------------------------------------
 
-    private SQLDialect                                                  dialect;
-    private Connection                                                  connection;
-    private DSLContext                                                  create;
-    private String[]                                                    excludes;
-    private String[]                                                    includes;
-    private String[]                                                    recordVersionFields;
-    private String[]                                                    recordTimestampFields;
-    private boolean                                                     supportsUnsignedTypes;
-    private boolean                                                     dateAsTimestamp;
-    private List<Schema>                                                configuredSchemata;
-    private List<CustomType>                                            configuredCustomTypes;
-    private List<EnumType>                                              configuredEnumTypes;
-    private List<ForcedType>                                            configuredForcedTypes;
+    private SQLDialect                                                       dialect;
+    private Connection                                                       connection;
+    private DSLContext                                                       create;
+    private String[]                                                         excludes;
+    private String[]                                                         includes;
+    private String[]                                                         recordVersionFields;
+    private String[]                                                         recordTimestampFields;
+    private boolean                                                          supportsUnsignedTypes;
+    private boolean                                                          dateAsTimestamp;
+    private List<Schema>                                                     configuredSchemata;
+    private List<CustomType>                                                 configuredCustomTypes;
+    private List<EnumType>                                                   configuredEnumTypes;
+    private List<ForcedType>                                                 configuredForcedTypes;
 
     // -------------------------------------------------------------------------
     // Loaded definitions
     // -------------------------------------------------------------------------
 
-    private List<String>                                                inputSchemata;
-    private List<SchemaDefinition>                                      schemata;
-    private List<SequenceDefinition>                                    sequences;
-    private List<IdentityDefinition>                                    identities;
-    private List<UniqueKeyDefinition>                                   uniqueKeys;
-    private List<ForeignKeyDefinition>                                  foreignKeys;
-    private List<TableDefinition>                                       tables;
-    private List<EnumDefinition>                                        enums;
-    private List<UDTDefinition>                                         udts;
-    private List<ArrayDefinition>                                       arrays;
-    private List<RoutineDefinition>                                     routines;
-    private List<PackageDefinition>                                     packages;
-    private Relations                                                   relations;
+    private List<String>                                                     inputSchemata;
+    private List<SchemaDefinition>                                           schemata;
+    private List<SequenceDefinition>                                         sequences;
+    private List<IdentityDefinition>                                         identities;
+    private List<UniqueKeyDefinition>                                        uniqueKeys;
+    private List<ForeignKeyDefinition>                                       foreignKeys;
+    private List<CheckConstraintDefinition>                                  checkConstraints;
+    private List<TableDefinition>                                            tables;
+    private List<EnumDefinition>                                             enums;
+    private List<UDTDefinition>                                              udts;
+    private List<ArrayDefinition>                                            arrays;
+    private List<RoutineDefinition>                                          routines;
+    private List<PackageDefinition>                                          packages;
+    private Relations                                                        relations;
 
-    private transient Map<SchemaDefinition, List<SequenceDefinition>>   sequencesBySchema;
-    private transient Map<SchemaDefinition, List<IdentityDefinition>>   identitiesBySchema;
-    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>  uniqueKeysBySchema;
-    private transient Map<SchemaDefinition, List<ForeignKeyDefinition>> foreignKeysBySchema;
-    private transient Map<SchemaDefinition, List<TableDefinition>>      tablesBySchema;
-    private transient Map<SchemaDefinition, List<EnumDefinition>>       enumsBySchema;
-    private transient Map<SchemaDefinition, List<UDTDefinition>>        udtsBySchema;
-    private transient Map<SchemaDefinition, List<ArrayDefinition>>      arraysBySchema;
-    private transient Map<SchemaDefinition, List<RoutineDefinition>>    routinesBySchema;
-    private transient Map<SchemaDefinition, List<PackageDefinition>>    packagesBySchema;
+    private transient Map<SchemaDefinition, List<SequenceDefinition>>        sequencesBySchema;
+    private transient Map<SchemaDefinition, List<IdentityDefinition>>        identitiesBySchema;
+    private transient Map<SchemaDefinition, List<UniqueKeyDefinition>>       uniqueKeysBySchema;
+    private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
+    private transient Map<SchemaDefinition, List<CheckConstraintDefinition>> checkConstraintsBySchema;
+    private transient Map<SchemaDefinition, List<TableDefinition>>           tablesBySchema;
+    private transient Map<SchemaDefinition, List<EnumDefinition>>            enumsBySchema;
+    private transient Map<SchemaDefinition, List<UDTDefinition>>             udtsBySchema;
+    private transient Map<SchemaDefinition, List<ArrayDefinition>>           arraysBySchema;
+    private transient Map<SchemaDefinition, List<RoutineDefinition>>         routinesBySchema;
+    private transient Map<SchemaDefinition, List<PackageDefinition>>         packagesBySchema;
 
     @Override
     public final SQLDialect getDialect() {
@@ -425,6 +427,27 @@ public abstract class AbstractDatabase implements Database {
     }
 
     @Override
+    public final List<CheckConstraintDefinition> getCheckConstraints(SchemaDefinition schema) {
+        if (checkConstraints == null) {
+            checkConstraints = new ArrayList<CheckConstraintDefinition>();
+
+            for (SchemaDefinition s : getSchemata()) {
+                for (TableDefinition table : getTables(s)) {
+                    for (CheckConstraintDefinition checkConstraint : table.getCheckConstraints()) {
+                        checkConstraints.add(checkConstraint);
+                    }
+                }
+            }
+        }
+
+        if (checkConstraintsBySchema == null) {
+            checkConstraintsBySchema = new LinkedHashMap<SchemaDefinition, List<CheckConstraintDefinition>>();
+        }
+
+        return filterSchema(checkConstraints, schema, checkConstraintsBySchema);
+    }
+
+    @Override
     public final List<TableDefinition> getTables(SchemaDefinition schema) {
         if (tables == null) {
             tables = new ArrayList<TableDefinition>();
@@ -716,6 +739,7 @@ public abstract class AbstractDatabase implements Database {
         loadPrimaryKeys(result);
         loadUniqueKeys(result);
         loadForeignKeys(result);
+        loadCheckConstraints(result);
 
         return result;
     }
@@ -757,6 +781,11 @@ public abstract class AbstractDatabase implements Database {
      * already loaded.
      */
     protected abstract void loadForeignKeys(DefaultRelations r) throws SQLException;
+
+    /**
+     * Retrieve <code>CHECK</code> constraints and store them to relations.
+     */
+    protected abstract void loadCheckConstraints(DefaultRelations r) throws SQLException;
 
     /**
      * Retrieve ALL schemata from the database. This will be filtered in

@@ -86,6 +86,10 @@ public class JDBCDatabase extends AbstractDatabase {
     }
 
     @Override
+    protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
+    }
+
+    @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
 

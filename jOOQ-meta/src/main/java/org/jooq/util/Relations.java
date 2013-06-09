@@ -76,4 +76,10 @@ public interface Relations {
      * the given table has no foreign keys.
      */
     List<ForeignKeyDefinition> getForeignKeys(TableDefinition table);
+
+    /**
+     * Get a list of <code>CHECK</code> constraints for a given table. Returns
+     * an empty list if the given table has no <code>CHECK</code> constraints.
+     */
+    List<CheckConstraintDefinition> getCheckConstraints(TableDefinition table);
 }

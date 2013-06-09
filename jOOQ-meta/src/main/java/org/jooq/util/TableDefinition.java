@@ -49,37 +49,37 @@ import org.jooq.Table;
 public interface TableDefinition extends Definition {
 
     /**
-     * All columns in the type, table or view
+     * All columns in the type, table or view.
      */
     List<ColumnDefinition> getColumns();
 
     /**
-     * Get a column in this type by its name
+     * Get a column in this type by its name.
      */
     ColumnDefinition getColumn(String columnName);
 
     /**
-     * Get a column in this type by its name
+     * Get a column in this type by its name.
      */
     ColumnDefinition getColumn(String columnName, boolean ignoreCase);
 
     /**
-     * Get a column in this type by its index (starting at 0)
+     * Get a column in this type by its index (starting at 0).
      */
     ColumnDefinition getColumn(int columnIndex);
 
     /**
-     * Get the primary key for this table
+     * Get the primary key for this table.
      */
     UniqueKeyDefinition getPrimaryKey();
 
     /**
-     * Get the unique keys for this table
+     * Get the unique keys for this table.
      */
     List<UniqueKeyDefinition> getUniqueKeys();
 
     /**
-     * Get the foreign keys for this table
+     * Get the foreign keys for this table.
      */
     List<ForeignKeyDefinition> getForeignKeys();
 
@@ -90,7 +90,7 @@ public interface TableDefinition extends Definition {
     IdentityDefinition getIdentity();
 
     /**
-     * This TableDefinition as a {@link Table}
+     * This TableDefinition as a {@link Table}.
      */
     Table<Record> getTable();
 

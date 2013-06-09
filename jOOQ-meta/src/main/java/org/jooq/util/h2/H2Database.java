@@ -35,6 +35,8 @@
  */
 package org.jooq.util.h2;
 
+import static org.jooq.impl.DSL.select;
+import static org.jooq.util.h2.information_schema.tables.Columns.COLUMNS;
 import static org.jooq.util.h2.information_schema.tables.Constraints.CONSTRAINTS;
 import static org.jooq.util.h2.information_schema.tables.CrossReferences.CROSS_REFERENCES;
 import static org.jooq.util.h2.information_schema.tables.FunctionAliases.FUNCTION_ALIASES;
@@ -56,6 +58,7 @@ import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
 import org.jooq.util.ColumnDefinition;
+import org.jooq.util.DefaultCheckConstraintDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
 import org.jooq.util.DefaultSequenceDefinition;
@@ -66,6 +69,7 @@ import org.jooq.util.SchemaDefinition;
 import org.jooq.util.SequenceDefinition;
 import org.jooq.util.TableDefinition;
 import org.jooq.util.UDTDefinition;
+import org.jooq.util.h2.information_schema.tables.Columns;
 import org.jooq.util.h2.information_schema.tables.Constraints;
 import org.jooq.util.h2.information_schema.tables.CrossReferences;
 import org.jooq.util.h2.information_schema.tables.FunctionAliases;
@@ -176,6 +180,46 @@ public class H2Database extends AbstractDatabase {
                 relations.addForeignKey(foreignKey, uniqueKey, referencingColumn, uniqueKeySchema);
             }
         }
+    }
+
+    @Override
+    protected void loadCheckConstraints(DefaultRelations relations) throws SQLException {
+
+        // TODO: Should we really UNION INFORMATION_SCHEMA.COLUMNS.CHECK_CONSTRAINT?
+        for (Record record : create()
+            .select(
+                Constraints.TABLE_SCHEMA,
+                Constraints.TABLE_NAME,
+                Constraints.CONSTRAINT_NAME,
+                Constraints.CHECK_EXPRESSION
+             )
+            .from(CONSTRAINTS)
+            .where(Constraints.CONSTRAINT_TYPE.eq("CHECK"))
+            .and(Constraints.TABLE_SCHEMA.in(getInputSchemata()))
+            .union(
+            select(
+                Columns.TABLE_SCHEMA,
+                Columns.TABLE_NAME,
+                Columns.CHECK_CONSTRAINT,
+                Columns.CHECK_CONSTRAINT
+            )
+            .from(COLUMNS)
+            .where(Columns.CHECK_CONSTRAINT.nvl("").ne(""))
+            .and(Columns.TABLE_SCHEMA.in(getInputSchemata())))
+            .fetch()) {
+
+        SchemaDefinition schema = getSchema(record.getValue(Constraints.TABLE_SCHEMA));
+        TableDefinition table = getTable(schema, record.getValue(Constraints.TABLE_NAME));
+
+        if (table != null) {
+            relations.addCheckConstraint(table, new DefaultCheckConstraintDefinition(
+                schema,
+                table,
+                record.getValue(Constraints.CONSTRAINT_NAME),
+                record.getValue(Constraints.CHECK_EXPRESSION)
+            ));
+        }
+    }
     }
 
     @Override

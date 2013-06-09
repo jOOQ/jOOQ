@@ -11,7 +11,7 @@
         <name>org.jooq.util.DefaultGenerator</name>
         <database>
             <name>org.jooq.util.hsqldb.HSQLDBDatabase</name>
-            <includes>SCHEMATA|TABLES|COLUMNS|REFERENTIAL_CONSTRAINTS|TABLE_CONSTRAINTS|KEY_COLUMN_USAGE|ROUTINES|PARAMETERS|SEQUENCES|ELEMENT_TYPES</includes>
+            <includes>CHECK_CONSTRAINTS|COLUMNS|ELEMENT_TYPES|KEY_COLUMN_USAGE|PARAMETERS|REFERENTIAL_CONSTRAINTS|ROUTINES|SCHEMATA|SEQUENCES|TABLE_CONSTRAINTS|TABLES</includes>
             <excludes></excludes>
             <recordVersionFields></recordVersionFields>
             <recordTimestampFields></recordTimestampFields>

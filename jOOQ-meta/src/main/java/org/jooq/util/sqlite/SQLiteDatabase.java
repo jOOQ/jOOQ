@@ -167,6 +167,11 @@ public class SQLiteDatabase extends AbstractDatabase {
     }
 
     @Override
+    protected void loadCheckConstraints(DefaultRelations r) throws SQLException {
+        // Currently not supported
+    }
+
+    @Override
     protected List<SchemaDefinition> getSchemata0() throws SQLException {
         List<SchemaDefinition> result = new ArrayList<SchemaDefinition>();
         result.add(new SchemaDefinition(this, "", ""));

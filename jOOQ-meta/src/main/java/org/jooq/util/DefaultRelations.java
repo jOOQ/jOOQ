@@ -47,15 +47,17 @@ import org.jooq.tools.JooqLogger;
 
 public class DefaultRelations implements Relations {
 
-    private static final JooqLogger                                     log         = JooqLogger.getLogger(DefaultRelations.class);
+    private static final JooqLogger                                         log              = JooqLogger.getLogger(DefaultRelations.class);
 
-    private Map<Key, UniqueKeyDefinition>                               primaryKeys = new LinkedHashMap<Key, UniqueKeyDefinition>();
-    private Map<Key, UniqueKeyDefinition>                               uniqueKeys  = new LinkedHashMap<Key, UniqueKeyDefinition>();
-    private Map<Key, ForeignKeyDefinition>                              foreignKeys = new LinkedHashMap<Key, ForeignKeyDefinition>();
+    private Map<Key, UniqueKeyDefinition>                                   primaryKeys      = new LinkedHashMap<Key, UniqueKeyDefinition>();
+    private Map<Key, UniqueKeyDefinition>                                   uniqueKeys       = new LinkedHashMap<Key, UniqueKeyDefinition>();
+    private Map<Key, ForeignKeyDefinition>                                  foreignKeys      = new LinkedHashMap<Key, ForeignKeyDefinition>();
+    private Map<Key, CheckConstraintDefinition>                             checkConstraints = new LinkedHashMap<Key, CheckConstraintDefinition>();
 
-    private transient Map<ColumnDefinition, UniqueKeyDefinition>        primaryKeysByColumn;
-    private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>  uniqueKeysByColumn;
-    private transient Map<ColumnDefinition, List<ForeignKeyDefinition>> foreignKeysByColumn;
+    private transient Map<ColumnDefinition, UniqueKeyDefinition>            primaryKeysByColumn;
+    private transient Map<ColumnDefinition, List<UniqueKeyDefinition>>      uniqueKeysByColumn;
+    private transient Map<ColumnDefinition, List<ForeignKeyDefinition>>     foreignKeysByColumn;
+    private transient Map<TableDefinition, List<CheckConstraintDefinition>> checkConstraintsByTable;
 
     public void addPrimaryKey(String keyName, ColumnDefinition column) {
 	    if (log.isDebugEnabled()) {
@@ -123,6 +125,10 @@ public class DefaultRelations implements Relations {
             foreignKey.getKeyColumns().add(foreignKeyColumn);
         }
 	}
+
+    public void addCheckConstraint(TableDefinition table, CheckConstraintDefinition constraint) {
+        checkConstraints.put(key(table, constraint.getName()), constraint);
+    }
 
 	@Override
 	public UniqueKeyDefinition getPrimaryKey(ColumnDefinition column) {
@@ -206,6 +212,27 @@ public class DefaultRelations implements Relations {
         }
 
         return new ArrayList<ForeignKeyDefinition>(result);
+    }
+
+    @Override
+    public List<CheckConstraintDefinition> getCheckConstraints(TableDefinition table) {
+        if (checkConstraintsByTable == null) {
+            checkConstraintsByTable = new LinkedHashMap<TableDefinition, List<CheckConstraintDefinition>>();
+
+            for (CheckConstraintDefinition constraint : checkConstraints.values()) {
+                List<CheckConstraintDefinition> list = checkConstraintsByTable.get(table);
+
+                if (list == null) {
+                    list = new ArrayList<CheckConstraintDefinition>();
+                    checkConstraintsByTable.put(table, list);
+                }
+
+                list.add(constraint);
+            }
+        }
+
+        List<CheckConstraintDefinition> list = checkConstraintsByTable.get(table);
+        return list != null ? list : Collections.<CheckConstraintDefinition>emptyList();
     }
 
     private static Key key(Definition definition, String keyName) {

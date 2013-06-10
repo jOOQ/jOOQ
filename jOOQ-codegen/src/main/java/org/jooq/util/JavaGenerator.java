@@ -42,7 +42,9 @@ import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.jooq.AggregateFunction;
 import org.jooq.Configuration;
@@ -1898,6 +1900,25 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(1).println("}");
     }
 
+    private String disambiguateJavaMemberName(Collection<? extends Definition> definitions, String defaultName) {
+
+        // [#2502] - Some name mangling in the event of procedure arguments
+        // called "configuration"
+        Set<String> names = new HashSet<String>();
+
+        for (Definition definition : definitions) {
+            names.add(getStrategy().getJavaMemberName(definition));
+        }
+
+        String name = defaultName;
+
+        while (names.contains(name)) {
+            name += "_";
+        }
+
+        return name;
+    }
+
     protected void printConvenienceMethodFunction(JavaWriter out, RoutineDefinition function, boolean instance) {
         // [#281] - Java can't handle more than 255 method parameters
         if (function.getInParameters().size() > 254) {
@@ -1909,6 +1930,7 @@ public class JavaGenerator extends AbstractGenerator {
         final String functionName = function.getQualifiedOutputName();
         final String functionType = getJavaType(function.getReturnType());
         final String methodName = getStrategy().getJavaMethodName(function, Mode.DEFAULT);
+        final String configurationArgument = disambiguateJavaMemberName(function.getInParameters(), "configuration");
 
         out.tab(1).javadoc("Call <code>%s</code>", functionName);
         out.tab(1).print("public %s%s %s(",
@@ -1916,7 +1938,7 @@ public class JavaGenerator extends AbstractGenerator {
 
         String glue = "";
         if (!instance) {
-            out.print("%s configuration", Configuration.class);
+            out.print("%s %s", Configuration.class, configurationArgument);
             glue = ", ";
         }
 
@@ -1946,7 +1968,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println();
-        out.tab(2).println("f.execute(%s);", instance ? "configuration()" : "configuration");
+        out.tab(2).println("f.execute(%s);", instance ? "configuration()" : configurationArgument);
 
         // TODO [#956] Find a way to register "SELF" as OUT parameter
         // in case this is a UDT instance (member) function
@@ -1962,6 +1984,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         final String className = getStrategy().getFullJavaClassName(procedure);
+        final String configurationArgument = disambiguateJavaMemberName(procedure.getInParameters(), "configuration");
 
         out.tab(1).javadoc("Call <code>%s</code>", procedure.getQualifiedOutputName());
         out.print("\tpublic ");
@@ -1987,7 +2010,8 @@ public class JavaGenerator extends AbstractGenerator {
         String glue = "";
         if (!instance) {
             out.print(Configuration.class);
-            out.print(" configuration");
+            out.print(" ");
+            out.print(configurationArgument);
             glue = ", ";
         }
 
@@ -2018,7 +2042,7 @@ public class JavaGenerator extends AbstractGenerator {
         }
 
         out.println();
-        out.tab(2).println("p.execute(%s);", instance ? "configuration()" : "configuration");
+        out.tab(2).println("p.execute(%s);", instance ? "configuration()" : configurationArgument);
 
         if (procedure.getOutParameters().size() > 0) {
             final String getter = getStrategy().getJavaGetterName(procedure.getOutParameters().get(0), Mode.DEFAULT);

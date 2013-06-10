@@ -1244,7 +1244,8 @@ public final class StringUtils {
     public static String toCamelCase(String string) {
         StringBuilder result = new StringBuilder();
 
-        for (String word : string.split("_")) {
+        // [#2515] - Keep trailing underscores
+        for (String word : string.split("_", -1)) {
 
             // Uppercase first letter of a word
             if (word.length() > 0) {

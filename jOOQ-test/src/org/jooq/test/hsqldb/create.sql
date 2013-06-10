@@ -16,6 +16,12 @@ DROP FUNCTION IF EXISTS f317/
 DROP PROCEDURE IF EXISTS p_get_two_cursors/
 DROP PROCEDURE IF EXISTS p_get_one_cursor/
 DROP FUNCTION IF EXISTS f_get_one_cursor/
+DROP FUNCTION IF EXISTS f2502/
+DROP FUNCTION IF EXISTS f2502_1/
+DROP FUNCTION IF EXISTS f2502_2/
+DROP PROCEDURE IF EXISTS p2502/
+DROP FUNCTION IF EXISTS f2515/
+DROP FUNCTION IF EXISTS f2515_/
 
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
@@ -412,6 +418,37 @@ BEGIN ATOMIC
 		RETURN TABLE(SELECT * FROM t_book WHERE id IN (UNNEST(book_ids)) ORDER BY id ASC);
 	END IF;
 END
+/
+
+CREATE FUNCTION f2502 (IN configuration int)
+RETURNS INTEGER
+RETURN 1
+/
+
+CREATE FUNCTION f2502_1 (IN configuration int, IN configuration_ int)
+RETURNS INTEGER
+RETURN 1
+/
+
+CREATE FUNCTION f2502_2 (IN configuration int, IN configuration_ int, IN configuration__ int)
+RETURNS INTEGER
+RETURN 1
+/
+
+CREATE PROCEDURE p2502 (IN configuration int, OUT configuration_ int)
+BEGIN ATOMIC
+    SET configuration_ = configuration;
+END
+/
+
+CREATE FUNCTION f2515 (IN a int, IN a_ int)
+RETURNS INTEGER
+RETURN 1
+/
+
+CREATE FUNCTION f2515_ (IN a_a int, IN a_a_ int)
+RETURNS INTEGER
+RETURN 1
 /
 
 CREATE PROCEDURE p_arrays1(IN in_array int array, OUT out_array int array)

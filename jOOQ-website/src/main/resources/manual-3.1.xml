@@ -906,9 +906,194 @@ public class Main {
 							</section>
 
 							<section id="jooq-with-spring">
-								<title>Using jOOQ with Spring</title>
+								<title>Using jOOQ with Spring and DBCP</title>
 								<content>
-									<p>Feel free to contribute a tutorial!</p>
+									<p>
+                                        jOOQ and Spring are easy to integrate. In this example, we shall integrate:
+                                    </p>
+                                    <ul>
+                                        <li><a href="http://commons.apache.org/proper/commons-dbcp">Apache Commons DBCP</a> as the connection pooling library.</li>
+                                        <li><a href="http://www.springsource.org/spring-data">Spring JDBC</a> as the transaction management library.</li>
+                                        <li><a href="http://www.jooq.org">jOOQ</a> as the <reference id="sql-building" title="SQL building"/> and <reference id="sql-execution" title="execution"/> library.</li>
+                                    </ul>
+                                    
+                                    <p>
+                                        The following steps show how to integrate the libraries.
+                                    </p>
+                                    
+                                    <h3>Add the required Maven dependencies</h3>
+                                    <p>
+                                        For this example, we'll create the following Maven dependencies
+                                    </p>
+
+<xml><![CDATA[<!-- Use this or the latest Spring RELEASE version -->
+<properties>
+    <org.springframework.version>3.2.3.RELEASE</org.springframework.version>
+</properties>
+
+<dependencies>
+    <dependency>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq</artifactId>
+        <version>{jooq-version}</version>
+    </dependency>
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>1.3.168</version>
+    </dependency>
+    <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>1.4</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${org.springframework.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-beans</artifactId>
+        <version>${org.springframework.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>${org.springframework.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${org.springframework.version}</version>
+    </dependency>
+</dependencies>
+]]></xml>          
+
+                                    <h3>Create a minimal Spring configuration file</h3>
+                                    <p>
+                                        The above dependencies are configured together using a Spring Beans configuration:
+                                    </p>
+                                    
+<xml><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!-- Using Apache DBCP as a connection pooling library.
+         Replace this with your preferred DataSource implementation -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        init-method="createDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.h2.Driver" />
+        <property name="url" value="jdbc:h2:~/maven-test" />
+        <property name="username" value="sa" />
+        <property name="password" value="" />
+    </bean>
+
+    <!-- Using Spring JDBC for transaction management -->
+    <bean id="transactionManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="transactionAwareDataSource"
+        class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">
+        <constructor-arg ref="dataSource" />
+    </bean>
+
+    <!-- Bridging Spring JDBC data sources to jOOQ's ConnectionProvider -->
+    <bean class="org.jooq.impl.DataSourceConnectionProvider" name="connectionProvider">
+        <constructor-arg ref="transactionAwareDataSource" />
+    </bean>
+
+    <bean id="dsl" class="org.jooq.impl.DefaultDSLContext">
+        <constructor-arg ref="config" />
+    </bean>
+
+    <!-- Invoking an internal, package-private constructor for the example
+         Implement your own Configuration for more reliable behaviour -->
+    <bean class="org.jooq.impl.DefaultConfiguration" name="config">
+        <constructor-arg index="0" ref="connectionProvider" />
+        <constructor-arg index="1"><null /></constructor-arg>
+        <constructor-arg index="2"><value type="org.jooq.SQLDialect">H2</value></constructor-arg>
+        <constructor-arg index="3"><null /></constructor-arg>
+        <constructor-arg index="4"><null /></constructor-arg>
+    </bean>
+</beans>]]></xml>
+
+                                    <h3>Run a query in the JDBC Connection's transaction:</h3>
+                                    <p>
+                                        The following simple program shows how you can now easily obtain a <reference id="dsl-context" title="DSLContext" /> instance, from which queries can be executed:
+                                    </p>
+                                    
+<java><![CDATA[package org.jooq.test.spring;
+
+import org.jooq.DSLContext;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+    public static void main(String[] args) {
+
+        // Configure the Spring application context, loading the bean configuration
+        ApplicationContext context =
+        new ClassPathXmlApplicationContext(new String[] {
+            "jooq-spring-config-minimal.xml"
+        });
+
+        // Fetch a DSLContext reference
+        DSLContext dsl = context.getBean("dsl", DSLContext.class);
+
+        // Execute a jOOQ query in its JDBC Connection's transaction
+        // ---------------------------------------------------------
+        System.out.println(dsl.selectOne().fetch());
+    }
+}]]></java>
+
+                                    <p>
+                                        The above example shows how Spring's TransactionAwareDataSourceProxy discovers that a jOOQ query is not executed in a transactional context.
+                                    </p>
+                                    
+                                    <h3>Run a query in an "explicit transaction":</h3>
+                                    <p>
+                                        The following simple program shows how Spring's TransactionAwareDataSourceProxy will discover that several jOOQ queries are executed in the context of an explicitly created transaction 
+                                    </p>
+                                    
+<java><![CDATA[package org.jooq.test.spring;
+
+import org.jooq.DSLContext;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Test {
+    public static void main(String[] args) {
+
+        // Configure the Spring application context, loading the bean configuration
+        ApplicationContext context =
+        new ClassPathXmlApplicationContext(new String[] {
+            "jooq-spring-config-minimal.xml"
+        });
+
+        // Fetch a DSLContext reference
+        DSLContext dsl = context.getBean("dsl", DSLContext.class);
+
+        // Execute some jOOQ queries in an explicit transaction
+        // ----------------------------------------------------
+        PlatformTransactionManager transactionManager =
+            context.getBean("transactionManager", PlatformTransactionManager.class);
+
+        TransactionStatus tx = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        dsl.selectOne().fetch();
+        dsl.selectOne().fetch();
+        dsl.selectOne().fetch();
+        transactionManager.commit(tx);
+    }
+}]]></java>                                  
+
+                                    <p>
+                                        Of course, in an actual productive setup, you are more likely to use Spring's AOP features to declare transactions and transactional behaviour on service methods, instead of explicitly starting and committing / rollbacking transactions. There are many other transaction models that you can choose to use with jOOQ.
+                                    </p>  
 								</content>
 							</section>
 

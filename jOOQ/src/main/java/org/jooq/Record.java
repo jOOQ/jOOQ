@@ -54,7 +54,7 @@ import org.jooq.tools.Convert;
 import org.jooq.tools.reflect.Reflect;
 
 /**
- * A database result record
+ * A database result record.
  * <p>
  * A record essentially combines a list of columns ({@link Field}) with a
  * corresponding list of values, each value being of the respective field's
@@ -102,7 +102,7 @@ import org.jooq.tools.reflect.Reflect;
 public interface Record extends Attachable, Comparable<Record> {
 
     /**
-     * Get this record's fields as a {@link Row}
+     * Get this record's fields as a {@link Row}.
      */
     Row fieldsRow();
 
@@ -135,7 +135,7 @@ public interface Record extends Attachable, Comparable<Record> {
     Field<?>[] fields();
 
     /**
-     * Get this record's values as a {@link Row}
+     * Get this record's values as a {@link Row}.
      */
     Row valuesRow();
 
@@ -525,7 +525,7 @@ public interface Record extends Attachable, Comparable<Record> {
     boolean changed(String fieldName);
 
     /**
-     * Set all of this record's internal changed flags to the supplied value
+     * Set all of this record's internal changed flags to the supplied value.
      * <p>
      * If the <code>changed</code> argument is <code>false</code>, the
      * {@link #original()} values will be reset to the corresponding "current"
@@ -758,8 +758,10 @@ public interface Record extends Attachable, Comparable<Record> {
     /**
      * Map resulting records onto a custom record type.
      * <p>
-     * The mapping algorithm is this:<p>
-     * <h5>jOOQ will map <code>Record</code> values by equal field names:</h5><p>
+     * The mapping algorithm is this:
+     * <p>
+     * <h5>jOOQ will map <code>Record</code> values by equal field names:</h5>
+     * <p>
      * <ul>
      * <li>For every field in the <code>table</code> argument with
      * {@link Field#getName()} <code>"MY_field"</code> (case-sensitive!), a
@@ -768,8 +770,10 @@ public interface Record extends Attachable, Comparable<Record> {
      * {@link Field#getName()}, then the first one returning true on
      * {@link Field#equals(Object)} will be returned. (e.g. qualified field
      * names match)</li>
-     * </ul><p>
-     * <h5>Other restrictions</h5><p>
+     * </ul>
+     * <p>
+     * <h5>Other restrictions</h5>
+     * <p>
      * <ul>
      * <li>{@link Table#getRecordType()} must return a class of type
      * {@link TableRecord}, which must provide a default constructor. Non-public
@@ -815,7 +819,7 @@ public interface Record extends Attachable, Comparable<Record> {
     ResultSet intoResultSet();
 
     /**
-     * Map this record into a custom mapper callback
+     * Map this record into a custom mapper callback.
      *
      * @param mapper The mapper callback
      * @return The custom mapped record
@@ -823,16 +827,23 @@ public interface Record extends Attachable, Comparable<Record> {
     <E> E map(RecordMapper<Record, E> mapper);
 
     /**
-     * Load data into this record from a source.<p>The mapping algorithm is this:<p>
+     * Load data into this record from a source.
+     * <p>
+     * The mapping algorithm is this:
+     * <p>
      * <h5>If <code>source</code> is an <code>array</code></h5>
      * <p>
-     * Loading of data is delegated to {@link #fromArray(Object...)}<p>
-     * <h5>If <code>source</code> is a {@link Map}</h5><p>
+     * Loading of data is delegated to {@link #fromArray(Object...)}
      * <p>
-     * Loading of data is delegated to {@link #fromMap(Map)}<p>
+     * <h5>If <code>source</code> is a {@link Map}</h5>
+     * <p>
+     * <p>
+     * Loading of data is delegated to {@link #fromMap(Map)}
+     * <p>
      * <h5>If any JPA {@link Column} annotations are found on the {@link Class}
      * of the provided <code>source</code>, only those are used. Matching
-     * candidates are:</h5><p>
+     * candidates are:</h5>
+     * <p>
      * <ul>
      * <li>Public no-argument instance methods annotated with
      * <code>Column</code></li>
@@ -851,12 +862,14 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li>Explicitly matching methods have a higher priority than implicitly
      * matching methods (implicitly matching getter = setter is annotated)</li>
      * <li>Static methods / member fields are ignored</li>
-     * </ul><p>
+     * </ul>
+     * <p>
      * <h5>If there are no JPA <code>Column</code> annotations, or jOOQ can't
      * find the <code>javax.persistence</code> API on the classpath, jOOQ will
-     * map members by naming convention:</h5><p> If {@link Field#getName()} is
-     * <code>MY_field</code> (case-sensitive!), then this field's value will be
-     * fetched from the first of these:
+     * map members by naming convention:</h5>
+     * <p>
+     * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!),
+     * then this field's value will be fetched from the first of these:
      * <ul>
      * <li>Public no-argument instance method <code>MY_field()</code></li>
      * <li>Public no-argument instance method <code>myField()</code></li>
@@ -864,16 +877,21 @@ public interface Record extends Attachable, Comparable<Record> {
      * <li>Public no-argument instance method <code>getMyField()</code></li>
      * <li>Public instance member field <code>MY_field</code></li>
      * <li>Public instance member field <code>myField</code></li>
-     * </ul><p>
-     * <h5>Other restrictions</h5><p>
+     * </ul>
+     * <p>
+     * <h5>Other restrictions</h5>
+     * <p>
      * <ul>
      * <li>primitive types are supported.</li>
-     * </ul><p>
-     * <h5>General notes</h5><p> The resulting record will have its internal
-     * "changed" flags set to true for all values. This means that
-     * {@link UpdatableRecord#store()} will perform an <code>INSERT</code>
-     * statement. If you wish to store the record using an <code>UPDATE</code>
-     * statement, use {@link DSLContext#executeUpdate(UpdatableRecord)} instead.
+     * </ul>
+     * <p>
+     * <h5>General notes</h5>
+     * <p>
+     * The resulting record will have its internal "changed" flags set to true
+     * for all values. This means that {@link UpdatableRecord#store()} will
+     * perform an <code>INSERT</code> statement. If you wish to store the record
+     * using an <code>UPDATE</code> statement, use
+     * {@link DSLContext#executeUpdate(UpdatableRecord)} instead.
      *
      * @param source The source object to copy data from
      * @throws MappingException wrapping any reflection exception that might
@@ -883,7 +901,7 @@ public interface Record extends Attachable, Comparable<Record> {
     void from(Object source) throws MappingException;
 
     /**
-     * Load data from a map into this record
+     * Load data from a map into this record.
      * <p>
      * The argument map is expected to hold field-name / value pairs where
      * field-names correspond to actual field names as provided by
@@ -897,7 +915,7 @@ public interface Record extends Attachable, Comparable<Record> {
     void fromMap(Map<String, ?> map);
 
     /**
-     * Load data from an array into this record
+     * Load data from an array into this record.
      * <p>
      * The argument array is expected to hold values for this record's field
      * indexes. Missing values will be left untouched. Excess values will be
@@ -913,7 +931,7 @@ public interface Record extends Attachable, Comparable<Record> {
 
     /**
      * Get a hash code of this <code>Record</code>, based on the underlying row
-     * value expression
+     * value expression.
      * <p>
      * In order to fulfill the general contract of {@link Object#hashCode()} and
      * {@link Object#equals(Object)}, a <code>Record</code>'s hash code value

@@ -91,6 +91,30 @@ public interface Row extends QueryPart {
     Field<?>[] fields();
 
     /**
+     * Get all fields from this row, providing some fields.
+     *
+     * @return All available fields
+     * @see #field(Field)
+     */
+    Field<?>[] fields(Field<?>... fields);
+
+    /**
+     * Get all fields from this row, providing some field names.
+     *
+     * @return All available fields
+     * @see #field(String)
+     */
+    Field<?>[] fields(String... fieldNames);
+
+    /**
+     * Get all fields from this row, providing some field indexes.
+     *
+     * @return All available fields
+     * @see #field(int)
+     */
+    Field<?>[] fields(int... fieldIndexes);
+
+    /**
      * Get a field's index from this row.
      *
      * @param field The field to look for

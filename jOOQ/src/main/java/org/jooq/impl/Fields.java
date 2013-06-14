@@ -113,6 +113,36 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return fields;
     }
 
+    final Field<?>[] fields(Field<?>... f) {
+        Field<?>[] result = new Field[f.length];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = field(f[i]);
+        }
+
+        return result;
+    }
+
+    final Field<?>[] fields(String... f) {
+        Field<?>[] result = new Field[f.length];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = field(f[i]);
+        }
+
+        return result;
+    }
+
+    final Field<?>[] fields(int... f) {
+        Field<?>[] result = new Field[f.length];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = field(f[i]);
+        }
+
+        return result;
+    }
+
     final int indexOf(Field<?> field) {
 
         // Get an exact match, or a field with a similar name

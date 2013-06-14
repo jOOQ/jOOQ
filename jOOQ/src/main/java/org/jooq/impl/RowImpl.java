@@ -230,6 +230,21 @@ implements
     }
 
     @Override
+    public final Field<?>[] fields(Field<?>... f) {
+        return fields.fields(f);
+    }
+
+    @Override
+    public final Field<?>[] fields(String... fieldNames) {
+        return fields.fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(int... fieldIndexes) {
+        return fields.fields(fieldIndexes);
+    }
+
+    @Override
     public final int indexOf(Field<?> field) {
         return fields.indexOf(field);
     }

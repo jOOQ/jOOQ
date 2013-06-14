@@ -140,6 +140,21 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         return fields.fields();
     }
 
+    @Override
+    public final Field<?>[] fields(Field<?>... f) {
+        return fields.fields(f);
+    }
+
+    @Override
+    public final Field<?>[] fields(String... fieldNames) {
+        return fields.fields(fieldNames);
+    }
+
+    @Override
+    public final Field<?>[] fields(int... fieldIndexes) {
+        return fields.fields(fieldIndexes);
+    }
+
     // ------------------------------------------------------------------------
     // XXX: Record API
     // ------------------------------------------------------------------------

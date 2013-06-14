@@ -135,6 +135,30 @@ public interface Record extends Attachable, Comparable<Record> {
     Field<?>[] fields();
 
     /**
+     * Get all fields from this Record, providing some fields.
+     *
+     * @return All available fields
+     * @see Row#fields(Field...)
+     */
+    Field<?>[] fields(Field<?>... fields);
+
+    /**
+     * Get all fields from this Record, providing some field names.
+     *
+     * @return All available fields
+     * @see Row#fields(String...)
+     */
+    Field<?>[] fields(String... fieldNames);
+
+    /**
+     * Get all fields from this Record, providing some field indexes.
+     *
+     * @return All available fields
+     * @see Row#fields(int...)
+     */
+    Field<?>[] fields(int... fieldIndexes);
+
+    /**
      * Get this record's values as a {@link Row}.
      */
     Row valuesRow();

@@ -93,7 +93,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
     private boolean                   isClosed;
 
     private transient CursorResultSet rs;
-    private transient int             rsIndex;
     private transient Iterator<R>     iterator;
 
     @SuppressWarnings("unchecked")
@@ -1382,7 +1381,6 @@ class CursorImpl<R extends Record> implements Cursor<R> {
 
             try {
                 if (!isClosed && rs.next()) {
-                    ++rsIndex;
 
                     // [#1296] Force a row-lock by updating the row if the
                     // FOR UPDATE clause is simulated

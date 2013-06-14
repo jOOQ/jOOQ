@@ -93,9 +93,6 @@ import org.jooq.debug.console.Console;
 import org.jooq.debug.impl.DebuggerFactory;
 import org.jooq.impl.DSL;
 import org.jooq.impl.DefaultExecuteListenerProvider;
-import org.jooq.test._.LifecycleWatcherListener;
-import org.jooq.test._.PrettyPrinter;
-import org.jooq.test._.TestStatisticsListener;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -103,6 +100,10 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
+import org.jooq.test._.listeners.JDBCLifecycleListener;
+import org.jooq.test._.listeners.LifecycleWatcherListener;
+import org.jooq.test._.listeners.PrettyPrinter;
+import org.jooq.test._.listeners.TestStatisticsListener;
 import org.jooq.test._.testcases.AggregateWindowFunctionTests;
 import org.jooq.test._.testcases.AliasTests;
 import org.jooq.test._.testcases.BatchTests;
@@ -463,11 +464,10 @@ public abstract class jOOQAbstractTest<
         logStat.info("---------------");
         logStat.info("Total", total);
 
-        logStat.info("");
-
         JooqLogger logLife = JooqLogger.getLogger(LifecycleWatcherListener.class);
-        logLife.info("EXECUTE LIFECYCLE STATS");
-        logLife.info("-----------------------");
+        logStat.info("");
+        logLife.info("EXECUTE LISTENER LIFECYCLE STATS");
+        logLife.info("--------------------------------");
 
         int unbalanced = 0;
         for (Method m : LifecycleWatcherListener.START_COUNT.keySet()) {
@@ -485,6 +485,25 @@ public abstract class jOOQAbstractTest<
             }
         }
 
+        logStat.info("");
+        logLife.info("JDBC OBJECT LIFECYCLE STATS");
+        logLife.info("---------------------------");
+        for (Method m : JDBCLifecycleListener.STMT_START_COUNT.keySet()) {
+            Integer starts = JDBCLifecycleListener.STMT_START_COUNT.get(m);
+            Integer ends = JDBCLifecycleListener.STMT_CLOSE_COUNT.get(m);
+
+            if (!StringUtils.equals(starts, ends)) {
+                unbalanced++;
+
+                logLife.info(
+                    "Unbalanced", String.format("(open, close): (%1$3s, %2$3s) at %3$s",
+                        starts,
+                        ends == null ? 0 : ends,
+                        m.toString().replace("public void ", "").replaceAll("( throws.*)?", "")));
+            }
+        }
+
+        logStat.info("");
         logLife.info("Unbalanced test: ", unbalanced);
     }
 
@@ -884,9 +903,10 @@ public abstract class jOOQAbstractTest<
 
         return DSL.using(create0(settings).configuration().derive(
             DefaultExecuteListenerProvider.providers(
+                new JDBCLifecycleListener(),
+                new LifecycleWatcherListener(),
                 new TestStatisticsListener(),
-                new PrettyPrinter(),
-                new LifecycleWatcherListener()
+                new PrettyPrinter()
             )
         ));
     }

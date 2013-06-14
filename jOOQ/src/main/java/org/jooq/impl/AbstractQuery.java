@@ -360,8 +360,6 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
     /**
      * Default implementation for executable check. Subclasses may override this
      * method.
-     *
-     * {@inheritDoc}
      */
     @Override
     public boolean isExecutable() {

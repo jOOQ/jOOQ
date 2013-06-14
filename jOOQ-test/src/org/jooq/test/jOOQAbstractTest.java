@@ -1369,6 +1369,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordFrom() throws Exception {
+        new FetchTests(this).testRecordFrom();
+    }
+
+    @Test
     public void testReflectionWithAnnotations() throws Exception {
         new FetchTests(this).testReflectionWithAnnotations();
     }

@@ -916,13 +916,62 @@ public interface Record extends Attachable, Comparable<Record> {
      * perform an <code>INSERT</code> statement. If you wish to store the record
      * using an <code>UPDATE</code> statement, use
      * {@link DSLContext#executeUpdate(UpdatableRecord)} instead.
+     * <p>
+     * This is the same as calling
+     * <code>record.from(source, record.fields())</code>
      *
      * @param source The source object to copy data from
      * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      * @see #into(Class)
+     * @see #from(Object, Field...)
      */
     void from(Object source) throws MappingException;
+
+    /**
+     * Load data into this record from a source, providing some fields.
+     * <p>
+     * This is the same as {@link #from(Object)}, except that only fields
+     * contained in the <code>fields</code> argument will be mapped.
+     *
+     * @param source The source object to copy data from
+     * @param fields The record's fields to use for mapping
+     * @throws MappingException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     * @see #into(Class)
+     * @see #from(Object)
+     */
+    void from(Object source, Field<?>... fields) throws MappingException;
+
+    /**
+     * Load data into this record from a source, providing some field names.
+     * <p>
+     * This is the same as {@link #from(Object)}, except that only fields
+     * contained in the <code>fieldNames</code> argument will be mapped.
+     *
+     * @param source The source object to copy data from
+     * @param fieldNames The record's fields names to use for mapping
+     * @throws MappingException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     * @see #into(Class)
+     * @see #from(Object)
+     */
+    void from(Object source, String... fieldNames) throws MappingException;
+
+    /**
+     * Load data into this record from a source, providing some field indexes.
+     * <p>
+     * This is the same as {@link #from(Object)}, except that only fields
+     * contained in the <code>fieldIndexes</code> argument will be mapped.
+     *
+     * @param source The source object to copy data from
+     * @param fieldIndexes The record's fields indexes to use for mapping
+     * @throws MappingException wrapping any reflection exception that might
+     *             have occurred while mapping records
+     * @see #into(Class)
+     * @see #from(Object)
+     */
+    void from(Object source, int... fieldIndexes) throws MappingException;
 
     /**
      * Load data from a map into this record.
@@ -932,11 +981,61 @@ public interface Record extends Attachable, Comparable<Record> {
      * {@link #field(String)}. Missing fields will be left untouched. Excess
      * fields will be ignored.
      * <p>
-     * This is the inverse operation to {@link #intoMap()}
+     * This is the inverse operation to {@link #intoMap()}. This is the same as
+     * calling <code>record.fromMap(map, record.fields())</code>
      *
      * @see #intoMap()
+     * @see #fromMap(Map, Field...)
      */
     void fromMap(Map<String, ?> map);
+
+    /**
+     * Load data from a map into this record, providing some fields.
+     * <p>
+     * The argument map is expected to hold field-name / value pairs where
+     * field-names correspond to actual field names as provided by
+     * {@link #field(String)}. Missing fields will be left untouched. Excess
+     * fields will be ignored.
+     * <p>
+     * This is the same as {@link #fromMap(Map)}, except that only fields
+     * contained in the <code>fields</code> argument will be mapped.
+     *
+     * @see #intoMap()
+     * @see #fromMap(Map)
+     */
+    void fromMap(Map<String, ?> map, Field<?>... fields);
+
+    /**
+     * Load data from a map into this record, providing some field names.
+     * <p>
+     * The argument map is expected to hold field-name / value pairs where
+     * field-names correspond to actual field names as provided by
+     * {@link #field(String)}. Missing fields will be left untouched. Excess
+     * fields will be ignored.
+     * <p>
+     * This is the same as {@link #fromMap(Map)}, except that only fields
+     * contained in the <code>fieldNames</code> argument will be mapped.
+     *
+     * @see #intoMap()
+     * @see #fromMap(Map)
+     */
+    void fromMap(Map<String, ?> map, String... fieldNames);
+
+    /**
+     * Load data from a map into this record, providing some field indexes.
+     * <p>
+     * The argument map is expected to hold field-name / value pairs where
+     * field-names correspond to actual field names as provided by
+     * {@link #field(String)}. Missing fields will be left untouched. Excess
+     * fields will be ignored.
+     * <p>
+     * This is the same as {@link #fromMap(Map)}, except that only fields
+     * contained in the <code>fieldIndexes</code> argument will be mapped.
+     *
+     * @see #intoMap()
+     * @see #fromMap(Map)
+     */
+    void fromMap(Map<String, ?> map, int... fieldIndexes);
 
     /**
      * Load data from an array into this record.
@@ -946,8 +1045,57 @@ public interface Record extends Attachable, Comparable<Record> {
      * ignored.
      * <p>
      * This is the inverse operation to {@link #intoArray()}
+     *
+     * @see #intoArray()
+     * @see #fromArray(Object[], Field...)
      */
     void fromArray(Object... array);
+
+    /**
+     * Load data from an array into this record, providing some fields.
+     * <p>
+     * The argument array is expected to hold values for this record's field
+     * indexes. Missing values will be left untouched. Excess values will be
+     * ignored.
+     * <p>
+     * This is the same as {@link #fromArray(Object...)}, except that only
+     * fields contained in the <code>fields</code> argument will be mapped.
+     *
+     * @see #intoArray()
+     * @see #fromArray(Object...)
+     */
+    void fromArray(Object[] array, Field<?>... fields);
+
+    /**
+     * Load data from an array into this record, providing some fields names.
+     * <p>
+     * The argument array is expected to hold values for this record's field
+     * indexes. Missing values will be left untouched. Excess values will be
+     * ignored.
+     * <p>
+     * This is the same as {@link #fromArray(Object...)}, except that only
+     * fields contained in the <code>fieldNames</code> argument will be mapped.
+     *
+     * @see #intoArray()
+     * @see #fromArray(Object...)
+     */
+    void fromArray(Object[] array, String... fieldNames);
+
+    /**
+     * Load data from an array into this record, providing some fields indexes.
+     * <p>
+     * The argument array is expected to hold values for this record's field
+     * indexes. Missing values will be left untouched. Excess values will be
+     * ignored.
+     * <p>
+     * This is the same as {@link #fromArray(Object...)}, except that only
+     * fields contained in the <code>fieldIndexes</code> argument will be
+     * mapped.
+     *
+     * @see #intoArray()
+     * @see #fromArray(Object...)
+     */
+    void fromArray(Object[] array, int... fieldIndexes);
 
     // -------------------------------------------------------------------------
     // Inherited methods

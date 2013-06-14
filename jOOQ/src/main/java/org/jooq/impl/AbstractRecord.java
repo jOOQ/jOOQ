@@ -559,12 +559,33 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
         // All other types are expected to be POJOs
         else {
+            from(source, fields());
+        }
+    }
+
+    @Override
+    public final void from(Object source, Field<?>... f) {
+        if (source == null) return;
+
+        // [#1987] Distinguish between various types to load data from
+        // Maps are loaded using a {field-name -> value} convention
+        if (source instanceof Map) {
+            fromMap((Map<String, ?>) source, f);
+        }
+
+        // Arrays are loaded through index mapping
+        else if (source instanceof Object[]) {
+            fromArray((Object[]) source, f);
+        }
+
+        // All other types are expected to be POJOs
+        else {
             Class<?> type = source.getClass();
 
             try {
                 boolean useAnnotations = hasColumnAnnotations(type);
 
-                for (Field<?> field : fields.fields) {
+                for (Field<?> field : f) {
                     List<java.lang.reflect.Field> members;
                     Method method;
 
@@ -598,25 +619,69 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
+    public final void from(Object source, String... fieldNames) {
+        from(source, fields(fieldNames));
+    }
+
+    @Override
+    public final void from(Object source, int... fieldIndexes) {
+        from(source, fields(fieldIndexes));
+    }
+
+    @Override
     public final void fromMap(Map<String, ?> map) {
-        int size = fields.size();
-        for (int i = 0; i < size; i++) {
-            Field<?> field = fields.field(i);
-            String name = field.getName();
+        from(map, fields());
+    }
+
+    @Override
+    public final void fromMap(Map<String, ?> map, Field<?>... f) {
+        for (int i = 0; i < f.length; i++) {
+            String name = f[i].getName();
 
             // Set only those values contained in the map
             if (map.containsKey(name)) {
-                Utils.setValue(this, field, map.get(name));
+                Utils.setValue(this, f[i], map.get(name));
             }
         }
     }
 
     @Override
+    public final void fromMap(Map<String, ?> map, String... fieldNames) {
+        fromMap(map, fields(fieldNames));
+    }
+
+    @Override
+    public final void fromMap(Map<String, ?> map, int... fieldIndexes) {
+        fromMap(map, fields(fieldIndexes));
+    }
+
+    @Override
     public final void fromArray(Object... array) {
+        fromArray(array, fields());
+    }
+
+    @Override
+    public final void fromArray(Object[] array, Field<?>... f) {
+        Fields accept = new Fields(f);
         int size = fields.size();
+
         for (int i = 0; i < size && i < array.length; i++) {
-            Utils.setValue(this, fields.field(i), array[i]);
+            Field field = fields.field(i);
+
+            if (accept.field(field) != null) {
+                Utils.setValue(this, field, array[i]);
+            }
         }
+    }
+
+    @Override
+    public final void fromArray(Object[] array, String... fieldNames) {
+        fromArray(array, fields(fieldNames));
+    }
+
+    @Override
+    public final void fromArray(Object[] array, int... fieldIndexes) {
+        fromArray(array, fields(fieldIndexes));
     }
 
     /**

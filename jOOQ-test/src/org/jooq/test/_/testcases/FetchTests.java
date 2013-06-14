@@ -61,6 +61,7 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -865,6 +866,59 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         A author4 = create().selectFrom(TAuthor()).where(TAuthor_ID().equal(3)).fetchOne();
         assertEquals(author3, author4);
+    }
+
+    @Test
+    public void testRecordFrom() throws Exception {
+        A author;
+
+        // Mapping through Objects
+        // -----------------------
+        AuthorWithoutAnnotations object = new AuthorWithoutAnnotations();
+        object.firstName = "A";
+        object.lastName = "B";
+        object.ID = 13;
+
+        author = create().newRecord(TAuthor());
+        author.from(object, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME());
+        testRecordFromAssertions(object, author);
+
+        author = create().newRecord(TAuthor());
+        author.from(object, TAuthor_FIRST_NAME().getName(), TAuthor_LAST_NAME().getName());
+        testRecordFromAssertions(object, author);
+
+        // Mapping through Maps
+        // --------------------
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put(TAuthor_FIRST_NAME().getName(), "A");
+        map.put(TAuthor_LAST_NAME().getName(), "B");
+        map.put(TAuthor_ID().getName(), 13);
+
+        author = create().newRecord(TAuthor());
+        author.fromMap(map, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME());
+        testRecordFromAssertions(object, author);
+
+        author = create().newRecord(TAuthor());
+        author.fromMap(map, TAuthor_FIRST_NAME().getName(), TAuthor_LAST_NAME().getName());
+        testRecordFromAssertions(object, author);
+
+        // Mapping through Arrays
+        // ----------------------
+        Object[] array = { 13, "A", "B" };
+
+        author = create().newRecord(TAuthor());
+        author.fromArray(array, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME());
+        testRecordFromAssertions(object, author);
+
+        author = create().newRecord(TAuthor());
+        author.fromArray(array, TAuthor_FIRST_NAME().getName(), TAuthor_LAST_NAME().getName());
+        testRecordFromAssertions(object, author);
+    }
+
+    private void testRecordFromAssertions(AuthorWithoutAnnotations object, A author) {
+        assertNull(author.getValue(TAuthor_ID()));
+        assertEquals(object.firstName, author.getValue(TAuthor_FIRST_NAME()));
+        assertEquals(object.lastName, author.getValue(TAuthor_LAST_NAME()));
     }
 
     @Test

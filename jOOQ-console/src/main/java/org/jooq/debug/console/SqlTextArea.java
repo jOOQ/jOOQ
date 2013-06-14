@@ -93,8 +93,7 @@ public class SqlTextArea extends RSyntaxTextArea {
                 switch(e.getKeyCode()) {
                     case KeyEvent.VK_P:
                         if(isControlDown && isShiftDown) {
-                            //int position = RSyntaxUtilities.getMatchingBracketPosition(SqlTextArea.this, null).y;
-                            int position = RSyntaxUtilities.getMatchingBracketPosition(SqlTextArea.this);
+                            int position = RSyntaxUtilities.getMatchingBracketPosition(SqlTextArea.this, null).y;
                             if(position >= 0) {
                                 setCaretPosition(position + 1);
                             }

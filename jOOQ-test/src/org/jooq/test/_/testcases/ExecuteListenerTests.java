@@ -462,14 +462,32 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        @SuppressWarnings("unused")
         private void checkStatement(ExecuteContext ctx, boolean patched) {
-            assertNotNull(ctx.statement());
+            checkStatement(ctx, patched, false);
         }
 
         @SuppressWarnings("unused")
+        private void checkStatement(ExecuteContext ctx, boolean patched, boolean isNull) {
+            if (isNull) {
+                assertNull(ctx.statement());
+            }
+            else {
+                assertNotNull(ctx.statement());
+            }
+        }
+
         private void checkResultSet(ExecuteContext ctx, boolean patched) {
-            assertNotNull(ctx.resultSet());
+            checkResultSet(ctx, patched, false);
+        }
+
+        @SuppressWarnings("unused")
+        private void checkResultSet(ExecuteContext ctx, boolean patched, boolean isNull) {
+            if (isNull) {
+                assertNull(ctx.resultSet());
+            }
+            else {
+                assertNotNull(ctx.resultSet());
+            }
         }
 
         @Override
@@ -651,8 +669,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             resultEnd = ++callbackCount;
             checkBase(ctx);
             checkSQL(ctx, true);
-            checkStatement(ctx, true);
-            checkResultSet(ctx, true);
+            checkStatement(ctx, true, true);
+            checkResultSet(ctx, true, true);
             assertNotNull(ctx.record());
             assertEquals(2, ctx.record().fieldsRow().size());
 
@@ -665,8 +683,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fetchEnd = ++callbackCount;
             checkBase(ctx);
             checkSQL(ctx, true);
-            checkStatement(ctx, true);
-            checkResultSet(ctx, true);
+            checkStatement(ctx, true, true);
+            checkResultSet(ctx, true, true);
             assertNotNull(ctx.record());
             assertEquals(2, ctx.record().fieldsRow().size());
 
@@ -679,8 +697,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             end = ++callbackCount;
             checkBase(ctx);
             checkSQL(ctx, true);
-            checkStatement(ctx, true);
-            checkResultSet(ctx, true);
+            checkStatement(ctx, true, true);
+            checkResultSet(ctx, true, true);
             assertNotNull(ctx.record());
             assertEquals(2, ctx.record().fieldsRow().size());
 
@@ -791,9 +809,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        @SuppressWarnings("unused")
         private void checkStatement(ExecuteContext ctx, boolean patched) {
-            assertNotNull(ctx.statement());
+            checkStatement(ctx, patched, false);
+        }
+
+        @SuppressWarnings("unused")
+        private void checkStatement(ExecuteContext ctx, boolean patched, boolean isNull) {
+            if (isNull) {
+                assertNull(ctx.statement());
+            }
+            else {
+                assertNotNull(ctx.statement());
+            }
         }
 
         @Override
@@ -915,7 +942,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             end = ++callbackCount;
             checkBase(ctx);
             checkSQL(ctx, true);
-            checkStatement(ctx, true);
+            checkStatement(ctx, true, true);
         }
     }
 
@@ -1024,9 +1051,18 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        @SuppressWarnings("unused")
         private void checkStatement(ExecuteContext ctx, boolean patched) {
-            assertNotNull(ctx.statement());
+            checkStatement(ctx, patched, false);
+        }
+
+        @SuppressWarnings("unused")
+        private void checkStatement(ExecuteContext ctx, boolean patched, boolean isNull) {
+            if (isNull) {
+                assertNull(ctx.statement());
+            }
+            else {
+                assertNotNull(ctx.statement());
+            }
         }
 
         @Override
@@ -1142,7 +1178,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             end = ++callbackCount;
             checkBase(ctx);
             checkSQL(ctx, true);
-            checkStatement(ctx, true);
+            checkStatement(ctx, true, true);
         }
     }
 

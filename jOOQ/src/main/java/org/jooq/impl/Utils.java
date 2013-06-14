@@ -1080,11 +1080,15 @@ final class Utils {
      * Safely close a statement
      */
     static final void safeClose(ExecuteListener listener, ExecuteContext ctx, boolean keepStatement, boolean keepResultSet) {
-        JDBCUtils.safeClose(ctx.resultSet());
+        // [#2523] Set JDBC objects to null, to prevent repeated closing
+    	JDBCUtils.safeClose(ctx.resultSet());
+        ctx.resultSet(null);
 
         // [#385] Close statements only if not requested to keep open
-        if (!keepStatement)
+        if (!keepStatement) {
             JDBCUtils.safeClose(ctx.statement());
+            ctx.statement(null);
+        }
 
         // [#1868] [#2373] Terminate ExecuteListener lifecycle, if needed
         if (keepResultSet)

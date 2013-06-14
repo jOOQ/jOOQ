@@ -33,7 +33,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.test._;
+package org.jooq.test._.listeners;
 
 import static org.jooq.conf.ParamType.INLINED;
 

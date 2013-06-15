@@ -44,6 +44,7 @@ import java.util.TreeMap;
 import org.jooq.ExecuteContext;
 import org.jooq.tools.jdbc.DefaultCallableStatement;
 import org.jooq.tools.jdbc.DefaultPreparedStatement;
+import org.jooq.tools.jdbc.DefaultResultSet;
 
 /**
  * An <code>ExecuteListener</code> that collects data about the lifecycle of
@@ -90,5 +91,20 @@ public class JDBCLifecycleListener extends AbstractLifecycleListener {
                 }
             });
         }
+    }
+
+    @Override
+    public void fetchStart(ExecuteContext ctx) {
+        super.fetchStart(ctx);
+        increment(RS_START_COUNT);
+
+        ctx.resultSet(new DefaultResultSet(ctx.resultSet()) {
+
+            @Override
+            public void close() throws SQLException {
+                increment(RS_CLOSE_COUNT);
+                super.close();
+            }
+        });
     }
 }

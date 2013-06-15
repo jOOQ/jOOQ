@@ -66,7 +66,7 @@ public abstract class AbstractLifecycleListener extends DefaultExecuteListener {
 
     private static final Object         INCREMENT_MONITOR = new Object();
 
-    protected void increment(Map<Method, Integer> map) {
+    protected final void increment(Map<Method, Integer> map) {
         synchronized (INCREMENT_MONITOR) {
             Method m = testMethod();
 

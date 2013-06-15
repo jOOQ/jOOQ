@@ -52,20 +52,20 @@ public class LifecycleWatcherListener extends AbstractLifecycleListener {
     /**
      * Generated UID
      */
-    private static final long                serialVersionUID  = -2283264126211556442L;
+    private static final long                serialVersionUID     = -2283264126211556442L;
 
-    public static final Map<Method, Integer> START_COUNT       = new TreeMap<Method, Integer>(METHOD_COMPARATOR);
-    public static final Map<Method, Integer> END_COUNT         = new TreeMap<Method, Integer>(METHOD_COMPARATOR);
+    public static final Map<Method, Integer> LISTENER_START_COUNT = new TreeMap<Method, Integer>(METHOD_COMPARATOR);
+    public static final Map<Method, Integer> LISTENER_END_COUNT   = new TreeMap<Method, Integer>(METHOD_COMPARATOR);
 
     @Override
     public void start(ExecuteContext ctx) {
         super.start(ctx);
-        increment(START_COUNT);
+        increment(LISTENER_START_COUNT);
     }
 
     @Override
     public void end(ExecuteContext ctx) {
         super.end(ctx);
-        increment(END_COUNT);
+        increment(LISTENER_END_COUNT);
     }
 }

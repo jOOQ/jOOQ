@@ -38,6 +38,12 @@ package org.jooq.test;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_CLOSE_COUNT;
+import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_START_COUNT;
+import static org.jooq.test._.listeners.JDBCLifecycleListener.STMT_CLOSE_COUNT;
+import static org.jooq.test._.listeners.JDBCLifecycleListener.STMT_START_COUNT;
+import static org.jooq.test._.listeners.LifecycleWatcherListener.LISTENER_END_COUNT;
+import static org.jooq.test._.listeners.LifecycleWatcherListener.LISTENER_START_COUNT;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.io.File;
@@ -464,47 +470,44 @@ public abstract class jOOQAbstractTest<
         logStat.info("---------------");
         logStat.info("Total", total);
 
+        int unbalanced = 0;
         JooqLogger logLife = JooqLogger.getLogger(LifecycleWatcherListener.class);
-        logStat.info("");
+
+        logLife.info("");
         logLife.info("EXECUTE LISTENER LIFECYCLE STATS");
         logLife.info("--------------------------------");
+        unbalanced = extracted(logLife, unbalanced, LISTENER_START_COUNT, LISTENER_END_COUNT);
 
-        int unbalanced = 0;
-        for (Method m : LifecycleWatcherListener.START_COUNT.keySet()) {
-            Integer starts = LifecycleWatcherListener.START_COUNT.get(m);
-            Integer ends = LifecycleWatcherListener.END_COUNT.get(m);
+        logLife.info("");
+        logLife.info("JDBC STATEMENT LIFECYCLE STATS");
+        logLife.info("------------------------------");
+        unbalanced = extracted(logLife, unbalanced, STMT_START_COUNT, STMT_CLOSE_COUNT);
 
-            if (!StringUtils.equals(starts, ends)) {
-                unbalanced++;
+        logLife.info("");
+        logLife.info("JDBC RESULTSET LIFECYCLE STATS");
+        logLife.info("------------------------------");
+        unbalanced = extracted(logLife, unbalanced, RS_START_COUNT, RS_CLOSE_COUNT);
 
-                logLife.info(
-                    "Unbalanced", String.format("(start, end): (%1$3s, %2$3s) at %3$s",
-                        starts,
-                        ends == null ? 0 : ends,
-                        m.toString().replace("public void ", "").replaceAll("( throws.*)?", "")));
-            }
-        }
+        logLife.info("");
+        logLife.info("Unbalanced test: ", unbalanced);
+    }
 
-        logStat.info("");
-        logLife.info("JDBC OBJECT LIFECYCLE STATS");
-        logLife.info("---------------------------");
-        for (Method m : JDBCLifecycleListener.STMT_START_COUNT.keySet()) {
-            Integer starts = JDBCLifecycleListener.STMT_START_COUNT.get(m);
-            Integer ends = JDBCLifecycleListener.STMT_CLOSE_COUNT.get(m);
+    private static int extracted(JooqLogger logger, int unbalanced, Map<Method, Integer> startCount, Map<Method, Integer> endCount) {
+        for (Method m : startCount.keySet()) {
+            Integer starts = startCount.get(m);
+            Integer ends = endCount.get(m);
 
             if (!StringUtils.equals(starts, ends)) {
                 unbalanced++;
 
-                logLife.info(
+                logger.info(
                     "Unbalanced", String.format("(open, close): (%1$3s, %2$3s) at %3$s",
                         starts,
                         ends == null ? 0 : ends,
                         m.toString().replace("public void ", "").replaceAll("( throws.*)?", "")));
             }
         }
-
-        logStat.info("");
-        logLife.info("Unbalanced test: ", unbalanced);
+        return unbalanced;
     }
 
     @SuppressWarnings("unused")

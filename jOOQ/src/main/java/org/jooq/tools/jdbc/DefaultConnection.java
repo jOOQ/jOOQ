@@ -55,7 +55,7 @@ import java.util.Properties;
 
 /**
  * A default JDBC Connection implementation delegating all JDBC 4.0 calls to an
- * internal delegate
+ * internal delegate.
  *
  * @author Lukas Eder
  */

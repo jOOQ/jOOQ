@@ -40,7 +40,7 @@ import java.sql.SQLException;
 import java.util.concurrent.Executor;
 
 /**
- * Add JDBC 4.1 API compliance to a JDBC 4.0 {@link Connection}
+ * Add JDBC 4.1 API compliance to a JDBC 4.0 {@link Connection}.
  * <p>
  * Extend this type if you want to compile {@link Connection} implementations on
  * both JDBC 4.0 (JDK 6) and 4.1 (JDK 7).

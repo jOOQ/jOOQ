@@ -39,7 +39,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Add JDBC 4.1 API compliance to a JDBC 4.0 {@link ResultSet}
+ * Add JDBC 4.1 API compliance to a JDBC 4.0 {@link ResultSet}.
  * <p>
  * Extend this type if you want to compile {@link ResultSet} implementations on
  * both JDBC 4.0 (JDK 6) and 4.1 (JDK 7).

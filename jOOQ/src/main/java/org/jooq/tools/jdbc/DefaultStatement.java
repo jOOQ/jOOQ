@@ -43,7 +43,7 @@ import java.sql.Statement;
 
 /**
  * A default JDBC Statement implementation delegating all JDBC 4.0 calls to an
- * internal delegate
+ * internal delegate.
  *
  * @author Lukas Eder
  */

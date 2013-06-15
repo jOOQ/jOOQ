@@ -56,7 +56,7 @@ import java.util.Map;
 
 /**
  * A default JDBC CallableStatement implementation delegating all JDBC 4.0 calls
- * to an internal delegate
+ * to an internal delegate.
  *
  * @author Lukas Eder
  */

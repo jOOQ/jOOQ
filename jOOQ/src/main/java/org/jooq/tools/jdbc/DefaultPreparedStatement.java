@@ -58,7 +58,7 @@ import java.util.Calendar;
 
 /**
  * A default JDBC PreparedStatement implementation delegating all JDBC 4.0 calls
- * to an internal delegate
+ * to an internal delegate.
  *
  * @author Lukas Eder
  */

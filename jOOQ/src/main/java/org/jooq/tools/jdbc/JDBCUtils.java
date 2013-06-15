@@ -64,7 +64,7 @@ import java.sql.Statement;
 import org.jooq.SQLDialect;
 
 /**
- * JDBC-related utility methods
+ * JDBC-related utility methods.
  *
  * @author Lukas Eder
  */

@@ -46,7 +46,7 @@ import java.lang.reflect.Method;
  *
  * @author Lukas Eder
  */
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)
 public @interface Transition {
 

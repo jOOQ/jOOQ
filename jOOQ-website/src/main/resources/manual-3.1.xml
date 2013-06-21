@@ -2652,7 +2652,7 @@ SELECT * FROM BOOK LIMIT 1 OFFSET 2
 -- CUBRID supports a MySQL variant of the LIMIT .. OFFSET clause
 SELECT * FROM BOOK LIMIT 2, 1
 
--- Derby
+-- Derby, SQL Server 2012
 SELECT * FROM BOOK OFFSET 2 ROWS FETCH NEXT 1 ROWS ONLY
 
 -- Ingres
@@ -2667,10 +2667,10 @@ SELECT TOP 1 ROWS START AT 3 * FROM BOOK
 -- DB2 (without OFFSET)
 SELECT * FROM BOOK FETCH FIRST 1 ROWS ONLY
 
--- Sybase ASE, SQL Server (without OFFSET)
+-- Sybase ASE, SQL Server 2008 (without OFFSET)
 SELECT TOP 1 * FROM BOOK
 
--- DB2 (with OFFSET), SQL Server (with OFFSET), Oracle (actual query may vary)
+-- DB2 (with OFFSET), SQL Server 2008 (with OFFSET), Oracle (actual query may vary)
 SELECT * FROM (
   SELECT LIMIT_98843777.*, ROW_NUMBER() OVER (ORDER BY ID ASC) AS ROWNUM_98843777
   FROM (

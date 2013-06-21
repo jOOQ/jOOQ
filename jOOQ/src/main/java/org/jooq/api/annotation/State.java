@@ -45,7 +45,7 @@ import java.lang.annotation.Target;
  *
  * @author Lukas Eder
  */
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.TYPE)
 public @interface State {
 

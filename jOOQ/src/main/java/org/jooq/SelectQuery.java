@@ -264,7 +264,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
     void addHaving(Operator operator, Collection<Condition> conditions);
 
     /**
-     * Add an Oracle-style hint to the select clause
+     * Add an Oracle-style hint to the select clause.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);
@@ -294,6 +294,37 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Support
     void addHint(String hint);
+
+    /**
+     * Add a SQL Server-style query hint to the select clause.
+     * <p>
+     * Example: <code><pre>
+     * DSLContext create = DSL.using(configuration);
+     *
+     * create.select(field1, field2)
+     *       .from(table1)
+     *       .option("OPTION (OPTIMIZE FOR UNKNOWN)")
+     *       .execute();
+     * </pre></code>
+     * <p>
+     * You can also use this clause for any other database, that accepts hints
+     * or options at the same syntactic location, e.g. for DB2's isolation clause: <code><pre>
+     * create.select(field1, field2)
+     *       .from(table1)
+     *       .option("WITH RR USE AND KEEP EXCLUSIVE LOCKS")
+     *       .execute();
+     * </pre></code>
+     * <p>
+     * The outcome of such a query is this: <code><pre>
+     * SELECT field1, field2 FROM table1 [option]
+     * </pre></code>
+     * <p>
+     * For SQL Server style table hints, see {@link Table#with(String)}
+     *
+     * @see Table#with(String)
+     */
+    @Support
+    void addOption(String option);
 
     /**
      * Add an Oracle-specific <code>CONNECT BY</code> clause to the query

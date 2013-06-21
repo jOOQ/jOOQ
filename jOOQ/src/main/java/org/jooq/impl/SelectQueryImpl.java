@@ -98,6 +98,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     private final SelectFieldList           select;
     private String                          hint;
+    private String                          option;
     private boolean                         distinct;
     private boolean                         forUpdate;
     private final QueryPartList<Field<?>>   forUpdateOf;
@@ -310,6 +311,14 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     break;
             }
         }
+
+        // [#1952] SQL Server OPTION() clauses as well as many other optional
+        // end-of-query clauses are appended to the end of a query
+        if (!StringUtils.isBlank(option)) {
+            context.formatSeparator()
+                   .sql(option);
+        }
+
     }
 
     /**
@@ -905,6 +914,10 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.hint = hint;
     }
 
+    final void setOption(String option) {
+        this.option = option;
+    }
+
     @Override
     final boolean isForUpdate() {
         return forUpdate;
@@ -1182,6 +1195,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     @Override
     public final void addHint(String h) {
         setHint(h);
+    }
+
+    @Override
+    public final void addOption(String o) {
+        setOption(o);
     }
 
     // -------------------------------------------------------------------------

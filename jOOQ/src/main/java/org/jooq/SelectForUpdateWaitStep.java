@@ -84,7 +84,7 @@ import org.jooq.api.annotation.Transition;
  * @author Lukas Eder
  */
 @State
-public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalStep<R> {
+public interface SelectForUpdateWaitStep<R extends Record> extends SelectOptionStep<R> {
 
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -99,7 +99,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalSt
         name = "WAIT",
         args = "Integer"
     )
-    SelectFinalStep<R> wait(int seconds);
+    SelectOptionStep<R> wait(int seconds);
 
     /**
      * Add a <code>NOWAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -111,7 +111,7 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalSt
     @Transition(
         name = "NOWAIT"
     )
-    SelectFinalStep<R> noWait();
+    SelectOptionStep<R> noWait();
 
     /**
      * Add a <code>WAIT</code> clause to the <code>FOR UPDATE</code> clause at
@@ -124,5 +124,5 @@ public interface SelectForUpdateWaitStep<R extends Record> extends SelectFinalSt
     @Transition(
         name = "SKIP LOCKED"
     )
-    SelectFinalStep<R> skipLocked();
+    SelectOptionStep<R> skipLocked();
 }

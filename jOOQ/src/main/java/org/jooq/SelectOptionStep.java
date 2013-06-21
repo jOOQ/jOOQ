@@ -35,22 +35,7 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ASE;
-import static org.jooq.SQLDialect.CUBRID;
-import static org.jooq.SQLDialect.DB2;
-import static org.jooq.SQLDialect.DERBY;
-import static org.jooq.SQLDialect.FIREBIRD;
-import static org.jooq.SQLDialect.H2;
-import static org.jooq.SQLDialect.HSQLDB;
-import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.MYSQL;
-import static org.jooq.SQLDialect.ORACLE;
-import static org.jooq.SQLDialect.POSTGRES;
-import static org.jooq.SQLDialect.SQLSERVER;
-import static org.jooq.SQLDialect.SYBASE;
-
 import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
 
 /**
  * This type is used for the {@link Select}'s DSL API when selecting generic
@@ -95,36 +80,37 @@ import org.jooq.api.annotation.Transition;
  * @author Lukas Eder
  */
 @State
-public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<R> {
+public interface SelectOptionStep<R extends Record> extends SelectFinalStep<R> {
 
     /**
-     * Add a <code>FOR UPDATE</code> clause to the end of the query.
+     * Add a SQL Server-style query hint to the select clause.
      * <p>
-     * Note: not all SQL dialects allow for combining a <code>FOR UPDATE</code>
-     * clause with <code>LIMIT .. OFFSET</code>, or with <code>GROUP BY</code>.
-     * This essentially includes {@link SQLDialect#INGRES} and
-     * {@link SQLDialect#ORACLE}. These incompatibilities are not reflected by
-     * the jOOQ API.
+     * Example: <code><pre>
+     * DSLContext create = DSL.using(configuration);
      *
-     * @see SelectQuery#setForUpdate(boolean) see LockProvider for more
-     *      details
-     */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
-    @Transition(
-        name = "FOR UPDATE"
-    )
-    SelectForUpdateOfStep<R> forUpdate();
-
-    /**
-     * Add a <code>FOR SHARE</code> clause to the end of the query.
+     * create.select(field1, field2)
+     *       .from(table1)
+     *       .option("OPTION (OPTIMIZE FOR UNKNOWN)")
+     *       .execute();
+     * </pre></code>
+     * <p>
+     * You can also use this clause for any other database, that accepts hints
+     * or options at the same syntactic location, e.g. for DB2's isolation clause: <code><pre>
+     * create.select(field1, field2)
+     *       .from(table1)
+     *       .option("WITH RR USE AND KEEP EXCLUSIVE LOCKS")
+     *       .execute();
+     * </pre></code>
+     * <p>
+     * The outcome of such a query is this: <code><pre>
+     * SELECT field1, field2 FROM table1 [option]
+     * </pre></code>
+     * <p>
+     * For SQL Server style table hints, see {@link Table#with(String)}
      *
-     * @see SelectQuery#setForShare(boolean) see LockProvider for more
-     *      details
+     * @see Table#with(String)
+     * @see SelectQuery#addOption(String)
      */
-    @Support({ MYSQL, POSTGRES })
-    @Transition(
-        name = "FOR SHARE"
-    )
-    SelectOptionStep<R> forShare();
-
+    @Support
+    SelectFinalStep<R> option(String string);
 }

@@ -36,6 +36,7 @@
 
 package org.jooq.test;
 
+import static junit.framework.Assert.assertEquals;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_639_NUMBERS_TABLE;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_725_LOB_TEST;
 import static org.jooq.test.sqlserver.generatedclasses.Tables.T_785;
@@ -103,6 +104,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.sqlserver.SQLServerDataType;
+
+import org.junit.Test;
 
 /**
  * @author Lukas Eder
@@ -753,5 +756,14 @@ public class SQLServerTest extends jOOQAbstractTest<
             SQLServerDataType.VARBINARY,
             SQLServerDataType.VARCHAR,
         };
+    }
+
+    @Test
+    public void testSQLServerOptionHint() throws Exception {
+        assertEquals(4, create()
+            .selectFrom(T_BOOK)
+            .option("OPTION(OPTIMIZE FOR UNKNOWN)")
+            .fetch()
+            .size());
     }
 }

@@ -187,6 +187,12 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
+    public final SelectImpl<R> option(String hint) {
+        getQuery().addOption(hint);
+        return this;
+    }
+
+    @Override
     public final SelectImpl<R> from(TableLike<?>... tables) {
         getQuery().addFrom(tables);
         return this;

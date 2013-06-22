@@ -62,6 +62,8 @@ public class LoggerListener extends DefaultExecuteListener {
     @Override
     public void renderEnd(ExecuteContext ctx) {
         if (log.isDebugEnabled()) {
+            String[] batchSQL = ctx.batchSQL();
+
             if (ctx.query() != null) {
 
                 // Actual SQL passed to JDBC
@@ -82,6 +84,15 @@ public class LoggerListener extends DefaultExecuteListener {
                 }
                 else {
                     log.debug("Executing query", ctx.sql());
+                }
+            }
+
+            // [#2532] Log a complete BatchMultiple query
+            else if (batchSQL.length > 0) {
+                if (batchSQL[batchSQL.length - 1] != null) {
+                    for (String sql : batchSQL) {
+                        log.debug("Executing batch query", sql);
+                    }
                 }
             }
         }

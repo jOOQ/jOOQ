@@ -2103,6 +2103,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRenderFormattedAndInlinedWithNewlines() throws Exception {
+        new RenderAndBindTests(this).testRenderFormattedAndInlinedWithNewlines();
+    }
+
+    @Test
     public void testNamedParams() throws Exception {
         new RenderAndBindTests(this).testNamedParams();
     }

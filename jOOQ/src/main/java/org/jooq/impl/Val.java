@@ -486,7 +486,7 @@ class Val<T> extends AbstractParam<T> {
                 }
             }
             else if (ArrayRecord.class.isAssignableFrom(type)) {
-                context.sql(val.toString());
+                context.sql(val.toString(), true);
             }
             else if (EnumType.class.isAssignableFrom(type)) {
                 toSQL(context, ((EnumType) val).getLiteral());
@@ -501,7 +501,7 @@ class Val<T> extends AbstractParam<T> {
             // - UUID
             else {
                 context.sql("'")
-                       .sql(escape(val))
+                       .sql(escape(val), true)
                        .sql("'");
             }
         }

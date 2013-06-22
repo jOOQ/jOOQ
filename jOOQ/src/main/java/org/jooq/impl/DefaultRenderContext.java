@@ -146,14 +146,20 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final RenderContext sql(String s) {
-        if (s != null && cachedRenderFormatted) {
-            sql.append(NEWLINE.matcher(s).replaceAll("$0" + indentation()));
+        return sql(s, s == null || !cachedRenderFormatted);
+    }
+
+    @Override
+    public final RenderContext sql(String s, boolean literal) {
+        if (literal) {
+            sql.append(s);
         }
         else {
-            sql.append(s);
+            sql.append(NEWLINE.matcher(s).replaceAll("$0" + indentation()));
         }
 
         return this;
+
     }
 
     @Override

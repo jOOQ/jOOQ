@@ -300,7 +300,7 @@ public class ASETest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<XUnusedRecord, UUID> TExoticTypes_UUID() {
+    protected TableField<XUnusedRecord, UUID> TExoticTypes_UU() {
         return null;
     }
 

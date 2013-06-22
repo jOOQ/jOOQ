@@ -725,7 +725,7 @@ public abstract class jOOQAbstractTest<
 
     protected abstract Table<UU> TExoticTypes();
     protected abstract TableField<UU, Integer> TExoticTypes_ID();
-    protected abstract TableField<UU, UUID> TExoticTypes_UUID();
+    protected abstract TableField<UU, UUID> TExoticTypes_UU();
 
     protected abstract Table<DATE> TDates();
 

@@ -127,8 +127,8 @@ import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
-import org.jooq.util.mysql.MySQLDataType;
 import org.jooq.util.mysql.MySQLDSL;
+import org.jooq.util.mysql.MySQLDataType;
 
 import org.junit.Test;
 
@@ -398,7 +398,7 @@ public class MySQLTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UUID() {
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
         return TExoticTypes.UU;
     }
 

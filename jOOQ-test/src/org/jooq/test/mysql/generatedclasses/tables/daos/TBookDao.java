@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.tables.daos;
  *
  * An entity holding books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookRecord, org.jooq.test.mysql.generatedclasses.tables.pojos.TBook, java.lang.Integer> {
 
 	/**

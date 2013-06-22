@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1286876124;
+	private static final long serialVersionUID = 720595449;
 
 	private final java.lang.String  cd;
 	private final java.lang.String  description;

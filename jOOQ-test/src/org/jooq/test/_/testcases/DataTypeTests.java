@@ -1573,17 +1573,22 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         UUID uuid2 = UUID.randomUUID();
 
         assertEquals(1,
-        create().insertInto(TExoticTypes(), TExoticTypes_ID(), TExoticTypes_UUID())
+        create().insertInto(TExoticTypes(),
+                    TExoticTypes_ID(),
+                    TExoticTypes_UU())
                 .values(1, uuid1)
                 .execute());
-        assertEquals(uuid1, create().fetchOne(TExoticTypes()).getValue(TExoticTypes_UUID()));
+        UU uu1 = create().fetchOne(TExoticTypes());
+        assertEquals(uuid1, uu1.getValue(TExoticTypes_UU()));
 
         assertEquals(1,
         create().update(TExoticTypes())
-                .set(TExoticTypes_UUID(), uuid2)
-                .where(TExoticTypes_UUID().eq(uuid1))
+                .set(TExoticTypes_UU(), uuid2)
+                .where(TExoticTypes_UU().eq(uuid1))
                 .execute());
-        assertEquals(uuid2, create().fetchOne(TExoticTypes()).getValue(TExoticTypes_UUID()));
+
+        UU uu2 = create().fetchOne(TExoticTypes());
+        assertEquals(uuid2, uu2.getValue(TExoticTypes_UU()));
     }
 
     @Test

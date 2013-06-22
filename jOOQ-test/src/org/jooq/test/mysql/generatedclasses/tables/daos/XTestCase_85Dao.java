@@ -8,7 +8,7 @@ package org.jooq.test.mysql.generatedclasses.tables.daos;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85Dao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record, org.jooq.test.mysql.generatedclasses.tables.pojos.XTestCase_85, java.lang.Integer> {
 
 	/**

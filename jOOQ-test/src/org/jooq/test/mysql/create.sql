@@ -58,6 +58,8 @@ CREATE TABLE t_dates (
   ts datetime,
   d_int int,
   ts_bigint bigint,
+  y2 year(2),
+  y4 year(4),
 
   CONSTRAINT pk_t_dates PRIMARY KEY (id)
 )

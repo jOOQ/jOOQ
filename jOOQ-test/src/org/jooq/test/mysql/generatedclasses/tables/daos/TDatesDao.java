@@ -79,4 +79,18 @@ public class TDatesDao extends org.jooq.impl.DAOImpl<org.jooq.test.mysql.generat
 	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TDates> fetchByTsBigint(java.lang.Long... values) {
 		return fetch(org.jooq.test.mysql.generatedclasses.tables.TDates.TS_BIGINT, values);
 	}
+
+	/**
+	 * Fetch records that have <code>y2 IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TDates> fetchByY2(java.sql.Date... values) {
+		return fetch(org.jooq.test.mysql.generatedclasses.tables.TDates.Y2, values);
+	}
+
+	/**
+	 * Fetch records that have <code>y4 IN (values)</code>
+	 */
+	public java.util.List<org.jooq.test.mysql.generatedclasses.tables.pojos.TDates> fetchByY4(java.sql.Date... values) {
+		return fetch(org.jooq.test.mysql.generatedclasses.tables.TDates.Y4, values);
+	}
 }

@@ -98,6 +98,7 @@ import org.jooq.test.mysql.generatedclasses.tables.TBook;
 import org.jooq.test.mysql.generatedclasses.tables.TBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.mysql.generatedclasses.tables.TBooleans;
+import org.jooq.test.mysql.generatedclasses.tables.TDates;
 import org.jooq.test.mysql.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.mysql.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.mysql.generatedclasses.tables.TTriggers;
@@ -849,5 +850,34 @@ public class MySQLTest extends jOOQAbstractTest<
         assertEquals(TBookStatus.ORDERED, MySQLDSL.enumType(TBookStatus.class, 2));
         assertEquals(TBookStatus.ON_STOCK, MySQLDSL.enumType(TBookStatus.class, 3));
         assertNull(MySQLDSL.enumType(TBookStatus.class, 4));
+    }
+
+    @Test
+    public void testMySQLYearType() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        Date d1 = Date.valueOf("2012-01-01");
+        Date d2 = Date.valueOf("1999-01-01");
+        
+        assertEquals(2,
+        create().insertInto(T_DATES,
+                    TDates.ID,
+                    TDates.Y2,
+                    TDates.Y4)
+                .values(1, d1, d1)
+                .values(2, d2, d2)
+                .execute());
+
+        Result<?> dates =
+        create().select(TDates.Y2, TDates.Y4)
+                .from(T_DATES)
+                .orderBy(TDates.ID)
+                .fetch();
+
+        assertEquals(2, dates.size());
+        assertEquals(d1, dates.getValue(0, 0));
+        assertEquals(d1, dates.getValue(0, 1));
+        assertEquals(d2, dates.getValue(1, 0));
+        assertEquals(d2, dates.getValue(1, 1));
     }
 }

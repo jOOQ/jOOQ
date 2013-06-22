@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.tables.pojos;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates implements java.io.Serializable {
 
-	private static final long serialVersionUID = 1631068874;
+	private static final long serialVersionUID = 1324210540;
 
 	private final java.lang.Integer  id;
 	private final java.sql.Date      d;
@@ -17,6 +17,8 @@ public class TDates implements java.io.Serializable {
 	private final java.sql.Timestamp ts;
 	private final java.lang.Integer  dInt;
 	private final java.lang.Long     tsBigint;
+	private final java.sql.Date      y2;
+	private final java.sql.Date      y4;
 
 	public TDates(
 		java.lang.Integer  id,
@@ -24,7 +26,9 @@ public class TDates implements java.io.Serializable {
 		java.sql.Time      t,
 		java.sql.Timestamp ts,
 		java.lang.Integer  dInt,
-		java.lang.Long     tsBigint
+		java.lang.Long     tsBigint,
+		java.sql.Date      y2,
+		java.sql.Date      y4
 	) {
 		this.id = id;
 		this.d = d;
@@ -32,6 +36,8 @@ public class TDates implements java.io.Serializable {
 		this.ts = ts;
 		this.dInt = dInt;
 		this.tsBigint = tsBigint;
+		this.y2 = y2;
+		this.y4 = y4;
 	}
 
 	public java.lang.Integer getId() {
@@ -56,5 +62,13 @@ public class TDates implements java.io.Serializable {
 
 	public java.lang.Long getTsBigint() {
 		return this.tsBigint;
+	}
+
+	public java.sql.Date getY2() {
+		return this.y2;
+	}
+
+	public java.sql.Date getY4() {
+		return this.y4;
 	}
 }

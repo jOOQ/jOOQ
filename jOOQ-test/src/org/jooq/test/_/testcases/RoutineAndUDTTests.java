@@ -588,9 +588,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(4, s.length);
             assertEquals(3, n.length);
             assertEquals(3, d.length);
-            assertEquals(TArrays_STRING().getType(), s.getClass());
-            assertEquals(TArrays_NUMBER().getType(), n.getClass());
-            assertEquals(TArrays_DATE().getType(), d.getClass());
+            assertEquals(String[].class, s.getClass());
+            assertEquals(Integer[].class, n.getClass());
+            assertEquals(Date[].class, d.getClass());
             assertEquals("a", s[0].toString());
             assertEquals("b", s[1].toString());
             assertEquals("c", s[2].toString());
@@ -625,9 +625,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(4, s.length);
             assertEquals(3, n.length);
             assertEquals(3, d.length);
-            assertEquals(TArrays_STRING().getType(), s.getClass());
-            assertEquals(TArrays_NUMBER().getType(), n.getClass());
-            assertEquals(TArrays_DATE().getType(), d.getClass());
+            assertEquals(String[].class, s.getClass());
+            assertEquals(Integer[].class, n.getClass());
+            assertEquals(Date[].class, d.getClass());
             assertEquals("d\"\\d", s[0].toString());
             assertEquals("c", s[1].toString());
             assertEquals("b", s[2].toString());

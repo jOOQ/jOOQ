@@ -438,10 +438,13 @@ public final class Convert {
                     return (U) from;
                 }
 
-                // [#1155] Do this early: identity-conversion into Object
-                else if (toClass == Object.class) {
+                // [#2535] Simple up-casting can be done early
+                // [#1155] ... up-casting includes (toClass == Object.class)
+                else if (toClass.isAssignableFrom(fromClass)) {
                     return (U) from;
                 }
+
+                // Regular checks
                 else if (fromClass == byte[].class) {
 
                     // This may not make much sense. Any other options?

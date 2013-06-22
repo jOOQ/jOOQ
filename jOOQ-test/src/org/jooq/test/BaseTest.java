@@ -279,8 +279,8 @@ public abstract class BaseTest<
         return delegate.TExoticTypes_ID();
     }
 
-    protected TableField<UU, UUID> TExoticTypes_UUID() {
-        return delegate.TExoticTypes_UUID();
+    protected TableField<UU, UUID> TExoticTypes_UU() {
+        return delegate.TExoticTypes_UU();
     }
 
     public Table<DATE> TDates() {

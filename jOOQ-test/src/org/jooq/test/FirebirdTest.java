@@ -361,7 +361,7 @@ public class FirebirdTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UUID() {
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
         return T_EXOTIC_TYPES.UU;
     }
 

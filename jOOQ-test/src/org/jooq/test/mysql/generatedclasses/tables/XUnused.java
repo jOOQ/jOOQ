@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
  *
  * An unused table in the same schema.
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 170339563;
+	private static final long serialVersionUID = 1013789448;
 
 	/**
 	 * The singleton instance of <code>test.x_unused</code>

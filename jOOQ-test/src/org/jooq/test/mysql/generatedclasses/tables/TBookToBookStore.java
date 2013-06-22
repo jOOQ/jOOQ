@@ -8,10 +8,10 @@ package org.jooq.test.mysql.generatedclasses.tables;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1897209899;
+	private static final long serialVersionUID = 341528136;
 
 	/**
 	 * The singleton instance of <code>test.t_book_to_book_store</code>

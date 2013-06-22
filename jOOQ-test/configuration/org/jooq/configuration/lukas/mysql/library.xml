@@ -45,6 +45,10 @@
             		<name>org.jooq.test._.converters.Boolean_YES_NO_UC</name>
             		<converter>org.jooq.test._.converters.Boolean_YES_NO_UC_Converter</converter>
             	</customType>
+                <customType>
+                    <name>java.util.UUID</name>
+                    <converter>org.jooq.test._.converters.UUIDBinaryConverter</converter>
+                </customType>
             </customTypes>
 
            <forcedTypes>
@@ -53,7 +57,7 @@
                     <expressions>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expressions>
                 </forcedType>
                 <forcedType>
-                    <name>UUID</name>
+                    <name>java.util.UUID</name>
                     <expressions>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expressions>
                 </forcedType>
 

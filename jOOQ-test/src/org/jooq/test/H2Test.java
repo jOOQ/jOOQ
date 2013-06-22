@@ -393,7 +393,7 @@ public class H2Test extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UUID() {
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
         return TExoticTypes.UU;
     }
 

@@ -246,7 +246,7 @@ CREATE TABLE x_unused (
 
 CREATE TABLE t_exotic_types (
   ID INT NOT NULL,
-  UU CHAR(36),
+  UU BINARY(16),
   
   CONSTRAINT pk_t_exotic_types PRIMARY KEY(ID)
 )

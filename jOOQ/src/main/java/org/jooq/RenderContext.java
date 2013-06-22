@@ -88,6 +88,14 @@ public interface RenderContext extends Context<RenderContext> {
 
     /**
      * Append some SQL to the context's contained {@link StringBuilder}.
+     * <p>
+     * Set <code>literal = true</code> to indicate that the
+     * <code>RenderContext</code> shall not format the argument SQL.
+     */
+    RenderContext sql(String sql, boolean literal);
+
+    /**
+     * Append some SQL to the context's contained {@link StringBuilder}.
      */
     RenderContext sql(char sql);
 

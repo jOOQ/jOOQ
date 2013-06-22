@@ -530,4 +530,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertTrue(s.getSQL().contains("ON"));
         assertTrue(s.getSQL().contains("ORDER BY"));
     }
+
+    @Test
+    public void testRenderFormattedAndInlinedWithNewlines() throws Exception {
+        // [#2528] When inlining bind values, formatting SQL might change the
+        // values, in case values contain newlines
+        DSLContext create = create(new Settings()
+            .withRenderFormatted(true)
+            .withStatementType(StatementType.STATIC_STATEMENT));
+
+        String value = "foo\nbar\n\n  baz";
+
+        create.update(TBook())
+              .set(TBook_TITLE(), value)
+              .where(TBook_ID().eq(1))
+              .execute();
+
+        assertEquals(value, create.select(TBook_TITLE())
+                                  .from(TBook())
+                                  .where(TBook_ID().eq(1))
+                                  .fetchOne(TBook_TITLE()));
+    }
 }

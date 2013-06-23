@@ -8,10 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = 691731803;
+	private static final long serialVersionUID = 412924856;
 
 	/**
 	 * The singleton instance of <code>test2.v_book</code>

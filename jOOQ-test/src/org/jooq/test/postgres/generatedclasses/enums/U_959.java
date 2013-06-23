@@ -125,6 +125,14 @@ public enum U_959 implements org.jooq.EnumType {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Schema getSchema() {
+		return org.jooq.test.postgres.generatedclasses.Public.PUBLIC;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public java.lang.String getName() {
 		return "u_959";
 	}

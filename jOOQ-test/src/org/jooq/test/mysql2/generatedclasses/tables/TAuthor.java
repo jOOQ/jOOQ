@@ -8,10 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  *
  * An entity holding authors of books
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 1204426566;
+	private static final long serialVersionUID = -1552299357;
 
 	/**
 	 * The singleton instance of <code>test2.t_author</code>

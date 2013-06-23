@@ -8,10 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.tables;
  *
  * An entity holding language master data
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -638057891;
+	private static final long serialVersionUID = 336706170;
 
 	/**
 	 * The singleton instance of <code>test2.t_language</code>

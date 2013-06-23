@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaActorInfo extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaActorInfoRecord> {
 
-	private static final long serialVersionUID = -1022671;
+	private static final long serialVersionUID = -417841292;
 
 	/**
 	 * The singleton instance of <code>sakila.actor_info</code>

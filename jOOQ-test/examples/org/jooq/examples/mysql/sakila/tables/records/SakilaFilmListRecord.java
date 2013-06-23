@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables.records;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaFilmListRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.SakilaFilmListRating, java.lang.String> {
 
-	private static final long serialVersionUID = 782701373;
+	private static final long serialVersionUID = 713279642;
 
 	/**
 	 * Setter for <code>sakila.film_list.FID</code>. 

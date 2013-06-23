@@ -8,10 +8,10 @@ package org.jooq.test.mysql2.generatedclasses.routines;
  *
  * 1 constant value
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FOne extends org.jooq.impl.AbstractRoutine<java.lang.Integer> {
 
-	private static final long serialVersionUID = 1255083906;
+	private static final long serialVersionUID = 1189185733;
 
 	/**
 	 * The parameter <code>test2.f_one.RETURN_VALUE</code>. 

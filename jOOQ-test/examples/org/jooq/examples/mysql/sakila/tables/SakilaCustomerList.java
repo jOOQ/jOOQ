@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaCustomerList extends org.jooq.impl.TableImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaCustomerListRecord> {
 
-	private static final long serialVersionUID = 1025095535;
+	private static final long serialVersionUID = 582557644;
 
 	/**
 	 * The singleton instance of <code>sakila.customer_list</code>

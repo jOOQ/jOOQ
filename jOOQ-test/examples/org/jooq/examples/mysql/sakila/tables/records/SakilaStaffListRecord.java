@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables.records;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaStaffListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaStaffListRecord> implements org.jooq.Record8<java.lang.Byte, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Byte> {
 
-	private static final long serialVersionUID = -1028590392;
+	private static final long serialVersionUID = 1333905406;
 
 	/**
 	 * Setter for <code>sakila.staff_list.ID</code>. 
@@ -58,14 +58,14 @@ public class SakilaStaffListRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	/**
 	 * Setter for <code>sakila.staff_list.zip code</code>. 
 	 */
-	public void setZipCode(java.lang.String value) {
+	public void setZip_code(java.lang.String value) {
 		setValue(3, value);
 	}
 
 	/**
 	 * Getter for <code>sakila.staff_list.zip code</code>. 
 	 */
-	public java.lang.String getZipCode() {
+	public java.lang.String getZip_code() {
 		return (java.lang.String) getValue(3);
 	}
 
@@ -238,7 +238,7 @@ public class SakilaStaffListRecord extends org.jooq.impl.TableRecordImpl<org.joo
 	 */
 	@Override
 	public java.lang.String value4() {
-		return getZipCode();
+		return getZip_code();
 	}
 
 	/**

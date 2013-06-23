@@ -57,6 +57,7 @@ import org.jooq.Identity;
 import org.jooq.Parameter;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -84,6 +85,7 @@ import org.jooq.tools.StringUtils;
 import org.jooq.tools.reflect.Reflect;
 import org.jooq.tools.reflect.ReflectException;
 import org.jooq.util.GeneratorStrategy.Mode;
+import org.jooq.util.postgres.PostgresDatabase;
 
 
 /**
@@ -980,9 +982,18 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("this.literal = literal;");
         out.tab(1).println("}");
 
+        // [#2135] Only the PostgreSQL database supports schema-scoped enum types
+        out.tab(1).overrideInherit();
+        out.tab(1).println("public %s getSchema() {", Schema.class);
+        out.tab(2).println("return %s;",
+            (e.isSynthetic() || !(e.getDatabase() instanceof PostgresDatabase))
+                ? "null"
+                : getStrategy().getFullJavaIdentifier(e.getSchema()));
+        out.tab(1).println("}");
+
         out.tab(1).overrideInherit();
         out.tab(1).println("public java.lang.String getName() {");
-        out.tab(2).println("return %s;", e.isSynthetic() ? "null" : "\"" + e.getName() + "\"");
+        out.tab(2).println("return %s;", e.isSynthetic() ? "null" : "\"" + e.getName().replace("\"", "\\\"") + "\"");
         out.tab(1).println("}");
 
         out.tab(1).overrideInherit();

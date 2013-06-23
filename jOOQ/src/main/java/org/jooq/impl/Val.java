@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.lang.Integer.toOctalString;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ASE;
@@ -52,6 +53,8 @@ import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.impl.DSL.name;
+import static org.jooq.impl.DSL.using;
 import static org.jooq.tools.StringUtils.leftPad;
 
 import java.math.BigDecimal;
@@ -66,6 +69,7 @@ import org.jooq.DataType;
 import org.jooq.EnumType;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.Schema;
 import org.jooq.UDTRecord;
 import org.jooq.tools.StringUtils;
 import org.jooq.types.Interval;
@@ -522,10 +526,19 @@ class Val<T> extends AbstractParam<T> {
                 context.sql(getBindVariable(context));
 
                 // [#968] Don't cast "synthetic" enum types (note, val can be null!)
-                String name = ((EnumType) type.getEnumConstants()[0]).getName();
-                if (!StringUtils.isBlank(name)) {
+                EnumType e = (EnumType) type.getEnumConstants()[0];
+                Schema schema = e.getSchema();
+
+                if (schema != null) {
                     context.sql("::");
-                    context.literal(name);
+
+                    schema = using(context.configuration()).map(schema);
+                    if (schema != null && TRUE.equals(context.configuration().settings().isRenderSchema())) {
+                        context.sql(schema);
+                        context.sql(".");
+                    }
+
+                    context.sql(name(e.getName()));
                 }
             }
 

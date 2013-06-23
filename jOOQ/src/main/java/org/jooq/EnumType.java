@@ -54,6 +54,12 @@ public interface EnumType {
     String getLiteral();
 
     /**
+     * The schema of the enum type, if applicable (Postgres schema-scope enum
+     * type only). Otherwise, this returns <code>null</code>
+     */
+    Schema getSchema();
+
+    /**
      * The type name as registered in the database, if applicable (Postgres
      * schema-scope enum type only). Otherwise, this returns <code>null</code>
      */

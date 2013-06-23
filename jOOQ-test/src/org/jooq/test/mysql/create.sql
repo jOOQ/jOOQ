@@ -7,6 +7,7 @@ DROP PROCEDURE IF EXISTS p_author_exists/
 DROP PROCEDURE IF EXISTS p_create_author/
 DROP PROCEDURE IF EXISTS p_create_author_by_name/
 DROP PROCEDURE IF EXISTS p391/
+DROP PROCEDURE IF EXISTS p2412/
 DROP FUNCTION IF EXISTS f_author_exists/
 DROP FUNCTION IF EXISTS f_one/
 DROP FUNCTION IF EXISTS f_number/
@@ -373,6 +374,19 @@ BEGIN
 
   SET o2 = io2;
   SET io2 = i2;
+END
+/
+
+CREATE PROCEDURE p2412(
+        In p_in_1 integer, 
+        p_in_2 integer,
+        Out p_out_1 decimal(12,2), 
+        out p_out_2 decimal(12,2), 
+        InOut p_in_out decimal(12,2))
+BEGIN
+  SET p_out_1 = 0;
+  SET p_out_2 = 0;
+  SET p_in_out = 0;
 END
 /
 

@@ -50,7 +50,7 @@ import org.jooq.tools.JooqLogger;
 public abstract class AbstractRoutineDefinition extends AbstractDefinition implements RoutineDefinition {
 
     private static final JooqLogger     log               = JooqLogger.getLogger(AbstractRoutineDefinition.class);
-    private static final String         INOUT             = "(?:(IN|OUT|INOUT)\\s+?)?";
+    private static final String         INOUT             = "(?i:(IN|OUT|INOUT)\\s+?)?";
     private static final String         PARAM_NAME        = "(?:(\\S+?)\\s+?)";
     private static final String         PARAM_TYPE        = "([^\\s\\(]+)(?:\\s*\\((\\d+)(?:\\s*,\\s*(\\d+))?\\))?";
     private static final String         PARAMETER         = "(" + INOUT + PARAM_NAME + PARAM_TYPE + ")";

@@ -9,7 +9,7 @@ package org.jooq.test.mysql.generatedclasses.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = 1832677735;
+	private static final long serialVersionUID = -991637223;
 
 	/**
 	 * The parameter <code>test.p_unused.in1</code>. 
@@ -19,12 +19,12 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>test.p_unused.out1</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.Boolean> OUT1 = createParameter("out1", org.jooq.impl.SQLDataType.BOOLEAN);
+	public static final org.jooq.Parameter<java.lang.Byte> OUT1 = createParameter("out1", org.jooq.impl.SQLDataType.TINYINT);
 
 	/**
 	 * The parameter <code>test.p_unused.out2</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.Boolean> OUT2 = createParameter("out2", org.jooq.impl.SQLDataType.BOOLEAN);
+	public static final org.jooq.Parameter<java.lang.Byte> OUT2 = createParameter("out2", org.jooq.impl.SQLDataType.TINYINT);
 
 	/**
 	 * Create a new routine call instance
@@ -47,21 +47,21 @@ public class PUnused extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * Set the <code>out2</code> parameter IN value to the routine
 	 */
-	public void setOut2(java.lang.Boolean value) {
+	public void setOut2(java.lang.Byte value) {
 		setValue(org.jooq.test.mysql.generatedclasses.routines.PUnused.OUT2, value);
 	}
 
 	/**
 	 * Get the <code>out1</code> parameter OUT value from the routine
 	 */
-	public java.lang.Boolean getOut1() {
+	public java.lang.Byte getOut1() {
 		return getValue(OUT1);
 	}
 
 	/**
 	 * Get the <code>out2</code> parameter OUT value from the routine
 	 */
-	public java.lang.Boolean getOut2() {
+	public java.lang.Byte getOut2() {
 		return getValue(OUT2);
 	}
 }

@@ -193,7 +193,7 @@ public class Routines {
 	/**
 	 * Call <code>test.p_unused</code>
 	 */
-	public static org.jooq.test.mysql.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Boolean out2) {
+	public static org.jooq.test.mysql.generatedclasses.routines.PUnused pUnused(org.jooq.Configuration configuration, java.lang.String in1, java.lang.Byte out2) {
 		org.jooq.test.mysql.generatedclasses.routines.PUnused p = new org.jooq.test.mysql.generatedclasses.routines.PUnused();
 		p.setIn1(in1);
 		p.setOut2(out2);

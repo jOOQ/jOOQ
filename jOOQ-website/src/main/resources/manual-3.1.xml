@@ -1269,7 +1269,7 @@ object Test {                                                        //
 						With this philosophy in mind, SQL building is the main feature of jOOQ. All other features (such as <reference id="sql-execution" title="SQL execution"/> and <reference id="code-generation" title="code generation"/>) are mere convenience built on top of jOOQ's SQL building capabilities.
 					</p>
 					<p>
-						This section explains all about the various syntax elements involved with jOOQ's SQL building capabilities. For a complete overview of all syntax elements, please refer to the manual's section about <reference id="reference-bnf-notation"/>
+						This section explains all about the various syntax elements involved with jOOQ's SQL building capabilities. For a complete overview of all syntax elements, please refer to the manual's sections about <reference id="dsl-mapping-rules" title="SQL to DSL mapping rules"/> as well as <reference id="reference-bnf-notation" title="jOOQ's BNF notation"/>
 					</p>
 				</content>
 
@@ -10249,6 +10249,202 @@ SERVER = new RemoteDebuggerServer(DEBUGGER_PORT);</java>
 						</sections>
 					</section>
 
+                    <section id="dsl-mapping-rules">
+                        <title>SQL to DSL mapping rules</title>
+                        <content>
+                            <p>
+                                jOOQ takes SQL as an external domain-specific language and maps it onto Java, creating an internal domain-specific language. Internal DSLs cannot 100% implement their external language counter parts, as they have to adhere to the syntax rules of their host or target language (i.e. Java). This section explains the various problems and workarounds encountered and implemented in jOOQ.
+                            </p>
+                            
+                            <h3>SQL allows for "keywordless" syntax</h3>
+                            <p>
+                                SQL syntax does not always need keywords to form expressions. The <code><reference id="update-statement" title="UPDATE .. SET"/></code> clause takes various argument assignments:
+                            </p>
+     
+<code-pair>
+<sql>UPDATE t SET a = 1, b = 2</sql>
+<java>update(t).set(a, 1).set(b, 2)</java>
+</code-pair>
+
+                            <p>
+                                The above example also shows missing operator overloading capabilities, where <code>"="</code> is replaced by <code>","</code> in jOOQ. Another example are <reference id="row-value-expressions" title="row value expressions"/>, which can be formed with parentheses only in SQL:
+                            </p>
+
+<code-pair>
+<sql>(a, b) IN ((1, 2), (3, 4))</sql>
+<java>row(a, b).in(row(1, 2), row(3, 4))</java>
+</code-pair>
+
+                            <p>
+                                In this case, <code>ROW</code> is an actual (optional) SQL keyword, implemented by at least PostgreSQL.
+                            </p>
+                            
+                            <h3>SQL contains "composed" keywords</h3>
+                            <p>
+                                As most languages, SQL does not attribute any meaning to whitespace. However, whitespace is important when forming "composed" keywords, i.e. SQL clauses composed of several keywords. jOOQ follows standard Java method naming conventions to map SQL keywords (case-insensitive) to Java methods (case-sensitive, camel-cased). Some examples:
+                            </p>
+                            
+<code-pair>
+<sql>GROUP BY
+ORDER BY
+WHEN MATCHED THEN UPDATE</sql>
+<java>groupBy()
+orderBy()
+whenMatchedThenUpdate()</java>
+</code-pair>
+
+                            <p>
+                                Future versions of jOOQ may use all-uppercased method names in addition to the camel-cased ones (to prevent collisions with Java keywords):
+                            </p>
+                            
+<code-pair>
+<sql>GROUP BY
+ORDER BY
+WHEN MATCHED THEN UPDATE</sql>
+<java>GROUP_BY()
+ORDER_BY()
+WHEN_MATCHED_THEN_UPDATE()</java>
+</code-pair>
+
+                            <h3>SQL contains "superfluous" keywords</h3>
+                            <p>
+                                Some SQL keywords aren't really necessary. They are just part of a keyword-rich language, the way Java developers aren't used to anymore. These keywords date from times when languages such as ADA, BASIC, COBOL, FORTRAN, PASCAL were more verbose:
+                            </p>
+                            <ul>
+                                <li><code>BEGIN .. END</code></li>
+                                <li><code>REPEAT .. UNTIL</code></li>
+                                <li><code>IF .. THEN .. ELSE .. END IF</code></li>
+                            </ul>
+                            <p>
+                                jOOQ omits some of those keywords when it is too tedious to write them in Java.
+                            </p>
+
+<code-pair>
+<sql>CASE WHEN .. THEN .. END</sql>
+<java>decode().when(.., ..)</java>
+</code-pair>
+
+                            <p>
+                                The above example omits <code>THEN</code> and <code>END</code> keywords in Java. Future versions of jOOQ may comprise a more complete DSL, including such keywords again though, to provide a more 1:1 match for the SQL language.
+                            </p>
+                            
+                            <h3>SQL contains "superfluous" syntactic elements</h3>
+                            <p>
+                                Some SQL constructs are hard to map to Java, but they are also not really necessary. SQL often expects syntactic parentheses where they wouldn't really be needed, or where they feel slightly inconsistent with the rest of the SQL language. 
+                            </p>
+
+<code-pair>
+<sql>LISTAGG(a, b) WITHIN GROUP (ORDER BY c)
+              OVER (PARTITION BY d)</sql>
+<java>listagg(a, b).withinGroupOrderBy(c)
+             .over().partitionBy(d)</java>
+</code-pair>
+
+                            <p>
+                                The parentheses used for the <code>WITHIN GROUP (..)</code> and <code>OVER (..)</code> clauses are required in SQL but do not seem to add any immediate value. In some cases, jOOQ omits them, although the above might be optionally re-phrased in the future to form a more SQLesque experience:  
+                            </p>
+
+<code-pair>
+<sql>LISTAGG(a, b) WITHIN GROUP (ORDER BY c)
+              OVER (PARTITION BY d)</sql>
+<java>listagg(a, b).withinGroup(orderBy(c))
+             .over(partitionBy(d))</java>
+</code-pair>
+
+                            <h3>SQL uses some of Java's reserved words</h3>
+                            <p>
+                                Some SQL keywords map onto <a href="http://download.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html">Java Language Keywords</a> if they're mapped using camel-casing. These keywords currently include: 
+                            </p>
+                            <ul>
+                                <li><code>CASE</code></li>
+                                <li><code>ELSE</code></li>
+                                <li><code>FOR</code></li>
+                            </ul>
+
+                            <p>
+                                jOOQ replaces those keywords by "synonyms":
+                            </p>
+                            
+<code-pair>
+<sql>CASE .. ELSE
+PIVOT .. FOR .. IN ..</sql>
+<java>decode() .. otherwise()
+pivot(..).on(..).in(..)</java>
+</code-pair>           
+
+                            <p>
+                                There is more future collision potential with:
+                            </p>
+                            <ul>
+                                <li><code>BOOLEAN</code></li>
+                                <li><code>CHAR</code></li>
+                                <li><code>DEFAULT</code></li>
+                                <li><code>DOUBLE</code></li>
+                                <li><code>ENUM</code></li>
+                                <li><code>FLOAT</code></li>
+                                <li><code>IF</code></li>
+                                <li><code>INT</code></li>
+                                <li><code>LONG</code></li>
+                                <li><code>PACKAGE</code></li>
+                            </ul>
+
+                            <h3>SQL operators cannot be overloaded in Java</h3>
+                            <p>
+                                Most SQL operators have to be mapped to descriptive method names in Java, as Java does not allow operator overloading:
+                            </p>
+                            
+<code-pair>
+<sql><![CDATA[=
+<>, !=
+||
+SET a = b]]></sql>
+<java>equal(), eq()
+notEqual(), ne()
+concat()
+set(a, b)</java>
+</code-pair>
+
+                            <p>
+                                For those users using <reference id="scala-sql-building" title="jOOQ with Scala or Groovy"/>, operator overloading and implicit conversion can be leveraged to enhance jOOQ:
+                            </p>
+
+<code-pair>
+<sql><![CDATA[=
+<>, !=
+||]]></sql>
+<java><![CDATA[===
+<>, !==
+||]]></java>
+</code-pair>
+
+                            <h3>SQL's reference before declaration capability</h3>
+                            <p>
+                                This is less of a syntactic SQL feature than a semantic one. In SQL, objects can be referenced before (i.e. "lexicographically before") they are declared. This is particularly true for <reference id="aliased-tables" title="aliasing"/>
+                            </p>
+ 
+<code-pair>
+<sql><![CDATA[SELECT t.a
+FROM my_table t]]></sql>
+<java><![CDATA[MyTable t = MY_TABLE.as("t");
+select(t.a).from(t)]]></java>
+</code-pair>
+
+                            <p>
+                                A more sophisticated example are common table expressions (CTE), which are currently not supported by jOOQ:
+                            </p>
+                            
+<sql>WITH t(a, b) AS (
+  SELECT 1, 2 FROM DUAL
+)
+SELECT t.a, t.b
+FROM t</sql>
+
+                            <p>
+                                Common table expressions define a "derived column list", just like <reference id="aliased-tables" title="table aliases"/> can do. The formal record type thus created cannot be typesafely verified by the Java compiler, i.e. it is not possible to formally dereference <code>t.a</code> from <code>t</code>.
+                            </p>
+                        </content>
+                    </section>
+                    
 					<section id="reference-bnf-notation">
 						<title>jOOQ's BNF pseudo-notation</title>
 						<content>

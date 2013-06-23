@@ -200,8 +200,8 @@ public class DefaultGeneratorStrategy extends AbstractGeneratorStrategy {
     private String getJavaClassName0(Definition definition, Mode mode) {
         StringBuilder result = new StringBuilder();
 
-        String name = GenerationUtil.convertToJavaIdentifier(definition.getOutputName());
-        result.append(StringUtils.toCamelCase(name));
+        String cc = StringUtils.toCamelCase(definition.getOutputName());
+        result.append(GenerationUtil.convertToJavaIdentifier(cc));
 
         if (mode == Mode.RECORD) {
             result.append("Record");

@@ -71,6 +71,7 @@ import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Param;
 import org.jooq.Record;
 import org.jooq.Record1;
 import org.jooq.Result;
@@ -78,6 +79,9 @@ import org.jooq.SQLDialect;
 import org.jooq.Table;
 import org.jooq.TableField;
 import org.jooq.UDTRecord;
+import org.jooq.conf.MappedSchema;
+import org.jooq.conf.RenderMapping;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DSL;
 import org.jooq.test._.converters.Boolean_10;
@@ -90,6 +94,7 @@ import org.jooq.test._.converters.Boolean_YN_UC;
 import org.jooq.test.postgres.generatedclasses.Keys;
 import org.jooq.test.postgres.generatedclasses.Routines;
 import org.jooq.test.postgres.generatedclasses.Sequences;
+import org.jooq.test.postgres.generatedclasses.enums.UCountry;
 import org.jooq.test.postgres.generatedclasses.enums.U_959;
 import org.jooq.test.postgres.generatedclasses.tables.records.TArraysRecord;
 import org.jooq.test.postgres.generatedclasses.tables.records.TAuthorRecord;
@@ -912,5 +917,32 @@ public class PostgresTest extends jOOQAbstractTest<
         assertEquals(uuid1, record.getValue(val).getU1());
         assertEquals(uuid1, record.getValue(val).getU2()[0]);
         assertEquals(uuid2, record.getValue(val).getU2()[1]);
+    }
+
+    @Test
+    public void testPostgresEnumType() throws Exception {
+        // [#2549] TODO: Re-enable this
+        // Param<UCountry> val = val(UCountry.England);
+        Param<UCountry> val = val(UCountry.England, UAddressType.COUNTRY.getDataType());
+
+        // [#2135] Be sure that all settings are applied to explicit casts to
+        // PostgreSQL enum types
+        assertEquals("'England'", create().renderInlined(val));
+        assertEquals("?::\"public\".\"u_country\"",
+            create().render(val));
+        assertEquals("?::\"u_country\"",
+            create(new Settings().withRenderSchema(false)).render(val));
+        assertEquals("?::PUBLIC.U_COUNTRY",
+            create(new Settings().withRenderNameStyle(RenderNameStyle.UPPER)).render(val));
+        assertEquals("?::\"u_country\"",
+            create(new Settings().withRenderMapping(
+                new RenderMapping().withDefaultSchema("public"))).render(val));
+        assertEquals("?::\"test\".\"u_country\"",
+            create(new Settings().withRenderMapping(
+                   new RenderMapping().withSchemata(
+                   new MappedSchema().withInput("public")
+                                     .withOutput("test")))).render(val));
+
+
     }
 }

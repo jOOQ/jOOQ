@@ -133,6 +133,19 @@ public class Routines {
 	}
 
 	/**
+	 * Call <code>test.p2412</code>
+	 */
+	public static org.jooq.test.mysql.generatedclasses.routines.P2412 p2412(org.jooq.Configuration configuration, java.lang.Integer pIn_1, java.lang.Integer pIn_2, java.math.BigDecimal pInOut) {
+		org.jooq.test.mysql.generatedclasses.routines.P2412 p = new org.jooq.test.mysql.generatedclasses.routines.P2412();
+		p.setPIn_1(pIn_1);
+		p.setPIn_2(pIn_2);
+		p.setPInOut(pInOut);
+
+		p.execute(configuration);
+		return p;
+	}
+
+	/**
 	 * Call <code>test.p391</code>
 	 */
 	public static org.jooq.test.mysql.generatedclasses.routines.P391 p391(org.jooq.Configuration configuration, java.lang.Integer i1, java.lang.Integer io1, java.lang.Integer io2, java.lang.Integer i2) {

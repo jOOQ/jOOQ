@@ -36,9 +36,11 @@
 
 package org.jooq.util.mysql;
 
-import java.sql.SQLException;
+import static org.jooq.util.hsqldb.information_schema.Tables.PARAMETERS;
+
 import java.util.regex.Matcher;
 
+import org.jooq.Record;
 import org.jooq.tools.StringUtils;
 import org.jooq.util.AbstractRoutineDefinition;
 import org.jooq.util.DataTypeDefinition;
@@ -47,25 +49,86 @@ import org.jooq.util.DefaultParameterDefinition;
 import org.jooq.util.InOutDefinition;
 import org.jooq.util.ParameterDefinition;
 import org.jooq.util.SchemaDefinition;
+import org.jooq.util.mysql.information_schema.tables.Parameters;
 
 /**
  * @author Lukas Eder
  */
 public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
 
+    private Boolean is55;
+
     private final String params;
     private final String returns;
 
-	public MySQLRoutineDefinition(SchemaDefinition schema, String name, String comment, String params, String returns) {
-		super(schema, null, name, comment, null);
+    public MySQLRoutineDefinition(SchemaDefinition schema, String name, String comment, String params, String returns) {
+        super(schema, null, name, comment, null);
 
-		this.params = params;
-		this.returns = returns;
-	}
+        this.params = params;
+        this.returns = returns;
+    }
 
     @Override
-    protected void init0() throws SQLException {
-        // [#738] Avoid matching commas that appear in types, for instance DECIMAL(2, 1)
+    protected void init0() {
+        if (is55()) {
+            init55();
+        }
+        else {
+            init54();
+        }
+    }
+
+    private void init55() {
+    	
+    	// [#742] In MySQL 5.5 and later, the INFORMATION_SCHEMA.PARAMETERS
+    	// table is available, which is much more reliable than mysql.proc
+        for (Record record : create()
+                .select(
+                    Parameters.ORDINAL_POSITION,
+                    Parameters.PARAMETER_NAME,
+                    Parameters.PARAMETER_MODE,
+                    Parameters.DATA_TYPE,
+                    Parameters.CHARACTER_MAXIMUM_LENGTH,
+                    Parameters.NUMERIC_PRECISION,
+                    Parameters.NUMERIC_SCALE
+                )
+                .from(PARAMETERS)
+                .where(Parameters.SPECIFIC_SCHEMA.eq(getSchema().getInputName()))
+                .and(Parameters.SPECIFIC_NAME.eq(getInputName()))
+                .orderBy(Parameters.ORDINAL_POSITION.asc())
+                .fetch()) {
+
+            String inOut = record.getValue(Parameters.PARAMETER_MODE);
+
+            DataTypeDefinition type = new DefaultDataTypeDefinition(
+                getDatabase(),
+                getSchema(),
+                record.getValue(Parameters.DATA_TYPE),
+                record.getValue(Parameters.CHARACTER_MAXIMUM_LENGTH),
+                record.getValue(Parameters.NUMERIC_PRECISION),
+                record.getValue(Parameters.NUMERIC_SCALE));
+
+            if (inOut == null) {
+                addParameter(InOutDefinition.RETURN, new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type));
+            }
+            else {
+                ParameterDefinition parameter = new DefaultParameterDefinition(
+                    this,
+                    record.getValue(Parameters.PARAMETER_NAME).replaceAll("@", ""),
+                    record.getValue(Parameters.ORDINAL_POSITION, int.class),
+                    type);
+
+                addParameter(InOutDefinition.getFromString(inOut), parameter);
+            }
+        }
+    }
+
+    private void init54() {
+        
+        // [#742] Before MySQL 5.5, the INFORMATION_SCHEMA.PARAMETERS table was
+    	// not yet available. Resort to mysql.proc and regex-pattern matching.
+
+    	// [#738] Avoid matching commas that appear in types, for instance DECIMAL(2, 1)
         String[] split = params.split(",(?!\\s*\\d+\\s*\\))");
 
         Matcher matcher = TYPE_PATTERN.matcher(returns);
@@ -93,9 +156,9 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
     }
 
     private ParameterDefinition createParameter(Matcher matcher, int group, int columnIndex, String paramName) {
-		String paramType = matcher.group(group + 1);
+        String paramType = matcher.group(group + 1);
 
-		Number precision = 0;
+        Number precision = 0;
         Number scale = 0;
 
         if (!StringUtils.isBlank(matcher.group(group + 2))) {
@@ -114,5 +177,21 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             scale);
 
         return new DefaultParameterDefinition(this, paramName, columnIndex, type);
-	}
+    }
+
+    private boolean is55() {
+    	
+    	// Check if this is a MySQL 5.5 or later database
+        if (is55 == null) {
+            try {
+                create().selectOne().from(PARAMETERS).limit(1).fetchOne();
+                is55 = true;
+            }
+            catch (Exception e) {
+                is55 = false;
+            }
+        }
+
+        return is55;
+    }
 }

@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.routines;
  *
  * Provides a customizable report on best customers
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaRewardsReport extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -881478791;
+	private static final long serialVersionUID = -189834602;
 
 	/**
 	 * The parameter <code>sakila.rewards_report.min_monthly_purchases</code>. 

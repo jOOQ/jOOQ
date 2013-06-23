@@ -27,6 +27,14 @@ public enum TBookStatus implements org.jooq.EnumType {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public org.jooq.Schema getSchema() {
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public java.lang.String getName() {
 		return "t_book_status";
 	}

@@ -8,7 +8,7 @@ package org.jooq.test.mysql2.generatedclasses.enums;
  *
  * The book's stock status
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public enum VBookStatus implements org.jooq.EnumType {
 
 	SOLD_OUT("SOLD OUT"),
@@ -23,6 +23,14 @@ public enum VBookStatus implements org.jooq.EnumType {
 
 	private VBookStatus(java.lang.String literal) {
 		this.literal = literal;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Schema getSchema() {
+		return null;
 	}
 
 	/**

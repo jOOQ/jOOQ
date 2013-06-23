@@ -8,14 +8,14 @@ package org.jooq.test.mysql2.generatedclasses.tables.pojos;
  *
  * An m:n relation between books and book stores
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "t_book_to_book_store", schema = "test2", uniqueConstraints = {
 	@javax.persistence.UniqueConstraint(columnNames = {"book_store_name", "book_id"})
 })
 public class TBookToBookStore implements java.io.Serializable {
 
-	private static final long serialVersionUID = -300447613;
+	private static final long serialVersionUID = 64107040;
 
 	private java.lang.String  bookStoreName;
 	private java.lang.Integer bookId;

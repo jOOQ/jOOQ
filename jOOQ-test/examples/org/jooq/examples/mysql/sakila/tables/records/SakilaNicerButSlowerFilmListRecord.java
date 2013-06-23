@@ -8,10 +8,10 @@ package org.jooq.examples.mysql.sakila.tables.records;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class SakilaNicerButSlowerFilmListRecord extends org.jooq.impl.TableRecordImpl<org.jooq.examples.mysql.sakila.tables.records.SakilaNicerButSlowerFilmListRecord> implements org.jooq.Record8<java.lang.Short, java.lang.String, java.lang.String, java.lang.String, java.math.BigDecimal, java.lang.Short, org.jooq.examples.mysql.sakila.enums.SakilaNicerButSlowerFilmListRating, java.lang.String> {
 
-	private static final long serialVersionUID = 1297389926;
+	private static final long serialVersionUID = -1249159575;
 
 	/**
 	 * Setter for <code>sakila.nicer_but_slower_film_list.FID</code>. 

@@ -8,12 +8,12 @@ package org.jooq.test.mysql2.generatedclasses.tables.records;
  *
  * VIEW
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 @javax.persistence.Entity
 @javax.persistence.Table(name = "v_author", schema = "test2")
 public class VAuthorRecord extends org.jooq.impl.TableRecordImpl<org.jooq.test.mysql2.generatedclasses.tables.records.VAuthorRecord> implements org.jooq.Record6<java.lang.Integer, java.lang.String, java.lang.String, java.sql.Date, java.lang.Integer, java.lang.String> {
 
-	private static final long serialVersionUID = -619603210;
+	private static final long serialVersionUID = -1239805549;
 
 	/**
 	 * Setter for <code>test2.v_author.ID</code>. The author ID

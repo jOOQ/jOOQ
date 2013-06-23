@@ -9,7 +9,7 @@ package org.jooq.examples.mysql.sakila;
  * A class modelling foreign key relationships between tables of the <code>sakila</code> 
  * schema
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Keys {
 
 	// -------------------------------------------------------------------------

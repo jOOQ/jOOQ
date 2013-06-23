@@ -8,7 +8,7 @@ package org.jooq.examples.mysql.sakila;
  *
  * Convenience access to all tables in sakila
  */
-@java.lang.SuppressWarnings({ "all", "unchecked" })
+@java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
 	/**

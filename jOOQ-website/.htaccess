@@ -1,55 +1,32 @@
 ################################## Errors ######################################
-#ErrorDocument 301 /error/301-moved_permanently.html
-#ErrorDocument 302 /error/302-moved_temporarily.html
-#ErrorDocument 303 /error/303-see_other.html
-#ErrorDocument 400 /error/400-bad_request.html
-ErrorDocument 401 /error/401-authorization_required.html
-#ErrorDocument 402 /error/402-payment_required.html
-ErrorDocument 403 /error/403-forbidden.html
-ErrorDocument 404 /error/404-not_found.html
-#ErrorDocument 405 /error/405-method_not_allowed.html
-#ErrorDocument 406 /error/406-not_acceptable.html
-#ErrorDocument 407 /error/407-proxy_authentication_required.html
-ErrorDocument 408 /error/408-request_timed_out.html
-#ErrorDocument 409 /error/409-conflicting_request.html
-#ErrorDocument 410 /error/410-gone.html
-#ErrorDocument 411 /error/411-content_length_required.html
-#ErrorDocument 412 /error/412-precondition_failed.html
-#ErrorDocument 413 /error/413-request_entity_too_long.html
-#ErrorDocument 414 /error/414-request_uri_too_long.html
-#ErrorDocument 415 /error/415-unsupported_media_type.html
-ErrorDocument 500 /error/500-internal_server_error.html
-#ErrorDocument 501 /error/501-not_implemented.html
-#ErrorDocument 502 /error/502-bad_gateway.html
-ErrorDocument 503 /error/503-service_unavailable.html
-#ErrorDocument 504 /error/504-gateway_timeout.html
-#ErrorDocument 505 /error/505-http_version_not_supported.html
+#ErrorDocument 301 /e/301-moved_permanently.html
+#ErrorDocument 302 /e/302-moved_temporarily.html
+#ErrorDocument 303 /e/303-see_other.html
+#ErrorDocument 400 /e/400-bad_request.html
+ErrorDocument 401 /e/401-authorization_required.html
+#ErrorDocument 402 /e/402-payment_required.html
+ErrorDocument 403 /e/403-forbidden.html
+ErrorDocument 404 /e/404-not_found.html
+#ErrorDocument 405 /e/405-method_not_allowed.html
+#ErrorDocument 406 /e/406-not_acceptable.html
+#ErrorDocument 407 /e/407-proxy_authentication_required.html
+ErrorDocument 408 /e/408-request_timed_out.html
+#ErrorDocument 409 /e/409-conflicting_request.html
+#ErrorDocument 410 /e/410-gone.html
+#ErrorDocument 411 /e/411-content_length_required.html
+#ErrorDocument 412 /e/412-precondition_failed.html
+#ErrorDocument 413 /e/413-request_entity_too_long.html
+#ErrorDocument 414 /e/414-request_uri_too_long.html
+#ErrorDocument 415 /e/415-unsupported_media_type.html
+ErrorDocument 500 /e/500-internal_server_error.html
+#ErrorDocument 501 /e/501-not_implemented.html
+#ErrorDocument 502 /e/502-bad_gateway.html
+ErrorDocument 503 /e/503-service_unavailable.html
+#ErrorDocument 504 /e/504-gateway_timeout.html
+#ErrorDocument 505 /e/505-http_version_not_supported.html
 ################################################################################
 
-######################### Howto map /~user to /user ############################
-#RewriteEngine On
-#RewriteCond %{REQUEST_URI} ^/([^/]+)$
-#RewriteCond %{DOCUMENT_ROOT}/%1 !-d
-#RewriteCond /home/sites/%{SERVER_NAME}/users/%1 -d
-#RewriteRule ^([^/]+)$ http://%{HTTP_HOST}/$1/ [R,L]
-#RewriteCond %{REQUEST_URI} ^/([^/]+)/
-#RewriteCond %{DOCUMENT_ROOT}/%1 !-d
-#RewriteCond /home/sites/%{SERVER_NAME}/users/%1 -d
-#RewriteRule ^([^/]+)(.+)$ /~$1/$2
-################################################################################
-
-###################### Howto map /users/user to /users/user ####################
-#RewriteEngine On
-#RewriteCond %{REQUEST_URI} ^/users/([^/]+)$
-#RewriteCond %{DOCUMENT_ROOT}/%1 !-d
-#RewriteCond /home/sites/%{SERVER_NAME}/users/%1 -d
-#RewriteRule ^users/([^/]+)$ http://%{HTTP_HOST}/users/$1/ [R,L]
-#RewriteCond %{REQUEST_URI} ^/users/([^/]+)/
-#RewriteCond %{DOCUMENT_ROOT}/%1 !-d
-#RewriteCond /home/sites/%{SERVER_NAME}/users/%1 -d
-#RewriteRule ^users/([^/]+)(.+)$ /~$1/$2
-################################################################################
-
+#Create uniform manual URLs, also for 2.4 manual
 RewriteEngine On
 RewriteBase /
 RewriteRule ^manual(.*)$ doc/2.4/manual$1 [L,R=301]

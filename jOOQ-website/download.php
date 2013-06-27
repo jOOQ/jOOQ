@@ -83,7 +83,7 @@ fluent API, a concept that is on the rise in software engineering. jOO* comes
 into play whenever a pre-existing API is too clumsy and no fun to work with. Here
 are some other products:
 
-<h3>jOOQ's little sister jOOX</h3>
+<h3>jOOX</h3>
 <div style="height: 100px;">
 	<a href="http://code.google.com/p/joox/"
 		title="jOOX, a product inspired by jOOQ">
@@ -96,7 +96,7 @@ are some other products:
 	can be used to enhance DOM, not as an alternative.</p>
 </div>
 
-<h3>jOOQ's infant twins jOOR and jOOU</h3>
+<h3>jOOR and jOOU</h3>
 <div style="height: 100px;">
 	<div style="width: 120px; height: 100px; float: left; margin-right: 4em; border: 0">&nbsp;</div>
 	<p><a href="http://code.google.com/p/joor/"

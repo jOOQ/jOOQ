@@ -53,6 +53,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
@@ -362,6 +363,10 @@ public abstract class jOOQAbstractTest<
                     }
                 }
 
+                else if (e.getMessage().startsWith("Cannot drop")) {
+                    continue;
+                }
+
                 // There is no DROP SEQUENCE IF EXISTS statement in Sybase
                 else if (e.getClass().getName().startsWith("com.sybase")) {
                     if (sql.contains("DROP SEQUENCE")) {
@@ -654,19 +659,22 @@ public abstract class jOOQAbstractTest<
                 jdbc.getPassword() != null ? jdbc.getPassword() :
                 getProperty(jdbc.getProperties(), "password");
 
-            Class.forName(driver);
-            if (StringUtils.isBlank(jdbcUser)) {
-                Properties p = new Properties();
-
-                if (getClass().getSimpleName().toLowerCase().contains("ingres")) {
-                    p.setProperty("timezone", "EUROPE-CENTRAL");
-                }
-
-                return DriverManager.getConnection(getJdbcURL(), p);
+            Properties info = new Properties();
+            if (getClass().getSimpleName().toLowerCase().contains("ingres")) {
+                info.setProperty("timezone", "EUROPE-CENTRAL");
+            }
+            Driver d = ((Driver) Class.forName(driver).newInstance());
+            if (!StringUtils.isBlank(jdbcUser)) {
+                info.put("user", jdbcUser);
+                info.put("password", jdbcPassword);
             }
             else {
                 return DriverManager.getConnection(getJdbcURL(), jdbcUser, jdbcPassword);
             }
+
+            return d != null
+                ? d.connect(getJdbcURL(), info)
+                : DriverManager.getConnection(getJdbcURL(), info);
         }
         catch (Exception e) {
             throw new Error(e);

@@ -217,6 +217,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case DERBY:
                 case H2:
                 case INGRES:
+                case MARIADB:
                 case MYSQL:
                 case SQLSERVER:
                     ctx.statement(connection.prepareStatement(ctx.sql(), Statement.RETURN_GENERATED_KEYS));
@@ -287,6 +288,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case DERBY:
                 case H2:
                 case INGRES:
+                case MARIADB:
                 case MYSQL:
                 case SQLSERVER: {
                     listener.executeStart(ctx);

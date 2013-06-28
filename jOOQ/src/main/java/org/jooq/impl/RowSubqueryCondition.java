@@ -43,6 +43,7 @@ import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -104,13 +105,13 @@ class RowSubqueryCondition extends AbstractCondition {
 
         // [#2395] These dialects have full native support for comparison
         // predicates with row value expressions and subqueries:
-        if (asList(H2, HSQLDB, MYSQL, POSTGRES).contains(dialect)) {
+        if (asList(H2, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(dialect)) {
             return new Native();
         }
 
         // [#2395] These dialects have native support for = and <>
         else if (
-            asList(H2, HSQLDB, MYSQL, ORACLE, POSTGRES).contains(dialect) &&
+            asList(H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES).contains(dialect) &&
             asList(EQUALS, NOT_EQUALS).contains(comparator)) {
 
             return new Native();
@@ -118,7 +119,7 @@ class RowSubqueryCondition extends AbstractCondition {
 
         // [#2395] These dialects have native support for IN and NOT IN
         else if (
-            asList(H2, DB2, HSQLDB, MYSQL, ORACLE, POSTGRES).contains(dialect) &&
+            asList(H2, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES).contains(dialect) &&
             asList(IN, NOT_IN).contains(comparator)) {
 
             return new Native();

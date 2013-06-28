@@ -72,6 +72,7 @@ class DateDiff extends AbstractFunction<Integer> {
             case SYBASE:
                 return field("{datediff}(day, {0}, {1})", getDataType(), date2, date1);
 
+            case MARIADB:
             case MYSQL:
                 return function("datediff", getDataType(), date1, date2);
 

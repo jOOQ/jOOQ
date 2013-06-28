@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -109,7 +110,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
      * @see SelectQuery#setForUpdate(boolean) see LockProvider for more
      *      details
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "FOR UPDATE"
     )
@@ -121,7 +122,7 @@ public interface SelectForUpdateStep<R extends Record> extends SelectOptionStep<
      * @see SelectQuery#setForShare(boolean) see LockProvider for more
      *      details
      */
-    @Support({ MYSQL, POSTGRES })
+    @Support({ MARIADB, MYSQL, POSTGRES })
     @Transition(
         name = "FOR SHARE"
     )

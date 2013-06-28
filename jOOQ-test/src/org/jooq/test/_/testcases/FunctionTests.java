@@ -614,6 +614,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 log.info("SKIPPING", "MD5 function test");
                 break;
 
+            case MARIADB:
             case MYSQL:
             case ORACLE:
             default:

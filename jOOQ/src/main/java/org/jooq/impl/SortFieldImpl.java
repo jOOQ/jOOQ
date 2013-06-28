@@ -98,6 +98,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 case ASE:
                 case CUBRID:
                 case INGRES:
+                case MARIADB:
                 case MYSQL:
                 case SQLITE:
                 case SQLSERVER:
@@ -149,6 +150,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 case ASE:
                 case CUBRID:
                 case INGRES:
+                case MARIADB:
                 case MYSQL:
                 case SQLITE:
                 case SQLSERVER:

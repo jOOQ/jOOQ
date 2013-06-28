@@ -38,6 +38,7 @@ package org.jooq;
 /**
  * A SQL enum type. This can be any of the following:
  * <ul>
+ * <li>In {@link SQLDialect#MARIADB}, this can be a column-scope enum type</li>
  * <li>In {@link SQLDialect#MYSQL}, this can be a column-scope enum type</li>
  * <li>In {@link SQLDialect#POSTGRES}, this can be a schema-scope enum type</li>
  * <li>In all other dialects, this can be an enum type as defined in the code

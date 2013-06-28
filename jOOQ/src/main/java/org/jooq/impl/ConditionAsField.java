@@ -76,6 +76,7 @@ class ConditionAsField extends AbstractFunction<Boolean> {
             case DERBY:
             case H2:
             case HSQLDB:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:

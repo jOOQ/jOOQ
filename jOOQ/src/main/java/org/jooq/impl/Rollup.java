@@ -59,6 +59,7 @@ class Rollup extends AbstractFunction<Object> {
     final Field<Object> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
             case CUBRID:
+            case MARIADB:
             case MYSQL:
                 return field("{0} {with rollup}", new QueryPartList<Field<?>>(getArguments()));
 

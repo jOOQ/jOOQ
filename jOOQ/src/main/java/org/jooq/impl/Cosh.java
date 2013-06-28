@@ -69,6 +69,7 @@ class Cosh extends AbstractFunction<BigDecimal> {
             case CUBRID:
             case HSQLDB:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLSERVER:

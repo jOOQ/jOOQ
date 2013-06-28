@@ -101,6 +101,11 @@ public enum SQLDialect {
     INGRES("Ingres"),
 
     /**
+     * The MariaDB dialect family.
+     */
+    MARIADB("MariaDB"),
+
+    /**
      * The MySQL dialect family.
      */
     MYSQL("MySQL"),

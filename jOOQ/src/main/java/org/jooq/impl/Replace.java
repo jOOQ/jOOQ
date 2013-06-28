@@ -75,6 +75,7 @@ class Replace extends AbstractFunction<String> {
             case FIREBIRD:
             case HSQLDB:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:

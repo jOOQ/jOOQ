@@ -63,19 +63,20 @@ class Nvl<T> extends AbstractFunction<T> {
     @Override
     final Field<T> getFunction0(Configuration configuration) {
         switch (configuration.dialect()) {
-            case DB2:    // No break
-            case H2:     // No break
-            case HSQLDB: // No break
-            case INGRES: // No break
+            case DB2:
+            case H2:
+            case HSQLDB:
+            case INGRES:
             case ORACLE:
                 return function("nvl", getDataType(), getArguments());
 
-            case DERBY:  // No break
+            case DERBY:
             case POSTGRES:
                 return function("coalesce", getDataType(), getArguments());
 
-            case MYSQL:  // No break
-            case SQLITE: // No break
+            case MARIADB:
+            case MYSQL:
+            case SQLITE:
                 return function("ifnull", getDataType(), getArguments());
 
             default:

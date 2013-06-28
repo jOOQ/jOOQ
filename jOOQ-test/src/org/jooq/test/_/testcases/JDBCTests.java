@@ -35,6 +35,7 @@
  */
 package org.jooq.test._.testcases;
 
+import static org.jooq.SQLDialect.MARIADB;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Connection;
@@ -81,6 +82,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testDialectGuessing() throws Exception {
+        if (dialect() == MARIADB) {
+            log.info("SKIPPING", "Skipping dialect guessing test");
+            return;
+        }
+
         ConnectionProvider cp = create().configuration().connectionProvider();
         Connection c = cp.acquire();
 

@@ -481,6 +481,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case HSQLDB:
             case H2:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case SYBASE:
                 log.info("SKIPPING", "FOR UPDATE .. WAIT/NOWAIT tests");
@@ -536,6 +537,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         switch (dialect()) {
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
                 log.info("SKIPPING", "FOR UPDATE OF tests");
@@ -571,6 +573,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         switch (dialect()) {
             case ASE: // This should normally work. Why doesn't it?
+            case MARIADB:
             case MYSQL:
                 log.info("SKIPPING", "FOR UPDATE OF tests");
                 break;
@@ -598,6 +601,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Only few dialects support the FOR SHARE clause:
         switch (dialect()) {
+            case MARIADB:
             case MYSQL:
             case POSTGRES: {
                 Result<Record1<Integer>> result = create()

@@ -73,6 +73,7 @@ class Limit extends AbstractQueryPart {
 
             // True LIMIT / OFFSET support provided by the following dialects
             // -----------------------------------------------------------------
+            case MARIADB:
             case MYSQL:    // No break
             case H2:       // No break
             case HSQLDB:   // No break
@@ -228,6 +229,7 @@ class Limit extends AbstractQueryPart {
 
             // LIMIT .. OFFSET support provided by the following dialects
             // ----------------------------------------------------------
+            case MARIADB:
             case MYSQL:
             case HSQLDB:
             case H2:

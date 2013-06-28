@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -419,6 +420,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case ASE:
 
             // MySQL doesn't allow for selecting from the INSERT INTO table
+            case MARIADB:
             case MYSQL:
                 ID3 = create().select(val(3)).asField();
                 ID4 = create().select(val(4)).asField();
@@ -470,7 +472,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testUpdateWithRowValueExpression() throws Exception {
-        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(dialect().family())) {
+        if (asList(ASE, CUBRID, DERBY, FIREBIRD, MARIADB, MYSQL, SQLSERVER, SQLITE, SYBASE).contains(dialect().family())) {
             log.info("SKIPPING", "UPDATE with row value expression tests");
             return;
         }
@@ -739,6 +741,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case H2:
             case HSQLDB:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case ORACLE:
             case SQLITE:
@@ -866,6 +869,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case DERBY:
             case H2:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:
@@ -989,6 +993,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case H2:
             case HSQLDB:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:
@@ -1079,6 +1084,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case ASE:
             case DERBY:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:
@@ -1178,6 +1184,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testUpdateSelect() throws Exception {
         switch (dialect()) {
             case SQLITE:
+            case MARIADB:
             case MYSQL:
                 log.info("SKIPPING", "UPDATE .. SET .. = (SELECT ..) integration test. This syntax is poorly supported by " + dialect());
                 return;

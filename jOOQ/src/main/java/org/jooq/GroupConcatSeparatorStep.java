@@ -39,6 +39,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -60,7 +61,7 @@ public interface GroupConcatSeparatorStep extends AggregateFunction<String> {
     /**
      * Specify the separator on the <code>GROUP_CONCAT</code> function
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE })
     @Transition(
         name = "SEPARATOR",
         args = "String"

@@ -164,6 +164,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case FIREBIRD:
             case H2:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case SQLITE:
 
@@ -328,6 +329,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case H2:
             case HSQLDB:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case SQLITE:
             case SQLSERVER:
@@ -387,6 +389,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case ASE:
             case FIREBIRD:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case SQLITE:
                 log.info("SKIPPING", "Window function tests");
@@ -935,6 +938,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             case DB2:
             case H2:
             case HSQLDB:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SYBASE:

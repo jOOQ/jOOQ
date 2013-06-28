@@ -92,6 +92,7 @@ class FieldCondition extends AbstractCondition {
             case DERBY:
             case H2:
             case HSQLDB:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case SQLITE:

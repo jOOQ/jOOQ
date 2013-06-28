@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -299,6 +300,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             switch (context.configuration().dialect()) {
 
                 // MySQL has a non-standard implementation for the "FOR SHARE" clause
+                case MARIADB:
                 case MYSQL:
                     context.formatSeparator()
                            .keyword("lock in share mode");
@@ -576,7 +578,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 }
 
                 // Some dialects don't support empty GROUP BY () clauses
-                else if (asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MYSQL, POSTGRES, SQLITE).contains(dialect)) {
+                else if (asList(CUBRID, DERBY, FIREBIRD, HSQLDB, MARIADB, MYSQL, POSTGRES, SQLITE).contains(dialect)) {
                     context.sql("1");
                 }
 

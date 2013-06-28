@@ -355,6 +355,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // [#456] TODO: Should floating point numbers have precision and scale?
             else if ("FLOAT".equalsIgnoreCase(field.getName())
                     && dialect() != SQLDialect.HSQLDB
+                    && dialect() != SQLDialect.MARIADB
                     && dialect() != SQLDialect.MYSQL
                     && dialect() != SQLDialect.SYBASE) {
 
@@ -363,6 +364,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 assertEquals(0, field.getDataType().length());
             }
             else if ("FLOAT".equalsIgnoreCase(field.getName())
+                    && dialect() != SQLDialect.MARIADB
                     && dialect() != SQLDialect.MYSQL
                     && dialect() != SQLDialect.SYBASE) {
 

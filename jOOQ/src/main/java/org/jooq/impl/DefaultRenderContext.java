@@ -318,6 +318,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
             switch (configuration.dialect().family()) {
 
                 // MySQL supports backticks and double quotes
+                case MARIADB:
                 case MYSQL:
                     sql("`").sql(StringUtils.replace(literal, "`", "``")).sql("`");
                     break;

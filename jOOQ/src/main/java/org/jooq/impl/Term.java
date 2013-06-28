@@ -107,6 +107,7 @@ enum Term {
                 case CUBRID:
                 case H2:
                 case HSQLDB:
+                case MARIADB:
                 case MYSQL:
                     return "group_concat";
 

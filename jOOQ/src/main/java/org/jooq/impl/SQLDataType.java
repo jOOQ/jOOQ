@@ -61,6 +61,7 @@ import org.jooq.util.firebird.FirebirdDataType;
 import org.jooq.util.h2.H2DataType;
 import org.jooq.util.hsqldb.HSQLDBDataType;
 import org.jooq.util.ingres.IngresDataType;
+import org.jooq.util.mariadb.MariaDBDataType;
 import org.jooq.util.mysql.MySQLDataType;
 import org.jooq.util.oracle.OracleDataType;
 import org.jooq.util.postgres.PostgresDataType;
@@ -323,6 +324,7 @@ public final class SQLDataType {
             Class.forName(H2DataType.class.getName());
             Class.forName(HSQLDBDataType.class.getName());
             Class.forName(IngresDataType.class.getName());
+            Class.forName(MariaDBDataType.class.getName());
             Class.forName(MySQLDataType.class.getName());
             Class.forName(OracleDataType.class.getName());
             Class.forName(PostgresDataType.class.getName());

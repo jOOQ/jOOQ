@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -318,7 +319,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#rightOuterJoin(TableLike)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep<R> rightOuterJoin(TableLike<?> table);
 
     /**
@@ -336,7 +337,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String)
      * @see Table#rightOuterJoin(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql);
 
     /**
@@ -354,7 +355,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String, Object...)
      * @see Table#rightOuterJoin(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -372,7 +373,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String, QueryPart...)
      * @see Table#rightOuterJoin(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinPartitionByStep<R> rightOuterJoin(String sql, QueryPart... parts);
 
     /**
@@ -591,7 +592,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      *
      * @see Table#naturalRightOuterJoin(TableLike)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep<R> naturalRightOuterJoin(TableLike<?> table);
 
     /**
@@ -610,7 +611,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String)
      * @see Table#naturalRightOuterJoin(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep<R> naturalRightOuterJoin(String sql);
 
     /**
@@ -629,7 +630,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String, Object...)
      * @see Table#naturalRightOuterJoin(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep<R> naturalRightOuterJoin(String sql, Object... bindings);
 
     /**
@@ -648,7 +649,7 @@ public interface SelectJoinStep<R extends Record> extends SelectWhereStep<R> {
      * @see DSL#table(String, QueryPart...)
      * @see Table#naturalRightOuterJoin(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     SelectJoinStep<R> naturalRightOuterJoin(String sql, QueryPart... parts);
 
 }

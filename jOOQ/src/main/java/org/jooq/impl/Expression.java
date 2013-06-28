@@ -37,12 +37,12 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.ASE;
+import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
-import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
@@ -315,6 +315,7 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case CUBRID:
+                case MARIADB:
                 case MYSQL: {
                     Interval interval = rhsAsInterval();
 
@@ -326,11 +327,11 @@ class Expression<T> extends AbstractFunction<T> {
                         return field("{date_add}({0}, {interval} {1} {year_month})", getDataType(), lhs, Utils.field(interval, String.class));
                     }
                     else {
-                        if (dialect == MYSQL) {
-                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Utils.field(interval, String.class));
+                        if (dialect == CUBRID) {
+                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Utils.field(interval, String.class));
                         }
                         else {
-                            return field("{date_add}({0}, {interval} {1} {day_millisecond})", getDataType(), lhs, Utils.field(interval, String.class));
+                            return field("{date_add}({0}, {interval} {1} {day_microsecond})", getDataType(), lhs, Utils.field(interval, String.class));
                         }
                     }
                 }
@@ -475,6 +476,7 @@ class Expression<T> extends AbstractFunction<T> {
                 }
 
                 case CUBRID:
+                case MARIADB:
                 case MYSQL: {
                     if (operator == ADD) {
                         return field("{date_add}({0}, {interval} {1} {day})", getDataType(), lhs, rhsAsNumber());

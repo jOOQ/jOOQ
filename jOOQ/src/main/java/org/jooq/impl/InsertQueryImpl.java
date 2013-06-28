@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
 import java.util.ArrayList;
@@ -139,6 +141,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
+                case MARIADB:
                 case MYSQL: {
                     toSQLInsert(context);
                     context.formatSeparator()
@@ -176,6 +179,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             switch (context.configuration().dialect().family()) {
 
                 // MySQL has a nice, native syntax for this
+                case MARIADB:
                 case MYSQL: {
                     toSQLInsert(context);
                     break;
@@ -234,6 +238,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // MySQL has a nice syntax for this
                 case CUBRID:
+                case MARIADB:
                 case MYSQL: {
                     bindInsert(context);
                     break;
@@ -267,6 +272,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             switch (context.configuration().dialect().family()) {
 
                 // MySQL has a nice, native syntax for this
+                case MARIADB:
                 case MYSQL: {
                     bindInsert(context);
                     break;
@@ -310,7 +316,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     private final void toSQLInsert(RenderContext context) {
         context.keyword("insert ")
                // [#1295] MySQL natively supports the IGNORE keyword
-               .keyword((onDuplicateKeyIgnore && context.configuration().dialect() == MYSQL) ? "ignore " : "")
+               .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) ? "ignore " : "")
                .keyword("into ")
                .sql(getInto())
                .sql(" ")

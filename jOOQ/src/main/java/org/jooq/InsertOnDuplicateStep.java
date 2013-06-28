@@ -38,6 +38,7 @@ package org.jooq;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -82,7 +83,7 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * <p>
      * These are the dialects that fulfill the above requirements:
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertOnDuplicateSetStep<R> onDuplicateKeyUpdate();
 
     /**
@@ -99,6 +100,10 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * <tr>
      * <th>Dialect</th>
      * <th>Simulation</th>
+     * </tr>
+     * <tr>
+     * <td> {@link SQLDialect#MARIADB}</td>
+     * <td> <code><pre>INSERT IGNORE INTO ..</pre></code></td>
      * </tr>
      * <tr>
      * <td> {@link SQLDialect#MYSQL}</td>
@@ -123,6 +128,6 @@ public interface InsertOnDuplicateStep<R extends Record> extends InsertFinalStep
      * </tr>
      * </table>
      */
-    @Support({ CUBRID, DB2, HSQLDB, MYSQL, ORACLE, SQLSERVER, SYBASE })
+    @Support({ CUBRID, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, SQLSERVER, SYBASE })
     InsertFinalStep<R> onDuplicateKeyIgnore();
 }

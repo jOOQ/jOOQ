@@ -108,6 +108,7 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
                 throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
 
             // MySQL's datetime operations operate on a microsecond level
+            case MARIADB:
             case MYSQL:
                 return field("{timestampdiff}(microsecond, {0}, {1}) / 1000", getDataType(), timestamp2, timestamp1);
 

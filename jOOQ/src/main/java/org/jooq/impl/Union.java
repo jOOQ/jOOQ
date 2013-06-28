@@ -103,6 +103,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
 
             // [#288] MySQL has a very special way of dealing with UNION's
             // So include it as well
+            case MARIADB:
             case MYSQL:
                 return;
         }

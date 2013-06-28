@@ -69,6 +69,7 @@ class Euler extends AbstractFunction<BigDecimal> {
             case H2:
             case HSQLDB:
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case ORACLE:
             case POSTGRES:

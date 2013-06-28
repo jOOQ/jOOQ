@@ -41,6 +41,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SYBASE;
@@ -183,7 +184,7 @@ class Function<T> extends AbstractField<T> implements
     @Override
     public final void bind(BindContext context) {
 
-        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.configuration().dialect())) {
+        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(context.configuration().dialect())) {
             context.bind(arguments.get(0));
             context.bind((QueryPart) withinGroupOrderBy);
 
@@ -202,7 +203,7 @@ class Function<T> extends AbstractField<T> implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MYSQL).contains(context.configuration().dialect())) {
+        if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(context.configuration().dialect())) {
             toSQLGroupConcat(context);
         }
         else if (term == LIST_AGG && asList(POSTGRES, SYBASE).contains(context.configuration().dialect())) {

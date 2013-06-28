@@ -88,6 +88,7 @@ class Values<R extends Record> extends AbstractTable<R> {
             // [#915] Simulate VALUES(..) with SELECT .. UNION ALL SELECT ..
             // for those dialects that do not support a VALUES() constructor
             case FIREBIRD:
+            case MARIADB:
             case MYSQL:
             case ORACLE:
             case SQLITE:

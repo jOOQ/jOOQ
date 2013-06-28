@@ -140,6 +140,7 @@ class Extract extends AbstractFunction<Integer> {
                 }
 
             case INGRES:
+            case MARIADB:
             case MYSQL:
             case POSTGRES:
             case HSQLDB:

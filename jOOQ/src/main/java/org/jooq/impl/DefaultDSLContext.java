@@ -1398,6 +1398,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
             }
 
             case CUBRID:
+            case MARIADB:
             case MYSQL: {
                 Field<BigInteger> field = field("last_insert_id()", BigInteger.class);
                 return select(field).fetchOne(field);

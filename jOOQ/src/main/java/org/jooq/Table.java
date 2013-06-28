@@ -44,6 +44,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -556,7 +557,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <p>
      * This is only possible where the underlying RDBMS supports it
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "RIGHT OUTER JOIN",
         args = "Table"
@@ -575,7 +576,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "RIGHT OUTER JOIN",
         args = "Table"
@@ -594,7 +595,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "RIGHT OUTER JOIN",
         args = "Table"
@@ -613,7 +614,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "RIGHT OUTER JOIN",
         args = "Table"
@@ -942,7 +943,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * If this is not supported by your RDBMS, then jOOQ will try to simulate
      * this behaviour using the information provided in this query.
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "NATURAL RIGHT OUTER JOIN",
         args = "Table",
@@ -963,7 +964,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "NATURAL RIGHT OUTER JOIN",
         args = "Table",
@@ -984,7 +985,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, Object...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "NATURAL RIGHT OUTER JOIN",
         args = "Table",
@@ -1005,7 +1006,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      *
      * @see DSL#table(String, QueryPart...)
      */
-    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
+    @Support({ ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, HSQLDB, INGRES, MARIADB, MYSQL, ORACLE, POSTGRES, SQLSERVER, SYBASE })
     @Transition(
         name = "NATURAL RIGHT OUTER JOIN",
         args = "Table",

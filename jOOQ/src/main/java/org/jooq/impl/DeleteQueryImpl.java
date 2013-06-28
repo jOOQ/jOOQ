@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
 import java.util.Collection;
@@ -107,7 +109,7 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
-        if (getFrom() instanceof TableAlias && context.configuration().dialect() == MYSQL) {
+        if (getFrom() instanceof TableAlias && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) {
             context.sql(getFrom())
                    .sql(" ");
         }

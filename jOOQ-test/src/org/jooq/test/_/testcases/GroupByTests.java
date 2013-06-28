@@ -38,6 +38,7 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static org.jooq.SQLDialect.DB2;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SYBASE;
 import static org.jooq.impl.DSL.count;
@@ -212,7 +213,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             assertEquals(Arrays.asList(1, null, 1, null, 2, null, 2, null, null), result.getValues(1));
         }
 
-        if (dialect() == MYSQL) {
+        if (asList(MARIADB, MYSQL).contains(dialect())) {
             log.info("SKIPPING", "CUBE and GROUPING SETS tests");
             return;
         }

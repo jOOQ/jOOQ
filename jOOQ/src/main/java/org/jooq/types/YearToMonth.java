@@ -64,6 +64,7 @@ import org.jooq.SQLDialect;
  * <code>TIMESTAMPADD</code>, and <code>TIMESTAMPDIFF</code>:
  * <ul>
  * <li> {@link SQLDialect#CUBRID}</li>
+ * <li> {@link SQLDialect#MARIADB}</li>
  * <li> {@link SQLDialect#MYSQL}</li>
  * </ul>
  *

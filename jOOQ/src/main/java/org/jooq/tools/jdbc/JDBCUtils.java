@@ -43,6 +43,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -130,6 +131,9 @@ public class JDBCUtils {
         }
         else if (url.startsWith("jdbc:ingres:")) {
             return INGRES;
+        }
+        else if (url.startsWith("jdbc:mariadb:")) {
+            return MARIADB;
         }
         else if (url.startsWith("jdbc:mysql:")
               || url.startsWith("jdbc:google:")) {

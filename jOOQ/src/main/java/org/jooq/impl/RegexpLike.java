@@ -64,6 +64,7 @@ class RegexpLike extends AbstractCondition {
             // [#620] These databases are compatible with the MySQL syntax
             case CUBRID:
             case H2:
+            case MARIADB:
             case MYSQL:
             case SQLITE:
             case SYBASE: {

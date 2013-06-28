@@ -39,6 +39,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -63,7 +64,7 @@ public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE })
     @Transition(
         name = "ORDER BY",
         args = "Field+"
@@ -73,7 +74,7 @@ public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE })
     @Transition(
         name = "ORDER BY",
         args = "SortField+"
@@ -83,7 +84,7 @@ public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
     /**
      * Add an <code>ORDER BY</code> clause to the query
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE })
     @Transition(
         name = "ORDER BY",
         args = "SortField+"

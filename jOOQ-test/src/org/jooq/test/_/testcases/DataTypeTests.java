@@ -47,6 +47,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -1366,6 +1367,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             dialect() == FIREBIRD ||
             dialect() == H2 ||
             dialect() == INGRES || // [#1285] TODO: Fix this for Ingres
+            dialect() == MARIADB ||
             dialect() == MYSQL ||
             dialect().family() == SQLSERVER ||
             dialect() == SQLITE ||

@@ -41,6 +41,7 @@ import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.SQLITE;
@@ -127,7 +128,7 @@ class IsDistinctFrom<T> extends AbstractCondition {
         }
 
         // MySQL knows the <=> operator
-        else if (MYSQL.equals(configuration.dialect())) {
+        else if (asList(MARIADB, MYSQL).contains(configuration.dialect())) {
             if (mySQLCondition == null) {
                 if (comparator == Comparator.IS_DISTINCT_FROM) {
                     mySQLCondition = (QueryPartInternal) condition("not({0} <=> {1})", lhs, rhs);

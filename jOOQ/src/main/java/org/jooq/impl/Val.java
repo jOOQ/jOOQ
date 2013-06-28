@@ -46,6 +46,7 @@ import static org.jooq.SQLDialect.FIREBIRD;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.SQLDialect.HSQLDB;
 import static org.jooq.SQLDialect.INGRES;
+import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.SQLDialect.POSTGRES;
@@ -357,7 +358,7 @@ class Val<T> extends AbstractParam<T> {
                            .sql(convertBytesToHex(binary))
                            .sql("')");
                 }
-                else if (asList(DERBY, H2, HSQLDB, INGRES, MYSQL, SQLITE).contains(family)) {
+                else if (asList(DERBY, H2, HSQLDB, INGRES, MARIADB, MYSQL, SQLITE).contains(family)) {
                     context.sql("X'")
                            .sql(convertBytesToHex(binary))
                            .sql("'");

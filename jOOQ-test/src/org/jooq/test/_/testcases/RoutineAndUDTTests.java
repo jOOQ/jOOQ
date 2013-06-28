@@ -164,7 +164,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // TODO: [#396] MySQL seems to have a bug when passing null to IN/OUT
             // parameters. Check back on this, when this is fixed.
-            if (dialect() != SQLDialect.MYSQL) {
+            if (dialect() != SQLDialect.MYSQL && dialect() != SQLDialect.MARIADB) {
                 Object p391a = invoke(cRoutines(), "p391", create().configuration(), null, null, DUMMY_OUT_INT, DUMMY_OUT_INT, null, null);
                 assertEquals(null, invoke(p391a, "getIo1"));
                 assertEquals(null, invoke(p391a, "getO1"));

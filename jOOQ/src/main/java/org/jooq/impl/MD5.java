@@ -63,6 +63,7 @@ class MD5 extends AbstractFunction<String> {
         switch (configuration.dialect()) {
             case ORACLE:
                 return field("{lower}({rawtohex}({sys}.{dbms_crypto}.{hash}({utl_raw}.{cast_to_raw}({0}), 2)))", SQLDataType.VARCHAR, argument);
+            case MARIADB:
             case MYSQL:
             default:
                 return field("{md5}({0})", SQLDataType.VARCHAR, argument);

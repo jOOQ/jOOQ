@@ -62,7 +62,6 @@ class Rows extends Generators {
 
             import org.jooq.Comparator;
             import org.jooq.api.annotation.State;
-            import org.jooq.api.annotation.Transition;
 
             import java.util.Collection;
 

@@ -180,6 +180,7 @@ insertInto(t, t.a, t.b).values(1, 2);
     <li>H2 1.3.161</li>
     <li>HSQLDB 2.2.5</li>
     <li>Ingres 10.1.0</li>
+    <li>MariaDB 5.2.14</li>
     <li>MySQL 5.1.41 and 5.5.8</li>
     <li>Oracle XE 10.2.0.1.0 and 11g</li>
     <li>PostgreSQL 9.0</li>

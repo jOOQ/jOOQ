@@ -65,6 +65,7 @@ import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.UpdateQuery;
+import org.jooq.conf.Settings;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 import org.jooq.tools.reflect.Reflect;
@@ -376,6 +377,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(Integer.valueOf(2), result2.getValue(1, 2));
     }
 
+    @Test
+    public void testStoredFunctionsWithNoSchema() throws Exception {
+        assertEquals(42, (int) create(new Settings().withRenderSchema(false))
+            .select(FNumberField(42).cast(Integer.class))
+            .fetchOne(0, Integer.class));
+    }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Test

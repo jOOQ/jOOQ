@@ -1906,6 +1906,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testStoredFunctionsWithNoSchema() throws Exception {
+        new RoutineAndUDTTests(this).testStoredFunctionsWithNoSchema();
+    }
+
+    @Test
     public void testFunctionsOnDates() throws Exception {
         new FunctionTests(this).testFunctionsOnDates();
     }

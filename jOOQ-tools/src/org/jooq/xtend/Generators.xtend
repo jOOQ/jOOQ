@@ -227,6 +227,19 @@ abstract class Generators {
     /** 
      * A comma-separated list of identifier declarations
      * <p>
+     * <code>Object t1, Object t2, .., Object t[N]</code>
+     */
+    def Object_tn(int degree) {
+    	return 
+    	if (degree == 0)
+    		"Object... values"
+    	else
+        	(1..degree).join(", ", [e | "Object t" + e])
+    }
+    
+    /** 
+     * A comma-separated list of identifier declarations
+     * <p>
      * <code>T1 t1, T2 t2, .., T[N] t[N]</code>
      */
     def TN_XXXn(int degree, String XXX) {
@@ -248,6 +261,19 @@ abstract class Generators {
     		"Field<?>... values"
 		else
 	        (1..degree).join(", ", [e | "Field<T" + e + "> t" + e])
+    }
+     
+    /**
+     * A comma-separated list of field declarations
+     * <p>
+     * <code>Field t1, Field t2, .., Field t[N]</code>
+     */
+    def Field_tn(int degree) {
+    	return
+    	if (degree == 0)
+    		"Field<?>... values"
+		else
+	        (1..degree).join(", ", [e | "Field t" + e])
     }
     
     /**

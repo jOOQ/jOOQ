@@ -168,9 +168,9 @@ insertInto(t, t.a, t.b).values(1, 2);
 <h2 id="What-databases-are-supported"><a href="#What-databases-are-supported" name="What-databases-are-supported">#</a> What databases are supported</h2>
     <p>Every RDMBS out there has its own little specialties.
     jOOQ considers those specialties as much as possible, while trying to
-    standardise the behaviour in jOOQ. In order to increase the quality of jOOQ,
-    some 70 unit tests are run for syntax and variable binding verification,
-    as well as some 180 integration tests with an overall of around 1200 queries for any
+    standardise the behaviour in the API. In order to maintain a very high level of quality,
+    some 140 unit tests are run for syntax and variable binding verification,
+    as well as some 300 integration tests with an overall of around 2000 queries for any
     of these databases:</p>
 <ul>
     <li>CUBRID 8.4.1 and 9.1.0</li>

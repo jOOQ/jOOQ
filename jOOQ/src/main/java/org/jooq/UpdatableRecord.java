@@ -137,13 +137,12 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * jOOQ can auto-generate "version" and "timestamp" values that can be used
      * for optimistic locking. If this is an {@link UpdatableRecord} and if this
-     * record returns fields for either
-     * {@link Table#getRecordVersion()} or
-     * {@link Table#getRecordTimestamp()}, then these values are set
-     * onto the <code>INSERT</code> or <code>UPDATE</code> statement being
-     * executed. On execution success, the generated values are set to this
-     * record. Use the code-generation configuration to specify naming patterns
-     * for auto-generated "version" and "timestamp" columns.
+     * record returns fields for either {@link Table#getRecordVersion()} or
+     * {@link Table#getRecordTimestamp()}, then these values are set onto the
+     * <code>INSERT</code> or <code>UPDATE</code> statement being executed. On
+     * execution success, the generated values are set to this record. Use the
+     * code-generation configuration to specify naming patterns for
+     * auto-generated "version" and "timestamp" columns.
      * <p>
      * Should you want to circumvent jOOQ-generated updates to these columns,
      * you can render an <code>INSERT</code> or <code>UPDATE</code> statement
@@ -163,10 +162,10 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * This is the preferred way of using optimistic locking in jOOQ. If this is
      * an {@link UpdatableRecord} and if this record returns fields for either
-     * {@link Table#getRecordVersion()} or
-     * {@link Table#getRecordTimestamp()}, then these values are
-     * compared to the corresponding value in the database in the
-     * <code>WHERE</code> clause of the executed <code>DELETE</code> statement.</li>
+     * {@link Table#getRecordVersion()} or {@link Table#getRecordTimestamp()},
+     * then these values are compared to the corresponding value in the database
+     * in the <code>WHERE</code> clause of the executed <code>DELETE</code>
+     * statement.</li>
      * <li><strong>Without any specific column configurations</strong>
      * <p>
      * In order to compare this record with the latest state, the database
@@ -202,6 +201,13 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * WHERE [key fields = key values]
      * AND [version/timestamp fields = version/timestamp values]</pre></code></li>
      * </ul>
+     * <p>
+     * <h3>Statement execution enforcement</h3>
+     * <p>
+     * If you want to enforce statement execution, regardless if the values in
+     * this record were changed, you can explicitly set the changed flags for
+     * all values with {@link #changed(boolean)} or for single values with
+     * {@link #changed(Field, boolean)}, prior to storing.
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
@@ -219,6 +225,11 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * This is the same as {@link #store()}, except that an <code>INSERT</code>
      * statement (or no statement) will always be executed.
+     * <p>
+     * If you want to enforce statement execution, regardless if the values in
+     * this record were changed, you can explicitly set the changed flags for
+     * all values with {@link #changed(boolean)} or for single values with
+     * {@link #changed(Field, boolean)}, prior to insertion.
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.
@@ -233,6 +244,11 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
      * <p>
      * This is the same as {@link #store()}, except that an <code>UPDATE</code>
      * statement (or no statement) will always be executed.
+     * <p>
+     * If you want to enforce statement execution, regardless if the values in
+     * this record were changed, you can explicitly set the changed flags for
+     * all values with {@link #changed(boolean)} or for single values with
+     * {@link #changed(Field, boolean)}, prior to updating.
      *
      * @return <code>1</code> if the record was stored to the database. <code>0
      *         </code> if storing was not necessary.

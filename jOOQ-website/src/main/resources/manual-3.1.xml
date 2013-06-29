@@ -9674,6 +9674,36 @@ public class Book implements java.io.Serializable
 					</section>
 
 
+                    <section id="data-type-rewrites">
+                        <title>Data type rewrites</title>
+                        <content>
+                            <p>
+                                Sometimes, the actual database data type does not match the SQL data type that you would like to use in Java. This is often the case for ill-supported SQL data types, such as <code>BOOLEAN</code> or <code>UUID</code>. jOOQ's code generator allows you to apply simple data type rewriting. The following configuration will rewrite <code>IS_VALID</code> columns in all tables to be of type <code>BOOLEAN</code>.
+                            </p>
+
+
+<xml><![CDATA[<database>
+
+  <!-- Associate data type rewrites with database columns -->
+  <forcedTypes>
+    <forcedType>
+      <!-- Specify any data type from org.jooq.impl.SQLDataType -->
+      <name>BOOLEAN</name>
+
+      <!-- Add a Java regular expression matching fully-qualified columns. 
+           Use the pipe to separate several expressions -->
+      <expressions>.*\.IS_VALID</expressions>
+    </forcedType>
+  </forcedTypes>
+</database>]]></xml>
+
+                            <p>
+                                See the section about <reference id="custom-data-types" title="Custom data types"/> for rewriting columns to your own custom data types.
+                            </p>
+                        </content>
+                    </section>
+
+
 				    <section id="custom-data-types">
 						<title>Custom data types and type conversion</title>
 						<content>
@@ -9700,7 +9730,8 @@ public class Book implements java.io.Serializable
       <!-- Specify again he fully-qualified class name of your custom type -->
       <name>java.util.GregorianCalendar</name>
 
-      <!-- Add a Java regular expression matching columns. Use the pipe to separate several expressions -->
+      <!-- Add a Java regular expression matching fully-columns. 
+           Use the pipe to separate several expressions -->
       <expressions>.*\.DATE_OF_.*</expressions>
     </forcedType>
   </forcedTypes>

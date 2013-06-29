@@ -1163,7 +1163,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
         }
 
-        // Skip DAOs for tables that don't have 1-column-PKs (for now)
+        // [#2573] Skip DAOs for tables that don't have 1-column-PKs (for now)
         if (keyColumn == null) {
             log.info("Skipping DAO generation", getStrategy().getFileName(table, Mode.DAO));
             return;

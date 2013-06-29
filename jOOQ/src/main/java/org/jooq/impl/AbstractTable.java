@@ -52,6 +52,7 @@ import org.jooq.PivotForStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Row;
+import org.jooq.RecordType;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -96,7 +97,12 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
      * <code>TableAlias</code> contains aliased fields of its
      * <code>AliasProvider</code> table.
      */
-    abstract Fields fields0();
+    abstract Fields<R> fields0();
+
+    @Override
+    public final RecordType<R> recordType() {
+        return fields0();
+    }
 
     @SuppressWarnings({ "rawtypes" })
     @Override

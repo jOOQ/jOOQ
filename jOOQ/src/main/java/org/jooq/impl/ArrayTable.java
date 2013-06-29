@@ -64,11 +64,11 @@ class ArrayTable extends AbstractTable<Record> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 2380426377794577041L;
+    private static final long    serialVersionUID = 2380426377794577041L;
 
-    private final Field<?>    array;
-    private final Fields      field;
-    private final String      alias;
+    private final Field<?>       array;
+    private final Fields<Record> field;
+    private final String         alias;
 
     ArrayTable(Field<?> array) {
         this(array, "array_table");
@@ -117,7 +117,7 @@ class ArrayTable extends AbstractTable<Record> {
         throw new UnsupportedOperationException("This constructor is not yet implemented");
     }
 
-    private static final Fields init(String alias, Class<?> arrayType) {
+    private static final Fields<Record> init(String alias, Class<?> arrayType) {
         List<Field<?>> result = new ArrayList<Field<?>>();
 
         // [#1114] VARRAY/TABLE of OBJECT have more than one field
@@ -138,7 +138,7 @@ class ArrayTable extends AbstractTable<Record> {
             result.add(fieldByName(DSL.getDataType(arrayType), alias, "COLUMN_VALUE"));
         }
 
-        return new Fields(result);
+        return new Fields<Record>(result);
     }
 
     @Override
@@ -297,7 +297,7 @@ class ArrayTable extends AbstractTable<Record> {
         }
 
         @Override
-        final Fields fields0() {
+        final Fields<Record> fields0() {
             return ArrayTable.this.fields0();
         }
     }
@@ -308,7 +308,7 @@ class ArrayTable extends AbstractTable<Record> {
     }
 
     @Override
-    final Fields fields0() {
+    final Fields<Record> fields0() {
         return field;
     }
 }

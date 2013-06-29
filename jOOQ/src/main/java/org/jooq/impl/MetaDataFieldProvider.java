@@ -46,6 +46,7 @@ import java.util.List;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.tools.JooqLogger;
 
@@ -71,13 +72,13 @@ class MetaDataFieldProvider implements Serializable {
     private static final long       serialVersionUID = -8482521025536063609L;
     private static final JooqLogger log              = JooqLogger.getLogger(MetaDataFieldProvider.class);
 
-    private final Fields            fields;
+    private final Fields<Record>    fields;
 
     MetaDataFieldProvider(Configuration configuration, ResultSetMetaData meta) {
         this.fields = init(configuration, meta);
     }
 
-    private Fields init(Configuration configuration, ResultSetMetaData meta) {
+    private Fields<Record> init(Configuration configuration, ResultSetMetaData meta) {
         List<Field<?>> fieldList = new ArrayList<Field<?>>();
         int columnCount = 0;
 
@@ -129,7 +130,7 @@ class MetaDataFieldProvider implements Serializable {
             throw Utils.translate(null, e);
         }
 
-        return new Fields(fieldList);
+        return new Fields<Record>(fieldList);
     }
 
     final Field<?>[] getFields() {

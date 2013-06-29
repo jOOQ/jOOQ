@@ -44,6 +44,7 @@ import java.util.Map;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.DefaultRecordMapper;
 import org.jooq.tools.Convert;
 
 import org.w3c.dom.Document;
@@ -58,6 +59,11 @@ import org.xml.sax.SAXException;
  * @see SelectQuery#getResult()
  */
 public interface Result<R extends Record> extends List<R>, Attachable {
+
+    /**
+     * Get this result's record type.
+     */
+    RecordType<R> recordType();
 
     /**
      * Get this result's fields as a {@link Row}.
@@ -527,6 +533,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             set.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
      */
     <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) throws IllegalArgumentException,
         InvalidResultException, MappingException;
@@ -549,6 +556,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             set.
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
      */
     <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) throws IllegalArgumentException,
         InvalidResultException, MappingException;
@@ -612,6 +620,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             in {@link #fieldsRow()}
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
      */
     <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) throws IllegalArgumentException,
         MappingException;
@@ -630,6 +639,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      *             contained in {@link #fieldsRow()}
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
      */
     <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) throws IllegalArgumentException,
         MappingException;
@@ -800,6 +810,7 @@ public interface Result<R extends Record> extends List<R>, Attachable {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see Record#into(Class)
+     * @see DefaultRecordMapper
      */
     <E> List<E> into(Class<? extends E> type) throws MappingException;
 

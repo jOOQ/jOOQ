@@ -59,11 +59,11 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
 
     private final Schema          schema;
     private final String          name;
-    private final Fields          fields;
+    private final Fields<R>       fields;
     private transient DataType<R> type;
 
     public UDTImpl(String name, Schema schema) {
-        this.fields = new Fields();
+        this.fields = new Fields<R>();
         this.name = name;
         this.schema = schema;
     }
@@ -104,7 +104,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
         return fieldsRow().fields();
     }
 
-    final Fields fields0() {
+    final Fields<R> fields0() {
         return fields;
     }
 

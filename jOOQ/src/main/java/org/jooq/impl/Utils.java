@@ -313,6 +313,22 @@ final class Utils {
         }
     }
 
+    /**
+     * Get an attachable's configuration or a new {@link DefaultConfiguration}
+     * if <code>null</code>.
+     */
+    static Configuration configuration(AttachableInternal attachable) {
+        return configuration(attachable.configuration());
+    }
+
+    /**
+     * Get an configuration or a new {@link DefaultConfiguration} if
+     * <code>null</code>.
+     */
+    static Configuration configuration(Configuration configuration) {
+        return configuration != null ? configuration : new DefaultConfiguration();
+    }
+
     private static final boolean attachRecords(Configuration configuration) {
         if (configuration != null) {
             Settings settings = configuration.settings();
@@ -946,7 +962,7 @@ final class Utils {
      * Render a list of names of the <code>NamedQueryParts</code> contained in
      * this list.
      */
-    static final void fieldNames(RenderContext context, Fields fields) {
+    static final void fieldNames(RenderContext context, Fields<?> fields) {
         fieldNames(context, list(fields.fields));
     }
 

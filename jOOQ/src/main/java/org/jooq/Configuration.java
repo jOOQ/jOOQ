@@ -83,6 +83,11 @@ public interface Configuration extends Serializable {
     ConnectionProvider connectionProvider();
 
     /**
+     * Get this configuration's underlying record mapper provider.
+     */
+    RecordMapperProvider recordMapperProvider();
+
+    /**
      * Retrieve the configured schema mapping.
      *
      * @deprecated - 2.0.5 - Use {@link #settings()} instead
@@ -207,6 +212,18 @@ public interface Configuration extends Serializable {
     Configuration set(ConnectionProvider newConnectionProvider);
 
     /**
+     * Change this configuration to hold a new record mapper provider.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newRecordMapperProvider The new record mapper provider to be
+     *            contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(RecordMapperProvider newRecordMapperProvider);
+
+    /**
      * Change this configuration to hold a new settings.
      * <p>
      * This method is not thread-safe and should not be used in globally
@@ -260,6 +277,16 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(ConnectionProvider newConnectionProvider);
+
+    /**
+     * Create a derived configuration from this one, with a new record mapper
+     * provider.
+     *
+     * @param newRecordMapperProvider The new record mapper provider to be
+     *            contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(RecordMapperProvider newRecordMapperProvider);
 
     /**
      * Create a derived configuration from this one, with new settings.

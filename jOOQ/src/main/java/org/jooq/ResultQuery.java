@@ -49,6 +49,7 @@ import org.jooq.exception.DataAccessException;
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.DefaultRecordMapper;
 
 /**
  * A query that can return results. Mostly, this is a {@link Select} query used
@@ -544,6 +545,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see Result#intoMap(Field[], Class)
+     * @see DefaultRecordMapper
      */
     <E> Map<List<?>, E> fetchMap(Field<?>[] keys, Class<? extends E> type) throws MappingException;
 
@@ -629,6 +631,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see Result#intoGroups(Field[], Class)
+     * @see DefaultRecordMapper
      */
     <E> Map<Record, List<E>> fetchGroups(Field<?>[] keys, Class<? extends E> type) throws MappingException;
 
@@ -644,6 +647,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @see Result#intoGroups(Field, Class)
+     * @see DefaultRecordMapper
      */
     <K, E> Map<K, List<E>> fetchGroups(Field<K> key, Class<? extends E> type) throws DataAccessException,
         MappingException;
@@ -807,6 +811,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
      */
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
@@ -831,6 +836,7 @@ public interface ResultQuery<R extends Record> extends Query {
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
      * @throws InvalidResultException if the query returned more than one record
+     * @see DefaultRecordMapper
      */
     <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException, InvalidResultException;
 

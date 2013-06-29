@@ -35,67 +35,21 @@
  */
 package org.jooq.impl;
 
-import org.jooq.BindContext;
 import org.jooq.Record;
-import org.jooq.RenderContext;
-import org.jooq.Table;
+import org.jooq.RecordMapper;
+import org.jooq.RecordMapperProvider;
+import org.jooq.RecordType;
 
 /**
+ * A default {@link RecordMapperProvider} implementation, providing a
+ * {@link DefaultRecordMapper} instance.
+ *
  * @author Lukas Eder
  */
-class WithTable<R extends Record> extends AbstractTable<R> {
-
-    /**
-     * Generated UID
-     */
-    private static final long      serialVersionUID = -3905775637768497535L;
-
-    private final AbstractTable<R> delegate;
-    private final String           hint;
-
-    WithTable(AbstractTable<R> delegate, String hint) {
-        super(delegate.getName(), delegate.getSchema());
-
-        this.delegate = delegate;
-        this.hint = hint;
-    }
+public class DefaultRecordMapperProvider implements RecordMapperProvider {
 
     @Override
-    public final boolean declaresTables() {
-        return true;
-    }
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(delegate)
-               .keyword(" with ")
-               .sql("(")
-               .sql(hint)
-               .sql(")");
-    }
-
-    @Override
-    public final void bind(BindContext context) {
-        context.bind(delegate);
-    }
-
-    @Override
-    public final Class<? extends R> getRecordType() {
-        return delegate.getRecordType();
-    }
-
-    @Override
-    public final Table<R> as(String alias) {
-        return new WithTable<R>(new TableAlias<R>(delegate, alias), hint);
-    }
-
-    @Override
-    public final Table<R> as(String alias, String... fieldAliases) {
-        return new WithTable<R>(new TableAlias<R>(delegate, alias, fieldAliases), hint);
-    }
-
-    @Override
-    final Fields<R> fields0() {
-        return delegate.fields0();
+    public final <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
+        return new DefaultRecordMapper<R, E>(rowType, type);
     }
 }

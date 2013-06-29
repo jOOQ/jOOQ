@@ -55,7 +55,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     private static final long     serialVersionUID = -8417114874567698325L;
 
     private final Alias<Table<R>> alias;
-    private final Fields          aliasedFields;
+    private final Fields<R>       aliasedFields;
 
     TableAlias(Table<R> table, String alias) {
         this(table, alias, null, false);
@@ -80,7 +80,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
      * Register fields for this table alias
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    private final Fields init(String[] fieldAliases) {
+    private final Fields<R> init(String[] fieldAliases) {
         List<Field<?>> result = new ArrayList<Field<?>>();
         Row row = this.alias.wrapped().fieldsRow();
         int size = row.size();
@@ -96,7 +96,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
             result.add(new TableFieldImpl(name, field.getDataType(), this));
         }
 
-        return new Fields(result);
+        return new Fields<R>(result);
     }
 
     /**
@@ -141,7 +141,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    final Fields fields0() {
+    final Fields<R> fields0() {
         return aliasedFields;
     }
 

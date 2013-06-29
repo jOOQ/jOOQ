@@ -54,7 +54,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     private static final long     serialVersionUID = 261033315221985068L;
 
-    private final Fields          fields;
+    private final Fields<R>       fields;
     private final Alias<Table<R>> alias;
 
     public TableImpl(String name) {
@@ -68,7 +68,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     public TableImpl(String name, Schema schema, Table<R> aliased) {
         super(name, schema);
 
-        this.fields = new Fields();
+        this.fields = new Fields<R>();
 
         if (aliased != null) {
             alias = new Alias<Table<R>>(aliased, name);
@@ -97,7 +97,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    final Fields fields0() {
+    final Fields<R> fields0() {
         return fields;
     }
 

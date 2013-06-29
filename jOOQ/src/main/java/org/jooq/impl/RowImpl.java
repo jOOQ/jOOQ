@@ -206,7 +206,7 @@ implements
 
     @Override
     public final int size() {
-        return fields.fields.length;
+        return fields.size();
     }
 
     @Override
@@ -256,156 +256,142 @@ implements
 
     @Override
     public final Class<?>[] types() {
-        int size = fields.fields.length;
-        Class<?>[] result = new Class[size];
-
-        for (int i = 0; i < size; i++) {
-            result[i] = fields.field(i).getType();
-        }
-
-        return result;
+        return fields.types();
     }
 
     @Override
     public final Class<?> type(int fieldIndex) {
-        return fieldIndex >= 0 && fieldIndex < size() ? fields.field(fieldIndex).getType() : null;
+        return fields.type(fieldIndex);
     }
 
     @Override
     public final Class<?> type(String fieldName) {
-        return type(indexOf(fieldName));
+        return fields.type(fieldName);
     }
 
     @Override
     public final DataType<?>[] dataTypes() {
-        int size = fields.fields.length;
-        DataType<?>[] result = new DataType[size];
-        
-        for (int i = 0; i < size; i++) {
-            result[i] = fields.field(i).getDataType();
-        }
-        
-        return result;
+        return fields.dataTypes();
     }
 
     @Override
     public final DataType<?> dataType(int fieldIndex) {
-        return fieldIndex >= 0 && fieldIndex < size() ? fields.field(fieldIndex).getDataType() : null;
+        return fields.dataType(fieldIndex);
     }
 
     @Override
     public final DataType<?> dataType(String fieldName) {
-        return dataType(indexOf(fieldName));
+        return fields.dataType(fieldName);
     }
 
     @Override
     public final Field<T1> field1() {
-        return (Field<T1>) fields.field(0);
+        return fields.field(0);
     }
 
     @Override
     public final Field<T2> field2() {
-        return (Field<T2>) fields.field(1);
+        return fields.field(1);
     }
 
     @Override
     public final Field<T3> field3() {
-        return (Field<T3>) fields.field(2);
+        return fields.field(2);
     }
 
     @Override
     public final Field<T4> field4() {
-        return (Field<T4>) fields.field(3);
+        return fields.field(3);
     }
 
     @Override
     public final Field<T5> field5() {
-        return (Field<T5>) fields.field(4);
+        return fields.field(4);
     }
 
     @Override
     public final Field<T6> field6() {
-        return (Field<T6>) fields.field(5);
+        return fields.field(5);
     }
 
     @Override
     public final Field<T7> field7() {
-        return (Field<T7>) fields.field(6);
+        return fields.field(6);
     }
 
     @Override
     public final Field<T8> field8() {
-        return (Field<T8>) fields.field(7);
+        return fields.field(7);
     }
 
     @Override
     public final Field<T9> field9() {
-        return (Field<T9>) fields.field(8);
+        return fields.field(8);
     }
 
     @Override
     public final Field<T10> field10() {
-        return (Field<T10>) fields.field(9);
+        return fields.field(9);
     }
 
     @Override
     public final Field<T11> field11() {
-        return (Field<T11>) fields.field(10);
+        return fields.field(10);
     }
 
     @Override
     public final Field<T12> field12() {
-        return (Field<T12>) fields.field(11);
+        return fields.field(11);
     }
 
     @Override
     public final Field<T13> field13() {
-        return (Field<T13>) fields.field(12);
+        return fields.field(12);
     }
 
     @Override
     public final Field<T14> field14() {
-        return (Field<T14>) fields.field(13);
+        return fields.field(13);
     }
 
     @Override
     public final Field<T15> field15() {
-        return (Field<T15>) fields.field(14);
+        return fields.field(14);
     }
 
     @Override
     public final Field<T16> field16() {
-        return (Field<T16>) fields.field(15);
+        return fields.field(15);
     }
 
     @Override
     public final Field<T17> field17() {
-        return (Field<T17>) fields.field(16);
+        return fields.field(16);
     }
 
     @Override
     public final Field<T18> field18() {
-        return (Field<T18>) fields.field(17);
+        return fields.field(17);
     }
 
     @Override
     public final Field<T19> field19() {
-        return (Field<T19>) fields.field(18);
+        return fields.field(18);
     }
 
     @Override
     public final Field<T20> field20() {
-        return (Field<T20>) fields.field(19);
+        return fields.field(19);
     }
 
     @Override
     public final Field<T21> field21() {
-        return (Field<T21>) fields.field(20);
+        return fields.field(20);
     }
 
     @Override
     public final Field<T22> field22() {
-        return (Field<T22>) fields.field(21);
+        return fields.field(21);
     }
 
     // ------------------------------------------------------------------------

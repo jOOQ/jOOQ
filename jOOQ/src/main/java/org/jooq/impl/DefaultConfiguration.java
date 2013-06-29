@@ -51,6 +51,7 @@ import org.jooq.Configuration;
 import org.jooq.ConnectionProvider;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteListenerProvider;
+import org.jooq.RecordMapperProvider;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
 import org.jooq.conf.Settings;
@@ -79,6 +80,7 @@ public class DefaultConfiguration implements Configuration {
 
     // Non-serializable Configuration objects
     private transient ConnectionProvider        connectionProvider;
+    private transient RecordMapperProvider      recordMapperProvider;
     private transient ExecuteListenerProvider[] listenerProviders;
 
     // Derived objects
@@ -98,6 +100,7 @@ public class DefaultConfiguration implements Configuration {
     public DefaultConfiguration() {
         this(
             new NoConnectionProvider(),
+            new DefaultRecordMapperProvider(),
             new ExecuteListenerProvider[0],
             SQL99,
             SettingsTools.defaultSettings(),
@@ -115,6 +118,7 @@ public class DefaultConfiguration implements Configuration {
     DefaultConfiguration(Configuration configuration) {
         this(
             configuration.connectionProvider(),
+            configuration.recordMapperProvider(),
             configuration.executeListenerProviders(),
             configuration.dialect(),
             configuration.settings(),
@@ -132,26 +136,21 @@ public class DefaultConfiguration implements Configuration {
      */
     DefaultConfiguration(
             ConnectionProvider connectionProvider,
+            RecordMapperProvider recordMapperProvider,
             ExecuteListenerProvider[] listenerProviders,
             SQLDialect dialect,
             Settings settings,
             Map<Object, Object> data)
     {
-        this.connectionProvider = connectionProvider;
-        this.listenerProviders = listenerProviders != null
-            ? listenerProviders
-            : new ExecuteListenerProvider[0];
-
-        this.dialect = dialect;
-        this.settings = settings != null
-            ? SettingsTools.clone(settings)
-            : SettingsTools.defaultSettings();
+        set(connectionProvider);
+        set(recordMapperProvider);
+        set(listenerProviders);
+        set(dialect);
+        set(settings);
 
         this.data = data != null
             ? new ConcurrentHashMap<Object, Object>(data)
             : new ConcurrentHashMap<Object, Object>();
-
-        this.mapping = new org.jooq.SchemaMapping(this);
     }
 
     // -------------------------------------------------------------------------
@@ -171,7 +170,7 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration derive(SQLDialect newDialect) {
-        return new DefaultConfiguration(connectionProvider, listenerProviders, newDialect, settings, data);
+        return new DefaultConfiguration(connectionProvider, recordMapperProvider, listenerProviders, newDialect, settings, data);
     }
 
     /**
@@ -179,7 +178,15 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration derive(ConnectionProvider newConnectionProvider) {
-        return new DefaultConfiguration(newConnectionProvider, listenerProviders, dialect, settings, data);
+        return new DefaultConfiguration(newConnectionProvider, recordMapperProvider, listenerProviders, dialect, settings, data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(RecordMapperProvider newRecordMapperProvider) {
+        return new DefaultConfiguration(connectionProvider, newRecordMapperProvider, listenerProviders, dialect, settings, data);
     }
 
     /**
@@ -187,7 +194,7 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration derive(Settings newSettings) {
-        return new DefaultConfiguration(connectionProvider, listenerProviders, dialect, newSettings, data);
+        return new DefaultConfiguration(connectionProvider, recordMapperProvider, listenerProviders, dialect, newSettings, data);
     }
 
     /**
@@ -195,7 +202,7 @@ public class DefaultConfiguration implements Configuration {
      */
     @Override
     public final Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders) {
-        return new DefaultConfiguration(connectionProvider, newExecuteListenerProviders, dialect, settings, data);
+        return new DefaultConfiguration(connectionProvider, recordMapperProvider, newExecuteListenerProviders, dialect, settings, data);
     }
 
     // -------------------------------------------------------------------------
@@ -215,15 +222,30 @@ public class DefaultConfiguration implements Configuration {
     }
 
     @Override
+    public final Configuration set(RecordMapperProvider newRecordMapperProvider) {
+        this.recordMapperProvider = newRecordMapperProvider != null
+            ? newRecordMapperProvider
+            : new DefaultRecordMapperProvider();
+
+        return this;
+    }
+
+    @Override
     public final Configuration set(Settings newSettings) {
-        this.settings = newSettings;
+        this.settings = newSettings != null
+            ? SettingsTools.clone(newSettings)
+            : SettingsTools.defaultSettings();
+
         this.mapping = new SchemaMapping(this);
         return this;
     }
 
     @Override
     public final Configuration set(ExecuteListenerProvider... newExecuteListenerProviders) {
-        this.listenerProviders = newExecuteListenerProviders;
+        this.listenerProviders = newExecuteListenerProviders != null
+            ? newExecuteListenerProviders
+            : new ExecuteListenerProvider[0];
+
         return this;
     }
 
@@ -245,6 +267,14 @@ public class DefaultConfiguration implements Configuration {
     @Override
     public final ConnectionProvider connectionProvider() {
         return connectionProvider;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public RecordMapperProvider recordMapperProvider() {
+        return recordMapperProvider;
     }
 
     /**
@@ -319,6 +349,9 @@ public class DefaultConfiguration implements Configuration {
         oos.writeObject(connectionProvider instanceof Serializable
             ? connectionProvider
             : null);
+        oos.writeObject(recordMapperProvider instanceof Serializable
+            ? recordMapperProvider
+            : null);
 
         ExecuteListenerProvider[] clone = new ExecuteListenerProvider[listenerProviders.length];
         for (int i = 0; i < clone.length; i++) {
@@ -334,6 +367,7 @@ public class DefaultConfiguration implements Configuration {
         ois.defaultReadObject();
 
         connectionProvider = (ConnectionProvider) ois.readObject();
+        recordMapperProvider = (RecordMapperProvider) ois.readObject();
         listenerProviders = (ExecuteListenerProvider[]) ois.readObject();
     }
 }

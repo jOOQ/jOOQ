@@ -125,7 +125,7 @@ class Dual extends AbstractTable<Record> {
     public final void bind(BindContext context) {}
 
     @Override
-    final Fields fields0() {
-        return new Fields();
+    final Fields<Record> fields0() {
+        return new Fields<Record>();
     }
 }

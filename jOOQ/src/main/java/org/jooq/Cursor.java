@@ -44,6 +44,7 @@ import java.util.List;
 import org.jooq.conf.Settings;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.DefaultRecordMapper;
 
 /**
  * Cursors allow for lazy, sequential access to an underlying JDBC
@@ -61,6 +62,11 @@ import org.jooq.exception.MappingException;
  * @author Lukas Eder
  */
 public interface Cursor<R extends Record> extends Iterable<R> {
+
+    /**
+     * Get this cursor's row type.
+     */
+    RecordType<R> recordType();
 
     /**
      * Get this cursor's fields as a {@link Row}.
@@ -216,6 +222,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
      */
     <E> E fetchOneInto(Class<? extends E> type) throws DataAccessException, MappingException;
 
@@ -232,6 +239,7 @@ public interface Cursor<R extends Record> extends Iterable<R> {
      * @throws DataAccessException if something went wrong executing the query
      * @throws MappingException wrapping any reflection or data type conversion
      *             exception that might have occurred while mapping records
+     * @see DefaultRecordMapper
      */
     <E> List<E> fetchInto(Class<? extends E> type) throws DataAccessException, MappingException;
 

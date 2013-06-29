@@ -71,6 +71,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.RecordType;
 import org.jooq.Table;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
@@ -115,6 +116,12 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                 intern[i] = true;
             }
         }
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    public final RecordType<R> recordType() {
+        return new RowImpl(fields).fields;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })

@@ -36,13 +36,14 @@
 
 package org.jooq.impl;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.jooq.BindContext;
+import org.jooq.DataType;
 import org.jooq.Field;
+import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.RecordType;
 
 /**
  * A simple wrapper for <code>Field[]</code>, providing some useful lookup
@@ -50,7 +51,7 @@ import org.jooq.RenderContext;
  *
  * @author Lukas Eder
  */
-class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
+class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R> {
 
     private static final long serialVersionUID = -6911012275707591576L;
     Field<?>[]                fields;
@@ -63,8 +64,14 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         this.fields = fields.toArray(new Field[fields.size()]);
     }
 
+    @Override
+    public final int size() {
+        return fields.length;
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
-    final <T> Field<T> field(Field<T> field) {
+    public final <T> Field<T> field(Field<T> field) {
         if (field == null) {
             return null;
         }
@@ -87,7 +94,8 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return null;
     }
 
-    final Field<?> field(String name) {
+    @Override
+    public final Field<?> field(String name) {
         if (name == null) {
             return null;
         }
@@ -101,7 +109,8 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return null;
     }
 
-    final Field<?> field(int index) {
+    @Override
+    public final Field<?> field(int index) {
         if (index >= 0 && index < fields.length) {
             return fields[index];
         }
@@ -109,11 +118,13 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return null;
     }
 
-    final Field<?>[] fields() {
+    @Override
+    public final Field<?>[] fields() {
         return fields;
     }
 
-    final Field<?>[] fields(Field<?>... f) {
+    @Override
+    public final Field<?>[] fields(Field<?>... f) {
         Field<?>[] result = new Field[f.length];
 
         for (int i = 0; i < result.length; i++) {
@@ -123,7 +134,8 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return result;
     }
 
-    final Field<?>[] fields(String... f) {
+    @Override
+    public final Field<?>[] fields(String... f) {
         Field<?>[] result = new Field[f.length];
 
         for (int i = 0; i < result.length; i++) {
@@ -133,7 +145,8 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return result;
     }
 
-    final Field<?>[] fields(int... f) {
+    @Override
+    public final Field<?>[] fields(int... f) {
         Field<?>[] result = new Field[f.length];
 
         for (int i = 0; i < result.length; i++) {
@@ -143,7 +156,8 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return result;
     }
 
-    final int indexOf(Field<?> field) {
+    @Override
+    public final int indexOf(Field<?> field) {
 
         // Get an exact match, or a field with a similar name
         Field<?> compareWith = field(field);
@@ -160,8 +174,53 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
         return -1;
     }
 
-    final int indexOf(String fieldName) {
+    @Override
+    public final int indexOf(String fieldName) {
         return indexOf(field(fieldName));
+    }
+
+    @Override
+    public final Class<?>[] types() {
+        int size = fields.length;
+        Class<?>[] result = new Class[size];
+
+        for (int i = 0; i < size; i++) {
+            result[i] = field(i).getType();
+        }
+
+        return result;
+    }
+
+    @Override
+    public final Class<?> type(int fieldIndex) {
+        return fieldIndex >= 0 && fieldIndex < size() ? field(fieldIndex).getType() : null;
+    }
+
+    @Override
+    public final Class<?> type(String fieldName) {
+        return type(indexOf(fieldName));
+    }
+
+    @Override
+    public final DataType<?>[] dataTypes() {
+        int size = fields.length;
+        DataType<?>[] result = new DataType[size];
+
+        for (int i = 0; i < size; i++) {
+            result[i] = field(i).getDataType();
+        }
+
+        return result;
+    }
+
+    @Override
+    public final DataType<?> dataType(int fieldIndex) {
+        return fieldIndex >= 0 && fieldIndex < size() ? field(fieldIndex).getDataType() : null;
+    }
+
+    @Override
+    public final DataType<?> dataType(String fieldName) {
+        return dataType(indexOf(fieldName));
     }
 
     final int[] indexesOf(Field<?>... f) {
@@ -198,11 +257,6 @@ class Fields extends AbstractQueryPart implements Iterable<Field<?>> {
     // -------------------------------------------------------------------------
     // XXX: List-like API
     // -------------------------------------------------------------------------
-
-    @Override
-    public final Iterator<Field<?>> iterator() {
-        return Arrays.asList(fields).iterator();
-    }
 
     final void add(Field<?> f) {
         Field<?>[] result = new Field[fields.length + 1];

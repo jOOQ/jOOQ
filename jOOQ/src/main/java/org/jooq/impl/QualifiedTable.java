@@ -95,7 +95,7 @@ class QualifiedTable extends AbstractTable<Record> {
     }
 
     @Override
-    final Fields fields0() {
-        return new Fields();
+    final Fields<Record> fields0() {
+        return new Fields<Record>();
     }
 }

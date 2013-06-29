@@ -181,10 +181,10 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
             return internIndexes;
         }
         else if (internFields != null) {
-            return new Fields(fields).indexesOf(internFields);
+            return new Fields<Record>(fields).indexesOf(internFields);
         }
         else if (internNames != null) {
-            return new Fields(fields).indexesOf(internNames);
+            return new Fields<Record>(fields).indexesOf(internNames);
         }
 
         return null;

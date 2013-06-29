@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
@@ -456,6 +457,12 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         if (context.qualify()) {
             if (mappedSchema != null) {
                 context.sql(mappedSchema);
+                context.sql(".");
+            }
+
+            // [#2569] In SQL Server, routines always have to be fully qualified
+            else if (getSchema() != null && context.configuration().dialect().family() == SQLSERVER) {
+                context.sql(getSchema());
                 context.sql(".");
             }
 

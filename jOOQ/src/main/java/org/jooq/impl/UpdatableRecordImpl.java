@@ -232,7 +232,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
      * Set all changed values of this record to a store query
      */
     private final void addChangedValues(StoreQuery<R> query) {
-        for (Field<?> field : fields.fields) {
+        for (Field<?> field : fields.fields.fields) {
             if (getValue0(field).isChanged()) {
                 addValue(query, field);
             }
@@ -373,7 +373,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
         // Copy all fields. This marks them all as isChanged, which is important
         List<TableField<R, ?>> key = getPrimaryKey().getFields();
-        for (Field<?> field : fields.fields) {
+        for (Field<?> field : fields.fields.fields) {
 
             // Don't copy key values
             if (!key.contains(field)) {
@@ -435,7 +435,7 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
             throw new DataChangedException("Database record no longer exists");
         }
 
-        for (Field<?> field : fields.fields) {
+        for (Field<?> field : fields.fields.fields) {
             Value<?> thisValue = getValue0(field);
             Value<?> thatValue = ((AbstractRecord) record).getValue0(field);
 

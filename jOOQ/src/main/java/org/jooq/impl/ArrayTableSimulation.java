@@ -63,7 +63,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     private static final long       serialVersionUID = 2392515064450536343L;
 
     private final Object[]          array;
-    private final Fields            field;
+    private final Fields<Record>    field;
     private final String            alias;
     private final String            fieldAlias;
 
@@ -83,7 +83,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
         this.array = array;
         this.alias = alias;
         this.fieldAlias = fieldAlias == null ? "COLUMN_VALUE" : fieldAlias;
-        this.field = new Fields(fieldByName(DSL.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
+        this.field = new Fields<Record>(fieldByName(DSL.getDataType(array.getClass().getComponentType()), alias, this.fieldAlias));
     }
 
     @Override
@@ -127,7 +127,7 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     }
 
     @Override
-    final Fields fields0() {
+    final Fields<Record> fields0() {
         return field;
     }
 

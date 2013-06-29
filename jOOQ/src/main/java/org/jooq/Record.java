@@ -36,22 +36,20 @@
 
 package org.jooq;
 
-import java.beans.ConstructorProperties;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.Proxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLData;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.Column;
 
 import org.jooq.exception.DataTypeException;
 import org.jooq.exception.MappingException;
+import org.jooq.impl.DefaultRecordMapper;
+import org.jooq.impl.DefaultRecordMapperProvider;
 import org.jooq.tools.Convert;
-import org.jooq.tools.reflect.Reflect;
 
 /**
  * A database result record.
@@ -656,110 +654,17 @@ public interface Record extends Attachable, Comparable<Record> {
     /**
      * Map resulting records onto a custom type.
      * <p>
-     * The mapping algorithm is this:
-     * <p>
-     * <h5>If <code>type</code> is an array:</h5>
-     * <p>
-     * The resulting array is of the nature described in {@link #intoArray()}.
-     * Arrays more specific than <code>Object[]</code> can be specified as well,
-     * e.g. <code>String[]</code>. If conversion fails, a
-     * {@link MappingException} is thrown, wrapping conversion exceptions.
-     * <p>
-     * <h5>If a default constructor is available and any JPA {@link Column}
-     * annotations are found on the provided <code>type</code>, only those are
-     * used:</h5>
-     * <p>
-     * <ul>
-     * <li>If <code>type</code> contains public single-argument instance methods
-     * annotated with <code>Column</code>, those methods are invoked</li>
-     * <li>If <code>type</code> contains public no-argument instance methods
-     * starting with <code>getXXX</code> or <code>isXXX</code>, annotated with
-     * <code>Column</code>, then matching public <code>setXXX()</code> instance
-     * methods are invoked</li>
-     * <li>If <code>type</code> contains public instance member fields annotated
-     * with <code>Column</code>, those members are set</li>
-     * </ul>
-     * Additional rules:
-     * <ul>
-     * <li>The same annotation can be re-used for several methods/members</li>
-     * <li>{@link Column#name()} must match {@link Field#getName()}. All other
-     * annotation attributes are ignored</li>
-     * <li>Static methods / member fields are ignored</li>
-     * <li>Final member fields are ignored</li>
-     * </ul>
-     * <p>
-     * <h5>If a default constructor is available and if there are no JPA
-     * <code>Column</code> annotations, or jOOQ can't find the
-     * <code>javax.persistence</code> API on the classpath, jOOQ will map
-     * <code>Record</code> values by naming convention:</h5>
-     * <p>
-     * If {@link Field#getName()} is <code>MY_field</code> (case-sensitive!),
-     * then this field's value will be set on all of these:
-     * <ul>
-     * <li>Public single-argument instance method <code>MY_field(...)</code></li>
-     * <li>Public single-argument instance method <code>myField(...)</code></li>
-     * <li>Public single-argument instance method <code>setMY_field(...)</code></li>
-     * <li>Public single-argument instance method <code>setMyField(...)</code></li>
-     * <li>Public non-final instance member field <code>MY_field</code></li>
-     * <li>Public non-final instance member field <code>myField</code></li>
-     * </ul>
-     * <p>
-     * <h5>If no default constructor is available, but at least one constructor
-     * annotated with <code>ConstructorProperties</code> is available, that one
-     * is used</h5>
-     * <p>
-     * <ul>
-     * <li>The standard JavaBeans {@link ConstructorProperties} annotation is
-     * used to match constructor arguments against POJO members or getters.</li>
-     * <li>If those POJO members or getters have JPA annotations, those will be
-     * used according to the aforementioned rules, in order to map
-     * <code>Record</code> values onto constructor arguments.</li>
-     * <li>If those POJO members or getters don't have JPA annotations, the
-     * aforementioned naming conventions will be used, in order to map
-     * <code>Record</code> values onto constructor arguments.</li>
-     * <li>When several annotated constructors are found, the first one is
-     * chosen (as reported by {@link Class#getDeclaredConstructors()}</li>
-     * <li>When invoking the annotated constructor, values are converted onto
-     * constructor argument types</li>
-     * </ul>
-     * <p>
-     * <h5>If no default constructor is available, but at least one "matching"
-     * constructor is available, that one is used</h5>
-     * <p>
-     * <ul>
-     * <li>A "matching" constructor is one with exactly as many arguments as
-     * this record holds fields</li>
-     * <li>When several "matching" constructors are found, the first one is
-     * chosen (as reported by {@link Class#getDeclaredConstructors()}</li>
-     * <li>When invoking the "matching" constructor, values are converted onto
-     * constructor argument types</li>
-     * </ul>
-     * <p>
-     * <h5>If the supplied type is an interface or an abstract class</h5>
-     * <p>
-     * Abstract types are instanciated using Java reflection {@link Proxy}
-     * mechanisms. The returned proxy will wrap a {@link HashMap} containing
-     * properties mapped by getters and setters of the supplied type. Methods
-     * (even JPA-annotated ones) other than standard POJO getters and setters
-     * are not supported. Details can be seen in {@link Reflect#as(Class)}.
-     * <p>
-     * <h5>Other restrictions</h5>
-     * <p>
-     * <ul>
-     * <li><code>type</code> must provide a default or a "matching" constructor.
-     * Non-public default constructors are made accessible using
-     * {@link Constructor#setAccessible(boolean)}</li>
-     * <li>primitive types are supported. If a value is <code>null</code>, this
-     * will result in setting the primitive type's default value (zero for
-     * numbers, or <code>false</code> for booleans). Hence, there is no way of
-     * distinguishing <code>null</code> and <code>0</code> in that case.</li>
-     * </ul>
+     * This will map this record onto your custom type using a
+     * {@link RecordMapper} as provided by
+     * {@link Configuration#recordMapperProvider()}. If no custom provider is
+     * specified, the {@link DefaultRecordMapperProvider} is used.
      *
      * @param <E> The generic entity type.
      * @param type The entity type.
      * @throws MappingException wrapping any reflection exception that might
      *             have occurred while mapping records
      * @see #from(Object)
+     * @see DefaultRecordMapper
      */
     <E> E into(Class<? extends E> type) throws MappingException;
 

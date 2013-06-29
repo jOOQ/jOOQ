@@ -45,6 +45,8 @@ import java.util.List;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
+import org.jooq.RecordMapperProvider;
+import org.jooq.RecordType;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
@@ -73,9 +75,9 @@ public class ModelmapperTests {
     @Test
     public void testMapping() throws Exception {
 
-    	// This is not yet a working example. Just playing around with the API
-    	// of ModelMapper
-    	final ModelMapper mapper = new ModelMapper();
+        // This is not yet a working example. Just playing around with the API
+        // of ModelMapper
+        final ModelMapper mapper = new ModelMapper();
         final TypeMap<Record, Book> map = mapper.createTypeMap(Record.class, Book.class);
 
         List<Book> books =
@@ -91,6 +93,42 @@ public class ModelmapperTests {
                 return map.map(record);
             }
         });
+
+        System.out.println(books);
+    }
+
+    @Test
+    public void testMappingWithRecordMapperProvider() throws Exception {
+
+        // This is not yet a working example. Just playing around with the API
+        // of ModelMapper
+        final ModelMapper mapper = new ModelMapper();
+        final TypeMap<Record, Book> map = mapper.createTypeMap(Record.class, Book.class);
+
+        List<Book> books =
+        DSL.using(create.configuration().derive(new RecordMapperProvider() {
+            @Override
+            public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
+                if (Book.class.isAssignableFrom(type)) {
+                    return new RecordMapper<R, E>() {
+
+                        @SuppressWarnings("unchecked")
+                        @Override
+                        public E map(R record) {
+                            return (E) map.map(record);
+                        }
+                    };
+                }
+
+                throw new RuntimeException();
+            }
+        }))
+        .select()
+        .from(T_BOOK
+            .join(T_AUTHOR)
+            .on(T_BOOK.AUTHOR_ID.eq(T_AUTHOR.ID)))
+        .orderBy(T_BOOK.ID)
+        .fetchInto(Book.class);
 
         System.out.println(books);
     }

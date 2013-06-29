@@ -69,6 +69,7 @@ import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
 import org.jooq.Result;
 import org.jooq.Row;
+import org.jooq.RecordType;
 import org.jooq.Table;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
@@ -92,21 +93,21 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = 6416154375799578362L;
+    private static final long serialVersionUID = 6416154375799578362L;
 
-    private Configuration       configuration;
-    private final Fields        fields;
-    private final List<R>       records;
+    private Configuration     configuration;
+    private final Fields<R>   fields;
+    private final List<R>     records;
 
     ResultImpl(Configuration configuration, Collection<? extends Field<?>> fields) {
-        this(configuration, new Fields(fields));
+        this(configuration, new Fields<R>(fields));
     }
 
     ResultImpl(Configuration configuration, Field<?>... fields) {
-        this(configuration, new Fields(fields));
+        this(configuration, new Fields<R>(fields));
     }
 
-    ResultImpl(Configuration configuration, Fields fields) {
+    ResultImpl(Configuration configuration, Fields<R> fields) {
         this.configuration = configuration;
         this.fields = fields;
         this.records = new ArrayList<R>();
@@ -135,6 +136,11 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     // -------------------------------------------------------------------------
     // XXX: Result API
     // -------------------------------------------------------------------------
+
+    @Override
+    public final RecordType<R> recordType() {
+        return fields;
+    }
 
     @SuppressWarnings({ "rawtypes" })
     @Override
@@ -443,7 +449,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         sb.append("<thead>");
         sb.append("<tr>");
 
-        for (Field<?> field : fields) {
+        for (Field<?> field : fields.fields) {
             sb.append("<th>");
             sb.append(field.getName());
             sb.append("</th>");
@@ -486,7 +492,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         StringBuilder sb = new StringBuilder();
 
         String sep1 = "";
-        for (Field<?> field : fields) {
+        for (Field<?> field : fields.fields) {
             sb.append(sep1);
             sb.append(formatCSV0(field.getName(), ""));
 
@@ -561,7 +567,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         List<List<Object>> r = new ArrayList<List<Object>>();
 
         Map<String, String> fieldMap;
-        for (Field<?> field : fields) {
+        for (Field<?> field : fields.fields) {
             fieldMap = new LinkedHashMap<String, String>();
             fieldMap.put("name", field.getName());
             fieldMap.put("type", field.getDataType().getTypeName().toUpperCase());
@@ -594,7 +600,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         sb.append("<result xmlns=\"http://www.jooq.org/xsd/jooq-export-2.6.0.xsd\">");
         sb.append("<fields>");
 
-        for (Field<?> field : fields) {
+        for (Field<?> field : fields.fields) {
             sb.append("<field name=\"");
             sb.append(escapeXML(field.getName()));
             sb.append("\" ");
@@ -649,7 +655,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
             Element eFields = document.createElement("fields");
             eResult.appendChild(eFields);
 
-            for (Field<?> field : fields) {
+            for (Field<?> field : fields.fields) {
                 Element eField = document.createElement("field");
                 eField.setAttribute("name", field.getName());
                 eField.setAttribute("type", field.getDataType().getTypeName().toUpperCase());
@@ -693,7 +699,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         handler.startElement("", "", "result", empty);
         handler.startElement("", "", "fields", empty);
 
-        for (Field<?> field : fields) {
+        for (Field<?> field : fields.fields) {
             AttributesImpl attrs = new AttributesImpl();
             attrs.addAttribute("", "", "name", "CDATA", field.getName());
             attrs.addAttribute("", "", "type", "CDATA", field.getDataType().getTypeName().toUpperCase());
@@ -810,7 +816,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<List<?>, E> intoMap(Field<?>[] keys, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
+        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
 
         if (keys == null) {
             keys = new Field[0];
@@ -835,7 +841,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, E> intoMap(Field<K> key, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
+        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
         int index = fieldsRow().indexOf(key);
         Map<K, E> map = new LinkedHashMap<K, E>();
 
@@ -924,7 +930,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @SuppressWarnings("unchecked")
     @Override
     public final <K, E> Map<K, List<E>> intoGroups(Field<K> key, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
+        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
         int index = fieldsRow().indexOf(key);
         Map<K, List<E>> map = new LinkedHashMap<K, List<E>>();
 
@@ -945,7 +951,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
 
     @Override
     public final <E> Map<Record, List<E>> intoGroups(Field<?>[] keys, Class<? extends E> type) {
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
+        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
 
         if (keys == null) {
             keys = new Field[0];
@@ -1044,7 +1050,7 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
     @Override
     public final <E> List<E> into(Class<? extends E> type) {
         List<E> list = new ArrayList<E>(size());
-        RecordMapper<R, E> mapper = new ReflectionMapper<R, E>(fields.fields, type);
+        RecordMapper<R, E> mapper = Utils.configuration(this).recordMapperProvider().provide(fields, type);
 
         for (R record : this) {
             list.add(mapper.map(record));

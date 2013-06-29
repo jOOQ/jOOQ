@@ -79,22 +79,27 @@ import org.jooq.impl.DSL;
 public interface Table<R extends Record> extends TableLike<R> {
 
     /**
-     * Get the table schema
+     * Get the table schema.
      */
     Schema getSchema();
 
     /**
-     * The name of this table
+     * The name of this table.
      */
     String getName();
 
     /**
-     * @return The record type produced by this table
+     * The record type produced by this table.
+     */
+    RecordType<R> recordType();
+
+    /**
+     * The record type produced by this table.
      */
     Class<? extends R> getRecordType();
 
     /**
-     * Create an alias for this table
+     * Create an alias for this table.
      * <p>
      * Note that the case-sensitivity of the returned table depends on
      * {@link Settings#getRenderNameStyle()}. By default, table aliases are

@@ -75,8 +75,8 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
     protected DAOImpl(Table<R> table, Class<P> type, Configuration configuration) {
         this.table = table;
         this.type = type;
-        this.configuration = configuration;
-        this.mapper = new ReflectionMapper<R, P>(table.fields(), type);
+
+        setConfiguration(configuration);
     }
 
     /**
@@ -87,6 +87,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
      */
     public final void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
+        this.mapper = Utils.configuration(configuration).recordMapperProvider().provide(table.recordType(), type);
     }
 
     @Override

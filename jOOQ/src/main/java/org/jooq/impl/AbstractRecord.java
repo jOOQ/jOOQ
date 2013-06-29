@@ -463,7 +463,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
 
     @Override
     public final <E> E into(Class<? extends E> type) {
-        return new ReflectionMapper<Record, E>(fields.fields(), type).map(this);
+        return (E) Utils.configuration(this).recordMapperProvider().provide(fields.fields, type).map(this);
     }
 
     @Override
@@ -475,7 +475,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
         Class<E> type = (Class<E>) object.getClass();
 
         try {
-            return new ReflectionMapper<Record, E>(fields.fields(), type, object).map(this);
+            return new DefaultRecordMapper<Record, E>(fields.fields, type, object).map(this);
         }
 
         // Pass MappingExceptions on to client code
@@ -689,7 +689,7 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      * public for broader use...?
      */
     protected final void from(Record source) {
-        for (Field<?> field : fields.fields) {
+        for (Field<?> field : fields.fields.fields) {
             Field<?> sourceField = source.field(field);
 
             if (sourceField != null) {

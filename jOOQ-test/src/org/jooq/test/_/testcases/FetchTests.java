@@ -74,6 +74,7 @@ import java.util.concurrent.TimeUnit;
 import junit.framework.Assert;
 
 import org.jooq.Cursor;
+import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -82,6 +83,8 @@ import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
+import org.jooq.RecordMapperProvider;
+import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
 import org.jooq.Select;
@@ -1411,6 +1414,65 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                         return record.getValue(TBook_TITLE());
                     }
                 }));
+    }
+
+    @SuppressWarnings("serial")
+    static class NoRecordMapperAvailableException extends RuntimeException {}
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testFetchIntoWithRecordMapperProvider() throws Exception {
+        DSLContext create = create(create().configuration().derive(
+            new RecordMapperProvider() {
+                @Override
+                public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
+                    if (type == Integer.class) {
+                        return new RecordMapper<R, E>() {
+                            @Override
+                            public E map(R record) {
+                                return (E) record.getValue(TBook_ID());
+                            }
+                        };
+                    }
+
+                    if (type == String.class && rowType.field(TBook_TITLE()) != null) {
+                        return new RecordMapper<R, E>() {
+                            @Override
+                            public E map(R record) {
+                                return (E) record.getValue(TBook_TITLE());
+                            }
+                        };
+                    }
+
+                    throw new NoRecordMapperAvailableException();
+                }
+            }
+        ));
+
+        assertEquals(BOOK_IDS,
+        create.selectFrom(TBook())
+              .orderBy(TBook_ID())
+              .fetchInto(Integer.class));
+
+        assertEquals(BOOK_TITLES,
+        create.selectFrom(TBook())
+              .orderBy(TBook_ID())
+              .fetchInto(String.class));
+
+        try {
+            create.selectFrom(TBook())
+                  .fetchInto(Object.class);
+            fail();
+        }
+        catch (NoRecordMapperAvailableException expected) {}
+
+        try {
+            create.select(TBook_ID())
+                  .from(TBook())
+                  .fetchInto(String.class);
+            fail();
+        }
+        catch (NoRecordMapperAvailableException expected) {}
     }
 
     @Test

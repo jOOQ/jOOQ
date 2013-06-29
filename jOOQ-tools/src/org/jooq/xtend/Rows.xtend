@@ -1285,7 +1285,7 @@ class Rows extends Generators {
 
             @Override
             public final int size() {
-                return fields.fields.length;
+                return fields.size();
             }
 
             @Override
@@ -1335,52 +1335,38 @@ class Rows extends Generators {
 
             @Override
             public final Class<?>[] types() {
-                int size = fields.fields.length;
-                Class<?>[] result = new Class[size];
-        
-                for (int i = 0; i < size; i++) {
-                    result[i] = fields.field(i).getType();
-                }
-        
-                return result;
+                return fields.types();
             }
-
+        
             @Override
             public final Class<?> type(int fieldIndex) {
-                return fieldIndex >= 0 && fieldIndex < size() ? fields.field(fieldIndex).getType() : null;
+                return fields.type(fieldIndex);
             }
-
+        
             @Override
             public final Class<?> type(String fieldName) {
-                return type(indexOf(fieldName));
+                return fields.type(fieldName);
             }
-
+        
             @Override
             public final DataType<?>[] dataTypes() {
-                int size = fields.fields.length;
-                DataType<?>[] result = new DataType[size];
-                
-                for (int i = 0; i < size; i++) {
-                    result[i] = fields.field(i).getDataType();
-                }
-                
-                return result;
+                return fields.dataTypes();
             }
-
+        
             @Override
             public final DataType<?> dataType(int fieldIndex) {
-                return fieldIndex >= 0 && fieldIndex < size() ? fields.field(fieldIndex).getDataType() : null;
+                return fields.dataType(fieldIndex);
             }
-
+        
             @Override
             public final DataType<?> dataType(String fieldName) {
-                return dataType(indexOf(fieldName));
+                return fields.dataType(fieldName);
             }
             «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
 
             @Override
             public final Field<T«degree»> field«degree»() {
-                return (Field<T«degree»>) fields.field(«degree - 1»);
+                return fields.field(«degree - 1»);
             }
             «ENDFOR»
 

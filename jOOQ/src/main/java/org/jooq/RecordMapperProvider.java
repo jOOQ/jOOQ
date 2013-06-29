@@ -35,6 +35,9 @@
  */
 package org.jooq;
 
+import org.jooq.impl.DefaultRecordMapper;
+import org.jooq.impl.DefaultRecordMapperProvider;
+
 /**
  * A provider for {@link RecordMapper} instances.
  * <p>
@@ -49,7 +52,7 @@ package org.jooq;
  * </ul>
  * <h3><code>Record</code></h3>
  * <ul>
- * <li> {@link Result#into(Class)}</li>
+ * <li> {@link Record#into(Class)}</li>
  * </ul>
  * <h3><code>Result</code></h3>
  * <ul>
@@ -72,14 +75,36 @@ package org.jooq;
  * <ul>
  * <li>Most {@link DAO} methods make use of any of the above methods</li>
  * </ul>
- * <p>
- * This is a non-public, experimental API type
  *
  * @author Lukas Eder
  * @see RecordMapper
  * @see Configuration
  */
-interface RecordMapperProvider {
+public interface RecordMapperProvider {
 
-    <R extends Record, E> RecordMapper<R, E> provide(Class<? extends E> type);
+    /**
+     * Provide a <code>RecordMapper</code> instance.
+     * <p>
+     * Implementations are free to choose whether this method returns new
+     * instances at every call or whether the same instance is returned
+     * repetitively.
+     * <p>
+     * A <code>RecordMapper</code> instance should be able to map any number of
+     * records with the same <code>RecordType</code>. For example, for
+     * {@link Record#into(Class)}, <code>provide()</code> and
+     * {@link RecordMapper#map(Record)} are called only once. For
+     * {@link Result#into(Class)}, <code>provide()</code> is called only once,
+     * but {@link RecordMapper#map(Record)} is called several times, once for
+     * every <code>Record</code> in the <code>Result</code>.
+     *
+     * @param recordType The <code>RecordType</code> of records that shall be
+     *            mapped by the returned <code>RecordMapper</code>.
+     * @param type The user type that was passed into {@link Record#into(Class)}
+     *            or any other method.
+     * @return A <code>RecordMapper</code> instance.
+     * @see RecordMapper
+     * @see DefaultRecordMapper
+     * @see DefaultRecordMapperProvider
+     */
+    <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> recordType, Class<? extends E> type);
 }

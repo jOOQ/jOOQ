@@ -35,31 +35,32 @@
  */
 package org.jooq;
 
-import org.jooq.api.annotation.State;
-import org.jooq.api.annotation.Transition;
-
 /**
- * A model type for a row value expression.
+ * A record type for {@link Table}, {@link Cursor}, {@link Result} and other
+ * objects.
  * <p>
- * Note: Not all databases support row value expressions, but many row value
- * expression operations can be simulated on all databases. See relevant row
- * value expression method Javadocs for details.
+ * This type differs from {@link Row} in several ways:
+ * <ul>
+ * <li>It is generic using <code>&lt;R></code></li>
+ * <li>It is not repeated for degrees 1 to 22, such as {@link Row1} ..
+ * {@link RowN}</li>
+ * <li>It is not part of the DSL</li>
+ * </ul>
  *
  * @author Lukas Eder
  */
-@State(terminal = true)
-public interface Row extends QueryPart {
+public interface RecordType<R extends Record> {
 
     /**
-     * Get the degree of this row value expression.
+     * Get the degree of this record type.
      */
     int size();
 
     /**
-     * Get a specific field from this row.
+     * Get a specific field from this record type.
      * <p>
      * Usually, this will return the field itself. However, if this is a row
-     * from an aliased table, the field will be aliased accordingly.
+     * type from an aliased table, the field will be aliased accordingly.
      *
      * @param <T> The generic field type
      * @param field The field to fetch
@@ -68,7 +69,7 @@ public interface Row extends QueryPart {
     <T> Field<T> field(Field<T> field);
 
     /**
-     * Get a specific field from this row.
+     * Get a specific field from this record type.
      *
      * @param fieldName The field to fetch
      * @return The field with the given name
@@ -76,7 +77,7 @@ public interface Row extends QueryPart {
     Field<?> field(String fieldName);
 
     /**
-     * Get a specific field from this row.
+     * Get a specific field from this record type.
      *
      * @param fieldIndex The field's index of the field to fetch
      * @return The field with the given name
@@ -84,14 +85,14 @@ public interface Row extends QueryPart {
     Field<?> field(int fieldIndex);
 
     /**
-     * Get all fields from this row.
+     * Get all fields from this record type.
      *
      * @return All available fields
      */
     Field<?>[] fields();
 
     /**
-     * Get all fields from this row, providing some fields.
+     * Get all fields from this record type, providing some fields.
      *
      * @return All available fields
      * @see #field(Field)
@@ -99,7 +100,7 @@ public interface Row extends QueryPart {
     Field<?>[] fields(Field<?>... fields);
 
     /**
-     * Get all fields from this row, providing some field names.
+     * Get all fields from this record type, providing some field names.
      *
      * @return All available fields
      * @see #field(String)
@@ -107,7 +108,7 @@ public interface Row extends QueryPart {
     Field<?>[] fields(String... fieldNames);
 
     /**
-     * Get all fields from this row, providing some field indexes.
+     * Get all fields from this record type, providing some field indexes.
      *
      * @return All available fields
      * @see #field(int)
@@ -115,7 +116,7 @@ public interface Row extends QueryPart {
     Field<?>[] fields(int... fieldIndexes);
 
     /**
-     * Get a field's index from this row.
+     * Get a field's index from this record type.
      *
      * @param field The field to look for
      * @return The field's index or <code>-1</code> if the field is not
@@ -124,7 +125,7 @@ public interface Row extends QueryPart {
     int indexOf(Field<?> field);
 
     /**
-     * Get a field's index from this row.
+     * Get a field's index from this record type.
      *
      * @param fieldName The field name to look for
      * @return The field's index or <code>-1</code> if the field is not
@@ -133,7 +134,7 @@ public interface Row extends QueryPart {
     int indexOf(String fieldName);
 
     /**
-     * Get an array of types for this row.
+     * Get an array of types for this record type.
      * <p>
      * Entries in the resulting array correspond to {@link Field#getType()} for
      * the corresponding <code>Field</code> in {@link #fields()}
@@ -157,7 +158,7 @@ public interface Row extends QueryPart {
     Class<?> type(String fieldName);
 
     /**
-     * Get an array of data types for this row.
+     * Get an array of data types for this record type.
      * <p>
      * Entries in the resulting array correspond to {@link Field#getDataType()}
      * for the corresponding <code>Field</code> in {@link #fields()}
@@ -179,46 +180,5 @@ public interface Row extends QueryPart {
      * @return The field's data type
      */
     DataType<?> dataType(String fieldName);
-
-    // ------------------------------------------------------------------------
-    // [NOT] NULL predicates
-    // ------------------------------------------------------------------------
-
-    /**
-     * Check if this row value expression contains only <code>NULL</code>
-     * values.
-     * <p>
-     * Row NULL predicates can be simulated in those databases that do not
-     * support such predicates natively: <code>(A, B) IS NULL</code> is
-     * equivalent to <code>A IS NULL AND B IS NULL</code>
-     */
-    @Support
-    @Transition(
-        name = "IS NULL",
-        to = "NullPredicate"
-    )
-    Condition isNull();
-
-    /**
-     * Check if this row value expression contains no <code>NULL</code> values.
-     * <p>
-     * Row NOT NULL predicates can be simulated in those databases that do not
-     * support such predicates natively: <code>(A, B) IS NOT NULL</code> is
-     * equivalent to <code>A IS NOT NULL AND B IS NOT NULL</code>
-     * <p>
-     * Note that the two following predicates are NOT equivalent:
-     * <ul>
-     * <li><code>(A, B) IS NOT NULL</code>, which is the same as
-     * <code>(A IS NOT NULL) AND (B IS NOT NULL)</code></li>
-     * <li><code>NOT((A, B) IS NULL)</code>, which is the same as
-     * <code>(A IS NOT NULL) OR (B IS NOT NULL)</code></li>
-     * </ul>
-     */
-    @Support
-    @Transition(
-        name = "IS NOT NULL",
-        to = "NullPredicate"
-    )
-    Condition isNotNull();
 
 }

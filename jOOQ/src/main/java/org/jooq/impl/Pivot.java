@@ -292,7 +292,7 @@ implements
         }
 
         @Override
-        final Fields fields0() {
+        final Fields<Record> fields0() {
             return Pivot.this.fields0();
         }
     }
@@ -326,8 +326,8 @@ implements
     }
 
     @Override
-    final Fields fields0() {
-        return new Fields();
+    final Fields<Record> fields0() {
+        return new Fields<Record>();
     }
 
     // ------------------------------------------------------------------------

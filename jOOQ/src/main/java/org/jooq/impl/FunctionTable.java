@@ -102,7 +102,7 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    final Fields fields0() {
-        return new Fields();
+    final Fields<R> fields0() {
+        return new Fields<R>();
     }
 }

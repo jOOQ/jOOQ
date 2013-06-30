@@ -379,6 +379,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testStoredFunctionsWithNoSchema() throws Exception {
+        if (cRoutines() == null) {
+            log.info("SKIPPING", "functions test with no schema");
+            return;
+        }
+
         assertEquals(42, (int) create(new Settings().withRenderSchema(false))
             .select(FNumberField(42).cast(Integer.class))
             .fetchOne(0, Integer.class));

@@ -9,7 +9,7 @@ package org.jooq.test.mysql2.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -1688903193;
+	private static final long serialVersionUID = -551779908;
 
 	/**
 	 * The singleton instance of <code>test2.t_exotic_types</code>
@@ -32,7 +32,7 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.mysql2.g
 	/**
 	 * The column <code>test2.t_exotic_types.UU</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, this);
+	public final org.jooq.TableField<org.jooq.test.mysql2.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.BINARY.length(16).asConvertedDataType(new org.jooq.test._.converters.UUIDBinaryConverter()), this);
 
 	/**
 	 * Create a <code>test2.t_exotic_types</code> table reference

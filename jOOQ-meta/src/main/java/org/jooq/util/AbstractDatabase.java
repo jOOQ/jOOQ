@@ -111,6 +111,7 @@ public abstract class AbstractDatabase implements Database {
     private transient Map<SchemaDefinition, List<ForeignKeyDefinition>>      foreignKeysBySchema;
     private transient Map<SchemaDefinition, List<CheckConstraintDefinition>> checkConstraintsBySchema;
     private transient Map<SchemaDefinition, List<TableDefinition>>           tablesBySchema;
+    @SuppressWarnings("unused")
     private transient Map<SchemaDefinition, List<EnumDefinition>>            enumsBySchema;
     private transient Map<SchemaDefinition, List<UDTDefinition>>             udtsBySchema;
     private transient Map<SchemaDefinition, List<ArrayDefinition>>           arraysBySchema;

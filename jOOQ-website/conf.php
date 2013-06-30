@@ -1,5 +1,5 @@
 <?php
   $root = "";
-  $minorVersion = "3.0";
+  $minorVersion = "3.1";
   $version = $minorVersion . ".0";
 ?>

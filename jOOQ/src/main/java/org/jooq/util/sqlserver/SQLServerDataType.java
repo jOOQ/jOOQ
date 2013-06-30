@@ -102,7 +102,7 @@ public class SQLServerDataType {
     protected static final DataType<String>  __LONGVARCHAR    = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGVARCHAR, "varchar");
     protected static final DataType<String>  __NCLOB          = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.NCLOB, "text");
     protected static final DataType<String>  __LONGNVARCHAR   = new DefaultDataType<String>(SQLDialect.SQLSERVER, SQLDataType.LONGNVARCHAR, "varchar");
-    protected static final DataType<Byte>    __BYTE           = new DefaultDataType<Byte>(SQLDialect.SQLSERVER, SQLDataType.TINYINT, "tinyint");
+    protected static final DataType<Byte>    __BYTE           = new DefaultDataType<Byte>(SQLDialect.SQLSERVER, SQLDataType.TINYINT, "signed tinyint", "tinyint");
 
     // -------------------------------------------------------------------------
     // Compatibility types for supported Java types

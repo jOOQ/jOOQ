@@ -533,6 +533,8 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testRenderFormattedAndInlinedWithNewlines() throws Exception {
+        jOOQAbstractTest.reset = false;
+
         // [#2528] When inlining bind values, formatting SQL might change the
         // values, in case values contain newlines
         DSLContext create = create(new Settings()

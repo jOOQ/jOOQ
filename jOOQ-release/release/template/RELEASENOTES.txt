@@ -22,7 +22,8 @@ SQL Server 2012 is another SQL dialect that is now officially supported in jOOQ,
 allowing to make use of the newly supported ROWS UNBOUNDED PRECEDING and similar
 windowing clauses, as well as the long awaited OFFSET .. FETCH clause. From now
 on, jOOQ SQLDialect.family() allows to define a super-set of SQL dialects by the
-same vendors with only subtle differences.
+same vendors with only subtle differences. SQL Server users be careful to choose
+the right dialect!
 
 POJO mapping is taken to the next level. jOOQ opened up its internal
 DefaultRecordMapper providing useful Record to POJO mapping algorithms. But your

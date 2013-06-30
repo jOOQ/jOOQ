@@ -109,9 +109,15 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
-        if (getFrom() instanceof TableAlias && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) {
-            context.sql(getFrom())
-                   .sql(" ");
+        if (asList(MARIADB, MYSQL).contains(context.configuration().dialect())) {
+
+            // [#2579] TODO: Improve Table API to discover aliased tables more
+            // reliably instead of resorting to instanceof:
+            if (getFrom() instanceof TableAlias ||
+               (getFrom() instanceof TableImpl && ((TableImpl<R>)getFrom()).getAliasedTable() != null)) {
+                context.sql(getFrom())
+                       .sql(" ");
+            }
         }
 
         context.keyword("from ");

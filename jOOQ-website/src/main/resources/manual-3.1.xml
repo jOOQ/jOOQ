@@ -1367,6 +1367,7 @@ DSLContext create = DSL.using(connection, dialect);]]></java>
 								<li><reference class="org.jooq.SQLDialect"/> : The dialect of your database. This may be any of the currently supported database types (see <reference id="sql-dialects"/> for more details)</li>
     							<li><reference class="org.jooq.conf.Settings"/> : An optional runtime configuration (see <reference id="custom-settings"/> for more details)</li>
 								<li><reference class="org.jooq.ExecuteListenerProvider"/> : An optional reference to a provider class that can provide execute listeners to jOOQ (see <reference id="execute-listeners"/> for more details)</li>
+                                <li><reference class="org.jooq.RecordMapperProvider"/> : An optional reference to a provider class that can provide record mappers to jOOQ (see <reference id="pojos-with-recordmapper-provider"/> for more details)</li>
                                 <li>
 									Any of these:
 									<ul>
@@ -6792,6 +6793,10 @@ create.selectFrom(BOOK)
       .fetch(book -> book.getId());
 ]]></java>
 
+                                    <p>
+                                        Your custom <code>RecordMapper</code> types can be used automatically through jOOQ's <reference id="pojos" title="POJO mapping APIs"/>, by injecting a <reference id="pojos-with-recordmapper-provider" title="RecordMapperProvider"/> into your <reference id="dsl-context" title="Configuration"/>. 
+                                    </p>
+
 									<p>
 										See also the manual's section about the <reference id="recordhandler" title="RecordHandler"/>, which provides similar features
 									</p>
@@ -6805,7 +6810,7 @@ create.selectFrom(BOOK)
 										Fetching data in records is fine as long as your application is not really layered, or as long as you're still writing code in the DAO layer. But if you have a more advanced application architecture, you may not want to allow for jOOQ artefacts to leak into other layers. You may choose to write POJOs (Plain Old Java Objects) as your primary DTOs (Data Transfer Objects), without any dependencies on jOOQ's <reference class="org.jooq.Record"/> types, which may even potentially hold a reference to a <reference id="dsl-context" title="Configuration"/>, and thus a JDBC <reference class="java.sql.Connection"/>. Like Hibernate/JPA, jOOQ allows you to operate with POJOs. Unlike Hibernate/JPA, jOOQ does not "attach" those POJOs or create proxies with any magic in them.
 									</p>
 									<p>
-										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to <reference id="codegen-pojos" title="generate POJOs"/> for you, but you're not required to use those generated POJOs. You can use your own.
+										If you're using jOOQ's <reference id="code-generation" title="code generator"/>, you can configure it to <reference id="codegen-pojos" title="generate POJOs"/> for you, but you're not required to use those generated POJOs. You can use your own. See the manual's section about <reference id="pojos-with-recordmapper-provider" title="POJOs with custom RecordMappers"/> to see how to modify jOOQ's standard POJO mapping behaviour.
 									</p>
 									
 									<h3>Using JPA-annotated POJOs</h3>									
@@ -6978,6 +6983,56 @@ bookDao.delete(book);]]></java>
 									</p>
 								</content>
 							</section>
+                            
+                            <section id="pojos-with-recordmapper-provider">
+                                <title>POJOs with RecordMappers</title>
+                                <content>
+                                    <p>
+                                        In the previous sections we have seen how to create <reference id="recordmapper" title="RecordMapper"/> types to map jOOQ records onto arbitrary objects. We have also seen how jOOQ provides default algorithms to map jOOQ records onto <reference id="pojos" title="POJOs"/>. Your own custom domain model might be much more complex, but you want to avoid looking up the most appropriate <code>RecordMapper</code> every time you need one. For this, you can provide jOOQ's <reference id="dsl-context" title="Configuration"/> with your own implementation of the <reference class="org.jooq.RecordMapperProvider"/> interface. An example is given here:
+                                    </p>
+                                    
+<java><![CDATA[DSL.using(new DefaultConfiguration()
+   .set(connection)
+   .set(SQLDialect.ORACLE)
+   .set(
+       new RecordMapperProvider() {
+           @Override
+           public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
+
+               // UUID mappers will always try to find the ID column
+               if (type == UUID.class) {
+                   return new RecordMapper<R, E>() {
+                       @Override
+                       public E map(R record) {
+                           return (E) record.getValue("ID");
+                       }
+                   }
+               }
+               
+               // Books might be joined with their authors, create a 1:1 mapping
+               if (type == Book.class) {
+                   return new BookMapper();
+               }
+
+               // Fall back to jOOQ's DefaultRecordMapper, which maps records onto
+               // POJOs using reflection.
+               return new DefaultRecordMapperProvider();           
+           }
+       }
+   ))
+   .selectFrom(BOOK)
+   .orderBy(BOOK.ID)
+   .fetchInto(UUID.class);]]></java>
+
+                                    <p>
+                                        The above is a very simple example showing that you will have complete flexibility in how to override jOOQ's record to POJO mapping mechanisms.
+                                    </p>
+                                    
+                                    <p>
+                                        If you're looking into a generic, third-party mapping utility, have a look at <a href="http://modelmapper.org">ModelMapper</a>, or <a href="http://orika-mapper.github.io/orika-docs">Orika Mapper</a>, which can both be easily integrated with jOOQ.
+                                    </p>
+                                </content>
+                            </section>
 
 							<section id="lazy-fetching">
 								<title>Lazy fetching</title>
@@ -7482,6 +7537,44 @@ finally {
     ResultQuery<R> maxRows(int rows);
     
 }]]></java>
+
+                            <h3>Using ResultSet concurrency with ExecuteListeners</h3>
+                            <p>
+                                An example of why you might want to manually set a ResultSet's concurrency flag to something non-default is given here:
+                            </p>
+                            
+<java><![CDATA[
+DSL.using(new DefaultConfiguration()
+   .set(connection)
+   .set(SQLDialect.ORACLE)
+   .set(DefaultExecuteListenerProvider.providers(
+           new DefaultExecuteListener() {
+        
+               @Override
+               public void recordStart(ExecuteContext ctx) {
+                   try {
+            
+                       // Change values in the cursor before reading a record
+                       ctx.resultSet().updateString(BOOK.TITLE.getName(), "New Title");
+                       ctx.resultSet().updateRow();
+                   }
+                   catch (SQLException e) {
+                       throw new DataAccessException("Exception", e);
+                   }
+               }
+          }
+       )
+   ))
+   .select(BOOK.ID, BOOK.TITLE)
+   .from(BOOK)
+   .orderBy(BOOK.ID)
+   .resultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)
+   .resultSetConcurrency(ResultSet.CONCUR_UPDATABLE)
+   .fetch(BOOK.TITLE);]]></java>
+   
+                            <p>
+                                In the above example, your custom <reference id="execute-listeners" title="ExecuteListener callback"/> is triggered before jOOQ loads a new <code>Record</code> from the JDBC <code>ResultSet</code>. With the concurrency being set to <code>ResultSet.CONCUR_UPDATABLE</code>, you can now modify the database cursor through the standard JDBC <code>ResultSet</code> API.  
+                            </p>
                         </content>
                     </section>
 

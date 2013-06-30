@@ -10,6 +10,164 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
+Version 3.1.0 - June 30, 2013
+================================================================================
+
+With this release, MariaDB is now finally officially supported by jOOQ! MariaDB
+is a MySQL fork, which currently has a very similar feature set as its parent.
+As such forks tend to evolve into different directions very quickly, it makes
+sense to add formal support in jOOQ.
+
+SQL Server 2012 is another SQL dialect that is now officially supported in jOOQ,
+allowing to make use of the newly supported ROWS UNBOUNDED PRECEDING and similar
+windowing clauses, as well as the long awaited OFFSET .. FETCH clause. From now
+on, jOOQ SQLDialect.family() allows to define a super-set of SQL dialects by the
+same vendors with only subtle differences.
+
+POJO mapping is taken to the next level. jOOQ opened up its internal
+DefaultRecordMapper providing useful Record to POJO mapping algorithms. But your
+custom domain model might be more complex. Instead of creating the next
+impedance mismatch, trying to foresee your own mapping algorithm needs, jOOQ 
+allows you to inject a RecordMapperProvider into your Configuration, allowing to
+override record mapping with arbitrary behaviour.
+
+This minor release is also a strong step forward towards a more unified SQL
+experience, where row value expression IN predicates and comparison predicates
+are simulated with an equivalent EXISTS predicate. See this blog post for more
+details:
+http://blog.jooq.org/2013/05/03/sql-query-transformation-fun-predicates-with-row-value-expressions
+
+Note, that for technical reasons, jOOQ 3.0.0 could not yet be integration
+tested with DB2, Ingres, and Sybase ASE. Consider using jOOQ 2.6, instead
+
+Features and improvements
+-------------------------
+#552  - Add SQLDialect.family() to group several SQLDialect versions of the same
+        RDBMS
+#742  - Improve MySQL Stored Procedure support using MySQL 5.5's 
+        INFORMATION_SCHEMA.PARAMETERS dictionary table
+#833  - Add integration tests for both jconn3 and jTDS JDBC drivers for Sybase
+        and SQL Server
+#963  - Map SQL Server TINYINT to UByte
+#965  - Add support for Sybase SQL Anywhere unsigned number types
+#1373 - Add <T> Field<T> DSL.coerce(Field<?>, DataType<T>) and similar methods,
+        to coerce a field to a given data type (as opposed to casting it)
+#1836 - Document using jOOQ with Spring for transaction support
+#1885 - Add test to count opening and closing of Statements and ResultSets by
+        jOOQ
+#2022 - Add support for SQL Server 2012 windowing clauses in window functions
+#2058 - Add support for the MariaDB database
+#2095 - Document <forcedType/>'s feature of forcing a column onto a SQL type
+#2235 - Add Result<?> DSLContext.fetchFromTXT() to allow for loading results
+        that were exported using Result.format()
+#2236 - Add DSLContext.batch(String...) and batch(String, Object[]...) to easily
+        create batch statements from SQL strings
+#2291 - Add DSLContext.fetchAny(Table, Condition) method and others
+#2299 - Allow for setting ResultSet flags (e.g. 
+        ResultSet.TYPE_SCROLL_INSENSITIVE through 
+        ResultQuery.resultSetConcurrency(), resultSetType(), 
+        resultSetHoldability()
+#2310 - Add DSL.using(Connection) and DSL.using(Connection, Settings) which 
+        auto-detect the SQLDialect from the jdbc url
+#2311 - Add Configuration.recordMapperProvider() to override jOOQ's internal
+        default ReflectionMapper
+#2339 - Support CUBRID 9.1's new features
+#2344 - Add a new ControlFlowSignal that is used to explicitly jump out of a 
+        control flow
+#2355 - Add support for Postgres / HSQLDB's TRUNCATE [...] RESTART / CONTINUE 
+        IDENTITY
+#2357 - Add support for Postgres' TRUNCATE [...] CASCADE statement
+#2395 - Simulate row value expression IN predicate using EXISTS
+#2414 - Add Setting to influence parameter rendering (indexed, named, inlined)
+#2416 - Add Result.intoXML(org.xml.sax.ContentHandler) to generate a SAX event
+        stream from a jOOQ result
+#2423 - Add support for SQL Server 2012 native OFFSET .. FETCH clause
+#2424 - Integration-test jOOQ with the SQLite xerial driver
+#2426 - Add DSLContext.batch(Query, Object[]...) as a convenience for calling
+        batch(Query).bind(Object...).bind(Object...)
+#2427 - Add more Javadoc to ResultQuery.fetchResultSet() explaining that 
+        underlying PreparedStatements are closed with ResultSet.close()
+#2428 - Simulate row value expression comparison predicates using EXISTS
+#2430 - Add CustomQueryPart for use with plain SQL and other places
+#2434 - Add Field.compare(Comparator, Select) and Field.compare(Comparator, 
+        QuantifiedSelect) to allow for more dynamic SQL
+#2437 - Add RenderContext.paramType() and deprecate RenderContext.inline() and 
+        .namedParams() 
+#2440 - Expose the DataSource contained in the DataSourceConnectionProvider
+#2441 - Add DSL.cast(Field<?>, XXX) for increased API consistency
+#2446 - Add JDBCUtils.dialect(Connection) to "guess" the jOOQ SQLDialect from a
+        JDBC Connection
+#2466 - Add a public DefaultDSLContext implementation that can be used by users
+        to override the default behaviour
+#2485 - Allow for treating Field<Boolean> as Condition
+#2496 - Add support for SQL Server 2012 sequences
+#2499 - Add JDBCUtils.safeClose(Connection)
+#2509 - Expose CHECK constraints in jOOQ-meta
+#2519 - Add Record.from(Object, Field<?>...) from(Object, String...), 
+        from(Object, int...) to copy only a select set of values from a POJO, 
+        Array, Map
+#2521 - Add {Row|Record}.fields(Field<?>...), {Row|Record}.fields(String...),
+        {Row|Record}.fields(int...) to extract Field<?>[] from a row or record
+#2527 - Add org.jooq.tools.jdbc.DefaultResultSet to provide a default ResultSet
+        delegation implementation
+#2531 - Add integration tests mapping binary(16) to java.util.UUID
+#2532 - Let batch executions debug-log executed queries
+#2535 - Convert.convert(Object, Class) should support simple casting
+#2547 - Document some SQL language to jOOQ DSL API mapping rules in the manual
+#2566 - Upgrade integration test jTDS version to 1.3.1
+#2571 - Add a new RecordType<R extends Record> type to make up for the missing
+        recursive type definition on Record
+
+API changes (backwards-incompatible)
+------------------------------------
+#2468 - API bug: MergeNotMatchedSetStep.set(Field, Select) returns 
+        MergeMatchedSetMoreStep instead of MergeNotMatchedSetMoreStep
+
+Bug fixes
+---------
+#1520 - Handle Ingres', SQLite, SQL Server's, Sybase ASE's limitations of 1024,
+        999, 2100 or 2000 maximum bind values per query
+#2135 - Postgres ENUM data type isn't supported correctly, if the ENUM needs
+        full qualification
+#2323 - NullPointerException when calling Schema.getTables() on a meta schema 
+        with SQLite
+#2401 - Bad package name generated when <packageName/> contents are not trimmed
+#2404 - Cannot combine <dateAsTimestamp/> with <forcedType/> if both match
+#2412 - jOOQ Meta does not recognise non-uppercase IN, OUT, INOUT keywords in
+        MySQL stored procedures
+#2413 - Suppress warnings in generated code (@SuppressWarnings("all") doesn't
+        suppress "rawtypes" warnings with javac)
+#2418 - RenderContext.data() is not passed on to QueryParts when being rendered
+#2422 - Upgrade RSyntaxTextArea to 2.0.7
+#2432 - Manual refers to a package-private DefaultConfiguration constructor
+#2443 - AbstractStoreQuery.execute() doesn't correctly operate on the
+        Configuration's ConnectionProvider in SQLite IDENTITY fetching queries
+#2445 - JDBCDatabase doesn't recognise Oracle's VARCHAR2 data type (and other
+        vendor-specific data types)
+#2447 - Tables collected through DSLContext.meta() return duplicate columns if
+        multi-schema environments contain identical tables
+#2449 - JDBCDatabase doesn't use DataType.length(), precision(), and scale()
+#2450 - Cannot set precision on TINYINT, SMALLINT, INT, BIGINT data types
+#2461 - Generator Encoding Error for Database-Objects with Unicode-Names
+#2464 - Bad SQL rendered from DELETE statements with aliased tables
+#2469 - NullPointerException in AbstractResultQuery.fetchOneMap()
+#2477 - MySQL's unsigned types cannot be used in other dialects
+#2478 - IngresDatabase erroneously joins IIINDEXES to get constraint columns,
+        rather than using IIKEYS
+#2494 - Possible null pointer passed to ConnectionProvider.release() 
+#2502 - Code generation fails to generate valid java for stored procedures that
+        accept parameters named configuration.
+#2506 - SQLDialectNotSupportedException on DSL.inline(T, Class), when jOOQ's
+        internals are not (yet) properly initialised
+#2515 - Compilation errors when generating code for artefacts that differ only
+        by a trailing underscore(s): A and A_ and A__
+#2523 - Statement.close() may be called upon previously closed statements
+#2528 - Combining renderFormatted with inlined bind variables will change bind$
+        values when they contain newlines
+#2562 - Bad SQLDialect reference in Oracle and MySQL package-info.java 
+#2569 - Error when rendering SQL Server procedures with Settings.renderSchema
+        == false
+
 Version 3.0.0 - April 28, 2013
 ================================================================================
 

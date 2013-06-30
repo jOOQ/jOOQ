@@ -1458,6 +1458,25 @@ SelectSelectStep<R> select(Field<?>... fields);]]></java>
 								</content>
 							</section>
 
+                            <section id="sql-dialect-family">
+                                <title>SQL Dialect Family</title>
+                                <content>
+                                    <p>
+                                        In jOOQ 3.1, the notion of a <code>SQLDialect.family()</code> was introduced, in order to group several similar <reference id="sql-dialects" title="SQL dialects"/> into a common family. An example for this is SQL Server, which is supported by jOOQ in various versions:
+                                    </p>
+                                    
+                                    <ul>
+                                        <li> <reference class="org.jooq.SQLDialect" title="SQL Server" anchor="#SQLSERVER"/>: The "version-less" SQL Server version. This always maps to the latest supported version of SQL Server</li>
+                                        <li> <reference class="org.jooq.SQLDialect" title="SQL Server 2012" anchor="#SQLSERVER2012"/>: The SQL Server version 2012</li>
+                                        <li> <reference class="org.jooq.SQLDialect" title="SQL Server 2008" anchor="#SQLSERVER2008"/>: The SQL Server version 2008</li>
+                                    </ul>
+                                    
+                                    <p>
+                                        In the above list, <code>SQLSERVER</code> is both a dialect and a family of three dialects. This distinction is used internally by jOOQ to distinguish whether to use the <reference id="limit-clause" title="OFFSET .. FETCH"/> clause (SQL Server 2012), or whether to simulate it using <code>ROW_NUMBER() OVER()</code> (SQL Server 2008).
+                                    </p>
+                                </content>
+                            </section>
+
 							<section id="connection-vs-datasource">
 								<title>Connection vs. DataSource</title>
 								<content>
@@ -3914,6 +3933,26 @@ public class DSL {
 }]]></java>
 								</content>
 							</section>
+
+                            <section id="datatype-coercions">
+                                <title>Datatype coercions</title>
+                                <content>
+                                    <p>
+                                        A slightly different use case than <reference id="cast-expressions" title="CAST expressions"/> are data type coercions, which are not rendered through to generated SQL. Sometimes, you may want to pretend that a numeric value is really treated as a string value, for instance when binding a numeric <reference id="variable-binding" title="bind value"/>:
+                                    </p>
+                                    
+<java><![CDATA[Field<String>  field1 = val(1).coerce(String.class);
+Field<Integer> field2 = val("1").coerce(Integer.class);]]></java>
+
+                                    <p>
+                                        In the above example, <code>field1</code> will be treated by jOOQ as a <code>Field&lt;String></code>, binding the numeric literal <code>1</code> as a <code>VARCHAR</code> value. The same applies to <code>field2</code>, whose string literal <code>"1"</code> will be bound as an <code>INTEGER</code> value.
+                                    </p>
+                                    
+                                    <p>
+                                        This technique is better than performing unsafe or rawtype casting in Java, if you cannot access the "right" field type from any given expression.
+                                    </p>
+                                </content>
+                            </section>
 
 							<section id="arithmetic-expressions">
 								<title>Arithmetic expressions</title>
@@ -6437,6 +6476,7 @@ fetch]]></scala>
 								<li><reference class="org.jooq.Cursor"/>: If you want more fine-grained control over how many records are fetched into memory at once, you can still do that using jOOQ's <reference id="lazy-fetching" title="lazy fetching"/> feature</li>
 								<li><reference id="statement-type" title="Statement type"/>: jOOQ does not formally distinguish between static statements and prepared statements. By default, all statements are prepared statements in jOOQ, internally. Executing a statement as a static statement can be done simply using a <reference id="custom-settings" title="custom settings flag"/></li>
 								<li><reference id="reusing-statements" title="Closing Statements"/>: JDBC keeps open resources even if they are already consumed. With JDBC, there is a lot of verbosity around safely closing resources. In jOOQ, resources are closed after consumption, by default. If you want to keep them open after consumption, you have to explicitly say so.</li>
+                                <li><reference id="jdbc-flags" title="JDBC flags"/>: JDBC execution flags and modes are not modified. They can be set fluently on a <reference id="query-vs-resultquery" title="Query"/></li>
 							</ul>
 						</content>
 					</section>
@@ -7404,6 +7444,46 @@ finally {
 							</p>
 						</content>
 					</section>
+
+                    <section id="jdbc-flags">
+                        <title>JDBC flags</title>
+                        <content>
+                            <p>
+                                JDBC knows a couple of execution flags and modes, which can be set through the jOOQ API as well. jOOQ essentially supports these flags and execution modes:
+                            </p>
+                            
+<java><![CDATA[public interface Query extends QueryPart, Attachable {
+
+    // [...]
+
+    // The query execution timeout.
+    // -----------------------------------------------------------
+    Query queryTimeout(int timeout);
+    
+}]]></java>
+                            
+<java><![CDATA[public interface ResultQuery<R extends Record> extends Query {
+
+    // [...]
+
+    // The query execution timeout.
+    // -----------------------------------------------------------
+    @Override
+    ResultQuery<R> queryTimeout(int timeout);
+
+    // Flags allowing to specify the resulting ResultSet modes
+    // -----------------------------------------------------------
+    ResultQuery<R> resultSetConcurrency(int resultSetConcurrency);
+    ResultQuery<R> resultSetType(int resultSetType);
+    ResultQuery<R> resultSetHoldability(int resultSetHoldability);
+
+    // The maximum number of rows to be fetched by JDBC
+    // -----------------------------------------------------------
+    ResultQuery<R> maxRows(int rows);
+    
+}]]></java>
+                        </content>
+                    </section>
 
 				    <section id="batch-execution">
 						<title>Using JDBC batch operations</title>

@@ -22,7 +22,12 @@ function printContent() {
 <table width="100%">
 <tr>
 <td valign="top" width="50%">
+<table width="100%">
+<td>
 <h2>Getting started</h2>
+</td>
+<tr>
+<td>
 <p>
 Your simplest entry point is probably to get the tutorial
 running. It shows how to use jOOQ and its code generator with a simple MySQL database
@@ -37,25 +42,52 @@ running. It shows how to use jOOQ and its code generator with a simple MySQL dat
     <li><a href="<?=printStep(7)?>">Step 6: Explore!</a></li>
 </ul>
 </td>
+</tr>
+</table>
+</td>
 
 <td valign="top" width="50%">
-<h2>Documentation</h2>
 <table width="100%">
+<tr>
+<td colspan="3">
+<h2>3.x Documentation</h2>
+</td>
 <tr>
 <th width="80" class="right">Version</th>
 <th class="right">Javadoc</th>
 <th class="right">Manual</th>
 </tr>
 <tr>
-<td class="right">3.0.0</td>
+<td class="right">3.1.0</td>
 <td class="right">
 	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/latest/" title="The jOOQ Javadoc">HTML</a>
+</td>
+<td class="right">
+	<a style="padding-right: 20px" href="<?=$root?>/doc/3.1/manual-single-page" title="The jOOQ Manual on one single page">HTML</a>
+	<a style="padding-right: 20px" href="<?=$root?>/doc/3.1/manual" title="The jOOQ Manual on multiple pages">HTML (multi-page)</a>
+	<a style="padding-right: 20px" href="<?=$root?>/doc/3.1/manual-pdf/jOOQ-manual-3.1.pdf" title="The jOOQ Manual as a PDF">PDF</a>
+</td>
+</tr>
+
+<tr>
+<td class="right">3.0.0</td>
+<td class="right">
+	<a style="padding-right: 20px" href="http://www.jooq.org/javadoc/3.0.x/" title="The jOOQ Javadoc">HTML</a>
 </td>
 <td class="right">
 	<a style="padding-right: 20px" href="<?=$root?>/doc/3.0/manual-single-page" title="The jOOQ Manual on one single page">HTML</a>
 	<a style="padding-right: 20px" href="<?=$root?>/doc/3.0/manual" title="The jOOQ Manual on multiple pages">HTML (multi-page)</a>
 	<a style="padding-right: 20px" href="<?=$root?>/doc/3.0/manual-pdf/jOOQ-manual-3.0.pdf" title="The jOOQ Manual as a PDF">PDF</a>
 </td>
+</tr>
+
+<td colspan="3">
+<h2>2.x Documentation</h2>
+</td>
+<tr>
+<th width="80" class="right">Version</th>
+<th class="right">Javadoc</th>
+<th class="right">Manual</th>
 </tr>
 
 <tr>

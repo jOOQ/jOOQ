@@ -185,9 +185,9 @@ insertInto(t, t.a, t.b).values(1, 2);
     <li>Oracle XE 10.2.0.1.0 and 11g</li>
     <li>PostgreSQL 9.0</li>
     <li>SQLite (using <a href="https://bitbucket.org/xerial/sqlite-jdbc">xerial sqlite-jdbc</a>)</li>
-    <li>SQL Server 2008 R8 and 2012</li>
+    <li>SQL Server 2008 R8 and 2012 (with sqljdbc4 or jTDS JDBC drivers)</li>
     <li>Sybase Adaptive Server Enterprise 15.5</li>
-    <li>Sybase SQL Anywhere 12</li>
+    <li>Sybase SQL Anywhere 12 (with jconn3 or jTDS JDCB drivers)</li>
 </ul>
 	<p>These platforms have been observed to work as well, but are not integration-tested</p>
 <ul>

@@ -51,6 +51,10 @@
                     <name>BIT</name>
                     <expressions>(?i:(.*?.)?T_BOOLEANS.(VC|C|N)_BOOLEAN)</expressions>
                 </forcedType>
+                <forcedType>
+                    <name>UUID</name>
+                    <expressions>(?i:(.*?.)?T_EXOTIC_TYPES.UU)</expressions>
+                </forcedType>
                 
                 <!-- [#2477] Check if unsigned types work correctly -->
                 <forcedType>

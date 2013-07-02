@@ -36,6 +36,9 @@
 
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
+import static org.jooq.impl.DSL.count;
+import static org.jooq.impl.DSL.select;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
@@ -45,6 +48,12 @@ import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.h2.generatedclasses.Tables.T_UNSIGNED;
 import static org.jooq.test.h2.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
+import static org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME;
+import static org.jooq.test.h2.generatedclasses.tables.TAuthor.LAST_NAME;
+import static org.jooq.test.h2.generatedclasses.tables.TAuthor.T_AUTHOR;
+import static org.jooq.test.h2.generatedclasses.tables.TBook.AUTHOR_ID;
+import static org.jooq.test.h2.generatedclasses.tables.TBook.T_BOOK;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -115,6 +124,8 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.util.h2.H2DataType;
+
+import org.junit.Test;
 
 /**
  * Integration test for the H2 database
@@ -834,5 +845,29 @@ public class H2Test extends jOOQAbstractTest<
         class MyKeys extends Keys {}
         class MySequences extends Sequences {}
         class MyTables extends Tables {}
+    }
+
+    @Test
+    public void testH2CreateViewPlainSQL() throws Exception {
+        try {
+            create().execute("CREATE VIEW my_view AS\n{0};",
+                select(FIRST_NAME, LAST_NAME, count().cast(Long.class).as("Books Written"))
+                .from(T_AUTHOR)
+                .join(T_BOOK)
+                .on(TAuthor.ID.eq(AUTHOR_ID))
+                .groupBy(FIRST_NAME, LAST_NAME)
+                .orderBy(FIRST_NAME, LAST_NAME)
+            );
+
+            Result<Record> result = create().fetch("SELECT * FROM my_view");
+            assertEquals(2, result.size());
+            assertEquals(AUTHOR_FIRST_NAMES, result.getValues(0));
+            assertEquals(AUTHOR_LAST_NAMES, result.getValues(1));
+            assertEquals(asList(2L, 2L), result.getValues("Books Written"));
+        }
+
+        finally {
+            create().execute("DROP VIEW my_view");
+        }
     }
 }

@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = 556522284;
+	private static final long serialVersionUID = 1757208304;
 
 	/**
 	 * The singleton instance of <code>T_TRIGGERS</code>
@@ -44,5 +44,21 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	 */
 	private TTriggers() {
 		super("T_TRIGGERS", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_TRIGGERS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_TRIGGERS);
 	}
 }

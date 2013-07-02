@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1153000191;
+	private static final long serialVersionUID = -1441045232;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>
@@ -42,12 +42,28 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	/**
 	 * The column <code>T_LANGUAGE.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord, java.lang.Short> ID = createField("ID", org.jooq.impl.SQLDataType.SMALLINT, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
 
 	/**
 	 * No further instances allowed
 	 */
 	private TLanguage() {
 		super("T_LANGUAGE", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_LANGUAGE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_LANGUAGE);
 	}
 }

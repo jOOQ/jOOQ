@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = -2093061946;
+	private static final long serialVersionUID = 60169958;
 
 	/**
 	 * The singleton instance of <code>T_AUTHOR</code>
@@ -59,5 +59,21 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.access.genera
 	 */
 	private TAuthor() {
 		super("T_AUTHOR", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_AUTHOR;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TAuthorRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_AUTHOR);
 	}
 }

@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = -2113391740;
+	private static final long serialVersionUID = -1602249302;
 
 	/**
 	 * The singleton instance of <code>T_DATES</code>
@@ -59,5 +59,21 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.access.generat
 	 */
 	private TDates() {
 		super("T_DATES", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_DATES;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TDatesRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_DATES);
 	}
 }

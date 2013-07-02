@@ -1,5 +1,3 @@
-GRANT SELECT ON MSysObjects TO Admin/
-
 DROP TABLE t_dates/
 DROP TABLE t_triggers/
 DROP TABLE t_book_to_book_store/
@@ -32,13 +30,13 @@ DROP TABLE t_identity/
 DROP TABLE t_identity_pk/
 
 CREATE TABLE t_identity_pk (
-  id INTEGER IDENTITY NOT NULL,
+  id int IDENTITY NOT NULL,
   val int
 )
 /
 
 CREATE TABLE t_identity (
-  id INTEGER IDENTITY NOT NULL,
+  id int IDENTITY NOT NULL,
   val int
 )
 /
@@ -91,7 +89,7 @@ CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,
   description VARCHAR(50) NULL,
   description_english VARCHAR(50) NULL,
-  id INTEGER NOT NULL,
+  id int NOT NULL,
 
   CONSTRAINT pk_t_language PRIMARY KEY (id)
 )
@@ -159,8 +157,8 @@ CREATE TABLE t_book_store (
 
 CREATE TABLE t_book_to_book_store (
   book_store_name VARCHAR(400) NOT NULL,
-  book_id INTEGER NOT NULL,
-  stock INTEGER,
+  book_id int NOT NULL,
+  stock int,
 
   CONSTRAINT fk_b2bs_bs_name FOREIGN KEY (book_store_name)
                              REFERENCES t_book_store (name),

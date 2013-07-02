@@ -34,8 +34,10 @@ package org.jooq.test;
 import static org.jooq.test.access.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.access.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.access.generatedclasses.Tables.T_DATES;
+import static org.jooq.test.access.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.access.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.access.generatedclasses.Tables.T_IDENTITY_PK;
+import static org.jooq.test.access.generatedclasses.Tables.T_UNSIGNED;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -62,15 +64,16 @@ import org.jooq.test._.converters.Boolean_YES_NO_LC;
 import org.jooq.test._.converters.Boolean_YES_NO_UC;
 import org.jooq.test._.converters.Boolean_YN_LC;
 import org.jooq.test._.converters.Boolean_YN_UC;
-import org.jooq.test.access.generatedclasses.Keys;
 import org.jooq.test.access.generatedclasses.tables.TAuthor;
 import org.jooq.test.access.generatedclasses.tables.TBook;
 import org.jooq.test.access.generatedclasses.tables.TBookStore;
 import org.jooq.test.access.generatedclasses.tables.TBookToBookStore;
 import org.jooq.test.access.generatedclasses.tables.TBooleans;
+import org.jooq.test.access.generatedclasses.tables.TExoticTypes;
 import org.jooq.test.access.generatedclasses.tables.TIdentity;
 import org.jooq.test.access.generatedclasses.tables.TIdentityPk;
 import org.jooq.test.access.generatedclasses.tables.TTriggers;
+import org.jooq.test.access.generatedclasses.tables.TUnsigned;
 import org.jooq.test.access.generatedclasses.tables.T_639NumbersTable;
 import org.jooq.test.access.generatedclasses.tables.T_725LobTest;
 import org.jooq.test.access.generatedclasses.tables.T_785;
@@ -80,9 +83,11 @@ import org.jooq.test.access.generatedclasses.tables.records.TBookStoreRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TBooleansRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TDatesRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TExoticTypesRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TIdentityPkRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TIdentityRecord;
 import org.jooq.test.access.generatedclasses.tables.records.TTriggersRecord;
+import org.jooq.test.access.generatedclasses.tables.records.TUnsignedRecord;
 import org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.access.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.access.generatedclasses.tables.records.T_785Record;
@@ -111,12 +116,12 @@ public class AccessTest extends jOOQAbstractTest<
         TBooleansRecord,
         TBookRecord,
         TTriggersRecord,
-        TBookRecord,
-        TBookRecord,
+        TUnsignedRecord,
+        TExoticTypesRecord,
         TIdentityRecord,
         TIdentityPkRecord,
-        TBookRecord,
-        TBookRecord,
+        T_725LobTestRecord,
+        T_639NumbersTableRecord,
         T_785Record> {
 
     @Override
@@ -186,7 +191,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TBookStoreRecord, String> TBookStore_NAME() {
-        return TBookStore.NAME;
+        return TBookStore.XNAME;
     }
 
     @Override
@@ -195,7 +200,7 @@ public class AccessTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<XUnusedRecord> TBookSale() {
+    protected Table<TBookRecord> TBookSale() {
         return null;
     }
 
@@ -216,12 +221,12 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_AUTHOR_ID() {
-        return Keys.T_BOOK__FK_T_BOOK_AUTHOR_ID;
+        return null;
     }
 
     @Override
     protected ForeignKey<TBookRecord, TAuthorRecord> FK_T_BOOK_CO_AUTHOR_ID() {
-        return Keys.T_BOOK__FK_T_BOOK_CO_AUTHOR_ID;
+        return null;
     }
 
     @Override
@@ -251,52 +256,52 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_785Record, String> T785_NAME() {
-        return T_785.NAME;
+        return T_785.XNAME;
     }
 
     @Override
     protected TableField<T_785Record, String> T785_VALUE() {
-        return T_785.VALUE;
+        return T_785.XVALUE;
     }
 
     @Override
-    protected Table<XUnusedRecord> TUnsigned() {
-        return null;
+    protected Table<TUnsignedRecord> TUnsigned() {
+        return T_UNSIGNED;
     }
 
     @Override
-    protected TableField<XUnusedRecord, UByte> TUnsigned_U_BYTE() {
-        return null;
+    protected TableField<TUnsignedRecord, UByte> TUnsigned_U_BYTE() {
+        return TUnsigned.U_BYTE;
     }
 
     @Override
-    protected TableField<XUnusedRecord, UShort> TUnsigned_U_SHORT() {
-        return null;
+    protected TableField<TUnsignedRecord, UShort> TUnsigned_U_SHORT() {
+        return TUnsigned.U_SHORT;
     }
 
     @Override
-    protected TableField<XUnusedRecord, UInteger> TUnsigned_U_INT() {
-        return null;
+    protected TableField<TUnsignedRecord, UInteger> TUnsigned_U_INT() {
+        return TUnsigned.U_INT;
     }
 
     @Override
-    protected TableField<XUnusedRecord, ULong> TUnsigned_U_LONG() {
-        return null;
+    protected TableField<TUnsignedRecord, ULong> TUnsigned_U_LONG() {
+        return TUnsigned.U_LONG;
     }
 
     @Override
-    protected Table<XUnusedRecord> TExoticTypes() {
-        return null;
+    protected Table<TExoticTypesRecord> TExoticTypes() {
+        return T_EXOTIC_TYPES;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TExoticTypes_ID() {
-        return null;
+    protected TableField<TExoticTypesRecord, Integer> TExoticTypes_ID() {
+        return TExoticTypes.ID;
     }
 
     @Override
-    protected TableField<XUnusedRecord, UUID> TExoticTypes_UU() {
-        return null;
+    protected TableField<TExoticTypesRecord, UUID> TExoticTypes_UU() {
+        return TExoticTypes.UU;
     }
 
     @Override
@@ -386,7 +391,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Byte> T639_BYTE() {
-        return T_639NumbersTable.BYTE;
+        return T_639NumbersTable.XBYTE;
     }
 
     @Override
@@ -396,7 +401,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Short> T639_SHORT() {
-        return T_639NumbersTable.SHORT;
+        return T_639NumbersTable.XSHORT;
     }
 
     @Override
@@ -406,7 +411,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Integer> T639_INTEGER() {
-        return T_639NumbersTable.INTEGER;
+        return T_639NumbersTable.XINTEGER;
     }
 
     @Override
@@ -416,7 +421,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Long> T639_LONG() {
-        return T_639NumbersTable.LONG;
+        return T_639NumbersTable.XLONG;
     }
 
     @Override
@@ -426,7 +431,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<T_639NumbersTableRecord, Double> T639_DOUBLE() {
-        return T_639NumbersTable.DOUBLE;
+        return T_639NumbersTable.XDOUBLE;
     }
 
     @Override
@@ -435,47 +440,47 @@ public class AccessTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<XUnusedRecord> TArrays() {
+    protected Table<TBookRecord> TArrays() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TArrays_ID() {
+    protected TableField<TBookRecord, Integer> TArrays_ID() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, String[]> TArrays_STRING() {
+    protected TableField<TBookRecord, String[]> TArrays_STRING() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer[]> TArrays_NUMBER() {
+    protected TableField<TBookRecord, Integer[]> TArrays_NUMBER() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Date[]> TArrays_DATE() {
+    protected TableField<TBookRecord, Date[]> TArrays_DATE() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, ArrayRecord<String>> TArrays_STRING_R() {
+    protected TableField<TBookRecord, ArrayRecord<String>> TArrays_STRING_R() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, ArrayRecord<Integer>> TArrays_NUMBER_R() {
+    protected TableField<TBookRecord, ArrayRecord<Integer>> TArrays_NUMBER_R() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, ArrayRecord<Date>> TArrays_DATE_R() {
+    protected TableField<TBookRecord, ArrayRecord<Date>> TArrays_DATE_R() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, ? extends ArrayRecord<Long>> TArrays_NUMBER_LONG_R() {
+    protected TableField<TBookRecord, ? extends ArrayRecord<Long>> TArrays_NUMBER_LONG_R() {
         return null;
     }
 
@@ -505,52 +510,52 @@ public class AccessTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected Table<VLibraryRecord> VLibrary() {
-        return VLibrary.V_LIBRARY;
+    protected Table<TBookRecord> VLibrary() {
+        return null;
     }
 
     @Override
-    protected TableField<VLibraryRecord, String> VLibrary_TITLE() {
-        return VLibrary.TITLE;
+    protected TableField<TBookRecord, String> VLibrary_TITLE() {
+        return null;
     }
 
     @Override
-    protected TableField<VLibraryRecord, String> VLibrary_AUTHOR() {
-        return VLibrary.AUTHOR;
+    protected TableField<TBookRecord, String> VLibrary_AUTHOR() {
+        return null;
     }
 
     @Override
     protected Table<?> VAuthor() {
-        return V_AUTHOR;
+        return null;
     }
 
     @Override
     protected Table<?> VBook() {
-        return V_BOOK;
-    }
-
-    @Override
-    protected Table<XUnusedRecord> TDirectory() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TDirectory_ID() {
+    protected Table<TBookRecord> TDirectory() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TDirectory_PARENT_ID() {
+    protected TableField<TBookRecord, Integer> TDirectory_ID() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, Integer> TDirectory_IS_DIRECTORY() {
+    protected TableField<TBookRecord, Integer> TDirectory_PARENT_ID() {
         return null;
     }
 
     @Override
-    protected TableField<XUnusedRecord, String> TDirectory_NAME() {
+    protected TableField<TBookRecord, Integer> TDirectory_IS_DIRECTORY() {
+        return null;
+    }
+
+    @Override
+    protected TableField<TBookRecord, String> TDirectory_NAME() {
         return null;
     }
 
@@ -571,7 +576,7 @@ public class AccessTest extends jOOQAbstractTest<
 
     @Override
     protected TableField<TTriggersRecord, Integer> TTriggers_COUNTER() {
-        return TTriggers.COUNTER;
+        return TTriggers.XINTEGER;
     }
 
     @Override
@@ -717,7 +722,7 @@ public class AccessTest extends jOOQAbstractTest<
     }
 
     @Override
-    protected TableField<XUnusedRecord, ? extends UDTRecord<?>[]> TArrays_UDT() {
+    protected TableField<TBookRecord, ? extends UDTRecord<?>[]> TArrays_UDT() {
         return null;
     }
 

@@ -2931,7 +2931,7 @@ public interface DSLContext {
 // [jooq-tools] END [selectDistinct]
 
     /**
-     * Create a new DSL select statement for constant <code>0</code> literal
+     * Create a new DSL select statement for a constant <code>0</code> literal.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
      * statement from this {@link DSLContext}. If you don't need to render or
@@ -2959,7 +2959,7 @@ public interface DSLContext {
     SelectSelectStep<Record1<Integer>> selectZero();
 
     /**
-     * Create a new DSL select statement for constant <code>1</code> literal
+     * Create a new DSL select statement for a constant <code>1</code> literal.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
      * statement from this {@link DSLContext}. If you don't need to render or
@@ -2987,7 +2987,7 @@ public interface DSLContext {
     SelectSelectStep<Record1<Integer>> selectOne();
 
     /**
-     * Create a new DSL select statement for <code>COUNT(*)</code>
+     * Create a new DSL select statement for <code>COUNT(*)</code>.
      * <p>
      * This creates an attached, renderable and executable <code>SELECT</code>
      * statement from this {@link DSLContext}. If you don't need to render or
@@ -3038,9 +3038,10 @@ public interface DSLContext {
     <R extends Record> InsertQuery<R> insertQuery(Table<R> into);
 
     /**
-     * Create a new DSL insert statement. This type of insert may feel more
-     * convenient to some users, as it uses the <code>UPDATE</code> statement's
-     * <code>SET a = b</code> syntax.
+     * Create a new DSL insert statement.
+     * <p>
+     * This type of insert may feel more convenient to some users, as it uses
+     * the <code>UPDATE</code> statement's <code>SET a = b</code> syntax.
      * <p>
      * Example: <code><pre>
      * DSLContext create = DSL.using(configuration);

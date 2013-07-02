@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1776897196;
+	private static final long serialVersionUID = -612429480;
 
 	/**
 	 * The singleton instance of <code>T_BOOLEANS</code>
@@ -84,5 +84,21 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	 */
 	private TBooleans() {
 		super("T_BOOLEANS", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBooleansRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_BOOLEANS;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBooleansRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBooleansRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_BOOLEANS);
 	}
 }

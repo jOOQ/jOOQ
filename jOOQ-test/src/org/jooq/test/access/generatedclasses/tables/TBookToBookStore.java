@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 911489800;
+	private static final long serialVersionUID = -1435852740;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_TO_BOOK_STORE</code>
@@ -32,12 +32,12 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.acce
 	/**
 	 * The column <code>T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Short> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.SMALLINT, T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
 	/**
 	 * The column <code>T_BOOK_TO_BOOK_STORE.STOCK</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Short> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.SMALLINT, T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> STOCK = createField("STOCK", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
 
 	/**
 	 * No further instances allowed

@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = 1928997220;
+	private static final long serialVersionUID = 272376038;
 
 	/**
 	 * The singleton instance of <code>T_BOOK</code>
@@ -74,5 +74,21 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.access.generate
 	 */
 	private TBook() {
 		super("T_BOOK", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBookRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_BOOK;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBookRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.TBookRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_BOOK);
 	}
 }

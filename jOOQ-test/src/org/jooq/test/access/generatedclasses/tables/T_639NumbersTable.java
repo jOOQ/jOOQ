@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = 921721274;
+	private static final long serialVersionUID = 1574932462;
 
 	/**
 	 * The singleton instance of <code>T_639_NUMBERS_TABLE</code>
@@ -94,5 +94,21 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.acc
 	 */
 	private T_639NumbersTable() {
 		super("T_639_NUMBERS_TABLE", org.jooq.test.access.generatedclasses.DefaultSchema.DEFAULT_SCHEMA);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord> getPrimaryKey() {
+		return org.jooq.test.access.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public java.util.List<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord>> getKeys() {
+		return java.util.Arrays.<org.jooq.UniqueKey<org.jooq.test.access.generatedclasses.tables.records.T_639NumbersTableRecord>>asList(org.jooq.test.access.generatedclasses.Keys.PK_T_639_NUMBERS_TABLE);
 	}
 }

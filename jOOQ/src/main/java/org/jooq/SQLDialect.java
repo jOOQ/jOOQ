@@ -61,6 +61,11 @@ public enum SQLDialect {
     SQL99(null),
 
     /**
+     * The MS Access SQL dialect family.
+     */
+    ACCESS("Access"),
+
+    /**
      * The Sybase Adaptive Server SQL dialect family.
      */
     ASE("ASE"),

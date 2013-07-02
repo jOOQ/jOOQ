@@ -53,6 +53,7 @@ import org.jooq.types.UInteger;
 import org.jooq.types.ULong;
 import org.jooq.types.UShort;
 import org.jooq.types.YearToMonth;
+import org.jooq.util.access.AccessDataType;
 import org.jooq.util.ase.ASEDataType;
 import org.jooq.util.cubrid.CUBRIDDataType;
 import org.jooq.util.db2.DB2DataType;
@@ -316,6 +317,7 @@ public final class SQLDataType {
         // TODO [#650] Make this more reliable using a data type registry
 
         try {
+            Class.forName(AccessDataType.class.getName());
             Class.forName(ASEDataType.class.getName());
             Class.forName(CUBRIDDataType.class.getName());
             Class.forName(DB2DataType.class.getName());

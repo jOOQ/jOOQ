@@ -35,6 +35,7 @@
  */
 package org.jooq.tools.jdbc;
 
+import static org.jooq.SQLDialect.ACCESS;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -108,7 +109,10 @@ public class JDBCUtils {
 
         // The below list might not be accurate or complete. Feel free to
         // contribute fixes related to new / different JDBC driver configuraitons
-        if (url.startsWith("jdbc:jtds:sybase:")) {
+        if (url.startsWith("jdbc:ucanaccess:")) {
+            return ACCESS;
+        }
+        else if (url.startsWith("jdbc:jtds:sybase:")) {
             return ASE;
         }
         else if (url.startsWith("jdbc:cubrid:")) {

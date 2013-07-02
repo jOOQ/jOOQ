@@ -7641,11 +7641,11 @@ create.batch(
 // 2. a single query
 // -----------------
 create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
-	  .bind(1, "Erich Gamma")
-	  .bind(2, "Richard Helm")
-	  .bind(3, "Ralph Johnson")
-	  .bind(4, "John Vlissides")
-	  .execute();]]></java>
+      .bind(1, "Erich Gamma")
+      .bind(2, "Richard Helm")
+      .bind(3, "Ralph Johnson")
+      .bind(4, "John Vlissides")
+      .execute();]]></java>
 						</content>
 					</section>
 

@@ -76,9 +76,61 @@ import org.jooq.ConnectionProvider;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.DatePart;
+import org.jooq.Delete;
+import org.jooq.DeleteWhereStep;
 import org.jooq.Field;
 import org.jooq.GroupConcatOrderByStep;
 import org.jooq.GroupField;
+import org.jooq.Insert;
+import org.jooq.InsertSetStep;
+import org.jooq.InsertValuesStep1;
+import org.jooq.InsertValuesStep10;
+import org.jooq.InsertValuesStep11;
+import org.jooq.InsertValuesStep12;
+import org.jooq.InsertValuesStep13;
+import org.jooq.InsertValuesStep14;
+import org.jooq.InsertValuesStep15;
+import org.jooq.InsertValuesStep16;
+import org.jooq.InsertValuesStep17;
+import org.jooq.InsertValuesStep18;
+import org.jooq.InsertValuesStep19;
+import org.jooq.InsertValuesStep2;
+import org.jooq.InsertValuesStep20;
+import org.jooq.InsertValuesStep21;
+import org.jooq.InsertValuesStep22;
+import org.jooq.InsertValuesStep3;
+import org.jooq.InsertValuesStep4;
+import org.jooq.InsertValuesStep5;
+import org.jooq.InsertValuesStep6;
+import org.jooq.InsertValuesStep7;
+import org.jooq.InsertValuesStep8;
+import org.jooq.InsertValuesStep9;
+import org.jooq.InsertValuesStepN;
+import org.jooq.Merge;
+import org.jooq.MergeKeyStep1;
+import org.jooq.MergeKeyStep10;
+import org.jooq.MergeKeyStep11;
+import org.jooq.MergeKeyStep12;
+import org.jooq.MergeKeyStep13;
+import org.jooq.MergeKeyStep14;
+import org.jooq.MergeKeyStep15;
+import org.jooq.MergeKeyStep16;
+import org.jooq.MergeKeyStep17;
+import org.jooq.MergeKeyStep18;
+import org.jooq.MergeKeyStep19;
+import org.jooq.MergeKeyStep2;
+import org.jooq.MergeKeyStep20;
+import org.jooq.MergeKeyStep21;
+import org.jooq.MergeKeyStep22;
+import org.jooq.MergeKeyStep3;
+import org.jooq.MergeKeyStep4;
+import org.jooq.MergeKeyStep5;
+import org.jooq.MergeKeyStep6;
+import org.jooq.MergeKeyStep7;
+import org.jooq.MergeKeyStep8;
+import org.jooq.MergeKeyStep9;
+import org.jooq.MergeKeyStepN;
+import org.jooq.MergeUsingStep;
 import org.jooq.Name;
 import org.jooq.OrderedAggregateFunction;
 import org.jooq.Param;
@@ -139,7 +191,10 @@ import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Support;
 import org.jooq.Table;
+import org.jooq.TruncateIdentityStep;
 import org.jooq.UDTRecord;
+import org.jooq.Update;
+import org.jooq.UpdateSetFirstStep;
 import org.jooq.WindowIgnoreNullsStep;
 import org.jooq.WindowOverStep;
 import org.jooq.api.annotation.State;
@@ -467,6 +522,27 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
+     * Create a new DSL select statement.
+     * <p>
+     * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>SELECT</code> statement. You can use this statement in two ways:
+     * <ul>
+     * <li>As a subselect within another select</li>
+     * <li>As a statement, after attaching it using
+     * {@link Select#attach(org.jooq.Configuration)}</li>
+     * </ul>
+     * <p>
+     * Example: <code><pre>
+     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
+     * </pre></code>
+     */
+    @Support
+    public static <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
+        return new SelectImpl<R>(new DefaultConfiguration()).from(table);
+    }
+
+    /**
      * Create a new DSL subselect statement.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
@@ -534,27 +610,6 @@ public class DSL {
     )
     public static SelectSelectStep<Record> select(Field<?>... fields) {
         return new SelectImpl<Record>(new DefaultConfiguration()).select(fields);
-    }
-
-    /**
-     * Create a new DSL select statement.
-     * <p>
-     * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
-     * creates an unattached, and thus not directly renderable or executable
-     * <code>SELECT</code> statement. You can use this statement in two ways:
-     * <ul>
-     * <li>As a subselect within another select</li>
-     * <li>As a statement, after attaching it using
-     * {@link Select#attach(org.jooq.Configuration)}</li>
-     * </ul>
-     * <p>
-     * Example: <code><pre>
-     * SELECT * FROM [table] WHERE [conditions] ORDER BY [ordering] LIMIT [limit clause]
-     * </pre></code>
-     */
-    @Support
-    public static <R extends Record> SelectWhereStep<R> selectFrom(Table<R> table) {
-        return new SelectImpl<R>(new DefaultConfiguration()).from(table);
     }
 
 // [jooq-tools] START [select]
@@ -2484,7 +2539,8 @@ public class DSL {
 // [jooq-tools] END [selectDistinct]
 
     /**
-     * Create a new DSL subselect statement.
+     * Create a new DSL subselect statement for a constant <code>0</code>
+     * literal.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2519,7 +2575,8 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL subselect statement.
+     * Create a new DSL subselect statement for a constant <code>1</code>
+     * literal.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2554,7 +2611,7 @@ public class DSL {
     }
 
     /**
-     * Create a new DSL subselect statement.
+     * Create a new DSL subselect statement for <code>COUNT(*)</code>.
      * <p>
      * Unlike {@link Select} factory methods in the {@link DSLContext} API, this
      * creates an unattached, and thus not directly renderable or executable
@@ -2586,6 +2643,1673 @@ public class DSL {
     )
     public static SelectSelectStep<Record1<Integer>> selectCount() {
         return new SelectImpl<Record1<Integer>>(new DefaultConfiguration()).select(count());
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * This type of insert may feel more convenient to some users, as it uses
+     * the <code>UPDATE</code> statement's <code>SET a = b</code> syntax.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table)
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     *   .newRecord()
+     *   .set(field1, value3)
+     *   .set(field2, value4)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table)
+     */
+    @Support
+    public static <R extends Record> InsertSetStep<R> insertInto(Table<R> into) {
+        return using(new DefaultConfiguration()).insertInto(into);
+    }
+
+    // [jooq-tools] START [insert]
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1)
+     *   .values(field1)
+     *   .values(field1)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1> InsertValuesStep1<R, T1> insertInto(Table<R> into, Field<T1> field1) {
+        return (InsertValuesStep1) insertInto(into, new Field[] { field1 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2)
+     *   .values(field1, field2)
+     *   .values(field1, field2)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2> InsertValuesStep2<R, T1, T2> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2) {
+        return (InsertValuesStep2) insertInto(into, new Field[] { field1, field2 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3)
+     *   .values(field1, field2, field3)
+     *   .values(field1, field2, field3)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3> InsertValuesStep3<R, T1, T2, T3> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+        return (InsertValuesStep3) insertInto(into, new Field[] { field1, field2, field3 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, field4)
+     *   .values(field1, field2, field3, field4)
+     *   .values(field1, field2, field3, field4)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4> InsertValuesStep4<R, T1, T2, T3, T4> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+        return (InsertValuesStep4) insertInto(into, new Field[] { field1, field2, field3, field4 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, field4, field5)
+     *   .values(field1, field2, field3, field4, field5)
+     *   .values(field1, field2, field3, field4, field5)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5> InsertValuesStep5<R, T1, T2, T3, T4, T5> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+        return (InsertValuesStep5) insertInto(into, new Field[] { field1, field2, field3, field4, field5 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field5, field6)
+     *   .values(valueA1, valueA2, valueA3, .., valueA5, valueA6)
+     *   .values(valueB1, valueB2, valueB3, .., valueB5, valueB6)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6> InsertValuesStep6<R, T1, T2, T3, T4, T5, T6> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+        return (InsertValuesStep6) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field6, field7)
+     *   .values(valueA1, valueA2, valueA3, .., valueA6, valueA7)
+     *   .values(valueB1, valueB2, valueB3, .., valueB6, valueB7)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> InsertValuesStep7<R, T1, T2, T3, T4, T5, T6, T7> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+        return (InsertValuesStep7) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field7, field8)
+     *   .values(valueA1, valueA2, valueA3, .., valueA7, valueA8)
+     *   .values(valueB1, valueB2, valueB3, .., valueB7, valueB8)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> InsertValuesStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+        return (InsertValuesStep8) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field8, field9)
+     *   .values(valueA1, valueA2, valueA3, .., valueA8, valueA9)
+     *   .values(valueB1, valueB2, valueB3, .., valueB8, valueB9)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> InsertValuesStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+        return (InsertValuesStep9) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field9, field10)
+     *   .values(valueA1, valueA2, valueA3, .., valueA9, valueA10)
+     *   .values(valueB1, valueB2, valueB3, .., valueB9, valueB10)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> InsertValuesStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+        return (InsertValuesStep10) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field10, field11)
+     *   .values(valueA1, valueA2, valueA3, .., valueA10, valueA11)
+     *   .values(valueB1, valueB2, valueB3, .., valueB10, valueB11)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> InsertValuesStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+        return (InsertValuesStep11) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field11, field12)
+     *   .values(valueA1, valueA2, valueA3, .., valueA11, valueA12)
+     *   .values(valueB1, valueB2, valueB3, .., valueB11, valueB12)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> InsertValuesStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+        return (InsertValuesStep12) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field12, field13)
+     *   .values(valueA1, valueA2, valueA3, .., valueA12, valueA13)
+     *   .values(valueB1, valueB2, valueB3, .., valueB12, valueB13)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> InsertValuesStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+        return (InsertValuesStep13) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field13, field14)
+     *   .values(valueA1, valueA2, valueA3, .., valueA13, valueA14)
+     *   .values(valueB1, valueB2, valueB3, .., valueB13, valueB14)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> InsertValuesStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+        return (InsertValuesStep14) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field14, field15)
+     *   .values(valueA1, valueA2, valueA3, .., valueA14, valueA15)
+     *   .values(valueB1, valueB2, valueB3, .., valueB14, valueB15)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> InsertValuesStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+        return (InsertValuesStep15) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field15, field16)
+     *   .values(valueA1, valueA2, valueA3, .., valueA15, valueA16)
+     *   .values(valueB1, valueB2, valueB3, .., valueB15, valueB16)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> InsertValuesStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+        return (InsertValuesStep16) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field16, field17)
+     *   .values(valueA1, valueA2, valueA3, .., valueA16, valueA17)
+     *   .values(valueB1, valueB2, valueB3, .., valueB16, valueB17)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> InsertValuesStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+        return (InsertValuesStep17) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field17, field18)
+     *   .values(valueA1, valueA2, valueA3, .., valueA17, valueA18)
+     *   .values(valueB1, valueB2, valueB3, .., valueB17, valueB18)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> InsertValuesStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+        return (InsertValuesStep18) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field18, field19)
+     *   .values(valueA1, valueA2, valueA3, .., valueA18, valueA19)
+     *   .values(valueB1, valueB2, valueB3, .., valueB18, valueB19)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> InsertValuesStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+        return (InsertValuesStep19) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field19, field20)
+     *   .values(valueA1, valueA2, valueA3, .., valueA19, valueA20)
+     *   .values(valueB1, valueB2, valueB3, .., valueB19, valueB20)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> InsertValuesStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+        return (InsertValuesStep20) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field20, field21)
+     *   .values(valueA1, valueA2, valueA3, .., valueA20, valueA21)
+     *   .values(valueB1, valueB2, valueB3, .., valueB20, valueB21)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> InsertValuesStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+        return (InsertValuesStep21) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21 });
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2, field3, .., field21, field22)
+     *   .values(valueA1, valueA2, valueA3, .., valueA21, valueA22)
+     *   .values(valueB1, valueB2, valueB3, .., valueB21, valueB22)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> InsertValuesStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> insertInto(Table<R> into, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+        return (InsertValuesStep22) insertInto(into, new Field[] { field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22 });
+    }
+
+// [jooq-tools] END [insert]
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2)
+     *   .values(valueA1, valueA2)
+     *   .values(valueB1, valueB2)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Field...)
+     */
+    @Support
+    public static <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Field<?>... fields) {
+        return using(new DefaultConfiguration()).insertInto(into, fields);
+    }
+
+    /**
+     * Create a new DSL insert statement.
+     * <p>
+     * Unlike {@link Insert} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>INSERT</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * insertInto(table, field1, field2)
+     *   .values(valueA1, valueA2)
+     *   .values(valueB1, valueB2)
+     *   .onDuplicateKeyUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     * </pre></code>
+     *
+     * @see DSLContext#insertInto(Table, Collection)
+     */
+    @Support
+    public static <R extends Record> InsertValuesStepN<R> insertInto(Table<R> into, Collection<? extends Field<?>> fields) {
+        return using(new DefaultConfiguration()).insertInto(into, fields);
+    }
+
+    /**
+     * Create a new DSL update statement.
+     * <p>
+     * Unlike {@link Update} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>UPDATE</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * update(table)
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     *   .where(field1.greaterThan(100))
+     * </pre></code>
+     * <p>
+     * Note that some databases support table expressions more complex than
+     * simple table references. In CUBRID and MySQL, for instance, you can write
+     * <code><pre>
+     * update(t1.join(t2).on(t1.id.eq(t2.id)))
+     *   .set(t1.value, value1)
+     *   .set(t2.value, value2)
+     *   .where(t1.id.eq(10))
+     * </pre></code>
+     */
+    @Support
+    @Transition(
+        name = "UPDATE",
+        args = "Table"
+    )
+    public static <R extends Record> UpdateSetFirstStep<R> update(Table<R> table) {
+        return using(new DefaultConfiguration()).update(table);
+    }
+
+    /**
+     * Create a new DSL SQL standard MERGE statement.
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <th>dialect</th>
+     * <th>support type</th>
+     * <th>documentation</th>
+     * </tr>
+     * <tr>
+     * <td>CUBRID</td>
+     * <td>SQL:2008 standard and some enhancements</td>
+     * <td><a href="http://www.cubrid.org/manual/90/en/MERGE"
+     * >http://www.cubrid.org/manual/90/en/MERGE</a></td>
+     * </tr>
+     * <tr>
+     * <tr>
+     * <td>DB2</td>
+     * <td>SQL:2008 standard and major enhancements</td>
+     * <td><a href=
+     * "http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.ibm.db2.udb.admin.doc/doc/r0010873.htm"
+     * >http://publib.boulder.ibm.com/infocenter/db2luw/v9/index.jsp?topic=/com.
+     * ibm.db2.udb.admin.doc/doc/r0010873.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>HSQLDB</td>
+     * <td>SQL:2008 standard</td>
+     * <td><a
+     * href="http://hsqldb.org/doc/2.0/guide/dataaccess-chapt.html#N129BA"
+     * >http://hsqldb.org/doc/2.0/guide/dataaccess-chapt.html#N129BA</a></td>
+     * </tr>
+     * <tr>
+     * <td>Oracle</td>
+     * <td>SQL:2008 standard and minor enhancements</td>
+     * <td><a href=
+     * "http://download.oracle.com/docs/cd/B28359_01/server.111/b28286/statements_9016.htm"
+     * >http://download.oracle.com/docs/cd/B28359_01/server.111/b28286/
+     * statements_9016.htm</a></td>
+     * </tr>
+     * <tr>
+     * <td>SQL Server</td>
+     * <td>Similar to SQL:2008 standard with some major enhancements</td>
+     * <td><a href= "http://msdn.microsoft.com/de-de/library/bb510625.aspx"
+     * >http://msdn.microsoft.com/de-de/library/bb510625.aspx</a></td>
+     * </tr>
+     * <tr>
+     * <td>Sybase</td>
+     * <td>Similar to SQL:2008 standard with some major enhancements</td>
+     * <td><a href=
+     * "http://dcx.sybase.com/1100/en/dbreference_en11/merge-statement.html"
+     * >http://dcx.sybase.com/1100/en/dbreference_en11/merge-statement.html</a></td>
+     * </tr>
+     * </table>
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * mergeInto(table)
+     *   .using(select)
+     *   .on(condition)
+     *   .whenMatchedThenUpdate()
+     *   .set(field1, value1)
+     *   .set(field2, value2)
+     *   .whenNotMatchedThenInsert(field1, field2)
+     *   .values(value1, value2)
+     * </pre></code>
+     * <p>
+     * Note: Using this method, you can also create an H2-specific MERGE
+     * statement without field specification. See also
+     * {@link #mergeInto(Table, Field...)}
+     *
+     * @see DSLContext#mergeInto(Table)
+     */
+    @Support({ CUBRID, DB2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    @Transition(
+        name = "MERGE INTO",
+        args = "Table"
+    )
+    public static <R extends Record> MergeUsingStep<R> mergeInto(Table<R> table) {
+        return using(new DefaultConfiguration()).mergeInto(table);
+    }
+
+    // [jooq-tools] START [merge]
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1> MergeKeyStep1<R, T1> mergeInto(Table<R> table, Field<T1> field1) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2> MergeKeyStep2<R, T1, T2> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3> MergeKeyStep3<R, T1, T2, T3> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4> MergeKeyStep4<R, T1, T2, T3, T4> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5> MergeKeyStep5<R, T1, T2, T3, T4, T5> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6> MergeKeyStep6<R, T1, T2, T3, T4, T5, T6> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7> MergeKeyStep7<R, T1, T2, T3, T4, T5, T6, T7> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8> MergeKeyStep8<R, T1, T2, T3, T4, T5, T6, T7, T8> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9> MergeKeyStep9<R, T1, T2, T3, T4, T5, T6, T7, T8, T9> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> MergeKeyStep10<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> MergeKeyStep11<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> MergeKeyStep12<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> MergeKeyStep13<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> MergeKeyStep14<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> MergeKeyStep15<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> MergeKeyStep16<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> MergeKeyStep17<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> MergeKeyStep18<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> MergeKeyStep19<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> MergeKeyStep20<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> MergeKeyStep21<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field, Field)
+     */
+    @Generated("This method was generated using jOOQ-tools")
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> MergeKeyStep22<R, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22> mergeInto(Table<R> table, Field<T1> field1, Field<T2> field2, Field<T3> field3, Field<T4> field4, Field<T5> field5, Field<T6> field6, Field<T7> field7, Field<T8> field8, Field<T9> field9, Field<T10> field10, Field<T11> field11, Field<T12> field12, Field<T13> field13, Field<T14> field14, Field<T15> field15, Field<T16> field16, Field<T17> field17, Field<T18> field18, Field<T19> field19, Field<T20> field20, Field<T21> field21, Field<T22> field22) {
+    	return using(new DefaultConfiguration()).mergeInto(table, field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11, field12, field13, field14, field15, field16, field17, field18, field19, field20, field21, field22);
+    }
+
+// [jooq-tools] END [merge]
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     * <p>
+     * This statement is available from DSL syntax only. It is known to be
+     * supported in some way by any of these dialects:
+     * <table border="1">
+     * <tr>
+     * <td>H2</td>
+     * <td>H2 natively supports this special syntax</td>
+     * <td><a href= "www.h2database.com/html/grammar.html#merge"
+     * >www.h2database.com/html/grammar.html#merge</a></td>
+     * </tr>
+     * <tr>
+     * <td>DB2, HSQLDB, Oracle, SQL Server, Sybase SQL Anywhere</td>
+     * <td>These databases can simulate the H2-specific MERGE statement using a
+     * standard SQL MERGE statement, without restrictions</td>
+     * <td>See {@link #mergeInto(Table)} for the standard MERGE statement</td>
+     * </tr>
+     * </table>
+     *
+     * @see DSLContext#mergeInto(Table, Field...)
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Field<?>... fields) {
+        return using(new DefaultConfiguration()).mergeInto(table, fields);
+    }
+
+    /**
+     * Create a new DSL merge statement (H2-specific syntax).
+     * <p>
+     * Unlike {@link Merge} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>MERGE</code> statement.
+     *
+     * @see DSLContext#mergeInto(Table, Collection)
+     */
+    @Support({ CUBRID, DB2, H2, HSQLDB, ORACLE, SQLSERVER, SYBASE })
+    public static <R extends Record> MergeKeyStepN<R> mergeInto(Table<R> table, Collection<? extends Field<?>> fields) {
+        return using(new DefaultConfiguration()).mergeInto(table, fields);
+    }
+
+    /**
+     * Create a new DSL delete statement.
+     * <p>
+     * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>DELETE</code> statement.
+     * <p>
+     * Example: <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * delete(table)
+     *   .where(field1.greaterThan(100))
+     * </pre></code>
+     * <p>
+     * Some but not all databases support aliased tables in delete statements.
+     *
+     * @see DSLContext#delete(Table)
+     */
+    @Support
+    @Transition(
+        name = "DELETE"
+    )
+    public static <R extends Record> DeleteWhereStep<R> delete(Table<R> table) {
+        return using(new DefaultConfiguration()).delete(table);
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX DDL Statements
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a new DSL truncate statement.
+     * <p>
+     * Unlike {@link Delete} factory methods in the {@link DSLContext} API, this
+     * creates an unattached, and thus not directly renderable or executable
+     * <code>DELETE</code> statement.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * import static org.jooq.impl.DSL.*;
+     *
+     * // [...]
+     *
+     * truncate(table);
+     * </pre></code>
+     * <h3>Simulation of <code>TRUNCATE</code></h3>
+     * <p>
+     * Most dialects implement the <code>TRUNCATE</code> statement. If it is not
+     * supported, it is simulated using an equivalent <code>DELETE</code>
+     * statement. This is particularly true for these dialects:
+     * <ul>
+     * <li> {@link SQLDialect#FIREBIRD}</li>
+     * <li> {@link SQLDialect#INGRES}</li>
+     * <li> {@link SQLDialect#SQLITE}</li>
+     * </ul>
+     * <h3>Vendor-specific extensions of <code>TRUNCATE</code></h3>
+     * <p>
+     * Some statements also support extensions of the <code>TRUNCATE</code>
+     * statement, such as Postgres:
+     * <p>
+     * <code><pre>
+     * truncate(table)
+     *   .restartIdentity()
+     *   .cascade()
+     * </pre></code>
+     * <p>
+     * These vendor-specific extensions are currently not simulated for those
+     * dialects that do not support them natively.
+     *
+     * @see DSLContext#truncate(Table)
+     */
+    @Support
+    @Transition(
+        name = "TRUNCATE",
+        args = "Table"
+    )
+    public static <R extends Record> TruncateIdentityStep<R> truncate(Table<R> table) {
+        return using(new DefaultConfiguration()).truncate(table);
     }
 
     // -------------------------------------------------------------------------

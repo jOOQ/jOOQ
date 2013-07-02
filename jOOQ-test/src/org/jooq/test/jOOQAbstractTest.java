@@ -304,6 +304,12 @@ public abstract class jOOQAbstractTest<
                 }
             }
             catch (Exception e) {
+
+                // Ignore all errors on DROP statements
+                if (sql.trim().startsWith("DROP")) {
+                    continue;
+                }
+
                 // There is no DROP TABLE IF EXISTS statement in Oracle
                 if (e.getMessage().contains("ORA-00942")) {
                     continue;

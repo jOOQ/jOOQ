@@ -32,6 +32,10 @@
 	<classpathentry kind="lib" path="lib/postgis-jdbc-1.3.3.jar" sourcepath="C:/Users/Lukas/.m2/repository/org/postgis/postgis-jdbc/1.3.3/postgis-jdbc-1.3.3-sources.jar"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.7.15-SNAPSHOT-2.jar"/>
 	<classpathentry kind="lib" path="lib/mariadb-java-client-1.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/ucanaccess/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/ucanaccess/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/ucanaccess/jackcess-1.2.13.jar"/>
+	<classpathentry kind="lib" path="lib/ucanaccess/ucanaccess-1.0.2.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-console"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-meta"/>
 	<classpathentry kind="output" path="bin"/>

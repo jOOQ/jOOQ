@@ -460,9 +460,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     assertTrue(metaFields.containsAll(asList(generatedTable.fields())));
 
                     // Check if relations are correctly loaded (and typed) as well
-                    // [#1977] Fix this, once the "main key" concept has been removed
-                    if (generatedTable.getPrimaryKey() != null && metaTable.getPrimaryKey() != null) {
-                        // [#1977] TODO: Add key checks
+                    if (generatedTable.getPrimaryKey() != null) {
+                        assertNotNull(metaTable.getPrimaryKey());
+                        assertEquals(generatedTable, metaTable.getPrimaryKey().getTable());
+                        assertEquals(generatedTable.getPrimaryKey().getFields(), metaTable.getPrimaryKey().getFields());
                     }
 
                     // Only truly updatable tables should be "Updatable"

@@ -62,7 +62,7 @@ import org.jooq.exception.DataAccessException;
 public interface Meta {
 
     /**
-     * Get all catalog objects from the underlying {@link DatabaseMetaData}
+     * Get all catalog objects from the underlying {@link DatabaseMetaData}.
      * <p>
      * For those databases that don't really support JDBC meta data catalogs, a
      * single empty catalog (named <code>""</code>) will be returned. In other
@@ -77,7 +77,7 @@ public interface Meta {
     List<Catalog> getCatalogs() throws DataAccessException;
 
     /**
-     * Get all schema objects from the underlying {@link DatabaseMetaData}
+     * Get all schema objects from the underlying {@link DatabaseMetaData}.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
@@ -86,11 +86,20 @@ public interface Meta {
     List<Schema> getSchemas() throws DataAccessException;
 
     /**
-     * Get all table objects from the underlying {@link DatabaseMetaData}
+     * Get all table objects from the underlying {@link DatabaseMetaData}.
      *
      * @throws DataAccessException If something went wrong fetching the meta
      *             objects
      */
     @Support
     List<Table<?>> getTables() throws DataAccessException;
+
+    /**
+     * Get all primary keys from the underlying {@link DatabaseMetaData}.
+     *
+     * @throws DataAccessException If something went wrong fetching the meta
+     *             objects
+     */
+    @Support
+    List<UniqueKey<?>> getPrimaryKeys() throws DataAccessException;
 }

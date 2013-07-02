@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.name;
@@ -61,6 +63,8 @@ import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.Schema;
 import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.exception.DataAccessException;
 import org.jooq.exception.SQLDialectNotSupportedException;
 
@@ -160,6 +164,21 @@ class MetaImpl implements Meta, Serializable {
 
         for (Schema schema : getSchemas()) {
             result.addAll(schema.getTables());
+        }
+
+        return result;
+    }
+
+    @Override
+    public final List<UniqueKey<?>> getPrimaryKeys() {
+        List<UniqueKey<?>> result = new ArrayList<UniqueKey<?>>();
+
+        for (Table<?> table : getTables()) {
+            UniqueKey<?> pk = table.getPrimaryKey();
+
+            if (pk != null) {
+                result.add(pk);
+            }
         }
 
         return result;
@@ -287,8 +306,6 @@ class MetaImpl implements Meta, Serializable {
                     tableName
                 });
 
-                System.out.println(getColumns0(schema, "%").format(1000));
-
                 columnCache = new LinkedHashMap<Name, Result<Record>>();
 
                 for (Entry<Record, Result<Record>> entry : groups.entrySet()) {
@@ -341,6 +358,49 @@ class MetaImpl implements Meta, Serializable {
             // - The "table" is in fact a SYNONYM
             if (columns != null) {
                 init(columns);
+            }
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public final List<UniqueKey<Record>> getKeys() {
+            return unmodifiableList(asList(getPrimaryKey()));
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public final UniqueKey<Record> getPrimaryKey() {
+            String schema = getSchema() == null ? null : getSchema().getName();
+
+            try {
+                Result<Record> result =
+                create.fetch(
+                    meta().getPrimaryKeys(null, schema, getName()),
+                    String.class, // TABLE_CAT
+                    String.class, // TABLE_SCHEM
+                    String.class, // TABLE_NAME
+                    String.class, // COLUMN_NAME
+                    int.class,    // KEY_SEQ
+                    String.class  // PK_NAME
+                );
+
+                // Sort by KEY_SEQ
+                result.sortAsc(4);
+
+                if (result.size() > 0) {
+                    TableField<Record, ?>[] fields = new TableField[result.size()];
+                    for (int i = 0; i < fields.length; i++) {
+                        fields[i] = (TableField<Record, ?>) field(result.get(i).getValue(3, String.class));
+                    }
+
+                    return AbstractKeys.createUniqueKey(this, fields);
+                }
+                else {
+                    return null;
+                }
+            }
+            catch (SQLException e) {
+                throw new DataAccessException("Error while accessing DatabaseMetaData", e);
             }
         }
 

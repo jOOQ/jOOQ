@@ -41,12 +41,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Field;
 import org.jooq.Schema;
 import org.jooq.Sequence;
 import org.jooq.Table;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
+import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DataTypeDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.DefaultRelations;
@@ -79,6 +82,21 @@ public class JDBCDatabase extends AbstractDatabase {
 
     @Override
     protected void loadUniqueKeys(DefaultRelations relations) throws SQLException {
+        for (UniqueKey<?> key : create().meta().getPrimaryKeys()) {
+            Schema schema = key.getTable().getSchema();
+            SchemaDefinition s = getSchema(schema == null ? "" : schema.getName());
+
+            if (s != null) {
+                TableDefinition t = getTable(s, key.getTable().getName());
+
+                if (t != null) {
+                    for (Field<?> field : key.getFields()) {
+                        ColumnDefinition c = t.getColumn(field.getName());
+                        relations.addPrimaryKey("PK_" + key.getTable().getName(), c);
+                    }
+                }
+            }
+        }
     }
 
     @Override

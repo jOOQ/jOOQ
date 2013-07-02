@@ -57,24 +57,6 @@ function manualHeader($isSingle, $forVersion) {
 		  })();
 
 		</script>
-		<!-- Start of Woopra Code -->
-		<script type="text/javascript">
-		function woopraReady(tracker) {
-			tracker.setDomain('jooq.org');
-			tracker.setIdleTimeout(300000);
-			tracker.track();
-			return false;
-		}
-		(function() {
-			var wsc = document.createElement('script');
-			wsc.src = document.location.protocol+'//static.woopra.com/js/woopra.js';
-			wsc.type = 'text/javascript';
-			wsc.async = true;
-			var ssc = document.getElementsByTagName('script')[0];
-			ssc.parentNode.insertBefore(wsc, ssc);
-		})();
-		</script>
-		<!-- End of Woopra Code -->
 		<?php } ?>
 		<script type="text/javascript" src="https://www.catincan.com/ribbon/right/1/jOOQ.js" defer="defer"></script>
 		<script>

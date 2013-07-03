@@ -87,7 +87,7 @@ CREATE TABLE t_triggers (
 
 CREATE TABLE t_language (
   cd CHAR(2) NOT NULL,
-  description VARCHAR(50) NULL,
+  descr VARCHAR(50) NULL,
   description_english VARCHAR(50) NULL,
   id int NOT NULL,
 

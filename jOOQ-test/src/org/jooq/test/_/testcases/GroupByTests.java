@@ -202,16 +202,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .groupBy(rollup(
                     TBook_ID(),
                     TBook_AUTHOR_ID()))
+                .orderBy(
+                    TBook_ID().asc().nullsLast(),
+                    TBook_AUTHOR_ID().asc().nullsLast())
                 .fetch();
 
-        if (dialect() == DB2) {
-            assertEquals(Arrays.asList(null, 1, 2, 3, 4, 1, 2, 3, 4), result.getValues(0));
-            assertEquals(Arrays.asList(null, null, null, null, null, 1, 1, 2, 2), result.getValues(1));
-        }
-        else {
-            assertEquals(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4, null), result.getValues(0));
-            assertEquals(Arrays.asList(1, null, 1, null, 2, null, 2, null, null), result.getValues(1));
-        }
+        assertEquals(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4, null), result.getValues(0));
+        assertEquals(Arrays.asList(1, null, 1, null, 2, null, 2, null, null), result.getValues(1));
 
         if (asList(MARIADB, MYSQL).contains(dialect())) {
             log.info("SKIPPING", "CUBE and GROUPING SETS tests");

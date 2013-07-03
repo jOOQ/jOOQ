@@ -44,10 +44,12 @@ class Conversions extends Generators {
     
     def static void main(String[] args) {
         val conversions = new Conversions();
-        conversions.generateConversions();
+        conversions.generateAsTuple();
+        conversions.generateAsMapper();
+        // conversions.generateAsHandler();
     }
     
-    def generateConversions() {
+    def generateAsTuple() {
         val out = new StringBuilder();
         
         out.append('''
@@ -64,5 +66,59 @@ class Conversions extends Generators {
         ''');
          
         insert("org.jooq.scala.Conversions", out, "tuples");
+    }
+
+    def generateAsMapper() {
+        val out = new StringBuilder();
+        
+        out.append('''
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+        
+          /**
+           * Wrap a Scala <code>Tuple«degree» => E</code> function in a jOOQ <code>RecordMapper</code> type.
+           */
+          implicit def asMapperFromArgList«degree»[«TN(degree)», E](f: («TN(degree)») => E): RecordMapper[Record«degree»[«TN(degree)»], E] = new RecordMapper[Record«degree»[«TN(degree)»], E] {
+            def map(record: Record«degree»[«TN(degree)»]) = f(«XXXn(degree, "record.value")»)
+          }
+        «ENDFOR»
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+        
+          /**
+           * Wrap a Scala <code>Tuple«degree» => E</code> function in a jOOQ <code>RecordMapper</code> type.
+           */
+          implicit def asMapperFromTuple«degree»[«TN(degree)», E](f: Tuple«degree»[«TN(degree)»] => E): RecordMapper[Record«degree»[«TN(degree)»], E] = new RecordMapper[Record«degree»[«TN(degree)»], E] {
+            def map(record: Record«degree»[«TN(degree)»]) = f(Tuple«degree»(«XXXn(degree, "record.value")»))
+          }
+        «ENDFOR»
+        ''');
+         
+        insert("org.jooq.scala.Conversions", out, "mapper");
+    }
+
+    def generateAsHandler() {
+        val out = new StringBuilder();
+        
+        out.append('''
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+        
+          /**
+           * Wrap a Scala <code>Tuple«degree» => Unit</code> function in a jOOQ <code>RecordHandler</code> type.
+           */
+          implicit def asHandlerFromArgList«degree»[«TN(degree)»](f: («TN(degree)») => Unit): RecordHandler[Record«degree»[«TN(degree)»]] = new RecordHandler[Record«degree»[«TN(degree)»]] {
+            def next(record: Record«degree»[«TN(degree)»]) = f(«XXXn(degree, "record.value")»)
+          }
+        «ENDFOR»
+        «FOR degree : (1..Constants::MAX_ROW_DEGREE)»
+        
+          /**
+           * Wrap a Scala <code>Tuple«degree» => Unit</code> function in a jOOQ <code>RecordHandler</code> type.
+           */
+          implicit def asHandlerFromTuple«degree»[«TN(degree)», E](f: Tuple«degree»[«TN(degree)»] => E): RecordHandler[Record«degree»[«TN(degree)»]] = new RecordHandler[Record«degree»[«TN(degree)»]] {
+            def next(record: Record«degree»[«TN(degree)»]) = f(Tuple«degree»(«XXXn(degree, "record.value")»))
+          }
+        «ENDFOR»
+        ''');
+         
+        insert("org.jooq.scala.Conversions", out, "handler");
     }
 }

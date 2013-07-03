@@ -73,7 +73,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     private static final Set<String> SQLITE_KEYWORDS;
 
     private final StringBuilder      sql;
-    private ParamType            paramType;
+    private ParamType                paramType;
     private int                      params;
     private boolean                  qualify            = true;
     private int                      alias;

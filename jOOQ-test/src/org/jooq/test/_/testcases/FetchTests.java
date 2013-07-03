@@ -910,11 +910,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         Object[] array = { 13, "A", "B" };
 
         author = create().newRecord(TAuthor());
-        author.fromArray(array, TAuthor_FIRST_NAME(), TAuthor_LAST_NAME());
+        author.fromArray(array, new Field[] { TAuthor_FIRST_NAME(), TAuthor_LAST_NAME() });
         testRecordFromAssertions(object, author);
 
         author = create().newRecord(TAuthor());
-        author.fromArray(array, TAuthor_FIRST_NAME().getName(), TAuthor_LAST_NAME().getName());
+        author.fromArray(array, new String[] { TAuthor_FIRST_NAME().getName(), TAuthor_LAST_NAME().getName() });
         testRecordFromAssertions(object, author);
     }
 

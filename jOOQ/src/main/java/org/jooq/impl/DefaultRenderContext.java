@@ -324,6 +324,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
                     break;
 
                 // T-SQL databases use brackets
+                case ACCESS:
                 case ASE:
                 case SQLSERVER:
                 case SYBASE:

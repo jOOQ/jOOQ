@@ -290,6 +290,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         Iterator<Entry<Record, Result<B>>> iterator = map5.entrySet().iterator();
         Entry<Record, Result<B>> entry1_en = iterator.next();
+        assertFalse(entry1_en.getKey().changed());
         assertEquals(2, entry1_en.getValue().size());
         assertEquals(entry1_en.getKey().getValue(0), entry1_en.getValue().get(0).getValue(TBook_AUTHOR_ID()));
         assertEquals(entry1_en.getKey().getValue(0), entry1_en.getValue().get(1).getValue(TBook_AUTHOR_ID()));
@@ -297,11 +298,13 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(entry1_en.getKey().getValue(1), entry1_en.getValue().get(1).getValue(TBook_LANGUAGE_ID()));
 
         Entry<Record, Result<B>> entry2_pt = iterator.next();
+        assertFalse(entry2_pt.getKey().changed());
         assertEquals(1, entry2_pt.getValue().size());
         assertEquals(entry2_pt.getKey().getValue(0), entry2_pt.getValue().get(0).getValue(TBook_AUTHOR_ID()));
         assertEquals(entry2_pt.getKey().getValue(1), entry2_pt.getValue().get(0).getValue(TBook_LANGUAGE_ID()));
 
         Entry<Record, Result<B>> entry2_de = iterator.next();
+        assertFalse(entry2_de.getKey().changed());
         assertEquals(1, entry2_de.getValue().size());
         assertEquals(entry2_de.getKey().getValue(0), entry2_de.getValue().get(0).getValue(TBook_AUTHOR_ID()));
         assertEquals(entry2_de.getKey().getValue(1), entry2_de.getValue().get(0).getValue(TBook_LANGUAGE_ID()));
@@ -314,6 +317,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(4, map6.size());
 
         for (Record key : map6.keySet()) {
+            assertFalse(key.changed());
             Result<B> result = map6.get(key);
             assertEquals(1, result.size());
             assertEquals(key.getValue(0), result.get(0).getValue(TBook_ID()));

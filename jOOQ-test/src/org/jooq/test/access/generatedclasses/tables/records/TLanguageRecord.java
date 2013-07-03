@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord> implements org.jooq.Record4<java.lang.String, java.lang.String, java.lang.String, java.lang.Integer> {
 
-	private static final long serialVersionUID = 402008525;
+	private static final long serialVersionUID = -1931210331;
 
 	/**
 	 * Setter for <code>T_LANGUAGE.CD</code>. 
@@ -26,16 +26,16 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	}
 
 	/**
-	 * Setter for <code>T_LANGUAGE.XDESCRIPTION</code>. 
+	 * Setter for <code>T_LANGUAGE.DESCR</code>. 
 	 */
-	public void setXdescription(java.lang.String value) {
+	public void setDescr(java.lang.String value) {
 		setValue(1, value);
 	}
 
 	/**
-	 * Getter for <code>T_LANGUAGE.XDESCRIPTION</code>. 
+	 * Getter for <code>T_LANGUAGE.DESCR</code>. 
 	 */
-	public java.lang.String getXdescription() {
+	public java.lang.String getDescr() {
 		return (java.lang.String) getValue(1);
 	}
 
@@ -112,7 +112,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public org.jooq.Field<java.lang.String> field2() {
-		return org.jooq.test.access.generatedclasses.tables.TLanguage.XDESCRIPTION;
+		return org.jooq.test.access.generatedclasses.tables.TLanguage.DESCR;
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class TLanguageRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.
 	 */
 	@Override
 	public java.lang.String value2() {
-		return getXdescription();
+		return getDescr();
 	}
 
 	/**

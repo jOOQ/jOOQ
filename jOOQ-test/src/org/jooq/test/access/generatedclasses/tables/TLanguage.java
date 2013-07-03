@@ -9,7 +9,7 @@ package org.jooq.test.access.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = -1441045232;
+	private static final long serialVersionUID = 1759806079;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>
@@ -30,9 +30,9 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.access.gene
 	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.VARCHAR.length(2), T_LANGUAGE);
 
 	/**
-	 * The column <code>T_LANGUAGE.XDESCRIPTION</code>. 
+	 * The column <code>T_LANGUAGE.DESCR</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord, java.lang.String> XDESCRIPTION = createField("XDESCRIPTION", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.access.generatedclasses.tables.records.TLanguageRecord, java.lang.String> DESCR = createField("DESCR", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_LANGUAGE);
 
 	/**
 	 * The column <code>T_LANGUAGE.DESCRIPTION_ENGLISH</code>. 

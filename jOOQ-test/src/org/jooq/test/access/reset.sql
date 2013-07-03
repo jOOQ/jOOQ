@@ -11,10 +11,10 @@ DELETE FROM t_identity/
 DELETE FROM t_identity_pk/
 DELETE FROM t_triggers/
 
-INSERT INTO t_language (id, cd, description, description_english) VALUES (1, 'en', 'English', 'English')/
-INSERT INTO t_language (id, cd, description, description_english) VALUES (2, 'de', 'Deutsch', 'German')/
-INSERT INTO t_language (id, cd, description, description_english) VALUES (3, 'fr', 'Français', 'French')/
-INSERT INTO t_language (id, cd, description, description_english) VALUES (4, 'pt', null, null)/
+INSERT INTO t_language (id, cd, descr, description_english) VALUES (1, 'en', 'English', 'English')/
+INSERT INTO t_language (id, cd, descr, description_english) VALUES (2, 'de', 'Deutsch', 'German')/
+INSERT INTO t_language (id, cd, descr, description_english) VALUES (3, 'fr', 'Français', 'French')/
+INSERT INTO t_language (id, cd, descr, description_english) VALUES (4, 'pt', null, null)/
 /
 
 INSERT INTO t_author VALUES (1, 'George', 'Orwell', '1903-06-25', 1903, null)/

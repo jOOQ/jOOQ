@@ -81,7 +81,6 @@ import org.jooq.ForeignKey;
 import org.jooq.Query;
 import org.jooq.Record;
 import org.jooq.Record1;
-import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
 import org.jooq.Result;
@@ -184,7 +183,7 @@ import com.microsoft.sqlserver.jdbc.SQLServerException;
 public abstract class jOOQAbstractTest<
 
         // T_AUTHOR table
-        A extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
+        A extends UpdatableRecord<A> & Record6<Integer, String, String, ? extends java.util.Date, Integer, ?>,
 
         // T_AUTHOR pojo
         AP,
@@ -196,13 +195,13 @@ public abstract class jOOQAbstractTest<
         S extends UpdatableRecord<S> & Record1<String>,
 
         // T_BOOK_TO_BOOK_STORE table
-        B2S extends UpdatableRecord<B2S> & Record3<String, Integer, Integer>,
+        B2S extends TableRecord<B2S> & Record3<String, Integer, Integer>,
 
         // MULTI_SCHEMA.T_BOOK_SALE table
         BS extends UpdatableRecord<BS>,
 
         // V_LIBRARY view
-        L extends TableRecord<L> & Record2<String, String>,
+        L extends TableRecord<L>/* & Record2<String, String>*/,
 
         // T_ARRAYS table
         X extends TableRecord<X>,
@@ -222,7 +221,7 @@ public abstract class jOOQAbstractTest<
         // T_UNSIGNED table
         U extends TableRecord<U>,
 
-        // T_1624_UUID table
+        // T_EXOTIC_TYPES table
         UU extends UpdatableRecord<UU>,
 
         // T_IDENTITY table

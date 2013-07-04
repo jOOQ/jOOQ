@@ -178,10 +178,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             })
             .select(TBook_ID(), TBook_TITLE())
             .from(TBook())
+
             // Derby doesn't support ORDER BY when using CONCUR_UPDATABLE
             // https://issues.apache.org/jira/browse/DERBY-4138
             // .orderBy(TBook_ID())
-            .resultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)
+
+            // SQL Server doesn't support SCROLL INSENSITIVE and UPDATABLE
+            // .resultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE)
+
             .resultSetConcurrency(ResultSet.CONCUR_UPDATABLE)
             .fetch(TBook_TITLE()));
     }

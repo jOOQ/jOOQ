@@ -36,7 +36,9 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.val;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -51,8 +53,8 @@ import org.jooq.JoinType;
 import org.jooq.PivotForStep;
 import org.jooq.QueryPart;
 import org.jooq.Record;
-import org.jooq.Row;
 import org.jooq.RecordType;
+import org.jooq.Row;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -61,6 +63,8 @@ import org.jooq.TableOnStep;
 import org.jooq.TableOptionalOnStep;
 import org.jooq.TablePartitionByStep;
 import org.jooq.UniqueKey;
+import org.jooq.VersionsBetweenAndStep;
+import org.jooq.impl.FlashbackTable.FlashbackType;
 import org.jooq.tools.StringUtils;
 
 /**
@@ -302,6 +306,60 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     @Override
     public final PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions) {
         return pivot(aggregateFunctions.toArray(new Field[0]));
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: FLASHBACK QUERY API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final VersionsBetweenAndStep<R, Number> versionsBetweenScn(Number scn) {
+        return versionsBetweenScn(val(scn));
+    }
+
+    @Override
+    public final VersionsBetweenAndStep<R, Number> versionsBetweenScn(Field<? extends Number> scn) {
+        return new FlashbackTable<R, Number>(this, null, scn, FlashbackType.SCN);
+    }
+
+    @Override
+    public final VersionsBetweenAndStep<R, Number> versionsBetweenScnMinvalue() {
+        return new FlashbackTable<R, Number>(this, null, null, FlashbackType.SCN);
+    }
+
+    @Override
+    public final VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestamp(Timestamp timestamp) {
+        return versionsBetweenTimestamp(val(timestamp));
+    }
+
+    @Override
+    public final VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestamp(Field<Timestamp> timestamp) {
+        return new FlashbackTable<R, Timestamp>(this, null, timestamp, FlashbackType.TIMESTAMP);
+    }
+
+    @Override
+    public final VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestampMinvalue() {
+        return new FlashbackTable<R, Timestamp>(this, null, null, FlashbackType.TIMESTAMP);
+    }
+
+    @Override
+    public final Table<R> asOfScn(Number scn) {
+        return asOfScn(val(scn));
+    }
+
+    @Override
+    public final Table<R> asOfScn(Field<? extends Number> scn) {
+        return new FlashbackTable<R, Number>(this, scn, null, FlashbackType.SCN);
+    }
+
+    @Override
+    public final Table<R> asOfTimestamp(Timestamp timestamp) {
+        return asOfTimestamp(val(timestamp));
+    }
+
+    @Override
+    public final Table<R> asOfTimestamp(Field<Timestamp> timestamp) {
+        return new FlashbackTable<R, Timestamp>(this, timestamp, null, FlashbackType.TIMESTAMP);
     }
 
     // ------------------------------------------------------------------------

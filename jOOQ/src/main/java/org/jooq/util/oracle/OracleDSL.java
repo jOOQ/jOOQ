@@ -38,6 +38,7 @@ package org.jooq.util.oracle;
 import static org.jooq.SQLDialect.ORACLE;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 import org.jooq.Field;
 import org.jooq.SQLDialect;
@@ -63,7 +64,7 @@ public class OracleDSL extends DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field
+     * Retrieve the Oracle-specific <code>ROWNUM</code> pseudo-field.
      */
     @Support(ORACLE)
     public static Field<Integer> rownum() {
@@ -71,7 +72,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * Retrieve the Oracle-specific <code>ROWID</code> pseudo-field
+     * Retrieve the Oracle-specific <code>ROWID</code> pseudo-field.
      */
     @Support(ORACLE)
     public static Field<String> rowid() {
@@ -83,7 +84,7 @@ public class OracleDSL extends DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * The Oracle-specific <code>SYS_CONTEXT</code> function
+     * The Oracle-specific <code>SYS_CONTEXT</code> function.
      */
     @Support(ORACLE)
     public static Field<String> sysContext(String namespace, String parameter) {
@@ -91,7 +92,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * The Oracle-specific <code>SYS_CONTEXT</code> function
+     * The Oracle-specific <code>SYS_CONTEXT</code> function.
      */
     @Support(ORACLE)
     public static Field<String> sysContext(String namespace, String parameter, int length) {
@@ -99,11 +100,63 @@ public class OracleDSL extends DSL {
     }
 
     // -------------------------------------------------------------------------
+    // Oracle Flashback Version Query pseudo-columns
+    // -------------------------------------------------------------------------
+
+    /**
+     * The Oracle-specific <code>VERSIONS_STARTSCN</code> pseudo-field.
+     */
+    @Support(ORACLE)
+    public static Field<Long> versionsStartscn() {
+        return field("{versions_startscn}", Long.class);
+    }
+
+    /**
+     * The Oracle-specific <code>VERSIONS_STARTTIME</code> pseudo-field.
+     */
+    @Support(ORACLE)
+    public static Field<Timestamp> versionsStarttime() {
+        return field("{versions_starttime}", Timestamp.class);
+    }
+
+    /**
+     * The Oracle-specific <code>VERSIONS_ENDSCN</code> pseudo-field.
+     */
+    @Support(ORACLE)
+    public static Field<Long> versionsEndscn() {
+        return field("{versions_endscn}", Long.class);
+    }
+
+    /**
+     * The Oracle-specific <code>VERSIONS_ENDTIME</code> pseudo-field.
+     */
+    @Support(ORACLE)
+    public static Field<Timestamp> versionsEndtime() {
+        return field("{versions_endtime}", Timestamp.class);
+    }
+
+    /**
+     * The Oracle-specific <code>VERSIONS_XID</code> pseudo-field.
+     */
+    @Support(ORACLE)
+    public static Field<String> versionsXid() {
+        return field("{versions_xid}", String.class);
+    }
+
+    /**
+     * The Oracle-specific <code>VERSIONS_OPERATION</code> pseudo-field.
+     */
+    @Support(ORACLE)
+    public static Field<String> versionsOperation() {
+        return field("{versions_operation}", String.class);
+    }
+
+    // -------------------------------------------------------------------------
     // Oracle Text functions
     // -------------------------------------------------------------------------
 
     /**
-     * The Oracle-Text specific <code>CONTAINS</code> function
+     * The Oracle-Text specific <code>CONTAINS</code> function.
      */
     @Support(ORACLE)
     public static Field<BigDecimal> contains(Field<String> field, String query) {
@@ -111,7 +164,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * The Oracle-Text specific <code>CONTAINS</code> function
+     * The Oracle-Text specific <code>CONTAINS</code> function.
      */
     @Support(ORACLE)
     public static Field<BigDecimal> contains(Field<String> field, String query, int label) {
@@ -119,7 +172,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * The Oracle-Text specific <code>MATCHES</code> function
+     * The Oracle-Text specific <code>MATCHES</code> function.
      */
     @Support(ORACLE)
     public static Field<BigDecimal> matches(Field<String> field, String query) {
@@ -127,7 +180,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * The Oracle-Text specific <code>CONTAINS</code> function
+     * The Oracle-Text specific <code>CONTAINS</code> function.
      */
     @Support(ORACLE)
     public static Field<BigDecimal> matches(Field<String> field, String query, int label) {
@@ -135,7 +188,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * The Oracle-Text specific <code>CATSEARCH</code> function
+     * The Oracle-Text specific <code>CATSEARCH</code> function.
      */
     @Support(ORACLE)
     public static Field<BigDecimal> catsearch(Field<String> field, String textQuery, String structuredQuery) {
@@ -143,7 +196,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * The Oracle-Text specific <code>SCORE</code> function
+     * The Oracle-Text specific <code>SCORE</code> function.
      */
     @Support(ORACLE)
     public static Field<BigDecimal> score(int label) {
@@ -151,7 +204,7 @@ public class OracleDSL extends DSL {
     }
 
     /**
-     * The Oracle-Text specific <code>MATCH_SCORE</code> function
+     * The Oracle-Text specific <code>MATCH_SCORE</code> function.
      */
     @Support(ORACLE)
     public static Field<BigDecimal> matchScore(int label) {

@@ -413,7 +413,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testFetchMany() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ORACLE:
             case SQLITE:
             case SYBASE:
@@ -2148,7 +2148,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(r3.get(0).getValue(TBook_TITLE()), r3.get(1).getValue(TBook_TITLE()));
 
         // Some JDBC drivers already perform string interning...
-        if (dialect() == ORACLE) {
+        if (dialect().family() == ORACLE) {
             Assert.assertNotSame(r1.get(0).getValue(TBook_TITLE()), r1.get(1).getValue(TBook_TITLE()));
         }
 

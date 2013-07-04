@@ -101,17 +101,17 @@ class RowSubqueryCondition extends AbstractCondition {
     }
 
     private final QueryPartInternal delegate(Configuration configuration, RenderContext context) {
-        SQLDialect dialect = configuration.dialect();
+        SQLDialect family = configuration.dialect().family();
 
         // [#2395] These dialects have full native support for comparison
         // predicates with row value expressions and subqueries:
-        if (asList(H2, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(dialect)) {
+        if (asList(H2, HSQLDB, MARIADB, MYSQL, POSTGRES).contains(family)) {
             return new Native();
         }
 
         // [#2395] These dialects have native support for = and <>
         else if (
-            asList(H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES).contains(dialect) &&
+            asList(H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES).contains(family) &&
             asList(EQUALS, NOT_EQUALS).contains(comparator)) {
 
             return new Native();
@@ -119,7 +119,7 @@ class RowSubqueryCondition extends AbstractCondition {
 
         // [#2395] These dialects have native support for IN and NOT IN
         else if (
-            asList(H2, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES).contains(dialect) &&
+            asList(H2, DB2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES).contains(family) &&
             asList(IN, NOT_IN).contains(comparator)) {
 
             return new Native();
@@ -193,7 +193,7 @@ class RowSubqueryCondition extends AbstractCondition {
         public final void toSQL(RenderContext context) {
 
             // Some databases need extra parentheses around the RHS
-            boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect());
+            boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect().family());
             boolean subquery = context.subquery();
 
             context.sql(left)

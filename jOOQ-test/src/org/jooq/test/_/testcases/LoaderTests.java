@@ -220,7 +220,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                                       .from(TAuthor())
                                       .where(TAuthor_ID().in(3, 4))
                                       .and(TAuthor_LAST_NAME().in("Hesse", "Frisch"))
-                                      .and(dialect() == ORACLE ?
+                                      .and(dialect().family() == ORACLE ?
                                            TAuthor_FIRST_NAME().isNull() :
                                            TAuthor_FIRST_NAME().equal(""))
                                       .fetchOne(count));
@@ -257,7 +257,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("Hesse", result.getValue(0, TAuthor_LAST_NAME()));
         assertEquals("Frisch", result.getValue(1, TAuthor_LAST_NAME()));
         assertEquals(null, result.getValue(0, TAuthor_FIRST_NAME()));
-        assertEquals(dialect() == ORACLE ? null : "", result.getValue(1, TAuthor_FIRST_NAME()));
+        assertEquals(dialect().family() == ORACLE ? null : "", result.getValue(1, TAuthor_FIRST_NAME()));
 
         assertEquals(2, create().delete(TAuthor()).where(TAuthor_ID().in(5, 6)).execute());
 

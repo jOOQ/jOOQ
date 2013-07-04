@@ -181,7 +181,7 @@ class RowCondition extends AbstractCondition {
         public final void toSQL(RenderContext context) {
 
             // Some dialects do not support != comparison with rows
-            if (comparator == NOT_EQUALS && asList(DB2).contains(context.configuration().dialect())) {
+            if (comparator == NOT_EQUALS && asList(DB2).contains(context.configuration().dialect().family())) {
                 context.keyword("not(")
                        .sql(left)
                        .sql(" = ")
@@ -190,7 +190,7 @@ class RowCondition extends AbstractCondition {
             }
             else {
                 // Some databases need extra parentheses around the RHS
-                boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect());
+                boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect().family());
 
                 context.sql(left)
                        .sql(" ")

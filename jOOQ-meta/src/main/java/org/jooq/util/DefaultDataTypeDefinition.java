@@ -130,7 +130,7 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     @Override
     public final boolean isGenericNumberType() {
-        switch (getDialect()) {
+        switch (getDialect().family()) {
             case ORACLE: {
                 return (OracleDataType.NUMBER.getTypeName().equalsIgnoreCase(typeName)
                     && precision == 0

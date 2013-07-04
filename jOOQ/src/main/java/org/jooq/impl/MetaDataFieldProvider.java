@@ -102,7 +102,7 @@ class MetaDataFieldProvider implements Serializable {
                 String type = meta.getColumnTypeName(i);
 
                 try {
-                    dataType = DefaultDataType.getDataType(configuration.dialect(), type, precision, scale);
+                    dataType = DefaultDataType.getDataType(configuration.dialect().family(), type, precision, scale);
 
                     if (dataType.hasPrecision()) {
                         dataType = dataType.precision(precision);

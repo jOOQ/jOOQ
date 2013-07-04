@@ -47,6 +47,8 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.ORACLE11G;
+import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
@@ -331,7 +333,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * <p>
      * This has been observed to work with
      * <ul>
-     * <li> {@link SQLDialect#ORACLE}</li>
+     * <li> {@link SQLDialect#ORACLE11G} upwards</li>
      * <li> {@link SQLDialect#SQLSERVER} (not yet officially supported)</li>
      * <li>Other dialects by using some means of simulation (not yet officially
      * supported)</li>
@@ -340,7 +342,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @param aggregateFunctions The aggregate functions used for pivoting.
      * @return A DSL object to create the <code>PIVOT</code> expression
      */
-    @Support({ ORACLE })
+    @Support({ ORACLE11G, ORACLE12C })
     @Transition(
         name = "PIVOT",
         args = "Field+"
@@ -357,7 +359,7 @@ public interface Table<R extends Record> extends TableLike<R> {
      * @return A DSL object to create the <code>PIVOT</code> expression
      * @see #pivot(Field...)
      */
-    @Support({ ORACLE })
+    @Support({ ORACLE11G, ORACLE12C })
     @Transition(
         name = "PIVOT",
         args = "Field+"

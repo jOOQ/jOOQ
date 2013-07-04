@@ -182,7 +182,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(1, record.store());
         record.refresh();
 
-        switch (dialect()) {
+        switch (dialect().family()) {
 
             // In ASE, there don't seem to be any empty byte[]
             case ASE:
@@ -218,7 +218,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         record.setValue(T725_ID(), 3);
         record.refresh();
 
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
                 assertEquals(1, record.getValue(T725_LOB()).length);
                 assertEquals(0, record.getValue(T725_LOB())[0]);
@@ -246,7 +246,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(BOOK_IDS, result.getValues(0));
         assertNull(result.getValue(1, 1));
 
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
                 assertEquals(1, result.getValue(2, T725_LOB()).length);
                 assertEquals(0, result.getValue(2, T725_LOB())[0]);
@@ -461,7 +461,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             SQLDataType.VARBINARY,
             SQLDataType.VARCHAR)) {
 
-            if (dialect() == SQLDialect.ORACLE) {
+            if (dialect().family() == SQLDialect.ORACLE) {
                 if (type.getType() == byte[].class ||
                     type == SQLDataType.CLOB ||
                     type == SQLDataType.NCLOB) {
@@ -471,10 +471,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 }
             }
 
-            if (dialect() == SQLDialect.ASE ||
-                dialect() == SQLDialect.DB2 ||
-                dialect() == SQLDialect.ORACLE ||
-                dialect() == SQLDialect.SYBASE) {
+            if (dialect().family() == SQLDialect.ASE ||
+                dialect().family() == SQLDialect.DB2 ||
+                dialect().family() == SQLDialect.ORACLE ||
+                dialect().family() == SQLDialect.SYBASE) {
                 if (type.getType() == Boolean.class) {
                     log.info("SKIPPING", "Casting to bit type in Sybase ASE / SQL Anywhere");
                     continue;

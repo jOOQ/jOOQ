@@ -34,53 +34,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jooq.impl;
+package org.jooq.test;
 
+import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
-import org.jooq.Select;
+import org.jooq.conf.Settings;
+import org.jooq.impl.DSL;
+
 
 /**
- * A combine operator is used to combine result sets of two arbitrary
- * {@link Select} queries.
- *
  * @author Lukas Eder
  */
-enum CombineOperator {
+public class OracleTest11g extends OracleTest {
 
-    /**
-     * Unite the two {@link Select}'s disallowing duplicate records
-     */
-    UNION("union"),
-
-    /**
-     * Unite the two {@link Select}'s allowing duplicate records
-     */
-    UNION_ALL("union all"),
-
-    /**
-     * Remove all records encountered in the second {@link Select} from the
-     * first {@link Select}
-     */
-    EXCEPT("except"),
-
-    /**
-     * Retain all records encountered in both {@link Select}'s
-     */
-    INTERSECT("intersect");
-
-    private final String sql;
-
-    private CombineOperator(String sql) {
-        this.sql = sql;
-    }
-
-    public String toSQL(SQLDialect dialect) {
-        if (this == EXCEPT) {
-            if (dialect.family() == SQLDialect.ORACLE) {
-                return "minus";
-            }
-        }
-
-        return sql;
+    @Override
+    protected DSLContext create0(Settings settings) {
+        return DSL.using(getConnection(), SQLDialect.ORACLE11G, settings);
     }
 }

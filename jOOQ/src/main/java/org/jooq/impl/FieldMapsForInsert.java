@@ -77,7 +77,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
         // True SQL92 multi-record inserts aren't always supported
         else {
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
 
                 // Some dialects don't support multi-record inserts
                 case ASE:

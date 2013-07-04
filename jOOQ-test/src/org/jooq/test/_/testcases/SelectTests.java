@@ -449,7 +449,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Check again with limit / offset clauses
         // ---------------------------------------
-        switch (dialect()) {
+        switch (dialect().family()) {
             case INGRES:
             case ORACLE:
                 log.info("SKIPPING", "LIMIT .. OFFSET .. FOR UPDATE");
@@ -473,7 +473,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ASE:
             case DB2:
             case DERBY:
@@ -498,7 +498,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     .fetch();
                 assertEquals(2, r1a.size());
 
-                if (dialect() == ORACLE) {
+                if (dialect().family() == ORACLE) {
                     Result<Record1<Integer>> r2a = create()
                         .select(TAuthor_ID())
                         .from(TAuthor())
@@ -536,7 +536,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
         }
 
-        switch (dialect()) {
+        switch (dialect().family()) {
             case MARIADB:
             case MYSQL:
             case POSTGRES:

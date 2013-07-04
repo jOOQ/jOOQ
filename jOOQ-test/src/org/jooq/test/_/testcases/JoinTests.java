@@ -306,7 +306,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TBook())
                 .naturalJoin(TAuthor())
-                .orderBy(dialect() == SQLDialect.ORACLE
+                .orderBy(dialect().family() == SQLDialect.ORACLE
                         ? field("id")
                         : TBook_ID())
                 .fetch();
@@ -324,7 +324,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         create().select(TAuthor_LAST_NAME(), TBook_TITLE())
                 .from(TBook())
                 .naturalLeftOuterJoin(TAuthor())
-                .orderBy(dialect() == SQLDialect.ORACLE
+                .orderBy(dialect().family() == SQLDialect.ORACLE
                     ? field("id")
                     : TBook_ID())
                 .fetch();
@@ -348,7 +348,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TAuthor())
                 .join(TBook())
                 .using(TAuthor_ID())
-                .orderBy(dialect() == SQLDialect.ORACLE
+                .orderBy(dialect().family() == SQLDialect.ORACLE
                         ? field("id")
                         : TBook_ID())
                 .fetch();
@@ -367,7 +367,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .from(TBook())
                 .leftOuterJoin(TAuthor())
                 .using(TAuthor_ID())
-                .orderBy(dialect() == SQLDialect.ORACLE
+                .orderBy(dialect().family() == SQLDialect.ORACLE
                     ? field("id")
                     : TBook_ID())
                 .fetch();

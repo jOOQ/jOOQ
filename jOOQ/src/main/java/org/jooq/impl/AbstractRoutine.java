@@ -370,7 +370,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLEnd(RenderContext context) {
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case ORACLE:
                 context.sql(";")
                        .formatIndentEnd()
@@ -385,7 +385,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLBegin(RenderContext context) {
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case ORACLE:
                 context.keyword("begin")
                        .formatIndentStart()
@@ -399,7 +399,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLAssign(RenderContext context) {
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case ORACLE:
                 context.sql("? := ");
                 break;
@@ -411,7 +411,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLCall(RenderContext context) {
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case ORACLE:
                 break;
 
@@ -424,7 +424,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case ORACLE:
                 context.sql(parameter);
                 context.sql(" => ");
@@ -438,7 +438,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
-        switch (context.configuration().dialect()) {
+        switch (context.configuration().dialect().family()) {
             case ORACLE:
                 context.sql(parameter);
                 context.sql(" => ");
@@ -498,7 +498,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 int index = parameterIndexes.get(parameter);
                 int sqlType = parameter.getDataType().getDataType(c).getSQLType();
 
-                switch (c.dialect()) {
+                switch (c.dialect().family()) {
 
                     // For some user defined types Oracle needs to bind
                     // also the type name

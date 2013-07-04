@@ -6539,10 +6539,6 @@ R fetchAny();
 Cursor<R> fetchLazy();
 Cursor<R> fetchLazy(int fetchSize);
 
-// Create a java.util.concurrent.Future, to handle asynchronous execution of the ResultQuery
-FutureResult<R> fetchLater();
-FutureResult<R> fetchLater(ExecutorService executor);
-
 // Fetch several results at once
 List<Result<Record>> fetchMany();
 

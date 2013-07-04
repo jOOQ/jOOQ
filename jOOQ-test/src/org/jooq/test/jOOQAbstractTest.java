@@ -1140,6 +1140,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testPlainSQLBlobAndClob() throws Exception {
+        new PlainSQLTests(this).testPlainSQLBlobAndClob();
+    }
+
+    @Test
     public void testCustomSQL() throws Exception {
         new PlainSQLTests(this).testCustomSQL();
     }

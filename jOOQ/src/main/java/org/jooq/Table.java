@@ -53,6 +53,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.SQLDialect.SYBASE;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.List;
 
@@ -1032,4 +1033,112 @@ public interface Table<R extends Record> extends TableLike<R> {
         args = "Table"
     )
     DivideByOnStep divideBy(Table<?> divisor);
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
+     * this table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "VERSIONS BETWEEN SCN",
+        args = "Field"
+    )
+    VersionsBetweenAndStep<R, Number> versionsBetweenScn(Number scn);
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
+     * this table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "VERSIONS BETWEEN SCN",
+        args = "Field"
+    )
+    VersionsBetweenAndStep<R, Number> versionsBetweenScn(Field<? extends Number> scn);
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
+     * this table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "VERSIONS BETWEEN SCN MINVALUE"
+    )
+    VersionsBetweenAndStep<R, Number> versionsBetweenScnMinvalue();
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
+     * this table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "VERSIONS BETWEEN TIMESTAMP",
+        args = "Field"
+    )
+    VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestamp(Timestamp timestamp);
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
+     * this table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "VERSIONS BETWEEN TIMESTAMP",
+        args = "Field"
+    )
+    VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestamp(Field<Timestamp> timestamp);
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback versions query clause from
+     * this table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "VERSIONS BETWEEN TIMESTAMP MINVALUE"
+    )
+    VersionsBetweenAndStep<R, Timestamp> versionsBetweenTimestampMinvalue();
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback query clause from this
+     * table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "AS OF SCN",
+        args = "Field"
+    )
+    Table<R> asOfScn(Number scn);
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback query clause from this
+     * table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "AS OF SCN",
+        args = "Field"
+    )
+    Table<R> asOfScn(Field<? extends Number> scn);
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback query clause from this
+     * table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "AS OF TIMESTAMP",
+        args = "Field"
+    )
+    Table<R> asOfTimestamp(Timestamp timestamp);
+
+    /**
+     * Create an {@link SQLDialect#ORACLE} flashback query clause from this
+     * table.
+     */
+    @Support({ ORACLE })
+    @Transition(
+        name = "AS OF TIMESTAMP",
+        args = "Field"
+    )
+    Table<R> asOfTimestamp(Field<Timestamp> timestamp);
 }

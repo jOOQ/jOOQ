@@ -42,6 +42,7 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static org.jooq.impl.DSL.currentUser;
+import static org.jooq.impl.DSL.max;
 import static org.jooq.impl.DSL.sum;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
@@ -83,6 +84,13 @@ import static org.jooq.test.oracle3.generatedclasses.DefaultSchema.DEFAULT_SCHEM
 import static org.jooq.util.oracle.OracleDSL.contains;
 import static org.jooq.util.oracle.OracleDSL.score;
 import static org.jooq.util.oracle.OracleDSL.sysContext;
+import static org.jooq.util.oracle.OracleDSL.versionsEndscn;
+import static org.jooq.util.oracle.OracleDSL.versionsEndtime;
+import static org.jooq.util.oracle.OracleDSL.versionsOperation;
+import static org.jooq.util.oracle.OracleDSL.versionsStartscn;
+import static org.jooq.util.oracle.OracleDSL.versionsStarttime;
+import static org.jooq.util.oracle.OracleDSL.versionsXid;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -1393,5 +1401,28 @@ public class OracleTest extends jOOQAbstractTest<
         address.setStreet(new UStreetTypeRecord());
         address.getStreet().setNo("15");
         assertEquals("15", Routines.pEnhanceAddress1(create.configuration(), address));
+    }
+
+    @Test
+    public void testOracleFlashbackQuery() throws Exception {
+        // Just checking syntactic integrity
+        Result<TAuthorRecord> a1 =
+        create().selectFrom(T_AUTHOR.versionsBetweenScnMinvalue()
+                                    .andMaxvalue())
+                .orderBy(T_AUTHOR.ID)
+                .fetch();
+        assertTrue(a1.size() >= 2);
+
+        create().select(
+                    max(versionsStartscn()),
+                    max(versionsStarttime()),
+                    max(versionsEndscn()),
+                    max(versionsEndtime()),
+                    max(versionsXid()),
+                    max(versionsOperation())
+                )
+                .from(T_AUTHOR.versionsBetweenTimestampMinvalue()
+                              .andMaxvalue())
+                .fetch();
     }
 }

@@ -611,11 +611,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals("text", r1.getValue(0));
         assertEquals("pdf", new String((byte[]) r1.getValue(1), "UTF-8"));
 
-        Record r2 = create().select(field("content_text"), field("content_pdf"))
+        Record r2 = create().select(
+                                field("content_text", String.class),
+                                field("content_pdf", byte[].class))
                             .from("t_book")
                             .where("id = 1")
                             .fetchOne();
         assertEquals("text", r2.getValue(0));
         assertEquals("pdf", new String((byte[]) r2.getValue(1), "UTF-8"));
+
+        Record r3 = create().select(field("content_text"), field("content_pdf"))
+                            .from("t_book")
+                            .where("id = 1")
+                            .fetchOne();
+        assertEquals("text", r3.getValue(0));
+        assertEquals("pdf", new String((byte[]) r3.getValue(1), "UTF-8"));
     }
 }

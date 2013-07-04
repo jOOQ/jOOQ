@@ -65,7 +65,6 @@ import org.jooq.Condition;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
 import org.jooq.Field;
-import org.jooq.FutureResult;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.Record1;
@@ -489,12 +488,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         });
 
         assertEquals(1, (int) count[0]);
-
-        FutureResult<Record> fetch9 = q.fetchLater();
-        Thread.sleep(50);
-        assertTrue(fetch9.isDone());
-        assertEquals(1, fetch9.get().size());
-        assertEquals("10", fetch9.get().getValue(0, 0));
 
         Cursor<Record> fetch10 = q.fetchLazy();
         assertFalse(fetch10.isClosed());

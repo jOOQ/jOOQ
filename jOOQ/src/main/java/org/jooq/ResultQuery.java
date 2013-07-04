@@ -932,7 +932,9 @@ public interface ResultQuery<R extends Record> extends Query {
      *
      * @return A future result
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 3.2.0 - [#2581] - This method will be removed in jOOQ 4.0
      */
+    @Deprecated
     FutureResult<R> fetchLater() throws DataAccessException;
 
     /**
@@ -961,7 +963,9 @@ public interface ResultQuery<R extends Record> extends Query {
      * @param executor A custom executor
      * @return A future result
      * @throws DataAccessException if something went wrong executing the query
+     * @deprecated - 3.2.0 - [#2581] - This method will be removed in jOOQ 4.0
      */
+    @Deprecated
     FutureResult<R> fetchLater(ExecutorService executor) throws DataAccessException;
 
     /**

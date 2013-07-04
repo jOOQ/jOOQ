@@ -816,10 +816,6 @@ public interface DSLContext {
      * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
      * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
      * </tr>
-     * <tr>
-     * <td> {@link ResultQuery#fetchLater()}</td>
-     * <td>Fetch records of a long-running query asynchronously</td>
-     * </tr>
      * </table>
      * <p>
      * Example (Postgres):
@@ -865,10 +861,6 @@ public interface DSLContext {
      * <tr>
      * <td> {@link ResultQuery#fetchInto(RecordHandler)}</td>
      * <td>Fetch records into a custom callback (similar to Spring's RowMapper)</td>
-     * </tr>
-     * <tr>
-     * <td> {@link ResultQuery#fetchLater()}</td>
-     * <td>Fetch records of a long-running query asynchronously</td>
      * </tr>
      * </table>
      * <p>

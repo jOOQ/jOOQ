@@ -108,6 +108,7 @@ import org.jooq.InsertValuesStep7;
 import org.jooq.InsertValuesStep8;
 import org.jooq.InsertValuesStep9;
 import org.jooq.InsertValuesStepN;
+import org.jooq.Keyword;
 import org.jooq.Merge;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;
@@ -4644,6 +4645,30 @@ public class DSL {
 
         // The field has any other type. Try to make it an array
         throw new SQLDialectNotSupportedException("Converting arbitrary types into array tables is currently not supported");
+    }
+
+    // -------------------------------------------------------------------------
+    // XXX SQL keywords
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create a SQL keyword.
+     * <p>
+     * A <code>Keyword</code> is a {@link QueryPart} that renders a SQL keyword
+     * according to the settings specified in
+     * {@link Settings#getRenderKeywordStyle()}. It can be embedded in other
+     * plain SQL <code>QueryParts</code> as shown in this example:
+     * <p>
+     * <code><pre>
+     * Condition c = condition("{0} {1} {2} {3} {4}",
+     *     value1, keyword("between")
+     *     value2, keyword("and")
+     *     value3
+     * );
+     * </pre></code>
+     */
+    public static Keyword keyword(String keyword) {
+        return new KeywordImpl(keyword);
     }
 
     // -------------------------------------------------------------------------

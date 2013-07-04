@@ -35,13 +35,19 @@
  */
 package org.jooq.test;
 
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
+import static org.jooq.conf.RenderKeywordStyle.LOWER;
+import static org.jooq.conf.RenderKeywordStyle.UPPER;
 import static org.jooq.conf.StatementType.STATIC_STATEMENT;
 import static org.jooq.impl.DSL.val;
 import static org.junit.Assert.assertEquals;
 
+import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.Keyword;
 import org.jooq.Query;
 import org.jooq.SQLDialect;
 import org.jooq.conf.Settings;
@@ -127,5 +133,19 @@ public class RenderTest extends AbstractTest {
            .select(val(1), val("A"));
 
         testGetSQL0(q, "select 1, 'A' from dual");
+    }
+
+    @Test
+    public void testKeywords() {
+        Keyword keyword = DSL.keyword("Abc");
+        Field<?> f = DSL.field("{0} Untouched {Xx} Untouched {1}", keyword, keyword);
+
+        DSLContext def = DSL.using(ORACLE);
+        DSLContext lower = DSL.using(ORACLE, new Settings().withRenderKeywordStyle(LOWER));
+        DSLContext upper = DSL.using(ORACLE, new Settings().withRenderKeywordStyle(UPPER));
+
+        assertEquals("abc Untouched xx Untouched abc", def.render(f));
+        assertEquals("abc Untouched xx Untouched abc", lower.render(f));
+        assertEquals("ABC Untouched XX Untouched ABC", upper.render(f));
     }
 }

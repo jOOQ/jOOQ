@@ -35,10 +35,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
 import org.jooq.Field;
+import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -59,18 +61,18 @@ implements VersionsBetweenAndStep<R, T> {
     private static final long   serialVersionUID = -7918219502110473521L;
 
     private final Table<R>      table;
-    private final FlashbackType type;
+    private final QueryPart     type;
     private final Field<?>      asOf;
-    private final Field<?>      minvalue;
-    private Field<?>            maxvalue;
+    private final QueryPart     minvalue;
+    private QueryPart           maxvalue;
 
     FlashbackTable(Table<R> table, Field<?> asOf, Field<?> minvalue, FlashbackType type) {
         super("flashbackquery");
 
         this.table = table;
         this.asOf = asOf;
-        this.minvalue = minvalue;
-        this.type = type;
+        this.minvalue = minvalue != null ? minvalue : keyword("minvalue");
+        this.type = type == FlashbackType.SCN ? keyword("scn") : keyword("timestamp");
     }
 
     // ------------------------------------------------------------------------
@@ -90,7 +92,7 @@ implements VersionsBetweenAndStep<R, T> {
 
     @Override
     public final Table<R> andMaxvalue() {
-        maxvalue = null;
+        maxvalue = keyword("maxvalue");
         return this;
     }
 
@@ -111,7 +113,7 @@ implements VersionsBetweenAndStep<R, T> {
             context.sql(" ")
                    .keyword("as of")
                    .sql(" ")
-                   .keyword(type == FlashbackType.SCN ? "scn" : "timestamp")
+                   .sql(type)
                    .sql(" ")
                    .sql(asOf);
         }
@@ -119,27 +121,13 @@ implements VersionsBetweenAndStep<R, T> {
             context.sql(" ")
                    .keyword("versions between")
                    .sql(" ")
-                   .keyword(type == FlashbackType.SCN ? "scn" : "timestamp")
-                   .sql(" ");
-
-            // [#2542] Replace this clumsy expression by DSL.keyword() if applicable
-            if (minvalue != null) {
-                context.sql(minvalue);
-            }
-            else {
-                context.keyword("minvalue");
-            }
-
-            context.sql(" ")
+                   .sql(type)
+                   .sql(" ")
+                   .sql(minvalue)
+                   .sql(" ")
                    .keyword("and")
-                   .sql(" ");
-
-            if (maxvalue != null) {
-                context.sql(maxvalue);
-            }
-            else {
-                context.keyword("maxvalue");
-            }
+                   .sql(" ")
+                   .sql(maxvalue);
         }
     }
 
@@ -151,12 +139,7 @@ implements VersionsBetweenAndStep<R, T> {
             context.bind(asOf);
         }
         else {
-            if (minvalue != null) {
-                context.bind(minvalue);
-            }
-            if (maxvalue != null) {
-                context.bind(maxvalue);
-            }
+            context.bind(minvalue).bind(maxvalue);
         }
     }
 

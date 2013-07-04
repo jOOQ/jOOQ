@@ -53,7 +53,6 @@ import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.FutureResult;
 import org.jooq.GroupField;
 import org.jooq.JoinType;
 import org.jooq.Operator;
@@ -1290,12 +1289,14 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final FutureResult<R> fetchLater() {
+    @Deprecated
+    public final org.jooq.FutureResult<R> fetchLater() {
         return getDelegate().fetchLater();
     }
 
     @Override
-    public final FutureResult<R> fetchLater(ExecutorService executor) {
+    @Deprecated
+    public final org.jooq.FutureResult<R> fetchLater(ExecutorService executor) {
         return getDelegate().fetchLater(executor);
     }
 

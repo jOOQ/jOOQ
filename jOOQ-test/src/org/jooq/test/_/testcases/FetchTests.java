@@ -68,8 +68,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
 
@@ -1477,47 +1475,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             fail();
         }
         catch (NoRecordMapperAvailableException expected) {}
-    }
-
-    @Test
-    public void testFetchLater() throws Exception {
-        Future<Result<B>> later;
-        Result<B> result;
-
-        int activeCount = Thread.activeCount();
-
-        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
-
-        // That's too fast for the query to be done, mostly
-        assertFalse(later.isDone());
-        assertFalse(later.isCancelled());
-        assertEquals(activeCount + 1, Thread.activeCount());
-
-        // Get should make sure the internal thread is terminated
-        result = later.get();
-        Thread.sleep(500);
-        assertEquals(activeCount, Thread.activeCount());
-
-        // Subsequent gets are ok
-        result = later.get();
-        result = later.get(1000, TimeUnit.MILLISECONDS);
-
-        // Check the data
-        assertEquals(4, result.size());
-        assertEquals(BOOK_IDS, result.getValues(TBook_ID()));
-
-        // Start new threads
-        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
-        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
-        later = create().selectFrom(TBook()).orderBy(TBook_ID()).fetchLater();
-        assertEquals(activeCount + 3, Thread.activeCount());
-
-        // This should be enough to ensure that GC will collect finished threads
-        later = null;
-        System.gc();
-        System.gc();
-        Thread.sleep(500);
-        assertEquals(activeCount, Thread.activeCount());
     }
 
     @Test

@@ -61,7 +61,6 @@ import org.jooq.Cursor;
 import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
-import org.jooq.FutureResult;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
@@ -630,14 +629,16 @@ abstract class AbstractResultQuery<R extends Record> extends AbstractQuery imple
     }
 
     @Override
-    public final FutureResult<R> fetchLater() {
+    @Deprecated
+    public final org.jooq.FutureResult<R> fetchLater() {
         ExecutorService executor = newSingleThreadExecutor();
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());
         return new FutureResultImpl<R>(future, executor);
     }
 
     @Override
-    public final FutureResult<R> fetchLater(ExecutorService executor) {
+    @Deprecated
+    public final org.jooq.FutureResult<R> fetchLater(ExecutorService executor) {
         Future<Result<R>> future = executor.submit(new ResultQueryCallable());
         return new FutureResultImpl<R>(future);
     }

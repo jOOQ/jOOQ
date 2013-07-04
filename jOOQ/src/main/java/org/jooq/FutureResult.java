@@ -51,7 +51,10 @@ import java.util.concurrent.Future;
  * all data into a single report</li>
  * <li>...</li>
  * </ul>
+ *
+ * @deprecated - 3.2.0 - [#2581] - This type will be removed in jOOQ 4.0
  */
+@Deprecated
 public interface FutureResult<R extends Record> extends Future<Result<R>> {
 
 }

@@ -1475,11 +1475,6 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testFetchLater() throws Exception {
-        new FetchTests(this).testFetchLater();
-    }
-
-    @Test
     public void testRecordOriginals() throws Exception {
         new RecordTests(this).testRecordOriginals();
     }

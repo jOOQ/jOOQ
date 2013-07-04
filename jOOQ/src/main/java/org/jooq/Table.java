@@ -101,86 +101,6 @@ public interface Table<R extends Record> extends TableLike<R> {
     Class<? extends R> getRecordType();
 
     /**
-     * Create an alias for this table.
-     * <p>
-     * Note that the case-sensitivity of the returned table depends on
-     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
-     * quoted, and thus case-sensitive!
-     *
-     * @param alias The alias name
-     * @return The table alias
-     */
-    @Support
-    @Transition(
-        name = "AS",
-        to = "AliasedTable",
-        args = "String"
-    )
-    Table<R> as(String alias);
-
-    /**
-     * Create an alias for this table and its fields
-     * <p>
-     * Note that the case-sensitivity of the returned table and columns depends
-     * on {@link Settings#getRenderNameStyle()}. By default, table aliases are
-     * quoted, and thus case-sensitive!
-     * <p>
-     * <h5>Derived column lists for table references</h5>
-     * <p>
-     * Note, not all databases support derived column lists for their table
-     * aliases. On the other hand, some databases do support derived column
-     * lists, but only for derived tables. jOOQ will try to turn table
-     * references into derived tables to make this syntax work. In other words,
-     * the following statements are equivalent: <code><pre>
-     * -- Using derived column lists to rename columns (e.g. Postgres)
-     * SELECT t.a, t.b
-     * FROM my_table t(a, b)
-     *
-     * -- Nesting table references within derived tables (e.g. SQL Server)
-     * SELECT t.a, t.b
-     * FROM (
-     *   SELECT * FROM my_table
-     * ) t(a, b)
-     * </pre></code>
-     * <p>
-     * <h5>Derived column lists for derived tables</h5>
-     * <p>
-     * Other databases may not support derived column lists at all, but they do
-     * support common table expressions. The following statements are
-     * equivalent: <code><pre>
-     * -- Using derived column lists to rename columns (e.g. Postgres)
-     * SELECT t.a, t.b
-     * FROM (
-     *   SELECT 1, 2
-     * ) AS t(a, b)
-     *
-     * -- Using UNION ALL to produce column names (e.g. MySQL)
-     * SELECT t.a, t.b
-     * FROM (
-     *   SELECT null a, null b FROM DUAL WHERE 1 = 0
-     *   UNION ALL
-     *   SELECT 1, 2 FROM DUAL
-     * ) t
-     * </pre></code>
-     *
-     * @param alias The alias name
-     * @param fieldAliases The field aliases. Excess aliases are ignored,
-     *            missing aliases will be substituted by this table's field
-     *            names.
-     * @return The table alias
-     */
-    @Support
-    @Transition(
-        name = "AS",
-        to = "AliasedTable",
-        args = {
-            "String",
-            "String+"
-        }
-    )
-    Table<R> as(String alias, String... fieldAliases);
-
-    /**
      * Retrieve the table's <code>IDENTITY</code> information, if available.
      * <p>
      * With SQL:2003, the concept of <code>IDENTITY</code> columns was
@@ -298,132 +218,93 @@ public interface Table<R extends Record> extends TableLike<R> {
      */
     <O extends Record> List<ForeignKey<R, O>> getReferencesTo(Table<O> other);
 
-    /**
-     * Specify a SQL Server style table hint for query optimisation
-     * <p>
-     * This makes sense only on an actual database table or view, not on other
-     * composed table sources.
-     * <p>
-     * Example:
-     * <p>
-     * <code><pre>
-     * create.select()
-     *       .from(BOOK.as("b").with("READUNCOMMITTED")
-     *       .fetch();
-     * </pre></code>
-     * <p>
-     * For {@link SQLDialect#ORACLE} style hints, see
-     * {@link SelectFromStep#hint(String)} and {@link SelectQuery#addHint(String)}
-     *
-     * @see <a
-     *      href="http://msdn.microsoft.com/en-us/library/ms187373.aspx">http://msdn.microsoft.com/en-us/library/ms187373.aspx</a>
-     * @see SelectFromStep#hint(String)
-     * @see SelectQuery#addHint(String)
-     */
-    @Support({ SQLSERVER, SYBASE })
-    @Transition(
-        name = "WITH",
-        args = "String"
-    )
-    Table<R> with(String hint);
+    // -------------------------------------------------------------------------
+    // XXX: Aliasing clauses
+    // -------------------------------------------------------------------------
 
     /**
-     * Create a new <code>TABLE</code> reference from this table, pivoting it
-     * into another form
+     * Create an alias for this table.
      * <p>
-     * This has been observed to work with
-     * <ul>
-     * <li> {@link SQLDialect#ORACLE11G} upwards</li>
-     * <li> {@link SQLDialect#SQLSERVER} (not yet officially supported)</li>
-     * <li>Other dialects by using some means of simulation (not yet officially
-     * supported)</li>
-     * </ul>
+     * Note that the case-sensitivity of the returned table depends on
+     * {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * quoted, and thus case-sensitive!
      *
-     * @param aggregateFunctions The aggregate functions used for pivoting.
-     * @return A DSL object to create the <code>PIVOT</code> expression
-     */
-    @Support({ ORACLE11G, ORACLE12C })
-    @Transition(
-        name = "PIVOT",
-        args = "Field+"
-    )
-    PivotForStep pivot(Field<?>... aggregateFunctions);
-
-    /**
-     * Create a new <code>TABLE</code> reference from this table, pivoting it
-     * into another form
-     * <p>
-     * For more details, see {@link #pivot(Field...)}
-     *
-     * @param aggregateFunctions The aggregate functions used for pivoting.
-     * @return A DSL object to create the <code>PIVOT</code> expression
-     * @see #pivot(Field...)
-     */
-    @Support({ ORACLE11G, ORACLE12C })
-    @Transition(
-        name = "PIVOT",
-        args = "Field+"
-    )
-    PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
-
-    /**
-     * Create a new <code>TABLE</code> reference from this table, applying
-     * relational division.
-     * <p>
-     * Relational division is the inverse of a cross join operation. The
-     * following is an approximate definition of a relational division:
-     * <code><pre>
-     * Assume the following cross join / cartesian product
-     * C = A × B
-     *
-     * Then it can be said that
-     * A = C ÷ B
-     * B = C ÷ A
-     * </pre></code>
-     * <p>
-     * With jOOQ, you can simplify using relational divisions by using the
-     * following syntax: <code><pre>
-     * C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)
-     * </pre></code>
-     * <p>
-     * The above roughly translates to <code><pre>
-     * SELECT DISTINCT C.TEXT FROM C "c1"
-     * WHERE NOT EXISTS (
-     *   SELECT 1 FROM B
-     *   WHERE NOT EXISTS (
-     *     SELECT 1 FROM C "c2"
-     *     WHERE "c2".TEXT = "c1".TEXT
-     *     AND "c2".ID = B.C_ID
-     *   )
-     * )
-     * </pre></code>
-     * <p>
-     * Or in plain text: Find those TEXT values in C whose ID's correspond to
-     * all ID's in B. Note that from the above SQL statement, it is immediately
-     * clear that proper indexing is of the essence. Be sure to have indexes on
-     * all columns referenced from the <code>on(...)</code> and
-     * <code>returning(...)</code> clauses.
-     * <p>
-     * For more information about relational division and some nice, real-life
-     * examples, see
-     * <ul>
-     * <li><a
-     * href="http://en.wikipedia.org/wiki/Relational_algebra#Division">http
-     * ://en.wikipedia.org/wiki/Relational_algebra#Division</a></li>
-     * <li><a href=
-     * "http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/"
-     * >http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-
-     * sql-of-relational-division/</a></li>
-     * </ul>
-     * <p>
-     * This has been observed to work with all dialects
+     * @param alias The alias name
+     * @return The table alias
      */
     @Support
     @Transition(
-        name = "DIVIDE BY",
-        args = "Table"
+        name = "AS",
+        to = "AliasedTable",
+        args = "String"
     )
-    DivideByOnStep divideBy(Table<?> divisor);
+    Table<R> as(String alias);
+
+    /**
+     * Create an alias for this table and its fields
+     * <p>
+     * Note that the case-sensitivity of the returned table and columns depends
+     * on {@link Settings#getRenderNameStyle()}. By default, table aliases are
+     * quoted, and thus case-sensitive!
+     * <p>
+     * <h5>Derived column lists for table references</h5>
+     * <p>
+     * Note, not all databases support derived column lists for their table
+     * aliases. On the other hand, some databases do support derived column
+     * lists, but only for derived tables. jOOQ will try to turn table
+     * references into derived tables to make this syntax work. In other words,
+     * the following statements are equivalent: <code><pre>
+     * -- Using derived column lists to rename columns (e.g. Postgres)
+     * SELECT t.a, t.b
+     * FROM my_table t(a, b)
+     *
+     * -- Nesting table references within derived tables (e.g. SQL Server)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT * FROM my_table
+     * ) t(a, b)
+     * </pre></code>
+     * <p>
+     * <h5>Derived column lists for derived tables</h5>
+     * <p>
+     * Other databases may not support derived column lists at all, but they do
+     * support common table expressions. The following statements are
+     * equivalent: <code><pre>
+     * -- Using derived column lists to rename columns (e.g. Postgres)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT 1, 2
+     * ) AS t(a, b)
+     *
+     * -- Using UNION ALL to produce column names (e.g. MySQL)
+     * SELECT t.a, t.b
+     * FROM (
+     *   SELECT null a, null b FROM DUAL WHERE 1 = 0
+     *   UNION ALL
+     *   SELECT 1, 2 FROM DUAL
+     * ) t
+     * </pre></code>
+     *
+     * @param alias The alias name
+     * @param fieldAliases The field aliases. Excess aliases are ignored,
+     *            missing aliases will be substituted by this table's field
+     *            names.
+     * @return The table alias
+     */
+    @Support
+    @Transition(
+        name = "AS",
+        to = "AliasedTable",
+        args = {
+            "String",
+            "String+"
+        }
+    )
+    Table<R> as(String alias, String... fieldAliases);
+
+    // -------------------------------------------------------------------------
+    // XXX: JOIN clauses on tables
+    // -------------------------------------------------------------------------
 
     /**
      * Join a table to this table using a {@link JoinType}
@@ -1020,4 +901,135 @@ public interface Table<R extends Record> extends TableLike<R> {
         to = "JoinedTable"
     )
     Table<Record> naturalRightOuterJoin(String sql, QueryPart... parts);
+
+    // -------------------------------------------------------------------------
+    // XXX: Exotic and vendor-specific clauses on tables
+    // -------------------------------------------------------------------------
+
+    /**
+     * Specify a SQL Server style table hint for query optimisation
+     * <p>
+     * This makes sense only on an actual database table or view, not on other
+     * composed table sources.
+     * <p>
+     * Example:
+     * <p>
+     * <code><pre>
+     * create.select()
+     *       .from(BOOK.as("b").with("READUNCOMMITTED")
+     *       .fetch();
+     * </pre></code>
+     * <p>
+     * For {@link SQLDialect#ORACLE} style hints, see
+     * {@link SelectFromStep#hint(String)} and {@link SelectQuery#addHint(String)}
+     *
+     * @see <a
+     *      href="http://msdn.microsoft.com/en-us/library/ms187373.aspx">http://msdn.microsoft.com/en-us/library/ms187373.aspx</a>
+     * @see SelectFromStep#hint(String)
+     * @see SelectQuery#addHint(String)
+     */
+    @Support({ SQLSERVER, SYBASE })
+    @Transition(
+        name = "WITH",
+        args = "String"
+    )
+    Table<R> with(String hint);
+
+    /**
+     * Create a new <code>TABLE</code> reference from this table, pivoting it
+     * into another form
+     * <p>
+     * This has been observed to work with
+     * <ul>
+     * <li> {@link SQLDialect#ORACLE11G} upwards</li>
+     * <li> {@link SQLDialect#SQLSERVER} (not yet officially supported)</li>
+     * <li>Other dialects by using some means of simulation (not yet officially
+     * supported)</li>
+     * </ul>
+     *
+     * @param aggregateFunctions The aggregate functions used for pivoting.
+     * @return A DSL object to create the <code>PIVOT</code> expression
+     */
+    @Support({ ORACLE11G, ORACLE12C })
+    @Transition(
+        name = "PIVOT",
+        args = "Field+"
+    )
+    PivotForStep pivot(Field<?>... aggregateFunctions);
+
+    /**
+     * Create a new <code>TABLE</code> reference from this table, pivoting it
+     * into another form
+     * <p>
+     * For more details, see {@link #pivot(Field...)}
+     *
+     * @param aggregateFunctions The aggregate functions used for pivoting.
+     * @return A DSL object to create the <code>PIVOT</code> expression
+     * @see #pivot(Field...)
+     */
+    @Support({ ORACLE11G, ORACLE12C })
+    @Transition(
+        name = "PIVOT",
+        args = "Field+"
+    )
+    PivotForStep pivot(Collection<? extends Field<?>> aggregateFunctions);
+
+    /**
+     * Create a new <code>TABLE</code> reference from this table, applying
+     * relational division.
+     * <p>
+     * Relational division is the inverse of a cross join operation. The
+     * following is an approximate definition of a relational division:
+     * <code><pre>
+     * Assume the following cross join / cartesian product
+     * C = A × B
+     *
+     * Then it can be said that
+     * A = C ÷ B
+     * B = C ÷ A
+     * </pre></code>
+     * <p>
+     * With jOOQ, you can simplify using relational divisions by using the
+     * following syntax: <code><pre>
+     * C.divideBy(B).on(C.ID.equal(B.C_ID)).returning(C.TEXT)
+     * </pre></code>
+     * <p>
+     * The above roughly translates to <code><pre>
+     * SELECT DISTINCT C.TEXT FROM C "c1"
+     * WHERE NOT EXISTS (
+     *   SELECT 1 FROM B
+     *   WHERE NOT EXISTS (
+     *     SELECT 1 FROM C "c2"
+     *     WHERE "c2".TEXT = "c1".TEXT
+     *     AND "c2".ID = B.C_ID
+     *   )
+     * )
+     * </pre></code>
+     * <p>
+     * Or in plain text: Find those TEXT values in C whose ID's correspond to
+     * all ID's in B. Note that from the above SQL statement, it is immediately
+     * clear that proper indexing is of the essence. Be sure to have indexes on
+     * all columns referenced from the <code>on(...)</code> and
+     * <code>returning(...)</code> clauses.
+     * <p>
+     * For more information about relational division and some nice, real-life
+     * examples, see
+     * <ul>
+     * <li><a
+     * href="http://en.wikipedia.org/wiki/Relational_algebra#Division">http
+     * ://en.wikipedia.org/wiki/Relational_algebra#Division</a></li>
+     * <li><a href=
+     * "http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/"
+     * >http://www.simple-talk.com/sql/t-sql-programming/divided-we-stand-the-
+     * sql-of-relational-division/</a></li>
+     * </ul>
+     * <p>
+     * This has been observed to work with all dialects
+     */
+    @Support
+    @Transition(
+        name = "DIVIDE BY",
+        args = "Table"
+    )
+    DivideByOnStep divideBy(Table<?> divisor);
 }

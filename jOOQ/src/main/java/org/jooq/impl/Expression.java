@@ -126,57 +126,57 @@ class Expression<T> extends AbstractFunction<T> {
     @SuppressWarnings("unchecked")
     @Override
     final Field<T> getFunction0(Configuration configuration) {
-        SQLDialect dialect = configuration.dialect();
+        SQLDialect family = configuration.dialect().family();
 
         // ---------------------------------------------------------------------
         // XXX: Bitwise operators
         // ---------------------------------------------------------------------
 
         // DB2, H2 and HSQLDB know functions, instead of operators
-        if (BIT_AND == operator && asList(DB2, H2, HSQLDB, ORACLE).contains(dialect)) {
+        if (BIT_AND == operator && asList(DB2, H2, HSQLDB, ORACLE).contains(family)) {
             return function("bitand", getDataType(), getArguments());
         }
-        else if (BIT_AND == operator && FIREBIRD == dialect) {
+        else if (BIT_AND == operator && FIREBIRD == family) {
             return function("bin_and", getDataType(), getArguments());
         }
-        else if (BIT_XOR == operator && asList(DB2, H2, HSQLDB).contains(dialect)) {
+        else if (BIT_XOR == operator && asList(DB2, H2, HSQLDB).contains(family)) {
             return function("bitxor", getDataType(), getArguments());
         }
-        else if (BIT_XOR == operator && FIREBIRD == dialect) {
+        else if (BIT_XOR == operator && FIREBIRD == family) {
             return function("bin_xor", getDataType(), getArguments());
         }
-        else if (BIT_OR == operator && asList(DB2, H2, HSQLDB).contains(dialect)) {
+        else if (BIT_OR == operator && asList(DB2, H2, HSQLDB).contains(family)) {
             return function("bitor", getDataType(), getArguments());
         }
-        else if (BIT_OR == operator && FIREBIRD == dialect) {
+        else if (BIT_OR == operator && FIREBIRD == family) {
             return function("bin_or", getDataType(), getArguments());
         }
 
         // Oracle has to simulate or/xor
-        else if (BIT_OR == operator && ORACLE == dialect) {
+        else if (BIT_OR == operator && ORACLE == family) {
             return lhs.sub(bitAnd(lhsAsNumber(), rhsAsNumber())).add(rhsAsNumber());
         }
 
         // ~(a & b) & (a | b)
-        else if (BIT_XOR == operator && asList(ORACLE, SQLITE).contains(dialect)) {
+        else if (BIT_XOR == operator && asList(ORACLE, SQLITE).contains(family)) {
             return (Field<T>) bitAnd(
                 bitNot(bitAnd(lhsAsNumber(), rhsAsNumber())),
                 bitOr(lhsAsNumber(), rhsAsNumber()));
         }
 
         // Many dialects don't support shifts. Use multiplication/division instead
-        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect.family())) {
+        else if (SHL == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family.family())) {
             return lhs.mul(DSL.power(two(), rhsAsNumber()));
         }
-        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(dialect.family())) {
+        else if (SHR == operator && asList(ASE, DB2, H2, HSQLDB, INGRES, ORACLE, SQLSERVER, SYBASE).contains(family.family())) {
             return lhs.div(DSL.power(two(), rhsAsNumber()));
         }
 
         // Some dialects support shifts as functions
-        else if (SHL == operator && FIREBIRD == dialect) {
+        else if (SHL == operator && FIREBIRD == family) {
             return function("bin_shl", getDataType(), getArguments());
         }
-        else if (SHR == operator && FIREBIRD == dialect) {
+        else if (SHR == operator && FIREBIRD == family) {
             return function("bin_shr", getDataType(), getArguments());
         }
 

@@ -46,6 +46,8 @@ import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.ORACLE11G;
+import static org.jooq.SQLDialect.ORACLE12C;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 import static org.jooq.SQLDialect.SQLSERVER;
@@ -9992,8 +9994,8 @@ public class DSL {
     /**
      * Get the aggregated concatenation for a field.
      * <p>
-     * This is natively supported by {@link SQLDialect#ORACLE}. It is simulated
-     * by the following dialects:
+     * This is natively supported by {@link SQLDialect#ORACLE11G} upwards. It is
+     * simulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT()</code></li>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
@@ -10006,7 +10008,7 @@ public class DSL {
      *
      * @see #groupConcat(Field)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
     @Transition(
         name = "LISTAGG",
         args = "Field"
@@ -10018,8 +10020,8 @@ public class DSL {
     /**
      * Get the aggregated concatenation for a field.
      * <p>
-     * This is natively supported by {@link SQLDialect#ORACLE}. It is simulated
-     * by the following dialects:
+     * This is natively supported by {@link SQLDialect#ORACLE11G} upwards. It is
+     * simulated by the following dialects:
      * <ul>
      * <li> {@link SQLDialect#CUBRID}: Using <code>GROUP_CONCAT</code></li>
      * <li> {@link SQLDialect#DB2}: Using <code>XMLAGG()</code></li>
@@ -10032,7 +10034,7 @@ public class DSL {
      *
      * @see #groupConcat(Field)
      */
-    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE, POSTGRES, SYBASE })
+    @Support({ CUBRID, DB2, H2, HSQLDB, MARIADB, MYSQL, ORACLE11G, ORACLE12C, POSTGRES, SYBASE })
     @Transition(
         name = "LISTAGG",
         args = {

@@ -174,7 +174,7 @@ class ArrayTable extends AbstractTable<Record> {
     }
 
     private final Table<Record> table(Configuration configuration) {
-        switch (configuration.dialect()) {
+        switch (configuration.dialect().family()) {
             case ORACLE: {
                 if (array.getDataType().getType().isArray()) {
                     return simulate().as(alias);

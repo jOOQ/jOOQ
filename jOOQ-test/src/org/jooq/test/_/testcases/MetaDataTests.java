@@ -111,19 +111,19 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 sequences++;
 
                 // DB2 has an additional sequence for the T_TRIGGERS table
-                if (dialect() == DB2 ||
-                    dialect() == H2) {
+                if (dialect().family() == DB2 ||
+                    dialect().family() == H2) {
 
                     sequences++;
                 }
 
                 // CUBRID generates sequences for AUTO_INCREMENT columns
-                else if (dialect() == CUBRID) {
+                else if (dialect().family() == CUBRID) {
                     sequences += 3;
                 }
 
                 // Oracle has additional sequences for [#961]
-                else if (dialect() == ORACLE) {
+                else if (dialect().family() == ORACLE) {
                     sequences += 5;
                 }
             }
@@ -176,7 +176,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             }
             // [#643] The U_INVALID types are only available in Oracle
             // [#799] The member procedure UDT's too
-            else if (dialect() == ORACLE) {
+            else if (dialect().family() == ORACLE) {
                 assertEquals(7, schema.getUDTs().size());
             }
             else {
@@ -330,9 +330,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // [#745] TODO: Unify distinction between NUMERIC and DECIMAL
             else if ("BIG_DECIMAL".equalsIgnoreCase(field.getName())
-                    && dialect() != SQLDialect.ORACLE
-                    && dialect() != SQLDialect.POSTGRES
-                    && dialect() != SQLDialect.SQLITE
+                    && dialect().family() != SQLDialect.ORACLE
+                    && dialect().family() != SQLDialect.POSTGRES
+                    && dialect().family() != SQLDialect.SQLITE
                     && dialect().family() != SQLDialect.SQLSERVER) {
 
                 assertEquals(BigDecimal.class, field.getType());

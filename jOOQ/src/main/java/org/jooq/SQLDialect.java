@@ -121,6 +121,21 @@ public enum SQLDialect {
     ORACLE("Oracle"),
 
     /**
+     * The Oracle 10g dialect.
+     */
+    ORACLE10G("Oracle", ORACLE),
+
+    /**
+     * The Oracle 11g dialect.
+     */
+    ORACLE11G("Oracle", ORACLE),
+
+    /**
+     * The Oracle 12c dialect.
+     */
+    ORACLE12C("Oracle", ORACLE),
+
+    /**
      * The PostgreSQL dialect family.
      */
     POSTGRES("Postgres"),

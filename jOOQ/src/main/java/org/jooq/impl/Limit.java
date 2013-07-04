@@ -299,7 +299,10 @@ class Limit extends AbstractQueryPart {
 
             // Oracle knows no LIMIT or TOP clause, limits are always bound
             // ------------------------------------------------------------
-            case ORACLE: {
+            case ORACLE:
+            case ORACLE10G:
+            case ORACLE11G:
+            case ORACLE12C: {
 
                 // [#1020] With the ROWNUM filtering improvement, the upper
                 // limit is bound before the lower limit

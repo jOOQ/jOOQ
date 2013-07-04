@@ -35,7 +35,8 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.ORACLE11G;
+import static org.jooq.SQLDialect.ORACLE12C;
 
 import java.util.Collection;
 
@@ -59,7 +60,7 @@ public interface PivotInStep<T> {
      * @param values The pivoting values
      * @return A new pivoted table
      */
-    @Support({ ORACLE })
+    @Support({ ORACLE11G, ORACLE12C })
     Table<Record> in(T... values);
 
     /**
@@ -72,7 +73,7 @@ public interface PivotInStep<T> {
      * @param fields The pivoting values
      * @return A new pivoted table
      */
-    @Support(ORACLE)
+    @Support({ ORACLE11G, ORACLE12C })
     @Transition(
         name = "IN",
         args = "Field+",
@@ -90,6 +91,6 @@ public interface PivotInStep<T> {
      * @param fields The pivoting values
      * @return A new pivoted table
      */
-    @Support(ORACLE)
+    @Support({ ORACLE11G, ORACLE12C })
     Table<Record> in(Collection<? extends Field<T>> fields);
 }

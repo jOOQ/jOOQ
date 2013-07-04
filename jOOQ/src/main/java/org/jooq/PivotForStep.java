@@ -35,7 +35,8 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.ORACLE11G;
+import static org.jooq.SQLDialect.ORACLE12C;
 
 import org.jooq.api.annotation.State;
 import org.jooq.api.annotation.Transition;
@@ -60,7 +61,7 @@ public interface PivotForStep {
      * @param field The pivoting field
      * @return A DSL object to create the <code>PIVOT</code> expression
      */
-    @Support({ ORACLE })
+    @Support({ ORACLE11G, ORACLE12C })
     @Transition(
         name = "FOR",
         args = "Field"

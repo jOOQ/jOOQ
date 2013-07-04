@@ -252,7 +252,7 @@ class MetaImpl implements Meta, Serializable {
             try {
                 String[] types = null;
 
-                switch (configuration.dialect()) {
+                switch (configuration.dialect().family()) {
 
                     // [#2323] SQLite JDBC drivers have a bug. They return other
                     // object types, too: https://bitbucket.org/xerial/sqlite-jdbc/issue/68

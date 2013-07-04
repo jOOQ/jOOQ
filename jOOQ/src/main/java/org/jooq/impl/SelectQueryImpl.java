@@ -187,6 +187,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
                 // Oracle knows the ROWNUM pseudo-column. That makes things simple
                 case ORACLE:
+                case ORACLE10G:
+                case ORACLE11G:
+                case ORACLE12C:
                     toSQLReferenceLimitOracle(context);
                     break;
 
@@ -267,7 +270,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             else if (!forUpdateOfTables.isEmpty()) {
                 context.keyword(" of ");
 
-                switch (context.configuration().dialect()) {
+                switch (context.configuration().dialect().family()) {
 
                     // Some dialects don't allow for an OF [table-names] clause
                     // It can be simulated by listing the table's fields, though

@@ -35,7 +35,8 @@
  */
 package org.jooq;
 
-import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.SQLDialect.ORACLE11G;
+import static org.jooq.SQLDialect.ORACLE12C;
 
 import java.util.Collection;
 
@@ -72,7 +73,7 @@ public interface OrderedAggregateFunction<T> {
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
-    @Support(ORACLE)
+    @Support({ ORACLE11G, ORACLE12C })
     @Transition(
         name = "WITHIN GROUP ORDER BY",
         args = "Field+",
@@ -84,7 +85,7 @@ public interface OrderedAggregateFunction<T> {
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
-    @Support(ORACLE)
+    @Support({ ORACLE11G, ORACLE12C })
     @Transition(
         name = "WITHIN GROUP ORDER BY",
         args = "SortField+",
@@ -96,7 +97,7 @@ public interface OrderedAggregateFunction<T> {
      * Add an <code>WITHIN GROUP (ORDER BY ..)</code> clause to the ordered
      * aggregate function
      */
-    @Support(ORACLE)
+    @Support({ ORACLE11G, ORACLE12C })
     @Transition(
         name = "WITHIN GROUP ORDER BY",
         args = "SortField+",

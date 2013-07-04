@@ -173,7 +173,7 @@ class Val<T> extends AbstractParam<T> {
         // the safe side, always cast these types in those dialects that support
         // them
         if (getDataType().isInterval()) {
-            switch (context.configuration().dialect()) {
+            switch (context.configuration().dialect().family()) {
                 case ORACLE:
                 case POSTGRES:
                     return true;

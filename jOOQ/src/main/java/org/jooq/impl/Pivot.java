@@ -107,7 +107,9 @@ implements
         switch (configuration.dialect()) {
 
             // Oracle has native support for the PIVOT clause
-            case ORACLE: {
+            case ORACLE:
+            case ORACLE11G:
+            case ORACLE12C: {
                 return new OraclePivotTable();
             }
 

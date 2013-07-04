@@ -366,7 +366,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         jOOQAbstractTest.reset = false;
 
         Field<?> nullField = null;
-        switch (dialect()) {
+        switch (dialect().family()) {
             case ORACLE:
             case POSTGRES:
                 // TODO: cast this to the UDT type

@@ -192,7 +192,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // F378, which is a stored function with OUT parameters
         // ---------------------------------------------------------------------
-        switch (dialect()) {
+        switch (dialect().family()) {
 
             // Currently, this is only supported for oracle
             case ORACLE:
@@ -1207,7 +1207,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
     @Test
     public void testStoredProceduresWithCursorParameters() throws Exception {
-        switch (dialect()) {
+        switch (dialect().family()) {
             case H2:
             case HSQLDB:
             case ORACLE:

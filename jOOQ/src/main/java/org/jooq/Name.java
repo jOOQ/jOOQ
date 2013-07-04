@@ -38,17 +38,17 @@ package org.jooq;
 import org.jooq.conf.Settings;
 
 /**
- * A SQL identifier <code>QueryPart</code>
+ * A SQL identifier <code>QueryPart</code>.
  * <p>
  * A <code>Name</code> is a {@link QueryPart} that renders a SQL identifier
- * according to the {@link Settings#getRenderNameStyle()}.
+ * according to the settings specified in {@link Settings#getRenderNameStyle()}.
  *
  * @author Lukas Eder
  */
 public interface Name extends QueryPart {
 
     /**
-     * The qualified name of this SQL identifier
+     * The qualified name of this SQL identifier.
      */
     String[] getName();
 }

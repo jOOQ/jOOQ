@@ -48,7 +48,6 @@ h3 {
 
 pre {
     background: none repeat scroll 0 0 #333333;
-    border-radius: 10px 10px 10px 10px;
     border-width: 2px;
     border-style: solid;
     border-color: #000;
@@ -293,7 +292,6 @@ div.navigation-item-active {
 
 div.screenshot {
     background: none repeat scroll 0 0 #ffffff;
-    border-radius: 10px 10px 10px 10px;
     border-width: 2px;
     border-style: solid;
     border-color: #000;

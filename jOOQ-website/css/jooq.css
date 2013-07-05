@@ -220,7 +220,6 @@ h2 a:hover {
 }
 
 #tweets {
-    padding-top: 4px;
     height: 25px;
     float: left;
 }
@@ -231,9 +230,12 @@ h2 a:hover {
 
 div.tweet-item {
     float: left;
-    width: 100px;
-    white-space: nowrap;
-    overflow: hidden;
+    padding-right: 20px;
+}
+
+div.tweet-item img {
+    box-shadow: 0 0 5px #000;
+    border: 0;
 }
 
 #navigation a,

@@ -12,6 +12,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="target/generated-test-sources/jooq-h2"/>
+	<classpathentry kind="src" path="target/generated-test-sources/jooq-sqlite"/>
 	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>

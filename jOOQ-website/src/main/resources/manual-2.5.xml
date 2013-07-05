@@ -3150,7 +3150,7 @@ create.select(concat("A", "B", "C"));
 <java><![CDATA[create.selectFrom(BOOK).where(TITLE.likeRegex("^.*SQL.*$"));]]></java>
 
 									<p>
-										Note that the SQL standard specifies that patterns should follow the XQuery standards. In the real world, the POSIX regular expression standard is the most used one, some use Java regular expressions, and only a few ones use Perl regular expressions. jOOQ does not make any assumptions about regular expression syntax. For cross-database compatibility, please read the relevant databaes manuals carefully, to learn about the appropriate syntax. Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
+										Note that the SQL standard specifies that patterns should follow the XQuery standards. In the real world, the POSIX regular expression standard is the most used one, some use Java regular expressions, and only a few ones use Perl regular expressions. jOOQ does not make any assumptions about regular expression syntax. For cross-database compatibility, please read the relevant database manuals carefully, to learn about the appropriate syntax. Please refer to the <reference class="org.jooq.impl.Factory" title="Factory Javadoc"/> for more details.
 									</p>
 								</content>
 								<!-- don't forget regex here! -->

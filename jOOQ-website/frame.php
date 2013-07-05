@@ -58,7 +58,6 @@ function manualHeader($isSingle, $forVersion) {
 
 		</script>
 		<?php } ?>
-		<script type="text/javascript" src="https://www.catincan.com/ribbon/right/1/jOOQ.js" defer="defer"></script>
 		<script>
 		$(document).ready(function() {
 		    $("a").filter("[href*='http']").filter(":not([href*='jooq.org'])").attr("target", "_blank");

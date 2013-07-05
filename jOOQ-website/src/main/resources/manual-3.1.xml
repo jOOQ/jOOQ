@@ -8947,7 +8947,7 @@ Finishing                : Total: 4.814ms, +3.375ms
            org.jooq.util.mysql.MySQLDatabase
            org.jooq.util.oracle.OracleDatabase
            org.jooq.util.postgres.PostgresDatabase
-           org.jooq.util.sqlite.SQLiteDatabaes
+           org.jooq.util.sqlite.SQLiteDatabase
            org.jooq.util.sqlserver.SQLServerDatabase
            org.jooq.util.sybase.SybaseDatabase (to be used with Sybase SQL Anywhere)
 

@@ -35,6 +35,8 @@
  */
 package org.jooq.util.sqlite;
 
+import static org.jooq.util.sqlite.sqlite_master.SQLiteMaster.SQLITE_MASTER;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,7 @@ import org.jooq.util.ColumnDefinition;
 import org.jooq.util.DefaultColumnDefinition;
 import org.jooq.util.DefaultDataTypeDefinition;
 import org.jooq.util.SchemaDefinition;
+import org.jooq.util.sqlite.sqlite_master.SQLiteMaster;
 
 /**
  * SQLite table definition
@@ -52,6 +55,8 @@ import org.jooq.util.SchemaDefinition;
  * @author Lukas Eder
  */
 public class SQLiteTableDefinition extends AbstractTableDefinition {
+
+    private static Boolean existsSqliteSequence;
 
     public SQLiteTableDefinition(SchemaDefinition schema, String name, String comment) {
         super(schema, name, comment);
@@ -74,7 +79,7 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
             // SQLite identities are primary keys whose tables are mentioned in
             // sqlite_sequence
             boolean pk = record.getValue("pk", Boolean.class);
-            boolean identity = pk && create()
+            boolean identity = pk && existsSqliteSequence() && create()
                 .fetchOne("select count(*) from sqlite_sequence where name = ?", getName())
                 .getValue(0, Boolean.class);
 
@@ -99,5 +104,17 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
         }
 
         return result;
+    }
+
+    private boolean existsSqliteSequence() {
+        if (existsSqliteSequence == null) {
+            existsSqliteSequence = create()
+                .selectCount()
+                .from(SQLITE_MASTER)
+                .where(SQLiteMaster.NAME.lower().eq("sqlite_sequence"))
+                .fetchOne(0, boolean.class);
+        }
+
+        return existsSqliteSequence;
     }
 }

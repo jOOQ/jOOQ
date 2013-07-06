@@ -78,6 +78,9 @@ public class Transform {
     private static final String version = Constants.FULL_VERSION;
 
     public static void main(String[] args) throws Exception {
+        System.out.println("Transforming manual: " + file("manual.xml"));
+        System.out.println();
+
         System.out.println("Transforming multi-page manual");
         System.out.println("------------------------------");
         multiplePages();

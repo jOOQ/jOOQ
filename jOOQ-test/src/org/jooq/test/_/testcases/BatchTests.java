@@ -38,6 +38,9 @@ package org.jooq.test._.testcases;
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
+import static org.jooq.impl.DSL.delete;
+import static org.jooq.impl.DSL.insertInto;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.tools.reflect.Reflect.on;
 
 import java.sql.Connection;
@@ -110,17 +113,36 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // [#1749] TODO Firebird renders CAST(? as VARCHAR(...)) bind values with sizes
         // pre-calculated. Hence the param needs to have some min length...
-        Batch batch = create().batch(create().insertInto(TAuthor())
-                                             .set(TAuthor_ID(), 8)
-                                             .set(TAuthor_LAST_NAME(), "           "))
-                              .bind(8, "Gamma")
-                              .bind(9, "Helm")
-                              .bind(10, "Johnson");
+        Batch batch1 = create().batch(create().insertInto(TAuthor())
+                                              .set(TAuthor_ID(), 8)
+                                              .set(TAuthor_LAST_NAME(), "           "))
+                               .bind(8, "Gamma")
+                               .bind(9, "Helm")
+                               .bind(10, "Johnson");
+        assertEquals(3, batch1.size());
+        int[] result1 = batch1.execute();
+        assertEquals(3, result1.length);
+        testBatchAuthors("Gamma", "Helm", "Johnson");
 
-        assertEquals(3, batch.size());
 
-        int[] result = batch.execute();
-        assertEquals(3, result.length);
+        Batch batch2 = create().batch(delete(TAuthor()).where(TAuthor_ID().eq((Integer) null)))
+                               .bind(8)
+                               .bind(9)
+                               .bind(10);
+        assertEquals(3, batch2.size());
+        int[] result2 = batch2.execute();
+        assertEquals(3, result2.length);
+        assertEquals(2, create().fetchCount(selectOne().from(TAuthor())));
+
+
+        Batch batch3 = create().batch(insertInto(TAuthor(), TAuthor_ID(), TAuthor_LAST_NAME())
+                                      .values((Integer) null, null))
+                               .bind(8, "Gamma")
+                               .bind(9, "Helm")
+                               .bind(10, "Johnson");
+        assertEquals(3, batch3.size());
+        int[] result3 = batch3.execute();
+        assertEquals(3, result3.length);
         testBatchAuthors("Gamma", "Helm", "Johnson");
     }
 

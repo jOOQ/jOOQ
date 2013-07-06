@@ -7238,29 +7238,33 @@ finally {
 <java><![CDATA[// 1. several queries
 // ------------------
 Statement stmt = connection.createStatement();
-stmt.addBatch("INSERT INTO author VALUES (1, 'Erich Gamma')");
-stmt.addBatch("INSERT INTO author VALUES (2, 'Richard Helm')");
-stmt.addBatch("INSERT INTO author VALUES (3, 'Ralph Johnson')");
-stmt.addBatch("INSERT INTO author VALUES (4, 'John Vlissides')");
+stmt.addBatch("INSERT INTO author(id, first_name, last_name) VALUES (1, 'Erich', 'Gamma')");
+stmt.addBatch("INSERT INTO author(id, first_name, last_name) VALUES (2, 'Richard', 'Helm')");
+stmt.addBatch("INSERT INTO author(id, first_name, last_name) VALUES (3, 'Ralph', 'Johnson')");
+stmt.addBatch("INSERT INTO author(id, first_name, last_name) VALUES (4, 'John', 'Vlissides')");
 int[] result = stmt.executeBatch();
 
 // 2. a single query
 // -----------------
-PreparedStatement stmt = connection.prepareStatement("INSERT INTO autho VALUES (?, ?)");
+PreparedStatement stmt = connection.prepareStatement("INSERT INTO author(id, first_name, last_name) VALUES (?, ?, ?)");
 stmt.setInt(1, 1);
-stmt.setString(2, "Erich Gamma");
+stmt.setString(2, "Erich");
+stmt.setString(3, "Gamma");
 stmt.addBatch();
 
 stmt.setInt(1, 2);
-stmt.setString(2, "Richard Helm");
+stmt.setString(2, "Richard");
+stmt.setString(3, "Helm");
 stmt.addBatch();
 
 stmt.setInt(1, 3);
-stmt.setString(2, "Ralph Johnson");
+stmt.setString(2, "Ralph");
+stmt.setString(3, "Johnson");
 stmt.addBatch();
 
 stmt.setInt(1, 4);
-stmt.setString(2, "John Vlissides");
+stmt.setString(2, "John");
+stmt.setString(3, "Vlissides");
 stmt.addBatch();
 
 int[] result = stmt.executeBatch();]]></java>
@@ -7274,20 +7278,24 @@ int[] result = stmt.executeBatch();]]></java>
 <java><![CDATA[// 1. several queries
 // ------------------
 create.batch(
-	create.insertInto(AUTHOR, ID, NAME).values(1, "Erich Gamma"),
-	create.insertInto(AUTHOR, ID, NAME).values(2, "Richard Helm"),
-	create.insertInto(AUTHOR, ID, NAME).values(3, "Ralph Johnson"),
-	create.insertInto(AUTHOR, ID, NAME).values(4, "John Vlissides"))
+	create.insertInto(AUTHOR, ID, FIRST_NAME, LAST_NAME).values(1, "Erich", "Gamma"),
+	create.insertInto(AUTHOR, ID, FIRST_NAME, LAST_NAME).values(2, "Richard", "Helm"),
+	create.insertInto(AUTHOR, ID, FIRST_NAME, LAST_NAME).values(3, "Ralph", "Johnson"),
+	create.insertInto(AUTHOR, ID, FIRST_NAME, LAST_NAME).values(4, "John", "Vlissides"))
 .execute();
 
 // 2. a single query
 // -----------------
-create.batch(create.insertInto(AUTHOR, ID, NAME).values("?", "?"))
-	  .bind(1, "Erich Gamma")
-	  .bind(2, "Richard Helm")
-	  .bind(3, "Ralph Johnson")
-	  .bind(4, "John Vlissides")
-	  .execute();]]></java>
+create.batch(create.insertInto(AUTHOR, ID, FIRST_NAME, LAST_NAME).values((Integer) null, null, null))
+      .bind(1, "Erich", "Gamma")
+      .bind(2, "Richard", "Helm")
+      .bind(3, "Ralph", "Johnson")
+      .bind(4, "John", "Vlissides")
+      .execute();]]></java>
+      
+                            <p>
+                                When creating a batch execution with a single query and multiple bind values, you will still have to provide jOOQ with dummy bind values for the original query. In the above example, these are set to <code>null</code>. For subsequent calls to <code>bind()</code>, there will be no type safety provided by jOOQ.
+                            </p>
 						</content>
 					</section>
 

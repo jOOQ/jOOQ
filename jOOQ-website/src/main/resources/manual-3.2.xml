@@ -9010,7 +9010,11 @@ Finishing                : Total: 4.814ms, +3.375ms
 
     <target>
       <!-- The destination package of your generated classes (within the
-           destination directory) -->
+           destination directory)
+           
+           jOOQ may append the schema name to this package if generating multiple schemas,
+           e.g. org.jooq.your.packagename.schema1
+                org.jooq.your.packagename.schema2 -->
       <packageName>[org.jooq.your.packagename]</packageName>
 
       <!-- The destination directory of your generated classes -->

@@ -8669,6 +8669,8 @@ bookDao.delete(book);]]></java>
 							<p>
 								For convenience and better backwards-compatibility, consider extending <reference class="org.jooq.impl.DefaultExecuteListener"/> instead of implementing this interface.
 							</p>
+                            
+                            <h3>Example: Query statistics ExecuteListener</h3>
 							<p>
 								Here is a sample implementation of an ExecuteListener, that is simply counting the number of queries per type that are being executed using jOOQ:
 							</p>
@@ -8732,7 +8734,7 @@ for (ExecuteType type : ExecuteType.values()) {
 								Please read the <reference class="org.jooq.ExecuteListener" title="ExecuteListener Javadoc"/> for more details
 							</p>
 							
-							<h3>Writing a custom ExecuteListener for logging</h3>
+							<h3>Example: Custom Logging ExecuteListener</h3>
 							<p>
 								The following depicts an example of a custom ExecuteListener, which pretty-prints all queries being executed by jOOQ to stdout:
 							</p>
@@ -8777,6 +8779,27 @@ public class PrettyPrinter extends DefaultExecuteListener {
 							<p>
 								See also the manual's sections about <reference id="logging" title="logging"/> and the <reference id="jooq-console" title="jOOQ Console"/> for more sample implementations of actual ExecuteListeners.
 							</p>
+                            
+                            <h3>Example: Bad query execution ExecuteListener</h3>
+                            <p>
+                                You can also use ExecuteListeners to interact with your SQL statements, for instance when you want to check if executed <code><reference id="update-statement" title="UPDATE"/></code> or <code><reference id="delete-statement" title="DELETE"/></code> statements contain a <code>WHERE</code> clause. This can be achieved trivially with the following sample ExecuteListener:
+                            </p>
+                            
+<java><![CDATA[public class DeleteOrUpdateWithoutWhereListener extends DefaultExecuteListener {
+
+    @Override
+    public void renderEnd(ExecuteContext ctx) {
+        if (ctx.sql().matches("^(?i:(UPDATE|DELETE)(?!.* WHERE ).*)$")) {
+            throw new DeleteOrUpdateWithoutWhereException();
+        }
+    }
+}
+
+public class DeleteOrUpdateWithoutWhereException extends RuntimeException {}
+]]></java>
+                            <p>
+                                You might want to replace the above implementation with a more efficient and more reliable one, of course.
+                            </p>
 						</content>
 					</section>
 

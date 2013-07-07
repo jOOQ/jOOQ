@@ -326,7 +326,7 @@ public class GenerationTool {
 
     private static void errorIfNull(Object o, String message) {
         if (o == null) {
-            log.error(message + " For details, see http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd");
+            log.error(message + " For details, see http://www.jooq.org/xsd/jooq-codegen-3.2.0.xsd");
             System.exit(-1);
         }
     }
@@ -373,11 +373,11 @@ public class GenerationTool {
         // TODO [#1201] Add better error handling here
         xml = xml.replaceAll(
             "<(\\w+:)?configuration xmlns(:\\w+)?=\"http://www.jooq.org/xsd/jooq-codegen-\\d+\\.\\d+\\.\\d+.xsd\">",
-            "<$1configuration xmlns$2=\"http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd\">");
+            "<$1configuration xmlns$2=\"http://www.jooq.org/xsd/jooq-codegen-3.2.0.xsd\">");
 
         xml = xml.replace(
             "<configuration>",
-            "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-3.0.0.xsd\">");
+            "<configuration xmlns=\"http://www.jooq.org/xsd/jooq-codegen-3.2.0.xsd\">");
 
         return JAXB.unmarshal(new StringReader(xml), Configuration.class);
     }

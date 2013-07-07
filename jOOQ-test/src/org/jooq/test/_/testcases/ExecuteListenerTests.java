@@ -73,6 +73,7 @@ import org.jooq.test.jOOQAbstractTest;
 
 import org.junit.Test;
 
+@SuppressWarnings("serial")
 public class ExecuteListenerTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
@@ -432,7 +433,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         public static Queue<Integer> ids = new LinkedList<Integer>(asList(1, 2));
 
-        @SuppressWarnings("serial")
         private void checkBase(ExecuteContext ctx) {
             assertNotNull(ctx.query());
             assertNotNull(ctx.batchQueries());
@@ -779,7 +779,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         public static int           executeEnd;
         public static int           end;
 
-        @SuppressWarnings("serial")
         private void checkBase(ExecuteContext ctx) {
             assertNull(ctx.query());
             assertNotNull(ctx.batchQueries());
@@ -1016,7 +1015,6 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         public static Queue<Integer> ids = new LinkedList<Integer>(asList(1, 2));
 
-        @SuppressWarnings("serial")
         private void checkBase(ExecuteContext ctx) {
             assertNull(ctx.query());
             assertNotNull(ctx.batchQueries());
@@ -1405,5 +1403,52 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         public void end(ExecuteContext ctx) {
             countEnd++;
         }
+    }
+
+    @Test
+    public void testExecuteListenerDELETEorUPDATEwithoutWHERE() throws Exception {
+        try {
+            create(new DELETEorUPDATEwithoutWHERElistener())
+                .update(TBook())
+                .set(TBook_TITLE(), "abc")
+                .execute();
+            fail();
+        }
+        catch (DELETEorUPDATEwithoutWHEREException expected) {}
+
+        try {
+            create(new DELETEorUPDATEwithoutWHERElistener())
+                .delete(TBook())
+                .execute();
+            fail();
+        }
+        catch (DELETEorUPDATEwithoutWHEREException expected) {}
+
+        assertEquals(0,
+        create(new DELETEorUPDATEwithoutWHERElistener())
+            .update(TBook())
+            .set(TBook_TITLE(), "abc")
+            .where(TBook_ID().eq(5))
+            .execute());
+
+        assertEquals(0,
+        create(new DELETEorUPDATEwithoutWHERElistener())
+            .delete(TBook())
+            .where(TBook_ID().eq(5))
+            .execute());
+    }
+
+    public static class DELETEorUPDATEwithoutWHERElistener extends DefaultExecuteListener {
+
+        @Override
+        public void renderEnd(ExecuteContext ctx) {
+            if (ctx.sql().matches("^(?i:(UPDATE|DELETE)(?!.* WHERE ).*)$")) {
+                throw new DELETEorUPDATEwithoutWHEREException();
+            }
+        }
+    }
+
+    public static class DELETEorUPDATEwithoutWHEREException extends RuntimeException {
+
     }
 }

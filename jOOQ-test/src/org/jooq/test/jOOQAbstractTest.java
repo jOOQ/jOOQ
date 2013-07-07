@@ -2246,6 +2246,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testExecuteListenerDELETEorUPDATEwithoutWHERE() throws Exception {
+        new ExecuteListenerTests(this).testExecuteListenerDELETEorUPDATEwithoutWHERE();
+    }
+
+    @Test
     public void testRenderNameStyle() throws Exception {
         new RenderAndBindTests(this).testRenderNameStyle();
     }

@@ -69,6 +69,44 @@ function manualHeader($isSingle, $forVersion) {
 	    <div class="wrapper">
 		<div id="tweets">
 			<div class="tweet-item">
+				<a href="http://twitter.com/share"
+					class="twitter-share-button"
+					data-url="http://www.jooq.org"
+					data-text="#jOOQ - A nice database abstraction library for Java"
+					data-count="horizontal" data-via="JavaOOQ">Tweet</a>
+				<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				&nbsp;
+			</div>
+			<div class="tweet-item">
+				<g:plusone size="medium" href="http://www.jooq.org"></g:plusone>
+				&nbsp;
+			</div>
+			<div class="tweet-item">
+				<div id="fb-root"></div>
+				<script>(function(d, s, id) {
+				  var js, fjs = d.getElementsByTagName(s)[0];
+				  if (d.getElementById(id)) {return;}
+				  js = d.createElement(s); js.id = id;
+				  js.src = "//connect.facebook.net/en_US/all.js#appId=232666253447462&xfbml=1";
+				  fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));</script>
+				<div class="fb-like"
+					data-send="false"
+					data-href="http://www.jooq.org"
+					data-layout="button_count"
+					data-width="450"
+					data-show-faces="true"
+					data-font="verdana"></div>
+					&nbsp;
+			</div>
+			<div class="tweet-item">
+				<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
+				<script type="IN/Share" data-url="http://www.jooq.org" data-counter="right"></script>
+			</div>
+
+		    <?php
+		    /*
+			<div class="tweet-item">
 				<a href="http://twitter.com/share?text=%23jOOQ,+a+fun+way+to+write+%23SQL+in+%23Java:+http://www.jooq.org" target="_blank">
 					<img src="<?=$root?>/img/social-tw.png" width="37" height="27" alt="Share jOOQ on Twitter" title="Share jOOQ on Twitter"/></a>
 			</div>
@@ -84,6 +122,16 @@ function manualHeader($isSingle, $forVersion) {
 				<a href="http://www.linkedin.com/shareArticle?mini=true&url=http://www.jooq.org" target="_blank">
 	    			<img src="<?=$root?>/img/social-in.png" alt="Share jOOQ on LinkedIn" title="Share jOOQ on LinkedIn"/></a>
 			</div>
+			<div class="tweet-item">
+				<a href="http://github.com/jOOQ/jOOQ" target="_blank">
+	    			<img src="<?=$root?>/img/social-gh.png" alt="See jOOQ on GitHub" title="See jOOQ on GitHub" style="background-color: #111"/></a>
+			</div>
+			<div class="tweet-item">
+				<a href="http://stackoverflow.com/questions/tagged/jooq" target="_blank">
+	    			<img src="<?=$root?>/img/social-so.png" alt="See jOOQ on Stack Overflow" title="See jOOQ on Stack Overflow" style="background-color: #eee"/></a>
+			</div>
+			*/
+			?>
 		</div>
 
 	    <div id="menu">

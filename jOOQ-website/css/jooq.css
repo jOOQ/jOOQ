@@ -219,6 +219,24 @@ h2 a:hover {
 }
 
 #tweets {
+    padding-top: 4px;
+    height: 25px;
+    float: left;
+}
+
+#menu {
+    float: right;
+}
+
+div.tweet-item {
+    float: left;
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/*
+#tweets {
     height: 25px;
     float: left;
 }
@@ -236,6 +254,7 @@ div.tweet-item img {
     box-shadow: 0 0 5px #000;
     border: 0;
 }
+*/
 
 #navigation a,
 #navigation a:link,
@@ -314,4 +333,41 @@ code {
 
 .mono {
     font-family: monospace;
+}
+
+#intro {
+    height: auto;
+    margin-top: 40px;
+}
+
+#intro .row {
+    width: 100%;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+#intro .col {
+    float: left;
+    height: 300px;
+    margin: 0;
+    overflow: hidden;
+}
+
+#intro .col > * {
+    margin-right: 20px;
+}
+
+#intro .col-1 {
+    width: 33%;
+}
+
+#intro .col-2 {
+    width: 66%;
+}
+
+#intro .col-3 {
+    width: 100%;
 }

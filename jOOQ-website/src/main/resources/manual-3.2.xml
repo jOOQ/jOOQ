@@ -6993,7 +6993,7 @@ bookDao.delete(book);]]></java>
    .set(
        new RecordMapperProvider() {
            @Override
-           public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> rowType, Class<? extends E> type) {
+           public <R extends Record, E> RecordMapper<R, E> provide(RecordType<R> recordType, Class<? extends E> type) {
 
                // UUID mappers will always try to find the ID column
                if (type == UUID.class) {
@@ -7012,7 +7012,7 @@ bookDao.delete(book);]]></java>
 
                // Fall back to jOOQ's DefaultRecordMapper, which maps records onto
                // POJOs using reflection.
-               return new DefaultRecordMapperProvider();           
+               return new DefaultRecordMapper(recordType, type);           
            }
        }
    ))

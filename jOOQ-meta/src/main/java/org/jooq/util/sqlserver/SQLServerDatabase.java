@@ -54,6 +54,7 @@ import org.jooq.Record;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 import org.jooq.util.AbstractDatabase;
 import org.jooq.util.ArrayDefinition;
@@ -87,9 +88,16 @@ public class SQLServerDatabase extends AbstractDatabase {
 
     private boolean is2012() {
         if (is2012 == null) {
-            is2012 = create().selectCount()
-                             .from(SEQUENCES)
-                             .fetchOne(0, boolean.class);
+            try {
+                create().selectCount()
+                        .from(SEQUENCES)
+                        .fetch();
+
+                is2012 = true;
+            }
+            catch (DataAccessException e) {
+                is2012 = false;
+            }
         }
 
         return is2012;

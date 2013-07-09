@@ -28,6 +28,7 @@
  *     lang-el - Emacs Lisp
  *     lang-lisp - Lisp
  *     lang-scm - Scheme
+ *     lang-lsp - FAT 8.3 filename version of lang-lisp.
  *
  *
  * I used http://www.devincook.com/goldparser/doc/meta-language/grammar-LISP.htm
@@ -90,4 +91,4 @@ PR['registerLangHandler'](
          // A printable non-space non-special character
          [PR['PR_PUNCTUATION'], /^[^\w\t\n\r \xA0()\"\\\';]+/]
         ]),
-    ['cl', 'el', 'lisp', 'scm']);
+    ['cl', 'el', 'lisp', 'lsp', 'scm', 'ss', 'rkt']);

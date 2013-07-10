@@ -10073,12 +10073,12 @@ Result<BookRecord> result = create.selectFrom(BOOK).where(BOOK.ID.equal(5)).fetc
         String sql = ctx.sql();
         
         // Exceptions are propagated through the JDBC and jOOQ APIs
-        if (sql.toLowerCase().startsWith("DROP")) {
+        if (sql.toUpperCase().startsWith("DROP")) {
             throw new SQLException("Statement not supported: " + sql);
         }
         
         // You decide, whether any given statement returns results, and how many
-        else if (sql.toLowerCase().startsWith("SELECT")) {
+        else if (sql.toUpperCase().startsWith("SELECT")) {
             
             // Always return one author record
             Result<AuthorRecord> result = create.newResult(AUTHOR);

@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.QueryPart;
@@ -50,16 +48,14 @@ class SQLQuery extends AbstractQuery {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = 1740879770879469220L;
+    private static final long serialVersionUID = 1740879770879469220L;
 
-    private final String          sql;
-    private final List<QueryPart> substitutes;
+    private final QueryPart   delegate;
 
-    public SQLQuery(Configuration configuration, String sql, Object[] substitutes) {
+    public SQLQuery(Configuration configuration, QueryPart delegate) {
         super(configuration);
 
-        this.sql = sql;
-        this.substitutes = Utils.queryParts(substitutes);
+        this.delegate = delegate;
     }
 
     // ------------------------------------------------------------------------
@@ -68,11 +64,11 @@ class SQLQuery extends AbstractQuery {
 
     @Override
     public final void toSQL(RenderContext context) {
-        Utils.renderAndBind(context, null, sql, substitutes);
+        context.sql(delegate);
     }
 
     @Override
     public final void bind(BindContext context) {
-        Utils.renderAndBind(null, context, sql, substitutes);
+        context.bind(delegate);
     }
 }

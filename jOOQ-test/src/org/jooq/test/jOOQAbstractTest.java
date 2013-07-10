@@ -143,6 +143,7 @@ import org.jooq.test._.testcases.RowValueExpressionTests;
 import org.jooq.test._.testcases.SchemaAndMappingTests;
 import org.jooq.test._.testcases.SelectTests;
 import org.jooq.test._.testcases.StatementTests;
+import org.jooq.test._.testcases.TemplateTests;
 import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.test._.testcases.TruncateTests;
 import org.jooq.test._.testcases.ValuesConstructorTests;
@@ -1147,6 +1148,16 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testCustomSQL() throws Exception {
         new PlainSQLTests(this).testCustomSQL();
+    }
+
+    @Test
+    public void testTextTemplates() throws Exception {
+        new TemplateTests(this).testTextTemplates();
+    }
+
+    @Test
+    public void testVelocityTemplates() throws Exception {
+        new TemplateTests(this).testVelocityTemplates();
     }
 
     @Test

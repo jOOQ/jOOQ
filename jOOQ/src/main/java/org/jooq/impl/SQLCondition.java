@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
@@ -46,14 +44,12 @@ class SQLCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long     serialVersionUID = -7661748411414898501L;
+    private static final long serialVersionUID = -7661748411414898501L;
 
-    private final String          sql;
-    private final List<QueryPart> substitutes;
+    private final QueryPart   delegate;
 
-    SQLCondition(String sql, Object[] substitutes) {
-        this.sql = sql;
-        this.substitutes = Utils.queryParts(substitutes);
+    SQLCondition(QueryPart delegate) {
+        this.delegate = delegate;
     }
 
     // ------------------------------------------------------------------------
@@ -66,12 +62,12 @@ class SQLCondition extends AbstractCondition {
         // in parentheses to ensure correct semantics
 
         context.sql("(");
-        Utils.renderAndBind(context, null, sql, substitutes);
+        context.sql(delegate);
         context.sql(")");
     }
 
     @Override
     public final void bind(BindContext context) {
-        Utils.renderAndBind(null, context, sql, substitutes);
+        context.bind(delegate);
     }
 }

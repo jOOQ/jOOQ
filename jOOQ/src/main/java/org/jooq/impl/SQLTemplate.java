@@ -35,67 +35,48 @@
  */
 package org.jooq.impl;
 
-import java.sql.ResultSetMetaData;
+import java.util.List;
 
 import org.jooq.BindContext;
-import org.jooq.Configuration;
-import org.jooq.Field;
 import org.jooq.QueryPart;
-import org.jooq.Record;
 import org.jooq.RenderContext;
+import org.jooq.Template;
 
-/**
- * A plain SQL query that returns results
- *
- * @author Lukas Eder
- */
-class SQLResultQuery extends AbstractResultQuery<Record> {
+class SQLTemplate implements Template {
 
-    /**
-     * Generated UID
-     */
-    private static final long serialVersionUID = 1740879770879469220L;
+    private final String sql;
 
-    private final QueryPart   delegate;
-
-    public SQLResultQuery(Configuration configuration, QueryPart delegate) {
-        super(configuration);
-
-        this.delegate = delegate;
-    }
-
-    // ------------------------------------------------------------------------
-    // ResultQuery API
-    // ------------------------------------------------------------------------
-
-    @Override
-    public final void toSQL(RenderContext context) {
-        context.sql(delegate);
+    SQLTemplate(String sql) {
+        this.sql = sql;
     }
 
     @Override
-    public final void bind(BindContext context) {
-        context.bind(delegate);
+    public final QueryPart transform(Object... input) {
+        return new SQLTemplateQueryPart(sql, input);
     }
 
-    @Override
-    public final Class<? extends Record> getRecordType() {
-        return RecordImpl.class;
-    }
+    private static class SQLTemplateQueryPart extends AbstractQueryPart {
 
-    @Override
-    protected final Field<?>[] getFields(ResultSetMetaData meta) {
-        Configuration configuration = configuration();
-        return new MetaDataFieldProvider(configuration, meta).getFields();
-    }
+        /**
+         * Generated UID
+         */
+        private static final long     serialVersionUID = -7514156096865122018L;
+        private final String          sql;
+        private final List<QueryPart> substitutes;
 
-    @Override
-    final boolean isSelectingRefCursor() {
-        return false;
-    }
+        SQLTemplateQueryPart(String sql, Object... input) {
+            this.sql = sql;
+            this.substitutes = Utils.queryParts(input);
+        }
 
-    @Override
-    final boolean isForUpdate() {
-        return false;
+        @Override
+        public final void toSQL(RenderContext context) {
+            Utils.renderAndBind(context, null, sql, substitutes);
+        }
+
+        @Override
+        public final void bind(BindContext context) {
+            Utils.renderAndBind(null, context, sql, substitutes);
+        }
     }
 }

@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import java.util.List;
-
 import org.jooq.BindContext;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -48,16 +46,14 @@ import org.jooq.Table;
  */
 class SQLTable extends AbstractTable<Record> {
 
-    private static final long     serialVersionUID = -5122023013463718796L;
+    private static final long serialVersionUID = -5122023013463718796L;
 
-    private final String          sql;
-    private final List<QueryPart> substitutes;
+    private final QueryPart   delegate;
 
-    public SQLTable(String sql, Object[] substitutes) {
-        super("sql");
+    public SQLTable(QueryPart delegate) {
+        super(delegate.toString());
 
-        this.sql = sql;
-        this.substitutes = Utils.queryParts(substitutes);
+        this.delegate = delegate;
     }
 
     // ------------------------------------------------------------------------
@@ -81,12 +77,12 @@ class SQLTable extends AbstractTable<Record> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        Utils.renderAndBind(context, null, sql, substitutes);
+        context.sql(delegate);
     }
 
     @Override
     public final void bind(BindContext context) {
-        Utils.renderAndBind(null, context, sql, substitutes);
+        context.bind(delegate);
     }
 
     @Override

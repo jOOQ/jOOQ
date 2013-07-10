@@ -76,6 +76,7 @@ import java.util.Properties;
  * Connection connection = new MockConnection(provider);
  * DSLContext create = DSL.using(connection, dialect);
  * assertEquals(1, create.selectOne().fetch().size());
+ * </pre></code>
  * <p>
  * While this <code>MockConnection</code> can be used independently of jOOQ, it
  * has been optimised for usage with jOOQ. JDBC features that are not used by

@@ -13,7 +13,7 @@
     <groupId>org.jooq</groupId>
     <artifactId>jooq</artifactId>
     <name>jOOQ</name>
-
+<version>3.1.0-java5</version>
     <build>
         <plugins>
             <!-- XJC-generate JAXB artefacts. Contribution is the courtesy

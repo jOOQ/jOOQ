@@ -530,7 +530,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // ---------------------
         context.declareTables(true);
 
-        if (!context.render(getFrom()).isEmpty()) {
+        if (!StringUtils.isEmpty(context.render(getFrom()))) {
             context.formatSeparator()
                    .keyword("from ")
                    .sql(getFrom());

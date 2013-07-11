@@ -175,23 +175,6 @@ insertInto(t, t.a, t.b).values(1, 2);
 	<li>Google Cloud SQL (MySQL)</li>
 </ul>
 
-<h3>Planned (Contributions and suggestions are very welcome!)</h3>
-    <ul>
-    <li>Access</li>
-    <li>EXASOL</li>
-    <li>Informix</li>
-    <li>Interbase</li>
-    <li>Mondrian</li>
-    <li>Netezza</li>
-    <li>SQL Azure</li>
-    <li>SQLFire</li>
-    <li>Sybase SQL Anywhere OnDemand</li>
-    <li>Teradata</li>
-    <li>Vectorwise</li>
-    <li>Vertica</li>
-    <li>VoltDB</li>
-    </ul>
-
 <h2 id="Other-requirements"><a href="#Other-requirements" name="Other-requirements">#</a> Other requirements</h2>
 <p>jOOQ runs with Java 1.6+</p>
 

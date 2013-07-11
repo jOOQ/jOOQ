@@ -146,25 +146,6 @@ insertInto(t, t.a, t.b).values(1, 2);
     <li>You can be productive again!</li>
     </ul>
 
-<h2 id="When-to-use-jOOQ"><a href="#When-to-use-jOOQ" name="When-to-use-jOOQ">#</a> When to use jOOQ</h2>
-    <ul>
-    <li>When you love your RDBMS of choice, including all its vendor-specific features.</li>
-    <li>When you love control over your code.</li>
-    <li>When you love the relational data model.</li>
-    <li>When you love SQL.</li>
-    <li>When you love stored procedures.</li>
-    <li>When you love both <a href="http://en.wikipedia.org/wiki/OLAP" title="Online Analytical Processing, advanced SELECT statements, i.e. what none of the ORMs do, but jOOQ does best">OLAP</a> and <a href="http://en.wikipedia.org/wiki/OLTP" title="Online Transaction Processing, i.e. basic CRUD operations, what all ORM's do">OLTP</a></li>
-    </ul>
-
-<h2 id="When-not-to-use-jOOQ"><a href="#When-not-to-use-jOOQ" name="When-not-to-use-jOOQ">#</a> When not to use jOOQ</h2>
-    <p>On the other hand, many people like the ease of use of Hibernate or other products, when it comes to simply persisting any domain model in any database. You should not use jOOQ...</p>
-    <ul>
-    <li>When you want to map your object-oriented domain model to a database and not vice versa.</li>
-    <li>When your schema changes more frequently than you can re-deploy jOOQ-generated source code.</li>
-    <li>When you need to write DDL statements. jOOQ only supports DML statements.</li>
-    <li>When you don't really need SQL, only "persistence".</li>
-    </ul>
-
 <h2 id="What-databases-are-supported"><a href="#What-databases-are-supported" name="What-databases-are-supported">#</a> What databases are supported</h2>
     <p>Every RDMBS out there has its own little specialties.
     jOOQ considers those specialties as much as possible, while trying to

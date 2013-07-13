@@ -64,6 +64,22 @@ pre {
     text-align: left;
 }
 
+button {
+    background: none repeat scroll 0 0 #333333;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #000;
+    box-shadow: 5px 5px 20px #AAAAAA;
+    color: #F1F2F3;
+    display: block;
+    font-size: 12px;
+    line-height: 1.5em;
+    margin: 1.5em 0;
+    padding: 0.3em;
+    text-align: center;
+    width: 90%;
+}
+
 p {
     padding-left: 1em;
     padding-right: 1em;
@@ -124,7 +140,22 @@ dl.toc dd.toc-main {
     padding-top: 1em;
 }
 
-a, a:link, a:visited, a:hover, a:active {
+button a, 
+button a:link, 
+button a:visited, 
+button a:hover, 
+button a:active {
+    color: #F1F2F3;
+    text-decoration: none;
+    text-shadow: 0 1px 2px #333333;
+}
+
+
+a, 
+a:link, 
+a:visited, 
+a:hover, 
+a:active {
     color: #000000;
     text-decoration: none;
     text-shadow: 0 1px 2px #333333;
@@ -335,39 +366,58 @@ code {
     font-family: monospace;
 }
 
+.row {
+    width: 100%;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+.col {
+    float: left;
+    margin: 0;
+    overflow: hidden;
+}
+
+.col > * {
+    margin-right: 20px;
+}
+
+.col .input,
+.col select {
+    width: 90%;
+}
+
+.col-1 {
+    width: 33%;
+}
+
+.col-2 {
+    width: 66%;
+}
+
+.col-3 {
+    width: 100%;
+}
+
 #intro {
     height: auto;
     margin-top: 40px;
 }
 
 #intro .row {
-    width: 100%;
-    margin-top: 0;
-    margin-left: auto;
-    margin-right: auto;
     margin-bottom: 30px;
-    overflow: hidden;
 }
 
 #intro .col {
-    float: left;
     height: 300px;
-    margin: 0;
-    overflow: hidden;
 }
 
-#intro .col > * {
-    margin-right: 20px;
+#registration {
+    height: auto;
 }
 
-#intro .col-1 {
-    width: 33%;
-}
-
-#intro .col-2 {
-    width: 66%;
-}
-
-#intro .col-3 {
-    width: 100%;
+#registration .row {
+    margin-bottom: 10px;
 }

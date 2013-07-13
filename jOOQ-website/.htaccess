@@ -31,3 +31,8 @@ RewriteEngine On
 RewriteBase /
 RewriteRule ^manual(.*)$ doc/2.4/manual$1 [L,R=301]
 RewriteRule ^doc/latest/manual([^/]*)/(.*)$ doc/3.0/manual$1/$2 [L,R=307]
+
+<Files users.csv>
+Order Allow,Deny
+Deny from all
+</Files>

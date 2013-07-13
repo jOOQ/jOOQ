@@ -37,8 +37,11 @@ function manualHeader($isSingle, $forVersion) {
 		<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
 		<link href="<?=$root?>/css/jooq.css" type="text/css" rel="stylesheet" />
+		<link href="<?=$root?>/css/jquery.modal.css" type="text/css" rel="stylesheet" />
 		<link href="<?=$root?>/js/prettify/prettify.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="<?=$root?>/js/jquery.js"></script>
+		<script type="text/javascript" src="<?=$root?>/js/jquery.modal.js"></script>
+		<script type="text/javascript" src="<?=$root?>/js/jquery.cookie.js"></script>
 		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
 		<script type="text/javascript" src="<?=$root?>/js/prettify/prettify.js"></script>
 		<script type="text/javascript" src="<?=$root?>/js/prettify/lang-sql.js"></script>
@@ -60,7 +63,82 @@ function manualHeader($isSingle, $forVersion) {
 		<?php } ?>
 		<script>
 		$(document).ready(function() {
+		    var $registration = $('#registration'),
+		         registration = function() {
+		             var $email = $('#registration #email'),
+		                 $save = $('#registration .save'),
+		                 $survey = $('#registration #survey'),
+		                 $noThanks = $('.no-thanks'),
+		                 fade = function($element) {
+	                         var heightBefore = $element.css('height'),
+	                             heightAfter;
+	                             
+	                         $element.html("Thank you!");
+	                         heightAfter = $element.css('height');
+	                         
+	                         $element.css('height', heightBefore);
+	                         $element.animate({
+	                             height: heightAfter
+	                         }, {
+	                             duration: 500,
+	                             complete: function() {
+	                                 $element.fadeOut(1000, function() {
+	                                     if (!$email.is(':visible') && !$survey.is(':visible')) {
+	                                         $.modal.close();
+	                                     }
+	                                 });
+	                             }
+	                         });
+		                 };
+		                 
+		             $save.click(function() {
+		                 $.cookie("jooq-registration-email", $('input[name=email]').val());
+		                 $.ajax({
+		                     type: "POST",
+		                     url: '<?=$root?>/registration-email-save.php',
+		                     data: $("#registration-email-form").serialize(),
+		                     success: function(data, textStatus, jqXHR) {
+		                         fade($email);
+		                     }
+		                 });
+		                 
+		                 return false;
+		             });
+		             
+		             $survey.click(function() {
+		                 window.open('http://srvy.it/15yxTuO');
+		                 $.cookie("jooq-registration-survey", "clicked");
+                         fade($survey);
+		             });
+		             
+		             $noThanks.click(function() {
+		                 var $this = $(this);
+    		             $.cookie($this.data("cookie"), "no-thanks");
+                         fade($('#' + $this.data("fade")));
+                         
+                         return false;
+		             });
+
+		             if ($.cookie("jooq-registration-email")) {
+		                 $email.hide();
+		             }
+
+		             if ($.cookie("jooq-registration-survey")) {
+		                 $survey.hide();
+		             }
+		             
+		             $registration.modal();
+		         };
+		    
 		    $("a").filter("[href*='http']").filter(":not([href*='jooq.org'])").attr("target", "_blank");
+		    
+		    if ($registration) {
+			    if (!$.cookie("jooq-registration-email") ||
+			        !$.cookie("jooq-registration-survey")) {
+			        
+			       	setTimeout(registration, 200);
+			    }
+		    }
 		});
 		</script>
 	</head>
@@ -193,9 +271,11 @@ function manualHeader($isSingle, $forVersion) {
 		</div>
 		</div>
 
+		<!--
 		<a href="https://github.com/jOOQ/jOOQ"> <img
 			alt="Fork me on GitHub" src="<?=$root?>/img/forkme.png"
 			style="position: absolute; top: 0; right: 0; border: 0;"/> </a>
+			-->
 		<div style="display: none">
 			<img src="/img/logo.png" alt="The jOOQ Logo" title="jOOQ Logo"/>
 		</div>

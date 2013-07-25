@@ -176,7 +176,10 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
+    <properties>
+        <maven.compile.source>1.6</maven.compile.source>
+        <maven.compile.target>1.6</maven.compile.target>
+    </properties>
     <build>
         <defaultGoal>deploy</defaultGoal>
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -190,8 +193,6 @@
                     <maxmem>512m</maxmem>
                     <meminitial>256m</meminitial>
                     <encoding>UTF-8</encoding>
-                    <source>1.6</source>
-                    <target>1.6</target>
                     <debug>true</debug>
                     <debuglevel>lines,vars,source</debuglevel>
                     <compilerArguments>

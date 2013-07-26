@@ -174,7 +174,7 @@ function manualHeader($isSingle, $forVersion) {
                 <a href="http://twitter.com/share"
                     class="twitter-share-button"
                     data-url="http://www.jooq.org"
-                    data-text="#jOOQ - A nice database abstraction library for Java"
+                    data-text="#jOOQ - Embedding #typesafe #SQL in #Java"
                     data-count="horizontal" data-via="JavaOOQ">Tweet</a>
                 <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
                 &nbsp;

@@ -939,6 +939,11 @@ final class Utils {
             return queryParts(new Object[] { null });
         }
         else {
+            return queryParts2(substitutes);
+        }
+    }
+
+    static final List<QueryPart> queryParts2(Object[] substitutes) {
             List<QueryPart> result = new ArrayList<QueryPart>();
 
             for (Object substitute : substitutes) {
@@ -955,7 +960,6 @@ final class Utils {
             }
 
             return result;
-        }
     }
 
     /**

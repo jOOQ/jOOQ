@@ -56,7 +56,7 @@ class SQLField<T> extends AbstractField<T> {
         super(sql, type);
 
         this.sql = sql;
-        this.substitutes = Utils.queryParts(substitutes);
+        this.substitutes = Utils.queryParts2(substitutes);
     }
 
     // ------------------------------------------------------------------------

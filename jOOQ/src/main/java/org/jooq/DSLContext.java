@@ -375,16 +375,6 @@ public interface DSLContext {
     Query query(String sql, QueryPart... parts);
 
     /**
-     * Create a new query from a template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return A query wrapping the template's output
-     */
-    @Support
-    Query query(Template template, Object... parameters);
-
-    /**
      * Execute a new query holding plain SQL.
      * <p>
      * Example (Postgres):
@@ -469,17 +459,6 @@ public interface DSLContext {
      */
     @Support
     Result<Record> fetch(String sql, QueryPart... parts) throws DataAccessException;
-
-    /**
-     * Execute a new query from a template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return The results from the executed query
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    @Support
-    Result<Record> fetch(Template template, Object... parameters) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL and "lazily" return the generated
@@ -586,18 +565,6 @@ public interface DSLContext {
     Cursor<Record> fetchLazy(String sql, QueryPart... parts) throws DataAccessException;
 
     /**
-     * Execute a new query from a template and "lazily" return the generated
-     * result.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return The results from the executed query
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    @Support
-    Cursor<Record> fetchLazy(Template template, Object... parameters) throws DataAccessException;
-
-    /**
      * Execute a new query holding plain SQL, possibly returning several result
      * sets.
      * <p>
@@ -677,18 +644,6 @@ public interface DSLContext {
      */
     @Support
     List<Result<Record>> fetchMany(String sql, QueryPart... parts) throws DataAccessException;
-
-    /**
-     * Execute a new query from a template, possibly returning several result
-     * sets.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return The results from the executed query
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    @Support
-    List<Result<Record>> fetchMany(Template template, Object... parameters) throws DataAccessException;
 
     /**
      * Execute a new query holding plain SQL.
@@ -780,19 +735,6 @@ public interface DSLContext {
     Record fetchOne(String sql, QueryPart... parts) throws DataAccessException, InvalidResultException;
 
     /**
-     * Execute a new query from a template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return The results from the executed query. This may be
-     *         <code>null</code> if the database returned no records
-     * @throws DataAccessException if something went wrong executing the query
-     * @throws InvalidResultException if the query returned more than one record
-     */
-    @Support
-    Record fetchOne(Template template, Object... parameters) throws DataAccessException;
-
-    /**
      * Execute a query holding plain SQL.
      * <p>
      * <b>NOTE</b>: When inserting plain SQL into jOOQ objects, you must
@@ -855,17 +797,6 @@ public interface DSLContext {
      */
     @Support
     int execute(String sql, QueryPart... parts) throws DataAccessException;
-
-    /**
-     * Execute a new query from a template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return The results from the executed query
-     * @throws DataAccessException if something went wrong executing the query
-     */
-    @Support
-    int execute(Template template, Object... parameters) throws DataAccessException;
 
     /**
      * Create a new query holding plain SQL.
@@ -985,16 +916,6 @@ public interface DSLContext {
      */
     @Support
     ResultQuery<Record> resultQuery(String sql, QueryPart... parts);
-
-    /**
-     * Create a new query from a template.
-     *
-     * @param template The template generating a delegate query part
-     * @param parameters The parameters provided to the template
-     * @return An executable query
-     */
-    @Support
-    ResultQuery<Record> resultQuery(Template template, Object... parameters);
 
     // -------------------------------------------------------------------------
     // XXX JDBC convenience methods

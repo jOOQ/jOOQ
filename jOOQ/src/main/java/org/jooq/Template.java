@@ -105,9 +105,13 @@ package org.jooq;
  * ORDER BY
  *   a.id ASC
  * </pre></code>
+ * <p>
  *
+ * @deprecated - This type is still very experimental and not yet released to a
+ *             broad public. Do not use this type yet.
  * @author Lukas Eder
  */
+@Deprecated
 public interface Template {
 
     /**

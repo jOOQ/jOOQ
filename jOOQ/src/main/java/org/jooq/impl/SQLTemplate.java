@@ -42,6 +42,7 @@ import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.Template;
 
+@SuppressWarnings("deprecation")
 class SQLTemplate implements Template {
 
     private final String sql;

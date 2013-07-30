@@ -194,7 +194,6 @@ import org.jooq.SelectSelectStep;
 import org.jooq.SelectWhereStep;
 import org.jooq.Support;
 import org.jooq.Table;
-import org.jooq.Template;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.UDTRecord;
 import org.jooq.Update;
@@ -4866,14 +4865,15 @@ public class DSL {
     // -------------------------------------------------------------------------
 
     /**
-     * Create a new {@link Template} that can transform parameter objects into a
-     * {@link QueryPart}.
+     * Create a new {@link org.jooq.Template} that can transform parameter
+     * objects into a {@link QueryPart}.
      *
      * @param sql The input SQL.
      * @return A template that can transform parameter objects into a
      *         {@link QueryPart}.
      */
-    public static Template template(String sql) {
+    @SuppressWarnings("deprecation")
+    static org.jooq.Template template(String sql) {
         return new SQLTemplate(sql);
     }
 
@@ -4949,8 +4949,9 @@ public class DSL {
      * @param parameters The parameters provided to the template
      * @return A query part wrapping the plain SQL
      */
+    @SuppressWarnings("deprecation")
     @Support
-    public static QueryPart queryPart(Template template, Object... parameters) {
+    static QueryPart queryPart(org.jooq.Template template, Object... parameters) {
         return template.transform(parameters);
     }
 
@@ -5062,8 +5063,9 @@ public class DSL {
      * @param parameters The parameters provided to the template
      * @return A query part wrapping the plain SQL
      */
+    @SuppressWarnings("deprecation")
     @Support
-    public static Table<Record> table(Template template, Object... parameters) {
+    static Table<Record> table(org.jooq.Template template, Object... parameters) {
         return new SQLTable(queryPart(template, parameters));
     }
 
@@ -5345,8 +5347,9 @@ public class DSL {
      * @param parameters The parameters provided to the template
      * @return A query part wrapping the plain SQL
      */
+    @SuppressWarnings("deprecation")
     @Support
-    public static Field<Object> field(Template template, Object... parameters) {
+    static Field<Object> field(org.jooq.Template template, Object... parameters) {
         return field(template, Object.class, parameters);
     }
 
@@ -5359,8 +5362,9 @@ public class DSL {
      * @param parameters The parameters provided to the template
      * @return A query part wrapping the plain SQL
      */
+    @SuppressWarnings("deprecation")
     @Support
-    public static <T> Field<T> field(Template template, Class<T> type, Object... parameters) {
+    static <T> Field<T> field(org.jooq.Template template, Class<T> type, Object... parameters) {
         return field(template, getDataType(type), parameters);
     }
 
@@ -5373,8 +5377,9 @@ public class DSL {
      * @param parameters The parameters provided to the template
      * @return A query part wrapping the plain SQL
      */
+    @SuppressWarnings("deprecation")
     @Support
-    public static <T> Field<T> field(Template template, DataType<T> type, Object... parameters) {
+    static <T> Field<T> field(org.jooq.Template template, DataType<T> type, Object... parameters) {
         return new SQLField<T>(type, queryPart(template, parameters));
     }
 
@@ -5526,8 +5531,9 @@ public class DSL {
      * @param parameters The parameters provided to the template
      * @return A query part wrapping the plain SQL
      */
+    @SuppressWarnings("deprecation")
     @Support
-    public static Condition condition(Template template, Object... parameters) {
+    static Condition condition(org.jooq.Template template, Object... parameters) {
         return new SQLCondition(queryPart(template, parameters));
     }
 

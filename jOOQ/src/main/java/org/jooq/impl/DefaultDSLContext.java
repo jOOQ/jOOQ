@@ -169,7 +169,6 @@ import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.TableLike;
 import org.jooq.TableRecord;
-import org.jooq.Template;
 import org.jooq.TruncateIdentityStep;
 import org.jooq.UDT;
 import org.jooq.UDTRecord;
@@ -370,8 +369,8 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return query(template(sql), (Object[]) parts);
     }
 
-    @Override
-    public Query query(Template template, Object... parameters) {
+    @SuppressWarnings("deprecation")
+    Query query(org.jooq.Template template, Object... parameters) {
         return new SQLQuery(configuration, queryPart(template, parameters));
     }
 
@@ -390,8 +389,8 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return resultQuery(sql, parts).fetch();
     }
 
-    @Override
-    public Result<Record> fetch(Template template, Object... parameters) {
+    @SuppressWarnings("deprecation")
+    Result<Record> fetch(org.jooq.Template template, Object... parameters) {
         return resultQuery(template, parameters).fetch();
     }
 
@@ -410,8 +409,8 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return resultQuery(sql, parts).fetchLazy();
     }
 
-    @Override
-    public Cursor<Record> fetchLazy(Template template, Object... parameters) {
+    @SuppressWarnings("deprecation")
+    Cursor<Record> fetchLazy(org.jooq.Template template, Object... parameters) {
         return resultQuery(template, parameters).fetchLazy();
     }
 
@@ -430,8 +429,8 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return resultQuery(sql, parts).fetchMany();
     }
 
-    @Override
-    public List<Result<Record>> fetchMany(Template template, Object... parameters) {
+    @SuppressWarnings("deprecation")
+    List<Result<Record>> fetchMany(org.jooq.Template template, Object... parameters) {
         return resultQuery(template, parameters).fetchMany();
     }
 
@@ -450,8 +449,8 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return resultQuery(sql, parts).fetchOne();
     }
 
-    @Override
-    public Record fetchOne(Template template, Object... parameters) {
+    @SuppressWarnings("deprecation")
+    Record fetchOne(org.jooq.Template template, Object... parameters) {
         return resultQuery(template, parameters).fetchOne();
     }
 
@@ -470,8 +469,8 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return query(sql, parts).execute();
     }
 
-    @Override
-    public int execute(Template template, Object... parameters) {
+    @SuppressWarnings("deprecation")
+    int execute(org.jooq.Template template, Object... parameters) {
         return query(template, parameters).execute();
     }
 
@@ -490,8 +489,8 @@ public class DefaultDSLContext implements DSLContext, Serializable {
         return resultQuery(template(sql), (Object[]) parts);
     }
 
-    @Override
-    public ResultQuery<Record> resultQuery(Template template, Object... parameters) {
+    @SuppressWarnings("deprecation")
+    ResultQuery<Record> resultQuery(org.jooq.Template template, Object... parameters) {
         return new SQLResultQuery(configuration, queryPart(template, parameters));
     }
 

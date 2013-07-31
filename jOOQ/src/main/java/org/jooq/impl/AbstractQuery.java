@@ -40,6 +40,7 @@ import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executePreparedStatements;
 import static org.jooq.conf.SettingsTools.getParamType;
+import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
 import static org.jooq.impl.Utils.DATA_FORCE_STATIC_STATEMENT;
 
@@ -291,7 +292,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                     !Boolean.TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
 
                     listener.bindStart(ctx);
-                    create(c).bind(this, ctx.statement());
+                    using(c).bindContext(ctx.statement()).bind(this);
                     listener.bindEnd(ctx);
                 }
 

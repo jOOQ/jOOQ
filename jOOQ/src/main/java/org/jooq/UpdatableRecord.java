@@ -94,8 +94,8 @@ public interface UpdatableRecord<R extends UpdatableRecord<R>> extends TableReco
     /**
      * Store this record back to the database.
      * <p>
-     * Depending on the state of the primary key's or main unique key's value,
-     * an {@link #insert()} or an {@link #update()} statement is executed.
+     * Depending on the state of the primary key's value, an {@link #insert()}
+     * or an {@link #update()} statement is executed.
      * <p>
      * <h5>Statement type</h5>
      * <p>

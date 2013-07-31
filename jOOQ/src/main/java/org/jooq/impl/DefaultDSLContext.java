@@ -321,6 +321,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     @Override
+    @Deprecated
     public int bind(QueryPart part, PreparedStatement stmt) {
         return bindContext(stmt).bind(part).peekIndex();
     }

@@ -39,6 +39,7 @@ import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.function;
 import static org.jooq.impl.DSL.table;
+import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
 
 import java.sql.CallableStatement;
@@ -268,7 +269,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             listener.prepareEnd(ctx);
 
             listener.bindStart(ctx);
-            create(configuration).bind(this, ctx.statement());
+            using(configuration).bindContext(ctx.statement()).bind(this);
             registerOutParameters(configuration, (CallableStatement) ctx.statement());
             listener.bindEnd(ctx);
 

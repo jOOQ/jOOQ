@@ -256,21 +256,15 @@ public interface DSLContext {
      * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
      * </ul>
      * <p>
-     * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
+     * BindContext for JOOQ INTERNAL USE only. Avoid referencing it directly
      */
     BindContext bindContext(PreparedStatement stmt);
 
     /**
-     * Get a new {@link BindContext} for the context of this executor.
-     * <p>
-     * This will return an initialised bind context as such:
-     * <ul>
-     * <li> <code>{@link RenderContext#declareFields()} == false</code></li>
-     * <li> <code>{@link RenderContext#declareTables()} == false</code></li>
-     * </ul>
-     * <p>
-     * RenderContext for JOOQ INTERNAL USE only. Avoid referencing it directly
+     * @deprecated - [#2662] - 3.2.0 - Do not reuse this method. It will be
+     *             removed with jOOQ 4.0
      */
+    @Deprecated
     int bind(QueryPart part, PreparedStatement stmt);
 
     // -------------------------------------------------------------------------

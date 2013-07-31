@@ -48,8 +48,6 @@ import org.jooq.exception.DataAccessException;
 /**
  * A context object for {@link Query} execution passed to registered
  * {@link ExecuteListener}'s.
- * <p>
- * Expect most of this context's objects to be <code>nullable</code>!
  *
  * @author Lukas Eder
  * @see ExecuteListener

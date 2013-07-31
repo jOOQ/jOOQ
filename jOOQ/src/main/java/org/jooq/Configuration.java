@@ -69,36 +69,8 @@ import org.jooq.conf.Settings;
 public interface Configuration extends Serializable {
 
     // -------------------------------------------------------------------------
-    // Getters
+    // Custom data
     // -------------------------------------------------------------------------
-
-    /**
-     * Retrieve the configured dialect.
-     */
-    SQLDialect dialect();
-
-    /**
-     * Get this configuration's underlying connection provider.
-     */
-    ConnectionProvider connectionProvider();
-
-    /**
-     * Get this configuration's underlying record mapper provider.
-     */
-    RecordMapperProvider recordMapperProvider();
-
-    /**
-     * Retrieve the configured schema mapping.
-     *
-     * @deprecated - 2.0.5 - Use {@link #settings()} instead
-     */
-    @Deprecated
-    SchemaMapping schemaMapping();
-
-    /**
-     * Retrieve the runtime configuration settings.
-     */
-    Settings settings();
 
     /**
      * Get all custom data from this <code>Configuration</code>.
@@ -154,13 +126,52 @@ public interface Configuration extends Serializable {
      */
     Object data(Object key, Object value);
 
+    // -------------------------------------------------------------------------
+    // Getters
+    // -------------------------------------------------------------------------
+
     /**
-     * Get the configured <code>ExecuteListenerProvider</code> from this
+     * Get this configuration's underlying connection provider.
+     */
+    ConnectionProvider connectionProvider();
+
+    /**
+     * Get this configuration's underlying record mapper provider.
+     */
+    RecordMapperProvider recordMapperProvider();
+
+    /**
+     * Get the configured <code>RecordListenerProvider</code>s from this
+     * configuration.
+     * <p>
+     * This method allows for retrieving the configured
+     * <code>RecordListenerProvider</code> from this configuration. The
+     * providers will provide jOOQ with {@link RecordListener} instances. These
+     * instances receive record manipulation notification events every time jOOQ
+     * executes queries. jOOQ makes no assumptions about the internal state of
+     * these listeners, i.e. listener instances may
+     * <ul>
+     * <li>share this <code>Configuration</code>'s lifecycle (i.e. that of a
+     * JDBC <code>Connection</code>, or that of a transaction)</li>
+     * <li>share the lifecycle of an <code>RecordContext</code> (i.e. that of a
+     * single record manipulation)</li>
+     * <li>follow an entirely different lifecycle.</li>
+     * </ul>
+     *
+     * @return The configured set of record listeners.
+     * @see RecordListenerProvider
+     * @see RecordListener
+     * @see RecordContext
+     */
+    RecordListenerProvider[] recordListenerProviders();
+
+    /**
+     * Get the configured <code>ExecuteListenerProvider</code>s from this
      * configuration.
      * <p>
      * This method allows for retrieving the configured
      * <code>ExecuteListenerProvider</code> from this configuration. The
-     * provider will provide jOOQ with {@link ExecuteListener} instances. These
+     * providers will provide jOOQ with {@link ExecuteListener} instances. These
      * instances receive execution lifecycle notification events every time jOOQ
      * executes queries. jOOQ makes no assumptions about the internal state of
      * these listeners, i.e. listener instances may
@@ -183,21 +194,27 @@ public interface Configuration extends Serializable {
      */
     ExecuteListenerProvider[] executeListenerProviders();
 
+    /**
+     * Retrieve the configured schema mapping.
+     *
+     * @deprecated - 2.0.5 - Use {@link #settings()} instead
+     */
+    @Deprecated
+    SchemaMapping schemaMapping();
+
+    /**
+     * Retrieve the configured dialect.
+     */
+    SQLDialect dialect();
+
+    /**
+     * Retrieve the runtime configuration settings.
+     */
+    Settings settings();
+
     // -------------------------------------------------------------------------
     // Setters
     // -------------------------------------------------------------------------
-
-    /**
-     * Change this configuration to hold a new dialect.
-     * <p>
-     * This method is not thread-safe and should not be used in globally
-     * available <code>Configuration</code> objects.
-     *
-     * @param newDialect The new dialect to be contained in the changed
-     *            configuration.
-     * @return The changed configuration.
-     */
-    Configuration set(SQLDialect newDialect);
 
     /**
      * Change this configuration to hold a new connection provider.
@@ -224,16 +241,16 @@ public interface Configuration extends Serializable {
     Configuration set(RecordMapperProvider newRecordMapperProvider);
 
     /**
-     * Change this configuration to hold a new settings.
+     * Change this configuration to hold a new record listener providers.
      * <p>
      * This method is not thread-safe and should not be used in globally
      * available <code>Configuration</code> objects.
      *
-     * @param newSettings The new settings to be contained in the changed
-     *            configuration.
+     * @param newRecordListenerProviders The new record listener providers to
+     *            be contained in the changed configuration.
      * @return The changed configuration.
      */
-    Configuration set(Settings newSettings);
+    Configuration set(RecordListenerProvider... newRecordListenerProviders);
 
     /**
      * Change this configuration to hold a new execute listener providers.
@@ -247,6 +264,30 @@ public interface Configuration extends Serializable {
      */
     Configuration set(ExecuteListenerProvider... newExecuteListenerProviders);
 
+    /**
+     * Change this configuration to hold a new dialect.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newDialect The new dialect to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(SQLDialect newDialect);
+
+    /**
+     * Change this configuration to hold a new settings.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newSettings The new settings to be contained in the changed
+     *            configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(Settings newSettings);
+
     // -------------------------------------------------------------------------
     // Derivation methods
     // -------------------------------------------------------------------------
@@ -258,15 +299,6 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive();
-
-    /**
-     * Create a derived configuration from this one, with a new dialect.
-     *
-     * @param newDialect The new dialect to be contained in the derived
-     *            configuration.
-     * @return The derived configuration.
-     */
-    Configuration derive(SQLDialect newDialect);
 
     /**
      * Create a derived configuration from this one, with a new connection
@@ -289,16 +321,17 @@ public interface Configuration extends Serializable {
     Configuration derive(RecordMapperProvider newRecordMapperProvider);
 
     /**
-     * Create a derived configuration from this one, with new settings.
+     * Create a derived configuration from this one, with new record listener
+     * providers.
      *
-     * @param newSettings The new settings to be contained in the derived
-     *            configuration.
+     * @param newRecordListenerProviders The new record listener providers to
+     *            be contained in the derived configuration.
      * @return The derived configuration.
      */
-    Configuration derive(Settings newSettings);
+    Configuration derive(RecordListenerProvider... newRecordListenerProviders);
 
     /**
-     * Create a derived configuration from this one, with a new execute listener
+     * Create a derived configuration from this one, with new execute listener
      * providers.
      *
      * @param newExecuteListenerProviders The new execute listener providers to
@@ -307,4 +340,21 @@ public interface Configuration extends Serializable {
      */
     Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders);
 
+    /**
+     * Create a derived configuration from this one, with a new dialect.
+     *
+     * @param newDialect The new dialect to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(SQLDialect newDialect);
+
+    /**
+     * Create a derived configuration from this one, with new settings.
+     *
+     * @param newSettings The new settings to be contained in the derived
+     *            configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(Settings newSettings);
 }

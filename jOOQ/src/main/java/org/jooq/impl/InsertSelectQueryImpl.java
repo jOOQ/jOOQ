@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.visitAll;
+
 import org.jooq.BindContext;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -69,7 +71,7 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     @Override
     public final void toSQL(RenderContext context) {
         context.keyword("insert into ")
-               .sql(into)
+               .visit(into)
                .sql(" (");
 
         String separator = "";
@@ -82,13 +84,13 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
 
         context.sql(")")
                .formatSeparator()
-               .sql(select);
+               .visit(select);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(into);
-        context.bind(fields);
-        context.bind(select);
+        context.visit(into);
+        visitAll(context, fields);
+        context.visit(select);
     }
 }

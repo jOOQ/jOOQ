@@ -75,7 +75,6 @@ import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Param;
-import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
 import org.jooq.exception.DataTypeException;
@@ -546,13 +545,13 @@ class Expression<T> extends AbstractFunction<T> {
             }
 
             context.sql("(");
-            context.sql(lhs);
+            context.visit(lhs);
 
             for (Field<?> field : rhs) {
                 context.sql(" ")
                        .sql(op)
                        .sql(" ")
-                       .sql(field);
+                       .visit(field);
             }
 
             context.sql(")");
@@ -560,7 +559,7 @@ class Expression<T> extends AbstractFunction<T> {
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(lhs).bind((QueryPart) rhs);
+            context.visit(lhs).visit(rhs);
         }
     }
 }

@@ -125,7 +125,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(lhs)
+        context.visit(lhs)
                .formatIndentStart()
                .formatSeparator()
                .keyword(translateType(context).toSQL())
@@ -139,7 +139,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                    .formatNewLine();
         }
 
-        context.sql(rhs);
+        context.visit(rhs);
 
         if (rhs instanceof JoinTable) {
             context.formatIndentEnd()
@@ -152,7 +152,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         if (!rhsPartitionBy.isEmpty()) {
             context.formatSeparator()
                    .keyword("partition by (")
-                   .sql(rhsPartitionBy)
+                   .visit(rhsPartitionBy)
                    .sql(")");
         }
 
@@ -214,9 +214,9 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                 for (Field<?> field : using) {
                     context.formatSeparator()
                            .keyword(glue)
-                           .sql(lhs.field(field))
+                           .visit(lhs.field(field))
                            .sql(" = ")
-                           .sql(rhs.field(field));
+                           .visit(rhs.field(field));
 
                     glue = "and ";
                 }
@@ -244,9 +244,9 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                 if (other != null) {
                     context.formatSeparator()
                            .keyword(glue)
-                           .sql(field)
+                           .visit(field)
                            .sql(" = ")
-                           .sql(other);
+                           .visit(other);
 
                     glue = "and ";
                 }
@@ -257,19 +257,19 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         else {
             context.formatSeparator()
                    .keyword("on ")
-                   .sql(condition);
+                   .visit(condition);
         }
     }
 
     @Override
     public final void bind(BindContext context) throws DataAccessException {
-        context.bind(lhs).bind(rhs).bind((QueryPart) rhsPartitionBy);
+        context.visit(lhs).visit(rhs).visit(rhsPartitionBy);
 
         if (!using.isEmpty()) {
-            context.bind((QueryPart) using);
+            context.visit(using);
         }
         else {
-            context.bind(condition);
+            context.visit(condition);
         }
     }
 

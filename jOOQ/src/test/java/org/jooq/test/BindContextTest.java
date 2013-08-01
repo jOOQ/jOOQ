@@ -57,7 +57,7 @@ public class BindContextTest extends AbstractTest {
         ctx.data("key", "value");
 
         TestDataQueryPart part = new TestDataQueryPart();
-        ctx.bind(part);
+        ctx.visit(part);
         assertEquals("value", part.value);
     }
 

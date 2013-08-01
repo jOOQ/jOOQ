@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.SettingsTools.executeStaticStatements;
+import static org.jooq.impl.Utils.visitAll;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -138,7 +139,7 @@ class BatchSingle implements BatchBindStep {
                 for (int i = 0; i < params.size(); i++) {
                     params.get(i).setConverted(bindValues[i]);
                 }
-                new DefaultBindContext(configuration, ctx.statement()).bind(params);
+                visitAll(new DefaultBindContext(configuration, ctx.statement()), params);
 
                 listener.bindEnd(ctx);
                 ctx.statement().addBatch();

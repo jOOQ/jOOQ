@@ -107,20 +107,20 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
             // The DERBY dialect doesn't support the simple CASE clause
             case DERBY: {
                 for (int i = 0; i < compareValues.size(); i++) {
-                    ctx.bind(value);
-                    ctx.bind(compareValues.get(i));
-                    ctx.bind(results.get(i));
+                    ctx.visit(value);
+                    ctx.visit(compareValues.get(i));
+                    ctx.visit(results.get(i));
                 }
 
                 break;
             }
 
             default: {
-                ctx.bind(value);
+                ctx.visit(value);
 
                 for (int i = 0; i < compareValues.size(); i++) {
-                    ctx.bind(compareValues.get(i));
-                    ctx.bind(results.get(i));
+                    ctx.visit(compareValues.get(i));
+                    ctx.visit(results.get(i));
                 }
 
                 break;
@@ -128,7 +128,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         }
 
         if (otherwise != null) {
-            ctx.bind(otherwise);
+            ctx.visit(otherwise);
         }
     }
 
@@ -150,9 +150,9 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
                     }
 
                     ctx.keyword(" when ");
-                    ctx.sql(value.equal(compareValues.get(i)));
+                    ctx.visit(value.equal(compareValues.get(i)));
                     ctx.keyword(" then ");
-                    ctx.sql(results.get(i));
+                    ctx.visit(results.get(i));
                 }
 
                 break;
@@ -160,7 +160,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
             default: {
                 ctx.sql(" ")
-                   .sql(value)
+                   .visit(value)
                    .formatIndentLockStart();
 
                 for (int i = 0; i < size; i++) {
@@ -169,9 +169,9 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
                     }
 
                     ctx.keyword(" when ");
-                    ctx.sql(compareValues.get(i));
+                    ctx.visit(compareValues.get(i));
                     ctx.keyword(" then ");
-                    ctx.sql(results.get(i));
+                    ctx.visit(results.get(i));
                 }
 
                 break;
@@ -181,7 +181,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
         if (otherwise != null) {
             ctx.formatNewLine()
                .keyword(" else ")
-               .sql(otherwise);
+               .visit(otherwise);
         }
 
         ctx.formatIndentLockEnd();

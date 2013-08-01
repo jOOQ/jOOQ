@@ -622,7 +622,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(23, 23);
         }});
 
-        assertEquals(24, b_ref().bind(t23).peekIndex());
+        assertEquals(24, b_ref().visit(t23).peekIndex());
         context.assertIsSatisfied();
     }
 
@@ -671,7 +671,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(++i, (i - 9));
         }});
 
-        assertEquals(19, b_ref().bind(row(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(1, "2", 3, "4", 5, "6", 7, "8", 9)).peekIndex());
+        assertEquals(19, b_ref().visit(row(1, "2", 3, "4", 5, "6", 7, "8", 9).eq(1, "2", 3, "4", 5, "6", 7, "8", 9)).peekIndex());
         context.assertIsSatisfied();
     }
 
@@ -714,12 +714,12 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(1, 4);
         }});
 
-        int f1 = b_ref().bind(val(1).as("c1")).peekIndex();
-        int f2 = b_decF().bind(val(2).as("c2")).peekIndex();
-        int f3 = b_decT().bind(val(2).as("c2")).peekIndex();
-        int t1 = b_ref().bind(create.select(val(3)).asTable("t1")).peekIndex();
-        int t2 = b_decF().bind(create.select(val(4)).asTable("t2")).peekIndex();
-        int t3 = b_decT().bind(create.select(val(4)).asTable("t2")).peekIndex();
+        int f1 = b_ref().visit(val(1).as("c1")).peekIndex();
+        int f2 = b_decF().visit(val(2).as("c2")).peekIndex();
+        int f3 = b_decT().visit(val(2).as("c2")).peekIndex();
+        int t1 = b_ref().visit(create.select(val(3)).asTable("t1")).peekIndex();
+        int t2 = b_decF().visit(create.select(val(4)).asTable("t2")).peekIndex();
+        int t3 = b_decT().visit(create.select(val(4)).asTable("t2")).peekIndex();
 
         assertEquals(1, f1);
         assertEquals(2, f2);
@@ -762,7 +762,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(4, 40);
         }});
 
-        int i = b_ref().bind(c).peekIndex();
+        int i = b_ref().visit(c).peekIndex();
         assertEquals(5, i);
 
         context.assertIsSatisfied();
@@ -783,7 +783,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 10);
         }});
 
-        int i = b_ref().bind(c).peekIndex();
+        int i = b_ref().visit(c).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -806,7 +806,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 10);
         }});
 
-        int i = b_ref().bind(c).peekIndex();
+        int i = b_ref().visit(c).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -826,7 +826,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setString(1, "x");
         }});
 
-        int i = b_ref().bind(c).peekIndex();
+        int i = b_ref().visit(c).peekIndex();
         assertEquals(2, i);
 
         context.assertIsSatisfied();
@@ -842,7 +842,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(1, 10);
         }});
 
-        int i = b_ref().bind(c).peekIndex();
+        int i = b_ref().visit(c).peekIndex();
         assertEquals(2, i);
 
         context.assertIsSatisfied();
@@ -865,7 +865,7 @@ public class BasicTest extends AbstractTest {
                 oneOf(statement).setInt(1, 10);
             }});
 
-            int i = b_ref().bind(c).peekIndex();
+            int i = b_ref().visit(c).peekIndex();
             assertEquals(2, i);
 
             context.assertIsSatisfied();
@@ -938,7 +938,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setString(2, "20");
         }});
 
-        int i = b_ref().bind(c2).peekIndex();
+        int i = b_ref().visit(c2).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -983,7 +983,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 1);
         }});
 
-        int i = b_ref().bind(c).peekIndex();
+        int i = b_ref().visit(c).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1016,7 +1016,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setString(2, "b");
         }});
 
-        int i = b_ref().bind(f).peekIndex();
+        int i = b_ref().visit(f).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1038,7 +1038,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setString(2, "b");
         }});
 
-        int i = b_ref().bind(f2).peekIndex();
+        int i = b_ref().visit(f2).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1071,7 +1071,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(1, 1);
         }});
 
-        int i = b_ref().bind(f).peekIndex();
+        int i = b_ref().visit(f).peekIndex();
         assertEquals(2, i);
 
         context.assertIsSatisfied();
@@ -1087,10 +1087,10 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"TABLE1\".\"ID1\" is not null", r_refI().render(c2));
         assertEquals("\"TABLE1\".\"ID1\" is not null", r_ref().render(c2));
 
-        int i = b_ref().bind(c1).peekIndex();
+        int i = b_ref().visit(c1).peekIndex();
         assertEquals(1, i);
 
-        int j = b_ref().bind(c2).peekIndex();
+        int j = b_ref().visit(c2).peekIndex();
         assertEquals(1, j);
     }
 
@@ -1127,7 +1127,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setString(7, "nothing");
         }});
 
-        int i = b_ref().bind(c).peekIndex();
+        int i = b_ref().visit(c).peekIndex();
         assertEquals(8, i);
 
         context.assertIsSatisfied();
@@ -1165,7 +1165,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setString(7, "nothing");
         }});
 
-        int i = b_ref().bind(c).peekIndex();
+        int i = b_ref().visit(c).peekIndex();
         assertEquals(8, i);
 
         context.assertIsSatisfied();
@@ -1181,7 +1181,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setObject(1, null);
         }});
 
-        int i = b_ref().bind(f).peekIndex();
+        int i = b_ref().visit(f).peekIndex();
         assertEquals(2, i);
 
         context.assertIsSatisfied();
@@ -1216,9 +1216,9 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(1, 1);
         }});
 
-        int i = b_decF().bind(f1).peekIndex();
-        int j = b_decF().bind(f2).peekIndex();
-        int k = b_decF().bind(f3).peekIndex();
+        int i = b_decF().visit(f1).peekIndex();
+        int j = b_decF().visit(f2).peekIndex();
+        int k = b_decF().visit(f3).peekIndex();
 
         assertEquals(2, i);
         assertEquals(2, j);
@@ -1249,7 +1249,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 2);
         }});
 
-        int i = b_decF().bind(sum2).peekIndex();
+        int i = b_decF().visit(sum2).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1277,7 +1277,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 2);
         }});
 
-        int i = b_decF().bind(difference2).peekIndex();
+        int i = b_decF().visit(difference2).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1305,7 +1305,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 2);
         }});
 
-        int i = b_decF().bind(product2).peekIndex();
+        int i = b_decF().visit(product2).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1333,7 +1333,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 2);
         }});
 
-        int i = b_decF().bind(division2).peekIndex();
+        int i = b_decF().visit(division2).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1383,7 +1383,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("sum(\"TABLE1\".\"ID1\")", r_ref().render(sum1));
         assertEquals("sum(\"TABLE1\".\"ID1\")", r_decI().render(sum1));
         assertEquals("sum(\"TABLE1\".\"ID1\")", r_dec().render(sum1));
-        assertEquals(1, b_ref().bind(sum1).peekIndex());
+        assertEquals(1, b_ref().visit(sum1).peekIndex());
 
         Field<BigDecimal> sum2 = sum(FIELD_ID1).as("value");
         assertEquals(BigDecimal.class, sum2.getType());
@@ -1391,7 +1391,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"value\"", r_ref().render(sum2));
         assertEquals("sum(\"TABLE1\".\"ID1\") \"value\"", r_decI().render(sum2));
         assertEquals("sum(\"TABLE1\".\"ID1\") \"value\"", r_dec().render(sum2));
-        assertEquals(1, b_ref().bind(sum2).peekIndex());
+        assertEquals(1, b_ref().visit(sum2).peekIndex());
 
         Field<BigDecimal> avg1 = avg(FIELD_ID1);
         assertEquals(BigDecimal.class, avg1.getType());
@@ -1399,7 +1399,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("avg(\"TABLE1\".\"ID1\")", r_ref().render(avg1));
         assertEquals("avg(\"TABLE1\".\"ID1\")", r_decI().render(avg1));
         assertEquals("avg(\"TABLE1\".\"ID1\")", r_dec().render(avg1));
-        assertEquals(1, b_ref().bind(avg1).peekIndex());
+        assertEquals(1, b_ref().visit(avg1).peekIndex());
 
         Field<BigDecimal> avg2 = avg(FIELD_ID1).as("value");
         assertEquals(BigDecimal.class, avg2.getType());
@@ -1407,7 +1407,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"value\"", r_ref().render(avg2));
         assertEquals("avg(\"TABLE1\".\"ID1\") \"value\"", r_decI().render(avg2));
         assertEquals("avg(\"TABLE1\".\"ID1\") \"value\"", r_dec().render(avg2));
-        assertEquals(1, b_ref().bind(avg2).peekIndex());
+        assertEquals(1, b_ref().visit(avg2).peekIndex());
 
         Field<Integer> min1 = min(FIELD_ID1);
         assertEquals(Integer.class, min1.getType());
@@ -1415,7 +1415,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("min(\"TABLE1\".\"ID1\")", r_ref().render(min1));
         assertEquals("min(\"TABLE1\".\"ID1\")", r_decI().render(min1));
         assertEquals("min(\"TABLE1\".\"ID1\")", r_dec().render(min1));
-        assertEquals(1, b_ref().bind(min1).peekIndex());
+        assertEquals(1, b_ref().visit(min1).peekIndex());
 
         Field<Integer> min2 = min(FIELD_ID1).as("value");
         assertEquals(Integer.class, min2.getType());
@@ -1423,7 +1423,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"value\"", r_ref().render(min2));
         assertEquals("min(\"TABLE1\".\"ID1\") \"value\"", r_decI().render(min2));
         assertEquals("min(\"TABLE1\".\"ID1\") \"value\"", r_dec().render(min2));
-        assertEquals(1, b_ref().bind(min2).peekIndex());
+        assertEquals(1, b_ref().visit(min2).peekIndex());
 
         Field<Integer> max1 = max(FIELD_ID1);
         assertEquals(Integer.class, max1.getType());
@@ -1431,7 +1431,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("max(\"TABLE1\".\"ID1\")", r_ref().render(max1));
         assertEquals("max(\"TABLE1\".\"ID1\")", r_decI().render(max1));
         assertEquals("max(\"TABLE1\".\"ID1\")", r_dec().render(max1));
-        assertEquals(1, b_ref().bind(max1).peekIndex());
+        assertEquals(1, b_ref().visit(max1).peekIndex());
 
         Field<Integer> max2 = max(FIELD_ID1).as("value");
         assertEquals(Integer.class, max2.getType());
@@ -1439,7 +1439,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"value\"", r_ref().render(max2));
         assertEquals("max(\"TABLE1\".\"ID1\") \"value\"", r_decI().render(max2));
         assertEquals("max(\"TABLE1\".\"ID1\") \"value\"", r_dec().render(max2));
-        assertEquals(1, b_ref().bind(max2).peekIndex());
+        assertEquals(1, b_ref().visit(max2).peekIndex());
 
         Field<Integer> count1 = count();
         assertEquals(Integer.class, count1.getType());
@@ -1447,7 +1447,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("count(*)", r_ref().render(count1));
         assertEquals("count(*)", r_decI().render(count1));
         assertEquals("count(*)", r_dec().render(count1));
-        assertEquals(1, b_ref().bind(count1).peekIndex());
+        assertEquals(1, b_ref().visit(count1).peekIndex());
 
         Field<Integer> count1a = count().as("cnt");
         assertEquals(Integer.class, count1a.getType());
@@ -1455,7 +1455,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"cnt\"", r_ref().render(count1a));
         assertEquals("count(*) \"cnt\"", r_decI().render(count1a));
         assertEquals("count(*) \"cnt\"", r_dec().render(count1a));
-        assertEquals(1, b_ref().bind(count1a).peekIndex());
+        assertEquals(1, b_ref().visit(count1a).peekIndex());
 
         Field<Integer> count2 = count(FIELD_ID1);
         assertEquals(Integer.class, count2.getType());
@@ -1463,7 +1463,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("count(\"TABLE1\".\"ID1\")", r_ref().render(count2));
         assertEquals("count(\"TABLE1\".\"ID1\")", r_decI().render(count2));
         assertEquals("count(\"TABLE1\".\"ID1\")", r_dec().render(count2));
-        assertEquals(1, b_ref().bind(count2).peekIndex());
+        assertEquals(1, b_ref().visit(count2).peekIndex());
 
         Field<Integer> count2a = count(FIELD_ID1).as("cnt");
         assertEquals(Integer.class, count2a.getType());
@@ -1471,7 +1471,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"cnt\"", r_ref().render(count2a));
         assertEquals("count(\"TABLE1\".\"ID1\") \"cnt\"", r_decI().render(count2a));
         assertEquals("count(\"TABLE1\".\"ID1\") \"cnt\"", r_dec().render(count2a));
-        assertEquals(1, b_ref().bind(count2a).peekIndex());
+        assertEquals(1, b_ref().visit(count2a).peekIndex());
 
         Field<Integer> count3 = countDistinct(FIELD_ID1);
         assertEquals(Integer.class, count3.getType());
@@ -1479,7 +1479,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("count(distinct \"TABLE1\".\"ID1\")", r_ref().render(count3));
         assertEquals("count(distinct \"TABLE1\".\"ID1\")", r_decI().render(count3));
         assertEquals("count(distinct \"TABLE1\".\"ID1\")", r_dec().render(count3));
-        assertEquals(1, b_ref().bind(count3).peekIndex());
+        assertEquals(1, b_ref().visit(count3).peekIndex());
 
         Field<Integer> count3a = countDistinct(FIELD_ID1).as("cnt");
         assertEquals(Integer.class, count3a.getType());
@@ -1487,7 +1487,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("\"cnt\"", r_ref().render(count3a));
         assertEquals("count(distinct \"TABLE1\".\"ID1\") \"cnt\"", r_decI().render(count3a));
         assertEquals("count(distinct \"TABLE1\".\"ID1\") \"cnt\"", r_dec().render(count3a));
-        assertEquals(1, b_ref().bind(count3a).peekIndex());
+        assertEquals(1, b_ref().visit(count3a).peekIndex());
     }
 
     @Test
@@ -1504,7 +1504,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(1, 10);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(2, i);
 
         context.assertIsSatisfied();
@@ -1528,7 +1528,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setDate(3, new Date(0));
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(4, i);
 
         context.assertIsSatisfied();
@@ -1548,7 +1548,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 1);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1583,7 +1583,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setString(2, "abc");
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1602,7 +1602,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(1, 10);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(2, i);
 
         context.assertIsSatisfied();
@@ -1623,7 +1623,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setString(2, "ABC");
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1647,7 +1647,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(3, 10);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(4, i);
 
         context.assertIsSatisfied();
@@ -1674,7 +1674,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(4, 20);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(5, i);
 
         context.assertIsSatisfied();
@@ -1704,7 +1704,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(6, 10);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(7, i);
 
         context.assertIsSatisfied();
@@ -1737,7 +1737,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setDate(7, new Date(0));
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(8, i);
 
         context.assertIsSatisfied();
@@ -1779,7 +1779,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 20);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1805,7 +1805,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(4, 10);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(5, i);
 
         context.assertIsSatisfied();
@@ -1862,7 +1862,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(4, 10);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(5, i);
 
         context.assertIsSatisfied();
@@ -1885,7 +1885,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 30);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -1901,7 +1901,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("select distinct \"TABLE1\".\"ID1\", \"TABLE2\".\"ID2\" from dual", r_ref().render(q));
         assertEquals(q, create.selectDistinct(FIELD_ID1, FIELD_ID2));
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(1, i);
     }
 
@@ -1916,7 +1916,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\", \"TABLE2\".\"ID2\", \"TABLE2\".\"NAME2\", \"TABLE2\".\"DATE2\", \"TABLE3\".\"ID3\", \"TABLE3\".\"NAME3\", \"TABLE3\".\"DATE3\" from \"TABLE1\", \"TABLE2\", \"TABLE3\"", r_ref().render(q));
         assertEquals(q, create.select().from(TABLE1, TABLE2, TABLE3));
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(1, i);
     }
 
@@ -1930,7 +1930,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\", \"TABLE2\".\"ID2\", \"TABLE2\".\"NAME2\", \"TABLE2\".\"DATE2\" from \"TABLE1\" join \"TABLE2\" on 1 = 1", r_ref().render(q));
         assertEquals(q, create.select().from(TABLE1).join(TABLE2).on());
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(1, i);
     }
 
@@ -1951,7 +1951,7 @@ public class BasicTest extends AbstractTest {
                                       .join(TABLE2).on(FIELD_ID1.equal(FIELD_ID2))
                                       .join(TABLE3).on(FIELD_ID2.equal(FIELD_ID3)));
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(1, i);
     }
 
@@ -2003,7 +2003,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(5, 5);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(6, i);
 
         context.assertIsSatisfied();
@@ -2024,7 +2024,7 @@ public class BasicTest extends AbstractTest {
                                 .join(t2).on(t1.field(FIELD_ID1).equal(
                                              t2.field(FIELD_ID1))));
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(1, i);
     }
 
@@ -2037,7 +2037,7 @@ public class BasicTest extends AbstractTest {
         assertEquals("select \"TABLE1\".\"ID1\", \"TABLE1\".\"NAME1\", \"TABLE1\".\"DATE1\", \"TABLE2\".\"ID2\", \"TABLE2\".\"NAME2\", \"TABLE2\".\"DATE2\" from \"TABLE1\" left outer join \"TABLE2\" on \"TABLE1\".\"ID1\" = \"TABLE2\".\"ID2\"", r_ref().render(q));
         assertEquals(q, create.select().from(TABLE1).leftOuterJoin(TABLE2).on(FIELD_ID1.equal(FIELD_ID2)));
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(1, i);
     }
 
@@ -2104,7 +2104,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(6, 3);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(7, i);
 
         context.assertIsSatisfied();
@@ -2126,7 +2126,7 @@ public class BasicTest extends AbstractTest {
                                     FIELD_ID1.asc(),
                                     FIELD_ID2.desc()));
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(1, i);
     }
 
@@ -2156,7 +2156,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(1, 1);
         }});
 
-        int i = b_ref().bind(q).peekIndex();
+        int i = b_ref().visit(q).peekIndex();
         assertEquals(2, i);
 
         context.assertIsSatisfied();
@@ -2196,7 +2196,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 2);
         }});
 
-        int i = b_ref().bind(combine).peekIndex();
+        int i = b_ref().visit(combine).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -2450,7 +2450,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 1);
         }});
 
-        int i = b_ref().bind(f1).peekIndex();
+        int i = b_ref().visit(f1).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();
@@ -2470,7 +2470,7 @@ public class BasicTest extends AbstractTest {
             oneOf(statement).setInt(2, 1);
         }});
 
-        int i = b_ref().bind(f1).peekIndex();
+        int i = b_ref().visit(f1).peekIndex();
         assertEquals(3, i);
 
         context.assertIsSatisfied();

@@ -111,7 +111,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
                 Schema mappedSchema = Utils.getMappedSchema(context.configuration(), getSchema());
 
                 if (mappedSchema != null) {
-                    context.sql(mappedSchema);
+                    context.visit(mappedSchema);
                     context.sql(".");
                 }
             }

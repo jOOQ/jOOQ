@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
-import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
 /**
@@ -58,12 +57,12 @@ class WrappedList extends AbstractQueryPart {
     @Override
     public final void toSQL(RenderContext context) {
         context.sql("(")
-               .sql(wrapped)
+               .visit(wrapped)
                .sql(")");
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind((QueryPart) wrapped);
+        context.visit(wrapped);
     }
 }

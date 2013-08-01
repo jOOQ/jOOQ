@@ -196,14 +196,14 @@ class RowSubqueryCondition extends AbstractCondition {
             boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect().family());
             boolean subquery = context.subquery();
 
-            context.sql(left)
+            context.visit(left)
                    .sql(" ")
                    .keyword(comparator.toSQL())
                    .sql(" (")
                    .sql(extraParentheses ? "(" : "");
             context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, true);
             context.subquery(true)
-                   .sql(right)
+                   .visit(right)
                    .subquery(subquery);
             context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
             context.sql(extraParentheses ? ")" : "")
@@ -212,7 +212,7 @@ class RowSubqueryCondition extends AbstractCondition {
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(left).bind(right);
+            context.visit(left).visit(right);
         }
     }
 }

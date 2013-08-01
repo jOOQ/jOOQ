@@ -100,14 +100,14 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
             case FIREBIRD:
             case INGRES:
             case SQLITE: {
-                context.sql(create(context).delete(table));
+                context.visit(create(context).delete(table));
                 break;
             }
 
             // All other dialects do
             default: {
                 context.keyword("truncate table ");
-                context.sql(table);
+                context.visit(table);
 
                 if (context.configuration().dialect() == SQLDialect.DB2) {
                     context.keyword(" immediate");
@@ -130,6 +130,6 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(table);
+        context.visit(table);
     }
 }

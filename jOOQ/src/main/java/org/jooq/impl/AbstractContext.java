@@ -40,10 +40,13 @@ import java.util.Map;
 
 import org.jooq.Configuration;
 import org.jooq.Context;
+import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 
 /**
  * @author Lukas Eder
  */
+@SuppressWarnings("unchecked")
 abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     final Configuration       configuration;
@@ -83,11 +86,43 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     }
 
     @Override
+    public final C visit(QueryPart part) {
+        if (part != null) {
+            QueryPartInternal internal = (QueryPartInternal) part;
+
+            // If this is supposed to be a declaration section and the part isn't
+            // able to declare anything, then disable declaration temporarily
+
+            // We're declaring fields, but "part" does not declare fields
+            if (declareFields() && !internal.declaresFields()) {
+                declareFields(false);
+                visit0(internal);
+                declareFields(true);
+            }
+
+            // We're declaring tables, but "part" does not declare tables
+            else if (declareTables() && !internal.declaresTables()) {
+                declareTables(false);
+                visit0(internal);
+                declareTables(true);
+            }
+
+            // We're not declaring, or "part" can declare
+            else {
+                visit0(internal);
+            }
+        }
+
+        return (C) this;
+    }
+
+    protected abstract void visit0(QueryPartInternal internal);
+
+    @Override
     public final boolean declareFields() {
         return declareFields;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final C declareFields(boolean d) {
         this.declareFields = d;
@@ -99,7 +134,6 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         return declareTables;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final C declareTables(boolean d) {
         this.declareTables = d;
@@ -111,7 +145,6 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         return subquery;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public final C subquery(boolean s) {
         this.subquery = s;

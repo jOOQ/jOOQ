@@ -100,7 +100,7 @@ implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(pivot(context.configuration()));
+        context.visit(pivot(context.configuration()));
     }
 
     private Table<?> pivot(Configuration configuration) {
@@ -134,14 +134,14 @@ implements
         @Override
         public void toSQL(RenderContext ctx) {
             ctx.declareTables(true)
-               .sql(select(ctx.configuration()))
+               .visit(select(ctx.configuration()))
                .declareTables(false);
         }
 
         @Override
         public void bind(BindContext ctx) throws DataAccessException {
             ctx.declareTables(true)
-               .bind(select(ctx.configuration()))
+               .visit(select(ctx.configuration()))
                .declareTables(false);
         }
 
@@ -231,20 +231,20 @@ implements
             boolean declareTables = context.declareTables();
 
             context.declareTables(true)
-                   .sql(table)
+                   .visit(table)
                    .declareTables(declareTables)
                    .formatSeparator()
                    .keyword("pivot (")
                    .paramType(INLINED)
                    .declareFields(true)
                    .formatIndentStart()
-                   .sql(aggregateFunctions)
+                   .visit(aggregateFunctions)
                    .formatSeparator()
                    .keyword("for ")
                    .literal(on.getName())
                    .formatSeparator()
                    .keyword("in (")
-                   .sql(in)
+                   .visit(in)
                    .declareFields(declareFields)
                    .paramType(paramType)
                    .sql(")")
@@ -258,7 +258,7 @@ implements
             boolean declareTables = context.declareFields();
 
             context.declareTables(true)
-                   .bind(table)
+                   .visit(table)
                    .declareTables(declareTables);
         }
     }
@@ -314,7 +314,7 @@ implements
 
     @Override
     public final void bind(BindContext context) throws DataAccessException {
-        context.bind(pivot(context.configuration()));
+        context.visit(pivot(context.configuration()));
     }
 
     @Override

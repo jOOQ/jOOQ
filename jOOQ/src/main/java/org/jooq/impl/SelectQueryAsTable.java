@@ -82,11 +82,11 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.bind(query);
+            context.visit(query);
         }
         else {
             context.subquery(true)
-                   .bind(query)
+                   .visit(query)
                    .subquery(false);
         }
     }
@@ -98,7 +98,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
         if (context.subquery()) {
             context.formatIndentStart()
                    .formatNewLine()
-                   .sql(query)
+                   .visit(query)
                    .formatIndentEnd()
                    .formatNewLine();
         }
@@ -106,7 +106,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
             context.subquery(true)
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(query)
+                   .visit(query)
                    .formatIndentEnd()
                    .formatNewLine()
                    .subquery(false);

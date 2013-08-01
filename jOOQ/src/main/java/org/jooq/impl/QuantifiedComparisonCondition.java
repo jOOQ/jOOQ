@@ -62,15 +62,15 @@ class QuantifiedComparisonCondition extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(field)
+        context.visit(field)
                .sql(" ")
                .keyword(comparator.toSQL())
                .sql(" ")
-               .sql(query);
+               .visit(query);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(field).bind(query);
+        context.visit(field).visit(query);
     }
 }

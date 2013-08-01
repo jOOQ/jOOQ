@@ -88,7 +88,7 @@ class Cast<T> extends AbstractField<T> {
                 context.keyword("trim(cast(")
                        .keyword("cast(")
                        .castMode(CastMode.NEVER)
-                       .sql(field)
+                       .visit(field)
                        .castMode(castMode)
                        .keyword(" as char(38))")
                        .keyword(" as ")
@@ -105,7 +105,7 @@ class Cast<T> extends AbstractField<T> {
                 context.keyword("cast(")
                        .keyword("cast(")
                        .castMode(CastMode.NEVER)
-                       .sql(field)
+                       .visit(field)
                        .castMode(castMode)
                        .keyword(" as decimal)")
                        .keyword(" as ")
@@ -119,7 +119,7 @@ class Cast<T> extends AbstractField<T> {
             else if (field.getDataType().isNumeric() &&
                      BOOLEAN.equals(getSQLDataType())) {
 
-                context.sql(asDecodeNumberToBoolean());
+                context.visit(asDecodeNumberToBoolean());
                 return;
             }
 
@@ -127,7 +127,7 @@ class Cast<T> extends AbstractField<T> {
             else if (field.getDataType().isString() &&
                      BOOLEAN.equals(getSQLDataType())) {
 
-                context.sql(asDecodeVarcharToBoolean());
+                context.visit(asDecodeVarcharToBoolean());
                 return;
             }
         }
@@ -135,7 +135,7 @@ class Cast<T> extends AbstractField<T> {
         // Default rendering, if no special case has applied yet
         context.keyword("cast(")
                .castMode(CastMode.NEVER)
-               .sql(field)
+               .visit(field)
                .castMode(castMode)
                .keyword(" as ")
                .keyword(getDataType(context.configuration()).getCastTypeName(context.configuration()))
@@ -172,7 +172,7 @@ class Cast<T> extends AbstractField<T> {
             if (field.getDataType().isNumeric() &&
                 BOOLEAN.equals(getSQLDataType())) {
 
-                context.bind(asDecodeNumberToBoolean());
+                context.visit(asDecodeNumberToBoolean());
                 return;
             }
 
@@ -180,11 +180,11 @@ class Cast<T> extends AbstractField<T> {
             else if (field.getDataType().isString() &&
                      BOOLEAN.equals(getSQLDataType())) {
 
-                context.bind(asDecodeVarcharToBoolean());
+                context.visit(asDecodeVarcharToBoolean());
                 return;
             }
         }
 
-        context.bind(field);
+        context.visit(field);
     }
 }

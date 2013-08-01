@@ -64,7 +64,7 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
                    .sql(" (")
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(query)
+                   .visit(query)
                    .formatIndentEnd()
                    .formatNewLine()
                    .sql(")");
@@ -75,7 +75,7 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
                    .subquery(true)
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(query)
+                   .visit(query)
                    .formatIndentEnd()
                    .formatNewLine()
                    .subquery(false)
@@ -88,11 +88,11 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.bind(query);
+            context.visit(query);
         }
         else {
             context.subquery(true)
-                   .bind(query)
+                   .visit(query)
                    .subquery(false);
         }
     }

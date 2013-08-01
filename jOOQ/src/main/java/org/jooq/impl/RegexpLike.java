@@ -68,9 +68,9 @@ class RegexpLike extends AbstractCondition {
             case MYSQL:
             case SQLITE:
             case SYBASE: {
-                context.sql(search)
+                context.visit(search)
                        .keyword(" regexp ")
-                       .sql(pattern);
+                       .visit(pattern);
 
                 break;
             }
@@ -79,7 +79,7 @@ class RegexpLike extends AbstractCondition {
             case HSQLDB: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
-                context.sql(DSL.condition("{regexp_matches}({0}, {1})", search, pattern));
+                context.visit(DSL.condition("{regexp_matches}({0}, {1})", search, pattern));
                 break;
             }
 
@@ -87,7 +87,7 @@ class RegexpLike extends AbstractCondition {
             case POSTGRES: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
-                context.sql(DSL.condition("{0} ~ {1}", search, pattern));
+                context.visit(DSL.condition("{0} ~ {1}", search, pattern));
                 break;
             }
 
@@ -95,7 +95,7 @@ class RegexpLike extends AbstractCondition {
             case ORACLE: {
 
                 // [#1570] TODO: Replace this by SQL.condition(String, QueryPart...)
-                context.sql(DSL.condition("{regexp_like}({0}, {1})", search, pattern));
+                context.visit(DSL.condition("{regexp_like}({0}, {1})", search, pattern));
                 break;
             }
 
@@ -108,9 +108,9 @@ class RegexpLike extends AbstractCondition {
             case INGRES:
             case SQLSERVER:
             default: {
-                context.sql(search)
+                context.visit(search)
                        .keyword(" like_regex ")
-                       .sql(pattern);
+                       .visit(pattern);
 
                 break;
             }
@@ -119,6 +119,6 @@ class RegexpLike extends AbstractCondition {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(search).bind(pattern);
+        context.visit(search).visit(pattern);
     }
 }

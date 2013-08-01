@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static org.jooq.impl.DSL.trueCondition;
+import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -95,16 +96,16 @@ class CombinedCondition extends AbstractCondition {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(conditions);
+        visitAll(context, conditions);
     }
 
     @Override
     public final void toSQL(RenderContext context) {
         if (conditions.isEmpty()) {
-            context.sql(trueCondition());
+            context.visit(trueCondition());
         }
         else if (conditions.size() == 1) {
-            context.sql(conditions.get(0));
+            context.visit(conditions.get(0));
         }
         else {
             context.sql("(")
@@ -120,7 +121,7 @@ class CombinedCondition extends AbstractCondition {
                 }
 
                 context.keyword(separator);
-                context.sql(conditions.get(i));
+                context.visit(conditions.get(i));
                 separator = operatorName;
             }
 

@@ -142,15 +142,15 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         @Override
         public final void toSQL(RenderContext context) {
             context.sql("(")
-                   .sql(left)
+                   .visit(left)
                    .keyword(" overlaps ")
-                   .sql(right)
+                   .visit(right)
                    .sql(")");
         }
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(left).bind(right);
+            context.visit(left).visit(right);
         }
     }
 }

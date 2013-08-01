@@ -292,7 +292,7 @@ abstract class AbstractQuery extends AbstractQueryPart implements Query, Attacha
                     !Boolean.TRUE.equals(ctx.data(DATA_FORCE_STATIC_STATEMENT))) {
 
                     listener.bindStart(ctx);
-                    using(c).bindContext(ctx.statement()).bind(this);
+                    using(c).bindContext(ctx.statement()).visit(this);
                     listener.bindEnd(ctx);
                 }
 

@@ -165,12 +165,12 @@ class ArrayTable extends AbstractTable<Record> {
 
     @Override
     public final void toSQL(RenderContext ctx) {
-        ctx.sql(table(ctx.configuration()));
+        ctx.visit(table(ctx.configuration()));
     }
 
     @Override
     public final void bind(BindContext ctx) {
-        ctx.bind(table(ctx.configuration()));
+        ctx.visit(table(ctx.configuration()));
     }
 
     private final Table<Record> table(Configuration configuration) {
@@ -218,7 +218,7 @@ class ArrayTable extends AbstractTable<Record> {
         @Override
         public void toSQL(RenderContext context) {
             context.keyword("(select * from unnest(")
-                   .sql(array)
+                   .visit(array)
                    .keyword(") as ")
                    .literal(alias)
                    .sql("(")
@@ -248,7 +248,7 @@ class ArrayTable extends AbstractTable<Record> {
                 context.keyword(array.getDataType().getTypeName());
             }
 
-            context.sql(" = ").sql(array).sql(")");
+            context.sql(" = ").visit(array).sql(")");
         }
     }
 
@@ -261,7 +261,7 @@ class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public void toSQL(RenderContext context) {
-            context.keyword("table (").sql(array).sql(")");
+            context.keyword("table (").visit(array).sql(")");
         }
     }
 
@@ -293,7 +293,7 @@ class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public final void bind(BindContext context) throws DataAccessException {
-            context.bind(array);
+            context.visit(array);
         }
 
         @Override

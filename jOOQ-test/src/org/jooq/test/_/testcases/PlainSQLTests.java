@@ -547,7 +547,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             public void toSQL(RenderContext context) {
                 context.configuration().data("Foo-Condition", "Baz");
 
-                context.sql(IDx2);
+                context.visit(IDx2);
                 context.sql(" > ");
 
                 if (context.paramType() == INLINED) {
@@ -561,7 +561,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             @Override
             public void bind(BindContext context) {
                 try {
-                    context.bind(IDx2);
+                    context.visit(IDx2);
                     context.statement().setInt(context.nextIndex(), 3);
                 }
                 catch (SQLException e) {

@@ -77,7 +77,7 @@ class CompareCondition extends AbstractCondition {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(field1).bind(field2);
+        context.visit(field1).visit(field2);
     }
 
     @Override
@@ -107,7 +107,7 @@ class CompareCondition extends AbstractCondition {
             op = (op == LIKE_IGNORE_CASE ? LIKE : NOT_LIKE);
         }
 
-        context.sql(lhs)
+        context.visit(lhs)
                .sql(" ");
 
         // [#1131] Some weird DB2 issue stops "LIKE" from working with a
@@ -118,7 +118,7 @@ class CompareCondition extends AbstractCondition {
         context.keyword(op.toSQL())
                .sql(" ")
                .keyword(castRhs ? "cast(" : "")
-               .sql(rhs)
+               .visit(rhs)
                .keyword(castRhs ? " as varchar(4000))" : "");
 
         if (escape != null) {

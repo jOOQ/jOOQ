@@ -183,28 +183,28 @@ class RowCondition extends AbstractCondition {
             // Some dialects do not support != comparison with rows
             if (comparator == NOT_EQUALS && asList(DB2).contains(context.configuration().dialect().family())) {
                 context.keyword("not(")
-                       .sql(left)
+                       .visit(left)
                        .sql(" = ")
-                       .sql(right)
+                       .visit(right)
                        .sql(")");
             }
             else {
                 // Some databases need extra parentheses around the RHS
                 boolean extraParentheses = asList(ORACLE).contains(context.configuration().dialect().family());
 
-                context.sql(left)
+                context.visit(left)
                        .sql(" ")
                        .sql(comparator.toSQL())
                        .sql(" ")
                        .sql(extraParentheses ? "(" : "")
-                       .sql(right)
+                       .visit(right)
                        .sql(extraParentheses ? ")" : "");
             }
         }
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(left).bind(right);
+            context.visit(left).visit(right);
         }
     }
 }

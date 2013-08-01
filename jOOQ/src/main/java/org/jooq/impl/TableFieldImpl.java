@@ -69,7 +69,7 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
     @Override
     public final void toSQL(RenderContext context) {
         if (context.qualify()) {
-            context.sql(table);
+            context.visit(table);
             context.sql(".");
         }
 

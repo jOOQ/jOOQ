@@ -38,6 +38,8 @@ package org.jooq;
 import java.sql.PreparedStatement;
 import java.util.Map;
 
+import org.jooq.exception.DataAccessException;
+
 /**
  * A context type that is used for rendering SQL or for binding.
  *
@@ -104,6 +106,19 @@ public interface Context<C extends Context<C>> {
      * @see ExecuteListener
      */
     Object data(Object key, Object value);
+
+    /**
+     * Visit a <code>QueryPart</code> in the current <code>Context</code>.
+     * <p>
+     * This method is called by certain <code>QueryPart</code> implementations
+     * to recursively visit component <code>QueryPart</code>s.
+     *
+     * @param part The component <code>QueryPart</code>
+     * @throws DataAccessException If something went wrong while visiting the
+     *             component <code>QueryPart</code>, e.g. when binding a
+     *             variable
+     */
+    C visit(QueryPart part) throws DataAccessException;
 
     /**
      * Whether the current context is rendering a SQL field declaration (e.g. a

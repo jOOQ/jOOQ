@@ -535,11 +535,11 @@ class Val<T> extends AbstractParam<T> {
 
                     schema = using(context.configuration()).map(schema);
                     if (schema != null && TRUE.equals(context.configuration().settings().isRenderSchema())) {
-                        context.sql(schema);
+                        context.visit(schema);
                         context.sql(".");
                     }
 
-                    context.sql(name(e.getName()));
+                    context.visit(name(e.getName()));
                 }
             }
 

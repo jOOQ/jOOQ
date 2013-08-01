@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.visitAll;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -85,7 +87,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
                 context.formatNewLine();
             }
 
-            context.sql(field);
+            context.visit(field);
             separator = ", ";
         }
 
@@ -116,7 +118,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
                 context.formatNewLine();
             }
 
-            context.sql(field);
+            context.visit(field);
             separator = ", ";
         }
 
@@ -130,7 +132,8 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(keySet()).bind(values());
+        visitAll(context, keySet());
+        visitAll(context, values());
     }
 
     final void putFields(Collection<? extends Field<?>> fields) {

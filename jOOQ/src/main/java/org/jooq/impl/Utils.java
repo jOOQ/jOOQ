@@ -87,6 +87,7 @@ import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Converter;
 import org.jooq.Cursor;
 import org.jooq.DSLContext;
@@ -775,6 +776,32 @@ final class Utils {
     }
 
     /**
+     * Visit each query part from a collection, given a context.
+     */
+    static final <C extends Context<? super C>> C visitAll(C ctx, Collection<? extends QueryPart> parts) {
+        if (parts != null) {
+            for (QueryPart part : parts) {
+                ctx.visit(part);
+            }
+        }
+
+        return ctx;
+    }
+
+    /**
+     * Visit each query part from an array, given a context.
+     */
+    static final <C extends Context<? super C>> C visitAll(C ctx, QueryPart[] parts) {
+        if (parts != null) {
+            for (QueryPart part : parts) {
+                ctx.visit(part);
+            }
+        }
+
+        return ctx;
+    }
+
+    /**
      * Render and bind a list of {@link QueryPart} to plain SQL
      * <p>
      * This will perform two actions:
@@ -856,14 +883,14 @@ final class Utils {
                 QueryPart substitute = substitutes.get(substituteIndex++);
 
                 if (render.paramType() == INLINED) {
-                    render.sql(substitute);
+                    render.visit(substitute);
                 }
                 else {
                     render.sql(sqlChars[i]);
                 }
 
                 if (bind != null) {
-                    bind.bind(substitute);
+                    bind.visit(substitute);
                 }
             }
 
@@ -886,10 +913,10 @@ final class Utils {
                     // Try getting the {numbered placeholder}
                     try {
                         QueryPart substitute = substitutes.get(Integer.valueOf(token));
-                        render.sql(substitute);
+                        render.visit(substitute);
 
                         if (bind != null) {
-                            bind.bind(substitute);
+                            bind.visit(substitute);
                         }
                     }
 

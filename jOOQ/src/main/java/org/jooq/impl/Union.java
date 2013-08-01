@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.visitAll;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +89,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
             }
 
             wrappingParenthesis(context, "(");
-            context.sql(queries.get(i));
+            context.visit(queries.get(i));
             wrappingParenthesis(context, ")");
         }
     }
@@ -123,7 +125,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(queries);
+        visitAll(context, queries);
     }
 
     @Override

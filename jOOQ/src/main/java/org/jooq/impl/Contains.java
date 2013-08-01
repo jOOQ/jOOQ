@@ -74,12 +74,12 @@ class Contains<T> extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(condition());
+        context.visit(condition());
     }
 
     @Override
     public final void bind(BindContext context) throws DataAccessException {
-        context.bind(condition());
+        context.visit(condition());
     }
 
     private final Condition condition() {
@@ -116,12 +116,12 @@ class Contains<T> extends AbstractCondition {
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql(lhs).sql(" @> ").sql(rhs());
+            context.visit(lhs).sql(" @> ").visit(rhs());
         }
 
         @Override
         public final void bind(BindContext context) throws DataAccessException {
-            context.bind(lhs).bind(rhs());
+            context.visit(lhs).visit(rhs());
         }
 
         private final Field<T> rhs() {

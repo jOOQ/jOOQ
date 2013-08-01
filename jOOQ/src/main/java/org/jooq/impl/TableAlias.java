@@ -117,12 +117,12 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(alias);
+        context.visit(alias);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(alias);
+        context.visit(alias);
     }
 
     @Override

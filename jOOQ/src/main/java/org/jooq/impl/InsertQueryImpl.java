@@ -146,7 +146,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     toSQLInsert(context);
                     context.formatSeparator()
                            .keyword("on duplicate key update ")
-                           .sql(updateMap);
+                           .visit(updateMap);
 
                     break;
                 }
@@ -164,7 +164,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.sql(toMerge(context.configuration()));
+                    context.visit(toMerge(context.configuration()));
                     break;
                 }
 
@@ -194,7 +194,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                     toSQLInsert(context);
                     context.formatSeparator()
                            .keyword("on duplicate key update ")
-                           .sql(update);
+                           .visit(update);
 
                     break;
                 }
@@ -212,7 +212,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.sql(toMerge(context.configuration()));
+                    context.visit(toMerge(context.configuration()));
                     break;
                 }
 
@@ -257,7 +257,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.bind(toMerge(context.configuration()));
+                    context.visit(toMerge(context.configuration()));
                     break;
                 }
 
@@ -297,7 +297,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case ORACLE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.bind(toMerge(context.configuration()));
+                    context.visit(toMerge(context.configuration()));
                     break;
                 }
 
@@ -318,17 +318,17 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                // [#1295] MySQL natively supports the IGNORE keyword
                .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) ? "ignore " : "")
                .keyword("into ")
-               .sql(getInto())
+               .visit(getInto())
                .sql(" ")
-               .sql(insertMaps);
+               .visit(insertMaps);
 
         toSQLReturning(context);
     }
 
     private final void bindInsert(BindContext context) {
-        context.bind(getInto())
-               .bind(insertMaps)
-               .bind(updateMap);
+        context.visit(getInto())
+               .visit(insertMaps)
+               .visit(updateMap);
 
         bindReturning(context);
     }

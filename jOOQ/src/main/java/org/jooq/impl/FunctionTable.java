@@ -80,7 +80,7 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     public final void toSQL(RenderContext context) {
         switch (context.configuration().dialect()) {
             case HSQLDB: {
-                context.keyword("table(").sql(function).sql(")");
+                context.keyword("table(").visit(function).sql(")");
                 break;
             }
 
@@ -93,7 +93,7 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
     public final void bind(BindContext context) {
         switch (context.configuration().dialect()) {
             case HSQLDB:
-                context.bind(function);
+                context.visit(function);
                 break;
 
             default:

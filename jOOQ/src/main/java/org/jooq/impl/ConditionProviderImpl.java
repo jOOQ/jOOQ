@@ -113,12 +113,12 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(getWhere());
+        context.visit(getWhere());
     }
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(getWhere());
+        context.visit(getWhere());
     }
 
     // -------------------------------------------------------------------------

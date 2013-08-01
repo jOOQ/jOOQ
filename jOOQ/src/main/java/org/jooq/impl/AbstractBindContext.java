@@ -35,8 +35,9 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.visitAll;
+
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.jooq.BindContext;
@@ -60,54 +61,26 @@ abstract class AbstractBindContext extends AbstractContext<BindContext> implemen
     // ------------------------------------------------------------------------
 
     @Override
+    @Deprecated
     public final BindContext bind(Collection<? extends QueryPart> parts) {
-        if (parts != null) {
-            for (QueryPart part : parts) {
-                bind(part);
-            }
-        }
-
-        return this;
+        return visitAll(this, parts);
     }
 
     @Override
+    @Deprecated
     public final BindContext bind(QueryPart[] parts) {
-        if (parts != null) {
-            bind(Arrays.asList(parts));
-        }
-
-        return this;
+        return visitAll(this, parts);
     }
 
     @Override
+    @Deprecated
     public final BindContext bind(QueryPart part) {
-        if (part != null) {
-            QueryPartInternal internal = (QueryPartInternal) part;
+        return visit(part);
+    }
 
-            // If this is supposed to be a declaration section and the part isn't
-            // able to declare anything, then disable declaration temporarily
-
-            // We're declaring fields, but "part" does not declare fields
-            if (declareFields() && !internal.declaresFields()) {
-                declareFields(false);
-                bindInternal(internal);
-                declareFields(true);
-            }
-
-            // We're declaring tables, but "part" does not declare tables
-            else if (declareTables() && !internal.declaresTables()) {
-                declareTables(false);
-                bindInternal(internal);
-                declareTables(true);
-            }
-
-            // We're not declaring, or "part" can declare
-            else {
-                bindInternal(internal);
-            }
-        }
-
-        return this;
+    @Override
+    protected void visit0(QueryPartInternal internal) {
+        bindInternal(internal);
     }
 
     @Override

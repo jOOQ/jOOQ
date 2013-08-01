@@ -112,7 +112,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     select(list(field("*"))).from(((Table<?>) wrapped).as(alias));
 
                 context.sql("(").formatIndentStart().formatNewLine()
-                       .sql(select).formatIndentEnd().formatNewLine()
+                       .visit(select).formatIndentEnd().formatNewLine()
                        .sql(")");
             }
 
@@ -132,7 +132,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
                     select(field("*")).from(((Table<?>) wrapped).as(alias)));
 
                 context.sql("(").formatIndentStart().formatNewLine()
-                       .sql(select).formatIndentEnd().formatNewLine()
+                       .visit(select).formatIndentEnd().formatNewLine()
                        .sql(")");
             }
 
@@ -192,7 +192,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     private void toSQLWrapped(RenderContext context) {
         context.sql(wrapInParentheses ? "(" : "")
-               .sql(wrapped)
+               .visit(wrapped)
                .sql(wrapInParentheses ? ")" : "");
     }
 
@@ -214,7 +214,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     @Override
     public final void bind(BindContext context) {
         if (context.declareFields() || context.declareTables()) {
-            context.bind(wrapped);
+            context.visit(wrapped);
         }
         else {
             // Don't bind any values

@@ -67,7 +67,7 @@ class WithTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(delegate)
+        context.visit(delegate)
                .keyword(" with ")
                .sql("(")
                .sql(hint)
@@ -76,7 +76,7 @@ class WithTable<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(delegate);
+        context.visit(delegate);
     }
 
     @Override

@@ -106,9 +106,9 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                     Field<Integer> ifNull = nullsFirst ? zero() : one();
                     Field<Integer> ifNotNull = nullsFirst ? one() : zero();
 
-                    context.sql(nvl2(field, ifNotNull, ifNull))
+                    context.visit(nvl2(field, ifNotNull, ifNull))
                            .sql(", ")
-                           .sql(field)
+                           .visit(field)
                            .sql(" ")
                            .keyword(order.toSQL());
 
@@ -117,7 +117,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
 
                 // DERBY, H2, HSQLDB, ORACLE, POSTGRES
                 default: {
-                    context.sql(field)
+                    context.visit(field)
                            .sql(" ")
                            .keyword(order.toSQL());
 
@@ -133,7 +133,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
             }
         }
         else {
-            context.sql(field)
+            context.visit(field)
                    .sql(" ")
                    .keyword(order.toSQL());
         }
@@ -155,11 +155,11 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                 case SQLITE:
                 case SQLSERVER:
                 case SYBASE: {
-                    context.bind(field);
+                    context.visit(field);
                 }
             }
         }
 
-        context.bind(field);
+        context.visit(field);
     }
 }

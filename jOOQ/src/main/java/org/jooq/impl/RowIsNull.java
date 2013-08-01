@@ -117,13 +117,13 @@ class RowIsNull extends AbstractCondition {
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql(row)
+            context.visit(row)
                    .keyword(isNull ? " is null" : " is not null");
         }
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(row);
+            context.visit(row);
         }
     }
 }

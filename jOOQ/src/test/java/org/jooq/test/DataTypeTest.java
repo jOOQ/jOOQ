@@ -80,7 +80,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setInt(1, 1);
             }});
 
-            assertEquals(2, b_ref().bind(int_int).peekIndex());
+            assertEquals(2, b_ref().visit(int_int).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -91,7 +91,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setString(1, "1");
             }});
 
-            assertEquals(2, b_ref().bind(string_string).peekIndex());
+            assertEquals(2, b_ref().visit(string_string).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -104,7 +104,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setInt(1, 1);
             }});
 
-            assertEquals(2, b_ref().bind(int_string).peekIndex());
+            assertEquals(2, b_ref().visit(int_string).peekIndex());
             context.assertIsSatisfied();
 
             Condition string_int = string.eq(1);
@@ -113,7 +113,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setString(1, "1");
             }});
 
-            assertEquals(2, b_ref().bind(string_int).peekIndex());
+            assertEquals(2, b_ref().visit(string_int).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -126,7 +126,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setInt(1, 1);
             }});
 
-            assertEquals(2, b_ref().bind(object_int).peekIndex());
+            assertEquals(2, b_ref().visit(object_int).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -137,7 +137,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setString(1, "1");
             }});
 
-            assertEquals(2, b_ref().bind(object_string).peekIndex());
+            assertEquals(2, b_ref().visit(object_string).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -148,7 +148,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setTimestamp(1, Timestamp.valueOf("2012-12-21 15:30:00.0"));
             }});
 
-            assertEquals(2, b_ref().bind(object_date).peekIndex());
+            assertEquals(2, b_ref().visit(object_date).peekIndex());
             context.assertIsSatisfied();
         }
     }
@@ -172,7 +172,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setInt(1, 1);
             }});
 
-            assertEquals(2, b_ref().bind(int_int).peekIndex());
+            assertEquals(2, b_ref().visit(int_int).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -183,7 +183,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setString(1, "1");
             }});
 
-            assertEquals(2, b_ref().bind(string_string).peekIndex());
+            assertEquals(2, b_ref().visit(string_string).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -196,7 +196,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setInt(1, 1);
             }});
 
-            assertEquals(2, b_ref().bind(int_string).peekIndex());
+            assertEquals(2, b_ref().visit(int_string).peekIndex());
             context.assertIsSatisfied();
 
             Condition string_int = string.in(1);
@@ -205,7 +205,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setString(1, "1");
             }});
 
-            assertEquals(2, b_ref().bind(string_int).peekIndex());
+            assertEquals(2, b_ref().visit(string_int).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -218,7 +218,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setInt(1, 1);
             }});
 
-            assertEquals(2, b_ref().bind(object_int).peekIndex());
+            assertEquals(2, b_ref().visit(object_int).peekIndex());
             context.assertIsSatisfied();
         }
 
@@ -229,7 +229,7 @@ public class DataTypeTest extends AbstractTest {
                 oneOf(statement).setString(1, "1");
             }});
 
-            assertEquals(2, b_ref().bind(object_string).peekIndex());
+            assertEquals(2, b_ref().visit(object_string).peekIndex());
             context.assertIsSatisfied();
         }
     }
@@ -299,7 +299,7 @@ public class DataTypeTest extends AbstractTest {
             oneOf(statement).setString(2, "2");
         }});
 
-        assertEquals(3, b_ref().bind(s).bind(i).peekIndex());
+        assertEquals(3, b_ref().visit(s).visit(i).peekIndex());
         context.assertIsSatisfied();
     }
 }

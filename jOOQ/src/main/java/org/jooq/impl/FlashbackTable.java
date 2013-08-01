@@ -107,39 +107,39 @@ implements VersionsBetweenAndStep<R, T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(table);
+        context.visit(table);
 
         if (asOf != null) {
             context.sql(" ")
                    .keyword("as of")
                    .sql(" ")
-                   .sql(type)
+                   .visit(type)
                    .sql(" ")
-                   .sql(asOf);
+                   .visit(asOf);
         }
         else {
             context.sql(" ")
                    .keyword("versions between")
                    .sql(" ")
-                   .sql(type)
+                   .visit(type)
                    .sql(" ")
-                   .sql(minvalue)
+                   .visit(minvalue)
                    .sql(" ")
                    .keyword("and")
                    .sql(" ")
-                   .sql(maxvalue);
+                   .visit(maxvalue);
         }
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(table);
+        context.visit(table);
 
         if (asOf != null) {
-            context.bind(asOf);
+            context.visit(asOf);
         }
         else {
-            context.bind(minvalue).bind(maxvalue);
+            context.visit(minvalue).visit(maxvalue);
         }
     }
 

@@ -55,7 +55,6 @@ import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Operator;
-import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.Row;
@@ -120,17 +119,17 @@ class RowInCondition extends AbstractCondition {
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql(left)
+            context.visit(left)
                    .sql(" ")
                    .keyword(comparator.toSQL())
                    .sql(" (")
-                   .sql(right)
+                   .visit(right)
                    .sql(")");
         }
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(left).bind((QueryPart) right);
+            context.visit(left).visit(right);
         }
     }
 }

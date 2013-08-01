@@ -60,11 +60,11 @@ class Coerce<T> extends AbstractField<T> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(field);
+        context.visit(field);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(field);
+        context.visit(field);
     }
 }

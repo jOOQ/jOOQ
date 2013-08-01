@@ -118,12 +118,12 @@ class ArrayTableSimulation extends AbstractTable<Record> {
 
     @Override
     public final void toSQL(RenderContext ctx) {
-        ctx.sql(table(ctx.configuration()));
+        ctx.visit(table(ctx.configuration()));
     }
 
     @Override
     public final void bind(BindContext ctx) throws DataAccessException {
-        ctx.bind(table(ctx.configuration()));
+        ctx.visit(table(ctx.configuration()));
     }
 
     @Override

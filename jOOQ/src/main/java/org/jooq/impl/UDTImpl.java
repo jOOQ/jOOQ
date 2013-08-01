@@ -133,7 +133,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(fields);
+        context.visit(fields);
     }
 
     /**

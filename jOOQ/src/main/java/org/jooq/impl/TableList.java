@@ -59,7 +59,7 @@ class TableList extends QueryPartList<Table<?>> {
 
     @Override
     protected void toSQLEmptyList(RenderContext context) {
-        context.sql(new Dual());
+        context.visit(new Dual());
     }
 
     @Override

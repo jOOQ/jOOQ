@@ -64,26 +64,26 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.sql(field)
+            context.visit(field)
                    .sql(" ")
                    .keyword(comparator.toSQL())
                    .sql(" (")
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(query)
+                   .visit(query)
                    .formatIndentEnd()
                    .formatNewLine()
                    .sql(")");
         }
         else {
-            context.sql(field)
+            context.visit(field)
                    .sql(" ")
                    .keyword(comparator.toSQL())
                    .sql(" (")
                    .subquery(true)
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(query)
+                   .visit(query)
                    .formatIndentEnd()
                    .formatNewLine()
                    .subquery(false)
@@ -96,12 +96,12 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.bind(field).bind(query);
+            context.visit(field).visit(query);
         }
         else {
-            context.bind(field)
+            context.visit(field)
                    .subquery(true)
-                   .bind(query)
+                   .visit(query)
                    .subquery(false);
         }
     }

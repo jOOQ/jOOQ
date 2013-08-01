@@ -131,7 +131,7 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
 
     @Override
     public final String render(QueryPart part) {
-        return new DefaultRenderContext(this).sql(part).render();
+        return new DefaultRenderContext(this).visit(part).render();
     }
 
     @Override
@@ -352,35 +352,15 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     }
 
     @Override
+    @Deprecated
     public final RenderContext sql(QueryPart part) {
-        if (part != null) {
-            checkForceInline(part);
-            QueryPartInternal internal = (QueryPartInternal) part;
+        return visit(part);
+    }
 
-            // If this is supposed to be a declaration section and the part
-            // isn't able to declare anything, then disable declaration temporarily
-
-            // We're declaring fields, but "part" does not declare fields
-            if (declareFields() && !internal.declaresFields()) {
-                declareFields(false);
-                internal.toSQL(this);
-                declareFields(true);
-            }
-
-            // We're declaring tables, but "part" does not declare tables
-            else if (declareTables() && !internal.declaresTables()) {
-                declareTables(false);
-                internal.toSQL(this);
-                declareTables(true);
-            }
-
-            // We're not declaring, or "part" can declare
-            else {
-                internal.toSQL(this);
-            }
-        }
-
-        return this;
+    @Override
+    protected final void visit0(QueryPartInternal internal) {
+        checkForceInline(internal);
+        internal.toSQL(this);
     }
 
     private final void checkForceInline(QueryPart part) throws ForceInlineSignal {

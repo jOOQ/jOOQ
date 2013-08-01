@@ -189,7 +189,7 @@ public class SequenceImpl<T extends Number> implements Sequence<T> {
             Schema mappedSchema = Utils.getMappedSchema(configuration, schema);
 
             if (mappedSchema != null && configuration.dialect() != CUBRID) {
-                local.sql(mappedSchema);
+                local.visit(mappedSchema);
                 local.sql(".");
             }
 

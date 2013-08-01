@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.visitAll;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +74,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
         // Single record inserts can use the standard syntax in any dialect
         else if (insertMaps.size() == 1 || insertMaps.get(1) == null) {
-            context.sql(insertMaps.get(0));
+            context.visit(insertMaps.get(0));
         }
 
         // True SQL92 multi-record inserts aren't always supported
@@ -113,11 +115,11 @@ class FieldMapsForInsert extends AbstractQueryPart {
             }
         }
 
-        context.sql(select);
+        context.visit(select);
     }
 
     private void toSQL92Values(RenderContext context) {
-        context.sql(insertMaps.get(0));
+        context.visit(insertMaps.get(0));
 
         int i = 0;
         for (FieldMapForInsert map : insertMaps) {
@@ -132,7 +134,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(insertMaps);
+        visitAll(context, insertMaps);
     }
 
     // -------------------------------------------------------------------------

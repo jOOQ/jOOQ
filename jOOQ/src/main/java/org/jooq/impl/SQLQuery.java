@@ -64,11 +64,11 @@ class SQLQuery extends AbstractQuery {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.sql(delegate);
+        context.visit(delegate);
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(delegate);
+        context.visit(delegate);
     }
 }

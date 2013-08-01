@@ -51,11 +51,11 @@ class NotCondition extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("not(").sql(condition).sql(")");
+        context.keyword("not(").visit(condition).sql(")");
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(condition);
+        context.visit(condition);
     }
 }

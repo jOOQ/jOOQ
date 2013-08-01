@@ -80,10 +80,10 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
                 }
 
                 context.qualify(supportsQualify)
-                       .sql(entry.getKey())
+                       .visit(entry.getKey())
                        .qualify(restoreQualify)
                        .sql(" = ")
-                       .sql(entry.getValue());
+                       .visit(entry.getValue());
 
                 separator = ", ";
             }
@@ -96,8 +96,8 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
     @Override
     public final void bind(BindContext context) {
         for (Entry<Field<?>, Field<?>> entry : entrySet()) {
-            context.bind(entry.getKey());
-            context.bind(entry.getValue());
+            context.visit(entry.getKey());
+            context.visit(entry.getValue());
         }
     }
 

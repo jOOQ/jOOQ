@@ -106,7 +106,10 @@ public interface RenderContext extends Context<RenderContext> {
 
     /**
      * Recurse rendering.
+     *
+     * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead
      */
+    @Deprecated
     RenderContext sql(QueryPart part);
 
     /**

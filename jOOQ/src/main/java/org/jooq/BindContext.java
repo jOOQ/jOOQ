@@ -64,7 +64,9 @@ public interface BindContext extends Context<BindContext> {
      *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
+     * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead
      */
+    @Deprecated
     BindContext bind(QueryPart part) throws DataAccessException;
 
     /**
@@ -73,7 +75,9 @@ public interface BindContext extends Context<BindContext> {
      *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
+     * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead
      */
+    @Deprecated
     BindContext bind(Collection<? extends QueryPart> parts) throws DataAccessException;
 
     /**
@@ -82,7 +86,9 @@ public interface BindContext extends Context<BindContext> {
      *
      * @throws DataAccessException If something went wrong while binding a
      *             variable
+     * @deprecated - 3.2.0 - [#2666] - Use {@link #visit(QueryPart)} instead
      */
+    @Deprecated
     BindContext bind(QueryPart[] parts) throws DataAccessException;
 
     /**

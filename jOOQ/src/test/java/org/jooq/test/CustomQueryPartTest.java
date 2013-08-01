@@ -61,12 +61,12 @@ public class CustomQueryPartTest extends AbstractTest {
 
             @Override
             public void toSQL(RenderContext ctx) {
-                ctx.sql(val("abc"));
+                ctx.visit(val("abc"));
             }
 
             @Override
             public void bind(BindContext ctx) {
-                ctx.bind(val("abc"));
+                ctx.visit(val("abc"));
             }
         };
 
@@ -78,7 +78,7 @@ public class CustomQueryPartTest extends AbstractTest {
             oneOf(statement).setString(1, "abc");
         }});
 
-        int i = b_ref().bind(DSL.condition("x = {0}", p)).peekIndex();
+        int i = b_ref().visit(DSL.condition("x = {0}", p)).peekIndex();
         assertEquals(2, i);
 
         context.assertIsSatisfied();

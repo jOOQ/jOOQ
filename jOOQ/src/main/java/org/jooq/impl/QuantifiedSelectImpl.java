@@ -81,7 +81,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                    .sql(" (")
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(part(context.configuration()))
+                   .visit(part(context.configuration()))
                    .formatIndentEnd()
                    .formatNewLine()
                    .sql(")");
@@ -92,7 +92,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                    .subquery(true)
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(part(context.configuration()))
+                   .visit(part(context.configuration()))
                    .formatIndentEnd()
                    .formatNewLine()
                    .subquery(false)
@@ -105,11 +105,11 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.bind(part(context.configuration()));
+            context.visit(part(context.configuration()));
         }
         else {
             context.subquery(true)
-                   .bind(part(context.configuration()))
+                   .visit(part(context.configuration()))
                    .subquery(false);
         }
     }

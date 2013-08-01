@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.visitAll;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -92,7 +94,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
                 if (indent)
                     context.formatNewLine();
 
-                context.sql(queryPart);
+                context.visit(queryPart);
                 separator = ", ";
             }
 
@@ -103,7 +105,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(wrappedList);
+        visitAll(context, wrappedList);
     }
 
     /**

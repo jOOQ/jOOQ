@@ -726,18 +726,18 @@ implements
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.sql(row)
+            context.visit(row)
                    .keyword(not ? " not" : "")
                    .keyword(" between ")
                    .keyword(symmetric ? "symmetric " : "")
-                   .sql(minValue)
+                   .visit(minValue)
                    .keyword(" and ")
-                   .sql(maxValue);
+                   .visit(maxValue);
         }
 
         @Override
         public final void bind(BindContext context) {
-            context.bind(row).bind(minValue).bind(maxValue);
+            context.visit(row).visit(minValue).visit(maxValue);
         }
     }
 }

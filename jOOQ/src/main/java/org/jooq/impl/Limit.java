@@ -82,9 +82,9 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit ")
-                       .sql(numberOfRows)
+                       .visit(numberOfRows)
                        .keyword(" offset ")
-                       .sql(offsetOrZero)
+                       .visit(offsetOrZero)
                        .castMode(castMode);
 
                 break;
@@ -96,9 +96,9 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit ")
-                       .sql(offsetOrZero)
+                       .visit(offsetOrZero)
                        .sql(", ")
-                       .sql(numberOfRows)
+                       .visit(numberOfRows)
                        .castMode(castMode);
 
                 break;
@@ -110,9 +110,9 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("rows ")
-                       .sql(getLowerRownum().add(inline(1)))
+                       .visit(getLowerRownum().add(inline(1)))
                        .keyword(" to ")
-                       .sql(getUpperRownum())
+                       .visit(getUpperRownum())
                        .castMode(castMode);
 
                 break;
@@ -126,9 +126,9 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("offset ")
-                       .sql(offsetOrZero)
+                       .visit(offsetOrZero)
                        .keyword(" rows fetch next ")
-                       .sql(numberOfRows)
+                       .visit(numberOfRows)
                        .keyword(" rows only")
                        .castMode(castMode);
 
@@ -142,9 +142,9 @@ class Limit extends AbstractQueryPart {
                 context.paramType(INLINED)
                        .formatSeparator()
                        .keyword("offset ")
-                       .sql(offsetOrZero)
+                       .visit(offsetOrZero)
                        .keyword(" fetch first ")
-                       .sql(numberOfRows)
+                       .visit(numberOfRows)
                        .keyword(" rows only")
                        .paramType(paramType);
 
@@ -156,9 +156,9 @@ class Limit extends AbstractQueryPart {
             case SYBASE: {
                 context.paramType(INLINED)
                        .keyword("top ")
-                       .sql(numberOfRows)
+                       .visit(numberOfRows)
                        .keyword(" start at ")
-                       .sql(offsetPlusOne)
+                       .visit(offsetPlusOne)
                        .paramType(paramType);
 
                 break;
@@ -176,7 +176,7 @@ class Limit extends AbstractQueryPart {
                 context.paramType(INLINED)
                        .formatSeparator()
                        .keyword("fetch first ")
-                       .sql(numberOfRows)
+                       .visit(numberOfRows)
                        .keyword(" rows only")
                        .paramType(paramType);
 
@@ -192,7 +192,7 @@ class Limit extends AbstractQueryPart {
                 // SQL Server and Sybase don't allow bind variables in the TOP n clause
                 context.paramType(INLINED)
                        .keyword("top ")
-                       .sql(numberOfRows)
+                       .visit(numberOfRows)
                        .paramType(paramType);
 
                 break;
@@ -203,9 +203,9 @@ class Limit extends AbstractQueryPart {
                 context.castMode(NEVER)
                        .formatSeparator()
                        .keyword("limit ")
-                       .sql(numberOfRows)
+                       .visit(numberOfRows)
                        .keyword(" offset ")
-                       .sql(offsetOrZero)
+                       .visit(offsetOrZero)
                        .castMode(castMode);
 
                 break;
@@ -222,8 +222,8 @@ class Limit extends AbstractQueryPart {
             case DERBY:
             case SQLSERVER:
             case SQLSERVER2012: {
-                context.bind(offsetOrZero);
-                context.bind(numberOfRows);
+                context.visit(offsetOrZero);
+                context.visit(numberOfRows);
                 break;
             }
 
@@ -235,24 +235,24 @@ class Limit extends AbstractQueryPart {
             case H2:
             case POSTGRES:
             case SQLITE: {
-                context.bind(numberOfRows);
-                context.bind(offsetOrZero);
+                context.visit(numberOfRows);
+                context.visit(offsetOrZero);
                 break;
             }
 
             // LIMIT [offset], [limit] supported by CUBRID
             // -------------------------------------------
             case CUBRID: {
-                context.bind(offsetOrZero);
-                context.bind(numberOfRows);
+                context.visit(offsetOrZero);
+                context.visit(numberOfRows);
                 break;
             }
 
             // No bind variables in the FIRST .. SKIP clause
             // ---------------------------------------------
             case FIREBIRD: {
-                context.bind(getLowerRownum());
-                context.bind(getUpperRownum());
+                context.visit(getLowerRownum());
+                context.visit(getUpperRownum());
                 break;
             }
 
@@ -272,8 +272,8 @@ class Limit extends AbstractQueryPart {
 
                 // With simulated OFFSETs, no break, fall through
                 else {
-                    context.bind(getLowerRownum());
-                    context.bind(getUpperRownum());
+                    context.visit(getLowerRownum());
+                    context.visit(getUpperRownum());
                 }
 
                 break;
@@ -290,8 +290,8 @@ class Limit extends AbstractQueryPart {
 
                 // With simulated OFFSETs, no break, fall through
                 else {
-                    context.bind(getLowerRownum());
-                    context.bind(getUpperRownum());
+                    context.visit(getLowerRownum());
+                    context.visit(getUpperRownum());
                 }
 
                 break;
@@ -306,15 +306,15 @@ class Limit extends AbstractQueryPart {
 
                 // [#1020] With the ROWNUM filtering improvement, the upper
                 // limit is bound before the lower limit
-                context.bind(getUpperRownum());
-                context.bind(getLowerRownum());
+                context.visit(getUpperRownum());
+                context.visit(getLowerRownum());
                 break;
             }
 
             // [#2057] Bind the same values as rendered in toSQL() by default
             default: {
-                context.bind(numberOfRows);
-                context.bind(offsetOrZero);
+                context.visit(numberOfRows);
+                context.visit(offsetOrZero);
                 break;
             }
         }

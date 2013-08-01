@@ -306,7 +306,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     public Map<String, Param<?>> extractParams(QueryPart part) {
         ParamCollector collector = new ParamCollector(configuration);
-        collector.bind(part);
+        collector.visit(part);
         return Collections.unmodifiableMap(collector.result);
     }
 
@@ -323,7 +323,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     @Override
     @Deprecated
     public int bind(QueryPart part, PreparedStatement stmt) {
-        return bindContext(stmt).bind(part).peekIndex();
+        return bindContext(stmt).visit(part).peekIndex();
     }
 
     // -------------------------------------------------------------------------

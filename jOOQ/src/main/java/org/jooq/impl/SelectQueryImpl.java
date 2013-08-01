@@ -156,26 +156,26 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     @Override
     public final void bind(BindContext context) {
         context.declareFields(true)
-               .bind((QueryPart) getSelect0())
+               .visit(getSelect0())
                .declareFields(false)
                .declareTables(true)
-               .bind((QueryPart) getFrom())
+               .visit(getFrom())
                .declareTables(false)
-               .bind(getWhere())
-               .bind(getConnectByStartWith())
-               .bind(getConnectBy())
-               .bind((QueryPart) getGroupBy())
-               .bind(getHaving())
-               .bind((QueryPart) getOrderBy());
+               .visit(getWhere())
+               .visit(getConnectByStartWith())
+               .visit(getConnectBy())
+               .visit(getGroupBy())
+               .visit(getHaving())
+               .visit(getOrderBy());
 
         // TOP clauses never bind values. So this can be safely applied at the
         // end for LIMIT .. OFFSET clauses, or ROW_NUMBER() filtering
         if (getLimit().isApplicable()) {
-            context.bind(getLimit());
+            context.visit(getLimit());
         }
 
-        context.bind((QueryPart) forUpdateOf)
-               .bind((QueryPart) forUpdateOfTables);
+        context.visit(forUpdateOf)
+               .visit(forUpdateOfTables);
     }
 
     @Override
@@ -331,7 +331,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      */
     private void toSQLReferenceLimitDefault(RenderContext context) {
         toSQLReference0(context);
-        context.sql(getLimit());
+        context.visit(getLimit());
     }
 
     /**
@@ -363,17 +363,17 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                .formatIndentEnd()
                .formatNewLine()
                .keyword(") as ")
-               .sql(name(subqueryName))
+               .visit(name(subqueryName))
                .formatSeparator()
                .keyword("where ")
-               .sql(name(rownumName))
+               .visit(name(rownumName))
                .sql(" > ")
-               .sql(getLimit().getLowerRownum())
+               .visit(getLimit().getLowerRownum())
                .formatSeparator()
                .keyword("and ")
-               .sql(name(rownumName))
+               .visit(name(rownumName))
                .sql(" <= ")
-               .sql(getLimit().getUpperRownum());
+               .visit(getLimit().getUpperRownum());
     }
 
     /**
@@ -392,9 +392,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                .formatIndentStart()
                .formatNewLine()
                  .keyword("select ")
-                 .sql(name(subqueryName))
+                 .visit(name(subqueryName))
                  .keyword(".*, rownum as ")
-                 .sql(name(rownumName))
+                 .visit(name(rownumName))
                  .formatSeparator()
                  .keyword("from (")
                  .formatIndentStart()
@@ -403,18 +403,18 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                  .formatIndentEnd()
                  .formatNewLine()
                  .sql(") ")
-                 .sql(name(subqueryName))
+                 .visit(name(subqueryName))
                  .formatSeparator()
                  .keyword("where rownum <= ")
-                 .sql(getLimit().getUpperRownum())
+                 .visit(getLimit().getUpperRownum())
                .formatIndentEnd()
                .formatNewLine()
                .sql(") ")
                .formatSeparator()
                .keyword("where ")
-               .sql(name(rownumName))
+               .visit(name(rownumName))
                .sql(" > ")
-               .sql(getLimit().getLowerRownum());
+               .visit(getLimit().getLowerRownum());
     }
 
     /**
@@ -456,7 +456,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                         && getLimit().offsetZero()
                         && !getLimit().rendersParams()) {
 
-                    context.sql(getLimit()).sql(" ");
+                    context.visit(getLimit()).sql(" ");
                 }
 
                 // [#759] SQL Server needs a TOP clause in ordered subqueries
@@ -476,7 +476,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
             case SYBASE: {
                 if (getLimit().isApplicable() && !getLimit().rendersParams()) {
-                    context.sql(getLimit()).sql(" ");
+                    context.visit(getLimit()).sql(" ");
                 }
 
                 break;
@@ -498,7 +498,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             try {
                 context.data(DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY, null);
                 context.sql("(")
-                       .sql(getSelect1())
+                       .visit(getSelect1())
                        .sql(")");
             }
             finally {
@@ -508,7 +508,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // The default behaviour
         else {
-            context.sql(getSelect1());
+            context.visit(getSelect1());
         }
 
         if (limitOffsetRownumber != null) {
@@ -522,7 +522,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .sql(",")
                    .formatIndentStart()
                    .formatSeparator()
-                   .sql(limitOffsetRownumber)
+                   .visit(limitOffsetRownumber)
                    .formatIndentEnd()
                    .paramType(paramType);
         }
@@ -536,7 +536,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         if (!context.render(getFrom()).isEmpty()) {
             context.formatSeparator()
                    .keyword("from ")
-                   .sql(getFrom());
+                   .visit(getFrom());
 
             // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
             // To be able to GROUP BY () empty sets
@@ -552,7 +552,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         if (!(getWhere().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
                    .keyword("where ")
-                   .sql(getWhere());
+                   .visit(getWhere());
         }
 
         // CONNECT BY clause
@@ -591,14 +591,14 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                 }
             }
             else {
-                context.sql(getGroupBy());
+                context.visit(getGroupBy());
             }
         }
 
         if (!(getHaving().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
                    .keyword("having ")
-                   .sql(getHaving());
+                   .visit(getHaving());
         }
 
         // ORDER BY clause
@@ -608,7 +608,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .keyword("order ")
                    .keyword(orderBySiblings ? "siblings " : "")
                    .keyword("by ")
-                   .sql(getOrderBy());
+                   .visit(getOrderBy());
         }
 
         // [#2423] SQL Server 2012 requires an ORDER BY clause, along with
@@ -623,7 +623,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
                    .keyword("start with ")
-                   .sql(getConnectByStartWith());
+                   .visit(getConnectByStartWith());
         }
     }
 
@@ -635,7 +635,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.keyword(" nocycle");
         }
 
-        context.sql(" ").sql(getConnectBy());
+        context.sql(" ").visit(getConnectBy());
     }
 
     @Override

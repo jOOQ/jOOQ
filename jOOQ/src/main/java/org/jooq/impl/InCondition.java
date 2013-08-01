@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.visitAll;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,7 +66,8 @@ class InCondition<T> extends AbstractCondition {
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(field).bind(values);
+        context.visit(field);
+        visitAll(context, values);
     }
 
     @Override
@@ -123,7 +126,7 @@ class InCondition<T> extends AbstractCondition {
      * Render the SQL for a sub-set of the <code>IN</code> clause's values
      */
     private void toSQLSubValues(RenderContext context, List<Field<?>> subValues) {
-        context.sql(field)
+        context.visit(field)
                .sql(" ")
                .keyword(comparator.toSQL())
                .sql(" (");
@@ -137,7 +140,7 @@ class InCondition<T> extends AbstractCondition {
         for (Field<?> value : subValues) {
             context.sql(separator)
                    .formatNewLineAfterPrintMargin()
-                   .sql(value);
+                   .visit(value);
 
             separator = ", ";
         }

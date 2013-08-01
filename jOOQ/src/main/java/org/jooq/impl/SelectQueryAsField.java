@@ -67,11 +67,11 @@ class SelectQueryAsField<T> extends AbstractField<T> {
 
         // If this is already a subquery, proceed
         if (context.subquery()) {
-            context.bind(query);
+            context.visit(query);
         }
         else {
             context.subquery(true)
-                   .bind(query)
+                   .visit(query)
                    .subquery(false);
         }
     }
@@ -84,7 +84,7 @@ class SelectQueryAsField<T> extends AbstractField<T> {
             context.sql("(")
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(query)
+                   .visit(query)
                    .formatIndentEnd()
                    .formatNewLine()
                    .sql(")");
@@ -94,7 +94,7 @@ class SelectQueryAsField<T> extends AbstractField<T> {
                    .subquery(true)
                    .formatIndentStart()
                    .formatNewLine()
-                   .sql(query)
+                   .visit(query)
                    .formatIndentEnd()
                    .formatNewLine()
                    .subquery(false)

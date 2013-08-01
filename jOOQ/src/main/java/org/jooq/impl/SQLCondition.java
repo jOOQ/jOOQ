@@ -62,12 +62,12 @@ class SQLCondition extends AbstractCondition {
         // in parentheses to ensure correct semantics
 
         context.sql("(");
-        context.sql(delegate);
+        context.visit(delegate);
         context.sql(")");
     }
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(delegate);
+        context.visit(delegate);
     }
 }

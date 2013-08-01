@@ -269,7 +269,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             listener.prepareEnd(ctx);
 
             listener.bindStart(ctx);
-            using(configuration).bindContext(ctx.statement()).bind(this);
+            using(configuration).bindContext(ctx.statement()).visit(this);
             registerOutParameters(configuration, (CallableStatement) ctx.statement());
             listener.bindEnd(ctx);
 
@@ -303,7 +303,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
             parameterIndexes.put(parameter, index);
 
             if (getInValues().get(parameter) != null) {
-                context.bind(getInValues().get(parameter));
+                context.visit(getInValues().get(parameter));
 
                 // [#391] This happens when null literals are used as IN/OUT
                 // parameters. They're not bound as in value, but they need to
@@ -427,7 +427,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final void toSQLOutParam(RenderContext context, Parameter<?> parameter) {
         switch (context.configuration().dialect().family()) {
             case ORACLE:
-                context.sql(parameter);
+                context.visit(parameter);
                 context.sql(" => ");
                 break;
 
@@ -441,7 +441,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     private final void toSQLInParam(RenderContext context, Parameter<?> parameter, Field<?> value) {
         switch (context.configuration().dialect().family()) {
             case ORACLE:
-                context.sql(parameter);
+                context.visit(parameter);
                 context.sql(" => ");
                 break;
 
@@ -449,7 +449,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                 break;
         }
 
-        context.sql(value);
+        context.visit(value);
     }
 
     private final void toSQLQualifiedName(RenderContext context) {
@@ -457,18 +457,18 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
         if (context.qualify()) {
             if (mappedSchema != null) {
-                context.sql(mappedSchema);
+                context.visit(mappedSchema);
                 context.sql(".");
             }
 
             // [#2569] In SQL Server, routines always have to be fully qualified
             else if (getSchema() != null && context.configuration().dialect().family() == SQLSERVER) {
-                context.sql(getSchema());
+                context.visit(getSchema());
                 context.sql(".");
             }
 
             if (getPackage() != null) {
-                context.sql(getPackage());
+                context.visit(getPackage());
                 context.sql(".");
             }
         }

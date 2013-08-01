@@ -447,7 +447,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     public final void toSQL(RenderContext context) {
         context.keyword("update ")
                .declareTables(true)
-               .sql(getInto())
+               .visit(getInto())
                .declareTables(false)
                .formatSeparator()
                .keyword("set ");
@@ -457,14 +457,14 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
             boolean qualify = context.qualify();
 
             context.qualify(false)
-                   .sql(multiRow)
+                   .visit(multiRow)
                    .qualify(qualify)
                    .sql(" = ");
 
             // Some dialects don't really support row value expressions on the
             // right hand side of a SET clause
             if (multiValue != null && !asList(INGRES, ORACLE).contains(context.configuration().dialect().family())) {
-                context.sql(multiValue);
+                context.visit(multiValue);
             }
 
             // Subselects or subselect simulatinos of row value expressions
@@ -479,7 +479,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                        .formatIndentStart()
                        .formatNewLine()
                        .subquery(true)
-                       .sql(select)
+                       .visit(select)
                        .subquery(false)
                        .formatIndentEnd()
                        .formatNewLine()
@@ -490,14 +490,14 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // A regular (non-multi-row) update was specified
         else {
             context.formatIndentLockStart()
-                   .sql(updateMap)
+                   .visit(updateMap)
                    .formatIndentLockEnd();
         }
 
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
                    .keyword("where ")
-                   .sql(getWhere());
+                   .visit(getWhere());
         }
 
         toSQLReturning(context);
@@ -505,28 +505,28 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void bind(BindContext context) {
-        context.bind(getInto());
+        context.visit(getInto());
 
         // A multi-row update was specified
         if (multiRow != null) {
-            context.bind(multiRow);
+            context.visit(multiRow);
 
             if (multiValue != null) {
-                context.bind(multiValue);
+                context.visit(multiValue);
             }
             else {
                 context.subquery(true)
-                       .bind(multiSelect)
+                       .visit(multiSelect)
                        .subquery(false);
             }
         }
 
         // A regular (non-multi-row) update was specified
         else {
-            context.bind(updateMap);
+            context.visit(updateMap);
         }
 
-        context.bind(condition);
+        context.visit(condition);
         bindReturning(context);
     }
 

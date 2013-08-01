@@ -55,7 +55,6 @@ import org.jooq.ExecuteContext;
 import org.jooq.ExecuteListener;
 import org.jooq.Field;
 import org.jooq.Identity;
-import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Result;
@@ -155,7 +154,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 case POSTGRES:
                     context.formatSeparator()
                            .keyword("returning ")
-                           .sql(returning);
+                           .visit(returning);
                     break;
 
                 default:
@@ -169,7 +168,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         switch (context.configuration().dialect()) {
             case FIREBIRD:
             case POSTGRES:
-                context.bind((QueryPart) returning);
+                context.visit(returning);
                 break;
 
             default:

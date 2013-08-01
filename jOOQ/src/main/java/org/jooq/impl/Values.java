@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.impl.Utils.visitAll;
+
 import org.jooq.BindContext;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -42,7 +44,6 @@ import org.jooq.Row;
 import org.jooq.Select;
 import org.jooq.Support;
 import org.jooq.Table;
-import org.jooq.exception.DataAccessException;
 
 /**
  * An implementation for the <code>VALUES(...)</code> table constructor
@@ -114,7 +115,7 @@ class Values<R extends Record> extends AbstractTable<R> {
                 context.formatIndentStart()
                        .formatNewLine()
                        .subquery(true)
-                       .sql(selects)
+                       .visit(selects)
                        .subquery(subquery)
                        .formatIndentEnd()
                        .formatNewLine();
@@ -142,7 +143,7 @@ class Values<R extends Record> extends AbstractTable<R> {
                         context.sql(",").formatSeparator();
                     }
 
-                    context.sql(row);
+                    context.visit(row);
                     firstRow = false;
                 }
 
@@ -153,8 +154,8 @@ class Values<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final void bind(BindContext context) throws DataAccessException {
-        context.bind(rows);
+    public final void bind(BindContext context) {
+        visitAll(context, rows);
     }
 
     @Override

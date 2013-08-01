@@ -1033,7 +1033,7 @@ implements
                 toSQLH2(context);
             }
             else {
-                context.sql(getStandardMerge(context.configuration()));
+                context.visit(getStandardMerge(context.configuration()));
             }
         }
         else {
@@ -1044,7 +1044,7 @@ implements
     private final void toSQLH2(RenderContext context) {
         context.keyword("merge into ")
                .declareTables(true)
-               .sql(table)
+               .visit(table)
                .formatSeparator();
 
         context.sql("(");
@@ -1059,11 +1059,11 @@ implements
 
         if (h2Select != null) {
             context.sql(" ")
-                   .sql(h2Select);
+                   .visit(h2Select);
         }
         else {
             context.keyword(" values (")
-                   .sql(getH2Values())
+                   .visit(getH2Values())
                    .sql(")");
         }
     }
@@ -1071,7 +1071,7 @@ implements
     private final void toSQLStandard(RenderContext context) {
         context.keyword("merge into ")
                .declareTables(true)
-               .sql(table)
+               .visit(table)
                .formatSeparator()
                .keyword("using ")
                .formatIndentStart()
@@ -1119,35 +1119,35 @@ implements
         if (matchedUpdate != null) {
             context.formatSeparator()
                    .keyword("when matched then update set ")
-                   .sql(matchedUpdate);
+                   .visit(matchedUpdate);
         }
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null) {
             context.formatSeparator()
                    .keyword("where ")
-                   .sql(matchedWhere);
+                   .visit(matchedWhere);
         }
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
         if (matchedDeleteWhere != null) {
             context.formatSeparator()
                    .keyword("delete where ")
-                   .sql(matchedDeleteWhere);
+                   .visit(matchedDeleteWhere);
         }
 
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
             context.formatSeparator()
                    .sql("when not matched then insert ")
-                   .sql(notMatchedInsert);
+                   .visit(notMatchedInsert);
         }
 
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
         if (notMatchedWhere != null) {
             context.formatSeparator()
                    .keyword("where ")
-                   .sql(notMatchedWhere);
+                   .visit(notMatchedWhere);
         }
 
         switch (context.configuration().dialect().family()) {
@@ -1164,7 +1164,7 @@ implements
                 bindH2(context);
             }
             else {
-                context.bind(getStandardMerge(context.configuration()));
+                context.visit(getStandardMerge(context.configuration()));
             }
         }
         else {
@@ -1174,24 +1174,24 @@ implements
 
     private final void bindH2(BindContext context) {
         context.declareTables(true)
-               .bind(table)
+               .visit(table)
                .declareTables(false)
-               .bind((QueryPart) getH2Fields())
-               .bind((QueryPart) getH2Keys())
-               .bind(h2Select)
-               .bind((QueryPart) getH2Values());
+               .visit(getH2Fields())
+               .visit(getH2Keys())
+               .visit(h2Select)
+               .visit(getH2Values());
     }
 
     private final void bindStandard(BindContext context) {
         context.declareTables(true)
-               .bind(table)
-               .bind(using)
+               .visit(table)
+               .visit(using)
                .declareTables(false)
-               .bind(on)
-               .bind(matchedUpdate)
-               .bind(matchedWhere)
-               .bind(matchedDeleteWhere)
-               .bind(notMatchedInsert)
-               .bind(notMatchedWhere);
+               .visit(on)
+               .visit(matchedUpdate)
+               .visit(matchedWhere)
+               .visit(matchedDeleteWhere)
+               .visit(notMatchedInsert)
+               .visit(notMatchedWhere);
     }
 }

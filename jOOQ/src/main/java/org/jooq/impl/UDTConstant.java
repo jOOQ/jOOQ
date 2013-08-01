@@ -93,7 +93,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
                     context.sql(separator);
                     context.sql(field.getName());
                     context.sql("(");
-                    context.sql(val(value.getValue(field)));
+                    context.visit(val(value.getValue(field)));
                     context.sql(")");
                 }
 
@@ -114,7 +114,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
         String separator = "";
         for (Field<?> field : value.fields()) {
             context.sql(separator);
-            context.sql(val(value.getValue(field), field));
+            context.visit(val(value.getValue(field), field));
             separator = ", ";
         }
 
@@ -162,7 +162,7 @@ class UDTConstant<R extends UDTRecord<R>> extends AbstractParam<R> {
             // inlined instead: ROW(.., .., ..)
             case POSTGRES: {
                 for (Field<?> field : value.fields()) {
-                    context.bind(val(value.getValue(field)));
+                    context.visit(val(value.getValue(field)));
                 }
 
                 break;

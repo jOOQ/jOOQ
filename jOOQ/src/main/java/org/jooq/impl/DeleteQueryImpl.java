@@ -68,11 +68,6 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
         this.condition = new ConditionProviderImpl();
     }
 
-    @Override
-    public final void bind(BindContext context) {
-        context.bind(getFrom()).bind(getWhere());
-    }
-
     final Table<R> getFrom() {
         return table;
     }
@@ -115,20 +110,25 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
             // reliably instead of resorting to instanceof:
             if (getFrom() instanceof TableAlias ||
                (getFrom() instanceof TableImpl && ((TableImpl<R>)getFrom()).getAliasedTable() != null)) {
-                context.sql(getFrom())
+                context.visit(getFrom())
                        .sql(" ");
             }
         }
 
         context.keyword("from ");
         context.declareTables(true)
-               .sql(getFrom())
+               .visit(getFrom())
                .declareTables(declare);
 
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
                    .keyword("where ")
-                   .sql(getWhere());
+                   .visit(getWhere());
         }
+    }
+
+    @Override
+    public final void bind(BindContext context) {
+        context.visit(getFrom()).visit(getWhere());
     }
 }

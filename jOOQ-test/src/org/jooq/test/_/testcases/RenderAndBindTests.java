@@ -321,6 +321,9 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         String s3 = "''";
         String s4 = (derby ? s1 : null);
 
+        // [#2669] MySQL uses backslashes for escaping...
+        String s5 = "no SQL \\'injection\\' in MySQL either";
+
         Byte b1 = Byte.valueOf("1");
         Byte b2 = (derby ? b1 : null);
         Short sh1 = Short.valueOf("2");
@@ -358,7 +361,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 .withStatementType(StatementType.STATIC_STATEMENT));
 
             Object[] array1 = create.select(
-                val(s1), val(s2), val(s3), val(s4)
+                val(s1), val(s2), val(s3), val(s4), val(s5)
             ).fetchOneArray();
             Object[] array2 = create.select(
                 val(b1), val(b2),
@@ -377,12 +380,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 val(by1), val(by2), val(bool1), val(bool2), val(bool3)
             ).fetchOneArray();
 
-            assertEquals(4, array1.length);
+            assertEquals(5, array1.length);
             assertEquals(16, array2.length);
             assertEquals(6, array3.length);
             assertEquals(5, array4.length);
 
-            assertEquals(asList(s1, s2, s3, s4), asList(array1));
+            assertEquals(asList(s1, s2, s3, s4, s5), asList(array1));
             assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
             assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
 
@@ -397,17 +400,17 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         {
             DSLContext create = create();
 
-            Object[] array1 = create.select(inline(s1), inline(s2), inline(s3), inline(s4)).fetchOneArray();
+            Object[] array1 = create.select(inline(s1), inline(s2), inline(s3), inline(s4), inline(s5)).fetchOneArray();
             Object[] array2 = create.select(inline(b1), inline(b2), inline(sh1), inline(sh2), inline(i1), inline(i2), inline(l1), inline(l2), inline(bi1), inline(bi2), inline(bd1), inline(bd2), inline(db1), inline(db2), inline(f1), inline(f2)).fetchOneArray();
             Object[] array3 = create.select(inline(d1), inline(d2), inline(t1), inline(t2), inline(ts1), inline(ts2)).fetchOneArray();
             Object[] array4 = create.select(inline(by1), inline(by2), inline(bool1), inline(bool2), inline(bool3)).fetchOneArray();
 
-            assertEquals(4, array1.length);
+            assertEquals(5, array1.length);
             assertEquals(16, array2.length);
             assertEquals(6, array3.length);
             assertEquals(5, array4.length);
 
-            assertEquals(asList(s1, s2, s3, s4), asList(array1));
+            assertEquals(asList(s1, s2, s3, s4, s5), asList(array1));
             assertEquals(asList((Number) b1, b2, sh1, sh2, i1, i2, l1, l2, bi1, bi2, bd1, bd2, db1, db2, f1, f2), asList(array2));
             assertEquals(asList(d1, d2, t1, t2, ts1, ts2), asList(array3));
 

@@ -45,7 +45,7 @@ import org.jooq.ExecuteListenerProvider;
  * <p>
  * This implementation just wraps an instance of {@link ExecuteListener}, always
  * providing the same.
- * 
+ *
  * @author Lukas Eder
  */
 public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, Serializable {
@@ -56,7 +56,7 @@ public class DefaultExecuteListenerProvider implements ExecuteListenerProvider, 
     private static final long     serialVersionUID = -2122007794302549679L;
 
     /**
-     * The delegate list.
+     * The delegate listener.
      */
     private final ExecuteListener listener;
 

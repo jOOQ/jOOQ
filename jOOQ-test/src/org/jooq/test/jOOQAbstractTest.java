@@ -38,6 +38,8 @@ package org.jooq.test;
 import static java.util.Arrays.asList;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.FIREBIRD;
+import static org.jooq.SQLDialect.MARIADB;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_CLOSE_COUNT;
 import static org.jooq.test._.listeners.JDBCLifecycleListener.RS_START_COUNT;
 import static org.jooq.test._.listeners.JDBCLifecycleListener.STMT_CLOSE_COUNT;
@@ -525,6 +527,12 @@ public abstract class jOOQAbstractTest<
         if (!connectionInitialised) {
             connectionInitialised = true;
             connection = getConnection0(null, null);
+
+            // [#2669] Turn of MySQL backslash escaping, which causes trouble
+            if (asList(MARIADB, MYSQL).contains(create().configuration().dialect().family())) {
+                create().execute("SET @@sql_mode=CONCAT_WS(',', @@sql_mode, 'NO_BACKSLASH_ESCAPES');");
+            }
+
             final Connection c = connection;
 
             // Reactivate this, to enable mock connections

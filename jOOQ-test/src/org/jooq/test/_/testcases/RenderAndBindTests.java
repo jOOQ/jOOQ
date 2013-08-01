@@ -322,7 +322,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         String s4 = (derby ? s1 : null);
 
         // [#2669] MySQL uses backslashes for escaping...
-        String s5 = "no SQL \\'injection\\' in MySQL either";
+        String s5 = "no SQL \\injection\\ in MySQL either\\";
 
         Byte b1 = Byte.valueOf("1");
         Byte b2 = (derby ? b1 : null);

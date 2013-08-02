@@ -35,7 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.TABLE;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -78,6 +81,11 @@ class QualifiedTable extends AbstractTable<Record> {
 
     @Override
     public final void bind(BindContext context) {}
+
+    @Override
+    public final Clause clause() {
+        return TABLE;
+    }
 
     @Override
     public final Class<? extends Record> getRecordType() {

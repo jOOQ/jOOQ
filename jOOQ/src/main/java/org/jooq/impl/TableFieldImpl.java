@@ -36,7 +36,10 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.FIELD;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -78,6 +81,11 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
 
     @Override
     public final void bind(BindContext context) {}
+
+    @Override
+    public final Clause clause() {
+        return FIELD;
+    }
 
     // ------------------------------------------------------------------------
     // XXX: Object API

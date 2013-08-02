@@ -35,7 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -69,7 +72,9 @@ class RegexpLike extends AbstractCondition {
             case SQLITE:
             case SYBASE: {
                 context.visit(search)
-                       .keyword(" regexp ")
+                       .sql(" ")
+                       .keyword("regexp")
+                       .sql(" ")
                        .visit(pattern);
 
                 break;
@@ -109,7 +114,9 @@ class RegexpLike extends AbstractCondition {
             case SQLSERVER:
             default: {
                 context.visit(search)
-                       .keyword(" like_regex ")
+                       .sql(" ")
+                       .keyword("like_regex")
+                       .sql(" ")
                        .visit(pattern);
 
                 break;
@@ -120,5 +127,10 @@ class RegexpLike extends AbstractCondition {
     @Override
     public final void bind(BindContext context) {
         context.visit(search).visit(pattern);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 }

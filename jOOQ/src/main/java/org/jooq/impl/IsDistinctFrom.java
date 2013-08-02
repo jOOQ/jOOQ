@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -53,6 +54,7 @@ import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -92,6 +94,11 @@ class IsDistinctFrom<T> extends AbstractCondition {
     @Override
     public final void bind(BindContext context) {
         delegate(context.configuration()).bind(context);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     /**

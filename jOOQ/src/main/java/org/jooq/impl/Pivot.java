@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.using;
@@ -44,6 +45,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -143,6 +145,11 @@ implements
             ctx.declareTables(true)
                .visit(select(ctx.configuration()))
                .declareTables(false);
+        }
+
+        @Override
+        public final Clause clause() {
+            return DUMMY;
         }
 
         private Table<Record> select(Configuration configuration) {
@@ -261,6 +268,11 @@ implements
                    .visit(table)
                    .declareTables(declareTables);
         }
+
+        @Override
+        public final Clause clause() {
+            return DUMMY;
+        }
     }
 
     /**
@@ -315,6 +327,11 @@ implements
     @Override
     public final void bind(BindContext context) throws DataAccessException {
         context.visit(pivot(context.configuration()));
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     @Override

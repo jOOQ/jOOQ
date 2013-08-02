@@ -40,9 +40,11 @@ import java.util.Map;
 
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Param;
 import org.jooq.Query;
+import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 
@@ -93,6 +95,15 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     @Override
     public final void bind(BindContext context) {
         context.visit(delegate);
+    }
+
+    @Override
+    public final Clause clause() {
+        if (delegate instanceof QueryPartInternal) {
+            return ((QueryPartInternal) delegate).clause();
+        }
+
+        return null;
     }
 
     @Override

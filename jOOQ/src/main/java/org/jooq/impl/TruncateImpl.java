@@ -35,7 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.TRUNCATE;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -131,5 +134,10 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
     @Override
     public final void bind(BindContext context) {
         context.visit(table);
+    }
+
+    @Override
+    public final Clause clause() {
+        return TRUNCATE;
     }
 }

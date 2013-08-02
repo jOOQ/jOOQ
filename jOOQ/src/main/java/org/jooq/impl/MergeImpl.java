@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.MERGE;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
@@ -52,6 +54,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -230,7 +233,7 @@ implements
 
         if (fields != null) {
             h2Style = true;
-            h2Fields = new QueryPartList<Field<?>>(fields);
+            h2Fields = new QueryPartList<Field<?>>(DUMMY, fields);
         }
     }
 
@@ -240,7 +243,7 @@ implements
 
     QueryPartList<Field<?>> getH2Fields() {
         if (h2Fields == null) {
-            h2Fields = new QueryPartList<Field<?>>(table.fields());
+            h2Fields = new QueryPartList<Field<?>>(DUMMY, table.fields());
         }
 
         return h2Fields;
@@ -248,7 +251,7 @@ implements
 
     QueryPartList<Field<?>> getH2Keys() {
         if (h2Keys == null) {
-            h2Keys = new QueryPartList<Field<?>>();
+            h2Keys = new QueryPartList<Field<?>>(DUMMY);
         }
 
         return h2Keys;
@@ -256,7 +259,7 @@ implements
 
     QueryPartList<Field<?>> getH2Values() {
         if (h2Values == null) {
-            h2Values = new QueryPartList<Field<?>>();
+            h2Values = new QueryPartList<Field<?>>(DUMMY);
         }
 
         return h2Values;
@@ -1193,5 +1196,10 @@ implements
                .visit(matchedDeleteWhere)
                .visit(notMatchedInsert)
                .visit(notMatchedWhere);
+    }
+
+    @Override
+    public final Clause clause() {
+        return MERGE;
     }
 }

@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;
 import static org.jooq.Comparator.GREATER_OR_EQUAL;
@@ -72,6 +73,7 @@ import org.jooq.BetweenAndStep;
 import org.jooq.BindContext;
 import org.jooq.CaseValueStep;
 import org.jooq.CaseWhenStep;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -118,6 +120,11 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
 
     @Override
     public abstract void bind(BindContext context);
+
+    @Override
+    public /* non-final for now */ Clause clause() {
+        return DUMMY;
+    }
 
     // ------------------------------------------------------------------------
     // XXX: API

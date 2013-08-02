@@ -37,6 +37,12 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.UPDATE;
+import static org.jooq.Clause.UPDATE_RETURNING;
+import static org.jooq.Clause.UPDATE_SET;
+import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
+import static org.jooq.Clause.UPDATE_UPDATE;
+import static org.jooq.Clause.UPDATE_WHERE;
 import static org.jooq.SQLDialect.INGRES;
 import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.select;
@@ -47,6 +53,7 @@ import java.util.Map;
 import javax.annotation.Generated;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -445,18 +452,24 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("update ")
+        context.start(UPDATE_UPDATE)
+               .keyword("update")
+               .sql(" ")
                .declareTables(true)
                .visit(getInto())
                .declareTables(false)
+               .end(UPDATE_UPDATE)
                .formatSeparator()
-               .keyword("set ");
+               .start(UPDATE_SET)
+               .keyword("set")
+               .sql(" ");
 
         // A multi-row update was specified
         if (multiRow != null) {
             boolean qualify = context.qualify();
 
-            context.qualify(false)
+            context.start(UPDATE_SET_ASSIGNMENT)
+                   .qualify(false)
                    .visit(multiRow)
                    .qualify(qualify)
                    .sql(" = ");
@@ -467,7 +480,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 context.visit(multiValue);
             }
 
-            // Subselects or subselect simulatinos of row value expressions
+            // Subselects or subselect simulations of row value expressions
             else {
                 Select<?> select = multiSelect;
 
@@ -485,6 +498,8 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                        .formatNewLine()
                        .sql(")");
             }
+
+            context.end(UPDATE_SET_ASSIGNMENT);
         }
 
         // A regular (non-multi-row) update was specified
@@ -494,13 +509,17 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                    .formatIndentLockEnd();
         }
 
+        context.end(UPDATE_SET);
+
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
+                   .start(UPDATE_WHERE)
                    .keyword("where ")
-                   .visit(getWhere());
+                   .visit(getWhere())
+                   .end(UPDATE_WHERE);
         }
 
-        toSQLReturning(context);
+        toSQLReturning(context, UPDATE_RETURNING);
     }
 
     @Override
@@ -528,6 +547,11 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         context.visit(condition);
         bindReturning(context);
+    }
+
+    @Override
+    public final Clause clause() {
+        return UPDATE;
     }
 
     @Override

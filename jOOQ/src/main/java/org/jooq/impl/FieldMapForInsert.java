@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.Collection;
@@ -42,6 +43,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -134,6 +136,11 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     public final void bind(BindContext context) {
         visitAll(context, keySet());
         visitAll(context, values());
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     final void putFields(Collection<? extends Field<?>> fields) {

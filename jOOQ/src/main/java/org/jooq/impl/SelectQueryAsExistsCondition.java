@@ -36,7 +36,12 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION_EXISTS;
+import static org.jooq.Clause.CONDITION_EXISTS_NOT;
+import static org.jooq.impl.ExistsOperator.EXISTS;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 
@@ -95,5 +100,10 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
                    .visit(query)
                    .subquery(false);
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return operator == EXISTS ? CONDITION_EXISTS : CONDITION_EXISTS_NOT;
     }
 }

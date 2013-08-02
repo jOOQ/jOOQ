@@ -36,10 +36,13 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
@@ -123,6 +126,11 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     @Override
     public final void bind(BindContext context) {
         context.visit(alias);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     @Override

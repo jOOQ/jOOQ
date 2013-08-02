@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -7766,7 +7767,7 @@ public class DSL {
         WrappedList[] array = new WrappedList[fieldSets.length];
 
         for (int i = 0; i < fieldSets.length; i++) {
-            array[i] = new WrappedList(new QueryPartList<Field<?>>(fieldSets[i]));
+            array[i] = new WrappedList(new QueryPartList<Field<?>>(DUMMY, fieldSets[i]));
         }
 
         return new Function<Object>("grouping sets", SQLDataType.OTHER, array);

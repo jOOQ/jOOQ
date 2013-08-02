@@ -36,12 +36,15 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLITE;
 
 import java.util.Map;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -79,11 +82,13 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
                     context.formatNewLine();
                 }
 
-                context.qualify(supportsQualify)
+                context.start(UPDATE_SET_ASSIGNMENT)
+                       .qualify(supportsQualify)
                        .visit(entry.getKey())
                        .qualify(restoreQualify)
                        .sql(" = ")
-                       .visit(entry.getValue());
+                       .visit(entry.getValue())
+                       .end(UPDATE_SET_ASSIGNMENT);
 
                 separator = ", ";
             }
@@ -99,6 +104,11 @@ class FieldMapForUpdate extends AbstractQueryPartMap<Field<?>, Field<?>> {
             context.visit(entry.getKey());
             context.visit(entry.getValue());
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     final void set(Map<? extends Field<?>, ?> map) {

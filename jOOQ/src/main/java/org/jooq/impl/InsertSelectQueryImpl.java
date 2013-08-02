@@ -35,9 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.INSERT;
 import static org.jooq.impl.Utils.visitAll;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Insert;
@@ -70,7 +72,8 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("insert into ")
+        context.keyword("insert into")
+               .sql(" ")
                .visit(into)
                .sql(" (");
 
@@ -92,5 +95,10 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
         context.visit(into);
         visitAll(context, fields);
         context.visit(select);
+    }
+
+    @Override
+    public final Clause clause() {
+        return INSERT;
     }
 }

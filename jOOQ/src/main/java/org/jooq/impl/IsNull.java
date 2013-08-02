@@ -36,7 +36,11 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION_NULL;
+import static org.jooq.Clause.CONDITION_NULL_NOT;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -62,6 +66,11 @@ class IsNull extends AbstractCondition {
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.visit(field).keyword(isNull ? " is null" : " is not null");
+        context.visit(field).sql(" ").keyword(isNull ? "is null" : "is not null");
+    }
+
+    @Override
+    public final Clause clause() {
+        return isNull ? CONDITION_NULL : CONDITION_NULL_NOT;
     }
 }

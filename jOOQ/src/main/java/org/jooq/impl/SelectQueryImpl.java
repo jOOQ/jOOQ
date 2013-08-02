@@ -36,6 +36,16 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.SELECT;
+import static org.jooq.Clause.SELECT_CONNECT_BY;
+import static org.jooq.Clause.SELECT_FROM;
+import static org.jooq.Clause.SELECT_GROUP_BY;
+import static org.jooq.Clause.SELECT_HAVING;
+import static org.jooq.Clause.SELECT_ORDER_BY;
+import static org.jooq.Clause.SELECT_SELECT;
+import static org.jooq.Clause.SELECT_START_WITH;
+import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
@@ -62,6 +72,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -140,7 +151,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.condition = new ConditionProviderImpl();
         this.connectBy = new ConditionProviderImpl();
         this.connectByStartWith = new ConditionProviderImpl();
-        this.groupBy = new QueryPartList<GroupField>();
+        this.groupBy = new QueryPartList<GroupField>(DUMMY);
         this.having = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
         this.limit = new Limit();
@@ -149,8 +160,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             this.from.add(from.asTable());
         }
 
-        this.forUpdateOf = new QueryPartList<Field<?>>();
+        this.forUpdateOf = new QueryPartList<Field<?>>(DUMMY);
         this.forUpdateOfTables = new TableList();
+    }
+
+    @Override
+    public final Clause clause() {
+        return SELECT;
     }
 
     @Override
@@ -323,7 +339,6 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.formatSeparator()
                    .sql(option);
         }
-
     }
 
     /**
@@ -434,7 +449,9 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
         // SELECT clause
         // -------------
-        context.keyword("select ");
+        context.start(SELECT_SELECT)
+               .keyword("select")
+               .sql(" ");
 
         // [#1493] Oracle hints come directly after the SELECT keyword
         if (!StringUtils.isBlank(hint)) {
@@ -442,7 +459,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         }
 
         if (distinct) {
-            context.keyword("distinct ");
+            context.keyword("distinct").sql(" ");
         }
 
         // Sybase and SQL Server have leading TOP clauses
@@ -527,15 +544,24 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .paramType(paramType);
         }
 
-        context.declareFields(false);
+        context.declareFields(false)
+               .end(SELECT_SELECT);
 
         // FROM and JOIN clauses
         // ---------------------
-        context.declareTables(true);
+        context.start(SELECT_FROM)
+               .declareTables(true);
 
-        if (!context.render(getFrom()).isEmpty()) {
+        // The simplest way to see if no FROM clause needs to be rendered is to
+        // render it. But use a new RenderContext (without any VisitListeners)
+        // for that purpose!
+        DefaultConfiguration c = new DefaultConfiguration(context.configuration().dialect());
+        String renderedFrom = new DefaultRenderContext(c).render(getFrom());
+
+        if (!renderedFrom.isEmpty()) {
             context.formatSeparator()
-                   .keyword("from ")
+                   .keyword("from")
+                   .sql(" ")
                    .visit(getFrom());
 
             // [#1681] Sybase ASE and Ingres need a cross-joined dummy table
@@ -545,32 +571,61 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             }
         }
 
-        context.declareTables(false);
+        context.declareTables(false)
+               .end(SELECT_FROM);
 
         // WHERE clause
         // ------------
+        context.start(SELECT_WHERE);
+
         if (!(getWhere().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .keyword("where ")
+                   .keyword("where")
+                   .sql(" ")
                    .visit(getWhere());
         }
 
+        context.end(SELECT_WHERE);
+
         // CONNECT BY clause
         // -----------------
-        if (!(getConnectBy().getWhere() instanceof TrueCondition)) {
 
-            // CUBRID supports this clause only as [ START WITH .. ] CONNECT BY
-            // Oracle also knows the CONNECT BY .. [ START WITH ] alternative
-            // syntax
-            toSQLStartWith(context);
-            toSQLConnectBy(context);
+        // CUBRID supports this clause only as [ START WITH .. ] CONNECT BY
+        // Oracle also knows the CONNECT BY .. [ START WITH ] alternative
+        // syntax
+        context.start(SELECT_START_WITH);
+
+        if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
+            context.formatSeparator()
+                   .keyword("start with")
+                   .sql(" ")
+                   .visit(getConnectByStartWith());
         }
+
+        context.end(SELECT_START_WITH);
+        context.start(SELECT_CONNECT_BY);
+
+        if (!(getConnectBy().getWhere() instanceof TrueCondition)) {
+            context.formatSeparator()
+                   .keyword("connect by");
+
+            if (connectByNoCycle) {
+                context.keyword(" nocycle");
+            }
+
+            context.sql(" ").visit(getConnectBy());
+        }
+
+        context.end(SELECT_CONNECT_BY);
 
         // GROUP BY and HAVING clause
         // --------------------------
+        context.start(SELECT_GROUP_BY);
+
         if (grouping) {
             context.formatSeparator()
-                   .keyword("group by ");
+                   .keyword("group by")
+                   .sql(" ");
 
             // [#1665] Empty GROUP BY () clauses need parentheses
             if (getGroupBy().isEmpty()) {
@@ -595,19 +650,33 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             }
         }
 
+        context.end(SELECT_GROUP_BY);
+
+        // HAVING clause
+        // -------------
+        context.start(SELECT_HAVING);
+
         if (!(getHaving().getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .keyword("having ")
+                   .keyword("having")
+                   .sql(" ")
                    .visit(getHaving());
         }
 
+        context.end(SELECT_HAVING);
+
         // ORDER BY clause
         // ---------------
+        context.start(SELECT_ORDER_BY);
+
         if (!getOrderBy().isEmpty()) {
             context.formatSeparator()
-                   .keyword("order ")
-                   .keyword(orderBySiblings ? "siblings " : "")
-                   .keyword("by ")
+                   .keyword("order")
+                   .sql(orderBySiblings ? " " : "")
+                   .keyword(orderBySiblings ? "siblings" : "")
+                   .sql(" ")
+                   .keyword("by")
+                   .sql(" ")
                    .visit(getOrderBy());
         }
 
@@ -615,27 +684,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         // OFFSET .. FETCH
         else if (getLimit().isApplicable() && asList(SQLSERVER, SQLSERVER2012).contains(dialect)){
             context.formatSeparator()
-                   .keyword("order by 1");
-        }
-    }
-
-    private void toSQLStartWith(RenderContext context) {
-        if (!(getConnectByStartWith().getWhere() instanceof TrueCondition)) {
-            context.formatSeparator()
-                   .keyword("start with ")
-                   .visit(getConnectByStartWith());
-        }
-    }
-
-    private void toSQLConnectBy(RenderContext context) {
-        context.formatSeparator()
-               .keyword("connect by");
-
-        if (connectByNoCycle) {
-            context.keyword(" nocycle");
+                   .keyword("order by")
+                   .sql(" 1");
         }
 
-        context.sql(" ").visit(getConnectBy());
+        context.end(SELECT_ORDER_BY);
     }
 
     @Override

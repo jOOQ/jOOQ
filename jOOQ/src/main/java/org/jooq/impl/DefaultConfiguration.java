@@ -55,6 +55,7 @@ import org.jooq.RecordListenerProvider;
 import org.jooq.RecordMapperProvider;
 import org.jooq.SQLDialect;
 import org.jooq.SchemaMapping;
+import org.jooq.VisitListenerProvider;
 import org.jooq.conf.Settings;
 import org.jooq.conf.SettingsTools;
 
@@ -84,6 +85,7 @@ public class DefaultConfiguration implements Configuration {
     private transient RecordMapperProvider      recordMapperProvider;
     private transient RecordListenerProvider[]  recordListenerProviders;
     private transient ExecuteListenerProvider[] executeListenerProviders;
+    private transient VisitListenerProvider[]   visitListenerProviders;
 
     // Derived objects
     private org.jooq.SchemaMapping              mapping;
@@ -100,14 +102,29 @@ public class DefaultConfiguration implements Configuration {
      * through the various <code>derive()</code> or <code>set()</code> methods.
      */
     public DefaultConfiguration() {
+        this(SQL99);
+    }
+
+    /**
+     * Create a new "empty" configuration object given a {@link SQLDialect}.
+     * <p>
+     * This can be used as is, as a "dummy" configuration object, or as a base
+     * implementation for creating more sophisticated "derived" configurations
+     * through the various <code>derive()</code> or <code>set()</code> methods.
+     *
+     * @param dialect The pre-existing {@link SQLDialect}.
+     */
+    DefaultConfiguration(SQLDialect dialect) {
         this(
             new NoConnectionProvider(),
             new DefaultRecordMapperProvider(),
             new RecordListenerProvider[0],
             new ExecuteListenerProvider[0],
-            SQL99,
+            new VisitListenerProvider[0],
+            dialect,
             SettingsTools.defaultSettings(),
-            null);
+            null
+        );
     }
 
     /**
@@ -124,6 +141,7 @@ public class DefaultConfiguration implements Configuration {
             configuration.recordMapperProvider(),
             configuration.recordListenerProviders(),
             configuration.executeListenerProviders(),
+            configuration.visitListenerProviders(),
             configuration.dialect(),
             configuration.settings(),
             configuration.data()
@@ -143,6 +161,7 @@ public class DefaultConfiguration implements Configuration {
             RecordMapperProvider recordMapperProvider,
             RecordListenerProvider[] recordListenerProviders,
             ExecuteListenerProvider[] executeListenerProviders,
+            VisitListenerProvider[] visitListenerProviders,
             SQLDialect dialect,
             Settings settings,
             Map<Object, Object> data)
@@ -151,6 +170,7 @@ public class DefaultConfiguration implements Configuration {
         set(recordMapperProvider);
         set(recordListenerProviders);
         set(executeListenerProviders);
+        set(visitListenerProviders);
         set(dialect);
         set(settings);
 
@@ -181,6 +201,7 @@ public class DefaultConfiguration implements Configuration {
             recordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            visitListenerProviders,
             dialect,
             settings,
             data
@@ -197,6 +218,7 @@ public class DefaultConfiguration implements Configuration {
             newRecordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            visitListenerProviders,
             dialect,
             settings,
             data
@@ -207,12 +229,13 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
+    public final Configuration derive(RecordListenerProvider... newRecordListenerProviders) {
         return new DefaultConfiguration(
             connectionProvider,
             recordMapperProvider,
             newRecordListenerProviders,
             executeListenerProviders,
+            visitListenerProviders,
             dialect,
             settings,
             data
@@ -229,6 +252,24 @@ public class DefaultConfiguration implements Configuration {
             recordMapperProvider,
             recordListenerProviders,
             newExecuteListenerProviders,
+            visitListenerProviders,
+            dialect,
+            settings,
+            data
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration derive(VisitListenerProvider... newVisitListenerProviders) {
+        return new DefaultConfiguration(
+            connectionProvider,
+            recordMapperProvider,
+            recordListenerProviders,
+            executeListenerProviders,
+            newVisitListenerProviders,
             dialect,
             settings,
             data
@@ -245,6 +286,7 @@ public class DefaultConfiguration implements Configuration {
             recordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            visitListenerProviders,
             newDialect,
             settings,
             data
@@ -261,6 +303,7 @@ public class DefaultConfiguration implements Configuration {
             recordMapperProvider,
             recordListenerProviders,
             executeListenerProviders,
+            visitListenerProviders,
             dialect,
             newSettings,
             data
@@ -270,15 +313,6 @@ public class DefaultConfiguration implements Configuration {
     // -------------------------------------------------------------------------
     // XXX: Changing configurations
     // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final Configuration set(SQLDialect newDialect) {
-        this.dialect = newDialect;
-        return this;
-    }
 
     /**
      * {@inheritDoc}
@@ -305,12 +339,11 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Configuration set(Settings newSettings) {
-        this.settings = newSettings != null
-            ? SettingsTools.clone(newSettings)
-            : SettingsTools.defaultSettings();
+    public final Configuration set(RecordListenerProvider... newRecordListenerProviders) {
+        this.recordListenerProviders = newRecordListenerProviders != null
+            ? newRecordListenerProviders
+            : new RecordListenerProvider[0];
 
-        this.mapping = new SchemaMapping(this);
         return this;
     }
 
@@ -330,25 +363,39 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final Configuration set(RecordListenerProvider... newRecordListenerProviders) {
-        this.recordListenerProviders = newRecordListenerProviders != null
-            ? newRecordListenerProviders
-            : new RecordListenerProvider[0];
+    public final Configuration set(VisitListenerProvider... newVisitListenerProviders) {
+        this.visitListenerProviders = newVisitListenerProviders != null
+            ? newVisitListenerProviders
+            : new VisitListenerProvider[0];
 
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration set(SQLDialect newDialect) {
+        this.dialect = newDialect;
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final Configuration set(Settings newSettings) {
+        this.settings = newSettings != null
+            ? SettingsTools.clone(newSettings)
+            : SettingsTools.defaultSettings();
+
+        this.mapping = new SchemaMapping(this);
         return this;
     }
 
     // -------------------------------------------------------------------------
     // XXX: Getters
     // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final SQLDialect dialect() {
-        return dialect;
-    }
 
     /**
      * {@inheritDoc}
@@ -362,7 +409,7 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public RecordMapperProvider recordMapperProvider() {
+    public final RecordMapperProvider recordMapperProvider() {
         return recordMapperProvider;
     }
 
@@ -370,9 +417,32 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    @Deprecated
-    public final org.jooq.SchemaMapping schemaMapping() {
-        return mapping;
+    public final RecordListenerProvider[] recordListenerProviders() {
+        return recordListenerProviders;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final ExecuteListenerProvider[] executeListenerProviders() {
+        return executeListenerProviders;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final VisitListenerProvider[] visitListenerProviders() {
+        return visitListenerProviders;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final SQLDialect dialect() {
+        return dialect;
     }
 
     /**
@@ -411,16 +481,9 @@ public class DefaultConfiguration implements Configuration {
      * {@inheritDoc}
      */
     @Override
-    public final ExecuteListenerProvider[] executeListenerProviders() {
-        return executeListenerProviders;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public RecordListenerProvider[] recordListenerProviders() {
-        return recordListenerProviders;
+    @Deprecated
+    public final org.jooq.SchemaMapping schemaMapping() {
+        return mapping;
     }
 
     @Override
@@ -452,6 +515,7 @@ public class DefaultConfiguration implements Configuration {
 
         oos.writeObject(cloneSerializables(executeListenerProviders));
         oos.writeObject(cloneSerializables(recordListenerProviders));
+        oos.writeObject(cloneSerializables(visitListenerProviders));
     }
 
     private <E> E[] cloneSerializables(E[] array) {
@@ -473,5 +537,6 @@ public class DefaultConfiguration implements Configuration {
         recordMapperProvider = (RecordMapperProvider) ois.readObject();
         executeListenerProviders = (ExecuteListenerProvider[]) ois.readObject();
         recordListenerProviders = (RecordListenerProvider[]) ois.readObject();
+        visitListenerProviders = (VisitListenerProvider[]) ois.readObject();
     }
 }

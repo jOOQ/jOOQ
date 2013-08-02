@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -88,8 +89,18 @@ public abstract class CustomField<T> extends AbstractField<T> {
     public abstract void bind(BindContext context) throws DataAccessException;
 
     // -------------------------------------------------------------------------
-    // Further overrides allowed
+    // Implementation optional
     // -------------------------------------------------------------------------
+
+    /**
+     * Subclasses may implement this method
+     * <hr/>
+     * {@inheritDoc}
+     */
+    @Override
+    public Clause clause() {
+        return null;
+    }
 
     // -------------------------------------------------------------------------
     // No further overrides allowed

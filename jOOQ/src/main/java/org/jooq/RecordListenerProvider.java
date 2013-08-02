@@ -43,8 +43,8 @@ import org.jooq.impl.DefaultRecordListenerProvider;
  * In order to facilitate the lifecycle management of
  * <code>RecordListener</code> instances that are provided to a jOOQ
  * {@link Configuration}, clients can implement this API. To jOOQ, it is thus
- * irrelevant, if execute listeners are stateful or stateless, local to a
- * single record or record manipulation, or global to an application.
+ * irrelevant, if execute listeners are stateful or stateless, local to a single
+ * record or record manipulation, or global to an application.
  *
  * @author Lukas Eder
  * @see RecordListener

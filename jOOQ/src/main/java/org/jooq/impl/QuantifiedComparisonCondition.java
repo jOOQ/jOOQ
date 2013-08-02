@@ -37,7 +37,10 @@
 package org.jooq.impl;
 
 
+import static org.jooq.Clause.CONDITION_COMPARISON;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
@@ -72,5 +75,10 @@ class QuantifiedComparisonCondition extends AbstractCondition {
     @Override
     public final void bind(BindContext context) {
         context.visit(field).visit(query);
+    }
+
+    @Override
+    public final Clause clause() {
+        return CONDITION_COMPARISON;
     }
 }

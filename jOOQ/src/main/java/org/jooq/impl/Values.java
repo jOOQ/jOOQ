@@ -35,9 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.Utils.visitAll;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Row;
@@ -156,6 +158,11 @@ class Values<R extends Record> extends AbstractTable<R> {
     @Override
     public final void bind(BindContext context) {
         visitAll(context, rows);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     @Override

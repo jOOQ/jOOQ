@@ -36,7 +36,10 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION_COMPARISON;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -104,5 +107,10 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
                    .visit(query)
                    .subquery(false);
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return CONDITION_COMPARISON;
     }
 }

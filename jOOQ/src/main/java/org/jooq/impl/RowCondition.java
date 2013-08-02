@@ -36,6 +36,8 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION_COMPARISON;
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;
 import static org.jooq.Comparator.GREATER_OR_EQUAL;
@@ -57,6 +59,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -96,6 +99,11 @@ class RowCondition extends AbstractCondition {
     @Override
     public final void bind(BindContext context) {
         delegate(context.configuration()).bind(context);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -205,6 +213,11 @@ class RowCondition extends AbstractCondition {
         @Override
         public final void bind(BindContext context) {
             context.visit(left).visit(right);
+        }
+
+        @Override
+        public final Clause clause() {
+            return CONDITION_COMPARISON;
         }
     }
 }

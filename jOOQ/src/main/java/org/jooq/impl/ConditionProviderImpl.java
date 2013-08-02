@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
 import org.jooq.Field;
@@ -119,6 +120,11 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     @Override
     public final void toSQL(RenderContext context) {
         context.visit(getWhere());
+    }
+
+    @Override
+    public final Clause clause() {
+        return null;
     }
 
     // -------------------------------------------------------------------------

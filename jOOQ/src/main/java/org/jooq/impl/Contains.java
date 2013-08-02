@@ -35,10 +35,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -82,6 +84,11 @@ class Contains<T> extends AbstractCondition {
         context.visit(condition());
     }
 
+    @Override
+    public final Clause clause() {
+        return CONDITION_COMPARISON;
+    }
+
     private final Condition condition() {
 
         // [#1107] Some dialects support "contains" operations for ARRAYs
@@ -122,6 +129,11 @@ class Contains<T> extends AbstractCondition {
         @Override
         public final void bind(BindContext context) throws DataAccessException {
             context.visit(lhs).visit(rhs());
+        }
+
+        @Override
+        public final Clause clause() {
+            return CONDITION_COMPARISON;
         }
 
         private final Field<T> rhs() {

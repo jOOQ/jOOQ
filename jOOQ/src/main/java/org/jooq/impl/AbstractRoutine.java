@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.function;
@@ -58,6 +59,7 @@ import org.jooq.AggregateFunction;
 import org.jooq.ArrayRecord;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
@@ -288,6 +290,11 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
         finally {
             Utils.safeClose(listener, ctx);
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     @Override

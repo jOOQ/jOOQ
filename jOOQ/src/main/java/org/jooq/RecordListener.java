@@ -35,6 +35,8 @@
  */
 package org.jooq;
 
+import java.util.EventListener;
+
 /**
  * A listener for manipulation events on {@link UpdatableRecord}s.
  * <p>
@@ -52,7 +54,7 @@ package org.jooq;
  *
  * @author Lukas Eder
  */
-public interface RecordListener {
+public interface RecordListener extends EventListener {
 
     /**
      * Called before storing an <code>UpdatableRecord</code>.

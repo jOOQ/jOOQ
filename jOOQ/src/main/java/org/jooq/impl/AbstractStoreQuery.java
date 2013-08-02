@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
@@ -49,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
@@ -83,7 +85,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         super(configuration);
 
         this.into = into;
-        this.returning = new QueryPartList<Field<?>>();
+        this.returning = new QueryPartList<Field<?>>(DUMMY);
     }
 
     protected abstract Map<Field<?>, Field<?>> getValues();
@@ -147,14 +149,17 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         return returned;
     }
 
-    final void toSQLReturning(RenderContext context) {
+    final void toSQLReturning(RenderContext context, Clause clause) {
         if (!returning.isEmpty()) {
             switch (context.configuration().dialect()) {
                 case FIREBIRD:
                 case POSTGRES:
                     context.formatSeparator()
-                           .keyword("returning ")
-                           .visit(returning);
+                           .start(clause)
+                           .keyword("returning")
+                           .sql(" ")
+                           .visit(returning)
+                           .end(clause);
                     break;
 
                 default:

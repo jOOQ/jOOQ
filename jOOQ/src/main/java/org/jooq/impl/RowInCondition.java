@@ -36,7 +36,11 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION_IN;
+import static org.jooq.Clause.CONDITION_IN_NOT;
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.Comparator.EQUALS;
+import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_IN;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.DB2;
@@ -51,6 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
@@ -87,6 +92,11 @@ class RowInCondition extends AbstractCondition {
     @Override
     public final void bind(BindContext context) {
         delegate(context.configuration()).bind(context);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -130,6 +140,11 @@ class RowInCondition extends AbstractCondition {
         @Override
         public final void bind(BindContext context) {
             context.visit(left).visit(right);
+        }
+
+        @Override
+        public final Clause clause() {
+            return comparator == IN ? CONDITION_IN : CONDITION_IN_NOT;
         }
     }
 }

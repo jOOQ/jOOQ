@@ -35,11 +35,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.CATALOG;
+
 import java.util.Collections;
 import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Catalog;
+import org.jooq.Clause;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.tools.StringUtils;
@@ -76,6 +79,11 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     @Override
     public final void toSQL(RenderContext context) {
         context.literal(getName());
+    }
+
+    @Override
+    public final Clause clause() {
+        return CATALOG;
     }
 
     @Override

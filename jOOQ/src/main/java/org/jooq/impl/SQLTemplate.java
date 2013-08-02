@@ -38,6 +38,7 @@ package org.jooq.impl;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.Template;
@@ -78,6 +79,11 @@ class SQLTemplate implements Template {
         @Override
         public final void bind(BindContext context) {
             Utils.renderAndBind(null, context, sql, substitutes);
+        }
+
+        @Override
+        public final Clause clause() {
+            return null;
         }
     }
 }

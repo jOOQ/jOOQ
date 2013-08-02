@@ -195,6 +195,11 @@ public interface Configuration extends Serializable {
     ExecuteListenerProvider[] executeListenerProviders();
 
     /**
+     * TODO [#2667]
+     */
+    VisitListenerProvider[] visitListenerProviders();
+
+    /**
      * Retrieve the configured schema mapping.
      *
      * @deprecated - 2.0.5 - Use {@link #settings()} instead
@@ -263,6 +268,18 @@ public interface Configuration extends Serializable {
      * @return The changed configuration.
      */
     Configuration set(ExecuteListenerProvider... newExecuteListenerProviders);
+
+    /**
+     * Change this configuration to hold a new visit listener providers.
+     * <p>
+     * This method is not thread-safe and should not be used in globally
+     * available <code>Configuration</code> objects.
+     *
+     * @param newVisitListenerProviders The new visit listener providers to
+     *            be contained in the changed configuration.
+     * @return The changed configuration.
+     */
+    Configuration set(VisitListenerProvider... newVisitListenerProviders);
 
     /**
      * Change this configuration to hold a new dialect.
@@ -339,6 +356,16 @@ public interface Configuration extends Serializable {
      * @return The derived configuration.
      */
     Configuration derive(ExecuteListenerProvider... newExecuteListenerProviders);
+
+    /**
+     * Create a derived configuration from this one, with new visit listener
+     * providers.
+     *
+     * @param newVisitListenerProviders The new visit listener providers to
+     *            be contained in the derived configuration.
+     * @return The derived configuration.
+     */
+    Configuration derive(VisitListenerProvider... newVisitListenerProviders);
 
     /**
      * Create a derived configuration from this one, with a new dialect.

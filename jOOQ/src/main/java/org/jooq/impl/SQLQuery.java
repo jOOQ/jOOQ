@@ -36,8 +36,10 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 
 /**
@@ -70,5 +72,14 @@ class SQLQuery extends AbstractQuery {
     @Override
     public final void bind(BindContext context) {
         context.visit(delegate);
+    }
+
+    @Override
+    public final Clause clause() {
+        if (delegate instanceof QueryPartInternal) {
+            return ((QueryPartInternal) delegate).clause();
+        }
+
+        return null;
     }
 }

@@ -36,7 +36,10 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.TABLE;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
@@ -90,15 +93,20 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
+    final Fields<R> fields0() {
+        return fields;
+    }
+
+    @Override
+    public final Clause clause() {
+        return TABLE;
+    }
+
+    @Override
     public final void bind(BindContext context) {
         if (alias != null) {
             alias.bind(context);
         }
-    }
-
-    @Override
-    final Fields<R> fields0() {
-        return fields;
     }
 
     @Override

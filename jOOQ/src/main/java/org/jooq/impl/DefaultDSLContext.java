@@ -202,7 +202,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     public DefaultDSLContext(SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new NoConnectionProvider(), null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(Connection connection, SQLDialect dialect) {
@@ -210,7 +210,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     public DefaultDSLContext(Connection connection, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new DefaultConnectionProvider(connection), null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect) {
@@ -218,7 +218,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     public DefaultDSLContext(DataSource datasource, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(new DataSourceConnectionProvider(datasource), null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect) {
@@ -226,7 +226,7 @@ public class DefaultDSLContext implements DSLContext, Serializable {
     }
 
     public DefaultDSLContext(ConnectionProvider connectionProvider, SQLDialect dialect, Settings settings) {
-        this(new DefaultConfiguration(connectionProvider, null, null, null, dialect, settings, null));
+        this(new DefaultConfiguration(connectionProvider, null, null, null, null, dialect, settings, null));
     }
 
     public DefaultDSLContext(Configuration configuration) {

@@ -36,6 +36,8 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION_BETWEEN;
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -76,6 +78,7 @@ import org.jooq.BetweenAndStep8;
 import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStepN;
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -685,6 +688,11 @@ implements
         delegate(context.configuration()).toSQL(context);
     }
 
+    @Override
+    public final Clause clause() {
+        return DUMMY;
+    }
+
     private final QueryPartInternal delegate(Configuration configuration) {
         // These casts are safe for RowImpl
         RowN r = (RowN) row;
@@ -727,17 +735,28 @@ implements
         @Override
         public final void toSQL(RenderContext context) {
             context.visit(row)
-                   .keyword(not ? " not" : "")
-                   .keyword(" between ")
-                   .keyword(symmetric ? "symmetric " : "")
+                   .sql(not ? " " : "")
+                   .keyword(not ? "not" : "")
+                   .sql(" ")
+                   .keyword("between")
+                   .sql(" ")
+                   .keyword(symmetric ? "symmetric" : "")
+                   .sql(symmetric ? " " : "")
                    .visit(minValue)
-                   .keyword(" and ")
+                   .sql(" ")
+                   .keyword("and")
+                   .sql(" ")
                    .visit(maxValue);
         }
 
         @Override
         public final void bind(BindContext context) {
             context.visit(row).visit(minValue).visit(maxValue);
+        }
+
+        @Override
+        public final Clause clause() {
+            return CONDITION_BETWEEN;
         }
     }
 }

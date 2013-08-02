@@ -36,7 +36,10 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Parameter;
@@ -83,11 +86,16 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     }
 
     @Override
+    public final void toSQL(RenderContext context) {
+        context.literal(getName());
+    }
+
+    @Override
     public final void bind(BindContext context) {}
 
     @Override
-    public final void toSQL(RenderContext context) {
-        context.literal(getName());
+    public final Clause clause() {
+        return DUMMY;
     }
 
     @Override

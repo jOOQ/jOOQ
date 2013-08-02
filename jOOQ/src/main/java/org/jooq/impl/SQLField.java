@@ -35,9 +35,13 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.FIELD;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 
 class SQLField<T> extends AbstractField<T> {
@@ -67,5 +71,14 @@ class SQLField<T> extends AbstractField<T> {
     @Override
     public final void bind(BindContext context) {
         context.visit(delegate);
+    }
+
+    @Override
+    public final Clause clause() {
+        if (delegate instanceof QueryPartInternal) {
+            return ((QueryPartInternal) delegate).clause();
+        }
+
+        return FIELD;
     }
 }

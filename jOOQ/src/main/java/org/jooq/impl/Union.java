@@ -35,12 +35,17 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.SELECT_EXCEPT;
+import static org.jooq.Clause.SELECT_INTERSECT;
+import static org.jooq.Clause.SELECT_UNION;
+import static org.jooq.Clause.SELECT_UNION_ALL;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -63,10 +68,10 @@ class Union<R extends Record> extends AbstractSelect<R> {
     Union(Configuration configuration, Select<R> query1, Select<? extends R> query2, CombineOperator operator) {
         super(configuration);
 
-        this.operator = operator;
         this.queries = new ArrayList<Select<? extends R>>();
         this.queries.add(query1);
         this.queries.add(query2);
+        this.operator = operator;
     }
 
     @Override
@@ -126,6 +131,17 @@ class Union<R extends Record> extends AbstractSelect<R> {
     @Override
     public final void bind(BindContext context) {
         visitAll(context, queries);
+    }
+
+    @Override
+    public final Clause clause() {
+        switch (operator) {
+            case EXCEPT:    return SELECT_EXCEPT;
+            case INTERSECT: return SELECT_INTERSECT;
+            case UNION:     return SELECT_UNION;
+            case UNION_ALL: return SELECT_UNION_ALL;
+            default:        throw new IllegalArgumentException("Operator not supported : " + operator);
+        }
     }
 
     @Override

@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
@@ -54,6 +55,7 @@ import java.util.Collection;
 
 import org.jooq.AggregateFunction;
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -136,10 +138,10 @@ class Function<T> extends AbstractField<T> implements
         this.term = null;
         this.name = null;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.arguments = new QueryPartList<QueryPart>(DUMMY, arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-        this.partitionBy = new QueryPartList<Field<?>>();
+        this.partitionBy = new QueryPartList<Field<?>>(DUMMY);
         this.orderBy = new SortFieldList();
     }
 
@@ -149,10 +151,10 @@ class Function<T> extends AbstractField<T> implements
         this.term = term;
         this.name = null;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.arguments = new QueryPartList<QueryPart>(DUMMY, arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-        this.partitionBy = new QueryPartList<Field<?>>();
+        this.partitionBy = new QueryPartList<Field<?>>(DUMMY);
         this.orderBy = new SortFieldList();
     }
 
@@ -162,10 +164,10 @@ class Function<T> extends AbstractField<T> implements
         this.term = null;
         this.name = name;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(arguments);
+        this.arguments = new QueryPartList<QueryPart>(DUMMY, arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-        this.partitionBy = new QueryPartList<Field<?>>();
+        this.partitionBy = new QueryPartList<Field<?>>(DUMMY);
         this.orderBy = new SortFieldList();
     }
 
@@ -182,8 +184,12 @@ class Function<T> extends AbstractField<T> implements
     // -------------------------------------------------------------------------
 
     @Override
-    public final void bind(BindContext context) {
+    public final Clause clause() {
+        return DUMMY;
+    }
 
+    @Override
+    public final void bind(BindContext context) {
         if (term == LIST_AGG && asList(CUBRID, H2, HSQLDB, MARIADB, MYSQL).contains(context.configuration().dialect())) {
             context.visit(arguments.get(0));
             context.visit(withinGroupOrderBy);

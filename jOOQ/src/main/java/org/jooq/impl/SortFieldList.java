@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +57,7 @@ class SortFieldList extends QueryPartList<SortField<?>> {
     }
 
     SortFieldList(List<SortField<?>> wrappedList) {
-        super(wrappedList);
+        super(DUMMY, wrappedList);
     }
 
     void addAll(Field<?>... fields) {

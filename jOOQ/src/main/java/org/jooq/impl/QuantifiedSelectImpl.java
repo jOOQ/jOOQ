@@ -35,9 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.table;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
@@ -112,6 +114,11 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                    .visit(part(context.configuration()))
                    .subquery(false);
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     private final QueryPart part(Configuration context) {

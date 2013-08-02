@@ -37,12 +37,14 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.DELETE;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
 import java.util.Collection;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.DeleteQuery;
@@ -130,5 +132,10 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     @Override
     public final void bind(BindContext context) {
         context.visit(getFrom()).visit(getWhere());
+    }
+
+    @Override
+    public final Clause clause() {
+        return DELETE;
     }
 }

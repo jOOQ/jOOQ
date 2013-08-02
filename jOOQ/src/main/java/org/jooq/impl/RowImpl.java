@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.row;
 
 import java.util.Arrays;
@@ -66,6 +67,7 @@ import org.jooq.BetweenAndStep8;
 import org.jooq.BetweenAndStep9;
 import org.jooq.BetweenAndStepN;
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.DataType;
@@ -198,6 +200,11 @@ implements
     @Override
     public final void bind(BindContext context) {
         context.visit(fields);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     // ------------------------------------------------------------------------
@@ -9910,13 +9917,13 @@ implements
 
     @Override
     public final Condition in(Collection rows) {
-        QueryPartList<Row> list = new QueryPartList<Row>(rows);
+        QueryPartList<Row> list = new QueryPartList<Row>(DUMMY, rows);
         return new RowInCondition(this, list, Comparator.IN);
     }
 
     @Override
     public final Condition notIn(Collection rows) {
-        QueryPartList<Row> list = new QueryPartList<Row>(rows);
+        QueryPartList<Row> list = new QueryPartList<Row>(DUMMY, rows);
         return new RowInCondition(this, list, Comparator.NOT_IN);
     }
 

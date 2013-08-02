@@ -35,11 +35,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.CaseConditionStep;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -136,5 +139,10 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
 
         context.keyword("end")
                .formatIndentLockEnd();
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 }

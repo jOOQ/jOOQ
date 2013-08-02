@@ -35,8 +35,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 
 class SQLCondition extends AbstractCondition {
@@ -69,5 +73,14 @@ class SQLCondition extends AbstractCondition {
     @Override
     public final void bind(BindContext context) {
         context.visit(delegate);
+    }
+
+    @Override
+    public final Clause clause() {
+        if (delegate instanceof QueryPartInternal) {
+            return ((QueryPartInternal) delegate).clause();
+        }
+
+        return CONDITION;
     }
 }

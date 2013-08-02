@@ -35,7 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.DataType;
 import org.jooq.Field;
@@ -70,6 +73,11 @@ abstract class AbstractFunction<T> extends AbstractField<T> {
     @Override
     public final void bind(BindContext ctx) {
         ctx.visit(getFunction0(ctx.configuration()));
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     final Field<?>[] getArguments() {

@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
@@ -85,6 +86,20 @@ public abstract class CustomCondition extends AbstractCondition {
      */
     @Override
     public abstract void bind(BindContext context) throws DataAccessException;
+
+    // -------------------------------------------------------------------------
+    // Implementation optional
+    // -------------------------------------------------------------------------
+
+    /**
+     * Subclasses may implement this method
+     * <hr/>
+     * {@inheritDoc}
+     */
+    @Override
+    public Clause clause() {
+        return null;
+    }
 
     // -------------------------------------------------------------------------
     // No further overrides allowed

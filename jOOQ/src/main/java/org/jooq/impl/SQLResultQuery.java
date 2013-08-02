@@ -38,9 +38,11 @@ package org.jooq.impl;
 import java.sql.ResultSetMetaData;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 
@@ -76,6 +78,15 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     @Override
     public final void bind(BindContext context) {
         context.visit(delegate);
+    }
+
+    @Override
+    public final Clause clause() {
+        if (delegate instanceof QueryPartInternal) {
+            return ((QueryPartInternal) delegate).clause();
+        }
+
+        return null;
     }
 
     @Override

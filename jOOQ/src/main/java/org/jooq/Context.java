@@ -121,6 +121,15 @@ public interface Context<C extends Context<C>> {
     C visit(QueryPart part) throws DataAccessException;
 
     /**
+     * TODO [#2667]
+     * 
+     * Properties of these methods:
+     * - A clause is always started / ended, even if it isn't rendered or if it's empty!
+     */
+    C start(Clause clause);
+    C end(Clause clause);
+
+    /**
      * Whether the current context is rendering a SQL field declaration (e.g. a
      * {@link Field} in the <code>SELECT</code> clause of the query).
      */

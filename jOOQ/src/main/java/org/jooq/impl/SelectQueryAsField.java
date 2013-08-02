@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -100,5 +101,10 @@ class SelectQueryAsField<T> extends AbstractField<T> {
                    .subquery(false)
                    .sql(")");
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return null;
     }
 }

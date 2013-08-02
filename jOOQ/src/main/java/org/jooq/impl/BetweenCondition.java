@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION_BETWEEN;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -53,6 +54,7 @@ import static org.jooq.impl.DSL.val;
 
 import org.jooq.BetweenAndStep;
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -106,6 +108,11 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
         delegate(ctx.configuration()).toSQL(ctx);
     }
 
+    @Override
+    public final Clause clause() {
+        return CONDITION_BETWEEN;
+    }
+
     private final QueryPartInternal delegate(Configuration configuration) {
         if (symmetric && asList(ASE, CUBRID, DB2, DERBY, FIREBIRD, H2, MARIADB, MYSQL, ORACLE, SQLSERVER, SQLITE, SYBASE).contains(configuration.dialect().family())) {
             if (not) {
@@ -141,6 +148,11 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
         @Override
         public final void bind(BindContext context) {
             context.visit(field).visit(minValue).visit(maxValue);
+        }
+
+        @Override
+        public final Clause clause() {
+            return CONDITION_BETWEEN;
         }
     }
 }

@@ -37,6 +37,8 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.INSERT;
+import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
@@ -45,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
 import org.jooq.Field;
@@ -313,16 +316,23 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         }
     }
 
+    @Override
+    public final Clause clause() {
+        return INSERT;
+    }
+
     private final void toSQLInsert(RenderContext context) {
-        context.keyword("insert ")
+        context.keyword("insert")
+               .sql(" ")
                // [#1295] MySQL natively supports the IGNORE keyword
                .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) ? "ignore " : "")
-               .keyword("into ")
+               .keyword("into")
+               .sql(" ")
                .visit(getInto())
                .sql(" ")
                .visit(insertMaps);
 
-        toSQLReturning(context);
+        toSQLReturning(context, INSERT_RETURNING);
     }
 
     private final void bindInsert(BindContext context) {

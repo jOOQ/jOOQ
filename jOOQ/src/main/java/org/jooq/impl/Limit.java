@@ -35,12 +35,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.RenderContext.CastMode.NEVER;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.RenderContext;
@@ -318,6 +320,11 @@ class Limit extends AbstractQueryPart {
                 break;
             }
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     /**

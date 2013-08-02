@@ -35,11 +35,13 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.nvl2;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.zero;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 import org.jooq.SortField;
@@ -122,10 +124,10 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
                            .keyword(order.toSQL());
 
                     if (nullsFirst) {
-                        context.keyword(" nulls first");
+                        context.sql(" ").keyword("nulls first");
                     }
                     else {
-                        context.keyword(" nulls last");
+                        context.sql(" ").keyword("nulls last");
                     }
 
                     break;
@@ -161,5 +163,10 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
         }
 
         context.visit(field);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 }

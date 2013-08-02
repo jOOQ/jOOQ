@@ -35,7 +35,10 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Package;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
@@ -84,6 +87,11 @@ public class PackageImpl extends AbstractQueryPart implements Package {
 
     @Override
     public final void bind(BindContext context) {}
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
+    }
 
     // ------------------------------------------------------------------------
     // XXX: Object API

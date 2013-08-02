@@ -36,14 +36,17 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import java.util.Collection;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
-import org.jooq.RenderContext;
 import org.jooq.RecordType;
+import org.jooq.RenderContext;
 
 /**
  * A simple wrapper for <code>Field[]</code>, providing some useful lookup
@@ -246,12 +249,17 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
 
     @Override
     public final void toSQL(RenderContext context) {
-        new QueryPartList<Field<?>>(fields).toSQL(context);
+        new QueryPartList<Field<?>>(DUMMY, fields).toSQL(context);
     }
 
     @Override
     public final void bind(BindContext context) {
-        new QueryPartList<Field<?>>(fields).bind(context);
+        new QueryPartList<Field<?>>(DUMMY, fields).bind(context);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     // -------------------------------------------------------------------------

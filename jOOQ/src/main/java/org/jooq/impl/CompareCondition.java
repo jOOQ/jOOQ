@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.LIKE;
 import static org.jooq.Comparator.LIKE_IGNORE_CASE;
 import static org.jooq.Comparator.NOT_LIKE;
@@ -47,6 +48,7 @@ import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.POSTGRES;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -126,5 +128,10 @@ class CompareCondition extends AbstractCondition {
                    .sql(escape)
                    .sql("'");
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return CONDITION_COMPARISON;
     }
 }

@@ -36,12 +36,16 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION_IN;
+import static org.jooq.Clause.CONDITION_IN_NOT;
+import static org.jooq.Comparator.IN;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -62,6 +66,11 @@ class InCondition<T> extends AbstractCondition {
         this.field = field;
         this.values = values;
         this.comparator = comparator;
+    }
+
+    @Override
+    public final Clause clause() {
+        return comparator == IN ? CONDITION_IN : CONDITION_IN_NOT;
     }
 
     @Override
@@ -93,11 +102,13 @@ class InCondition<T> extends AbstractCondition {
                             // operator
                             if (comparator == Comparator.IN) {
                                 context.formatSeparator()
-                                       .keyword("or ");
+                                       .keyword("or")
+                                       .sql(" ");
                             }
                             else {
                                 context.formatSeparator()
-                                       .keyword("and ");
+                                       .keyword("and")
+                                       .sql(" ");
                             }
                         }
 

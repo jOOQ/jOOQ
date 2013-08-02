@@ -35,37 +35,68 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
+import java.io.Serializable;
 
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.VisitListener;
+import org.jooq.VisitListenerProvider;
 
 /**
+ * A default implementation for {@link VisitListenerProvider}.
+ * <p>
+ * This implementation just wraps an instance of {@link VisitListener}, always
+ * providing the same.
+ *
  * @author Lukas Eder
  */
-class Rollup extends AbstractFunction<Object> {
+public class DefaultVisitListenerProvider implements VisitListenerProvider, Serializable {
 
     /**
-     * Generated UID
+     * Generated UID.
      */
-    private static final long serialVersionUID = -5820608758939548704L;
+    private static final long     serialVersionUID = -2122007794302549679L;
 
-    Rollup(Field<?>... fields) {
-        super("rollup", SQLDataType.OTHER, fields);
+    /**
+     * The delegate listener.
+     */
+    private final VisitListener listener;
+
+    /**
+     * Convenience method to construct an array of
+     * <code>DefaultVisitListenerProvider</code> from an array of
+     * <code>VisitListener</code> instances.
+     */
+    public static VisitListenerProvider[] providers(VisitListener... listeners) {
+        VisitListenerProvider[] result = new VisitListenerProvider[listeners.length];
+
+        for (int i = 0; i < listeners.length; i++) {
+            result[i] = new DefaultVisitListenerProvider(listeners[i]);
+        }
+
+        return result;
     }
 
-    @Override
-    final Field<Object> getFunction0(Configuration configuration) {
-        switch (configuration.dialect()) {
-            case CUBRID:
-            case MARIADB:
-            case MYSQL:
-                return field("{0} {with rollup}", new QueryPartList<Field<?>>(DUMMY, getArguments()));
+    /**
+     * Create a new provider instance from an argument listener.
+     *
+     * @param listener The argument listener.
+     */
+    public DefaultVisitListenerProvider(VisitListener listener) {
+        this.listener = listener;
+    }
 
-            default:
-                return function("rollup", Object.class, getArguments());
-        }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final VisitListener provide() {
+        return listener;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return listener.toString();
     }
 }

@@ -33,39 +33,40 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jooq.impl;
+package org.jooq;
 
-import static org.jooq.Clause.DUMMY;
-import static org.jooq.impl.DSL.field;
-import static org.jooq.impl.DSL.function;
-
-import org.jooq.Configuration;
-import org.jooq.Field;
+import org.jooq.impl.DefaultVisitListenerProvider;
 
 /**
+ * A provider for {@link VisitListener} instances.
+ * <p>
+ * In order to facilitate the lifecycle management of <code>VisitListener</code>
+ * instances that are provided to a jOOQ {@link Configuration}, clients can
+ * implement this API. To jOOQ, it is thus irrelevant, if execute listeners are
+ * stateful or stateless, local to a single record or record manipulation, or
+ * global to an application.
+ *
  * @author Lukas Eder
+ * @see VisitListener
+ * @see Configuration
  */
-class Rollup extends AbstractFunction<Object> {
+public interface VisitListenerProvider {
 
     /**
-     * Generated UID
+     * Provide a <code>VisitListener</code> instance.
+     * <p>
+     * Implementations are free to choose whether this method returns new
+     * instances at every call or whether the same instance is returned
+     * repetitively.
+     * <p>
+     * A <code>VisitListener</code> shall be provided exactly once per
+     * <code>Context</code> traversal, i.e. per <code>RenderContext</code> or
+     * <code>BindContext</code>.
+     *
+     * @return A <code>VisitListener</code> instance.
+     * @see VisitListener
+     * @see VisitContext
+     * @see DefaultVisitListenerProvider
      */
-    private static final long serialVersionUID = -5820608758939548704L;
-
-    Rollup(Field<?>... fields) {
-        super("rollup", SQLDataType.OTHER, fields);
-    }
-
-    @Override
-    final Field<Object> getFunction0(Configuration configuration) {
-        switch (configuration.dialect()) {
-            case CUBRID:
-            case MARIADB:
-            case MYSQL:
-                return field("{0} {with rollup}", new QueryPartList<Field<?>>(DUMMY, getArguments()));
-
-            default:
-                return function("rollup", Object.class, getArguments());
-        }
-    }
+    VisitListener provide();
 }

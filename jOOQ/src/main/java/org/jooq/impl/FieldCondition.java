@@ -35,10 +35,12 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.inline;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
@@ -67,6 +69,11 @@ class FieldCondition extends AbstractCondition {
     @Override
     public void bind(BindContext ctx) {
         delegate(ctx.configuration()).bind(ctx);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {

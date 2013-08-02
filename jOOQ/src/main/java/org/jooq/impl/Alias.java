@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -55,6 +56,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.Utils.list;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -219,6 +221,11 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
         else {
             // Don't bind any values
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     @Override

@@ -36,6 +36,19 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.TABLE_JOIN;
+import static org.jooq.Clause.TABLE_JOIN_CROSS;
+import static org.jooq.Clause.TABLE_JOIN_INNER;
+import static org.jooq.Clause.TABLE_JOIN_NATURAL;
+import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_LEFT;
+import static org.jooq.Clause.TABLE_JOIN_NATURAL_OUTER_RIGHT;
+import static org.jooq.Clause.TABLE_JOIN_ON;
+import static org.jooq.Clause.TABLE_JOIN_OUTER_FULL;
+import static org.jooq.Clause.TABLE_JOIN_OUTER_LEFT;
+import static org.jooq.Clause.TABLE_JOIN_OUTER_RIGHT;
+import static org.jooq.Clause.TABLE_JOIN_PARTITION_BY;
+import static org.jooq.Clause.TABLE_JOIN_USING;
 import static org.jooq.JoinType.CROSS_JOIN;
 import static org.jooq.JoinType.JOIN;
 import static org.jooq.JoinType.LEFT_OUTER_JOIN;
@@ -59,6 +72,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
@@ -101,11 +115,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();
-        this.rhsPartitionBy = new QueryPartList<Field<?>>();
+        this.rhsPartitionBy = new QueryPartList<Field<?>>(DUMMY);
         this.type = type;
 
         this.condition = new ConditionProviderImpl();
-        this.using = new QueryPartList<Field<?>>();
+        this.using = new QueryPartList<Field<?>>(DUMMY);
     }
 
     // ------------------------------------------------------------------------
@@ -125,10 +139,14 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
     @Override
     public final void toSQL(RenderContext context) {
+        JoinType translatedType = translateType(context);
+        Clause translatedClause = translateClause(translatedType);
+
         context.visit(lhs)
                .formatIndentStart()
                .formatSeparator()
-               .keyword(translateType(context).toSQL())
+               .start(translatedClause)
+               .keyword(translatedType.toSQL())
                .sql(" ");
 
         // [#671] Some databases formally require nested JOINS to be
@@ -151,20 +169,41 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         // OUTER JOINed table
         if (!rhsPartitionBy.isEmpty()) {
             context.formatSeparator()
-                   .keyword("partition by (")
+                   .start(TABLE_JOIN_PARTITION_BY)
+                   .keyword("partition by")
+                   .sql(" (")
                    .visit(rhsPartitionBy)
-                   .sql(")");
+                   .sql(")")
+                   .end(TABLE_JOIN_PARTITION_BY);
         }
 
         // CROSS JOIN and NATURAL JOIN do not have any condition clauses
         if (!asList(CROSS_JOIN,
                     NATURAL_JOIN,
                     NATURAL_LEFT_OUTER_JOIN,
-                    NATURAL_RIGHT_OUTER_JOIN).contains(translateType(context))) {
+                    NATURAL_RIGHT_OUTER_JOIN).contains(translatedType)) {
             toSQLJoinCondition(context);
         }
 
-        context.formatIndentEnd();
+        context.end(translatedClause)
+               .formatIndentEnd();
+    }
+
+    /**
+     * Translate the join type into a join clause
+     */
+    final Clause translateClause(JoinType translatedType) {
+        switch (translatedType) {
+            case JOIN:                     return TABLE_JOIN_INNER;
+            case CROSS_JOIN:               return TABLE_JOIN_CROSS;
+            case NATURAL_JOIN:             return TABLE_JOIN_NATURAL;
+            case LEFT_OUTER_JOIN:          return TABLE_JOIN_OUTER_LEFT;
+            case RIGHT_OUTER_JOIN:         return TABLE_JOIN_OUTER_RIGHT;
+            case FULL_OUTER_JOIN:          return TABLE_JOIN_OUTER_FULL;
+            case NATURAL_LEFT_OUTER_JOIN:  return TABLE_JOIN_NATURAL_OUTER_LEFT;
+            case NATURAL_RIGHT_OUTER_JOIN: return TABLE_JOIN_NATURAL_OUTER_RIGHT;
+            default: throw new IllegalArgumentException("Bad join type: " + translatedType);
+        }
     }
 
     /**
@@ -210,24 +249,38 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
             // [#582] Some dialects don't explicitly support a JOIN .. USING
             // syntax. This can be simulated with JOIN .. ON
             if (asList(ASE, CUBRID, DB2, H2, SQLSERVER, SYBASE).contains(context.configuration().dialect().family())) {
-                String glue = "on ";
+                boolean first = true;
                 for (Field<?> field : using) {
-                    context.formatSeparator()
-                           .keyword(glue)
+                    context.formatSeparator();
+
+                    if (first) {
+                        first = false;
+
+                        context.start(TABLE_JOIN_ON)
+                               .keyword("on");
+                    }
+                    else {
+                        context.keyword("and");
+                    }
+
+                    context.sql(" ")
                            .visit(lhs.field(field))
                            .sql(" = ")
                            .visit(rhs.field(field));
-
-                    glue = "and ";
                 }
+
+                context.end(TABLE_JOIN_ON);
             }
 
             // Native supporters of JOIN .. USING
             else {
                 context.formatSeparator()
-                       .keyword("using (");
+                       .start(TABLE_JOIN_USING)
+                       .keyword("using")
+                       .sql("( ");
                 Utils.fieldNames(context, using);
-                context.sql(")");
+                context.sql(")")
+                       .end(TABLE_JOIN_USING);
             }
         }
 
@@ -237,27 +290,41 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
                  simulateNaturalLeftOuterJoin(context) ||
                  simulateNaturalRightOuterJoin(context)) {
 
-            String glue = "on ";
+            boolean first = true;
             for (Field<?> field : lhs.fields()) {
                 Field<?> other = rhs.field(field);
 
                 if (other != null) {
-                    context.formatSeparator()
-                           .keyword(glue)
+                    context.formatSeparator();
+
+                    if (first) {
+                        first = false;
+
+                        context.start(TABLE_JOIN_ON)
+                               .keyword("on");
+                    }
+                    else {
+                        context.keyword("and");
+                    }
+
+                    context.sql(" ")
                            .visit(field)
                            .sql(" = ")
                            .visit(other);
-
-                    glue = "and ";
                 }
             }
+
+            context.end(TABLE_JOIN_ON);
         }
 
         // Regular JOIN condition
         else {
             context.formatSeparator()
-                   .keyword("on ")
-                   .visit(condition);
+                   .start(TABLE_JOIN_ON)
+                   .keyword("on")
+                   .sql(" ")
+                   .visit(condition)
+                   .end(TABLE_JOIN_ON);
         }
     }
 
@@ -271,6 +338,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
         else {
             context.visit(condition);
         }
+    }
+
+    @Override
+    public final Clause clause() {
+        return TABLE_JOIN;
     }
 
     @Override

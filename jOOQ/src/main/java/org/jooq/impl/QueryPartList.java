@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
@@ -55,22 +57,26 @@ import org.jooq.RenderContext;
 class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements List<T> {
 
     private static final long serialVersionUID = -2936922742534009564L;
-    private final List<T>     wrappedList      = new ArrayList<T>();
+    private final List<T>     wrappedList;
+    private final Clause      clause;
 
-    QueryPartList() {
-        this((Collection<T>) null);
+    QueryPartList(Clause clause) {
+        this(clause, (Collection<T>) null);
     }
 
-    QueryPartList(Collection<? extends T> wrappedList) {
+    QueryPartList(Clause clause, Collection<? extends T> wrappedList) {
         super();
+
+        this.clause = clause;
+        this.wrappedList = new ArrayList<T>();
 
         if (wrappedList != null) {
             addAll(wrappedList);
         }
     }
 
-    QueryPartList(T... wrappedList) {
-        this(Arrays.asList(wrappedList));
+    QueryPartList(Clause clause, T... wrappedList) {
+        this(clause, Arrays.asList(wrappedList));
     }
 
     @Override
@@ -78,7 +84,13 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
         // Some lists render different SQL when empty
         if (isEmpty()) {
+//            if (clause != null && clause != DUMMY)
+//                context.start(clause);
+
             toSQLEmptyList(context);
+
+//            if (clause != null && clause != DUMMY)
+//                context.end(clause);
         }
 
         else {
@@ -94,7 +106,14 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
                 if (indent)
                     context.formatNewLine();
 
+//                if (clause != null && clause != DUMMY)
+//                    context.start(clause);
+
                 context.visit(queryPart);
+
+//                if (clause != null && clause != DUMMY)
+//                    context.end(clause);
+
                 separator = ", ";
             }
 
@@ -106,6 +125,11 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     @Override
     public final void bind(BindContext context) {
         visitAll(context, wrappedList);
+    }
+
+    @Override
+    public final Clause clause() {
+        return DUMMY;
     }
 
     /**

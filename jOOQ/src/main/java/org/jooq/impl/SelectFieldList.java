@@ -36,6 +36,8 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.FIELD;
+
 import java.util.Collection;
 
 import org.jooq.Field;
@@ -49,15 +51,15 @@ class SelectFieldList extends QueryPartList<Field<?>> {
     private static final long serialVersionUID = 8850104968428500798L;
 
     SelectFieldList() {
-        super();
+        super(FIELD);
     }
 
     SelectFieldList(Collection<? extends Field<?>> wrappedList) {
-        super(wrappedList);
+        super(FIELD, wrappedList);
     }
 
     SelectFieldList(Field<?>... wrappedList) {
-        super(wrappedList);
+        super(FIELD, wrappedList);
     }
 
     @Override

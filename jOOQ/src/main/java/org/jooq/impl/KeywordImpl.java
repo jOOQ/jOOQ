@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Keyword;
 import org.jooq.RenderContext;
 
@@ -64,4 +65,9 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
 
     @Override
     public final void bind(BindContext ctx) {}
+
+    @Override
+    public final Clause clause() {
+        return null;
+    }
 }

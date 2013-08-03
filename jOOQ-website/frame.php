@@ -170,6 +170,8 @@ function manualHeader($isSingle, $forVersion) {
         <div id="navigation">
         <div class="wrapper">
         <div id="tweets">
+            <?php
+            /*
             <div class="tweet-item">
                 <a href="http://twitter.com/share"
                     class="twitter-share-button"
@@ -205,32 +207,39 @@ function manualHeader($isSingle, $forVersion) {
                 <script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
                 <script type="IN/Share" data-url="http://www.jooq.org" data-counter="right"></script>
             </div>
+            */
+            ?>
 
-            <?php
-            /*
             <div class="tweet-item">
-                <a href="http://twitter.com/share?text=%23jOOQ,+a+fun+way+to+write+%23SQL+in+%23Java:+http://www.jooq.org" target="_blank">
+                <a href="https://plus.google.com/share?url=http://www.jooq.org" target="_blank">
+                    <img src="<?=$root?>/img/social-g+.png" width="37" height="27" alt="Share jOOQ on Google+" title="Share jOOQ on Google+"/></a>
+            </div>
+            <div class="tweet-item">
+                <a href="http://www.stumbleupon.com/submit?url=http://www.jooq.org" target="_blank">
+                    <img src="<?=$root?>/img/social-su.png" width="37" height="27" alt="Share jOOQ on StumbleUpon" title="Share jOOQ on StumbleUpon"/></a>
+            </div>
+            <div class="tweet-item">
+                <a href="http://twitter.com/share?text=%23jOOQ,+the+best+way+to+write+%23SQL+in+%23Java" target="_blank">
                     <img src="<?=$root?>/img/social-tw.png" width="37" height="27" alt="Share jOOQ on Twitter" title="Share jOOQ on Twitter"/></a>
             </div>
             <div class="tweet-item">
-                <a href="https://plus.google.com/share?url=http://www.jooq.org" target="_blank">
-                    <img src="<?=$root?>/img/social-g+.png" alt="Share jOOQ on Google+" title="Share jOOQ on Google+"/></a>
+                <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://www.jooq.org" target="_blank">
+                    <img src="<?=$root?>/img/social-in.png" width="37" height="27" alt="Share jOOQ on LinkedIn" title="Share jOOQ on LinkedIn"/></a>
             </div>
             <div class="tweet-item">
                 <a href="http://www.facebook.com/sharer.php?u=http://www.jooq.org" target="_blank">
-                    <img src="<?=$root?>/img/social-fb.png" alt="Share jOOQ on Facebook" title="Share jOOQ on Facebook"/></a>
+                    <img src="<?=$root?>/img/social-fb.png" width="37" height="27" alt="Share jOOQ on Facebook" title="Share jOOQ on Facebook"/></a>
             </div>
-            <div class="tweet-item">
-                <a href="http://www.linkedin.com/shareArticle?mini=true&url=http://www.jooq.org" target="_blank">
-                    <img src="<?=$root?>/img/social-in.png" alt="Share jOOQ on LinkedIn" title="Share jOOQ on LinkedIn"/></a>
-            </div>
+            
+            <?php
+            /*
             <div class="tweet-item">
                 <a href="http://github.com/jOOQ/jOOQ" target="_blank">
-                    <img src="<?=$root?>/img/social-gh.png" alt="See jOOQ on GitHub" title="See jOOQ on GitHub" style="background-color: #111"/></a>
+                    <img src="<?=$root?>/img/social-gh.png" width="37" height="27" alt="See jOOQ on GitHub" title="See jOOQ on GitHub" style="background-color: #111"/></a>
             </div>
             <div class="tweet-item">
                 <a href="http://stackoverflow.com/questions/tagged/jooq" target="_blank">
-                    <img src="<?=$root?>/img/social-so.png" alt="See jOOQ on Stack Overflow" title="See jOOQ on Stack Overflow" style="background-color: #eee"/></a>
+                    <img src="<?=$root?>/img/social-so.png" width="37" height="27" alt="See jOOQ on Stack Overflow" title="See jOOQ on Stack Overflow" style="background-color: #eee"/></a>
             </div>
             */
             ?>

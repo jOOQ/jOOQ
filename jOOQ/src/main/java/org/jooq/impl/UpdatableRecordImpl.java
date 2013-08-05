@@ -37,7 +37,10 @@ package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
 import static org.jooq.impl.RecordDelegate.delegate;
+import static org.jooq.impl.RecordDelegate.RecordLifecycleType.INSERT;
 import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
+import static org.jooq.impl.RecordDelegate.RecordLifecycleType.STORE;
+import static org.jooq.impl.RecordDelegate.RecordLifecycleType.UPDATE;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -111,6 +114,56 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final int store() {
+        final int[] result = new int[1];
+
+        delegate(configuration(), (Record) this, STORE)
+        .operate(new RecordOperation<Record, RuntimeException>() {
+
+            @Override
+            public Record operate(Record record) throws RuntimeException {
+                result[0] = store0();
+                return record;
+            }
+        });
+
+        return result[0];
+    }
+
+    @Override
+    public final int insert() {
+        final int[] result = new int[1];
+
+        delegate(configuration(), (Record) this, INSERT)
+        .operate(new RecordOperation<Record, RuntimeException>() {
+
+            @Override
+            public Record operate(Record record) throws RuntimeException {
+                result[0] = storeInsert();
+                return record;
+            }
+        });
+
+        return result[0];
+    }
+
+    @Override
+    public final int update() {
+        final int[] result = new int[1];
+
+        delegate(configuration(), (Record) this, UPDATE)
+        .operate(new RecordOperation<Record, RuntimeException>() {
+
+            @Override
+            public Record operate(Record record) throws RuntimeException {
+                result[0] = storeUpdate(getPrimaryKey().getFieldsArray());
+                return record;
+            }
+        });
+
+        return result[0];
+    }
+
+    private final int store0() {
         TableField<R, ?>[] keys = getPrimaryKey().getFieldsArray();
         boolean executeUpdate = false;
 
@@ -138,16 +191,6 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         }
 
         return result;
-    }
-
-    @Override
-    public final int insert() {
-        return storeInsert();
-    }
-
-    @Override
-    public final int update() {
-        return storeUpdate(getPrimaryKey().getFieldsArray());
     }
 
     private final int storeInsert() {

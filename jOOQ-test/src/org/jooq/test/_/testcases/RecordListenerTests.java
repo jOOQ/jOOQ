@@ -112,6 +112,26 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     public void testRecordListenerStore() throws Exception {
         jOOQAbstractTest.reset = false;
 
+        SimpleRecordListener listener1 = new SimpleRecordListener();
+        B book1 = newBook(5);
+        book1.attach(create(listener1).configuration());
+        assertEquals(1, book1.store());
+        assertEquals(asList("storeStart", "storeEnd"), listener1.events);
+
+        SimpleRecordListener listener2 = new SimpleRecordListener();
+        B book2 = newBook(6);
+        book2.attach(create(listener2).configuration());
+        assertEquals(1, book2.insert());
+        assertEquals(asList("insertStart", "insertEnd"), listener2.events);
+
+        listener2.events.clear();
+        book2.setValue(TBook_TITLE(), "1234");
+        assertEquals(1, book2.update());
+        assertEquals(asList("updateStart", "updateEnd"), listener2.events);
+    }
+
+    @Test
+    public void testRecordListenerRefresh() throws Exception {
         B book =
         create()
             .selectFrom(TBook())

@@ -149,6 +149,7 @@ import org.jooq.test._.testcases.StatementTests;
 import org.jooq.test._.testcases.ThreadSafetyTests;
 import org.jooq.test._.testcases.TruncateTests;
 import org.jooq.test._.testcases.ValuesConstructorTests;
+import org.jooq.test._.testcases.VisitListenerTests;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.StopWatch;
 import org.jooq.tools.StringUtils;
@@ -1521,6 +1522,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testRecordListenerBatchStore() throws Exception {
         new RecordListenerTests(this).testRecordListenerBatchStore();
+    }
+
+    @Test
+    public void testVisitListener() throws Exception {
+        new VisitListenerTests(this).testVisitListener();
     }
 
     @Test

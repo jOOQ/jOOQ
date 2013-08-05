@@ -36,6 +36,8 @@
 package org.jooq.impl;
 
 import static java.lang.Boolean.TRUE;
+import static org.jooq.impl.RecordDelegate.delegate;
+import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -340,15 +342,21 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     }
 
     @Override
-    public final void refresh(Field<?>... f) {
-        SelectQuery<?> select = create().selectQuery();
+    public final void refresh(final Field<?>... f) {
+        SelectQuery<Record> select = create().selectQuery();
         select.addSelect(f);
         select.addFrom(getTable());
         Utils.addConditions(select, this, getPrimaryKey().getFieldsArray());
 
         if (select.execute() == 1) {
-            AbstractRecord record = (AbstractRecord) select.getResult().get(0);
-            setValues(f, record);
+            delegate(configuration(), select.getResult().get(0), REFRESH)
+                .operate(new RecordOperation<Record, RuntimeException>() {
+                    @Override
+                    public Record operate(Record record) throws RuntimeException {
+                        setValues(f, (AbstractRecord) record);
+                        return record;
+                    }
+                });
         }
         else {
             throw new InvalidResultException("Exactly one row expected for refresh. Record does not exist in database.");
@@ -370,10 +378,10 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
     @Override
     public final R copy() {
         return Utils.newRecord(getTable(), configuration())
-                    .initialise(new RecordInitialiser<R, RuntimeException>() {
-            
+                    .operate(new RecordOperation<R, RuntimeException>() {
+
         	@Override
-            public R initialise(R copy) throws RuntimeException {
+            public R operate(R copy) throws RuntimeException {
                 // Copy all fields. This marks them all as isChanged, which is important
                 List<TableField<R, ?>> key = getPrimaryKey().getFields();
                 for (Field<?> field : fields.fields.fields) {

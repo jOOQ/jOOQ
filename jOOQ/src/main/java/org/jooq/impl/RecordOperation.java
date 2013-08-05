@@ -39,15 +39,15 @@ import org.jooq.Record;
 import org.jooq.RecordListener;
 
 /**
- * An stub for {@link Record} objects, abstracting {@link RecordListener}
- * lifecycle handling.
+ * An operation callback for {@link Record} objects, abstracting
+ * {@link RecordListener} lifecycle handling.
  *
  * @author Lukas Eder
  */
-interface RecordInitialiser<R extends Record, E extends Exception> {
+interface RecordOperation<R extends Record, E extends Exception> {
 
     /**
      * Callback method to initialise a record.
      */
-    R initialise(R record) throws E;
+    R operate(R record) throws E;
 }

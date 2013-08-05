@@ -514,7 +514,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                         if (sqlType == Types.STRUCT) {
                             UDTRecord<?> record = Utils
                                 .newRecord((Class<? extends UDTRecord<?>>) parameter.getType())
-                                .<RuntimeException>initialise(null);
+                                .<RuntimeException>operate(null);
                             statement.registerOutParameter(index, Types.STRUCT, record.getSQLTypeName());
                         }
 

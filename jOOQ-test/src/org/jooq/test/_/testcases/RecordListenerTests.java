@@ -108,6 +108,25 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         assertEquals(asList("loadStart", "loadEnd"), listener2.events);
     }
 
+    @Test
+    public void testRecordListenerStore() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        B book =
+        create()
+            .selectFrom(TBook())
+            .where(TBook_ID().eq(1))
+            .fetchOne();
+
+        SimpleRecordListener listener1 = new SimpleRecordListener();
+        book.attach(create(listener1).configuration());
+
+        // TODO: There is an internal load operation involved here. Is that
+        // really the desired behaviour?
+        book.refresh();
+        assertEquals(asList("loadStart", "loadEnd", "refreshStart", "refreshEnd"), listener1.events);
+    }
+
     private static class SimpleRecordListener extends DefaultRecordListener {
         List<String> events = new ArrayList<String>();
 
@@ -119,6 +138,56 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         @Override
         public void loadEnd(RecordContext ctx) {
             events.add("loadEnd");
+        }
+
+        @Override
+        public void storeStart(RecordContext ctx) {
+            events.add("storeStart");
+        }
+
+        @Override
+        public void storeEnd(RecordContext ctx) {
+            events.add("storeEnd");
+        }
+
+        @Override
+        public void insertStart(RecordContext ctx) {
+            events.add("insertStart");
+        }
+
+        @Override
+        public void insertEnd(RecordContext ctx) {
+            events.add("insertEnd");
+        }
+
+        @Override
+        public void updateStart(RecordContext ctx) {
+            events.add("updateStart");
+        }
+
+        @Override
+        public void updateEnd(RecordContext ctx) {
+            events.add("updateEnd");
+        }
+
+        @Override
+        public void deleteStart(RecordContext ctx) {
+            events.add("deleteStart");
+        }
+
+        @Override
+        public void deleteEnd(RecordContext ctx) {
+            events.add("deleteEnd");
+        }
+
+        @Override
+        public void refreshStart(RecordContext ctx) {
+            events.add("refreshStart");
+        }
+
+        @Override
+        public void refreshEnd(RecordContext ctx) {
+            events.add("refreshEnd");
         }
     }
 }

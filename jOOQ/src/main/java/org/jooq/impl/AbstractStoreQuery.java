@@ -378,10 +378,10 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                     for (final Number id : ids) {
                         getReturnedRecords().add(
                         Utils.newRecord(into, configuration)
-                             .initialise(new RecordInitialiser<R, RuntimeException>() {
+                             .operate(new RecordOperation<R, RuntimeException>() {
 
                                 @Override
-                                public R initialise(R record) throws RuntimeException {
+                                public R operate(R record) throws RuntimeException {
                                     ((AbstractRecord) record).setValue(field, new Value<Number>(id));
                                     return record;
                                 }

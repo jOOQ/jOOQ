@@ -346,10 +346,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public Record original() {
         return Utils.newRecord((Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
-                    .initialise(new RecordInitialiser<AbstractRecord, RuntimeException>() {
+                    .operate(new RecordOperation<AbstractRecord, RuntimeException>() {
 
             @Override
-            public AbstractRecord initialise(AbstractRecord record) throws RuntimeException {
+            public AbstractRecord operate(AbstractRecord record) throws RuntimeException {
                 Value<?>[] v = getValues();
 
                 for (int i = 0; i < v.length; i++) {
@@ -498,10 +498,10 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     @Override
     public final <R extends Record> R into(final Table<R> table) {
         return Utils.newRecord(table, configuration())
-                    .initialise(new RecordInitialiser<R, MappingException>() {
+                    .operate(new RecordOperation<R, MappingException>() {
 
             @Override
-            public R initialise(R record) throws MappingException {
+            public R operate(R record) throws MappingException {
                 try {
                     for (Field<?> targetField : table.fields()) {
                         Field<?> sourceField = field(targetField);

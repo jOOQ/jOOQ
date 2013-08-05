@@ -278,13 +278,6 @@ final class Utils {
     /**
      * Create a new record
      */
-    static final <R extends Record> R newRecord(Class<R> type, Collection<? extends Field<?>> fields, Configuration configuration) {
-        return newRecord(type, fieldArray(fields), configuration);
-    }
-
-    /**
-     * Create a new record
-     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     static final <R extends Record> R newRecord(Class<R> type, Field<?>[] fields, Configuration configuration) {
         try {

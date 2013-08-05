@@ -116,7 +116,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         B book1 = newBook(5);
         book1.attach(create(listener1).configuration());
         assertEquals(1, book1.store());
-        assertEquals(asList("storeStart", "storeEnd"), listener1.events);
+        assertEquals(asList("storeStart", "insertStart", "insertEnd", "storeEnd"), listener1.events);
+
+        listener1.events.clear();
+        book1.setValue(TBook_TITLE(), "1234");
+        assertEquals(1, book1.store());
+        assertEquals(asList("storeStart", "updateStart", "updateEnd", "storeEnd"), listener1.events);
 
         SimpleRecordListener listener2 = new SimpleRecordListener();
         B book2 = newBook(6);
@@ -128,6 +133,10 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         book2.setValue(TBook_TITLE(), "1234");
         assertEquals(1, book2.update());
         assertEquals(asList("updateStart", "updateEnd"), listener2.events);
+
+        listener2.events.clear();
+        assertEquals(1, book2.delete());
+        assertEquals(asList("deleteStart", "deleteEnd"), listener2.events);
     }
 
     @Test

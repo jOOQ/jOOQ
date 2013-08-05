@@ -63,6 +63,9 @@ public interface RecordListener extends EventListener {
      * prior to storing. Note that modifying the record's primary key value may
      * influence whether storing results in an <code>INSERT</code> or
      * <code>UPDATE</code> statement.
+     * <p>
+     * A store event will generate a nested {@link #insertStart(RecordContext)}
+     * or {@link #updateStart(RecordContext)} event.
      *
      * @see UpdatableRecord#store()
      */
@@ -75,6 +78,9 @@ public interface RecordListener extends EventListener {
      * after storing. Note that modifying the record's primary key value may
      * influence whether storing results in an <code>INSERT</code> or
      * <code>UPDATE</code> statement.
+     * <p>
+     * A store event will generate a nested {@link #insertEnd(RecordContext)}
+     * or {@link #updateEnd(RecordContext)} event.
      *
      * @see UpdatableRecord#store()
      */

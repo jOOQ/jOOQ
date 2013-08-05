@@ -64,7 +64,7 @@ import org.jooq.Update;
 import org.jooq.tools.jdbc.JDBCUtils;
 
 /**
- * A default iplementation for the {@link ExecuteContext}
+ * A default implementation for the {@link ExecuteContext}.
  *
  * @author Lukas Eder
  */

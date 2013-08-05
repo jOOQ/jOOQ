@@ -366,7 +366,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
             // This shouldn't be null, as relevant dialects should
             // return empty generated keys ResultSet
             if (into.getIdentity() != null) {
-                Field<Number> field = (Field<Number>) into.getIdentity().getField();
+                final Field<Number> field = (Field<Number>) into.getIdentity().getField();
                 Number[] ids = new Number[values.length];
                 for (int i = 0; i < values.length; i++) {
                     ids[i] = field.getDataType().convert(values[i]);
@@ -375,10 +375,17 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 // Only the IDENTITY value was requested. No need for an
                 // additional query
                 if (returning.size() == 1 && new Fields<Record>(returning).field(field) != null) {
-                    for (Number id : ids) {
-                        R typed = Utils.newRecord(into, configuration);
-                        ((AbstractRecord) typed).setValue(field, new Value<Number>(id));
-                        getReturnedRecords().add(typed);
+                    for (final Number id : ids) {
+                        getReturnedRecords().add(
+                        Utils.newRecord(into, configuration)
+                             .initialise(new RecordInitialiser<R, RuntimeException>() {
+
+                                @Override
+                                public R initialise(R record) throws RuntimeException {
+                                    ((AbstractRecord) record).setValue(field, new Value<Number>(id));
+                                    return record;
+                                }
+                            }));
                     }
                 }
 

@@ -35,53 +35,64 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.ExecuteType.READ;
+
+import org.jooq.Configuration;
+import org.jooq.Record;
 import org.jooq.RecordContext;
 import org.jooq.RecordListener;
+import org.jooq.RecordListenerProvider;
 
 /**
- * A publicly available default implementation of {@link RecordListener}.
- * <p>
- * Use this to stay compatible with future API changes (i.e. added methods to
- * <code>RecordListener</code>)
+ * A stub for {@link Record} objects, abstracting {@link RecordListener}
+ * lifecycle handling.
  *
  * @author Lukas Eder
  */
-public class DefaultRecordListener implements RecordListener {
+class RecordStub<R extends Record> {
 
-    @Override
-    public void storeStart(RecordContext ctx) {}
+    private final Configuration configuration;
+    private final R             record;
 
-    @Override
-    public void storeEnd(RecordContext ctx) {}
+    RecordStub(Configuration configuration, R record) {
+        this.configuration = configuration;
+        this.record = record;
+    }
 
-    @Override
-    public void insertStart(RecordContext ctx) {}
+    final <E extends Exception> R initialise(RecordInitialiser<R, E> initialiser) throws E {
+        RecordListenerProvider[] providers = null;
+        RecordListener[] listeners = null;
+        RecordContext ctx = null;
 
-    @Override
-    public void insertEnd(RecordContext ctx) {}
+        if (configuration != null) {
+            providers = configuration.recordListenerProviders();
 
-    @Override
-    public void updateStart(RecordContext ctx) {}
+            if (providers != null) {
+                listeners = new RecordListener[providers.length];
+                ctx = new DefaultRecordContext(configuration, READ, record);
 
-    @Override
-    public void updateEnd(RecordContext ctx) {}
+                for (int i = 0; i < providers.length; i++) {
+                    listeners[i] = providers[i].provide();
+                }
+            }
+        }
 
-    @Override
-    public void deleteStart(RecordContext ctx) {}
+        if (listeners != null) {
+            for (RecordListener listener  : listeners) {
+                listener.loadStart(ctx);
+            }
+        }
 
-    @Override
-    public void deleteEnd(RecordContext ctx) {}
+        if (initialiser != null) {
+            initialiser.initialise(record);
+        }
 
-    @Override
-    public void loadStart(RecordContext ctx) {}
+        if (listeners != null) {
+            for (RecordListener listener  : listeners) {
+                listener.loadEnd(ctx);
+            }
+        }
 
-    @Override
-    public void loadEnd(RecordContext ctx) {}
-
-    @Override
-    public void refreshStart(RecordContext ctx) {}
-
-    @Override
-    public void refreshEnd(RecordContext ctx) {}
-
+        return record;
+    }
 }

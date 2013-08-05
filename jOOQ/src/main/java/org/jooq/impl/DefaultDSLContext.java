@@ -1480,19 +1480,25 @@ public class DefaultDSLContext implements DSLContext, Serializable {
 
     @Override
     public <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
-        return Utils.newRecord(type, configuration);
+        return Utils.newRecord(type, configuration).<RuntimeException>initialise(null);
     }
 
     @Override
     public <R extends Record> R newRecord(Table<R> table) {
-        return Utils.newRecord(table, configuration);
+        return Utils.newRecord(table, configuration).<RuntimeException>initialise(null);
     }
 
     @Override
-    public <R extends Record> R newRecord(Table<R> table, Object source) {
-        R result = newRecord(table);
-        result.from(source);
-        return result;
+    public <R extends Record> R newRecord(Table<R> table, final Object source) {
+        return Utils.newRecord(table, configuration)
+                    .initialise(new RecordInitialiser<R, RuntimeException>() {
+
+            @Override
+            public R initialise(R record) {
+                record.from(source);
+                return record;
+            }
+        });
     }
 
     @Override

@@ -236,42 +236,43 @@ final class Utils {
     /**
      * Create a new record
      */
-    static final <R extends Record> R newRecord(Class<R> type) {
+    static final <R extends Record> RecordStub<R> newRecord(Class<R> type) {
         return newRecord(type, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> R newRecord(Class<R> type, Field<?>[] fields) {
+    static final <R extends Record> RecordStub<R> newRecord(Class<R> type, Field<?>[] fields) {
         return newRecord(type, fields, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> R newRecord(Table<R> type) {
+    static final <R extends Record> RecordStub<R> newRecord(Table<R> type) {
         return newRecord(type, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> R newRecord(Table<R> type, Configuration configuration) {
-        return newRecord(type.getRecordType(), type.fields(), configuration);
+    @SuppressWarnings("unchecked")
+    static final <R extends Record> RecordStub<R> newRecord(Table<R> type, Configuration configuration) {
+        return (RecordStub<R>) newRecord(type.getRecordType(), type.fields(), configuration);
     }
 
     /**
      * Create a new UDT record
      */
-    static final <R extends UDTRecord<R>> R newRecord(UDT<R> type) {
+    static final <R extends UDTRecord<R>> RecordStub<R> newRecord(UDT<R> type) {
         return newRecord(type, null);
     }
 
     /**
      * Create a new UDT record
      */
-    static final <R extends UDTRecord<R>> R newRecord(UDT<R> type, Configuration configuration) {
+    static final <R extends UDTRecord<R>> RecordStub<R> newRecord(UDT<R> type, Configuration configuration) {
         return newRecord(type.getRecordType(), type.fields(), configuration);
     }
 
@@ -279,28 +280,28 @@ final class Utils {
      * Create a new record
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final <R extends Record> R newRecord(Class<R> type, Field<?>[] fields, Configuration configuration) {
+    static final <R extends Record> RecordStub<R> newRecord(Class<R> type, Field<?>[] fields, Configuration configuration) {
         try {
-            R result;
+            R record;
 
             // An ad-hoc type resulting from a JOIN or arbitrary SELECT
             if (type == RecordImpl.class || type == Record.class) {
-                result = (R) new RecordImpl(fields);
+                record = (R) new RecordImpl(fields);
             }
 
             // Any generated record
             else {
 
                 // [#919] Allow for accessing non-public constructors
-                result = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
+                record = Reflect.accessible(type.getDeclaredConstructor()).newInstance();
             }
 
             // [#1684] TODO: Do not attach configuration if settings say no
             if (attachRecords(configuration)) {
-                result.attach(configuration);
+                record.attach(configuration);
             }
 
-            return result;
+            return new RecordStub<R>(configuration, record);
         }
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record", e);
@@ -2390,21 +2391,27 @@ final class Utils {
      *            dependency to postgres logic is desired
      * @return The converted {@link UDTRecord}
      */
-    private static final UDTRecord<?> pgNewUDTRecord(Class<?> type, Object object) throws SQLException {
+    @SuppressWarnings("unchecked")
+    private static final UDTRecord<?> pgNewUDTRecord(Class<?> type, final Object object) throws SQLException {
         if (object == null) {
             return null;
         }
 
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        UDTRecord<?> record = (UDTRecord<?>) Utils.newRecord((Class) type);
-        List<String> values = PostgresUtils.toPGObject(object.toString());
+        return Utils.newRecord((Class<UDTRecord<?>>) type)
+                    .initialise(new RecordInitialiser<UDTRecord<?>, SQLException>() {
 
-        Row row = record.fieldsRow();
-        for (int i = 0; i < row.size(); i++) {
-            pgSetValue(record, row.field(i), values.get(i));
-        }
+                @Override
+                public UDTRecord<?> initialise(UDTRecord<?> record) throws SQLException {
+                    List<String> values = PostgresUtils.toPGObject(object.toString());
 
-        return record;
+                    Row row = record.fieldsRow();
+                    for (int i = 0; i < row.size(); i++) {
+                        pgSetValue(record, row.field(i), values.get(i));
+                    }
+
+                    return record;
+                }
+            });
     }
 
     /**

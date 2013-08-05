@@ -69,9 +69,9 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
+import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
-import org.jooq.RecordType;
 import org.jooq.Table;
 import org.jooq.tools.JooqLogger;
 import org.jooq.tools.jdbc.JDBC41ResultSet;
@@ -1348,17 +1348,23 @@ class CursorImpl<R extends Record> implements Cursor<R> {
         /**
          * The (potentially) pre-fetched next record
          */
-        private R next;
+        private R                             next;
 
         /**
-         * Whether the underlying {@link ResultSet} has a next record. This boolean has three states:
+         * Whether the underlying {@link ResultSet} has a next record. This
+         * boolean has three states:
          * <ul>
          * <li>null: it's not known whether there is a next record</li>
          * <li>true: there is a next record, and it has been pre-fetched</li>
          * <li>false: there aren't any next records</li>
          * </ul>
          */
-        private Boolean hasNext;
+        private Boolean                       hasNext;
+
+        /**
+         * A delegate runnable that handles record initialisation.
+         */
+        private final CursorRecordInitialiser initialiser = new CursorRecordInitialiser();
 
         @Override
         public final boolean hasNext() {
@@ -1396,21 +1402,8 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                         rs.updateRow();
                     }
 
-                    record = (AbstractRecord) Utils.newRecord(type, fields, ctx.configuration());
-
-                    ctx.record(record);
-                    listener.recordStart(ctx);
-
-                    for (int i = 0; i < fields.length; i++) {
-                        setValue(record, fields[i], i);
-
-                        if (intern[i]) {
-                            record.getValue0(i).intern();
-                        }
-                    }
-
-                    ctx.record(record);
-                    listener.recordEnd(ctx);
+                    record = Utils.newRecord((Class<AbstractRecord>) type, fields, ctx.configuration())
+                                  .initialise(initialiser);
                 }
             }
             catch (SQLException e) {
@@ -1429,17 +1422,39 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             return (R) record;
         }
 
-        /**
-         * Utility method to prevent unnecessary unchecked conversions
-         */
-        private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
-            T value = Utils.getFromResultSet(ctx, field, index + 1);
-            record.setValue(index, new Value<T>(value));
-        }
-
         @Override
         public final void remove() {
             throw new UnsupportedOperationException();
+        }
+
+        private class CursorRecordInitialiser implements RecordInitialiser<AbstractRecord, SQLException> {
+
+            @Override
+            public AbstractRecord initialise(AbstractRecord record) throws SQLException {
+                ctx.record(record);
+                listener.recordStart(ctx);
+
+                for (int i = 0; i < fields.length; i++) {
+                    setValue(record, fields[i], i);
+
+                    if (intern[i]) {
+                        record.getValue0(i).intern();
+                    }
+                }
+
+                ctx.record(record);
+                listener.recordEnd(ctx);
+
+                return record;
+            }
+
+            /**
+             * Utility method to prevent unnecessary unchecked conversions
+             */
+            private final <T> void setValue(AbstractRecord record, Field<T> field, int index) throws SQLException {
+                T value = Utils.getFromResultSet(ctx, field, index + 1);
+                record.setValue(index, new Value<T>(value));
+            }
         }
     }
 }

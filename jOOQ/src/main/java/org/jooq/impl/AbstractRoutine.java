@@ -512,7 +512,9 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
                     // also the type name
                     case ORACLE: {
                         if (sqlType == Types.STRUCT) {
-                            UDTRecord<?> record = Utils.newRecord((Class<? extends UDTRecord<?>>) parameter.getType());
+                            UDTRecord<?> record = Utils
+                                .newRecord((Class<? extends UDTRecord<?>>) parameter.getType())
+                                .<RuntimeException>initialise(null);
                             statement.registerOutParameter(index, Types.STRUCT, record.getSQLTypeName());
                         }
 

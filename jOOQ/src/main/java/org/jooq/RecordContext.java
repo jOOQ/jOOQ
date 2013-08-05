@@ -38,7 +38,7 @@ package org.jooq;
 import java.util.Map;
 
 /**
- * A context object for {@link UpdatableRecord} manipulation passed to
+ * A context object for {@link Record} manipulation passed to
  * registered {@link RecordListener}'s.
  *
  * @author Lukas Eder
@@ -125,23 +125,23 @@ public interface RecordContext {
     ExecuteType type();
 
     /**
-     * The <code>UpdatableRecord</code> that is being manipulated.
+     * The <code>Record</code> that is being manipulated.
      *
-     * @return The <code>UpdatableRecord</code> being manipulated. This is never
+     * @return The <code>Record</code> being manipulated. This is never
      *         <code>null</code>
      */
-    UpdatableRecord<?> record();
+    Record record();
 
     /**
-     * The <code>UpdatableRecord</code>(s) that are being manipulated in batch
+     * The <code>Record</code>(s) that are being manipulated in batch
      * mode.
      * <p>
-     * If a single <code>UpdatableRecord</code> is being manipulated in
+     * If a single <code>Record</code> is being manipulated in
      * non-batch mode, this will return an array of length <code>1</code>,
      * containing that <code>Record</code>.
      *
-     * @return The <code>UpdatableRecord</code>(s) being manipulated. This is
+     * @return The <code>Record</code>(s) being manipulated. This is
      *         never <code>null</code>
      */
-    UpdatableRecord<?>[] batchRecords();
+    Record[] batchRecords();
 }

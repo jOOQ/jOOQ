@@ -369,26 +369,31 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
 
     @Override
     public final R copy() {
-        R copy = create().newRecord(getTable());
+        return Utils.newRecord(getTable(), configuration())
+                    .initialise(new RecordInitialiser<R, RuntimeException>() {
+            
+        	@Override
+            public R initialise(R copy) throws RuntimeException {
+                // Copy all fields. This marks them all as isChanged, which is important
+                List<TableField<R, ?>> key = getPrimaryKey().getFields();
+                for (Field<?> field : fields.fields.fields) {
 
-        // Copy all fields. This marks them all as isChanged, which is important
-        List<TableField<R, ?>> key = getPrimaryKey().getFields();
-        for (Field<?> field : fields.fields.fields) {
+                    // Don't copy key values
+                    if (!key.contains(field)) {
+                        setValue(copy, field);
+                    }
+                }
 
-            // Don't copy key values
-            if (!key.contains(field)) {
-                setValue(copy, field);
+                return copy;
             }
-        }
 
-        return copy;
-    }
-
-    /**
-     * Extracted method to ensure generic type safety.
-     */
-    private final <T> void setValue(Record record, Field<T> field) {
-        record.setValue(field, getValue(field));
+            /**
+             * Extracted method to ensure generic type safety.
+             */
+            private final <T> void setValue(Record record, Field<T> field) {
+                record.setValue(field, getValue(field));
+            }
+        });
     }
 
     private final boolean isExecuteWithOptimisticLocking() {

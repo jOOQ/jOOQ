@@ -60,7 +60,6 @@ import org.jooq.DAO;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteListener;
-import org.jooq.ExecuteListenerProvider;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
@@ -68,6 +67,7 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.RecordListener;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.Schema;
@@ -77,8 +77,11 @@ import org.jooq.TableField;
 import org.jooq.TableRecord;
 import org.jooq.UDTRecord;
 import org.jooq.UpdatableRecord;
+import org.jooq.VisitListener;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DefaultExecuteListenerProvider;
+import org.jooq.impl.DefaultRecordListenerProvider;
+import org.jooq.impl.DefaultVisitListenerProvider;
 import org.jooq.test._.converters.Boolean_10;
 import org.jooq.test._.converters.Boolean_TF_LC;
 import org.jooq.test._.converters.Boolean_TF_UC;
@@ -717,11 +720,15 @@ public abstract class BaseTest<
     }
 
     protected final DSLContext create(ExecuteListener... listeners) {
-        ExecuteListenerProvider[] providers = new ExecuteListenerProvider[listeners.length];
-        for (int i = 0; i < listeners.length; i++)
-            providers[i] = new DefaultExecuteListenerProvider(listeners[i]);
+        return create(create().configuration().derive(DefaultExecuteListenerProvider.providers(listeners)));
+    }
 
-        return create(create().configuration().derive(providers));
+    protected final DSLContext create(RecordListener... listeners) {
+        return create(create().configuration().derive(DefaultRecordListenerProvider.providers(listeners)));
+    }
+
+    protected final DSLContext create(VisitListener... listeners) {
+        return create(create().configuration().derive(DefaultVisitListenerProvider.providers(listeners)));
     }
 
     protected final Connection getConnection() {

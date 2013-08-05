@@ -35,53 +35,65 @@
  */
 package org.jooq.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.jooq.Configuration;
+import org.jooq.ExecuteType;
+import org.jooq.Record;
 import org.jooq.RecordContext;
-import org.jooq.RecordListener;
 
 /**
- * A publicly available default implementation of {@link RecordListener}.
- * <p>
- * Use this to stay compatible with future API changes (i.e. added methods to
- * <code>RecordListener</code>)
+ * A default implementation for {@link RecordContext}.
  *
  * @author Lukas Eder
  */
-public class DefaultRecordListener implements RecordListener {
+class DefaultRecordContext implements RecordContext {
+
+    private final Configuration           configuration;
+    private final HashMap<Object, Object> data;
+    private final ExecuteType             type;
+    private final Record[]                records;
+
+    DefaultRecordContext(Configuration configuration, ExecuteType type, Record... records) {
+        this.configuration = configuration;
+        this.type = type;
+        this.data = new HashMap<Object, Object>();
+        this.records = records;
+    }
 
     @Override
-    public void storeStart(RecordContext ctx) {}
+    public final Map<Object, Object> data() {
+        return data;
+    }
 
     @Override
-    public void storeEnd(RecordContext ctx) {}
+    public final Object data(Object key) {
+        return data.get(key);
+    }
 
     @Override
-    public void insertStart(RecordContext ctx) {}
+    public final Object data(Object key, Object value) {
+        return data.put(key, value);
+    }
 
     @Override
-    public void insertEnd(RecordContext ctx) {}
+    public final Configuration configuration() {
+        return configuration;
+    }
 
     @Override
-    public void updateStart(RecordContext ctx) {}
+    public final ExecuteType type() {
+        return type;
+    }
 
     @Override
-    public void updateEnd(RecordContext ctx) {}
+    public final Record record() {
+        return records != null && records.length > 0 ? records[0] : null;
+    }
 
     @Override
-    public void deleteStart(RecordContext ctx) {}
-
-    @Override
-    public void deleteEnd(RecordContext ctx) {}
-
-    @Override
-    public void loadStart(RecordContext ctx) {}
-
-    @Override
-    public void loadEnd(RecordContext ctx) {}
-
-    @Override
-    public void refreshStart(RecordContext ctx) {}
-
-    @Override
-    public void refreshEnd(RecordContext ctx) {}
-
+    public final Record[] batchRecords() {
+        return records;
+    }
 }

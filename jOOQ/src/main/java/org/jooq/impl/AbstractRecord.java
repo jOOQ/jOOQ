@@ -345,14 +345,20 @@ abstract class AbstractRecord extends AbstractStore implements Record {
      */
     @Override
     public Record original() {
-        AbstractRecord result = Utils.newRecord(getClass(), fields.fields.fields, configuration());
-        Value<?>[] v = getValues();
+        return Utils.newRecord((Class<AbstractRecord>) getClass(), fields.fields.fields, configuration())
+                    .initialise(new RecordInitialiser<AbstractRecord, RuntimeException>() {
 
-        for (int i = 0; i < v.length; i++) {
-            result.setValue(i, new Value<Object>(v[i].getOriginal()));
-        }
+            @Override
+            public AbstractRecord initialise(AbstractRecord record) throws RuntimeException {
+                Value<?>[] v = getValues();
 
-        return result;
+                for (int i = 0; i < v.length; i++) {
+                    record.setValue(i, new Value<Object>(v[i].getOriginal()));
+                }
+
+                return record;
+            }
+        });
     }
 
     @Override
@@ -490,44 +496,48 @@ abstract class AbstractRecord extends AbstractStore implements Record {
     }
 
     @Override
-    public final <R extends Record> R into(Table<R> table) {
-        try {
-            R result = Utils.newRecord(table, configuration());
+    public final <R extends Record> R into(final Table<R> table) {
+        return Utils.newRecord(table, configuration())
+                    .initialise(new RecordInitialiser<R, MappingException>() {
 
-            for (Field<?> targetField : table.fields()) {
-                Field<?> sourceField = field(targetField);
+            @Override
+            public R initialise(R record) throws MappingException {
+                try {
+                    for (Field<?> targetField : table.fields()) {
+                        Field<?> sourceField = field(targetField);
 
-                if (sourceField != null) {
-                    Utils.setValue(result, targetField, this, sourceField);
-                }
-            }
-
-            // [#1522] If the primary key has been fully fetched, then changed
-            // flags should all be reset in order for the returned record to be
-            // updatable using store()
-            if (result instanceof AbstractRecord) {
-                UniqueKey<?> key = ((AbstractRecord) result).getPrimaryKey();
-
-                if (key != null) {
-                    boolean isKeySet = true;
-
-                    for (Field<?> field : key.getFields()) {
-                        isKeySet = isKeySet && (field(field) != null);
+                        if (sourceField != null) {
+                            Utils.setValue(record, targetField, AbstractRecord.this, sourceField);
+                        }
                     }
 
-                    if (isKeySet) {
-                        result.changed(false);
+                    // [#1522] If the primary key has been fully fetched, then changed
+                    // flags should all be reset in order for the returned record to be
+                    // updatable using store()
+                    if (record instanceof AbstractRecord) {
+                        UniqueKey<?> key = ((AbstractRecord) record).getPrimaryKey();
+
+                        if (key != null) {
+                            boolean isKeySet = true;
+
+                            for (Field<?> field : key.getFields()) {
+                                isKeySet = isKeySet && (field(field) != null);
+                            }
+
+                            if (isKeySet) {
+                                record.changed(false);
+                            }
+                        }
                     }
+
+                    return record;
+                    // All reflection exceptions are intercepted
+                }
+                catch (Exception e) {
+                    throw new MappingException("An error ocurred when mapping record to " + table, e);
                 }
             }
-
-            return result;
-        }
-
-        // All reflection exceptions are intercepted
-        catch (Exception e) {
-            throw new MappingException("An error ocurred when mapping record to " + table, e);
-        }
+        });
     }
 
     @Override

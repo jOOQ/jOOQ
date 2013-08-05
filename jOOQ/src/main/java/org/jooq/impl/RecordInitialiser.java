@@ -35,53 +35,19 @@
  */
 package org.jooq.impl;
 
-import org.jooq.RecordContext;
+import org.jooq.Record;
 import org.jooq.RecordListener;
 
 /**
- * A publicly available default implementation of {@link RecordListener}.
- * <p>
- * Use this to stay compatible with future API changes (i.e. added methods to
- * <code>RecordListener</code>)
+ * An stub for {@link Record} objects, abstracting {@link RecordListener}
+ * lifecycle handling.
  *
  * @author Lukas Eder
  */
-public class DefaultRecordListener implements RecordListener {
+interface RecordInitialiser<R extends Record, E extends Exception> {
 
-    @Override
-    public void storeStart(RecordContext ctx) {}
-
-    @Override
-    public void storeEnd(RecordContext ctx) {}
-
-    @Override
-    public void insertStart(RecordContext ctx) {}
-
-    @Override
-    public void insertEnd(RecordContext ctx) {}
-
-    @Override
-    public void updateStart(RecordContext ctx) {}
-
-    @Override
-    public void updateEnd(RecordContext ctx) {}
-
-    @Override
-    public void deleteStart(RecordContext ctx) {}
-
-    @Override
-    public void deleteEnd(RecordContext ctx) {}
-
-    @Override
-    public void loadStart(RecordContext ctx) {}
-
-    @Override
-    public void loadEnd(RecordContext ctx) {}
-
-    @Override
-    public void refreshStart(RecordContext ctx) {}
-
-    @Override
-    public void refreshEnd(RecordContext ctx) {}
-
+    /**
+     * Callback method to initialise a record.
+     */
+    R initialise(R record) throws E;
 }

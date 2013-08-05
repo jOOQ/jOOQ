@@ -135,6 +135,7 @@ import org.jooq.test._.testcases.MetaDataTests;
 import org.jooq.test._.testcases.OrderByTests;
 import org.jooq.test._.testcases.PlainSQLTests;
 import org.jooq.test._.testcases.PredicateTests;
+import org.jooq.test._.testcases.RecordListenerTests;
 import org.jooq.test._.testcases.RecordTests;
 import org.jooq.test._.testcases.ReferentialTests;
 import org.jooq.test._.testcases.RenderAndBindTests;
@@ -1500,6 +1501,11 @@ public abstract class jOOQAbstractTest<
     @Test
     public void testRecordReset() throws Exception {
         new RecordTests(this).testRecordReset();
+    }
+
+    @Test
+    public void testRecordListenerLoad() throws Exception {
+        new RecordListenerTests(this).testRecordListenerLoad();
     }
 
     @Test

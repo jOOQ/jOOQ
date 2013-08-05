@@ -141,6 +141,22 @@ public interface RecordListener extends EventListener {
     void deleteEnd(RecordContext ctx);
 
     /**
+     * Called before loading an <code>UpdatableRecord</code>.
+     * <p>
+     * Implementations are allowed to modify {@link RecordContext#record()}
+     * prior to loading.
+     */
+    void loadStart(RecordContext ctx);
+
+    /**
+     * Called after loading an <code>UpdatableRecord</code>.
+     * <p>
+     * Implementations are allowed to modify {@link RecordContext#record()}
+     * after loading.
+     */
+    void loadEnd(RecordContext ctx);
+
+    /**
      * Called before refreshing an <code>UpdatableRecord</code>.
      * <p>
      * Implementations are allowed to modify {@link RecordContext#record()}

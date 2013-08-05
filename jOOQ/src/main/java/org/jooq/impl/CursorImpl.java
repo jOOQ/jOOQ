@@ -1403,7 +1403,7 @@ class CursorImpl<R extends Record> implements Cursor<R> {
                     }
 
                     record = Utils.newRecord((Class<AbstractRecord>) type, fields, ctx.configuration())
-                                  .initialise(initialiser);
+                                  .operate(initialiser);
                 }
             }
             catch (SQLException e) {
@@ -1427,10 +1427,10 @@ class CursorImpl<R extends Record> implements Cursor<R> {
             throw new UnsupportedOperationException();
         }
 
-        private class CursorRecordInitialiser implements RecordInitialiser<AbstractRecord, SQLException> {
+        private class CursorRecordInitialiser implements RecordOperation<AbstractRecord, SQLException> {
 
             @Override
-            public AbstractRecord initialise(AbstractRecord record) throws SQLException {
+            public AbstractRecord operate(AbstractRecord record) throws SQLException {
                 ctx.record(record);
                 listener.recordStart(ctx);
 

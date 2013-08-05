@@ -236,21 +236,21 @@ final class Utils {
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordStub<R> newRecord(Class<R> type) {
+    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type) {
         return newRecord(type, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordStub<R> newRecord(Class<R> type, Field<?>[] fields) {
+    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type, Field<?>[] fields) {
         return newRecord(type, fields, null);
     }
 
     /**
      * Create a new record
      */
-    static final <R extends Record> RecordStub<R> newRecord(Table<R> type) {
+    static final <R extends Record> RecordDelegate<R> newRecord(Table<R> type) {
         return newRecord(type, null);
     }
 
@@ -258,21 +258,21 @@ final class Utils {
      * Create a new record
      */
     @SuppressWarnings("unchecked")
-    static final <R extends Record> RecordStub<R> newRecord(Table<R> type, Configuration configuration) {
-        return (RecordStub<R>) newRecord(type.getRecordType(), type.fields(), configuration);
+    static final <R extends Record> RecordDelegate<R> newRecord(Table<R> type, Configuration configuration) {
+        return (RecordDelegate<R>) newRecord(type.getRecordType(), type.fields(), configuration);
     }
 
     /**
      * Create a new UDT record
      */
-    static final <R extends UDTRecord<R>> RecordStub<R> newRecord(UDT<R> type) {
+    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(UDT<R> type) {
         return newRecord(type, null);
     }
 
     /**
      * Create a new UDT record
      */
-    static final <R extends UDTRecord<R>> RecordStub<R> newRecord(UDT<R> type, Configuration configuration) {
+    static final <R extends UDTRecord<R>> RecordDelegate<R> newRecord(UDT<R> type, Configuration configuration) {
         return newRecord(type.getRecordType(), type.fields(), configuration);
     }
 
@@ -280,7 +280,7 @@ final class Utils {
      * Create a new record
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    static final <R extends Record> RecordStub<R> newRecord(Class<R> type, Field<?>[] fields, Configuration configuration) {
+    static final <R extends Record> RecordDelegate<R> newRecord(Class<R> type, Field<?>[] fields, Configuration configuration) {
         try {
             R record;
 
@@ -301,7 +301,7 @@ final class Utils {
                 record.attach(configuration);
             }
 
-            return new RecordStub<R>(configuration, record);
+            return new RecordDelegate<R>(configuration, record);
         }
         catch (Exception e) {
             throw new IllegalStateException("Could not construct new record", e);
@@ -2398,10 +2398,10 @@ final class Utils {
         }
 
         return Utils.newRecord((Class<UDTRecord<?>>) type)
-                    .initialise(new RecordInitialiser<UDTRecord<?>, SQLException>() {
+                    .operate(new RecordOperation<UDTRecord<?>, SQLException>() {
 
                 @Override
-                public UDTRecord<?> initialise(UDTRecord<?> record) throws SQLException {
+                public UDTRecord<?> operate(UDTRecord<?> record) throws SQLException {
                     List<String> values = PostgresUtils.toPGObject(object.toString());
 
                     Row row = record.fieldsRow();

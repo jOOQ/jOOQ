@@ -36,8 +36,12 @@
 package org.jooq.impl;
 
 import static org.jooq.ExecuteType.READ;
+import static org.jooq.ExecuteType.WRITE;
+import static org.jooq.impl.RecordDelegate.RecordLifecycleType.LOAD;
+import static org.jooq.impl.RecordDelegate.RecordLifecycleType.REFRESH;
 
 import org.jooq.Configuration;
+import org.jooq.ExecuteType;
 import org.jooq.Record;
 import org.jooq.RecordContext;
 import org.jooq.RecordListener;
@@ -49,17 +53,31 @@ import org.jooq.RecordListenerProvider;
  *
  * @author Lukas Eder
  */
-class RecordStub<R extends Record> {
+class RecordDelegate<R extends Record> {
 
-    private final Configuration configuration;
-    private final R             record;
+    private final Configuration       configuration;
+    private final R                   record;
+    private final RecordLifecycleType type;
 
-    RecordStub(Configuration configuration, R record) {
-        this.configuration = configuration;
-        this.record = record;
+    RecordDelegate(Configuration configuration, R record) {
+        this(configuration, record, LOAD);
     }
 
-    final <E extends Exception> R initialise(RecordInitialiser<R, E> initialiser) throws E {
+    RecordDelegate(Configuration configuration, R record, RecordLifecycleType type) {
+        this.configuration = configuration;
+        this.record = record;
+        this.type = type;
+    }
+
+    static final <R extends Record> RecordDelegate<R> delegate(Configuration configuration, R record) {
+        return new RecordDelegate<R>(configuration, record);
+    }
+
+    static final <R extends Record> RecordDelegate<R> delegate(Configuration configuration, R record, RecordLifecycleType type) {
+        return new RecordDelegate<R>(configuration, record, type);
+    }
+
+    final <E extends Exception> R operate(RecordOperation<R, E> operation) throws E {
         RecordListenerProvider[] providers = null;
         RecordListener[] listeners = null;
         RecordContext ctx = null;
@@ -69,7 +87,7 @@ class RecordStub<R extends Record> {
 
             if (providers != null) {
                 listeners = new RecordListener[providers.length];
-                ctx = new DefaultRecordContext(configuration, READ, record);
+                ctx = new DefaultRecordContext(configuration, executeType(), record);
 
                 for (int i = 0; i < providers.length; i++) {
                     listeners[i] = providers[i].provide();
@@ -79,20 +97,51 @@ class RecordStub<R extends Record> {
 
         if (listeners != null) {
             for (RecordListener listener  : listeners) {
-                listener.loadStart(ctx);
+                switch (type) {
+                    case LOAD:    listener.loadStart(ctx);    break;
+                    case REFRESH: listener.refreshStart(ctx); break;
+                    case STORE:   listener.storeStart(ctx);   break;
+                    case INSERT:  listener.insertStart(ctx);  break;
+                    case UPDATE:  listener.updateStart(ctx);  break;
+                    case DELETE:  listener.deleteStart(ctx);  break;
+                    default:
+                        throw new IllegalStateException("Type not supported: " + type);
+                }
             }
         }
 
-        if (initialiser != null) {
-            initialiser.initialise(record);
+        if (operation != null) {
+            operation.operate(record);
         }
 
         if (listeners != null) {
             for (RecordListener listener  : listeners) {
-                listener.loadEnd(ctx);
+                switch (type) {
+                    case LOAD:    listener.loadEnd(ctx);    break;
+                    case REFRESH: listener.refreshEnd(ctx); break;
+                    case STORE:   listener.storeEnd(ctx);   break;
+                    case INSERT:  listener.insertEnd(ctx);  break;
+                    case UPDATE:  listener.updateEnd(ctx);  break;
+                    case DELETE:  listener.deleteEnd(ctx);  break;
+                    default:
+                        throw new IllegalStateException("Type not supported: " + type);
+                }
             }
         }
 
         return record;
+    }
+
+    private final ExecuteType executeType() {
+        return type == LOAD || type == REFRESH ? READ : WRITE;
+    }
+
+    enum RecordLifecycleType {
+        LOAD,
+        REFRESH,
+        STORE,
+        INSERT,
+        UPDATE,
+        DELETE
     }
 }

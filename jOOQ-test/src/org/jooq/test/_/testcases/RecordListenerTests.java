@@ -140,6 +140,30 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
+    public void testRecordListenerBatchStore() throws Exception {
+        jOOQAbstractTest.reset = false;
+        SimpleRecordListener listener1 = new SimpleRecordListener();
+
+        B book1 = newBook(5);
+        B book2 = newBook(6);
+
+        create(listener1).batchStore(book1, book2).execute();
+
+        System.out.println(listener1.events);
+        throw new RuntimeException("Support for RecordListener and batch store is not yet implemented");
+
+//        Result<B> books =
+//        create().selectFrom(TBook())
+//                .orderBy(TBook_ID().asc())
+//                .fetch();
+//
+//        for (int i = 0; i < books.size(); i++) {
+//            books.get(i).attach(create(listener1).configuration());
+//            books.get(i).setValue(TBook_TITLE(), "Title " + i);
+//        }
+    }
+
+    @Test
     public void testRecordListenerRefresh() throws Exception {
         B book =
         create()

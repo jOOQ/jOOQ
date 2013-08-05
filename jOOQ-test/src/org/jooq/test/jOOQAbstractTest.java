@@ -1509,6 +1509,11 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
+    public void testRecordListenerRefresh() throws Exception {
+        new RecordListenerTests(this).testRecordListenerRefresh();
+    }
+
+    @Test
     public void testRecordListenerStore() throws Exception {
         new RecordListenerTests(this).testRecordListenerStore();
     }

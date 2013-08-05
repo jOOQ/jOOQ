@@ -349,11 +349,13 @@ public class UpdatableRecordImpl<R extends UpdatableRecord<R>> extends TableReco
         Utils.addConditions(select, this, getPrimaryKey().getFieldsArray());
 
         if (select.execute() == 1) {
-            delegate(configuration(), select.getResult().get(0), REFRESH)
+            final AbstractRecord source = (AbstractRecord) select.getResult().get(0);
+
+            delegate(configuration(), (Record) this, REFRESH)
                 .operate(new RecordOperation<Record, RuntimeException>() {
                     @Override
                     public Record operate(Record record) throws RuntimeException {
-                        setValues(f, (AbstractRecord) record);
+                        setValues(f, source);
                         return record;
                     }
                 });

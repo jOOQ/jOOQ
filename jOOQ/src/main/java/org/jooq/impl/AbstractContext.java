@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.DUMMY;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
@@ -169,10 +171,12 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     @Override
     public final C start(Clause clause) {
-        visitClauses.addLast(clause);
+        if (clause != null && clause != DUMMY) {
+            visitClauses.addLast(clause);
 
-        for (VisitListener listener : visitListeners) {
-            listener.clauseStart(visitContext);
+            for (VisitListener listener : visitListeners) {
+                listener.clauseStart(visitContext);
+            }
         }
 
         return (C) this;
@@ -180,12 +184,14 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     @Override
     public final C end(Clause clause) {
-        for (VisitListener listener : visitListeners) {
-            listener.clauseEnd(visitContext);
-        }
+        if (clause != null && clause != DUMMY) {
+            for (VisitListener listener : visitListeners) {
+                listener.clauseEnd(visitContext);
+            }
 
-        if (visitClauses.removeLast() != clause)
-            throw new IllegalStateException("Mismatch between visited clauses!");
+            if (visitClauses.removeLast() != clause)
+                throw new IllegalStateException("Mismatch between visited clauses!");
+        }
 
         return (C) this;
     }

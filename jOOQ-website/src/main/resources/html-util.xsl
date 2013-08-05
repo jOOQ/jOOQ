@@ -36,215 +36,265 @@
   -->
 
 <xsl:stylesheet version="1.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
-	<xsl:output encoding="UTF-8" method="html" omit-xml-declaration="yes" indent="yes"/>
+    <xsl:output encoding="UTF-8" method="html" omit-xml-declaration="yes" indent="yes"/>
 
-	<xsl:template match="html-only" mode="content">
-		<xsl:apply-templates mode="content"/>
-	</xsl:template>
+    <xsl:template match="html-only" mode="content">
+        <xsl:apply-templates mode="content"/>
+    </xsl:template>
 
-	<xsl:template match="section" mode="toc">
-		<xsl:if test="count(sections/section) &gt; 0">
-			<dl class="toc">
-				<xsl:apply-templates select="." mode="toc-contents"/>
-			</dl>
-		</xsl:if>
-	</xsl:template>
-	
-	<xsl:template match="section" mode="toc-contents">
-		<xsl:if test="count(sections/section) &gt; 0">
-			<xsl:for-each select="sections/section">
-			    <xsl:variable name="class">
-			    	<xsl:if test="../../@id = 'manual'">toc-main</xsl:if>
-				</xsl:variable>
-				
-				<dt class="{$class}">
-				    <xsl:apply-templates select="." mode="chapter-number"/>
-				</dt>
-				
-				<dd class="{$class}">
-					<xsl:variable name="href">
-						<xsl:apply-templates select="." mode="href"/>
-					</xsl:variable>
-
-					<a href="{$href}" title="{title}">
-						<xsl:value-of select="title"/>
-					</a>
-				</dd>
-				
-				<xsl:apply-templates select="." mode="toc-contents"/>
-			</xsl:for-each>
-		</xsl:if>
-	</xsl:template>
-
-	<xsl:template match="content">
-		<xsl:apply-templates select="@*|node()" mode="content"/>
-	</xsl:template>
-
-	<xsl:template match="@*|node()" mode="content">
-		<xsl:choose>
-			<xsl:when test="name(.) = 'reference'">
-				<xsl:variable name="id" select="@id"/>
-
-				<a>
-					<xsl:attribute name="href">
-						<xsl:choose>
-							<xsl:when test="@id">
-								<xsl:apply-templates select="//section[@id = $id]" mode="href"/>
-								<xsl:value-of select="@anchor"/>
-
-								<xsl:if test="not(//section[@id = $id])">
-									<xsl:message>
-										<xsl:text>Reference not found: </xsl:text>
-										<xsl:value-of select="$id"/>
-									</xsl:message>
-								</xsl:if>
-							</xsl:when>
-
-							<xsl:when test="@class and starts-with(@class, 'org.jooq.test')">
-								<xsl:text>https://github.com/jOOQ/jOOQ/blob/master/jOOQ-test/src/</xsl:text>
-								<xsl:value-of select="translate(@class, '.', '/')"/>
-								<xsl:text>.java</xsl:text>
-								<xsl:value-of select="@anchor"/>
-							</xsl:when>
-
-							<xsl:when test="@class and starts-with(@class, 'org.jooq.debug')">
-								<xsl:text>https://github.com/jOOQ/jOOQ/blob/master/jOOQ-console/src/main/java/</xsl:text>
-								<xsl:value-of select="translate(@class, '.', '/')"/>
-								<xsl:text>.java</xsl:text>
-								<xsl:value-of select="@anchor"/>
-							</xsl:when>
-
-							<xsl:when test="@class and starts-with(@class, 'org.jooq')">
-								<xsl:text>http://www.jooq.org/javadoc/latest/</xsl:text>
-								<xsl:value-of select="translate(@class, '.', '/')"/>
-								<xsl:text>.html</xsl:text>
-								<xsl:value-of select="@anchor"/>
-							</xsl:when>
-
-							<xsl:when test="@class and (starts-with(@class, 'javax.persistence'))">
-								<xsl:text>http://docs.oracle.com/javaee/6/api/</xsl:text>
-								<xsl:value-of select="translate(@class, '.', '/')"/>
-								<xsl:text>.html</xsl:text>
-								<xsl:value-of select="@anchor"/>
-							</xsl:when>
-
-							<xsl:when test="@class and (starts-with(@class, 'java') or starts-with(@class, 'org.w3c.dom'))">
-								<xsl:text>http://download.oracle.com/javase/6/docs/api/</xsl:text>
-								<xsl:value-of select="translate(@class, '.', '/')"/>
-								<xsl:text>.html</xsl:text>
-								<xsl:value-of select="@anchor"/>
-							</xsl:when>
-
-							<xsl:when test="@ticket">
-								<xsl:text>https://github.com/jOOQ/jOOQ/issues/</xsl:text>
-								<xsl:value-of select="@ticket"/>
-								<xsl:value-of select="@anchor"/>
-							</xsl:when>
-
-							<xsl:otherwise>
-								<xsl:message>
-									<xsl:text>Reference not supported</xsl:text>
-								</xsl:message>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:attribute>
-
-					<xsl:attribute name="title">
-						<xsl:choose>
-							<xsl:when test="@id">
-								<xsl:text>jOOQ Manual reference: </xsl:text>
-								<xsl:value-of select="//section[@id = $id]/title"/>
-							</xsl:when>
-							<xsl:when test="@class and starts-with(@class, 'org.jooq')">
-								<xsl:text>Internal API reference: </xsl:text>
-								<xsl:value-of select="@class"/>
-							</xsl:when>
-							<xsl:when test="@class and starts-with(@class, 'java')">
-								<xsl:text>External API reference: </xsl:text>
-								<xsl:value-of select="@class"/>
-							</xsl:when>
-							<xsl:when test="@ticket">
-								<xsl:text>GitHub issue: #</xsl:text>
-								<xsl:value-of select="@ticket"/>
-							</xsl:when>
-						</xsl:choose>
-					</xsl:attribute>
-
-					<xsl:choose>
-						<xsl:when test="@title">
-							<xsl:value-of select="@title"/>
-						</xsl:when>
-						<xsl:when test="@id">
-							<xsl:value-of select="//section[@id = $id]/title"/>
-						</xsl:when>
-						<xsl:when test="@class">
-							<xsl:value-of select="@class"/>
-						</xsl:when>
-						<xsl:when test="@ticket">
-							<xsl:text>#</xsl:text>
-							<xsl:value-of select="@ticket"/>
-						</xsl:when>
-					</xsl:choose>
-				</a>
-			</xsl:when>
-			<xsl:when test="name(.) = 'java'">
-				<pre class="prettyprint lang-java">
-					<xsl:value-of select="text()"/>
-				</pre>
-			</xsl:when>
-			<xsl:when test="name(.) = 'scala'">
-				<pre class="prettyprint lang-scala">
-					<xsl:value-of select="text()"/>
-				</pre>
-			</xsl:when>
-			<xsl:when test="name(.) = 'sql'">
-				<pre class="prettyprint lang-sql">
-					<xsl:value-of select="text()"/>
-				</pre>
-			</xsl:when>
-			<xsl:when test="name(.) = 'xml'">
-				<pre class="prettyprint lang-xml">
-					<xsl:value-of select="text()"/>
-				</pre>
-			</xsl:when>
-			<xsl:when test="name(.) = 'config'">
-				<pre class="prettyprint">
-					<xsl:value-of select="text()"/>
-				</pre>
-			</xsl:when>
-			<xsl:when test="name(.) = 'text'">
-				<pre>
-					<xsl:value-of select="text()"/>
-				</pre>
-			</xsl:when>
-			<xsl:when test="name(.) = 'code-pair'">
-				<table width="100%" cellpadding="0" cellspacing="0">
-				<tr>
-					<td width="50%" class="left">
-						<xsl:apply-templates select="./*[position() = 1]" mode="content"/>
-					</td>
-					<td width="50%" class="right">
-						<xsl:apply-templates select="./*[position() = 2]" mode="content"/>
-					</td>
-				</tr>
-				</table>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:copy>
-		            <xsl:apply-templates select="@*|node()" mode="content"/>
-		        </xsl:copy>
-			</xsl:otherwise>
-		</xsl:choose>
+    <xsl:template match="section" mode="toc">
+        <xsl:if test="count(sections/section) &gt; 0">
+            <dl class="toc">
+                <xsl:apply-templates select="." mode="toc-contents"/>
+            </dl>
+        </xsl:if>
     </xsl:template>
     
-	<xsl:template match="section" mode="chapter-number">
-		<xsl:if test="@id != 'manual'">
-			<xsl:apply-templates select="../.." mode="chapter-number"/>
+    <xsl:template match="section" mode="toc-contents">
+        <xsl:if test="count(sections/section) &gt; 0">
+            <xsl:for-each select="sections/section">
+                <xsl:variable name="class">
+                    <xsl:if test="../../@id = 'manual'">toc-main</xsl:if>
+                </xsl:variable>
+                
+                <dt class="{$class}">
+                    <xsl:apply-templates select="." mode="chapter-number"/>
+                </dt>
+                
+                <dd class="{$class}">
+                    <xsl:variable name="href">
+                        <xsl:apply-templates select="." mode="href"/>
+                    </xsl:variable>
 
-			<xsl:value-of select="count(preceding-sibling::section) + 1"/>
-			<xsl:text>.</xsl:text>
-		</xsl:if>
-	</xsl:template>
+                    <a href="{$href}" title="{title}">
+                        <xsl:value-of select="title"/>
+                    </a>
+                </dd>
+                
+                <xsl:apply-templates select="." mode="toc-contents"/>
+            </xsl:for-each>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="content">
+        <xsl:apply-templates select="@*|node()" mode="content"/>
+    </xsl:template>
+
+    <xsl:template match="@*|node()" mode="content">
+        <xsl:param name="colwidth" select="'100'"/>
+        <xsl:param name="col1" select="false()"/>
+        <xsl:param name="col2" select="false()"/>
+        
+        <xsl:choose>
+            <xsl:when test="name(.) = 'reference'">
+                <xsl:variable name="id" select="@id"/>
+
+                <a>
+                    <xsl:attribute name="href">
+                        <xsl:choose>
+                            <xsl:when test="@id">
+                                <xsl:apply-templates select="//section[@id = $id]" mode="href"/>
+                                <xsl:value-of select="@anchor"/>
+
+                                <xsl:if test="not(//section[@id = $id])">
+                                    <xsl:message>
+                                        <xsl:text>Reference not found: </xsl:text>
+                                        <xsl:value-of select="$id"/>
+                                    </xsl:message>
+                                </xsl:if>
+                            </xsl:when>
+
+                            <xsl:when test="@class and starts-with(@class, 'org.jooq.test')">
+                                <xsl:text>https://github.com/jOOQ/jOOQ/blob/master/jOOQ-test/src/</xsl:text>
+                                <xsl:value-of select="translate(@class, '.', '/')"/>
+                                <xsl:text>.java</xsl:text>
+                                <xsl:value-of select="@anchor"/>
+                            </xsl:when>
+
+                            <xsl:when test="@class and starts-with(@class, 'org.jooq.debug')">
+                                <xsl:text>https://github.com/jOOQ/jOOQ/blob/master/jOOQ-console/src/main/java/</xsl:text>
+                                <xsl:value-of select="translate(@class, '.', '/')"/>
+                                <xsl:text>.java</xsl:text>
+                                <xsl:value-of select="@anchor"/>
+                            </xsl:when>
+
+                            <xsl:when test="@class and starts-with(@class, 'org.jooq')">
+                                <xsl:text>http://www.jooq.org/javadoc/latest/</xsl:text>
+                                <xsl:value-of select="translate(@class, '.', '/')"/>
+                                <xsl:text>.html</xsl:text>
+                                <xsl:value-of select="@anchor"/>
+                            </xsl:when>
+
+                            <xsl:when test="@class and (starts-with(@class, 'javax.persistence'))">
+                                <xsl:text>http://docs.oracle.com/javaee/6/api/</xsl:text>
+                                <xsl:value-of select="translate(@class, '.', '/')"/>
+                                <xsl:text>.html</xsl:text>
+                                <xsl:value-of select="@anchor"/>
+                            </xsl:when>
+
+                            <xsl:when test="@class and (starts-with(@class, 'java') or starts-with(@class, 'org.w3c.dom'))">
+                                <xsl:text>http://download.oracle.com/javase/6/docs/api/</xsl:text>
+                                <xsl:value-of select="translate(@class, '.', '/')"/>
+                                <xsl:text>.html</xsl:text>
+                                <xsl:value-of select="@anchor"/>
+                            </xsl:when>
+
+                            <xsl:when test="@ticket">
+                                <xsl:text>https://github.com/jOOQ/jOOQ/issues/</xsl:text>
+                                <xsl:value-of select="@ticket"/>
+                                <xsl:value-of select="@anchor"/>
+                            </xsl:when>
+
+                            <xsl:otherwise>
+                                <xsl:message>
+                                    <xsl:text>Reference not supported</xsl:text>
+                                </xsl:message>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+
+                    <xsl:attribute name="title">
+                        <xsl:choose>
+                            <xsl:when test="@id">
+                                <xsl:text>jOOQ Manual reference: </xsl:text>
+                                <xsl:value-of select="//section[@id = $id]/title"/>
+                            </xsl:when>
+                            <xsl:when test="@class and starts-with(@class, 'org.jooq')">
+                                <xsl:text>Internal API reference: </xsl:text>
+                                <xsl:value-of select="@class"/>
+                            </xsl:when>
+                            <xsl:when test="@class and starts-with(@class, 'java')">
+                                <xsl:text>External API reference: </xsl:text>
+                                <xsl:value-of select="@class"/>
+                            </xsl:when>
+                            <xsl:when test="@ticket">
+                                <xsl:text>GitHub issue: #</xsl:text>
+                                <xsl:value-of select="@ticket"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:attribute>
+
+                    <xsl:choose>
+                        <xsl:when test="@title">
+                            <xsl:value-of select="@title"/>
+                        </xsl:when>
+                        <xsl:when test="@id">
+                            <xsl:value-of select="//section[@id = $id]/title"/>
+                        </xsl:when>
+                        <xsl:when test="@class">
+                            <xsl:value-of select="@class"/>
+                        </xsl:when>
+                        <xsl:when test="@ticket">
+                            <xsl:text>#</xsl:text>
+                            <xsl:value-of select="@ticket"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </a>
+            </xsl:when>
+            <xsl:when test="name(.) = 'java'">
+                <xsl:if test="not($col2)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
+                </xsl:if>
+                <div class="row col col-{$colwidth} col-darkgrey">
+                    <pre class="prettyprint lang-java">
+                        <xsl:value-of select="text()"/>
+                    </pre>
+                </div>
+                <xsl:if test="not($col1)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
+                </xsl:if>
+            </xsl:when>
+            <xsl:when test="name(.) = 'scala'">
+                <xsl:if test="not($col2)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
+                </xsl:if>
+                <div class="row col col-{$colwidth} col-darkgrey">
+                <pre class="prettyprint lang-scala">
+                    <xsl:value-of select="text()"/>
+                </pre>
+                </div>
+                <xsl:if test="not($col1)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
+                </xsl:if>
+            </xsl:when>
+            <xsl:when test="name(.) = 'sql'">
+                <xsl:if test="not($col2)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
+                </xsl:if>
+                <div class="row col col-{$colwidth} col-black">
+                <pre class="prettyprint lang-sql">
+                    <xsl:value-of select="text()"/>
+                </pre>
+                </div>
+                <xsl:if test="not($col1)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
+                </xsl:if>
+            </xsl:when>
+            <xsl:when test="name(.) = 'xml'">
+                <xsl:if test="not($col2)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
+                </xsl:if>
+                <div class="row col col-{$colwidth} col-grey">
+                <pre class="prettyprint lang-xml">
+                    <xsl:value-of select="text()"/>
+                </pre>
+                </div>
+                <xsl:if test="not($col1)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
+                </xsl:if>
+            </xsl:when>
+            <xsl:when test="name(.) = 'config'">
+                <xsl:if test="not($col2)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
+                </xsl:if>
+                <div class="row col col-{$colwidth} col-green">
+                <pre class="prettyprint">
+                    <xsl:value-of select="text()"/>
+                </pre>
+                </div>
+                <xsl:if test="not($col1)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
+                </xsl:if>
+            </xsl:when>
+            <xsl:when test="name(.) = 'text'">
+                <xsl:if test="not($col2)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
+                </xsl:if>
+                <div class="row col col-{$colwidth} col-red">
+                <pre>
+                    <xsl:value-of select="text()"/>
+                </pre>
+                </div>
+                <xsl:if test="not($col1)">
+                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
+                </xsl:if>
+            </xsl:when>
+            <xsl:when test="name(.) = 'code-pair'">
+                <xsl:apply-templates select="./*[position() = 1]" mode="content">
+                    <xsl:with-param name="colwidth" select="'50'"/>
+                    <xsl:with-param name="col1" select="true()"/>
+                </xsl:apply-templates>
+                <xsl:apply-templates select="./*[position() = 2]" mode="content">
+                    <xsl:with-param name="colwidth" select="'50'"/>
+                    <xsl:with-param name="col2" select="true()"/>
+                </xsl:apply-templates>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy>
+                    <xsl:apply-templates select="@*|node()" mode="content"/>
+                </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template match="section" mode="chapter-number">
+        <xsl:if test="@id != 'manual'">
+            <xsl:apply-templates select="../.." mode="chapter-number"/>
+
+            <xsl:value-of select="count(preceding-sibling::section) + 1"/>
+            <xsl:text>.</xsl:text>
+        </xsl:if>
+    </xsl:template>
 </xsl:stylesheet>

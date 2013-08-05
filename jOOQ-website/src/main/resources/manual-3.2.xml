@@ -38,7 +38,7 @@
 	<section id="manual">
 		<title>The jOOQ User Manual. Multiple Pages</title>
 		<content>
-			<h2 id="Overview"><a href="#Overview" name="Overview">#</a> Overview</h2>
+			<h2 id="Overview"><a href="#Overview" name="Overview">Overview</a></h2>
 			<p>This manual is divided into six main sections:</p>
 
 			<ul>
@@ -11090,7 +11090,6 @@ Condition condition3 = BOOK.TITLE.isNotDistinctFrom(possiblyNull);]]></java>
 								jOOQ lives in a very challenging ecosystem. The Java to SQL interface is still one of the most important system interfaces. Yet there are still a lot of open questions, best practices and no "true" standard has been established. This situation gave way to a lot of tools, APIs, utilities which essentially tackle the same problem domain as jOOQ. jOOQ has gotten great inspiration from pre-existing tools and this section should give them some credit. Here is a list of inspirational tools in alphabetical order:
 							</p>
 							<ul>
-								<li><a href="http://avaje.org">Avajé EBean</a>: Play! Framework's preferred ORM has a feature called asynchronous query execution. This idea made it into jOOQ as <reference class="org.jooq.ResultQuery" anchor="#fetchLater()"/></li>
 								<li><a href="http://www.hibernate.org">Hibernate</a>: The de-facto standard (JPA) with its useful table-to-POJO mapping features have influenced jOOQ's <reference class="org.jooq.ResultQuery" anchor="#fetchInto(java.lang.Class)"/> facilities</li>
 								<li><a href="http://www.h2database.com/html/jaqu.html">JaQu</a>: H2's own fluent API for querying databases</li>
 								<li><a href="http://www.oracle.com/technetwork/java/javaee/tech/persistence-jsp-140049.html">JPA</a>: The de-facto standard in the javax.persistence packages, supplied by Oracle. Its annotations are useful to jOOQ as well.</li>

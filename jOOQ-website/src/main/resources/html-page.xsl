@@ -58,38 +58,48 @@ function getH1() {
     return "The jOOQ User Manual. Single Page";
 }
 function getActiveMenu() {
-	return "learn";
+    return "learn";
 }
 function printContent() {
     global $root;
 ?&gt;
 </xsl:text>
 
+        <div id="manual">
 		<!-- Display the main section's content -->
+        <div class="row col col-100 col-white">
 		<xsl:apply-templates select="/manual/section/content"/>
+        </div>
 
 		<!-- Display the overall table of contents -->
-		<h2 id="toc"><a href="#toc" name="toc">#</a> Table of contents</h2>
+        <div class="row col col-100 col-white">
+		<h2 id="toc"><a href="#toc" name="toc">Table of contents</a></h2>
 		<xsl:apply-templates select="/manual/section" mode="toc"/>
-
+        </div>
+        
 		<xsl:for-each select="/manual/section//section">
             <xsl:variable name="id" select="@id"/>
             
-			<h2 id="{@id}">
-                <xsl:for-each select="//redirect[@redirect-to = $id]">
-                    <a id="{@id}" name="{@id}"/>
-                </xsl:for-each>
-                
-				<a name="{@id}" href="#{@id}">#</a>
-				<xsl:text> </xsl:text>
-				<xsl:apply-templates select="." mode="chapter-number"/>
-				<xsl:text> </xsl:text>
-				<xsl:value-of select="title"/>
-			</h2>
-
-			<xsl:apply-templates select="content" />
+            <section>
+                <div class="row col col-100 col-white">
+        			<h2 id="{@id}">
+                        <xsl:for-each select="//redirect[@redirect-to = $id]">
+                            <a id="{@id}" name="{@id}"/>
+                        </xsl:for-each>
+                        
+        				<a name="{@id}" href="#{@id}">
+            				<xsl:apply-templates select="." mode="chapter-number"/>
+            				<xsl:text> </xsl:text>
+            				<xsl:value-of select="title"/>
+                        </a>
+        			</h2>
+        
+        			<xsl:apply-templates select="content" />
+                </div>
+            </section>
 		</xsl:for-each>
 
+        </div>
 		<xsl:text disable-output-escaping="yes">
 &lt;?php
 }

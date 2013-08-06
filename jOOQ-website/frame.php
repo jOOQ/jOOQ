@@ -261,6 +261,9 @@ function manualHeader($isSingle, $forVersion) {
             <div class="navigation-item-left <?php if ($menu == 'community') print 'navigation-item-active'?>">
                 <a href="<?=$root?>/community.php" title="See who's behind jOOQ and contribute">Community</a>
             </div>
+            <div class="navigation-item-left <?php if ($menu == 'news') print 'navigation-item-active'?>">
+                <a href="<?=$root?>/news.php" title="What's new around jOOQ">News</a>
+            </div>
             <div class="navigation-item-left <?php if ($menu == 'donate') print 'navigation-item-active'?>">
                 <a href="<?=$root?>/donate.php" title="Show some love to the jOOQ developer">Donate</a>
             </div>

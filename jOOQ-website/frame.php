@@ -79,7 +79,7 @@ function manualHeader($isSingle, $forVersion) {
                      }
                      catch (ignore) {}
                  },
-                 registration = function() {
+                 registration = function(forceEmail, forceSurvey) {
                      var $email = $('#email'),
                          $save = $('.save'),
                          $survey = $('#survey'),
@@ -137,12 +137,18 @@ function manualHeader($isSingle, $forVersion) {
                          return false;
                      });
 
-                     if ($.cookie("jooq-registration-email")) {
+                     if ($.cookie("jooq-registration-email") && !forceEmail) {
                          $email.hide();
                      }
+                     else if (forceEmail) {
+                         $email.show();
+                     }
 
-                     if ($.cookie("jooq-registration-survey")) {
+                     if ($.cookie("jooq-registration-survey") && !forceSurvey) {
                          $survey.hide();
+                     }
+                     else if (forceSurvey) {
+                         $survey.show();
                      }
                      
                      $registration.modal();
@@ -156,7 +162,11 @@ function manualHeader($isSingle, $forVersion) {
                       track($(this).attr("href"));
                   });
                   
-            if ($registration) {
+            $("#newsletterbutton").click(function() {
+                registration(true, true);
+            });
+              
+            if ($registration && document.URL.indexOf("download.php") >= 0) {
                 if (!$.cookie("jooq-registration-email") ||
                     !$.cookie("jooq-registration-survey")) {
                     
@@ -229,6 +239,10 @@ function manualHeader($isSingle, $forVersion) {
             <div class="tweet-item">
                 <a href="http://www.facebook.com/sharer.php?u=http://www.jooq.org" target="_blank">
                     <img src="<?=$root?>/img/social-fb.png" width="37" height="27" alt="Share jOOQ on Facebook" title="Share jOOQ on Facebook"/></a>
+            </div>
+            <div class="tweet-item">
+                <a id="newsletterbutton" href="#">
+                    <img src="<?=$root?>/img/social-nl.png" width="37" height="27" alt="Sign up for the jOOQ newsletter" title="Sign up for the jOOQ newsletter"/></a>
             </div>
             
             <?php
@@ -315,5 +329,39 @@ function manualHeader($isSingle, $forVersion) {
         <div style="display: none">
             <img src="/img/logo.png" alt="The jOOQ Logo" title="jOOQ Logo"/>
         </div>
+        
+        <div id="registration" style="display: none; width: 800px">
+          <div id="email">
+            <h3>Tell us a little bit about yourself and join our newsletter</h3>
+            <sup>We will keep this information strictly confidential</sup>
+                
+            <?php require 'registration-email.php'; ?> 
+          </div>
+          <div id="survey">
+            <h3>Help us understand your needs by completing this survey</h3>
+            <div class="row">
+              <div class="col col-3">
+                  jOOQ has been the leading Java Open Source SQL building tool for the last three years. Feedback on social media such as Facebook, Twitter, reddit, Stack Overflow has been overwhelmingly positive.
+              </div>
+              <div class="col col-3">
+                  You can influence jOOQ's future in the professional OSS world. By completing this survey, you help us take the right decisions to provide you with an even better Java / SQL integration in the future. All of the provided information will be kept strictly confidential.
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-1">&#160;</div>
+              <div class="col col-1">
+                <button id="survey">
+                  Complete the survey
+                </button>
+              </div>
+              <div class="col col-1">
+                <button class="no-thanks" data-cookie="jooq-registration-survey" data-fade="survey">
+                  No thanks
+                </button>  
+              </div>
+            </div>
+          </div>
+        </div>
+                
     </body>
 </html>

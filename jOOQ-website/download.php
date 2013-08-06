@@ -117,39 +117,6 @@ are some other products:
 	created out of necessity, as jOOQ supports MySQL's (and other databases') unsigned integers</p>
 </div>
 
-<div id="registration" style="display: none; width: 800px">
-  <div id="email">
-    <h3>Tell us a little bit about yourself</h3>
-	<sup>We will keep this information strictly confidential</sup>
-	    
-    <?php require 'registration-email.php'; ?> 
-  </div>
-  <div id="survey">
-    <h3>Help us understand your needs by completing this survey</h3>
-    <div class="row">
-      <div class="col col-3">
-          jOOQ has been the leading Java Open Source SQL building tool for the last three years. Feedback on social media such as Facebook, Twitter, reddit, Stack Overflow has been overwhelmingly positive.
-      </div>
-      <div class="col col-3">
-          You can influence jOOQ's future in the professional OSS world. By completing this survey, you help us take the right decisions to provide you with an even better Java / SQL integration in the future. All of the provided information will be kept strictly confidential.
-      </div>
-    </div>
-    <div class="row">
-      <div class="col col-1">&#160;</div>
-      <div class="col col-1">
-        <button id="survey">
-          Complete the survey
-        </button>
-      </div>
-      <div class="col col-1">
-        <button class="no-thanks" data-cookie="jooq-registration-survey" data-fade="survey">
-          No thanks
-        </button>  
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <?php
 }

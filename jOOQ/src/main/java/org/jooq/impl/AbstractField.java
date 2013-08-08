@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.FIELD;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;
 import static org.jooq.Comparator.GREATER_OR_EQUAL;
@@ -99,7 +99,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 2884811923648354905L;
+    private static final long     serialVersionUID = 2884811923648354905L;
+    private static final Clause[] CLAUSES          = { FIELD };
 
     private final String      name;
     private final DataType<T> dataType;
@@ -122,8 +123,8 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public abstract void bind(BindContext context);
 
     @Override
-    public /* non-final for now */ Clause clause() {
-        return DUMMY;
+    public Clause[] clauses() {
+        return CLAUSES;
     }
 
     // ------------------------------------------------------------------------

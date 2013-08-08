@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.CATALOG;
+import static org.jooq.Clause.CATALOG_REFERENCE;
 
 import java.util.Collections;
 import java.util.List;
@@ -59,8 +60,9 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -3650318934053960244L;
-    private final String      catalogName;
+    private static final long     serialVersionUID = -3650318934053960244L;
+    private static final Clause[] CLAUSES          = { CATALOG, CATALOG_REFERENCE };
+    private final String          catalogName;
 
     public CatalogImpl(String name) {
         super();
@@ -82,8 +84,8 @@ public class CatalogImpl extends AbstractQueryPart implements Catalog {
     }
 
     @Override
-    public final Clause clause() {
-        return CATALOG;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     @Override

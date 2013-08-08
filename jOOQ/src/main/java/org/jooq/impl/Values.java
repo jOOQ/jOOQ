@@ -161,8 +161,8 @@ class Values<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     @Override

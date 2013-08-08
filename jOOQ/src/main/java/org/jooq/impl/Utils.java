@@ -183,6 +183,8 @@ final class Utils {
      */
     static final String          DATA_FORCE_STATIC_STATEMENT                  = "org.jooq.configuration.force-static-statement";
 
+    static final String          DATA_OMIT_CLAUSE_EVENT_EMISSION              = "org.jooq.configuration.omit-clause-event-emission";
+
     // ------------------------------------------------------------------------
     // Other constants
     // ------------------------------------------------------------------------

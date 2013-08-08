@@ -89,8 +89,8 @@ public class PackageImpl extends AbstractQueryPart implements Package {
     public final void bind(BindContext context) {}
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     // ------------------------------------------------------------------------

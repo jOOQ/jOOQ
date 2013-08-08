@@ -258,8 +258,8 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     // -------------------------------------------------------------------------

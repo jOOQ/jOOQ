@@ -107,6 +107,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
      * Generated UID
      */
     private static final long               serialVersionUID = 1646393178384872967L;
+    private static final Clause[]           CLAUSES          = { SELECT };
 
     private final SelectFieldList           select;
     private String                          hint;
@@ -165,8 +166,8 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final Clause clause() {
-        return SELECT;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     @Override

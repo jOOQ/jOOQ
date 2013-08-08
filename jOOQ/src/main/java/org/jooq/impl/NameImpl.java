@@ -76,8 +76,8 @@ class NameImpl extends AbstractQueryPart implements Name {
     public final void bind(BindContext context) {}
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     @Override

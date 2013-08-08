@@ -117,8 +117,8 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     private final QueryPart part(Configuration context) {

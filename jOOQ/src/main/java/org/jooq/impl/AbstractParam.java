@@ -35,8 +35,11 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.FIELD;
+import static org.jooq.Clause.FIELD_VALUE;
 import static org.jooq.conf.ParamType.INLINED;
 
+import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.Param;
 import org.jooq.RenderContext;
@@ -51,7 +54,8 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 1311856649676227970L;
+    private static final long     serialVersionUID = 1311856649676227970L;
+    private static final Clause[] CLAUSES          = { FIELD, FIELD_VALUE };
 
     private final String      paramName;
     T                         value;
@@ -78,6 +82,15 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
      */
     private static String name(Object value, String paramName) {
         return paramName == null ? String.valueOf(value) : paramName;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     // ------------------------------------------------------------------------

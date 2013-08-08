@@ -56,11 +56,12 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -1540775270159018516L;
+    private static final long     serialVersionUID = -1540775270159018516L;
+    private static final Clause[] CLAUSES          = { INSERT };
 
-    private final Table<?>    into;
-    private final Field<?>[]  fields;
-    private final Select<?>   select;
+    private final Table<?>        into;
+    private final Field<?>[]      fields;
+    private final Select<?>       select;
 
     InsertSelectQueryImpl(Configuration configuration, Table<?> into, Field<?>[] fields, Select<?> select) {
         super(configuration);
@@ -98,7 +99,7 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     }
 
     @Override
-    public final Clause clause() {
-        return INSERT;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 }

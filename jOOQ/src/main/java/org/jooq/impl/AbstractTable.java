@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.TABLE;
 import static org.jooq.impl.DSL.table;
 import static org.jooq.impl.DSL.val;
 
@@ -44,6 +45,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.DivideByOnStep;
 import org.jooq.Field;
@@ -75,7 +77,8 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 3155496238969274871L;
+    private static final long     serialVersionUID = 3155496238969274871L;
+    private static final Clause[] CLAUSES          = { TABLE };
 
     private final Schema      schema;
     private final String      name;
@@ -89,6 +92,15 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
 
         this.schema = schema;
         this.name = name;
+    }
+
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public Clause[] clauses() {
+        return CLAUSES;
     }
 
     // ------------------------------------------------------------------------

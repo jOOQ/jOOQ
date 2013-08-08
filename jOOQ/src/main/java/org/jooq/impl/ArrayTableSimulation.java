@@ -129,8 +129,8 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     @Override

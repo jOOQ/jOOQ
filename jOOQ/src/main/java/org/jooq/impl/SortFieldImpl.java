@@ -166,7 +166,7 @@ class SortFieldImpl<T> extends AbstractQueryPart implements SortField<T> {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 }

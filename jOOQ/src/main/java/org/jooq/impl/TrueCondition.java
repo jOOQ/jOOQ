@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 
 import org.jooq.BindContext;
@@ -47,7 +48,8 @@ import org.jooq.RenderContext;
  */
 class TrueCondition extends AbstractCondition {
 
-    private static final long serialVersionUID = 775364624704563687L;
+    private static final long     serialVersionUID = 775364624704563687L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
     @Override
     public final void bind(BindContext context) {}
@@ -58,8 +60,8 @@ class TrueCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return CONDITION_COMPARISON;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     TrueCondition() {}

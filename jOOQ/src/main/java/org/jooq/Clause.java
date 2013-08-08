@@ -53,12 +53,14 @@ public enum Clause {
     // -------------------------------------------------------------------------
 
     CATALOG,
+    CATALOG_REFERENCE,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model schema references
     // -------------------------------------------------------------------------
 
     SCHEMA,
+    SCHEMA_REFERENCE,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model table references
@@ -79,6 +81,9 @@ public enum Clause {
      * </ul>
      */
     TABLE,
+
+    TABLE_ALIAS,
+    TABLE_REFERENCE,
 
     /**
      *
@@ -104,6 +109,9 @@ public enum Clause {
     // -------------------------------------------------------------------------
 
     FIELD,
+    FIELD_ALIAS,
+    FIELD_REFERENCE,
+    FIELD_VALUE,
     FIELD_CASE,
     FIELD_ROW,
 
@@ -229,11 +237,70 @@ public enum Clause {
 
 
 
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an UPDATE statement
+    // -------------------------------------------------------------------------
+
+    /**
+     * A complete <code>UPDATE</code> statement.
+     */
     UPDATE,
+
+    /**
+     * An <code>UPDATE</code> clause within an {@link #UPDATE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>UPDATE</code> keyword</li>
+     * <li>the table that is being updated</li>
+     * </ul>
+     */
     UPDATE_UPDATE,
+
+    /**
+     * A <code>SET</code> clause within an {@link #UPDATE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>SET</code> keyword</li>
+     * <li>one or several assignments: {@link #UPDATE_SET_ASSIGNMENT}</li>
+     * </ul>
+     */
     UPDATE_SET,
+
+    /**
+     * An assigment within a {@link #UPDATE_SET} clause within an
+     * {@link #UPDATE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>a column</li>
+     * <li>an assigment operator</li>
+     * <li>a value being assigned</li>
+     * </ul>
+     */
     UPDATE_SET_ASSIGNMENT,
+
+    /**
+     * A <code>WHERE</code> clause within an {@link #UPDATE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
     UPDATE_WHERE,
+
+    /**
+     * A <code>RETURNING</code> clause within an {@link #UPDATE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RETURNING</code> keyword</li>
+     * <li>several {@link #FIELD} "clauses"</li>
+     * </ul>
+     */
     UPDATE_RETURNING,
 
 

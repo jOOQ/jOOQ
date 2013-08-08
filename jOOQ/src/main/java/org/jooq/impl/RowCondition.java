@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Clause.DUMMY;
 import static org.jooq.Comparator.EQUALS;
@@ -79,11 +80,12 @@ class RowCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -1806139685201770706L;
+    private static final long     serialVersionUID = -1806139685201770706L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    private final Row         left;
-    private final Row         right;
-    private final Comparator  comparator;
+    private final Row             left;
+    private final Row             right;
+    private final Comparator      comparator;
 
     RowCondition(Row left, Row right, Comparator comparator) {
         this.left = left;
@@ -102,8 +104,8 @@ class RowCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -216,8 +218,8 @@ class RowCondition extends AbstractCondition {
         }
 
         @Override
-        public final Clause clause() {
-            return CONDITION_COMPARISON;
+        public final Clause[] clauses() {
+            return CLAUSES;
         }
     }
 }

@@ -36,6 +36,8 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.FIELD;
+import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.impl.DSL.row;
 
 import java.util.Arrays;
@@ -160,9 +162,10 @@ implements
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -929427349071556318L;
+    private static final long     serialVersionUID = -929427349071556318L;
+    private static final Clause[] CLAUSES          = { FIELD, FIELD_ROW };
 
-    final Fields              fields;
+    final Fields                  fields;
 
     RowImpl(Field<?>... fields) {
         this(new Fields(fields));
@@ -203,8 +206,8 @@ implements
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     // ------------------------------------------------------------------------

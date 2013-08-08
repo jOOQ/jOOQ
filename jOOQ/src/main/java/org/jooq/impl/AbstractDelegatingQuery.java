@@ -98,9 +98,9 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     }
 
     @Override
-    public final Clause clause() {
+    public final Clause[] clauses() {
         if (delegate instanceof QueryPartInternal) {
-            return ((QueryPartInternal) delegate).clause();
+            return ((QueryPartInternal) delegate).clauses();
         }
 
         return null;

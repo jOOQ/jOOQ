@@ -70,19 +70,20 @@ public interface QueryPartInternal extends QueryPart {
     void bind(BindContext ctx) throws DataAccessException;
 
     /**
-     * The {@link Clause} that is represented by this query part.
+     * The {@link Clause}s that are represented by this query part.
      * <p>
-     * {@link QueryPart}s can specify a <code>Clause</code> for which an event
-     * will be emitted {@link Context#start(Clause) before} and
-     * {@link Context#end(Clause) after} visiting the the query part through
-     * {@link Context#visit(QueryPart)}
+     * {@link QueryPart}s can specify several <code>Clause</code>s for which an
+     * event will be emitted {@link Context#start(Clause) before} (in forward
+     * order) and {@link Context#end(Clause) after} (in reverse order) visiting
+     * the the query part through {@link Context#visit(QueryPart)}
      * <p>
      * This method is for JOOQ INTERNAL USE only. Do not reference directly
      *
-     * @return The <code>Clause</code> represented by this query part or
-     *         <code>null</code> if this query part does not represent a clause.
+     * @return The <code>Clause</code>s represented by this query part or
+     *         <code>null</code> or an empty array if this query part does not
+     *         represent a clause.
      */
-    Clause clause();
+    Clause[] clauses();
 
     /**
      * Check whether this {@link QueryPart} is able to declare fields in a

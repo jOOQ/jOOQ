@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Comparator.LIKE;
 import static org.jooq.Comparator.LIKE_IGNORE_CASE;
@@ -59,12 +60,13 @@ import org.jooq.SQLDialect;
  */
 class CompareCondition extends AbstractCondition {
 
-    private static final long serialVersionUID = -747240442279619486L;
+    private static final long     serialVersionUID = -747240442279619486L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    private final Field<?>    field1;
-    private final Field<?>    field2;
-    private final Comparator  comparator;
-    private final Character   escape;
+    private final Field<?>        field1;
+    private final Field<?>        field2;
+    private final Comparator      comparator;
+    private final Character       escape;
 
     CompareCondition(Field<?> field1, Field<?> field2, Comparator comparator) {
         this(field1, field2, comparator, null);
@@ -131,7 +133,7 @@ class CompareCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return CONDITION_COMPARISON;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 }

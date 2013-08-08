@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Operator.AND;
@@ -58,6 +59,8 @@ import org.jooq.RenderContext;
 class CombinedCondition extends AbstractCondition {
 
     private static final long     serialVersionUID = -7373293246207052549L;
+    private static final Clause[] CLAUSES_AND      = { CONDITION, CONDITION_AND };
+    private static final Clause[] CLAUSES_OR       = { CONDITION, CONDITION_OR };
 
     private final Operator        operator;
     private final List<Condition> conditions;
@@ -99,8 +102,8 @@ class CombinedCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return operator == AND ? CONDITION_AND : CONDITION_OR;
+    public final Clause[] clauses() {
+        return operator == AND ? CLAUSES_AND : CLAUSES_OR;
     }
 
     @Override

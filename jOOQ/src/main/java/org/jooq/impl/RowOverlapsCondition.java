@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_OVERLAPS;
 import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.ASE;
@@ -69,10 +70,11 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long  serialVersionUID = 85887551884667824L;
+    private static final long     serialVersionUID = 85887551884667824L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_OVERLAPS };
 
-    private final Row2<T1, T2> left;
-    private final Row2<T1, T2> right;
+    private final Row2<T1, T2>    left;
+    private final Row2<T1, T2>    right;
 
     RowOverlapsCondition(Row2<T1, T2> left, Row2<T1, T2> right) {
         this.left = left;
@@ -90,8 +92,8 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -162,8 +164,8 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         }
 
         @Override
-        public final Clause clause() {
-            return CONDITION_OVERLAPS;
+        public final Clause[] clauses() {
+            return CLAUSES;
         }
     }
 }

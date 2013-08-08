@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.SCHEMA;
+import static org.jooq.Clause.SCHEMA_REFERENCE;
 
 import java.util.Collections;
 import java.util.List;
@@ -59,8 +60,10 @@ import org.jooq.tools.StringUtils;
  */
 public class SchemaImpl extends AbstractQueryPart implements Schema {
 
-    private static final long serialVersionUID = -8101463810207566546L;
-    private final String      schemaName;
+    private static final long     serialVersionUID = -8101463810207566546L;
+    private static final Clause[] CLAUSES          = { SCHEMA, SCHEMA_REFERENCE };
+
+    private final String          schemaName;
 
     public SchemaImpl(String name) {
         super();
@@ -82,8 +85,8 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     public final void bind(BindContext context) {}
 
     @Override
-    public final Clause clause() {
-        return SCHEMA;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     @Override

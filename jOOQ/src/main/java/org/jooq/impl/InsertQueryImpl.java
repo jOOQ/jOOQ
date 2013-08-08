@@ -38,7 +38,6 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.INSERT;
-import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
@@ -65,12 +64,13 @@ import org.jooq.exception.SQLDialectNotSupportedException;
  */
 class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements InsertQuery<R> {
 
-    private static final long             serialVersionUID = 4466005417945353842L;
+    private static final long        serialVersionUID = 4466005417945353842L;
+    private static final Clause[]    CLAUSES          = { INSERT };
 
-    private final FieldMapForUpdate       updateMap;
-    private final FieldMapsForInsert      insertMaps;
-    private boolean                       onDuplicateKeyUpdate;
-    private boolean                       onDuplicateKeyIgnore;
+    private final FieldMapForUpdate  updateMap;
+    private final FieldMapsForInsert insertMaps;
+    private boolean                  onDuplicateKeyUpdate;
+    private boolean                  onDuplicateKeyIgnore;
 
     InsertQueryImpl(Configuration configuration, Table<R> into) {
         super(configuration, into);
@@ -317,8 +317,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final Clause clause() {
-        return INSERT;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     private final void toSQLInsert(RenderContext context) {
@@ -332,7 +332,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .sql(" ")
                .visit(insertMaps);
 
-        toSQLReturning(context, INSERT_RETURNING);
+        toSQLReturning(context);
     }
 
     private final void bindInsert(BindContext context) {

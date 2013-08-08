@@ -138,6 +138,7 @@ public enum Clause {
      */
     CONDITION_IS_NOT_NULL,
 
+
     // TODO: Should operators be distinguished?
     // - LIKE predicate
     // - Subselect predicates

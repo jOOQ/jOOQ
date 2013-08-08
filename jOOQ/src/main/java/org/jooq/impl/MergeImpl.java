@@ -198,6 +198,7 @@ implements
      * Generated UID
      */
     private static final long           serialVersionUID = -8835479296876774391L;
+    private static final Clause[]       CLAUSES          = { MERGE };
 
     private final Table<R>              table;
     private final ConditionProviderImpl on;
@@ -1199,7 +1200,7 @@ implements
     }
 
     @Override
-    public final Clause clause() {
-        return MERGE;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 }

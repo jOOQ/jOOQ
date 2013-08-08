@@ -148,8 +148,8 @@ implements
         }
 
         @Override
-        public final Clause clause() {
-            return DUMMY;
+        public final Clause[] clauses() {
+            return new Clause[] { DUMMY };
         }
 
         private Table<Record> select(Configuration configuration) {
@@ -270,8 +270,8 @@ implements
         }
 
         @Override
-        public final Clause clause() {
-            return DUMMY;
+        public final Clause[] clauses() {
+            return new Clause[] { DUMMY };
         }
     }
 
@@ -330,8 +330,8 @@ implements
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     @Override

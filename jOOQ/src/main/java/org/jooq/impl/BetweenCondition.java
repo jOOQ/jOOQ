@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
@@ -66,13 +67,14 @@ import org.jooq.RenderContext;
  */
 class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T> {
 
-    private static final long serialVersionUID = -4666251100802237878L;
+    private static final long     serialVersionUID = -4666251100802237878L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_BETWEEN };
 
-    private final boolean     symmetric;
-    private final boolean     not;
-    private final Field<T>    field;
-    private final Field<T>    minValue;
-    private Field<T>          maxValue;
+    private final boolean         symmetric;
+    private final boolean         not;
+    private final Field<T>        field;
+    private final Field<T>        minValue;
+    private Field<T>              maxValue;
 
     BetweenCondition(Field<T> field, Field<T> minValue, boolean not, boolean symmetric) {
         this.field = field;
@@ -109,8 +111,8 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
     }
 
     @Override
-    public final Clause clause() {
-        return CONDITION_BETWEEN;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -151,8 +153,8 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
         }
 
         @Override
-        public final Clause clause() {
-            return CONDITION_BETWEEN;
+        public final Clause[] clauses() {
+            return CLAUSES;
         }
     }
 }

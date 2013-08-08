@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.val;
@@ -56,11 +57,12 @@ class Contains<T> extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6146303086487338550L;
+    private static final long     serialVersionUID = 6146303086487338550L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    private final Field<T>    lhs;
-    private final Field<T>    rhs;
-    private final T           value;
+    private final Field<T>        lhs;
+    private final Field<T>        rhs;
+    private final T               value;
 
     Contains(Field<T> field, T value) {
         this.lhs = field;
@@ -85,8 +87,8 @@ class Contains<T> extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return CONDITION_COMPARISON;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     private final Condition condition() {
@@ -132,8 +134,8 @@ class Contains<T> extends AbstractCondition {
         }
 
         @Override
-        public final Clause clause() {
-            return CONDITION_COMPARISON;
+        public final Clause[] clauses() {
+            return CLAUSES;
         }
 
         private final Field<T> rhs() {

@@ -82,7 +82,7 @@ class SQLTemplate implements Template {
         }
 
         @Override
-        public final Clause clause() {
+        public final Clause[] clauses() {
             return null;
         }
     }

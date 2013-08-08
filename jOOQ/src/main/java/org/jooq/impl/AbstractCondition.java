@@ -35,12 +35,14 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 
 import java.util.Arrays;
 
+import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.Operator;
@@ -55,9 +57,15 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -6683692251799468624L;
+    private static final long     serialVersionUID = -6683692251799468624L;
+    private static final Clause[] CLAUSES          = { CONDITION };
 
     AbstractCondition() {}
+
+    @Override
+    public Clause[] clauses() {
+        return CLAUSES;
+    }
 
     @Override
     public final Condition and(Condition other) {

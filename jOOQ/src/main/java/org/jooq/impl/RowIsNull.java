@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_NULL;
 import static org.jooq.Clause.CONDITION_NULL_NOT;
 import static org.jooq.Clause.DUMMY;
@@ -73,10 +74,12 @@ class RowIsNull extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -1806139685201770706L;
+    private static final long     serialVersionUID = -1806139685201770706L;
+    private static final Clause[] CLAUSES_NULL     = { CONDITION, CONDITION_NULL };
+    private static final Clause[] CLAUSES_NULL_NOT = { CONDITION, CONDITION_NULL_NOT };
 
-    private final Row         row;
-    private final boolean     isNull;
+    private final Row             row;
+    private final boolean         isNull;
 
     RowIsNull(Row row, boolean isNull) {
         this.row = row;
@@ -94,8 +97,8 @@ class RowIsNull extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -136,8 +139,8 @@ class RowIsNull extends AbstractCondition {
         }
 
         @Override
-        public final Clause clause() {
-            return isNull ? CONDITION_NULL : CONDITION_NULL_NOT;
+        public final Clause[] clauses() {
+            return isNull ? CLAUSES_NULL : CLAUSES_NULL_NOT;
         }
     }
 }

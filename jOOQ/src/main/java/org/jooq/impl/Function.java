@@ -55,7 +55,6 @@ import java.util.Collection;
 
 import org.jooq.AggregateFunction;
 import org.jooq.BindContext;
-import org.jooq.Clause;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Name;
@@ -182,11 +181,6 @@ class Function<T> extends AbstractField<T> implements
     // -------------------------------------------------------------------------
     // XXX QueryPart API
     // -------------------------------------------------------------------------
-
-    @Override
-    public final Clause clause() {
-        return DUMMY;
-    }
 
     @Override
     public final void bind(BindContext context) {

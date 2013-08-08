@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_JOIN;
 import static org.jooq.Clause.TABLE_JOIN_CROSS;
 import static org.jooq.Clause.TABLE_JOIN_INNER;
@@ -101,6 +102,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
      * Generated UID
      */
     private static final long             serialVersionUID = 8377996833996498178L;
+    private static final Clause[]         CLAUSES          = { TABLE, TABLE_JOIN };
 
     private final Table<?>                lhs;
     private final Table<?>                rhs;
@@ -341,8 +343,8 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @Override
-    public final Clause clause() {
-        return TABLE_JOIN;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     @Override

@@ -64,6 +64,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
 
     private final List<Select<? extends R>> queries;
     private final CombineOperator           operator;
+    private final Clause[]                  clauses;
 
     Union(Configuration configuration, Select<R> query1, Select<? extends R> query2, CombineOperator operator) {
         super(configuration);
@@ -72,6 +73,14 @@ class Union<R extends Record> extends AbstractSelect<R> {
         this.queries.add(query1);
         this.queries.add(query2);
         this.operator = operator;
+
+        switch (operator) {
+            case EXCEPT:    this.clauses = new Clause[] { SELECT_EXCEPT }    ; break;
+            case INTERSECT: this.clauses = new Clause[] { SELECT_INTERSECT } ; break;
+            case UNION:     this.clauses = new Clause[] { SELECT_UNION }     ; break;
+            case UNION_ALL: this.clauses = new Clause[] { SELECT_UNION_ALL } ; break;
+            default:        throw new IllegalArgumentException("Operator not supported : " + operator);
+        }
     }
 
     @Override
@@ -134,14 +143,8 @@ class Union<R extends Record> extends AbstractSelect<R> {
     }
 
     @Override
-    public final Clause clause() {
-        switch (operator) {
-            case EXCEPT:    return SELECT_EXCEPT;
-            case INTERSECT: return SELECT_INTERSECT;
-            case UNION:     return SELECT_UNION;
-            case UNION_ALL: return SELECT_UNION_ALL;
-            default:        throw new IllegalArgumentException("Operator not supported : " + operator);
-        }
+    public final Clause[] clauses() {
+        return clauses;
     }
 
     @Override

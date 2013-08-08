@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_BETWEEN;
 import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.ASE;
@@ -166,13 +167,14 @@ implements
     BetweenAndStep22<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22>,
     BetweenAndStepN {
 
-    private static final long serialVersionUID = -4666251100802237878L;
+    private static final long     serialVersionUID = -4666251100802237878L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_BETWEEN };
 
-    private final boolean     symmetric;
-    private final boolean     not;
-    private final Row         row;
-    private final Row         minValue;
-    private Row               maxValue;
+    private final boolean         symmetric;
+    private final boolean         not;
+    private final Row             row;
+    private final Row             minValue;
+    private Row                   maxValue;
 
     RowBetweenCondition(Row row, Row minValue, boolean not, boolean symmetric) {
         this.row = row;
@@ -689,8 +691,8 @@ implements
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -755,8 +757,8 @@ implements
         }
 
         @Override
-        public final Clause clause() {
-            return CONDITION_BETWEEN;
+        public final Clause[] clauses() {
+            return CLAUSES;
         }
     }
 }

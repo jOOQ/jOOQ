@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_NULL;
 import static org.jooq.Clause.CONDITION_NULL_NOT;
 
@@ -49,10 +50,12 @@ import org.jooq.RenderContext;
  */
 class IsNull extends AbstractCondition {
 
-    private static final long serialVersionUID = -747240442279619486L;
+    private static final long     serialVersionUID = -747240442279619486L;
+    private static final Clause[] CLAUSES_NULL     = { CONDITION, CONDITION_NULL };
+    private static final Clause[] CLAUSES_NULL_NOT = { CONDITION, CONDITION_NULL_NOT };
 
-    private final Field<?>    field;
-    private final boolean     isNull;
+    private final Field<?>        field;
+    private final boolean         isNull;
 
     IsNull(Field<?> field, boolean isNull) {
         this.field = field;
@@ -70,7 +73,7 @@ class IsNull extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return isNull ? CONDITION_NULL : CONDITION_NULL_NOT;
+    public final Clause[] clauses() {
+        return isNull ? CLAUSES_NULL : CLAUSES_NULL_NOT;
     }
 }

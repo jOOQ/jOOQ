@@ -140,8 +140,8 @@ class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     // -------------------------------------------------------------------------

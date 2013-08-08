@@ -37,6 +37,8 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.FIELD;
+import static org.jooq.Clause.FIELD_REFERENCE;
+import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -54,7 +56,8 @@ import org.jooq.tools.StringUtils;
  */
 class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements TableField<R, T> {
 
-    private static final long serialVersionUID = -2211214195583539735L;
+    private static final long     serialVersionUID = -2211214195583539735L;
+    private static final Clause[] CLAUSES          = { FIELD, FIELD_REFERENCE };
 
     private final Table<R>    table;
 
@@ -69,23 +72,30 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
         return table;
     }
 
+    // ------------------------------------------------------------------------
+    // XXX: QueryPart API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final Clause[] clauses() {
+        return CLAUSES;
+    }
+
     @Override
     public final void toSQL(RenderContext context) {
+        context.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, true);
+
         if (context.qualify()) {
             context.visit(table);
             context.sql(".");
         }
 
         context.literal(getName());
+        context.data(DATA_OMIT_CLAUSE_EVENT_EMISSION, null);
     }
 
     @Override
     public final void bind(BindContext context) {}
-
-    @Override
-    public final Clause clause() {
-        return FIELD;
-    }
 
     // ------------------------------------------------------------------------
     // XXX: Object API

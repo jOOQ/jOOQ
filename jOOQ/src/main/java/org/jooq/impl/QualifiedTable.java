@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE;
+import static org.jooq.Clause.TABLE_REFERENCE;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -54,7 +55,8 @@ class QualifiedTable extends AbstractTable<Record> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 6937002867156868761L;
+    private static final long     serialVersionUID = 6937002867156868761L;
+    private static final Clause[] CLAUSES          = { TABLE, TABLE_REFERENCE };
 
     private final String[]    sql;
 
@@ -83,8 +85,8 @@ class QualifiedTable extends AbstractTable<Record> {
     public final void bind(BindContext context) {}
 
     @Override
-    public final Clause clause() {
-        return TABLE;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     @Override

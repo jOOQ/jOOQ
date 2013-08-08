@@ -45,7 +45,6 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Param;
 import org.jooq.Query;
-import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.conf.ParamType;
 
@@ -100,10 +99,8 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        if (delegate instanceof QueryPartInternal) {
-            return ((QueryPartInternal) delegate).clauses(null);
-        }
 
+        // Delegate queries don't emit clauses themselves.
         return null;
     }
 

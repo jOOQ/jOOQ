@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -88,18 +87,18 @@ class IsDistinctFrom<T> extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        delegate(context.configuration()).toSQL(context);
+    public final void toSQL(RenderContext ctx) {
+        delegate(ctx.configuration()).toSQL(ctx);
     }
 
     @Override
-    public final void bind(BindContext context) {
-        delegate(context.configuration()).bind(context);
+    public final void bind(BindContext ctx) {
+        delegate(ctx.configuration()).bind(ctx);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return delegate(ctx.configuration()).clauses(ctx);
     }
 
     /**

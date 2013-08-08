@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
@@ -108,7 +109,7 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
      * {@inheritDoc}
      */
     @Override
-    public Clause[] clauses() {
+    public Clause[] clauses(Context<?> ctx) {
         return null;
     }
 

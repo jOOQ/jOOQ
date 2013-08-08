@@ -75,6 +75,7 @@ import java.util.List;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.JoinType;
@@ -343,7 +344,7 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

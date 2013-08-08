@@ -41,6 +41,7 @@ import static org.jooq.impl.Utils.visitAll;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Insert;
 import org.jooq.Record;
@@ -99,7 +100,7 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 }

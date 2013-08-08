@@ -60,6 +60,7 @@ import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
@@ -97,7 +98,7 @@ class RowIsNull extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 
@@ -139,7 +140,7 @@ class RowIsNull extends AbstractCondition {
         }
 
         @Override
-        public final Clause[] clauses() {
+        public final Clause[] clauses(Context<?> ctx) {
             return isNull ? CLAUSES_NULL : CLAUSES_NULL_NOT;
         }
     }

@@ -39,6 +39,7 @@ import static org.jooq.Clause.DUMMY;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -130,7 +131,7 @@ class RegexpLike extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 }

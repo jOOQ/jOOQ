@@ -44,6 +44,7 @@ import java.util.Arrays;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
@@ -63,7 +64,7 @@ abstract class AbstractCondition extends AbstractQueryPart implements Condition 
     AbstractCondition() {}
 
     @Override
-    public Clause[] clauses() {
+    public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

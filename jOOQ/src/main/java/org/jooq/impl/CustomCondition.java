@@ -38,6 +38,7 @@ package org.jooq.impl;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
+import org.jooq.Context;
 import org.jooq.RenderContext;
 import org.jooq.exception.DataAccessException;
 
@@ -97,7 +98,7 @@ public abstract class CustomCondition extends AbstractCondition {
      * {@inheritDoc}
      */
     @Override
-    public Clause[] clauses() {
+    public Clause[] clauses(Context<?> ctx) {
         return null;
     }
 

@@ -41,6 +41,7 @@ import static org.jooq.Clause.DUMMY;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Parameter;
 import org.jooq.RenderContext;
@@ -94,7 +95,7 @@ class ParameterImpl<T> extends AbstractQueryPart implements Parameter<T> {
     public final void bind(BindContext context) {}
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

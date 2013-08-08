@@ -61,6 +61,7 @@ import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DSLContext;
 import org.jooq.DataType;
 import org.jooq.ExecuteContext;
@@ -293,7 +294,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

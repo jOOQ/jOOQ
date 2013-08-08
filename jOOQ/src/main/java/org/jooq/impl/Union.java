@@ -47,6 +47,7 @@ import java.util.List;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -143,7 +144,7 @@ class Union<R extends Record> extends AbstractSelect<R> {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return clauses;
     }
 

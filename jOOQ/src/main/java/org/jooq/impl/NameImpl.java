@@ -41,6 +41,7 @@ import java.util.Arrays;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.RenderContext;
 
@@ -76,7 +77,7 @@ class NameImpl extends AbstractQueryPart implements Name {
     public final void bind(BindContext context) {}
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

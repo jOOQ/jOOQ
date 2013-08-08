@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.DivideByOnStep;
 import org.jooq.Field;
@@ -99,7 +100,7 @@ abstract class AbstractTable<R extends Record> extends AbstractQueryPart impleme
     // ------------------------------------------------------------------------
 
     @Override
-    public Clause[] clauses() {
+    public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

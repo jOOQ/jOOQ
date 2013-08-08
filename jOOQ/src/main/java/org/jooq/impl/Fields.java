@@ -42,6 +42,7 @@ import java.util.Collection;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -258,7 +259,7 @@ class Fields<R extends Record> extends AbstractQueryPart implements RecordType<R
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

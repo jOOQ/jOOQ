@@ -41,6 +41,7 @@ import static org.jooq.Clause.CONDITION_NOT;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
+import org.jooq.Context;
 import org.jooq.RenderContext;
 
 class NotCondition extends AbstractCondition {
@@ -65,7 +66,7 @@ class NotCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 }

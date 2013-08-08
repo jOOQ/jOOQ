@@ -45,6 +45,7 @@ import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.ConditionProvider;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPart;
@@ -123,7 +124,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
 

@@ -56,6 +56,7 @@ import static org.jooq.SQLDialect.SYBASE;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.QueryPartInternal;
@@ -92,7 +93,7 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 
@@ -164,7 +165,7 @@ class RowOverlapsCondition<T1, T2> extends AbstractCondition {
         }
 
         @Override
-        public final Clause[] clauses() {
+        public final Clause[] clauses(Context<?> ctx) {
             return CLAUSES;
         }
     }

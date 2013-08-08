@@ -60,6 +60,7 @@ import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
@@ -98,7 +99,7 @@ class RowInCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 
@@ -146,7 +147,7 @@ class RowInCondition extends AbstractCondition {
         }
 
         @Override
-        public final Clause[] clauses() {
+        public final Clause[] clauses(Context<?> ctx) {
             return comparator == IN ? CLAUSES_IN : CLAUSES_IN_NOT;
         }
     }

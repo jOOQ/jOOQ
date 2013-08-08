@@ -56,6 +56,7 @@ import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.Record;
@@ -555,7 +556,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

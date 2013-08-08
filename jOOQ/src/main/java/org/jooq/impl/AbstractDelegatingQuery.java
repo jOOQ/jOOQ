@@ -42,6 +42,7 @@ import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Param;
 import org.jooq.Query;
 import org.jooq.QueryPartInternal;
@@ -98,9 +99,9 @@ abstract class AbstractDelegatingQuery<Q extends Query> extends AbstractQueryPar
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         if (delegate instanceof QueryPartInternal) {
-            return ((QueryPartInternal) delegate).clauses();
+            return ((QueryPartInternal) delegate).clauses(null);
         }
 
         return null;

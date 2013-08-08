@@ -45,6 +45,8 @@ import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
 import static org.jooq.Clause.CONDITION_IS_NULL;
+import static org.jooq.Clause.CONDITION_NOT_BETWEEN;
+import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
@@ -377,7 +379,7 @@ public class VisitContextTest extends AbstractTest {
 
     @Test
     public void test_CONDITION_BETWEEN() {
-        ctx.render(FIELD_ID1.between(1, 2));
+        ctx.render(FIELD_ID1.between(1).and(2));
 
         assertEvents(asList(
             asList(CONDITION),
@@ -392,8 +394,27 @@ public class VisitContextTest extends AbstractTest {
     }
 
     @Test
+    public void test_CONDITION_NOT_BETWEEN() {
+        ctx.render(FIELD_ID1.notBetween(1, 2));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_NOT_BETWEEN),
+            asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD, FIELD_VALUE)
+        ));
+    }
+
+    @Test
     public void test_CONDITION_BETWEEN_SYMMETRIC() {
-        ctx.render(FIELD_ID1.betweenSymmetric(1, 2));
+
+        // Use Postgres for its native SYMMETRIC support
+        ctx.configuration().set(POSTGRES);
+        ctx.render(FIELD_ID1.betweenSymmetric(1).and(2));
 
         assertEvents(asList(
             asList(CONDITION),
@@ -404,6 +425,56 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE),
             asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD),
             asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_NOT_BETWEEN_SYMMETRIC() {
+
+        // Use Postgres for its native SYMMETRIC support
+        ctx.configuration().set(POSTGRES);
+        ctx.render(FIELD_ID1.notBetweenSymmetric(1, 2));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_NOT_BETWEEN_SYMMETRIC_rowValueExpressions() {
+
+        // Use Postgres for its native SYMMETRIC support
+        ctx.configuration().set(POSTGRES);
+        ctx.render(row(FIELD_ID1, FIELD_NAME1).notBetweenSymmetric(1, "a").and(2, "b"));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_VALUE)
         ));
     }
 

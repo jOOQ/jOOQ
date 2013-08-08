@@ -45,6 +45,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Record;
@@ -176,7 +177,7 @@ class ArrayTable extends AbstractTable<Record> {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 
@@ -304,7 +305,7 @@ class ArrayTable extends AbstractTable<Record> {
         }
 
         @Override
-        public final Clause[] clauses() {
+        public final Clause[] clauses(Context<?> ctx) {
             return new Clause[] { DUMMY };
         }
 

@@ -302,6 +302,7 @@ public class VisitContextTest extends AbstractTest {
         }
     }
 
+
     private static class SimpleListener implements VisitListener {
 
         List<List<Clause>> clauses = new ArrayList<List<Clause>>();

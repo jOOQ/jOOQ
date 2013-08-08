@@ -121,8 +121,8 @@ public enum Clause {
 
     CONDITION,
 
-    CONDITION_NULL,
-    CONDITION_NULL_NOT,
+    CONDITION_IS_NULL,
+    CONDITION_IS_NOT_NULL,
     // TODO: Should operators be distinguished?
     // - LIKE predicate
     // - Subselect predicates
@@ -130,8 +130,11 @@ public enum Clause {
     // - Quantified predicates
     CONDITION_COMPARISON,
     CONDITION_BETWEEN,
-    CONDITION_DISTINCT,
-    CONDITION_DISTINCT_NOT,
+    CONDITION_BETWEEN_SYMMETRIC,
+    CONDITION_NOT_BETWEEN,
+    CONDITION_NOT_BETWEEN_SYMMETRIC,
+    CONDITION_IS_DISTINCT,
+    CONDITION_IS_NOT_DISTINCT,
     CONDITION_OVERLAPS,
 
     CONDITION_AND,
@@ -139,9 +142,9 @@ public enum Clause {
     CONDITION_NOT,
 
     CONDITION_IN,
-    CONDITION_IN_NOT,
+    CONDITION_NOT_IN,
     CONDITION_EXISTS,
-    CONDITION_EXISTS_NOT,
+    CONDITION_NOT_EXISTS,
 
     // -------------------------------------------------------------------------
     // Clauses that are used in a SELECT statement

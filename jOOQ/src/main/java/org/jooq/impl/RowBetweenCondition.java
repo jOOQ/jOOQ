@@ -736,19 +736,13 @@ implements
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.visit(row)
-                   .sql(not ? " " : "")
-                   .keyword(not ? "not" : "")
-                   .sql(" ")
-                   .keyword("between")
-                   .sql(" ")
-                   .keyword(symmetric ? "symmetric" : "")
-                   .sql(symmetric ? " " : "")
-                   .visit(minValue)
-                   .sql(" ")
-                   .keyword("and")
-                   .sql(" ")
-                   .visit(maxValue);
+                           context.visit(row);
+            if (not)       context.sql(" ").keyword("not");
+                           context.sql(" ").keyword("between");
+            if (symmetric) context.sql(" ").keyword("symmetric");
+                           context.sql(" ").visit(minValue);
+                           context.sql(" ").keyword("and");
+                           context.sql(" ").visit(maxValue);
         }
 
         @Override

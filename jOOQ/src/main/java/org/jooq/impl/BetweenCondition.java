@@ -138,13 +138,13 @@ class BetweenCondition<T> extends AbstractCondition implements BetweenAndStep<T>
 
         @Override
         public final void toSQL(RenderContext context) {
-            context.visit(field)
-                   .keyword(not ? " not" : "")
-                   .keyword(" between ")
-                   .keyword(symmetric ? "symmetric " : "")
-                   .visit(minValue)
-                   .keyword(" and ")
-                   .visit(maxValue);
+                           context.visit(field);
+            if (not)       context.sql(" ").keyword("not");
+                           context.sql(" ").keyword("between");
+            if (symmetric) context.sql(" ").keyword("symmetric");
+                           context.sql(" ").visit(minValue);
+                           context.sql(" ").keyword("and");
+                           context.sql(" ").visit(maxValue);
         }
 
         @Override

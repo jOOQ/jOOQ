@@ -43,15 +43,27 @@ import static org.jooq.Clause.CONDITION_AND;
 import static org.jooq.Clause.CONDITION_BETWEEN;
 import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
 import static org.jooq.Clause.CONDITION_COMPARISON;
+import static org.jooq.Clause.CONDITION_EXISTS;
+import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
 import static org.jooq.Clause.CONDITION_IS_NULL;
 import static org.jooq.Clause.CONDITION_NOT_BETWEEN;
 import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
+import static org.jooq.Clause.CONDITION_NOT_EXISTS;
+import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.FIELD_VALUE;
+import static org.jooq.Clause.SELECT;
+import static org.jooq.Clause.SELECT_CONNECT_BY;
+import static org.jooq.Clause.SELECT_FROM;
+import static org.jooq.Clause.SELECT_GROUP_BY;
+import static org.jooq.Clause.SELECT_HAVING;
+import static org.jooq.Clause.SELECT_ORDER_BY;
+import static org.jooq.Clause.SELECT_SELECT;
+import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_REFERENCE;
@@ -62,8 +74,11 @@ import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
 import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultVisitListenerProvider.providers;
@@ -374,6 +389,86 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_IS_NOT_NULL),
             asList(CONDITION, CONDITION_IS_NOT_NULL, FIELD),
             asList(CONDITION, CONDITION_IS_NOT_NULL, FIELD, FIELD_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_IN() {
+        ctx.render(FIELD_ID1.in(1, 2));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_IN),
+            asList(CONDITION, CONDITION_IN, FIELD),
+            asList(CONDITION, CONDITION_IN, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_IN, FIELD),
+            asList(CONDITION, CONDITION_IN, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_IN, FIELD),
+            asList(CONDITION, CONDITION_IN, FIELD, FIELD_VALUE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_NOT_IN() {
+        ctx.render(FIELD_ID1.notIn(1, 2));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_NOT_IN),
+            asList(CONDITION, CONDITION_NOT_IN, FIELD),
+            asList(CONDITION, CONDITION_NOT_IN, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_NOT_IN, FIELD),
+            asList(CONDITION, CONDITION_NOT_IN, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_IN, FIELD),
+            asList(CONDITION, CONDITION_NOT_IN, FIELD, FIELD_VALUE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_EXISTS() {
+
+        // Omit "dual" with Postgres
+        ctx.configuration().set(POSTGRES);
+        ctx.render(exists(selectOne()));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_EXISTS),
+            asList(CONDITION, CONDITION_EXISTS, SELECT),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_SELECT),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_SELECT, FIELD),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_FROM),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_WHERE),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_START_WITH),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_CONNECT_BY),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_GROUP_BY),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_HAVING),
+            asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_ORDER_BY)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_NOT_EXISTS() {
+
+        // Omit "dual" with Postgres
+        ctx.configuration().set(POSTGRES);
+        ctx.render(notExists(selectOne()));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_NOT_EXISTS),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_SELECT),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_SELECT, FIELD),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_FROM),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_WHERE),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_START_WITH),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_CONNECT_BY),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_GROUP_BY),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_HAVING),
+            asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_ORDER_BY)
         ));
     }
 

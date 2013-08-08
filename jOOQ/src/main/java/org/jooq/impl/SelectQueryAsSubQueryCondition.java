@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
 
 import org.jooq.BindContext;
@@ -50,11 +51,12 @@ import org.jooq.Select;
  */
 class SelectQueryAsSubQueryCondition extends AbstractCondition {
 
-    private static final long serialVersionUID = -402776705884329740L;
+    private static final long     serialVersionUID = -402776705884329740L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    private final Select<?>   query;
-    private final Field<?>    field;
-    private final Comparator  comparator;
+    private final Select<?>       query;
+    private final Field<?>        field;
+    private final Comparator      comparator;
 
     SelectQueryAsSubQueryCondition(Select<?> query, Field<?> field, Comparator comparator) {
         this.query = query;
@@ -110,7 +112,7 @@ class SelectQueryAsSubQueryCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return CONDITION_COMPARISON;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 }

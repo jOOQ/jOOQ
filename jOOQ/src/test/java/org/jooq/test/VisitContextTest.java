@@ -35,20 +35,48 @@
  */
 package org.jooq.test;
 
+import static java.util.Arrays.asList;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+import static org.jooq.Clause.CONDITION;
+import static org.jooq.Clause.CONDITION_COMPARISON;
+import static org.jooq.Clause.FIELD;
+import static org.jooq.Clause.FIELD_REFERENCE;
+import static org.jooq.Clause.FIELD_ROW;
+import static org.jooq.Clause.FIELD_VALUE;
 import static org.jooq.Clause.SELECT_WHERE;
+import static org.jooq.Clause.TABLE;
+import static org.jooq.Clause.TABLE_REFERENCE;
+import static org.jooq.Clause.UPDATE;
+import static org.jooq.Clause.UPDATE_RETURNING;
+import static org.jooq.Clause.UPDATE_SET;
+import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
+import static org.jooq.Clause.UPDATE_UPDATE;
+import static org.jooq.Clause.UPDATE_WHERE;
+import static org.jooq.SQLDialect.POSTGRES;
+import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.using;
+import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DefaultVisitListenerProvider.providers;
+import static org.jooq.test.data.Table1.FIELD_DATE1;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
 import static org.jooq.tools.StringUtils.leftPad;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.DSLContext;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
+import org.jooq.impl.DSL;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -56,7 +84,25 @@ import org.junit.Test;
  *
  * @author Lukas Eder
  */
+@SuppressWarnings("unchecked")
 public class VisitContextTest extends AbstractTest {
+
+    private DSLContext ctx;
+    private SimpleListener listener;
+
+    @Before
+    public void setup() {
+        listener = new SimpleListener();
+        ctx = DSL.using(
+            create.configuration().derive(providers(listener)));
+    }
+
+    @After
+    public void teardown() {
+        ctx = null;
+        listener = null;
+    }
+
 
     @Test
     public void testClauses() {
@@ -129,5 +175,150 @@ public class VisitContextTest extends AbstractTest {
         @Override
         public void visitEnd(VisitContext context) {
         }
+    }
+
+    @Test
+    public void test_UPDATE_SET_simple() {
+        ctx.update(TABLE1)
+           .set(FIELD_NAME1, "value")
+           .getSQL();
+
+        assertEvents(asList(
+            asList(UPDATE),
+            asList(UPDATE, UPDATE_UPDATE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE, TABLE_REFERENCE),
+            asList(UPDATE, UPDATE_SET),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_WHERE),
+            asList(UPDATE, UPDATE_RETURNING)
+        ));
+    }
+
+    @Test
+    public void test_UPDATE_SET_twoValues() {
+        ctx.update(TABLE1)
+           .set(FIELD_NAME1, "value")
+           .set(FIELD_DATE1, FIELD_DATE1)
+           .getSQL();
+
+        assertEvents(asList(
+            asList(UPDATE),
+            asList(UPDATE, UPDATE_UPDATE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE, TABLE_REFERENCE),
+            asList(UPDATE, UPDATE_SET),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_WHERE),
+            asList(UPDATE, UPDATE_RETURNING)
+        ));
+    }
+
+    @Test
+    public void test_UPDATE_SET_rowValueExpressions() {
+
+        // Postgres is known to support this syntax particularly well
+        ctx.configuration().set(POSTGRES);
+
+        ctx.update(TABLE1)
+           .set(row(FIELD_NAME1,  FIELD_DATE1),
+                row(val("value"), FIELD_DATE1))
+           .getSQL();
+
+        assertEvents(asList(
+            asList(UPDATE),
+            asList(UPDATE, UPDATE_UPDATE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE, TABLE_REFERENCE),
+            asList(UPDATE, UPDATE_SET),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_WHERE),
+            asList(UPDATE, UPDATE_RETURNING)
+        ));
+    }
+
+    @Test
+    public void test_UPDATE_SET_WHERE() {
+        ctx.update(TABLE1)
+           .set(FIELD_NAME1, "value")
+           .where(FIELD_ID1.eq(1))
+           .getSQL();
+
+        assertEvents(asList(
+            asList(UPDATE),
+            asList(UPDATE, UPDATE_UPDATE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE, TABLE_REFERENCE),
+            asList(UPDATE, UPDATE_SET),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_WHERE),
+            asList(UPDATE, UPDATE_WHERE, CONDITION),
+            asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON),
+            asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_RETURNING)
+        ));
+    }
+
+    private void assertEvents(List<List<Clause>> expected) {
+        // This assertion is a bit more verbose to be able to detect errors more easily
+        for (int i = 0; i < expected.size() && i < listener.clauses.size(); i++) {
+            assertEquals("Mismatch at position " + i + ":", expected.get(i), listener.clauses.get(i));
+        }
+
+        if (expected.size() != listener.clauses.size()) {
+            fail("Size mismatch:\n\tExpected: " + expected + "\n\tActual: " + listener.clauses);
+        }
+    }
+
+    private static class SimpleListener implements VisitListener {
+
+        List<List<Clause>> clauses = new ArrayList<List<Clause>>();
+
+        @Override
+        public void clauseStart(VisitContext context) {
+            clauses.add(asList(context.clauses()));
+        }
+
+        @Override
+        public void clauseEnd(VisitContext context) {}
+
+        @Override
+        public void visitStart(VisitContext context) {}
+
+        @Override
+        public void visitEnd(VisitContext context) {}
+
     }
 }

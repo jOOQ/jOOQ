@@ -108,7 +108,7 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
      * {@inheritDoc}
      */
     @Override
-    public Clause clause() {
+    public Clause[] clauses() {
         return null;
     }
 

@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_IN_NOT;
 import static org.jooq.Clause.DUMMY;
@@ -73,6 +74,8 @@ class RowInCondition extends AbstractCondition {
      * Generated UID
      */
     private static final long                  serialVersionUID = -1806139685201770706L;
+    private static final Clause[]              CLAUSES_IN       = { CONDITION, CONDITION_IN };
+    private static final Clause[]              CLAUSES_IN_NOT   = { CONDITION, CONDITION_IN_NOT };
 
     private final Row                          left;
     private final QueryPartList<? extends Row> right;
@@ -95,8 +98,8 @@ class RowInCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -143,8 +146,8 @@ class RowInCondition extends AbstractCondition {
         }
 
         @Override
-        public final Clause clause() {
-            return comparator == IN ? CONDITION_IN : CONDITION_IN_NOT;
+        public final Clause[] clauses() {
+            return comparator == IN ? CLAUSES_IN : CLAUSES_IN_NOT;
         }
     }
 }

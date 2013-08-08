@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.DUMMY;
+import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -216,10 +217,11 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
     @Override
     public final C visit(QueryPart part) {
         if (part != null) {
-            Clause clause = visitListeners.length > 0 ? clause(part) : null;
+            Clause[] clauses = visitListeners.length > 0 ? clause(part) : null;
 
-            if (clause != null)
-                start(clause);
+            if (clauses != null)
+                for (int i = 0; i < clauses.length; i++)
+                    start(clauses[i]);
 
             start(part);
             QueryPartInternal internal = (QueryPartInternal) part;
@@ -247,8 +249,9 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
             }
 
             end(part);
-            if (clause != null)
-                end(clause);
+            if (clauses != null)
+                for (int i = clauses.length - 1; i >= 0; i--)
+                    end(clauses[i]);
         }
 
         return (C) this;
@@ -270,9 +273,9 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
      * {@link Context#visit(QueryPart)} event has to be issued here in
      * <code>AbstractContext</code>.
      */
-    private final Clause clause(QueryPart part) {
-        if (part instanceof QueryPartInternal) {
-            return ((QueryPartInternal) part).clause();
+    private final Clause[] clause(QueryPart part) {
+        if (part instanceof QueryPartInternal && data(DATA_OMIT_CLAUSE_EVENT_EMISSION) == null) {
+            return ((QueryPartInternal) part).clauses();
         }
 
         return null;

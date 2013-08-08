@@ -176,8 +176,8 @@ class ArrayTable extends AbstractTable<Record> {
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     private final Table<Record> table(Configuration configuration) {
@@ -304,8 +304,8 @@ class ArrayTable extends AbstractTable<Record> {
         }
 
         @Override
-        public final Clause clause() {
-            return DUMMY;
+        public final Clause[] clauses() {
+            return new Clause[] { DUMMY };
         }
 
         @Override

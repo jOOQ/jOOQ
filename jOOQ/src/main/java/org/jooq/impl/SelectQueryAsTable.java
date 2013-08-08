@@ -115,7 +115,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Clause clause() {
+    public final Clause[] clauses() {
         return null;
     }
 }

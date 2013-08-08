@@ -97,7 +97,7 @@ public abstract class CustomCondition extends AbstractCondition {
      * {@inheritDoc}
      */
     @Override
-    public Clause clause() {
+    public Clause[] clauses() {
         return null;
     }
 

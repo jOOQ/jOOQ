@@ -37,7 +37,8 @@
 package org.jooq.impl;
 
 
-import static org.jooq.Clause.CONDITION_COMPARISON;
+import static org.jooq.Clause.CONDITION;
+import static org.jooq.Clause.CONDITION_BETWEEN;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -52,6 +53,7 @@ import org.jooq.RenderContext;
 class QuantifiedComparisonCondition extends AbstractCondition {
 
     private static final long         serialVersionUID = -402776705884329740L;
+    private static final Clause[]     CLAUSES          = { CONDITION, CONDITION_BETWEEN };
 
     private final QuantifiedSelect<?> query;
     private final Field<?>            field;
@@ -78,7 +80,7 @@ class QuantifiedComparisonCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return CONDITION_COMPARISON;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 }

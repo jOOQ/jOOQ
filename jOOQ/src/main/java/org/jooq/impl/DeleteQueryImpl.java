@@ -59,6 +59,7 @@ import org.jooq.Table;
 class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQuery<R> {
 
     private static final long           serialVersionUID = -1943687511774150929L;
+    private static final Clause[]       CLAUSES          = { DELETE };
 
     private final Table<R>              table;
     private final ConditionProviderImpl condition;
@@ -135,7 +136,7 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     }
 
     @Override
-    public final Clause clause() {
-        return DELETE;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 }

@@ -293,8 +293,8 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
     }
 
     @Override
-    public final Clause clause() {
-        return DUMMY;
+    public final Clause[] clauses() {
+        return new Clause[] { DUMMY };
     }
 
     @Override

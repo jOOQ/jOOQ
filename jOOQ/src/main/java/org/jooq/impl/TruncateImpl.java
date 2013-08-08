@@ -59,7 +59,8 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 8904572826501186329L;
+    private static final long     serialVersionUID = 8904572826501186329L;
+    private static final Clause[] CLAUSES          = { TRUNCATE };
 
     private final Table<R>    table;
     private Boolean           cascade;
@@ -137,7 +138,7 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
     }
 
     @Override
-    public final Clause clause() {
-        return TRUNCATE;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 }

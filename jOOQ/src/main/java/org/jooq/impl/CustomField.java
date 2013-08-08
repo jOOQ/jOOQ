@@ -98,8 +98,8 @@ public abstract class CustomField<T> extends AbstractField<T> {
      * {@inheritDoc}
      */
     @Override
-    public Clause clause() {
-        return null;
+    public Clause[] clauses() {
+        return super.clauses();
     }
 
     // -------------------------------------------------------------------------

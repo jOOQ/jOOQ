@@ -50,7 +50,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.jooq.BindContext;
-import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
@@ -149,17 +148,15 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         return returned;
     }
 
-    final void toSQLReturning(RenderContext context, Clause clause) {
+    final void toSQLReturning(RenderContext context) {
         if (!returning.isEmpty()) {
             switch (context.configuration().dialect()) {
                 case FIREBIRD:
                 case POSTGRES:
                     context.formatSeparator()
-                           .start(clause)
                            .keyword("returning")
                            .sql(" ")
-                           .visit(returning)
-                           .end(clause);
+                           .visit(returning);
                     break;
 
                 default:

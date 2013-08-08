@@ -67,7 +67,7 @@ public class KeywordImpl extends AbstractQueryPart implements Keyword {
     public final void bind(BindContext ctx) {}
 
     @Override
-    public final Clause clause() {
+    public final Clause[] clauses() {
         return null;
     }
 }

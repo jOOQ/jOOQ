@@ -36,6 +36,7 @@
 
 package org.jooq.impl;
 
+import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_IN_NOT;
 import static org.jooq.Comparator.IN;
@@ -55,12 +56,14 @@ import org.jooq.RenderContext;
  */
 class InCondition<T> extends AbstractCondition {
 
-    private static final long serialVersionUID = -1653924248576930761L;
-    private static final int  IN_LIMIT         = 1000;
+    private static final long     serialVersionUID = -1653924248576930761L;
+    private static final int      IN_LIMIT         = 1000;
+    private static final Clause[] CLAUSES_IN       = { CONDITION, CONDITION_IN };
+    private static final Clause[] CLAUSES_IN_NOT   = { CONDITION, CONDITION_IN_NOT };
 
-    private final Field<T>    field;
-    private final Field<?>[]  values;
-    private final Comparator  comparator;
+    private final Field<T>        field;
+    private final Field<?>[]      values;
+    private final Comparator      comparator;
 
     InCondition(Field<T> field, Field<?>[] values, Comparator comparator) {
         this.field = field;
@@ -69,8 +72,8 @@ class InCondition<T> extends AbstractCondition {
     }
 
     @Override
-    public final Clause clause() {
-        return comparator == IN ? CONDITION_IN : CONDITION_IN_NOT;
+    public final Clause[] clauses() {
+        return comparator == IN ? CLAUSES_IN : CLAUSES_IN_NOT;
     }
 
     @Override

@@ -115,6 +115,7 @@ import org.jooq.UpdateQuery;
 class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements UpdateQuery<R> {
 
     private static final long           serialVersionUID = -660460731970074719L;
+    private static final Clause[]       CLAUSES          = { UPDATE };
 
     private final FieldMapForUpdate     updateMap;
     private final ConditionProviderImpl condition;
@@ -509,17 +510,21 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                    .formatIndentLockEnd();
         }
 
-        context.end(UPDATE_SET);
+        context.end(UPDATE_SET)
+               .start(UPDATE_WHERE);
 
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .start(UPDATE_WHERE)
                    .keyword("where ")
-                   .visit(getWhere())
-                   .end(UPDATE_WHERE);
+                   .visit(getWhere());
         }
 
-        toSQLReturning(context, UPDATE_RETURNING);
+        context.end(UPDATE_WHERE)
+               .start(UPDATE_RETURNING);
+
+        toSQLReturning(context);
+
+        context.end(UPDATE_RETURNING);
     }
 
     @Override
@@ -550,8 +555,8 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     @Override
-    public final Clause clause() {
-        return UPDATE;
+    public final Clause[] clauses() {
+        return CLAUSES;
     }
 
     @Override

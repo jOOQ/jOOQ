@@ -38,6 +38,7 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.INSERT;
+import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
@@ -76,7 +77,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     InsertQueryImpl(Configuration configuration, Table<R> into) {
         super(configuration, into);
 
-        updateMap = new FieldMapForUpdate();
+        updateMap = new FieldMapForUpdate(INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
         insertMaps = new FieldMapsForInsert();
     }
 
@@ -149,7 +150,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case MYSQL: {
                     toSQLInsert(context);
                     context.formatSeparator()
-                           .keyword("on duplicate key update ")
+                           .keyword("on duplicate key update")
+                           .sql(" ")
                            .visit(updateMap);
 
                     break;
@@ -191,13 +193,14 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                 // CUBRID can simulate this using ON DUPLICATE KEY UPDATE
                 case CUBRID: {
-                    FieldMapForUpdate update = new FieldMapForUpdate();
+                    FieldMapForUpdate update = new FieldMapForUpdate(INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT);
                     Field<?> field = getInto().field(0);
                     update.put(field, field);
 
                     toSQLInsert(context);
                     context.formatSeparator()
-                           .keyword("on duplicate key update ")
+                           .keyword("on duplicate key update")
+                           .sql(" ")
                            .visit(update);
 
                     break;

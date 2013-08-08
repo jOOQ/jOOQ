@@ -49,6 +49,13 @@ public enum Clause {
     DUMMY,
 
     // -------------------------------------------------------------------------
+    // Clauses used in a any type of statement to model package references
+    // -------------------------------------------------------------------------
+
+    PACKAGE,
+    PACKAGE_REFERENCE,
+
+    // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model catalog references
     // -------------------------------------------------------------------------
 
@@ -67,9 +74,9 @@ public enum Clause {
     // -------------------------------------------------------------------------
 
     /**
-     * A complete table reference.
+     * A table expression.
      * <p>
-     * This clause surrounds a complete table reference as it can be encountered
+     * This clause surrounds an actual table expression as it can be encountered
      * in
      * <ul>
      * <li> {@link #SELECT_FROM}</li>
@@ -84,10 +91,6 @@ public enum Clause {
 
     TABLE_ALIAS,
     TABLE_REFERENCE,
-
-    /**
-     *
-     */
     TABLE_JOIN,
     TABLE_JOIN_INNER,
     TABLE_JOIN_CROSS,
@@ -320,6 +323,8 @@ public enum Clause {
 
     INSERT,
     INSERT_INSERT_INTO,
+    INSERT_ON_DUPLICATE_KEY_UPDATE,
+    INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT,
     INSERT_RETURNING,
 
 
@@ -398,6 +403,8 @@ public enum Clause {
 
     MERGE,
     MERGE_MERGE_INTO,
+    MERGE_WHEN_MATCHED_THEN_UPDATE_SET,
+    MERGE_WHEN_MATCHED_THEN_UPDATE_SET_ASSIGNMENT,
 
 
 

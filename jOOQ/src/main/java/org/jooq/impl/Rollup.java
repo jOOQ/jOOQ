@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.field;
 import static org.jooq.impl.DSL.function;
 
@@ -62,7 +61,7 @@ class Rollup extends AbstractFunction<Object> {
             case CUBRID:
             case MARIADB:
             case MYSQL:
-                return field("{0} {with rollup}", new QueryPartList<Field<?>>(DUMMY, getArguments()));
+                return field("{0} {with rollup}", new QueryPartList<Field<?>>(getArguments()));
 
             default:
                 return function("rollup", Object.class, getArguments());

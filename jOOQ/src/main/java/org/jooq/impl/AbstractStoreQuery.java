@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.Utils.fieldArray;
 import static org.jooq.util.sqlite.SQLiteDSL.rowid;
 
@@ -84,7 +83,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
         super(configuration);
 
         this.into = into;
-        this.returning = new QueryPartList<Field<?>>(DUMMY);
+        this.returning = new QueryPartList<Field<?>>();
     }
 
     protected abstract Map<Field<?>, Field<?>> getValues();

@@ -37,9 +37,8 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
-import static org.jooq.Clause.CONDITION_IS_NULL;
 import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.CONDITION_IS_NULL;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.DERBY;
@@ -77,7 +76,7 @@ class RowIsNull extends AbstractCondition {
      */
     private static final long     serialVersionUID = -1806139685201770706L;
     private static final Clause[] CLAUSES_NULL     = { CONDITION, CONDITION_IS_NULL };
-    private static final Clause[] CLAUSES_NULL_NOT = { CONDITION, CONDITION_IS_NOT_NULL };
+    private static final Clause[] CLAUSES_NOT_NULL = { CONDITION, CONDITION_IS_NOT_NULL };
 
     private final Row             row;
     private final boolean         isNull;
@@ -88,18 +87,18 @@ class RowIsNull extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        delegate(context.configuration()).toSQL(context);
+    public final void toSQL(RenderContext ctx) {
+        delegate(ctx.configuration()).toSQL(ctx);
     }
 
     @Override
-    public final void bind(BindContext context) {
-        delegate(context.configuration()).bind(context);
+    public final void bind(BindContext ctx) {
+        delegate(ctx.configuration()).bind(ctx);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return delegate(ctx.configuration()).clauses(ctx);
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -131,7 +130,8 @@ class RowIsNull extends AbstractCondition {
         @Override
         public final void toSQL(RenderContext context) {
             context.visit(row)
-                   .keyword(isNull ? " is null" : " is not null");
+                   .sql(" ")
+                   .keyword(isNull ? "is null" : "is not null");
         }
 
         @Override
@@ -141,7 +141,7 @@ class RowIsNull extends AbstractCondition {
 
         @Override
         public final Clause[] clauses(Context<?> ctx) {
-            return isNull ? CLAUSES_NULL : CLAUSES_NULL_NOT;
+            return isNull ? CLAUSES_NULL : CLAUSES_NOT_NULL;
         }
     }
 }

@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.ASE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
@@ -100,7 +99,7 @@ class Expression<T> extends AbstractFunction<T> {
 
         this.operator = operator;
         this.lhs = lhs;
-        this.rhs = new QueryPartList<Field<?>>(DUMMY, rhs);
+        this.rhs = new QueryPartList<Field<?>>(rhs);
     }
 
     @Override

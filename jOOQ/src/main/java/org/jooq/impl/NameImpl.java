@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
-
 import java.util.Arrays;
 
 import org.jooq.BindContext;
@@ -78,7 +76,7 @@ class NameImpl extends AbstractQueryPart implements Name {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return null;
     }
 
     @Override

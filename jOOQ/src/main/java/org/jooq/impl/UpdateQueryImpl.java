@@ -128,7 +128,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         super(configuration, table);
 
         this.condition = new ConditionProviderImpl();
-        this.updateMap = new FieldMapForUpdate();
+        this.updateMap = new FieldMapForUpdate(UPDATE_SET_ASSIGNMENT);
     }
 
     @Override

@@ -38,7 +38,6 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_EQUALS;
@@ -86,9 +85,9 @@ class RowSubqueryCondition extends AbstractCondition {
     private static final long     serialVersionUID = -1806139685201770706L;
     private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    private final Row         left;
-    private final Select<?>   right;
-    private final Comparator  comparator;
+    private final Row             left;
+    private final Select<?>       right;
+    private final Comparator      comparator;
 
     RowSubqueryCondition(Row left, Select<?> right, Comparator comparator) {
         this.left = left;
@@ -97,21 +96,21 @@ class RowSubqueryCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        delegate(context.configuration(), context).toSQL(context);
+    public final void toSQL(RenderContext ctx) {
+        delegate(ctx.configuration(), ctx).toSQL(ctx);
     }
 
     @Override
-    public final void bind(BindContext context) {
-        delegate(context.configuration(), null).bind(context);
+    public final void bind(BindContext ctx) {
+        delegate(ctx.configuration(), null).bind(ctx);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return delegate(ctx.configuration(), null).clauses(ctx);
     }
 
-    private final QueryPartInternal delegate(Configuration configuration, RenderContext context) {
+    private final QueryPartInternal delegate(Configuration configuration, RenderContext ctx) {
         SQLDialect family = configuration.dialect().family();
 
         // [#2395] These dialects have full native support for comparison
@@ -138,7 +137,7 @@ class RowSubqueryCondition extends AbstractCondition {
 
         // [#2395] All other configurations have to be simulated
         else {
-            String table = context == null ? "t" : context.nextAlias();
+            String table = ctx == null ? "t" : ctx.nextAlias();
 
             List<String> names = new ArrayList<String>();
             for (int i = 0; i < left.size(); i++) {

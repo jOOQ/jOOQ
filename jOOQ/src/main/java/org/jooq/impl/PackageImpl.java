@@ -35,7 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.PACKAGE;
+import static org.jooq.Clause.PACKAGE_REFERENCE;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -61,10 +62,11 @@ public class PackageImpl extends AbstractQueryPart implements Package {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = 7466890004995197675L;
+    private static final long     serialVersionUID = 7466890004995197675L;
+    private static final Clause[] CLAUSES          = { PACKAGE, PACKAGE_REFERENCE };
 
-    private final Schema      schema;
-    private final String      name;
+    private final Schema          schema;
+    private final String          name;
 
     public PackageImpl(String name, Schema schema) {
         this.schema = schema;
@@ -91,7 +93,7 @@ public class PackageImpl extends AbstractQueryPart implements Package {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return CLAUSES;
     }
 
     // ------------------------------------------------------------------------

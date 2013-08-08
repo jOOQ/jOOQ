@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_FROM;
@@ -153,7 +152,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         this.condition = new ConditionProviderImpl();
         this.connectBy = new ConditionProviderImpl();
         this.connectByStartWith = new ConditionProviderImpl();
-        this.groupBy = new QueryPartList<GroupField>(DUMMY);
+        this.groupBy = new QueryPartList<GroupField>();
         this.having = new ConditionProviderImpl();
         this.orderBy = new SortFieldList();
         this.limit = new Limit();
@@ -162,7 +161,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             this.from.add(from.asTable());
         }
 
-        this.forUpdateOf = new QueryPartList<Field<?>>(DUMMY);
+        this.forUpdateOf = new QueryPartList<Field<?>>();
         this.forUpdateOfTables = new TableList();
     }
 

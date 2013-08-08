@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.table;
 
 import org.jooq.BindContext;
@@ -44,7 +43,7 @@ import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
-import org.jooq.QueryPart;
+import org.jooq.QueryPartInternal;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -76,62 +75,62 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
+    public final void toSQL(RenderContext ctx) {
 
         // If this is already a subquery, proceed
-        if (context.subquery()) {
-            context.keyword(quantifier.toSQL())
-                   .sql(" (")
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(part(context.configuration()))
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .sql(")");
+        if (ctx.subquery()) {
+            ctx.keyword(quantifier.toSQL())
+               .sql(" (")
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(delegate(ctx.configuration()))
+               .formatIndentEnd()
+               .formatNewLine()
+               .sql(")");
         }
         else {
-            context.keyword(quantifier.toSQL())
-                   .sql(" (")
-                   .subquery(true)
-                   .formatIndentStart()
-                   .formatNewLine()
-                   .visit(part(context.configuration()))
-                   .formatIndentEnd()
-                   .formatNewLine()
-                   .subquery(false)
-                   .sql(")");
+            ctx.keyword(quantifier.toSQL())
+               .sql(" (")
+               .subquery(true)
+               .formatIndentStart()
+               .formatNewLine()
+               .visit(delegate(ctx.configuration()))
+               .formatIndentEnd()
+               .formatNewLine()
+               .subquery(false)
+               .sql(")");
         }
     }
 
     @Override
-    public final void bind(BindContext context) {
+    public final void bind(BindContext ctx) {
 
         // If this is already a subquery, proceed
-        if (context.subquery()) {
-            context.visit(part(context.configuration()));
+        if (ctx.subquery()) {
+            ctx.visit(delegate(ctx.configuration()));
         }
         else {
-            context.subquery(true)
-                   .visit(part(context.configuration()))
-                   .subquery(false);
+            ctx.subquery(true)
+               .visit(delegate(ctx.configuration()))
+               .subquery(false);
         }
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return delegate(ctx.configuration()).clauses(ctx);
     }
 
-    private final QueryPart part(Configuration context) {
+    private final QueryPartInternal delegate(Configuration ctx) {
         if (query != null) {
-            return query;
+            return (QueryPartInternal) query;
         }
         else {
-            switch (context.dialect()) {
+            switch (ctx.dialect()) {
 
                 // [#869] Postgres supports this syntax natively
                 case POSTGRES: {
-                    return array;
+                    return (QueryPartInternal) array;
                 }
 
                 // [#869] H2 and HSQLDB can simulate this syntax by unnesting
@@ -142,7 +141,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
                 // [#1048] All other dialects simulate unnesting of arrays using
                 // UNION ALL-connected subselects
                 default: {
-                    return create(context).select().from(table(array));
+                    return (QueryPartInternal) create(ctx).select().from(table(array));
                 }
             }
         }

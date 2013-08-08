@@ -36,11 +36,10 @@
 
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
+import static java.util.Arrays.asList;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -59,16 +58,14 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
     private static final long serialVersionUID = -2936922742534009564L;
     private final List<T>     wrappedList;
-    private final Clause      clause;
 
-    QueryPartList(Clause clause) {
-        this(clause, (Collection<T>) null);
+    QueryPartList() {
+        this((Collection<T>) null);
     }
 
-    QueryPartList(Clause clause, Collection<? extends T> wrappedList) {
+    QueryPartList(Collection<? extends T> wrappedList) {
         super();
 
-        this.clause = clause;
         this.wrappedList = new ArrayList<T>();
 
         if (wrappedList != null) {
@@ -76,8 +73,8 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
         }
     }
 
-    QueryPartList(Clause clause, T... wrappedList) {
-        this(clause, Arrays.asList(wrappedList));
+    QueryPartList(T... wrappedList) {
+        this(asList(wrappedList));
     }
 
     @Override
@@ -130,7 +127,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return null;
     }
 
     /**

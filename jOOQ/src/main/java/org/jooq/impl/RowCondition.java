@@ -38,7 +38,6 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_COMPARISON;
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.GREATER;
 import static org.jooq.Comparator.GREATER_OR_EQUAL;
@@ -95,18 +94,18 @@ class RowCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        delegate(context.configuration()).toSQL(context);
+    public final void toSQL(RenderContext ctx) {
+        delegate(ctx.configuration()).toSQL(ctx);
     }
 
     @Override
-    public final void bind(BindContext context) {
-        delegate(context.configuration()).bind(context);
+    public final void bind(BindContext ctx) {
+        delegate(ctx.configuration()).bind(ctx);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return delegate(ctx.configuration()).clauses(ctx);
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {
@@ -193,10 +192,8 @@ class RowCondition extends AbstractCondition {
 
             // Some dialects do not support != comparison with rows
             if (comparator == NOT_EQUALS && asList(DB2).contains(context.configuration().dialect().family())) {
-                context.keyword("not(")
-                       .visit(left)
-                       .sql(" = ")
-                       .visit(right)
+                context.keyword("not").sql("(")
+                       .visit(left).sql(" = ").visit(right)
                        .sql(")");
             }
             else {

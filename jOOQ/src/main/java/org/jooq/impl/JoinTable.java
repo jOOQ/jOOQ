@@ -36,7 +36,6 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_JOIN;
 import static org.jooq.Clause.TABLE_JOIN_CROSS;
@@ -118,11 +117,11 @@ class JoinTable extends AbstractTable<Record> implements TableOptionalOnStep, Ta
 
         this.lhs = lhs.asTable();
         this.rhs = rhs.asTable();
-        this.rhsPartitionBy = new QueryPartList<Field<?>>(DUMMY);
+        this.rhsPartitionBy = new QueryPartList<Field<?>>();
         this.type = type;
 
         this.condition = new ConditionProviderImpl();
-        this.using = new QueryPartList<Field<?>>(DUMMY);
+        this.using = new QueryPartList<Field<?>>();
     }
 
     // ------------------------------------------------------------------------

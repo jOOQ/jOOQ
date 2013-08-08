@@ -36,8 +36,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.Clause.TABLE;
-
 import java.util.List;
 
 import org.jooq.Field;
@@ -52,11 +50,11 @@ class TableList extends QueryPartList<Table<?>> {
     private static final long serialVersionUID = -8545559185481762229L;
 
     TableList() {
-        super(TABLE);
+        super();
     }
 
     TableList(List<? extends Table<?>> wrappedList) {
-        super(TABLE, wrappedList);
+        super(wrappedList);
     }
 
     @Override

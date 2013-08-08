@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
@@ -75,7 +74,7 @@ implements
         this.divisor = divisor;
 
         this.condition = new ConditionProviderImpl();
-        this.returning = new QueryPartList<Field<?>>(DUMMY);
+        this.returning = new QueryPartList<Field<?>>();
     }
 
     // ------------------------------------------------------------------------

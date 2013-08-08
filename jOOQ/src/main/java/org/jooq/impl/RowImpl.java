@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.impl.DSL.row;
@@ -9921,13 +9920,13 @@ implements
 
     @Override
     public final Condition in(Collection rows) {
-        QueryPartList<Row> list = new QueryPartList<Row>(DUMMY, rows);
+        QueryPartList<Row> list = new QueryPartList<Row>(rows);
         return new RowInCondition(this, list, Comparator.IN);
     }
 
     @Override
     public final Condition notIn(Collection rows) {
-        QueryPartList<Row> list = new QueryPartList<Row>(DUMMY, rows);
+        QueryPartList<Row> list = new QueryPartList<Row>(rows);
         return new RowInCondition(this, list, Comparator.NOT_IN);
     }
 

@@ -35,8 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.Clause.MERGE;
+import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE_SET_ASSIGNMENT;
 import static org.jooq.SQLDialect.H2;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
@@ -235,7 +235,7 @@ implements
 
         if (fields != null) {
             h2Style = true;
-            h2Fields = new QueryPartList<Field<?>>(DUMMY, fields);
+            h2Fields = new QueryPartList<Field<?>>(fields);
         }
     }
 
@@ -245,7 +245,7 @@ implements
 
     QueryPartList<Field<?>> getH2Fields() {
         if (h2Fields == null) {
-            h2Fields = new QueryPartList<Field<?>>(DUMMY, table.fields());
+            h2Fields = new QueryPartList<Field<?>>(table.fields());
         }
 
         return h2Fields;
@@ -253,7 +253,7 @@ implements
 
     QueryPartList<Field<?>> getH2Keys() {
         if (h2Keys == null) {
-            h2Keys = new QueryPartList<Field<?>>(DUMMY);
+            h2Keys = new QueryPartList<Field<?>>();
         }
 
         return h2Keys;
@@ -261,7 +261,7 @@ implements
 
     QueryPartList<Field<?>> getH2Values() {
         if (h2Values == null) {
-            h2Values = new QueryPartList<Field<?>>(DUMMY);
+            h2Values = new QueryPartList<Field<?>>();
         }
 
         return h2Values;
@@ -678,7 +678,7 @@ implements
     @Override
     public final MergeImpl whenMatchedThenUpdate() {
         matchedClause = true;
-        matchedUpdate = new FieldMapForUpdate();
+        matchedUpdate = new FieldMapForUpdate(MERGE_WHEN_MATCHED_THEN_UPDATE_SET_ASSIGNMENT);
 
         notMatchedClause = false;
         return this;

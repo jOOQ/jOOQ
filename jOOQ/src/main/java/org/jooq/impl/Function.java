@@ -37,7 +37,6 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DB2;
 import static org.jooq.SQLDialect.H2;
@@ -137,10 +136,10 @@ class Function<T> extends AbstractField<T> implements
         this.term = null;
         this.name = null;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(DUMMY, arguments);
+        this.arguments = new QueryPartList<QueryPart>(arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-        this.partitionBy = new QueryPartList<Field<?>>(DUMMY);
+        this.partitionBy = new QueryPartList<Field<?>>();
         this.orderBy = new SortFieldList();
     }
 
@@ -150,10 +149,10 @@ class Function<T> extends AbstractField<T> implements
         this.term = term;
         this.name = null;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(DUMMY, arguments);
+        this.arguments = new QueryPartList<QueryPart>(arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-        this.partitionBy = new QueryPartList<Field<?>>(DUMMY);
+        this.partitionBy = new QueryPartList<Field<?>>();
         this.orderBy = new SortFieldList();
     }
 
@@ -163,10 +162,10 @@ class Function<T> extends AbstractField<T> implements
         this.term = null;
         this.name = name;
         this.distinct = distinct;
-        this.arguments = new QueryPartList<QueryPart>(DUMMY, arguments);
+        this.arguments = new QueryPartList<QueryPart>(arguments);
         this.keepDenseRankOrderBy = new SortFieldList();
         this.withinGroupOrderBy = new SortFieldList();
-        this.partitionBy = new QueryPartList<Field<?>>(DUMMY);
+        this.partitionBy = new QueryPartList<Field<?>>();
         this.orderBy = new SortFieldList();
     }
 

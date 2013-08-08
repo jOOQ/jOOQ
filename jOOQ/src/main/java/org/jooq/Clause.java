@@ -69,7 +69,7 @@ public enum Clause {
     /**
      * A complete table reference.
      * <p>
-     * This "clause" surrounds a complete table reference as it can be encountered
+     * This clause surrounds a complete table reference as it can be encountered
      * in
      * <ul>
      * <li> {@link #SELECT_FROM}</li>
@@ -119,31 +119,114 @@ public enum Clause {
     // Clauses used in a any type of statement to model condition references
     // -------------------------------------------------------------------------
 
+    /**
+     * A condition expression.
+     */
     CONDITION,
 
+    /**
+     * A <code>NULL</code> condition.
+     * <p>
+     * This clause surrounds a {@link #FIELD}.
+     */
     CONDITION_IS_NULL,
+
+    /**
+     * A <code>NOT NULL</code> condition.
+     * <p>
+     * This clause surrounds a {@link #FIELD}.
+     */
     CONDITION_IS_NOT_NULL,
+
     // TODO: Should operators be distinguished?
     // - LIKE predicate
     // - Subselect predicates
     // - RVE predicates
     // - Quantified predicates
     CONDITION_COMPARISON,
+
+    /**
+     * A <code>BEWEEN</code> condition.
+     * <p>
+     * This clause surrounds three {@link #FIELD} clauses.
+     */
     CONDITION_BETWEEN,
+
+    /**
+     * A <code>BEWEEN SYMMETRIC</code> condition.
+     * <p>
+     * This clause surrounds three {@link #FIELD} clauses.
+     */
     CONDITION_BETWEEN_SYMMETRIC,
+
+    /**
+     * A <code>NOT BEWEEN</code> condition.
+     * <p>
+     * This clause surrounds three {@link #FIELD} clauses.
+     */
     CONDITION_NOT_BETWEEN,
+
+    /**
+     * A <code>NOT BEWEEN SYMMETRIC</code> condition.
+     * <p>
+     * This clause surrounds three {@link #FIELD} clauses.
+     */
     CONDITION_NOT_BETWEEN_SYMMETRIC,
-    CONDITION_IS_DISTINCT,
-    CONDITION_IS_NOT_DISTINCT,
+
+    /**
+     * An <code>OVERLAPS</code> condition.
+     * <p>
+     * This clause surrounds two {@link #FIELD} clauses.
+     */
     CONDITION_OVERLAPS,
 
+    /**
+     * A combined condition using <code>AND</code>.
+     * <p>
+     * This clause surrounds several {@link #CONDITION} clauses.
+     */
     CONDITION_AND,
+
+    /**
+     * A combined condition using <code>OR</code>.
+     * <p>
+     * This clause surrounds several {@link #CONDITION} clauses.
+     */
     CONDITION_OR,
+
+    /**
+     * A <code>NOT</code> condition.
+     * <p>
+     * This clause surrounds a {@link #CONDITION} clause.
+     */
     CONDITION_NOT,
 
+    /**
+     * An <code>IN</code> condition.
+     * <p>
+     * This clause surrounds two or more {@link #FIELD} clauses.
+     */
     CONDITION_IN,
+
+    /**
+     * A <code>NOT IN</code> condition.
+     * <p>
+     * This clause surrounds two or more {@link #FIELD} clauses.
+     */
     CONDITION_NOT_IN,
+
+    /**
+     * An <code>EXISTS</code> condition.
+     * <p>
+     * This clause surrounds a {@link #SELECT} clause.
+     */
     CONDITION_EXISTS,
+
+    /**
+     * A <code>NOT EXISTS</code> condition.
+     * <p>
+     * This clause surrounds a {@link #SELECT} clause.
+     */
     CONDITION_NOT_EXISTS,
 
     // -------------------------------------------------------------------------
@@ -153,7 +236,7 @@ public enum Clause {
     /**
      * A complete <code>SELECT</code> statement or a subselect.
      * <p>
-     * This "clause" surrounds a complete <code>SELECT</code> statement, a
+     * This clause surrounds a complete <code>SELECT</code> statement, a
      * subselect, or a set operation, such as
      * <ul>
      * <li> {@link #SELECT_UNION}</li>
@@ -301,7 +384,7 @@ public enum Clause {
      * This clause surrounds
      * <ul>
      * <li>the <code>RETURNING</code> keyword</li>
-     * <li>several {@link #FIELD} "clauses"</li>
+     * <li>several {@link #FIELD} clauses</li>
      * </ul>
      */
     UPDATE_RETURNING,

@@ -84,7 +84,7 @@ class SQLResultQuery extends AbstractResultQuery<Record> {
     @Override
     public final Clause[] clauses(Context<?> ctx) {
         if (delegate instanceof QueryPartInternal) {
-            return ((QueryPartInternal) delegate).clauses(null);
+            return ((QueryPartInternal) delegate).clauses(ctx);
         }
 
         return null;

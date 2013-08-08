@@ -48,6 +48,7 @@ import java.util.ListIterator;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 
@@ -128,7 +129,7 @@ class QueryPartList<T extends QueryPart> extends AbstractQueryPart implements Li
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

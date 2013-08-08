@@ -43,6 +43,7 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
 import org.jooq.Record;
@@ -129,7 +130,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

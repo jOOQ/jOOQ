@@ -37,6 +37,7 @@ package org.jooq.impl;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.RenderContext;
@@ -98,8 +99,8 @@ public abstract class CustomField<T> extends AbstractField<T> {
      * {@inheritDoc}
      */
     @Override
-    public Clause[] clauses() {
-        return super.clauses();
+    public Clause[] clauses(Context<?> ctx) {
+        return super.clauses(ctx);
     }
 
     // -------------------------------------------------------------------------

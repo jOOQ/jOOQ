@@ -50,6 +50,7 @@ import java.util.List;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
+import org.jooq.Context;
 import org.jooq.Operator;
 import org.jooq.RenderContext;
 
@@ -102,7 +103,7 @@ class CombinedCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return operator == AND ? CLAUSES_AND : CLAUSES_OR;
     }
 

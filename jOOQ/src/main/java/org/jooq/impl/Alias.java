@@ -57,6 +57,7 @@ import static org.jooq.impl.Utils.list;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -224,7 +225,7 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

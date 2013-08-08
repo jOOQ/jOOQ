@@ -43,6 +43,7 @@ import static org.jooq.impl.ExistsOperator.EXISTS;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.RenderContext;
 import org.jooq.Select;
 
@@ -106,7 +107,7 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return operator == EXISTS ? CLAUSES_EXISTS : CLAUSES_EXISTS_NOT;
     }
 }

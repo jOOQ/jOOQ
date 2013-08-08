@@ -43,6 +43,7 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -140,7 +141,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

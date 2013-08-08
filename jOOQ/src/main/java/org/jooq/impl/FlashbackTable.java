@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -146,7 +147,7 @@ implements VersionsBetweenAndStep<R, T> {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

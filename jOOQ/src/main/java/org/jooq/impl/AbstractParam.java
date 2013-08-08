@@ -40,6 +40,7 @@ import static org.jooq.Clause.FIELD_VALUE;
 import static org.jooq.conf.ParamType.INLINED;
 
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Param;
 import org.jooq.RenderContext;
@@ -89,7 +90,7 @@ abstract class AbstractParam<T> extends AbstractField<T> implements Param<T> {
     // ------------------------------------------------------------------------
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

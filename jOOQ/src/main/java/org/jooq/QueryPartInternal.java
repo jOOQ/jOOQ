@@ -83,7 +83,7 @@ public interface QueryPartInternal extends QueryPart {
      *         <code>null</code> or an empty array if this query part does not
      *         represent a clause.
      */
-    Clause[] clauses();
+    Clause[] clauses(Context<?> ctx);
 
     /**
      * Check whether this {@link QueryPart} is able to declare fields in a

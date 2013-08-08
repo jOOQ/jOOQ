@@ -42,6 +42,7 @@ import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -77,7 +78,7 @@ class TableFieldImpl<R extends Record, T> extends AbstractField<T> implements Ta
     // ------------------------------------------------------------------------
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

@@ -42,6 +42,7 @@ import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -73,7 +74,7 @@ class IsNull extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return isNull ? CLAUSES_NULL : CLAUSES_NULL_NOT;
     }
 }

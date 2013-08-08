@@ -41,6 +41,7 @@ import static org.jooq.Clause.CONDITION_COMPARISON;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.RenderContext;
 
 /**
@@ -60,7 +61,7 @@ class FalseCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

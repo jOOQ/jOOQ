@@ -64,6 +64,7 @@ import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Operator;
 import org.jooq.QueryPartInternal;
@@ -104,7 +105,7 @@ class RowCondition extends AbstractCondition {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 
@@ -218,7 +219,7 @@ class RowCondition extends AbstractCondition {
         }
 
         @Override
-        public final Clause[] clauses() {
+        public final Clause[] clauses(Context<?> ctx) {
             return CLAUSES;
         }
     }

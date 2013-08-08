@@ -41,6 +41,7 @@ import static org.jooq.impl.DSL.table;
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QuantifiedSelect;
 import org.jooq.QueryPart;
@@ -117,7 +118,7 @@ class QuantifiedSelectImpl<R extends Record> extends AbstractQueryPart implement
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

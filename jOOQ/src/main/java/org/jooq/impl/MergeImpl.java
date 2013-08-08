@@ -57,6 +57,7 @@ import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.MergeKeyStep1;
 import org.jooq.MergeKeyStep10;
@@ -1200,7 +1201,7 @@ implements
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 }

@@ -38,6 +38,7 @@ package org.jooq.impl;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Select;
@@ -115,7 +116,7 @@ class SelectQueryAsTable<R extends Record> extends AbstractTable<R> {
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return null;
     }
 }

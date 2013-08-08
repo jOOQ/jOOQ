@@ -39,6 +39,7 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.QueryPart;
 import org.jooq.RenderContext;
 import org.jooq.Template;
@@ -82,7 +83,7 @@ class SQLTemplate implements Template {
         }
 
         @Override
-        public final Clause[] clauses() {
+        public final Clause[] clauses(Context<?> ctx) {
             return null;
         }
     }

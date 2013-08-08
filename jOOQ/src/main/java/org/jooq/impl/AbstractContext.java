@@ -275,7 +275,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
      */
     private final Clause[] clause(QueryPart part) {
         if (part instanceof QueryPartInternal && data(DATA_OMIT_CLAUSE_EVENT_EMISSION) == null) {
-            return ((QueryPartInternal) part).clauses();
+            return ((QueryPartInternal) part).clauses(this);
         }
 
         return null;

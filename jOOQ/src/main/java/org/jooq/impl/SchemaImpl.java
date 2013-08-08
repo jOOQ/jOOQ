@@ -44,6 +44,7 @@ import java.util.List;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.RenderContext;
 import org.jooq.Schema;
 import org.jooq.Sequence;
@@ -85,7 +86,7 @@ public class SchemaImpl extends AbstractQueryPart implements Schema {
     public final void bind(BindContext context) {}
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

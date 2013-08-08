@@ -39,6 +39,7 @@ import static org.jooq.Clause.DUMMY;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.Field;
 import org.jooq.Record;
@@ -140,7 +141,7 @@ public class UDTImpl<R extends UDTRecord<R>> extends AbstractQueryPart implement
     }
 
     @Override
-    public final Clause[] clauses() {
+    public final Clause[] clauses(Context<?> ctx) {
         return new Clause[] { DUMMY };
     }
 

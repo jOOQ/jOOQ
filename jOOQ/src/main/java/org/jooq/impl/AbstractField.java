@@ -77,6 +77,7 @@ import org.jooq.Clause;
 import org.jooq.Comparator;
 import org.jooq.Condition;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.DataType;
 import org.jooq.DatePart;
 import org.jooq.Field;
@@ -123,7 +124,7 @@ abstract class AbstractField<T> extends AbstractQueryPart implements Field<T> {
     public abstract void bind(BindContext context);
 
     @Override
-    public Clause[] clauses() {
+    public Clause[] clauses(Context<?> ctx) {
         return CLAUSES;
     }
 

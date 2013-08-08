@@ -39,7 +39,13 @@ import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 import static org.jooq.Clause.CONDITION;
+import static org.jooq.Clause.CONDITION_AND;
+import static org.jooq.Clause.CONDITION_BETWEEN;
+import static org.jooq.Clause.CONDITION_BETWEEN_SYMMETRIC;
 import static org.jooq.Clause.CONDITION_COMPARISON;
+import static org.jooq.Clause.CONDITION_IS_NOT_NULL;
+import static org.jooq.Clause.CONDITION_IS_NULL;
+import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.Clause.FIELD_ROW;
@@ -288,6 +294,116 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD),
             asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE),
             asList(UPDATE, UPDATE_RETURNING)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_simple() {
+        ctx.render(FIELD_ID1.eq(1));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_COMPARISON),
+            asList(CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_AND() {
+        ctx.render(FIELD_ID1.eq(1).and(FIELD_NAME1.isNotNull()));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_AND),
+            asList(CONDITION, CONDITION_AND, CONDITION),
+            asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_COMPARISON),
+            asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_AND, CONDITION),
+            asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_IS_NOT_NULL),
+            asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_IS_NOT_NULL, FIELD),
+            asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_IS_NOT_NULL, FIELD, FIELD_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_OR() {
+        ctx.render(FIELD_ID1.eq(1).or(FIELD_NAME1.isNull()));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_OR),
+            asList(CONDITION, CONDITION_OR, CONDITION),
+            asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_COMPARISON),
+            asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_OR, CONDITION),
+            asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_IS_NULL),
+            asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_IS_NULL, FIELD),
+            asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_IS_NULL, FIELD, FIELD_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_NULL() {
+        ctx.render(FIELD_ID1.isNull());
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_IS_NULL),
+            asList(CONDITION, CONDITION_IS_NULL, FIELD),
+            asList(CONDITION, CONDITION_IS_NULL, FIELD, FIELD_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_NOT_NULL() {
+        ctx.render(FIELD_ID1.isNotNull());
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_IS_NOT_NULL),
+            asList(CONDITION, CONDITION_IS_NOT_NULL, FIELD),
+            asList(CONDITION, CONDITION_IS_NOT_NULL, FIELD, FIELD_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_BETWEEN() {
+        ctx.render(FIELD_ID1.between(1, 2));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_BETWEEN),
+            asList(CONDITION, CONDITION_BETWEEN, FIELD),
+            asList(CONDITION, CONDITION_BETWEEN, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_BETWEEN, FIELD),
+            asList(CONDITION, CONDITION_BETWEEN, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_BETWEEN, FIELD),
+            asList(CONDITION, CONDITION_BETWEEN, FIELD, FIELD_VALUE)
+        ));
+    }
+
+    @Test
+    public void test_CONDITION_BETWEEN_SYMMETRIC() {
+        ctx.render(FIELD_ID1.betweenSymmetric(1, 2));
+
+        assertEvents(asList(
+            asList(CONDITION),
+            asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC),
+            asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD),
+            asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE)
         ));
     }
 

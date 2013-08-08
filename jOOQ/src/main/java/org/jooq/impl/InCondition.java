@@ -38,7 +38,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
-import static org.jooq.Clause.CONDITION_IN_NOT;
+import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Comparator.IN;
 import static org.jooq.impl.Utils.visitAll;
 
@@ -59,7 +59,7 @@ class InCondition<T> extends AbstractCondition {
     private static final long     serialVersionUID = -1653924248576930761L;
     private static final int      IN_LIMIT         = 1000;
     private static final Clause[] CLAUSES_IN       = { CONDITION, CONDITION_IN };
-    private static final Clause[] CLAUSES_IN_NOT   = { CONDITION, CONDITION_IN_NOT };
+    private static final Clause[] CLAUSES_IN_NOT   = { CONDITION, CONDITION_NOT_IN };
 
     private final Field<T>        field;
     private final Field<?>[]      values;

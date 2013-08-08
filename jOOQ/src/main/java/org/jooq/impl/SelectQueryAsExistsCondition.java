@@ -38,7 +38,7 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_EXISTS;
-import static org.jooq.Clause.CONDITION_EXISTS_NOT;
+import static org.jooq.Clause.CONDITION_NOT_EXISTS;
 import static org.jooq.impl.ExistsOperator.EXISTS;
 
 import org.jooq.BindContext;
@@ -53,7 +53,7 @@ class SelectQueryAsExistsCondition extends AbstractCondition {
 
     private static final long     serialVersionUID   = 5678338161136603292L;
     private static final Clause[] CLAUSES_EXISTS     = { CONDITION, CONDITION_EXISTS };
-    private static final Clause[] CLAUSES_EXISTS_NOT = { CONDITION, CONDITION_EXISTS_NOT };
+    private static final Clause[] CLAUSES_EXISTS_NOT = { CONDITION, CONDITION_NOT_EXISTS };
 
     private final Select<?>       query;
     private final ExistsOperator  operator;

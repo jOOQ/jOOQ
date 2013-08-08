@@ -3144,7 +3144,7 @@ create.insertInto(AUTHOR, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
 </code-pair>
 
 									<p>
-										Most databases allow for using scalar subselects in UPDATE statements in one way or another. jOOQ models this through a <code>set(Field&lt;T>, Select&lt;? extends Record1&lt;T>>) method in the UPDATE DSL API:</code>
+										Most databases allow for using scalar subselects in UPDATE statements in one way or another. jOOQ models this through a <code>set(Field&lt;T>, Select&lt;? extends Record1&lt;T>>)</code> method in the <code>UPDATE</code> DSL API:
 									</p>
 
 <code-pair>

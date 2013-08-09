@@ -70,7 +70,7 @@ Telling the world:<br/>
 
 <h3>Hints for new features</h3>
 
-<p>A lot of ideas are around already. Check out this <a href="https://https://github.com/jOOQ/jOOQ/issues?milestone=20&state=open">GitHub Milestone</a> to see some of them</p>
+<p>A lot of ideas are around already. Check out this <a href="https://github.com/jOOQ/jOOQ/issues?milestone=20&state=open">GitHub Milestone</a> to see some of them</p>
 
 <h3>Hints for new database integrations</h3>
 

@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.Collection;
@@ -55,7 +56,8 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -2192833491610583485L;
+    private static final long     serialVersionUID = -2192833491610583485L;
+    private static final Clause[] CLAUSES          = { FIELD_ROW };
 
     FieldMapForInsert() {
     }
@@ -63,30 +65,30 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     @Override
     public final void toSQL(RenderContext context) {
         boolean indent = (size() > 1);
-        
+
         context.sql("(");
-        
+
         if (indent) {
             context.formatIndentStart();
         }
-        
+
         String separator = "";
         for (Field<?> field : values()) {
             context.sql(separator);
-        
+
             if (indent) {
                 context.formatNewLine();
             }
-        
+
             context.visit(field);
             separator = ", ";
         }
-        
+
         if (indent) {
             context.formatIndentEnd()
                    .formatNewLine();
         }
-        
+
         context.sql(")");
     }
 
@@ -133,7 +135,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return null;
+        return CLAUSES;
     }
 
     final void putFields(Collection<? extends Field<?>> fields) {

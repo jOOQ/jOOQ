@@ -37,6 +37,8 @@ package org.jooq.impl;
 
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
+import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
+import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.impl.Utils.visitAll;
 
@@ -100,7 +102,11 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
                .formatSeparator()
                .start(INSERT_SELECT)
                .visit(select)
-               .end(INSERT_SELECT);
+               .end(INSERT_SELECT)
+               .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+               .end(INSERT_ON_DUPLICATE_KEY_UPDATE)
+               .start(INSERT_RETURNING)
+               .end(INSERT_RETURNING);
     }
 
     @Override

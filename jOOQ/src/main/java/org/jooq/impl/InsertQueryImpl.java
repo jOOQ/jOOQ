@@ -193,6 +193,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case MARIADB:
                 case MYSQL: {
                     toSQLInsert(context);
+                    context.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
 
@@ -204,9 +206,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                     toSQLInsert(context);
                     context.formatSeparator()
+                           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                            .keyword("on duplicate key update")
                            .sql(" ")
-                           .visit(update);
+                           .visit(update)
+                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;
                 }
@@ -237,7 +241,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ------------
         else {
             toSQLInsert(context);
+            context.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                   .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
         }
+
+        context.start(INSERT_RETURNING);
+        toSQLReturning(context);
+        context.end(INSERT_RETURNING);
     }
 
     @Override
@@ -344,10 +354,6 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         context.sql(" ")
                .end(INSERT_INSERT_INTO)
                .visit(insertMaps);
-
-        context.start(INSERT_RETURNING);
-        toSQLReturning(context);
-        context.end(INSERT_RETURNING);
     }
 
     private final void bindInsert(BindContext context) {

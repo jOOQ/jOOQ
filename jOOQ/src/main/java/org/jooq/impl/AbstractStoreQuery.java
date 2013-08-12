@@ -161,6 +161,7 @@ abstract class AbstractStoreQuery<R extends Record> extends AbstractQuery implem
                 default:
                     // Other dialects don't render a RETURNING clause, but
                     // use JDBC's Statement.RETURN_GENERATED_KEYS mode instead
+                    break;
             }
         }
     }

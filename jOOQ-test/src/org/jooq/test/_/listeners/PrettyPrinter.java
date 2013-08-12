@@ -43,6 +43,7 @@ import org.jooq.DSLContext;
 import org.jooq.ExecuteContext;
 import org.jooq.conf.SettingsTools;
 import org.jooq.impl.DSL;
+import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultExecuteListener;
 import org.jooq.tools.StringUtils;
 
@@ -67,13 +68,20 @@ public class PrettyPrinter extends DefaultExecuteListener {
     public void renderEnd(ExecuteContext ctx) {
 
         // Create a new factory for logging rendering purposes
-        // This factory doesn't need a connection, only the SQLDialect...
-        DSLContext pretty = DSL.using(ctx.configuration().dialect(),
+        DSLContext pretty = DSL.using(new DefaultConfiguration()
 
-        // ... and the flag for pretty-printing
-            SettingsTools.clone(ctx.configuration().settings()).withRenderFormatted(true));
+            // This factory doesn't need a connection, only the SQLDialect...
+            .set(ctx.configuration().dialect())
 
-        DSLContext normal = DSL.using(ctx.configuration().dialect());
+            // ... and the flag for pretty-printing
+            .set(SettingsTools.clone(ctx.configuration().settings()).withRenderFormatted(true))
+
+            // ... and visit listener providers for potential SQL transformations
+            .set(ctx.configuration().visitListenerProviders()));
+
+        DSLContext normal = DSL.using(new DefaultConfiguration()
+            .set(ctx.configuration().dialect())
+            .set(ctx.configuration().visitListenerProviders()));
 
         String n = "" + count.incrementAndGet();
 

@@ -35,13 +35,20 @@
  */
 package org.jooq.test._.testcases;
 
-import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.selectFrom;
+import static org.jooq.impl.DSL.selectOne;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -90,7 +97,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // No join with author table
         Result<?> result1 =
-        create(new OnlyAuthorIDEq1VisitListener())
+        create(new OnlyAuthorIDEqual1())
             .select(TBook_ID())
             .from(TBook())
             .orderBy(TBook_ID())
@@ -101,7 +108,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Additional predicates
         Result<?> result2 =
-        create(new OnlyAuthorIDEq1VisitListener())
+        create(new OnlyAuthorIDEqual1())
             .select(TBook_ID())
             .from(TBook())
             .where(TBook_ID().in(BOOK_IDS))
@@ -113,7 +120,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Join with author table
         Result<?> result3 =
-        create(new OnlyAuthorIDEq1VisitListener())
+        create(new OnlyAuthorIDEqual1())
             .select(TBook_ID())
             .from(TBook().join(TAuthor())
                          .on(TBook_AUTHOR_ID().eq(TAuthor_ID())))
@@ -122,9 +129,105 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(2, result3.size());
         assertEquals(asList(1, 2), result3.getValues(TBook_ID()));
+
+        // Create a union of authors
+        Result<?> result4 =
+        create(new OnlyAuthorIDEqual1())
+            .select(TAuthor_ID())
+            .from(TAuthor())
+            .where(TAuthor_ID().eq(1))
+            .union(
+             select(TAuthor_ID())
+            .from(TAuthor())
+            .where(TAuthor_ID().ne(1)))
+            .union(
+             select(TAuthor_ID())
+            .from(TAuthor()))
+            .fetch();
+
+        assertEquals(1, result4.size());
+        assertEquals(1, (int) result4.getValue(0, TAuthor_ID()));
+
+        // Use nested selects
+        Result<?> result5 =
+        create(new OnlyAuthorIDEqual1())
+            .select(inline(1).as("value"))
+            .where(inline(2).in(select(TAuthor_ID()).from(TAuthor()).where(TAuthor_ID().eq(2))))
+            .union(
+             select(inline(2))
+            .whereExists(selectOne().from(TAuthor()).where(TAuthor_ID().eq(2))))
+            .union(
+             select(inline(3))
+            .from(selectFrom(TAuthor()).where(TAuthor_ID().eq(2))))
+            .fetch();
+
+        assertEquals(0, result5.size());
     }
 
-    private class OnlyAuthorIDEq1VisitListener extends DefaultVisitListener {
+    private enum Key {
+        NESTING_LEVEL,
+        SUBSELECT_VALUES
+    }
+
+    private enum Value {
+        SUBSELECT_SELECTS_FROM_AUTHOR,
+        SUBSELECT_SELECTS_FROM_BOOK,
+        SUBSELECT_HAS_WHERE_CLAUSE_PREDICATES
+    }
+
+    /**
+     * This sample visit listener restricts T_AUTHOR.ID = 1 and T_BOOK.AUTHOR_ID
+     * = 1.
+     */
+    private class OnlyAuthorIDEqual1 extends DefaultVisitListener {
+
+        private int nestingLevel(VisitContext context, int increase) {
+            Integer level = (Integer) context.data(Key.NESTING_LEVEL);
+            if (level == null) {
+                level = 0;
+            }
+
+            if (increase == -1)
+                subselectValueMap(context).remove(level);
+
+            level += increase;
+
+            if (increase != 0)
+                context.data(Key.NESTING_LEVEL, level);
+            if (increase == 1)
+                subselectValueMap(context).put(level, EnumSet.noneOf(Value.class));
+
+            return level;
+        }
+
+        @SuppressWarnings("unchecked")
+        private Map<Integer, EnumSet<Value>> subselectValueMap(VisitContext context) {
+            Map<Integer, EnumSet<Value>> data = (Map<Integer, EnumSet<Value>>) context.data(Key.SUBSELECT_VALUES);
+            if (data == null) {
+                data = new HashMap<Integer, EnumSet<Value>>();
+                context.data(Key.SUBSELECT_VALUES, data);
+            }
+            return data;
+        }
+
+        private EnumSet<Value> subselectValues(VisitContext context) {
+            return subselectValueMap(context).get(nestingLevel(context, 0));
+        }
+
+        private List<Clause> subselectClauses(VisitContext context) {
+            List<Clause> result = asList(context.clauses());
+            return result.subList(result.lastIndexOf(SELECT), result.size() - 1);
+        }
+
+        @Override
+        public void clauseStart(VisitContext context) {
+            if (context.renderContext() == null)
+                return;
+
+            if (context.clause() == SELECT) {
+                nestingLevel(context, 1);
+            }
+        }
 
         @Override
         public void clauseEnd(VisitContext context) {
@@ -132,13 +235,14 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
 
             if (context.clause() == SELECT_WHERE) {
-                if (TRUE.equals(context.data("book present"))) {
+                if (subselectValues(context).contains(Value.SUBSELECT_SELECTS_FROM_BOOK) ||
+                    subselectValues(context).contains(Value.SUBSELECT_SELECTS_FROM_AUTHOR)) {
                     context.renderContext()
                            .sql(" ")
-                           .keyword(TRUE.equals(context.data("where present")) ? "and" : "where")
+                           .keyword(subselectValues(context).contains(Value.SUBSELECT_HAS_WHERE_CLAUSE_PREDICATES) ? "and" : "where")
                            .sql(" ");
 
-                    if (TRUE.equals(context.data("author present"))) {
+                    if (subselectValues(context).contains(Value.SUBSELECT_SELECTS_FROM_AUTHOR)) {
                         context.renderContext().visit(TAuthor_ID().eq(inline(1)));
                     }
                     else {
@@ -146,29 +250,29 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     }
                 }
             }
+
+            if (context.clause() == SELECT) {
+                nestingLevel(context, -1);
+            }
         }
 
         @Override
         public void visitEnd(VisitContext context) {
             if (context.visiting() == TBook()) {
-
-                // TODO: Check if we're in a subquery, too (i.e. with several SELECT_FROMs)
-                if (asList(context.clauses()).contains(Clause.SELECT_FROM)) {
-                    context.data("book present", true);
+                if (subselectClauses(context).contains(Clause.SELECT_FROM)) {
+                    subselectValues(context).add(Value.SUBSELECT_SELECTS_FROM_BOOK);
                 }
             }
 
             if (context.visiting() == TAuthor()) {
-
-                // TODO: Check if we're in a subquery, too (i.e. with several SELECT_FROMs)
-                if (asList(context.clauses()).contains(Clause.SELECT_FROM)) {
-                    context.data("author present", true);
+                if (subselectClauses(context).contains(Clause.SELECT_FROM)) {
+                    subselectValues(context).add(Value.SUBSELECT_SELECTS_FROM_AUTHOR);
                 }
             }
 
             if (context.visiting() instanceof Condition) {
-                if (asList(context.clauses()).contains(Clause.SELECT_WHERE)) {
-                    context.data("where present", true);
+                if (subselectClauses(context).contains(Clause.SELECT_WHERE)) {
+                    subselectValues(context).add(Value.SUBSELECT_HAS_WHERE_CLAUSE_PREDICATES);
                 }
             }
         }

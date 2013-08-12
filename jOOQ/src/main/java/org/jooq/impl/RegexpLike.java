@@ -35,7 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.CONDITION;
+import static org.jooq.Clause.CONDITION_COMPARISON;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -51,10 +52,11 @@ class RegexpLike extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long   serialVersionUID = 3162855665213654276L;
+    private static final long     serialVersionUID = 3162855665213654276L;
+    private static final Clause[] CLAUSES          = { CONDITION, CONDITION_COMPARISON };
 
-    private final Field<?>      search;
-    private final Field<String> pattern;
+    private final Field<?>        search;
+    private final Field<String>   pattern;
 
     RegexpLike(Field<?> search, Field<String> pattern) {
         this.search = search;
@@ -132,6 +134,6 @@ class RegexpLike extends AbstractCondition {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return CLAUSES;
     }
 }

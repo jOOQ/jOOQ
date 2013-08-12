@@ -1145,8 +1145,10 @@ implements
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
             context.formatSeparator()
-                   .keyword("when not matched then insert").sql(" ")
-                   .visit(notMatchedInsert);
+                   .keyword("when not matched then insert").sql(" ");
+            notMatchedInsert.toSQLReferenceKeys(context);
+            context.formatSeparator().keyword("values")
+                   .sql(" ").visit(notMatchedInsert);
         }
 
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE

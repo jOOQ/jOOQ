@@ -39,6 +39,7 @@ package org.jooq.impl;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
+import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.SQLDialect.MARIADB;
@@ -152,9 +153,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case MYSQL: {
                     toSQLInsert(context);
                     context.formatSeparator()
+                           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                            .keyword("on duplicate key update")
                            .sql(" ")
-                           .visit(updateMap);
+                           .visit(updateMap)
+                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;
                 }
@@ -336,8 +339,10 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .keyword("into")
                .sql(" ")
                .visit(getInto())
+               .sql(" ");
+        insertMaps.insertMaps.get(0).toSQLReferenceKeys(context);
+        context.sql(" ")
                .end(INSERT_INSERT_INTO)
-               .sql(" ")
                .visit(insertMaps);
 
         context.start(INSERT_RETURNING);

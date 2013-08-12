@@ -59,6 +59,7 @@ import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.FIELD_VALUE;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
+import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
@@ -215,14 +216,20 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_INSERT_INTO),
             asList(INSERT, INSERT_INSERT_INTO, TABLE),
             asList(INSERT, INSERT_INSERT_INTO, TABLE, TABLE_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
             asList(INSERT, INSERT_VALUES),
-            asList(INSERT, INSERT_VALUES, FIELD_ROW),
-            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
-            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
-            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
-            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
-            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
-            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE)
+            asList(INSERT, INSERT_VALUES, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_RETURNING)
         ));
     }
 

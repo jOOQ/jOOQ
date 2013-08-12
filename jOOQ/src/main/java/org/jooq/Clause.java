@@ -456,10 +456,17 @@ public enum Clause {
      */
     UPDATE_RETURNING,
 
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an DELETE statement
+    // -------------------------------------------------------------------------
 
     DELETE,
     DELETE_DELETE,
     DELETE_WHERE,
+
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an MERGE statement
+    // -------------------------------------------------------------------------
 
 
     MERGE,
@@ -467,7 +474,9 @@ public enum Clause {
     MERGE_WHEN_MATCHED_THEN_UPDATE_SET,
     MERGE_WHEN_MATCHED_THEN_UPDATE_SET_ASSIGNMENT,
 
-
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an TRUNCATE statement
+    // -------------------------------------------------------------------------
 
     TRUNCATE,
     TRUNCATE_TRUNCATE,

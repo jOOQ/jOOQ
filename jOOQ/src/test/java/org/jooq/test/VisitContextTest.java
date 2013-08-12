@@ -59,6 +59,8 @@ import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.FIELD_VALUE;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
+import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
+import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
@@ -80,6 +82,7 @@ import static org.jooq.Clause.UPDATE_SET;
 import static org.jooq.Clause.UPDATE_SET_ASSIGNMENT;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
+import static org.jooq.SQLDialect.MYSQL;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
@@ -232,6 +235,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
         ));
     }
@@ -265,11 +269,58 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING),
             asList(INSERT, INSERT_RETURNING, FIELD),
             asList(INSERT, INSERT_RETURNING, FIELD, FIELD_REFERENCE),
             asList(INSERT, INSERT_RETURNING, FIELD),
             asList(INSERT, INSERT_RETURNING, FIELD, FIELD_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_INSERT_VALUES_ON_DUPLICATE_KEY() {
+
+        // Use MySQL to actually render ON DUPLICATE KEY UPDATE
+        ctx.configuration().set(MYSQL);
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .onDuplicateKeyUpdate()
+           .set(FIELD_NAME1, "value")
+           .set(FIELD_DATE1, FIELD_DATE1)
+           .getSQL();
+
+        assertEvents(asList(
+            asList(INSERT),
+            asList(INSERT, INSERT_INSERT_INTO),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE, TABLE_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_VALUES),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_RETURNING)
         ));
     }
 
@@ -309,6 +360,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
         ));
     }
@@ -367,6 +419,7 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_GROUP_BY),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_HAVING),
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_ORDER_BY),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
         ));
     }
@@ -404,7 +457,9 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_CONNECT_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_GROUP_BY),
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_HAVING),
-            asList(INSERT, INSERT_SELECT, SELECT, SELECT_ORDER_BY)
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_ORDER_BY),
+            asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
+            asList(INSERT, INSERT_RETURNING)
         ));
     }
 

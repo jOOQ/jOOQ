@@ -312,10 +312,70 @@ public enum Clause {
      * @see #TABLE
      */
     SELECT_FROM,
+
+    /**
+     * A <code>WHERE</code> clause within a {@link #SELECT} statement or
+     * subselect.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     * <p>
+     * See {@link #CONDITION} and related clauses for possible conditions
+     *
+     * @see #CONDITION
+     */
     SELECT_WHERE,
+
+    /**
+     * A <code>START WITH</code> clause within a {@link #SELECT} statement or
+     * subselect.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>START WITH</code> keywords</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     * <p>
+     * See {@link #CONDITION} and related clauses for possible conditions
+     *
+     * @see #CONDITION
+     */
     SELECT_START_WITH,
+
+    /**
+     * A <code>CONNECT BY</code> clause within a {@link #SELECT} statement or
+     * subselect.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>CONNECT BY</code> keywords</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     * <p>
+     * See {@link #CONDITION} and related clauses for possible conditions
+     *
+     * @see #CONDITION
+     */
     SELECT_CONNECT_BY,
     SELECT_GROUP_BY,
+
+    /**
+     * A <code>HAVING</code> clause within a {@link #SELECT} statement or
+     * subselect.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>HAVING</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     * <p>
+     * See {@link #CONDITION} and related clauses for possible conditions
+     *
+     * @see #CONDITION
+     */
     SELECT_HAVING,
     SELECT_ORDER_BY,
 

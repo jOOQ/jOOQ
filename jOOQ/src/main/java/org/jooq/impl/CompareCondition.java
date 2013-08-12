@@ -120,14 +120,13 @@ class CompareCondition extends AbstractCondition {
         // characters long
         boolean castRhs = (dialect == DB2 && rhs instanceof Concat);
 
-        context.keyword(op.toSQL())
-               .sql(" ")
-               .keyword(castRhs ? "cast(" : "")
-               .visit(rhs)
-               .keyword(castRhs ? " as varchar(4000))" : "");
+                     context.keyword(op.toSQL()).sql(" ");
+        if (castRhs) context.keyword("cast").sql("(");
+                     context.visit(rhs);
+        if (castRhs) context.sql(" ").keyword("as").sql(" ").keyword("varchar").sql("(4000))");
 
         if (escape != null) {
-            context.keyword(" escape '")
+            context.sql(" ").keyword("escape").sql(" '")
                    .sql(escape)
                    .sql("'");
         }

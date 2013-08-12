@@ -516,7 +516,7 @@ class UpdateQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .keyword("where ")
+                   .keyword("where").sql(" ")
                    .visit(getWhere());
         }
 

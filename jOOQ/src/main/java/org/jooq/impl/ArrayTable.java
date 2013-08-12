@@ -225,13 +225,10 @@ class ArrayTable extends AbstractTable<Record> {
 
         @Override
         public void toSQL(RenderContext context) {
-            context.keyword("(select * from unnest(")
-                   .visit(array)
-                   .keyword(") as ")
-                   .literal(alias)
-                   .sql("(")
-                   .literal("COLUMN_VALUE")
-                   .sql("))");
+            context.sql("(").keyword("select").sql(" * ")
+                   .keyword("from").sql(" ").keyword("unnest").sql("(").visit(array).sql(") ")
+                   .keyword("as").sql(" ").literal(alias)
+                   .sql("(").literal("COLUMN_VALUE").sql("))");
         }
     }
 

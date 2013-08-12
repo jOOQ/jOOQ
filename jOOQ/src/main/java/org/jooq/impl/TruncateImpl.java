@@ -111,11 +111,11 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
 
             // All other dialects do
             default: {
-                context.keyword("truncate table ");
+                context.keyword("truncate table").sql(" ");
                 context.visit(table);
 
                 if (context.configuration().dialect() == SQLDialect.DB2) {
-                    context.keyword(" immediate");
+                    context.sql(" ").keyword("immediate");
                 }
 
                 break;

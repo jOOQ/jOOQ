@@ -104,7 +104,7 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     public final void toSQL(RenderContext context) {
         boolean declare = context.declareTables();
 
-        context.keyword("delete ");
+        context.keyword("delete").sql(" ");
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
@@ -119,14 +119,14 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
             }
         }
 
-        context.keyword("from ");
+        context.keyword("from").sql(" ");
         context.declareTables(true)
                .visit(getFrom())
                .declareTables(declare);
 
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .keyword("where ")
+                   .keyword("where").sql(" ")
                    .visit(getWhere());
         }
     }

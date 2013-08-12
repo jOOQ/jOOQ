@@ -1047,7 +1047,8 @@ implements
     }
 
     private final void toSQLH2(RenderContext context) {
-        context.keyword("merge into ")
+        context.keyword("merge into")
+               .sql(" ")
                .declareTables(true)
                .visit(table)
                .formatSeparator();
@@ -1057,7 +1058,7 @@ implements
         context.sql(")");
 
         if (!getH2Keys().isEmpty()) {
-            context.keyword(" key (");
+            context.sql(" ").keyword("key").sql(" (");
             Utils.fieldNames(context, getH2Keys());
             context.sql(")");
         }
@@ -1067,18 +1068,18 @@ implements
                    .visit(h2Select);
         }
         else {
-            context.keyword(" values (")
+            context.sql(" ").keyword("values").sql(" (")
                    .visit(getH2Values())
                    .sql(")");
         }
     }
 
     private final void toSQLStandard(RenderContext context) {
-        context.keyword("merge into ")
+        context.keyword("merge into").sql(" ")
                .declareTables(true)
                .visit(table)
                .formatSeparator()
-               .keyword("using ")
+               .keyword("using").sql(" ")
                .formatIndentStart()
                .formatNewLine()
                .sql(Utils.wrapInParentheses(context.render(using)))
@@ -1091,7 +1092,7 @@ implements
                 if (using instanceof Select) {
                     int hash = Utils.hash(using);
 
-                    context.keyword(" as ")
+                    context.sql(" ").keyword("as").sql(" ")
                            .sql("dummy_")
                            .sql(hash)
                            .sql("(");
@@ -1117,41 +1118,41 @@ implements
         }
 
         context.formatSeparator()
-               .keyword("on ")
+               .keyword("on").sql(" ")
                .sql(Utils.wrapInParentheses(context.render(on)));
 
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {
             context.formatSeparator()
-                   .keyword("when matched then update set ")
+                   .keyword("when matched then update set").sql(" ")
                    .visit(matchedUpdate);
         }
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null) {
             context.formatSeparator()
-                   .keyword("where ")
+                   .keyword("where").sql(" ")
                    .visit(matchedWhere);
         }
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
         if (matchedDeleteWhere != null) {
             context.formatSeparator()
-                   .keyword("delete where ")
+                   .keyword("delete where").sql(" ")
                    .visit(matchedDeleteWhere);
         }
 
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
             context.formatSeparator()
-                   .sql("when not matched then insert ")
+                   .keyword("when not matched then insert").sql(" ")
                    .visit(notMatchedInsert);
         }
 
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
         if (notMatchedWhere != null) {
             context.formatSeparator()
-                   .keyword("where ")
+                   .keyword("where").sql(" ")
                    .visit(notMatchedWhere);
         }
 

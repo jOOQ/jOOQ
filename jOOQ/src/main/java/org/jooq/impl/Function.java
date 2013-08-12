@@ -247,12 +247,12 @@ class Function<T> extends AbstractField<T> implements
         context.sql(")"); // XMLTEXT
 
         if (!withinGroupOrderBy.isEmpty()) {
-            context.keyword(" order by ")
+            context.sql(" ").keyword("order by").sql(" ")
                    .visit(withinGroupOrderBy);
         }
 
         context.sql(")"); // XMLAGG
-        context.keyword(" as ");
+        context.sql(" ").keyword("as").sql(" ");
         context.sql(DB2DataType.VARCHAR.getCastTypeName());
         context.sql(")"); // XMLSERIALIZE
 
@@ -274,7 +274,7 @@ class Function<T> extends AbstractField<T> implements
         context.sql("(");
 
         if (distinct) {
-            context.keyword("distinct ");
+            context.keyword("distinct").sql(" ");
         }
 
         // The explicit cast is needed in Postgres
@@ -289,7 +289,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         if (!withinGroupOrderBy.isEmpty()) {
-            context.keyword(" order by ")
+            context.sql(" ").keyword("order by").sql(" ")
                    .visit(withinGroupOrderBy);
         }
 
@@ -305,18 +305,18 @@ class Function<T> extends AbstractField<T> implements
         context.sql("(");
 
         if (distinct) {
-            context.keyword("distinct ");
+            context.keyword("distinct").sql(" ");
         }
 
         context.visit(arguments.get(0));
 
         if (!withinGroupOrderBy.isEmpty()) {
-            context.keyword(" order by ")
+            context.sql(" ").keyword("order by").sql(" ")
                    .visit(withinGroupOrderBy);
         }
 
         if (arguments.size() > 1) {
-            context.keyword(" separator ")
+            context.sql(" ").keyword("separator").sql(" ")
                    .visit(arguments.get(1));
         }
 
@@ -336,7 +336,7 @@ class Function<T> extends AbstractField<T> implements
         }
 
         String glue = "";
-        context.keyword(" over (");
+        context.sql(" ").keyword("over").sql(" (");
         if (!partitionBy.isEmpty()) {
 
             // Ignore PARTITION BY 1 clause. These databases erroneously map the
@@ -345,7 +345,7 @@ class Function<T> extends AbstractField<T> implements
             }
             else {
                 context.sql(glue)
-                       .keyword("partition by ")
+                       .keyword("partition by").sql(" ")
                        .visit(partitionBy);
 
                 glue = " ";
@@ -354,7 +354,7 @@ class Function<T> extends AbstractField<T> implements
 
         if (!orderBy.isEmpty()) {
             context.sql(glue)
-                   .keyword("order by ")
+                   .keyword("order by").sql(" ")
                    .visit(orderBy);
 
             glue = " ";
@@ -362,13 +362,13 @@ class Function<T> extends AbstractField<T> implements
 
         if (rowsStart != null) {
             context.sql(glue);
-            context.keyword("rows ");
+            context.keyword("rows").sql(" ");
 
             if (rowsEnd != null) {
-                context.keyword("between ");
+                context.keyword("between").sql(" ");
                 toSQLRows(context, rowsStart);
 
-                context.keyword(" and ");
+                context.sql(" ").keyword("and").sql(" ");
                 toSQLRows(context, rowsEnd);
             }
             else {
@@ -386,10 +386,11 @@ class Function<T> extends AbstractField<T> implements
      */
     private void toSQLKeepDenseRankOrderByClause(RenderContext context) {
         if (!keepDenseRankOrderBy.isEmpty()) {
-            context.keyword(" keep (dense_rank ")
-                   .keyword(first ? "first" : "last")
-                   .keyword(" order by ")
-                   .visit(keepDenseRankOrderBy)
+            context.sql(" ").keyword("keep")
+                   .sql(" (").keyword("dense_rank")
+                   .sql(" ").keyword(first ? "first" : "last")
+                   .sql(" ").keyword("order by")
+                   .sql(" ").visit(keepDenseRankOrderBy)
                    .sql(")");
         }
     }
@@ -399,8 +400,9 @@ class Function<T> extends AbstractField<T> implements
      */
     private final void toSQLWithinGroupClause(RenderContext context) {
         if (!withinGroupOrderBy.isEmpty()) {
-            context.keyword(" within group (order by ")
-                   .visit(withinGroupOrderBy)
+            context.sql(" ").keyword("within group")
+                   .sql(" (").keyword("order by")
+                   .sql(" ").visit(withinGroupOrderBy)
                    .sql(")");
         }
     }
@@ -413,7 +415,7 @@ class Function<T> extends AbstractField<T> implements
         context.sql("(");
 
         if (distinct) {
-            context.keyword("distinct ");
+            context.keyword("distinct").sql(" ");
         }
 
         if (!arguments.isEmpty()) {
@@ -425,7 +427,7 @@ class Function<T> extends AbstractField<T> implements
                 context.sql(", 'IGNORE NULLS'");
             }
             else {
-                context.keyword(" ignore nulls");
+                context.sql(" ").keyword("ignore nulls");
             }
         }
         else if (respectNulls) {
@@ -433,7 +435,7 @@ class Function<T> extends AbstractField<T> implements
                 context.sql(", 'RESPECT NULLS'");
             }
             else {
-                context.keyword(" respect nulls");
+                context.sql(" ").keyword("respect nulls");
             }
         }
 
@@ -461,11 +463,11 @@ class Function<T> extends AbstractField<T> implements
         }
         else if (rows < 0) {
             context.sql(-rows);
-            context.keyword(" preceding");
+            context.sql(" ").keyword("preceding");
         }
         else if (rows > 0) {
             context.sql(rows);
-            context.keyword(" following");
+            context.sql(" ").keyword("following");
         }
         else {
             context.keyword("current row");

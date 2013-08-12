@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.Collection;
@@ -65,8 +66,11 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
     public final void toSQL(RenderContext context) {
         toSQLReferenceKeys(context);
         context.formatSeparator()
-               .keyword("values ");
+               .start(INSERT_VALUES)
+               .keyword("values")
+               .sql(" ");
         toSQLReferenceValues(context);
+        context.end(INSERT_VALUES);
     }
 
     final void toSQLReferenceKeys(RenderContext context) {

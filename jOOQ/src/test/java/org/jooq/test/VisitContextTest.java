@@ -57,6 +57,9 @@ import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.FIELD_VALUE;
+import static org.jooq.Clause.INSERT;
+import static org.jooq.Clause.INSERT_INSERT_INTO;
+import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_FROM;
@@ -199,6 +202,28 @@ public class VisitContextTest extends AbstractTest {
         @Override
         public void visitEnd(VisitContext context) {
         }
+    }
+
+    @Test
+    public void test_INSERT_VALUES_simple() {
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .getSQL();
+
+        assertEvents(asList(
+            asList(INSERT),
+            asList(INSERT, INSERT_INSERT_INTO),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE, TABLE_REFERENCE),
+            asList(INSERT, INSERT_VALUES),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE)
+        ));
     }
 
     @Test

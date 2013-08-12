@@ -320,14 +320,75 @@ public enum Clause {
     SELECT_ORDER_BY,
 
 
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an INSERT statement
+    // -------------------------------------------------------------------------
 
+    /**
+     * A complete <code>INSERT</code> statement.
+     */
     INSERT,
+
+    /**
+     * The <code>INSERT INTO</code> clause within an {@link #INSERT} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>INSERT INTO</code> keywords</li>
+     * <li>the table that is being inserted</li>
+     * </ul>
+     */
     INSERT_INSERT_INTO,
+
+    /**
+     * The <code>VALUES</code> clause within an {@link #INSERT} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>VALUES</code> keyword</li>
+     * <li>several {@link #FIELD_ROW} clauses</li>
+     * </ul>
+     */
+    INSERT_VALUES,
+
+    /**
+     * The <code>SELECT</code> clause within an {@link #INSERT} statement.
+     * <p>
+     * This clause surrounds a {@link #SELECT} clause.
+     */
+    INSERT_SELECT,
+
+    /**
+     * The <code>ON DUPLICATE KEY UPDATE</code> clause within an {@link #INSERT}
+     * statement.
+     * <p>
+     * This clause surrounds several
+     * {@link #INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT} clauses.
+     * <ul>
+     * <li>the <code>ON DUPLICATE KEY UPDATE</code> keywords</li>
+     * <li>several {@link #INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT} clauses</li>
+     * </ul>
+     */
     INSERT_ON_DUPLICATE_KEY_UPDATE,
+
+    /**
+     * The <code>ON DUPLICATE KEY UPDATE</code> clause within an {@link #INSERT}
+     * statement.
+     * <p>
+     * This clause surrounds two {@link #FIELD} clauses.
+     */
     INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT,
+
+    /**
+     * The <code>RETURNING</code> clause within an {@link #INSERT} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RETURNING</code> keyword</li>
+     * <li>several {@link #FIELD} clauses</li>
+     * </ul>
+     */
     INSERT_RETURNING,
-
-
 
     // -------------------------------------------------------------------------
     // Clauses that are used in an UPDATE statement

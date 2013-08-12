@@ -60,6 +60,7 @@ import org.jooq.Record3;
 import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Result;
+import org.jooq.SelectOrderByStep;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.exception.DataAccessException;
@@ -194,18 +195,23 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         // Simple ROLLUP clause
         // --------------------
-        Result<Record2<Integer, Integer>> result = create()
+        SelectOrderByStep<Record2<Integer, Integer>> step = create()
                 .select(
                     TBook_ID(),
                     TBook_AUTHOR_ID())
                 .from(TBook())
                 .groupBy(rollup(
                     TBook_ID(),
-                    TBook_AUTHOR_ID()))
-                .orderBy(
-                    TBook_ID().asc().nullsLast(),
-                    TBook_AUTHOR_ID().asc().nullsLast())
-                .fetch();
+                    TBook_AUTHOR_ID()));
+
+        // MySQL doesn't really support ORDER BY clauses with ROLLUP
+        if (!asList(MARIADB, MYSQL).contains(dialect())) {
+            step.orderBy(
+                TBook_ID().asc().nullsLast(),
+                TBook_AUTHOR_ID().asc().nullsLast());
+        }
+
+        Result<Record2<Integer, Integer>>  result = step.fetch();
 
         assertEquals(Arrays.asList(1, 1, 2, 2, 3, 3, 4, 4, null), result.getValues(0));
         assertEquals(Arrays.asList(1, null, 1, null, 2, null, 2, null, null), result.getValues(1));

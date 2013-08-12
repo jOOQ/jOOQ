@@ -35,7 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
@@ -90,11 +90,15 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 case INGRES:
                 case ORACLE:
                 case SQLITE:
+                    context.start(INSERT_SELECT);
                     toSQLInsertSelect(context);
+                    context.end(INSERT_SELECT);
+
                     break;
 
                 default:
                     toSQL92Values(context);
+
                     break;
             }
         }
@@ -142,7 +146,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return null;
     }
 
     // -------------------------------------------------------------------------

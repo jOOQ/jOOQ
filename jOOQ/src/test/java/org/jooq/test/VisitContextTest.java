@@ -237,6 +237,43 @@ public class VisitContextTest extends AbstractTest {
     }
 
     @Test
+    public void test_INSERT_VALUES_RETURNING() {
+
+        // Postgres is the only dialect to actually have a RETURNING clause.
+        ctx.configuration().set(POSTGRES);
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .returning(FIELD_ID1, FIELD_NAME1)
+           .getSQL();
+
+        assertEvents(asList(
+            asList(INSERT),
+            asList(INSERT, INSERT_INSERT_INTO),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE, TABLE_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_VALUES),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_RETURNING),
+            asList(INSERT, INSERT_RETURNING, FIELD),
+            asList(INSERT, INSERT_RETURNING, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_RETURNING, FIELD),
+            asList(INSERT, INSERT_RETURNING, FIELD, FIELD_REFERENCE)
+        ));
+    }
+
+    @Test
     public void test_INSERT_VALUES_multiple() {
 
         // Postgres has a native implementation for multi-value inserts

@@ -60,6 +60,7 @@ import static org.jooq.Clause.FIELD_VALUE;
 import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.INSERT_RETURNING;
+import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
@@ -69,6 +70,7 @@ import static org.jooq.Clause.SELECT_HAVING;
 import static org.jooq.Clause.SELECT_ORDER_BY;
 import static org.jooq.Clause.SELECT_SELECT;
 import static org.jooq.Clause.SELECT_START_WITH;
+import static org.jooq.Clause.SELECT_UNION_ALL;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_REFERENCE;
@@ -223,13 +225,149 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_INSERT_INTO, FIELD),
             asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
             asList(INSERT, INSERT_VALUES),
-            asList(INSERT, INSERT_VALUES, FIELD),
-            asList(INSERT, INSERT_VALUES, FIELD, FIELD_VALUE),
-            asList(INSERT, INSERT_VALUES, FIELD),
-            asList(INSERT, INSERT_VALUES, FIELD, FIELD_VALUE),
-            asList(INSERT, INSERT_VALUES, FIELD),
-            asList(INSERT, INSERT_VALUES, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(INSERT, INSERT_RETURNING)
+        ));
+    }
+
+    @Test
+    public void test_INSERT_VALUES_multiple() {
+
+        // Postgres has a native implementation for multi-value inserts
+        ctx.configuration().set(POSTGRES);
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .values(2, "value", null)
+           .getSQL();
+
+        assertEvents(asList(
+            asList(INSERT),
+            asList(INSERT, INSERT_INSERT_INTO),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE, TABLE_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_VALUES),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD),
+            asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_RETURNING)
+        ));
+    }
+
+    @Test
+    public void test_INSERT_VALUES_multiple_emulated() {
+
+        // Oracle emulates multi-record inserts through INSERT .. SELECT
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .values(2, "value", null)
+           .getSQL();
+
+        assertEvents(asList(
+            asList(INSERT),
+            asList(INSERT, INSERT_INSERT_INTO),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE, TABLE_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_SELECT),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_FROM),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_FROM, TABLE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_WHERE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_START_WITH),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_CONNECT_BY),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_GROUP_BY),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_HAVING),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_ORDER_BY),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_FROM),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_FROM, TABLE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_WHERE),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_START_WITH),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_CONNECT_BY),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_GROUP_BY),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_HAVING),
+            asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_ORDER_BY),
+            asList(INSERT, INSERT_RETURNING)
+        ));
+    }
+
+    @Test
+    public void test_INSERT_SELECT() {
+        ctx.insertInto(TABLE1)
+           .select(select(val(1), val("value"), val(null)))
+           .getSQL();
+
+        assertEvents(asList(
+            asList(INSERT),
+            asList(INSERT, INSERT_INSERT_INTO),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE),
+            asList(INSERT, INSERT_INSERT_INTO, TABLE, TABLE_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD),
+            asList(INSERT, INSERT_INSERT_INTO, FIELD, FIELD_REFERENCE),
+            asList(INSERT, INSERT_SELECT),
+            asList(INSERT, INSERT_SELECT, SELECT),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_SELECT),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_SELECT, FIELD),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_SELECT, FIELD, FIELD_VALUE),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_FROM),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_FROM, TABLE),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_WHERE),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_START_WITH),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_CONNECT_BY),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_GROUP_BY),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_HAVING),
+            asList(INSERT, INSERT_SELECT, SELECT, SELECT_ORDER_BY)
         ));
     }
 

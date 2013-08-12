@@ -116,8 +116,6 @@ class FieldMapsForInsert extends AbstractQueryPart {
     }
 
     private void toSQLInsertSelect(RenderContext context) {
-        context.start(INSERT_SELECT);
-
         Select<Record> select = null;
         for (FieldMapForInsert map : insertMaps) {
             if (map != null) {
@@ -133,7 +131,6 @@ class FieldMapsForInsert extends AbstractQueryPart {
         }
 
         context.visit(select);
-        context.end(INSERT_SELECT);
     }
 
     private void toSQL92Values(RenderContext context) {

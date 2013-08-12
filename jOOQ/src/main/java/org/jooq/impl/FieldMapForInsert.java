@@ -35,8 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
-import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.Collection;
@@ -64,13 +62,32 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
     @Override
     public final void toSQL(RenderContext context) {
-        toSQLReferenceKeys(context);
-        context.formatSeparator()
-               .start(INSERT_VALUES)
-               .keyword("values")
-               .sql(" ");
-        toSQLReferenceValues(context);
-        context.end(INSERT_VALUES);
+        boolean indent = (size() > 1);
+        
+        context.sql("(");
+        
+        if (indent) {
+            context.formatIndentStart();
+        }
+        
+        String separator = "";
+        for (Field<?> field : values()) {
+            context.sql(separator);
+        
+            if (indent) {
+                context.formatNewLine();
+            }
+        
+            context.visit(field);
+            separator = ", ";
+        }
+        
+        if (indent) {
+            context.formatIndentEnd()
+                   .formatNewLine();
+        }
+        
+        context.sql(")");
     }
 
     final void toSQLReferenceKeys(RenderContext context) {
@@ -108,35 +125,6 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
         context.sql(")");
     }
 
-    final void toSQLReferenceValues(RenderContext context) {
-        boolean indent = (size() > 1);
-
-        context.sql("(");
-
-        if (indent) {
-            context.formatIndentStart();
-        }
-
-        String separator = "";
-        for (Field<?> field : values()) {
-            context.sql(separator);
-
-            if (indent) {
-                context.formatNewLine();
-            }
-
-            context.visit(field);
-            separator = ", ";
-        }
-
-        if (indent) {
-            context.formatIndentEnd()
-                   .formatNewLine();
-        }
-
-        context.sql(")");
-    }
-
     @Override
     public final void bind(BindContext context) {
         visitAll(context, keySet());
@@ -145,7 +133,7 @@ class FieldMapForInsert extends AbstractQueryPartMap<Field<?>, Field<?>> {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return null;
     }
 
     final void putFields(Collection<? extends Field<?>> fields) {

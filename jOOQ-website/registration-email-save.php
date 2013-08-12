@@ -8,7 +8,8 @@ fwrite($handle,
   '"' . str_replace('"', '""', $_POST['country']) . '",' .
   '"' . str_replace('"', '""', $_POST['company_name']) . '",' .
   '"' . str_replace('"', '""', $_POST['company_size']) . '",' .
-  '"' . str_replace('"', '""', $_POST['newsletter']) . '"' . "\n"
+  '"' . str_replace('"', '""', $_POST['newsletter']) . '",' .
+  '"' . date('Y-m-d H:i:s') . '"' . "\n"
 );
 fclose($handle);
 ?>

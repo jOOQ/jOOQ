@@ -37,6 +37,8 @@
 package org.jooq.impl;
 
 import org.jooq.BindContext;
+import org.jooq.Clause;
+import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.RenderContext;
 
@@ -46,7 +48,6 @@ import org.jooq.RenderContext;
 class FieldAlias<T> extends AbstractField<T> {
 
     private static final long     serialVersionUID = -85277321749681553L;
-
     private final Alias<Field<T>> alias;
 
     FieldAlias(Field<T> field, String alias) {
@@ -63,6 +64,11 @@ class FieldAlias<T> extends AbstractField<T> {
     @Override
     public final void bind(BindContext context) {
         context.visit(alias);
+    }
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return null;
     }
 
     @Override

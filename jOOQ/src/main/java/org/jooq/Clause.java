@@ -89,7 +89,22 @@ public enum Clause {
      */
     TABLE,
 
+    /**
+     * A table alias declaration.
+     * <p>
+     * This clause surrounds a table alias declaration, for instance within the
+     * {@link #SELECT_FROM} clause, or within a {@link #TABLE_JOIN} clause,
+     * wrapping another {@link #TABLE}.
+     * <p>
+     * Referenced table aliases emit {@link #TABLE_REFERENCE} clauses.
+     */
     TABLE_ALIAS,
+
+    /**
+     * A physical or aliased table reference.
+     * <p>
+     * This is a terminal clause used to reference physical or aliased tables.
+     */
     TABLE_REFERENCE,
     TABLE_JOIN,
     TABLE_JOIN_INNER,
@@ -104,6 +119,17 @@ public enum Clause {
     TABLE_JOIN_USING,
     TABLE_JOIN_PARTITION_BY,
 
+    /**
+     * A <code>VALUES</code> table constructor
+     * <p>
+     * This clause surrounds a
+     * <ul>
+     * <li>a <code>VALUES</code> keyword</li>
+     * <li>a table constructor with several {@link #FIELD_ROW} value expressions
+     * </li>
+     * </ul>
+     */
+    TABLE_VALUES,
     TABLE_FLASHBACK,
     TABLE_PIVOT,
 
@@ -111,9 +137,32 @@ public enum Clause {
     // Clauses used in a any type of statement to model column references
     // -------------------------------------------------------------------------
 
+    /**
+     * A field expression.
+     * <p>
+     * This clause surrounds an actual field expression as it can be encountered
+     * in various other clauses, such as for instance {@link #SELECT_SELECT}.
+     */
     FIELD,
+
+    /**
+     * A field alias declaration.
+     * <p>
+     * This clause surrounds a field alias declaration, for instance within the
+     * {@link #SELECT_SELECT} clause,
+     * wrapping another {@link #FIELD}.
+     * <p>
+     * Referenced field aliases emit {@link #FIELD_REFERENCE} clauses.
+     */
     FIELD_ALIAS,
+
+    /**
+     * A physical or aliased field reference.
+     * <p>
+     * This is a terminal clause used to reference physical or aliased fields.
+     */
     FIELD_REFERENCE,
+
     FIELD_VALUE,
     FIELD_CASE,
     FIELD_ROW,

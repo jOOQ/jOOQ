@@ -37,7 +37,12 @@
 package org.jooq.impl;
 
 import static java.util.Arrays.asList;
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.FIELD;
+import static org.jooq.Clause.FIELD_ALIAS;
+import static org.jooq.Clause.FIELD_REFERENCE;
+import static org.jooq.Clause.TABLE;
+import static org.jooq.Clause.TABLE_ALIAS;
+import static org.jooq.Clause.TABLE_REFERENCE;
 import static org.jooq.SQLDialect.CUBRID;
 import static org.jooq.SQLDialect.DERBY;
 import static org.jooq.SQLDialect.FIREBIRD;
@@ -70,11 +75,16 @@ import org.jooq.Table;
  */
 class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
-    private static final long serialVersionUID = -2456848365524191614L;
-    private final Q           wrapped;
-    private final String      alias;
-    private final String[]    fieldAliases;
-    private final boolean     wrapInParentheses;
+    private static final long     serialVersionUID        = -2456848365524191614L;
+    private static final Clause[] CLAUSES_TABLE_REFERENCE = { TABLE, TABLE_REFERENCE };
+    private static final Clause[] CLAUSES_TABLE_ALIAS     = { TABLE, TABLE_ALIAS };
+    private static final Clause[] CLAUSES_FIELD_REFERENCE = { FIELD, FIELD_REFERENCE };
+    private static final Clause[] CLAUSES_FIELD_ALIAS     = { FIELD, FIELD_ALIAS };
+
+    private final Q               wrapped;
+    private final String          alias;
+    private final String[]        fieldAliases;
+    private final boolean         wrapInParentheses;
 
     Alias(Q wrapped, String alias) {
         this(wrapped, alias, null, false);
@@ -226,7 +236,18 @@ class Alias<Q extends QueryPart> extends AbstractQueryPart {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        if (ctx.declareFields() || ctx.declareTables()) {
+            if (wrapped instanceof Table)
+                return CLAUSES_TABLE_ALIAS;
+            else
+                return CLAUSES_FIELD_ALIAS;
+        }
+        else {
+            if (wrapped instanceof Table)
+                return CLAUSES_TABLE_REFERENCE;
+            else
+                return CLAUSES_FIELD_REFERENCE;
+        }
     }
 
     @Override

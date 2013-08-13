@@ -35,16 +35,13 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.falseCondition;
 import static org.jooq.impl.DSL.fieldByName;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.using;
 
 import org.jooq.BindContext;
-import org.jooq.Clause;
 import org.jooq.Configuration;
-import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -127,11 +124,6 @@ class ArrayTableSimulation extends AbstractTable<Record> {
     @Override
     public final void bind(BindContext ctx) throws DataAccessException {
         ctx.visit(table(ctx.configuration()));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
     }
 
     @Override

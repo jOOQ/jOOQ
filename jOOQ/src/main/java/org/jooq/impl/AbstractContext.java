@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
 import java.util.ArrayDeque;
@@ -172,7 +171,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     @Override
     public final C start(Clause clause) {
-        if (clause != null && clause != DUMMY) {
+        if (clause != null) {
             visitClauses.addLast(clause);
 
             for (VisitListener listener : visitListeners) {
@@ -185,7 +184,7 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
 
     @Override
     public final C end(Clause clause) {
-        if (clause != null && clause != DUMMY) {
+        if (clause != null) {
             for (VisitListener listener : visitListeners) {
                 listener.clauseEnd(visitContext);
             }

@@ -36,24 +36,9 @@
 package org.jooq;
 
 /**
- * TODO [#2667]
+ * A listing of clauses that emit events {@link VisitListener}.
  */
 public enum Clause {
-
-    /**
-     * A placeholder clause for cases where the behaviour was not yet specified.
-     * This will not go public, and is meant to be a placeholder during
-     * development.
-     */
-    @Deprecated
-    DUMMY,
-
-    // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model package references
-    // -------------------------------------------------------------------------
-
-    PACKAGE,
-    PACKAGE_REFERENCE,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model catalog references
@@ -130,8 +115,6 @@ public enum Clause {
      * </ul>
      */
     TABLE_VALUES,
-    TABLE_FLASHBACK,
-    TABLE_PIVOT,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model column references
@@ -166,6 +149,7 @@ public enum Clause {
     FIELD_VALUE,
     FIELD_CASE,
     FIELD_ROW,
+    FIELD_FUNCTION,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model condition references

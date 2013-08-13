@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.fieldByName;
 
 import java.util.ArrayList;
@@ -43,9 +42,7 @@ import java.util.List;
 
 import org.jooq.ArrayRecord;
 import org.jooq.BindContext;
-import org.jooq.Clause;
 import org.jooq.Configuration;
-import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Param;
 import org.jooq.Record;
@@ -176,11 +173,6 @@ class ArrayTable extends AbstractTable<Record> {
         ctx.visit(table(ctx.configuration()));
     }
 
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
-    }
-
     private final Table<Record> table(Configuration configuration) {
         switch (configuration.dialect().family()) {
             case ORACLE: {
@@ -299,11 +291,6 @@ class ArrayTable extends AbstractTable<Record> {
         @Override
         public final void bind(BindContext context) throws DataAccessException {
             context.visit(array);
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return new Clause[] { DUMMY };
         }
 
         @Override

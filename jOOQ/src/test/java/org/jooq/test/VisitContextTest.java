@@ -175,9 +175,6 @@ public class VisitContextTest extends AbstractTest {
 
         @Override
         public void clauseStart(VisitContext context) {
-            if (context.clause() == Clause.DUMMY)
-                return;
-
             clause = context.clause();
             indent += 2;
             System.out.println(leftPad("+-", indent, "| ") + context.clause());
@@ -185,9 +182,6 @@ public class VisitContextTest extends AbstractTest {
 
         @Override
         public void clauseEnd(VisitContext context) {
-            if (context.clause() == Clause.DUMMY)
-                return;
-
             if (clause == SELECT_WHERE) {
                 if (context.renderContext() != null) {
                     context.renderContext()

@@ -35,11 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
-
 import org.jooq.BindContext;
-import org.jooq.Clause;
-import org.jooq.Context;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Table;
@@ -80,11 +76,6 @@ class WithTable<R extends Record> extends AbstractTable<R> {
     @Override
     public final void bind(BindContext context) {
         context.visit(delegate);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
     }
 
     @Override

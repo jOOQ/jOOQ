@@ -92,7 +92,6 @@ import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
-import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
 import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DefaultVisitListenerProvider.providers;
@@ -100,13 +99,11 @@ import static org.jooq.test.data.Table1.FIELD_DATE1;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
-import static org.jooq.tools.StringUtils.leftPad;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jooq.Clause;
-import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
@@ -138,74 +135,6 @@ public class VisitContextTest extends AbstractTest {
     public void teardown() {
         ctx = null;
         listener = null;
-    }
-
-
-    @Test
-    public void testClauses() {
-        Configuration c = create.configuration().derive(providers(new ClausesListener()));
-
-//        String sql =
-//        using(c)
-//            .select(FIELD_ID1, FIELD_NAME1)
-//            .from(select(FIELD_NAME1).from(
-//                TABLE1,
-//                TABLE2.join(TABLE3).on("1 = 2")
-//                      .leftOuterJoin(TABLE3).on("1 = 1")))
-//            .where(FIELD_ID1.eq(1))
-//            .and(FIELD_NAME1.ne("3"))
-//            .and("x = y")
-//            .having(FIELD_ID1.eq(1))
-//            .getSQL();
-        String sql =
-        using(c)
-            .select(FIELD_ID1, FIELD_NAME1)
-            .from(select(FIELD_NAME1).from(TABLE1))
-            .getSQL();
-
-        System.out.println();
-        System.out.println(sql);
-    }
-
-    private static class ClausesListener implements VisitListener {
-
-        Clause clause;
-        String where = "where";
-        int indent = 0;
-
-        @Override
-        public void clauseStart(VisitContext context) {
-            clause = context.clause();
-            indent += 2;
-            System.out.println(leftPad("+-", indent, "| ") + context.clause());
-        }
-
-        @Override
-        public void clauseEnd(VisitContext context) {
-            if (clause == SELECT_WHERE) {
-                if (context.renderContext() != null) {
-                    context.renderContext()
-                           .sql(" ")
-                           .keyword(where)
-                           .sql(" ")
-                           .sql("SecurityCode IN (1, 2, 3)");
-                }
-            }
-
-            clause = null;
-            indent -= 2;
-        }
-
-        @Override
-        public void visitStart(VisitContext context) {
-            if (clause == SELECT_WHERE) {
-                where = "and";
-            }
-        }
-
-        @Override
-        public void visitEnd(VisitContext context) {
-        }
     }
 
     @Test

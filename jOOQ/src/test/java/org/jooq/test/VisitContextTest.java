@@ -54,6 +54,7 @@ import static org.jooq.Clause.CONDITION_NOT_EXISTS;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Clause.CONDITION_OR;
 import static org.jooq.Clause.FIELD;
+import static org.jooq.Clause.FIELD_ALIAS;
 import static org.jooq.Clause.FIELD_REFERENCE;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.Clause.FIELD_VALUE;
@@ -75,7 +76,9 @@ import static org.jooq.Clause.SELECT_START_WITH;
 import static org.jooq.Clause.SELECT_UNION_ALL;
 import static org.jooq.Clause.SELECT_WHERE;
 import static org.jooq.Clause.TABLE;
+import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
+import static org.jooq.Clause.TABLE_VALUES;
 import static org.jooq.Clause.UPDATE;
 import static org.jooq.Clause.UPDATE_RETURNING;
 import static org.jooq.Clause.UPDATE_SET;
@@ -91,6 +94,7 @@ import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.using;
 import static org.jooq.impl.DSL.val;
+import static org.jooq.impl.DSL.values;
 import static org.jooq.impl.DefaultVisitListenerProvider.providers;
 import static org.jooq.test.data.Table1.FIELD_DATE1;
 import static org.jooq.test.data.Table1.FIELD_ID1;
@@ -208,6 +212,75 @@ public class VisitContextTest extends AbstractTest {
         @Override
         public void visitEnd(VisitContext context) {
         }
+    }
+
+    @Test
+    public void test_table_VALUES() {
+
+        // Postgres supports VALUES table constructors
+        ctx.configuration().set(POSTGRES);
+        ctx.renderContext().declareTables(true).render(values(row(1, "value"), row(2, "value")));
+
+        assertEvents(asList(
+            asList(TABLE),
+            asList(TABLE, TABLE_ALIAS),
+            asList(TABLE, TABLE_ALIAS, TABLE),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD, FIELD_VALUE)
+        ));
+    }
+
+    @Test
+    public void test_tableAliasReference() {
+        ctx.render(TABLE1.as("x"));
+
+        assertEvents(asList(
+            asList(TABLE),
+            asList(TABLE, TABLE_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_tableAliasDeclaration() {
+        ctx.renderContext().declareTables(true).render(TABLE1.as("x"));
+
+        assertEvents(asList(
+            asList(TABLE),
+            asList(TABLE, TABLE_ALIAS),
+            asList(TABLE, TABLE_ALIAS, TABLE),
+            asList(TABLE, TABLE_ALIAS, TABLE, TABLE_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_fieldAliasReference() {
+        ctx.render(FIELD_ID1.as("x"));
+
+        assertEvents(asList(
+            asList(FIELD),
+            asList(FIELD, FIELD_REFERENCE)
+        ));
+    }
+
+    @Test
+    public void test_fieldAliasDeclaration() {
+        ctx.renderContext().declareFields(true).render(FIELD_ID1.as("x"));
+
+        assertEvents(asList(
+            asList(FIELD),
+            asList(FIELD, FIELD_ALIAS),
+            asList(FIELD, FIELD_ALIAS, FIELD),
+            asList(FIELD, FIELD_ALIAS, FIELD, FIELD_REFERENCE)
+        ));
     }
 
     @Test
@@ -531,18 +604,16 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_UPDATE, TABLE, TABLE_REFERENCE),
             asList(UPDATE, UPDATE_SET),
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD, FIELD_VALUE),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD),
-            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD, FIELD_REFERENCE),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_RETURNING)
         ));
@@ -831,24 +902,21 @@ public class VisitContextTest extends AbstractTest {
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_REFERENCE),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_VALUE),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_VALUE),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_VALUE),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD),
-            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_ROW, FIELD, FIELD_VALUE)
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD, FIELD_REFERENCE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD),
+            asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD, FIELD_VALUE)
         ));
     }
 

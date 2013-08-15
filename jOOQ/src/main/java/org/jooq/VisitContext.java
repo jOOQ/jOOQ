@@ -127,12 +127,24 @@ public interface VisitContext {
     Context<?> context();
 
     /**
-     * The underlying {@link RenderContext} or <code>null</code>, if the underlying context is a {@link BindContext}.
+     * The underlying {@link RenderContext} or <code>null</code>, if the
+     * underlying context is a {@link BindContext}.
+     * <p>
+     * [#2694] [#2695] As of jOOQ 3.2, the {@link QueryPart} traversal SPI
+     * through {@link VisitListener} is only implemented for
+     * {@link RenderContext}. Hence, you may need to inline bind values if
+     * applicable.
      */
     RenderContext renderContext();
 
     /**
-     * The underlying {@link BindContext} or <code>null</code>, if the underlying context is a {@link RenderContext}.
+     * The underlying {@link BindContext} or <code>null</code>, if the
+     * underlying context is a {@link RenderContext}.
+     *
+     * @throws UnsupportedOperationException [#2694] [#2695] As of jOOQ 3.2,
+     *             this method is not yet implemented as {@link QueryPart}
+     *             traversal SPI through {@link VisitListener} is only
+     *             implemented for {@link RenderContext}
      */
-    BindContext bindContext();
+    BindContext bindContext() throws UnsupportedOperationException;
 }

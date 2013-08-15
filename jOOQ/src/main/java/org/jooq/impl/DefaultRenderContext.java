@@ -40,19 +40,30 @@ import static org.jooq.conf.ParamType.INDEXED;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.conf.ParamType.NAMED;
 import static org.jooq.impl.Utils.DATA_COUNT_BIND_VALUES;
+import static org.jooq.impl.Utils.DATA_OMIT_CLAUSE_EVENT_EMISSION;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
+import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
+import org.jooq.Context;
 import org.jooq.Param;
 import org.jooq.QueryPart;
 import org.jooq.QueryPartInternal;
 import org.jooq.RenderContext;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
+import org.jooq.VisitContext;
+import org.jooq.VisitListener;
+import org.jooq.VisitListenerProvider;
 import org.jooq.conf.ParamType;
 import org.jooq.conf.RenderKeywordStyle;
 import org.jooq.conf.RenderNameStyle;
@@ -66,27 +77,33 @@ import org.jooq.tools.StringUtils;
  */
 class DefaultRenderContext extends AbstractContext<RenderContext> implements RenderContext {
 
-    private static final JooqLogger  log                = JooqLogger.getLogger(DefaultRenderContext.class);
+    private static final JooqLogger   log                = JooqLogger.getLogger(DefaultRenderContext.class);
 
-    private static final Pattern     IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
-    private static final Pattern     NEWLINE            = Pattern.compile("[\\n\\r]");
-    private static final Set<String> SQLITE_KEYWORDS;
+    private static final Pattern      IDENTIFIER_PATTERN = Pattern.compile("[A-Za-z][A-Za-z0-9_]*");
+    private static final Pattern      NEWLINE            = Pattern.compile("[\\n\\r]");
+    private static final Set<String>  SQLITE_KEYWORDS;
 
-    private final StringBuilder      sql;
-    private ParamType                paramType;
-    private int                      params;
-    private boolean                  qualify            = true;
-    private int                      alias;
-    private CastMode                 castMode           = CastMode.DEFAULT;
-    private SQLDialect[]             castDialects;
-    private int                      indent;
-    private Stack<Integer>           indentLock         = new Stack<Integer>();
-    private int                      printMargin        = 80;
+    private final StringBuilder       sql;
+    private ParamType                 paramType;
+    private int                       params;
+    private boolean                   qualify            = true;
+    private int                       alias;
+    private CastMode                  castMode           = CastMode.DEFAULT;
+    private SQLDialect[]              castDialects;
+    private int                       indent;
+    private Stack<Integer>            indentLock         = new Stack<Integer>();
+    private int                       printMargin        = 80;
 
     // [#1632] Cached values from Settings
-    private RenderKeywordStyle       cachedRenderKeywordStyle;
-    private RenderNameStyle          cachedRenderNameStyle;
-    private boolean                  cachedRenderFormatted;
+    private RenderKeywordStyle        cachedRenderKeywordStyle;
+    private RenderNameStyle           cachedRenderNameStyle;
+    private boolean                   cachedRenderFormatted;
+
+    // [#2665] VisitListener API
+    final VisitListener[]             visitListeners;
+    private final DefaultVisitContext visitContext;
+    private final Deque<Clause>       visitClauses;
+    private final Deque<QueryPart>    visitParts;
 
     DefaultRenderContext(Configuration configuration) {
         super(configuration);
@@ -97,6 +114,17 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         this.cachedRenderKeywordStyle = settings.getRenderKeywordStyle();
         this.cachedRenderFormatted = Boolean.TRUE.equals(settings.isRenderFormatted());
         this.cachedRenderNameStyle = settings.getRenderNameStyle();
+
+        VisitListenerProvider[] providers = configuration.visitListenerProviders();
+
+        this.visitListeners = new VisitListener[providers.length];
+        this.visitContext = new DefaultVisitContext();
+        this.visitClauses = new ArrayDeque<Clause>();
+        this.visitParts = new ArrayDeque<QueryPart>();
+
+        for (int i = 0; i < providers.length; i++) {
+            this.visitListeners[i] = providers[i].provide();
+        }
     }
 
     DefaultRenderContext(RenderContext context) {
@@ -108,6 +136,161 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         declareFields(context.declareFields());
         declareTables(context.declareTables());
         data().putAll(context.data());
+    }
+
+    // ------------------------------------------------------------------------
+    // VisitListener API
+    // ------------------------------------------------------------------------
+
+    @Override
+    public final RenderContext start(Clause clause) {
+        if (clause != null) {
+            visitClauses.addLast(clause);
+
+            for (VisitListener listener : visitListeners) {
+                listener.clauseStart(visitContext);
+            }
+        }
+
+        return this;
+    }
+
+    @Override
+    public final RenderContext end(Clause clause) {
+        if (clause != null) {
+            for (VisitListener listener : visitListeners) {
+                listener.clauseEnd(visitContext);
+            }
+
+            if (visitClauses.removeLast() != clause)
+                throw new IllegalStateException("Mismatch between visited clauses!");
+        }
+
+        return this;
+    }
+
+    @Override
+    public final RenderContext visit(QueryPart part) {
+        if (part != null) {
+            Clause[] clauses = visitListeners.length > 0 ? clause(part) : null;
+            if (clauses != null)
+                for (int i = 0; i < clauses.length; i++)
+                    start(clauses[i]);
+
+            
+            start(part);
+            super.visit(part);
+            end(part);
+            
+            if (clauses != null)
+                for (int i = clauses.length - 1; i >= 0; i--)
+                    end(clauses[i]);
+        }
+
+        return this;
+    }
+
+    private final void start(QueryPart part) {
+        visitParts.addLast(part);
+
+        for (VisitListener listener : visitListeners) {
+            listener.visitStart(visitContext);
+        }
+    }
+
+    private final void end(QueryPart part) {
+        for (VisitListener listener : visitListeners) {
+            listener.visitEnd(visitContext);
+        }
+
+        if (visitParts.removeLast() != part)
+            throw new RuntimeException("Mismatch between visited query parts");
+    }
+
+    /**
+     * Emit a clause from a query part being visited.
+     * <p>
+     * This method returns a clause to emit as a surrounding event before /
+     * after visiting a query part. This is needed for all reusable query parts,
+     * whose clause type is ambiguous at the container site. An example:
+     * <p>
+     * <code><pre>SELECT * FROM [A CROSS JOIN B]</pre></code>
+     * <p>
+     * The type of the above <code>JoinTable</code> modelling
+     * <code>A CROSS JOIN B</code> is not known to the surrounding
+     * <code>SELECT</code> statement, which only knows {@link Table} types. The
+     * {@link Clause#TABLE_JOIN} event that is required to be emitted around the
+     * {@link Context#visit(QueryPart)} event has to be issued here in
+     * <code>AbstractContext</code>.
+     */
+    private final Clause[] clause(QueryPart part) {
+        if (part instanceof QueryPartInternal && data(DATA_OMIT_CLAUSE_EVENT_EMISSION) == null) {
+            return ((QueryPartInternal) part).clauses(this);
+        }
+
+        return null;
+    }
+
+    /**
+     * A {@link VisitContext} is always in the scope of the current
+     * {@link RenderContext}.
+     */
+    private class DefaultVisitContext implements VisitContext {
+
+        @Override
+        public final Map<Object, Object> data() {
+            return DefaultRenderContext.this.data();
+        }
+
+        @Override
+        public final Object data(Object key) {
+            return DefaultRenderContext.this.data(key);
+        }
+
+        @Override
+        public final Object data(Object key, Object value) {
+            return DefaultRenderContext.this.data(key, value);
+        }
+
+        @Override
+        public final Configuration configuration() {
+            return DefaultRenderContext.this.configuration();
+        }
+
+        @Override
+        public final Clause clause() {
+            return visitClauses.peekLast();
+        }
+
+        @Override
+        public final Clause[] clauses() {
+            return visitClauses.toArray(new Clause[visitClauses.size()]);
+        }
+
+        @Override
+        public final QueryPart queryPart() {
+            return visitParts.peekLast();
+        }
+
+        @Override
+        public final QueryPart[] queryParts() {
+            return visitParts.toArray(new QueryPart[visitParts.size()]);
+        }
+
+        @Override
+        public final Context<?> context() {
+            return DefaultRenderContext.this;
+        }
+
+        @Override
+        public final RenderContext renderContext() {
+            return DefaultRenderContext.this;
+        }
+
+        @Override
+        public final BindContext bindContext() {
+            throw new UnsupportedOperationException("QueryPart traversal listening is currently only supported for RenderContext");
+        }
     }
 
     // ------------------------------------------------------------------------

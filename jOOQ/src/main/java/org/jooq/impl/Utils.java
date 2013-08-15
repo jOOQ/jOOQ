@@ -194,6 +194,17 @@ final class Utils {
      */
     static final String          DATA_OMIT_CLAUSE_EVENT_EMISSION              = "org.jooq.configuration.omit-clause-event-emission";
 
+    /**
+     * [#2665] Wrap derived tables in parentheses.
+     * <p>
+     * Before allowing for hooking into the SQL transformation SPI, new
+     * {@link RenderContext} instances could be created to "try" to render a
+     * given SQL subclause before inserting it into the real SQL string. This
+     * practice should no longer be pursued, as such "sub-renderers" will emit /
+     * divert {@link Clause} events.
+     */
+    static final String          DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES      = "org.jooq.configuration.wrap-derived-tables-in-parentheses";
+
     // ------------------------------------------------------------------------
     // Other constants
     // ------------------------------------------------------------------------

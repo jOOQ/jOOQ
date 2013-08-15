@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
@@ -65,6 +66,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -197,6 +199,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void toSQL(RenderContext context) {
+        Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
+        if (TRUE.equals(wrapDerivedTables)) {
+            context.sql("(")
+                   .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
+        }
 
         // If a limit applies
         if (getLimit().isApplicable()) {
@@ -339,6 +346,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         if (!StringUtils.isBlank(option)) {
             context.formatSeparator()
                    .sql(option);
+        }
+
+        if (TRUE.equals(wrapDerivedTables)) {
+            context.sql(")")
+                   .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
         }
     }
 

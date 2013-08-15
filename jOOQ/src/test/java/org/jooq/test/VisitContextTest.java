@@ -53,6 +53,9 @@ import static org.jooq.Clause.CONDITION_NOT_BETWEEN_SYMMETRIC;
 import static org.jooq.Clause.CONDITION_NOT_EXISTS;
 import static org.jooq.Clause.CONDITION_NOT_IN;
 import static org.jooq.Clause.CONDITION_OR;
+import static org.jooq.Clause.DELETE;
+import static org.jooq.Clause.DELETE_DELETE;
+import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_ALIAS;
 import static org.jooq.Clause.FIELD_REFERENCE;
@@ -100,14 +103,23 @@ import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.DSLContext;
+import org.jooq.QueryPart;
+import org.jooq.RenderContext;
 import org.jooq.VisitContext;
 import org.jooq.VisitListener;
 import org.jooq.impl.DSL;
+import org.jooq.tools.jdbc.MockConnection;
+import org.jooq.tools.jdbc.MockDataProvider;
+import org.jooq.tools.jdbc.MockExecuteContext;
+import org.jooq.tools.jdbc.MockResult;
+import org.jooq.tools.jdbc.MockStatement;
 
 import org.junit.After;
 import org.junit.Before;
@@ -142,8 +154,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Postgres supports VALUES table constructors
         ctx.configuration().set(POSTGRES);
-        ctx.renderContext().declareTables(true).render(values(row(1, "value"), row(2, "value")));
-
         assertEvents(asList(
             asList(TABLE),
             asList(TABLE, TABLE_ALIAS),
@@ -159,59 +169,58 @@ public class VisitContextTest extends AbstractTest {
             asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD),
             asList(TABLE, TABLE_ALIAS, TABLE, TABLE_VALUES, FIELD_ROW, FIELD, FIELD_VALUE)
-        ));
+        ),
+        values(row(1, "value"), row(2, "value")),
+        r_ctx().declareTables(true),
+        b_ctx().declareTables(true));
     }
 
     @Test
     public void test_tableAliasReference() {
-        ctx.render(TABLE1.as("x"));
-
         assertEvents(asList(
             asList(TABLE),
             asList(TABLE, TABLE_REFERENCE)
-        ));
+        ),
+        TABLE1.as("x"));
     }
 
     @Test
     public void test_tableAliasDeclaration() {
-        ctx.renderContext().declareTables(true).render(TABLE1.as("x"));
-
         assertEvents(asList(
             asList(TABLE),
             asList(TABLE, TABLE_ALIAS),
             asList(TABLE, TABLE_ALIAS, TABLE),
             asList(TABLE, TABLE_ALIAS, TABLE, TABLE_REFERENCE)
-        ));
+        ),
+        TABLE1.as("x"),
+        r_ctx().declareTables(true),
+        b_ctx().declareTables(true));
     }
 
     @Test
     public void test_fieldAliasReference() {
-        ctx.render(FIELD_ID1.as("x"));
-
         assertEvents(asList(
             asList(FIELD),
             asList(FIELD, FIELD_REFERENCE)
-        ));
+        ),
+        FIELD_ID1.as("x"));
     }
 
     @Test
     public void test_fieldAliasDeclaration() {
-        ctx.renderContext().declareFields(true).render(FIELD_ID1.as("x"));
-
         assertEvents(asList(
             asList(FIELD),
             asList(FIELD, FIELD_ALIAS),
             asList(FIELD, FIELD_ALIAS, FIELD),
             asList(FIELD, FIELD_ALIAS, FIELD, FIELD_REFERENCE)
-        ));
+        ),
+        FIELD_ID1.as("x"),
+        r_ctx().declareFields(true),
+        b_ctx().declareFields(true));
     }
 
     @Test
     public void test_INSERT_VALUES_simple() {
-        ctx.insertInto(TABLE1)
-           .values(1, "value", null)
-           .getSQL();
-
         assertEvents(asList(
             asList(INSERT),
             asList(INSERT, INSERT_INSERT_INTO),
@@ -233,7 +242,9 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
-        ));
+        ),
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null));
     }
 
     @Test
@@ -241,11 +252,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Postgres is the only dialect to actually have a RETURNING clause.
         ctx.configuration().set(POSTGRES);
-        ctx.insertInto(TABLE1)
-           .values(1, "value", null)
-           .returning(FIELD_ID1, FIELD_NAME1)
-           .getSQL();
-
         assertEvents(asList(
             asList(INSERT),
             asList(INSERT, INSERT_INSERT_INTO),
@@ -271,7 +277,10 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_RETURNING, FIELD, FIELD_REFERENCE),
             asList(INSERT, INSERT_RETURNING, FIELD),
             asList(INSERT, INSERT_RETURNING, FIELD, FIELD_REFERENCE)
-        ));
+        ),
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .returning(FIELD_ID1, FIELD_NAME1));
     }
 
     @Test
@@ -279,12 +288,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Use MySQL to actually render ON DUPLICATE KEY UPDATE
         ctx.configuration().set(MYSQL);
-        ctx.insertInto(TABLE1)
-           .values(1, "value", null)
-           .onDuplicateKeyUpdate()
-           .set(FIELD_NAME1, "value")
-           .set(FIELD_DATE1, FIELD_DATE1)
-           .getSQL();
 
         assertEvents(asList(
             asList(INSERT),
@@ -317,7 +320,12 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE, INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT, FIELD, FIELD_REFERENCE),
             asList(INSERT, INSERT_RETURNING)
-        ));
+        ),
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .onDuplicateKeyUpdate()
+           .set(FIELD_NAME1, "value")
+           .set(FIELD_DATE1, FIELD_DATE1));
     }
 
     @Test
@@ -325,10 +333,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Postgres has a native implementation for multi-value inserts
         ctx.configuration().set(POSTGRES);
-        ctx.insertInto(TABLE1)
-           .values(1, "value", null)
-           .values(2, "value", null)
-           .getSQL();
 
         assertEvents(asList(
             asList(INSERT),
@@ -358,17 +362,16 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
-        ));
+        ),
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .values(2, "value", null));
     }
 
     @Test
     public void test_INSERT_VALUES_multiple_emulated() {
 
         // Oracle emulates multi-record inserts through INSERT .. SELECT
-        ctx.insertInto(TABLE1)
-           .values(1, "value", null)
-           .values(2, "value", null)
-           .getSQL();
 
         assertEvents(asList(
             asList(INSERT),
@@ -417,15 +420,14 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT_UNION_ALL, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
-        ));
+        ),
+        ctx.insertInto(TABLE1)
+           .values(1, "value", null)
+           .values(2, "value", null));
     }
 
     @Test
     public void test_INSERT_SELECT() {
-        ctx.insertInto(TABLE1)
-           .select(select(val(1), val("value"), val(null)))
-           .getSQL();
-
         assertEvents(asList(
             asList(INSERT),
             asList(INSERT, INSERT_INSERT_INTO),
@@ -456,15 +458,46 @@ public class VisitContextTest extends AbstractTest {
             asList(INSERT, INSERT_SELECT, SELECT, SELECT_ORDER_BY),
             asList(INSERT, INSERT_ON_DUPLICATE_KEY_UPDATE),
             asList(INSERT, INSERT_RETURNING)
-        ));
+        ),
+        ctx.insertInto(TABLE1)
+           .select(select(val(1), val("value"), val(null))));
+    }
+
+    @Test
+    public void test_DELETE_simple() {
+        assertEvents(asList(
+            asList(DELETE),
+            asList(DELETE, DELETE_DELETE),
+            asList(DELETE, DELETE_DELETE, TABLE),
+            asList(DELETE, DELETE_DELETE, TABLE, TABLE_REFERENCE),
+            asList(DELETE, DELETE_WHERE)
+        ),
+        ctx.delete(TABLE1));
+    }
+
+    @Test
+    public void test_DELETE_WHERE() {
+        QueryPart part =
+        ctx.delete(TABLE1)
+           .where(FIELD_ID1.eq(1));
+
+        assertEvents(asList(
+            asList(DELETE),
+            asList(DELETE, DELETE_DELETE),
+            asList(DELETE, DELETE_DELETE, TABLE),
+            asList(DELETE, DELETE_DELETE, TABLE, TABLE_REFERENCE),
+            asList(DELETE, DELETE_WHERE),
+            asList(DELETE, DELETE_WHERE, CONDITION),
+            asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON),
+            asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
+            asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(DELETE, DELETE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE)
+        ), part);
     }
 
     @Test
     public void test_UPDATE_SET_simple() {
-        ctx.update(TABLE1)
-           .set(FIELD_NAME1, "value")
-           .getSQL();
-
         assertEvents(asList(
             asList(UPDATE),
             asList(UPDATE, UPDATE_UPDATE),
@@ -478,16 +511,13 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_RETURNING)
-        ));
+        ),
+        ctx.update(TABLE1)
+           .set(FIELD_NAME1, "value"));
     }
 
     @Test
     public void test_UPDATE_SET_twoValues() {
-        ctx.update(TABLE1)
-           .set(FIELD_NAME1, "value")
-           .set(FIELD_DATE1, FIELD_DATE1)
-           .getSQL();
-
         assertEvents(asList(
             asList(UPDATE),
             asList(UPDATE, UPDATE_UPDATE),
@@ -506,7 +536,10 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_RETURNING)
-        ));
+        ),
+        ctx.update(TABLE1)
+           .set(FIELD_NAME1, "value")
+           .set(FIELD_DATE1, FIELD_DATE1));
     }
 
     @Test
@@ -514,12 +547,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Postgres is known to support this syntax particularly well
         ctx.configuration().set(POSTGRES);
-
-        ctx.update(TABLE1)
-           .set(row(FIELD_NAME1,  FIELD_DATE1),
-                row(val("value"), FIELD_DATE1))
-           .getSQL();
-
         assertEvents(asList(
             asList(UPDATE),
             asList(UPDATE, UPDATE_UPDATE),
@@ -539,16 +566,14 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD_ROW, FIELD, FIELD_REFERENCE),
             asList(UPDATE, UPDATE_WHERE),
             asList(UPDATE, UPDATE_RETURNING)
-        ));
+        ),
+        ctx.update(TABLE1)
+           .set(row(FIELD_NAME1,  FIELD_DATE1),
+                row(val("value"), FIELD_DATE1)));
     }
 
     @Test
     public void test_UPDATE_SET_WHERE() {
-        ctx.update(TABLE1)
-           .set(FIELD_NAME1, "value")
-           .where(FIELD_ID1.eq(1))
-           .getSQL();
-
         assertEvents(asList(
             asList(UPDATE),
             asList(UPDATE, UPDATE_UPDATE),
@@ -568,13 +593,42 @@ public class VisitContextTest extends AbstractTest {
             asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD),
             asList(UPDATE, UPDATE_WHERE, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE),
             asList(UPDATE, UPDATE_RETURNING)
-        ));
+        ),
+        ctx.update(TABLE1)
+           .set(FIELD_NAME1, "value")
+           .where(FIELD_ID1.eq(1)));
+    }
+
+    @Test
+    public void test_UPDATE_SET_RETURNING() {
+
+        // Postgres is the only DB to support the RETURNING clause
+        ctx.configuration().set(POSTGRES);
+        assertEvents(asList(
+            asList(UPDATE),
+            asList(UPDATE, UPDATE_UPDATE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE),
+            asList(UPDATE, UPDATE_UPDATE, TABLE, TABLE_REFERENCE),
+            asList(UPDATE, UPDATE_SET),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD),
+            asList(UPDATE, UPDATE_SET, UPDATE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(UPDATE, UPDATE_WHERE),
+            asList(UPDATE, UPDATE_RETURNING),
+            asList(UPDATE, UPDATE_RETURNING, FIELD),
+            asList(UPDATE, UPDATE_RETURNING, FIELD, FIELD_REFERENCE),
+            asList(UPDATE, UPDATE_RETURNING, FIELD),
+            asList(UPDATE, UPDATE_RETURNING, FIELD, FIELD_REFERENCE)
+        ),
+        ctx.update(TABLE1)
+           .set(FIELD_NAME1, "value")
+           .returning(FIELD_ID1, FIELD_NAME1));
     }
 
     @Test
     public void test_CONDITION_simple() {
-        ctx.render(FIELD_ID1.eq(1));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_COMPARISON),
@@ -582,13 +636,12 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
             asList(CONDITION, CONDITION_COMPARISON, FIELD),
             asList(CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE)
-        ));
+        ),
+        FIELD_ID1.eq(1));
     }
 
     @Test
     public void test_CONDITION_NOT() {
-        ctx.render(FIELD_ID1.eq(1).not());
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_NOT),
@@ -598,13 +651,12 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
             asList(CONDITION, CONDITION_NOT, CONDITION, CONDITION_COMPARISON, FIELD),
             asList(CONDITION, CONDITION_NOT, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_VALUE)
-        ));
+        ),
+        FIELD_ID1.eq(1).not());
     }
 
     @Test
     public void test_CONDITION_AND() {
-        ctx.render(FIELD_ID1.eq(1).and(FIELD_NAME1.isNotNull()));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_AND),
@@ -618,13 +670,12 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_IS_NOT_NULL),
             asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_IS_NOT_NULL, FIELD),
             asList(CONDITION, CONDITION_AND, CONDITION, CONDITION_IS_NOT_NULL, FIELD, FIELD_REFERENCE)
-        ));
+        ),
+        FIELD_ID1.eq(1).and(FIELD_NAME1.isNotNull()));
     }
 
     @Test
     public void test_CONDITION_OR() {
-        ctx.render(FIELD_ID1.eq(1).or(FIELD_NAME1.isNull()));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_OR),
@@ -638,37 +689,34 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_IS_NULL),
             asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_IS_NULL, FIELD),
             asList(CONDITION, CONDITION_OR, CONDITION, CONDITION_IS_NULL, FIELD, FIELD_REFERENCE)
-        ));
+        ),
+        FIELD_ID1.eq(1).or(FIELD_NAME1.isNull()));
     }
 
     @Test
     public void test_CONDITION_NULL() {
-        ctx.render(FIELD_ID1.isNull());
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_IS_NULL),
             asList(CONDITION, CONDITION_IS_NULL, FIELD),
             asList(CONDITION, CONDITION_IS_NULL, FIELD, FIELD_REFERENCE)
-        ));
+        ),
+        FIELD_ID1.isNull());
     }
 
     @Test
     public void test_CONDITION_NOT_NULL() {
-        ctx.render(FIELD_ID1.isNotNull());
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_IS_NOT_NULL),
             asList(CONDITION, CONDITION_IS_NOT_NULL, FIELD),
             asList(CONDITION, CONDITION_IS_NOT_NULL, FIELD, FIELD_REFERENCE)
-        ));
+        ),
+        FIELD_ID1.isNotNull());
     }
 
     @Test
     public void test_CONDITION_IN() {
-        ctx.render(FIELD_ID1.in(1, 2));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_IN),
@@ -678,13 +726,12 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_IN, FIELD, FIELD_VALUE),
             asList(CONDITION, CONDITION_IN, FIELD),
             asList(CONDITION, CONDITION_IN, FIELD, FIELD_VALUE)
-        ));
+        ),
+        FIELD_ID1.in(1, 2));
     }
 
     @Test
     public void test_CONDITION_NOT_IN() {
-        ctx.render(FIELD_ID1.notIn(1, 2));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_NOT_IN),
@@ -694,7 +741,8 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT_IN, FIELD, FIELD_VALUE),
             asList(CONDITION, CONDITION_NOT_IN, FIELD),
             asList(CONDITION, CONDITION_NOT_IN, FIELD, FIELD_VALUE)
-        ));
+        ),
+        FIELD_ID1.notIn(1, 2));
     }
 
     @Test
@@ -702,8 +750,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Omit "dual" with Postgres
         ctx.configuration().set(POSTGRES);
-        ctx.render(exists(selectOne()));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_EXISTS),
@@ -718,7 +764,8 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_GROUP_BY),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_HAVING),
             asList(CONDITION, CONDITION_EXISTS, SELECT, SELECT_ORDER_BY)
-        ));
+        ),
+        exists(selectOne()));
     }
 
     @Test
@@ -726,8 +773,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Omit "dual" with Postgres
         ctx.configuration().set(POSTGRES);
-        ctx.render(notExists(selectOne()));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_NOT_EXISTS),
@@ -742,13 +787,12 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_GROUP_BY),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_HAVING),
             asList(CONDITION, CONDITION_NOT_EXISTS, SELECT, SELECT_ORDER_BY)
-        ));
+        ),
+        notExists(selectOne()));
     }
 
     @Test
     public void test_CONDITION_BETWEEN() {
-        ctx.render(FIELD_ID1.between(1).and(2));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_BETWEEN),
@@ -758,13 +802,12 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_BETWEEN, FIELD, FIELD_VALUE),
             asList(CONDITION, CONDITION_BETWEEN, FIELD),
             asList(CONDITION, CONDITION_BETWEEN, FIELD, FIELD_VALUE)
-        ));
+        ),
+        FIELD_ID1.between(1).and(2));
     }
 
     @Test
     public void test_CONDITION_NOT_BETWEEN() {
-        ctx.render(FIELD_ID1.notBetween(1, 2));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_NOT_BETWEEN),
@@ -774,7 +817,8 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD, FIELD_VALUE),
             asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD),
             asList(CONDITION, CONDITION_NOT_BETWEEN, FIELD, FIELD_VALUE)
-        ));
+        ),
+        FIELD_ID1.notBetween(1, 2));
     }
 
     @Test
@@ -782,8 +826,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Use Postgres for its native SYMMETRIC support
         ctx.configuration().set(POSTGRES);
-        ctx.render(FIELD_ID1.betweenSymmetric(1).and(2));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC),
@@ -793,7 +835,8 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE),
             asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD),
             asList(CONDITION, CONDITION_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE)
-        ));
+        ),
+        FIELD_ID1.betweenSymmetric(1).and(2));
     }
 
     @Test
@@ -801,8 +844,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Use Postgres for its native SYMMETRIC support
         ctx.configuration().set(POSTGRES);
-        ctx.render(FIELD_ID1.notBetweenSymmetric(1, 2));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC),
@@ -812,7 +853,8 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE),
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD),
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD, FIELD_VALUE)
-        ));
+        ),
+        FIELD_ID1.notBetweenSymmetric(1, 2));
     }
 
     @Test
@@ -820,8 +862,6 @@ public class VisitContextTest extends AbstractTest {
 
         // Use Postgres for its native SYMMETRIC support
         ctx.configuration().set(POSTGRES);
-        ctx.render(row(FIELD_ID1, FIELD_NAME1).notBetweenSymmetric(1, "a").and(2, "b"));
-
         assertEvents(asList(
             asList(CONDITION),
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC),
@@ -840,10 +880,44 @@ public class VisitContextTest extends AbstractTest {
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD, FIELD_VALUE),
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD),
             asList(CONDITION, CONDITION_NOT_BETWEEN_SYMMETRIC, FIELD_ROW, FIELD, FIELD_VALUE)
-        ));
+        ),
+        row(FIELD_ID1, FIELD_NAME1).notBetweenSymmetric(1, "a").and(2, "b"));
     }
 
-    private void assertEvents(List<List<Clause>> expected) {
+    private RenderContext r_ctx() {
+        return ctx.renderContext();
+    }
+
+    private BindContext b_ctx() {
+        MockDataProvider p = new MockDataProvider() {
+            @Override
+            public MockResult[] execute(MockExecuteContext c) throws SQLException {
+                return new MockResult[0];
+            }
+        };
+
+        return ctx.bindContext(new MockStatement(new MockConnection(p), p));
+    }
+
+    private void assertEvents(List<List<Clause>> expected, QueryPart part) {
+        assertEvents(expected, part, r_ctx(), b_ctx());
+    }
+
+    private void assertEvents(List<List<Clause>> expected, QueryPart part, RenderContext r_ctx, BindContext b_ctx) {
+        listener.clauses.clear();
+        r_ctx.visit(part);
+        assertEvents0(expected);
+
+        // TODO: Re-enable this once bind variable visiting is implemented
+        if (false) {
+            listener.clauses.clear();
+            b_ctx.visit(part);
+            assertEvents0(expected);
+        }
+    }
+
+    private void assertEvents0(List<List<Clause>> expected) {
+
         // This assertion is a bit more verbose to be able to detect errors more easily
         for (int i = 0; i < expected.size() && i < listener.clauses.size(); i++) {
             assertEquals("Mismatch at position " + i + ":", expected.get(i), listener.clauses.get(i));

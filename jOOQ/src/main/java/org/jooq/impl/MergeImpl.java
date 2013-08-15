@@ -47,6 +47,7 @@ import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
 import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
 import static org.jooq.Clause.MERGE_WHERE;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
@@ -1134,12 +1135,14 @@ implements
             }
         }
 
+        boolean onParentheses = context.configuration().dialect().family() == ORACLE;
         context.end(MERGE_USING)
                .formatSeparator()
                .start(MERGE_ON)
-               .keyword("on").sql(" (")
+               // Oracle ON ( ... ) parentheses are a mandatory syntax element
+               .keyword("on").sql(onParentheses ? " (" : " ")
                .visit(on)
-               .sql(")")
+               .sql(onParentheses ? ")" : "")
                .end(MERGE_ON)
                .start(MERGE_WHEN_MATCHED_THEN_UPDATE)
                .start(MERGE_SET);

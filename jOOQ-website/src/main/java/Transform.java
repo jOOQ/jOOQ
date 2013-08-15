@@ -146,7 +146,7 @@ public class Transform {
                 }
 
                 if (content.contains("{codegen-xsd-version}")) {
-                    content = content.replace("{codegen-xsd-version}", "3.0.0");
+                    content = content.replace("{codegen-xsd-version}", "3.2.0");
                     changed = true;
                 }
 
@@ -156,7 +156,7 @@ public class Transform {
                 }
 
                 if (content.contains("{runtime-xsd-version}")) {
-                    content = content.replace("{runtime-xsd-version}", "3.0.0");
+                    content = content.replace("{runtime-xsd-version}", "3.1.0");
                     changed = true;
                 }
 

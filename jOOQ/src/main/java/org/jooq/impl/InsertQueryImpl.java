@@ -351,8 +351,7 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                .visit(getInto())
                .sql(" ");
         insertMaps.insertMaps.get(0).toSQLReferenceKeys(context);
-        context.sql(" ")
-               .end(INSERT_INSERT_INTO)
+        context.end(INSERT_INSERT_INTO)
                .visit(insertMaps);
     }
 

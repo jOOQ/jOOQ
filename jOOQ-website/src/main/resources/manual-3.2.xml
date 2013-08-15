@@ -3975,7 +3975,15 @@ Field<Integer> field2 = val("1").coerce(Integer.class);]]></java>
 										You can write something like this in jOOQ:
 									</p>
 									
-<java>create.select(val(1).add(2).mul(val(5).sub(3)).div(2).mod(10);</java>
+<java>create.select(val(1).add(2).mul(val(5).sub(3)).div(2).mod(10));</java>
+                                    
+                                    <h3>Operator precedence</h3>
+                                    <p>
+                                        jOOQ does not know any operator precedence (see also <reference id="boolean-operator-precedence" title="boolean operator precedence"/>). All operations are evaluated from left to right, as with any object-oriented API. The two following expressions are the same:
+                                    </p>
+
+<java>   val(1).add(2) .mul(val(5).sub(3)) .div(2) .mod(10);
+(((val(1).add(2)).mul(val(5).sub(3))).div(2)).mod(10);</java>
 
 									<h3>Datetime arithmetic expressions</h3>
 									<p>
@@ -5076,6 +5084,29 @@ BOOK.TITLE.notEqualIgnoreCase("animal farm")]]></java>
 </code-pair>
 								</content>
 							</section>
+                            
+                            <section id="boolean-operator-precedence">
+                                <title>Boolean operator precedence</title>
+                                <content>
+                                    <p>
+                                        As previously mentioned in the manual's section about <reference id="arithmetic-expressions" title="arithmetic expressions"/>, jOOQ does not implement operator precedence. All operators are evaluated from left to right, as expected in an object-oriented API. This is important to understand when combining <reference id="boolean-operators" title="boolean operators"/>, such as <code>AND</code>, <code>OR</code>, and <code>NOT</code>. The following expressions are equivalent:
+                                    </p>
+
+<java>
+   A.and(B) .or(C) .and(D) .or(E)
+(((A.and(B)).or(C)).and(D)).or(E)
+</java>
+
+                                    <p>
+                                        In SQL, the two expressions wouldn't be the same, as SQL natively knows operator precedence.
+                                    </p>
+                                    
+<sql>
+   A AND B  OR C  AND D  OR E -- Precedence is applied
+(((A AND B) OR C) AND D) OR E -- Precedence is overridden
+</sql>                                    
+                                </content>
+                            </section>
 
 							<section id="comparison-predicate-degree-n">
 							    <title>Comparison predicate (degree > 1)</title>

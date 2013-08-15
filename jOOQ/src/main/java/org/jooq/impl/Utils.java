@@ -86,6 +86,7 @@ import org.jooq.ArrayRecord;
 import org.jooq.Attachable;
 import org.jooq.AttachableInternal;
 import org.jooq.BindContext;
+import org.jooq.Clause;
 import org.jooq.Configuration;
 import org.jooq.Context;
 import org.jooq.Converter;
@@ -183,6 +184,14 @@ final class Utils {
      */
     static final String          DATA_FORCE_STATIC_STATEMENT                  = "org.jooq.configuration.force-static-statement";
 
+    /**
+     * [#2665] Omit the emission of clause events by {@link QueryPart}s.
+     * <p>
+     * Some {@link QueryPart}s may contain further {@link QueryPart}s for whom
+     * {@link Clause} emission should be avoided. For example
+     * {@link Clause#FIELD_REFERENCE} may contain a
+     * {@link Clause#TABLE_REFERENCE}.
+     */
     static final String          DATA_OMIT_CLAUSE_EVENT_EMISSION              = "org.jooq.configuration.omit-clause-event-emission";
 
     // ------------------------------------------------------------------------
@@ -1178,18 +1187,6 @@ final class Utils {
         }
         else {
             return table;
-        }
-    }
-
-    /**
-     * Wrap a piece of SQL code in parentheses, if not wrapped already
-     */
-    static final String wrapInParentheses(String sql) {
-        if (sql.startsWith("(")) {
-            return sql;
-        }
-        else {
-            return "(" + sql + ")";
         }
     }
 

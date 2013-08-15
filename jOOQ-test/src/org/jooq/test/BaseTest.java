@@ -462,6 +462,10 @@ public abstract class BaseTest<
         return delegate.TBook_AUTHOR_ID();
     }
 
+    protected TableField<B, Integer> TBook_CO_AUTHOR_ID() {
+        return delegate.TBook_CO_AUTHOR_ID();
+    }
+
     protected TableField<B, String> TBook_TITLE() {
         return delegate.TBook_TITLE();
     }

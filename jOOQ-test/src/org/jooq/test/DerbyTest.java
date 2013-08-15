@@ -189,6 +189,11 @@ public class DerbyTest extends jOOQAbstractTest<
 		return TBook.AUTHOR_ID;
 	}
 
+    @Override
+    protected TableField<TBookRecord, Integer> TBook_CO_AUTHOR_ID() {
+        return TBook.CO_AUTHOR_ID;
+    }
+
 	@Override
 	protected TableField<TBookRecord, String> TBook_TITLE() {
 		return TBook.TITLE;

@@ -64,6 +64,7 @@ import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.VisitContext;
+import org.jooq.conf.ParamType;
 import org.jooq.impl.DefaultVisitListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
@@ -367,7 +368,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     for (Condition c : conditions)
                         condition = condition.and(c);
 
-                    context.renderContext().visit(condition);
+                    // Force bind variable inlining
+                    ParamType previous = context.renderContext().paramType();
+                    context.renderContext()
+                           .paramType(ParamType.INLINED)
+                           .visit(condition)
+                           .paramType(previous);
                 }
             }
 

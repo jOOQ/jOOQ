@@ -132,8 +132,7 @@ public enum Clause {
      * A field alias declaration.
      * <p>
      * This clause surrounds a field alias declaration, for instance within the
-     * {@link #SELECT_SELECT} clause,
-     * wrapping another {@link #FIELD}.
+     * {@link #SELECT_SELECT} clause, wrapping another {@link #FIELD}.
      * <p>
      * Referenced field aliases emit {@link #FIELD_REFERENCE} clauses.
      */
@@ -173,7 +172,6 @@ public enum Clause {
      * This clause surrounds a {@link #FIELD}.
      */
     CONDITION_IS_NOT_NULL,
-
 
     // TODO: Should operators be distinguished?
     // - LIKE predicate
@@ -412,7 +410,6 @@ public enum Clause {
     SELECT_HAVING,
     SELECT_ORDER_BY,
 
-
     // -------------------------------------------------------------------------
     // Clauses that are used in an INSERT statement
     // -------------------------------------------------------------------------
@@ -520,9 +517,9 @@ public enum Clause {
      * <p>
      * This clause surrounds
      * <ul>
-     * <li>a column</li>
+     * <li>a {@link #FIELD} receiving the assignment</li>
      * <li>an assigment operator</li>
-     * <li>a value being assigned</li>
+     * <li>a {@link #FIELD} being assigned</li>
      * </ul>
      */
     UPDATE_SET_ASSIGNMENT,
@@ -584,11 +581,132 @@ public enum Clause {
     // Clauses that are used in an MERGE statement
     // -------------------------------------------------------------------------
 
-
+    /**
+     * A complete <code>MERGE</code> statement.
+     */
     MERGE,
+
+    /**
+     * A <code>MERGE INTO</code> clause within an {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>MERGE INTO</code> keywords</li>
+     * <li>the table that is being merged</li>
+     * </ul>
+     */
     MERGE_MERGE_INTO,
-    MERGE_WHEN_MATCHED_THEN_UPDATE_SET,
-    MERGE_WHEN_MATCHED_THEN_UPDATE_SET_ASSIGNMENT,
+
+    /**
+     * A <code>USING</code> clause within a {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>USING</code> keyword</li>
+     * <li>a {@link #TABLE}</li>
+     * </ul>
+     */
+    MERGE_USING,
+
+    /**
+     * An <code>ON</code> clause within a {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>ON</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
+    MERGE_ON,
+
+    /**
+     * A <code>WHEN MATCHED THEN UPDATE</code> clause within a {@link #MERGE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHEN MATCHED THEN UPDATE</code> keywords</li>
+     * <li>a {@link #MERGE_SET} clause</li>
+     * <li>a {@link #MERGE_WHERE} clause</li>
+     * <li>a {@link #MERGE_DELETE_WHERE} clause</li>
+     * </ul>
+     */
+    MERGE_WHEN_MATCHED_THEN_UPDATE,
+
+    /**
+     * A <code>SET</code> clause within a
+     * {@link #MERGE_WHEN_MATCHED_THEN_UPDATE} clause within an {@link #MERGE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>SET</code> keyword</li>
+     * <li>several {@link #MERGE_SET_ASSIGNMENT} clauses</li>
+     * </ul>
+     */
+    MERGE_SET,
+
+    /**
+     * An assigment within a {@link #MERGE_SET} clause within an {@link #MERGE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>a {@link #FIELD} receiving the assignment</li>
+     * <li>an assigment operator</li>
+     * <li>a {@link #FIELD} being assigned</li>
+     * </ul>
+     */
+    MERGE_SET_ASSIGNMENT,
+
+    /**
+     * A <code>WHERE</code> clause within a
+     * {@link #MERGE_WHEN_MATCHED_THEN_UPDATE} clause within a
+     * {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
+    MERGE_WHERE,
+
+    /**
+     * A <code>DELETE_WHERE</code> clause within a
+     * {@link #MERGE_WHEN_MATCHED_THEN_UPDATE} clause within a {@link #MERGE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DELETE WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
+    MERGE_DELETE_WHERE,
+
+    /**
+     * A <code>WHEN NOT MATCHED THEN INSERT</code> clause within a
+     * {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHEN NOT MATCHED THEN INSERT</code> keywords</li>
+     * <li>several {@link #FIELD} clauses</li>
+     * </ul>
+     */
+    MERGE_WHEN_NOT_MATCHED_THEN_INSERT,
+
+    /**
+     * A <code>VALUES</code> clause within a {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>VALUES</code> keyword</li>
+     * <li>several {@link #FIELD_ROW} clauses</li>
+     * </ul>
+     */
+    MERGE_VALUES,
 
     // -------------------------------------------------------------------------
     // Clauses that are used in an TRUNCATE statement

@@ -68,6 +68,17 @@ import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
 import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.Clause.INSERT_VALUES;
+import static org.jooq.Clause.MERGE;
+import static org.jooq.Clause.MERGE_DELETE_WHERE;
+import static org.jooq.Clause.MERGE_MERGE_INTO;
+import static org.jooq.Clause.MERGE_ON;
+import static org.jooq.Clause.MERGE_SET;
+import static org.jooq.Clause.MERGE_SET_ASSIGNMENT;
+import static org.jooq.Clause.MERGE_USING;
+import static org.jooq.Clause.MERGE_VALUES;
+import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
+import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
+import static org.jooq.Clause.MERGE_WHERE;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
 import static org.jooq.Clause.SELECT_FROM;
@@ -104,6 +115,8 @@ import static org.jooq.test.data.Table1.FIELD_DATE1;
 import static org.jooq.test.data.Table1.FIELD_ID1;
 import static org.jooq.test.data.Table1.FIELD_NAME1;
 import static org.jooq.test.data.Table1.TABLE1;
+import static org.jooq.test.data.Table2.FIELD_ID2;
+import static org.jooq.test.data.Table2.TABLE2;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -463,6 +476,60 @@ public class VisitContextTest extends AbstractTest {
         ),
         ctx.insertInto(TABLE1)
            .select(select(val(1), val("value"), val(null))));
+    }
+
+    @Test
+    public void test_MERGE_simple() {
+        assertEvents(asList(
+            asList(MERGE),
+            asList(MERGE, MERGE_MERGE_INTO),
+            asList(MERGE, MERGE_MERGE_INTO, TABLE),
+            asList(MERGE, MERGE_MERGE_INTO, TABLE, TABLE_REFERENCE),
+            asList(MERGE, MERGE_USING),
+            asList(MERGE, MERGE_USING, TABLE),
+            asList(MERGE, MERGE_USING, TABLE, TABLE_REFERENCE),
+            asList(MERGE, MERGE_ON),
+            asList(MERGE, MERGE_ON, CONDITION),
+            asList(MERGE, MERGE_ON, CONDITION, CONDITION_COMPARISON),
+            asList(MERGE, MERGE_ON, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(MERGE, MERGE_ON, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
+            asList(MERGE, MERGE_ON, CONDITION, CONDITION_COMPARISON, FIELD),
+            asList(MERGE, MERGE_ON, CONDITION, CONDITION_COMPARISON, FIELD, FIELD_REFERENCE),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT, FIELD),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT, FIELD),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT, FIELD, FIELD_VALUE),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT, FIELD),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT, FIELD),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_SET, MERGE_SET_ASSIGNMENT, FIELD, FIELD_REFERENCE),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_WHERE),
+            asList(MERGE, MERGE_WHEN_MATCHED_THEN_UPDATE, MERGE_DELETE_WHERE),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, FIELD),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, FIELD, FIELD_REFERENCE),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, FIELD),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, FIELD, FIELD_REFERENCE),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, MERGE_VALUES),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, MERGE_VALUES, FIELD_ROW),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, MERGE_VALUES, FIELD_ROW, FIELD),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, MERGE_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, MERGE_VALUES, FIELD_ROW, FIELD),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, MERGE_VALUES, FIELD_ROW, FIELD, FIELD_VALUE),
+            asList(MERGE, MERGE_WHEN_NOT_MATCHED_THEN_INSERT, MERGE_WHERE)
+        ),
+        ctx.mergeInto(TABLE1)
+           .using(TABLE2)
+           .on(FIELD_ID1.eq(FIELD_ID2))
+           .whenMatchedThenUpdate()
+           .set(FIELD_NAME1, "a")
+           .set(FIELD_DATE1, FIELD_DATE1)
+           .whenNotMatchedThenInsert(FIELD_ID1, FIELD_NAME1)
+           .values(1, "a"));
     }
 
     @Test

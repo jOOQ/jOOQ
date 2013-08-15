@@ -82,6 +82,8 @@ import static org.jooq.Clause.TABLE;
 import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
 import static org.jooq.Clause.TABLE_VALUES;
+import static org.jooq.Clause.TRUNCATE;
+import static org.jooq.Clause.TRUNCATE_TRUNCATE;
 import static org.jooq.Clause.UPDATE;
 import static org.jooq.Clause.UPDATE_RETURNING;
 import static org.jooq.Clause.UPDATE_SET;
@@ -461,6 +463,17 @@ public class VisitContextTest extends AbstractTest {
         ),
         ctx.insertInto(TABLE1)
            .select(select(val(1), val("value"), val(null))));
+    }
+
+    @Test
+    public void test_TRUNCATE_simple() {
+        assertEvents(asList(
+            asList(TRUNCATE),
+            asList(TRUNCATE, TRUNCATE_TRUNCATE),
+            asList(TRUNCATE, TRUNCATE_TRUNCATE, TABLE),
+            asList(TRUNCATE, TRUNCATE_TRUNCATE, TABLE, TABLE_REFERENCE)
+        ),
+        ctx.truncate(TABLE1));
     }
 
     @Test

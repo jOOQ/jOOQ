@@ -553,8 +553,31 @@ public enum Clause {
     // Clauses that are used in an DELETE statement
     // -------------------------------------------------------------------------
 
+    /**
+     * A complete <code>DELETE</code> statement.
+     */
     DELETE,
+
+    /**
+     * A <code>DELETE</code> clause within an {@link #DELETE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DELETE FROM</code> keywords</li>
+     * <li>the table that is being deleted</li>
+     * </ul>
+     */
     DELETE_DELETE,
+
+    /**
+     * A <code>WHERE</code> clause within an {@link #DELETE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
     DELETE_WHERE,
 
     // -------------------------------------------------------------------------
@@ -571,6 +594,19 @@ public enum Clause {
     // Clauses that are used in an TRUNCATE statement
     // -------------------------------------------------------------------------
 
+    /**
+     * A complete <code>TRUNCATE</code> statement.
+     */
     TRUNCATE,
+
+    /**
+     * A <code>TRUNCATE</code> clause within an {@link #TRUNCATE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>TRUNCATE TABLE</code> keywords</li>
+     * <li>the table that is being truncated</li>
+     * </ul>
+     */
     TRUNCATE_TRUNCATE,
 }

@@ -807,6 +807,7 @@ public abstract class jOOQAbstractTest<
 
     protected abstract TableField<B, Integer> TBook_ID();
     protected abstract TableField<B, Integer> TBook_AUTHOR_ID();
+    protected abstract TableField<B, Integer> TBook_CO_AUTHOR_ID();
     protected abstract TableField<B, String> TBook_TITLE();
     protected abstract TableField<B, Integer> TBook_LANGUAGE_ID();
     protected abstract TableField<B, Integer> TBook_PUBLISHED_IN();

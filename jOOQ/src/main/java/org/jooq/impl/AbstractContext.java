@@ -149,8 +149,13 @@ abstract class AbstractContext<C extends Context<C>> implements Context<C> {
         }
 
         @Override
-        public final QueryPart visiting() {
+        public final QueryPart queryPart() {
             return visitParts.peekLast();
+        }
+
+        @Override
+        public final QueryPart[] queryParts() {
+            return visitParts.toArray(new QueryPart[visitParts.size()]);
         }
 
         @Override

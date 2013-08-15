@@ -37,6 +37,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TABLE;
+import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.TABLE_REFERENCE;
 
 import org.jooq.BindContext;
@@ -57,8 +58,9 @@ import org.jooq.tools.StringUtils;
  */
 public class TableImpl<R extends Record> extends AbstractTable<R> {
 
-    private static final long     serialVersionUID = 261033315221985068L;
-    private static final Clause[] CLAUSES          = { TABLE, TABLE_REFERENCE };
+    private static final long     serialVersionUID        = 261033315221985068L;
+    private static final Clause[] CLAUSES_TABLE_REFERENCE = { TABLE, TABLE_REFERENCE };
+    private static final Clause[] CLAUSES_TABLE_ALIAS     = { TABLE, TABLE_ALIAS };
 
     private final Fields<R>       fields;
     private final Alias<Table<R>> alias;
@@ -102,7 +104,7 @@ public class TableImpl<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return CLAUSES;
+        return alias != null ? CLAUSES_TABLE_ALIAS : CLAUSES_TABLE_REFERENCE;
     }
 
     @Override

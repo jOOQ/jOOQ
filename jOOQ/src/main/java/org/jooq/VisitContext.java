@@ -97,7 +97,7 @@ public interface VisitContext {
     Clause clause();
 
     /**
-     * All previous clauses.
+     * A path of clauses going through the visiting tree.
      * <p>
      * This returns all previous clauses that were encountered through
      * {@link Context#start(Clause)} and that haven't been removed yet through
@@ -107,9 +107,19 @@ public interface VisitContext {
     Clause[] clauses();
 
     /**
-     * The {@link QueryPart} that is being visited.
+     * The most recent {@link QueryPart} that was encountered through
+     * {@link Context#visit(QueryPart)}
      */
-    QueryPart visiting();
+    QueryPart queryPart();
+
+    /**
+     * A path of {@link QueryPart}s going through the visiting tree.
+     * <p>
+     * This returns all previous <code>QueryParts</code> that were encountered
+     * through {@link Context#visit(QueryPart)}. In other words,
+     * <code>VisitContext</code> contains a stack of <code>QueryParts</code>.
+     */
+    QueryPart[] queryParts();
 
     /**
      * The underlying {@link RenderContext} or {@link BindContext} object.

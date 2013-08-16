@@ -91,17 +91,18 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
     @Override
     public abstract void toSQL(RenderContext context);
 
+    // -------------------------------------------------------------------------
+    // Implementation optional
+    // -------------------------------------------------------------------------
+
     /**
-     * Subclasses must implement this method
+     * Subclasses may implement this method
      * <hr/>
      * {@inheritDoc}
      */
     @Override
-    public abstract void bind(BindContext context) throws DataAccessException;
-
-    // -------------------------------------------------------------------------
-    // Implementation optional
-    // -------------------------------------------------------------------------
+    public void bind(BindContext context) throws DataAccessException {
+    }
 
     /**
      * Subclasses may implement this method

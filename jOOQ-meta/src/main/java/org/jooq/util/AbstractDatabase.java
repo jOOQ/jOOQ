@@ -77,6 +77,7 @@ public abstract class AbstractDatabase implements Database {
     private DSLContext                                                       create;
     private String[]                                                         excludes;
     private String[]                                                         includes;
+    private boolean                                                          includeExcludeColumns;
     private String[]                                                         recordVersionFields;
     private String[]                                                         recordTimestampFields;
     private boolean                                                          supportsUnsignedTypes;
@@ -255,6 +256,16 @@ public abstract class AbstractDatabase implements Database {
     @Override
     public final String[] getIncludes() {
         return includes;
+    }
+
+    @Override
+    public final void setIncludeExcludeColumns(boolean includeExcludeColumns) {
+        this.includeExcludeColumns = includeExcludeColumns;
+    }
+
+    @Override
+    public final boolean getIncludeExcludeColumns() {
+        return includeExcludeColumns;
     }
 
     @Override
@@ -705,6 +716,10 @@ public abstract class AbstractDatabase implements Database {
     }
 
     private final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions) {
+        return filterExcludeInclude(definitions, excludes, includes);
+    }
+
+    static final <T extends Definition> List<T> filterExcludeInclude(List<T> definitions, String[] excludes, String[] includes) {
         List<T> result = new ArrayList<T>();
 
         definitionsLoop: for (T definition : definitions) {
@@ -758,7 +773,7 @@ public abstract class AbstractDatabase implements Database {
         return false;
     }
 
-    private final String fetchedSize(List<?> fetched, List<?> included) {
+    static final String fetchedSize(List<?> fetched, List<?> included) {
         return fetched.size() + " (" + included.size() + " included, " + (fetched.size() - included.size()) + " excluded)";
     }
 

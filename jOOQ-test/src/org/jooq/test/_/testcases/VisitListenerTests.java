@@ -36,10 +36,12 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.CUSTOM;
 import static org.jooq.Clause.DELETE;
 import static org.jooq.Clause.DELETE_DELETE;
 import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.Clause.INSERT;
+import static org.jooq.Clause.INSERT_INSERT_INTO;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_FROM;
 import static org.jooq.Clause.SELECT_WHERE;
@@ -47,12 +49,17 @@ import static org.jooq.Clause.TABLE_ALIAS;
 import static org.jooq.Clause.UPDATE;
 import static org.jooq.Clause.UPDATE_UPDATE;
 import static org.jooq.Clause.UPDATE_WHERE;
+import static org.jooq.SQLDialect.ORACLE;
+import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.inline;
+import static org.jooq.impl.DSL.queryPart;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -68,18 +75,22 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Record3;
 import org.jooq.Record6;
+import org.jooq.RenderContext;
 import org.jooq.Result;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 import org.jooq.UpdatableRecord;
 import org.jooq.VisitContext;
 import org.jooq.conf.ParamType;
+import org.jooq.exception.DataAccessException;
+import org.jooq.impl.CustomQueryPart;
 import org.jooq.impl.DefaultVisitListener;
 import org.jooq.test.BaseTest;
 import org.jooq.test.jOOQAbstractTest;
 
 import org.junit.Test;
 
+@SuppressWarnings("serial")
 public class VisitListenerTests<
     A    extends UpdatableRecord<A> & Record6<Integer, String, String, Date, Integer, ?>,
     AP,
@@ -229,7 +240,57 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             selectOne()
            .from(TBook())
            .where(TBook_TITLE().eq("changed"))
-       ));
+        ));
+
+
+        if (dialect().family() == ORACLE) {
+
+            // Cannot insert books for author_id = 2
+            try {
+                create(new OnlyAuthorIDEqual1())
+                    .insertInto(TBook())
+                    .set(TBook_ID(), 5)
+                    .set(TBook_AUTHOR_ID(), 2)
+                    .set(TBook_TITLE(), "1234")
+                    .set(TBook_PUBLISHED_IN(), 2000)
+                    .set(TBook_LANGUAGE_ID(), 1)
+                    .execute();
+                fail();
+            }
+            catch (DataAccessException expected) {
+                assertTrue(
+                    expected.getMessage(),
+                    expected.getMessage().toUpperCase().contains("ORA-01402"));
+            }
+
+            // Can insert books for author_id = 1
+            assertEquals(1,
+            create(new OnlyAuthorIDEqual1())
+                .insertInto(TBook())
+                .set(TBook_ID(), 5)
+                .set(TBook_AUTHOR_ID(), 1)
+                .set(TBook_TITLE(), "1234")
+                .set(TBook_PUBLISHED_IN(), 2000)
+                .set(TBook_LANGUAGE_ID(), 1)
+                .execute());
+            assertEquals(1, create().selectFrom(TBook()).where(TBook_ID().eq(5)).fetch().size());
+
+            // Cannot insert any new authors
+            try {
+                create(new OnlyAuthorIDEqual1())
+                    .insertInto(TAuthor())
+                    .set(TAuthor_ID(), 3)
+                    .set(TAuthor_FIRST_NAME(), "Jon")
+                    .set(TAuthor_LAST_NAME(), "Doe")
+                    .execute();
+                fail();
+            }
+            catch (DataAccessException expected) {
+                assertTrue(
+                    expected.getMessage(),
+                    expected.getMessage().toUpperCase().contains("ORA-01402"));
+            }
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -445,6 +506,20 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         }
 
         @Override
+        public void visitStart(VisitContext context) {
+
+            // Operating on RenderContext only, as we're using inline values
+            if (context.renderContext() == null)
+                return;
+
+            // Add Oracle CHECK OPTIONs to INSERT statements, if applicable
+            if (context.configuration().dialect().family() == ORACLE) {
+                patchCheckOption(context, TBook(), TBook_AUTHOR_ID(), 1);
+                patchCheckOption(context, TAuthor(), TAuthor_ID(), 1);
+            }
+        }
+
+        @Override
         public void visitEnd(VisitContext context) {
 
             // Operating on RenderContext only, as we're using inline values
@@ -464,6 +539,40 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                     clauses.contains(UPDATE_WHERE) ||
                     clauses.contains(DELETE_WHERE)) {
                     anyPredicates(context, true);
+                }
+            }
+        }
+
+        private <E> void patchCheckOption(
+                final VisitContext context,
+                final Table<?> table,
+                final Field<E> field,
+                final E... values)
+        {
+            if (context.queryPart() == table) {
+
+                // ... within a SQL INSERT INTO clause
+                List<Clause> clauses = subselectClauses(context);
+                if (clauses.contains(INSERT_INSERT_INTO)
+
+                    // But avoid recursion!
+                    && !clauses.contains(CUSTOM)) {
+
+                    // ... then, replace the table by an equivalent
+                    // view with a CHECK OPTION clause
+                    context.queryPart(new CustomQueryPart() {
+                        @Override
+                        public void toSQL(RenderContext ctx) {
+                            ParamType previous = ctx.paramType();
+                            ctx.paramType(INLINED)
+                               .visit(queryPart(
+                                   "(SELECT * FROM {0} WHERE {1} WITH CHECK OPTION)",
+                                   table,
+                                   field.in(values).or(field.isNull())
+                                ))
+                               .paramType(previous);
+                        }
+                    });
                 }
             }
         }

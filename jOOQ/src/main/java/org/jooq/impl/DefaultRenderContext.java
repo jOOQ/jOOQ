@@ -172,16 +172,28 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
     @Override
     public final RenderContext visit(QueryPart part) {
         if (part != null) {
+
+            // Issue start clause events
+            // -----------------------------------------------------------------
             Clause[] clauses = visitListeners.length > 0 ? clause(part) : null;
             if (clauses != null)
                 for (int i = 0; i < clauses.length; i++)
                     start(clauses[i]);
 
-            
-            start(part);
-            super.visit(part);
-            end(part);
-            
+            // Perform the actual visiting, or recurse into the replacement
+            // -----------------------------------------------------------------
+            QueryPart original = part;
+            QueryPart replacement = start(part);
+
+            if (original == replacement)
+                super.visit(original);
+            else
+                visit(replacement);
+
+            end(replacement);
+
+            // Issue end clause events
+            // -----------------------------------------------------------------
             if (clauses != null)
                 for (int i = clauses.length - 1; i >= 0; i--)
                     end(clauses[i]);
@@ -190,12 +202,14 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         return this;
     }
 
-    private final void start(QueryPart part) {
+    private final QueryPart start(QueryPart part) {
         visitParts.addLast(part);
 
         for (VisitListener listener : visitListeners) {
             listener.visitStart(visitContext);
         }
+
+        return visitParts.peekLast();
     }
 
     private final void end(QueryPart part) {
@@ -270,6 +284,12 @@ class DefaultRenderContext extends AbstractContext<RenderContext> implements Ren
         @Override
         public final QueryPart queryPart() {
             return visitParts.peekLast();
+        }
+
+        @Override
+        public final void queryPart(QueryPart part) {
+            visitParts.pollLast();
+            visitParts.addLast(part);
         }
 
         @Override

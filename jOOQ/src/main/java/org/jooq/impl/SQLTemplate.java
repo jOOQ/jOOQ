@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.TEMPLATE;
+
 import java.util.List;
 
 import org.jooq.BindContext;
@@ -64,6 +66,7 @@ class SQLTemplate implements Template {
          * Generated UID
          */
         private static final long     serialVersionUID = -7514156096865122018L;
+        private static final Clause[] CLAUSES          = { TEMPLATE };
         private final String          sql;
         private final List<QueryPart> substitutes;
 
@@ -84,7 +87,7 @@ class SQLTemplate implements Template {
 
         @Override
         public final Clause[] clauses(Context<?> ctx) {
-            return null;
+            return CLAUSES;
         }
     }
 }

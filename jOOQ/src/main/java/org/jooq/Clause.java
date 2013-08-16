@@ -727,4 +727,18 @@ public enum Clause {
      * </ul>
      */
     TRUNCATE_TRUNCATE,
+
+    // -------------------------------------------------------------------------
+    // Other clauses
+    // -------------------------------------------------------------------------
+
+    /**
+     * A plain SQL template clause.
+     */
+    TEMPLATE,
+
+    /**
+     * A custom {@link QueryPart} clause.
+     */
+    CUSTOM
 }

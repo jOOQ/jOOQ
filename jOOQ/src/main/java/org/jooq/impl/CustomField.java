@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.CUSTOM;
+
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -63,7 +65,8 @@ public abstract class CustomField<T> extends AbstractField<T> {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -1778024624798672262L;
+    private static final long     serialVersionUID = -1778024624798672262L;
+    private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomField(String name, DataType<T> type) {
         super(name, type);
@@ -94,19 +97,14 @@ public abstract class CustomField<T> extends AbstractField<T> {
     public void bind(BindContext context) throws DataAccessException {
     }
 
-    /**
-     * Subclasses may implement this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    public Clause[] clauses(Context<?> ctx) {
-        return super.clauses(ctx);
-    }
-
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES;
+    }
 
     @Override
     public final Field<T> as(String alias) {

@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.CUSTOM;
+
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Context;
@@ -74,7 +76,8 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -3439681086987884991L;
+    private static final long     serialVersionUID = -3439681086987884991L;
+    private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomQueryPart() {
     }
@@ -104,19 +107,14 @@ public abstract class CustomQueryPart extends AbstractQueryPart {
     public void bind(BindContext context) throws DataAccessException {
     }
 
-    /**
-     * Subclasses may implement this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    public Clause[] clauses(Context<?> ctx) {
-        return null;
-    }
-
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES;
+    }
 
     @Override
     public final boolean declaresFields() {

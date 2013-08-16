@@ -36,8 +36,17 @@
 package org.jooq.test._.testcases;
 
 import static java.util.Arrays.asList;
+import static org.jooq.Clause.DELETE;
+import static org.jooq.Clause.DELETE_DELETE;
+import static org.jooq.Clause.DELETE_WHERE;
+import static org.jooq.Clause.INSERT;
 import static org.jooq.Clause.SELECT;
+import static org.jooq.Clause.SELECT_FROM;
 import static org.jooq.Clause.SELECT_WHERE;
+import static org.jooq.Clause.TABLE_ALIAS;
+import static org.jooq.Clause.UPDATE;
+import static org.jooq.Clause.UPDATE_UPDATE;
+import static org.jooq.Clause.UPDATE_WHERE;
 import static org.jooq.impl.DSL.inline;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectFrom;
@@ -98,7 +107,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
     }
 
     @Test
-    public void testVisitListener() throws Exception {
+    public void testVisitListenerOnSELECT() throws Exception {
 
         // No join with author table
         Result<?> result1 =
@@ -186,7 +195,46 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
         assertEquals(2, result6.size());
         assertEquals(asList(1, 2), result6.getValues(TBook_ID()));
+
+        // Count books from a subselect
+        assertEquals(2, create(new OnlyAuthorIDEqual1())
+            .fetchCount(selectOne().from(TBook()))
+        );
     }
+
+    @Test
+    public void testVisitListenerOnDML() throws Exception {
+        jOOQAbstractTest.reset = false;
+
+        // Can only update 2 out of 4 books
+        assertEquals(2,
+        create(new OnlyAuthorIDEqual1())
+            .update(TBook())
+            .set(TBook_TITLE(), "changed")
+            .execute());
+
+        assertEquals(2, create().fetchCount(
+             selectOne()
+            .from(TBook())
+            .where(TBook_TITLE().eq("changed"))
+        ));
+
+        // Can only delete 2 out of 4 books
+        assertEquals(2,
+        create(new OnlyAuthorIDEqual1())
+            .delete(TBook())
+            .execute());
+
+        assertEquals(0, create().fetchCount(
+            selectOne()
+           .from(TBook())
+           .where(TBook_TITLE().eq("changed"))
+       ));
+    }
+
+    // -------------------------------------------------------------------------
+    // Utilities
+    // -------------------------------------------------------------------------
 
     /**
      * A key object to be used with {@link VisitContext#data()}
@@ -260,7 +308,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Clean up the level that we're about to leave.
             if (increase == -1) {
-                subselectHasPredicatesMap(context).remove(level);
+                anyPredicatesMap(context).remove(level);
                 subselectConditionMap(context).remove(level);
             }
 
@@ -269,7 +317,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Initialise the new level that we're about to enter.
             if (increase == 1) {
-                subselectHasPredicatesMap(context).put(level, false);
+                anyPredicatesMap(context).put(level, false);
                 subselectConditionMap(context).put(level, new ArrayList<Condition>());
             }
 
@@ -302,7 +350,7 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
          * Lazy-initialise the per-level map for "has predicates" flags.
          */
         @SuppressWarnings("unchecked")
-        private Map<Integer, Boolean> subselectHasPredicatesMap(VisitContext context) {
+        private Map<Integer, Boolean> anyPredicatesMap(VisitContext context) {
             Map<Integer, Boolean> data = (Map<Integer, Boolean>) context.data(DataKey.SUBSELECT_HAS_PREDICATES);
             if (data == null) {
                 data = new HashMap<Integer, Boolean>();
@@ -314,15 +362,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
         /**
          * Check whether the current subselect level already has predicates.
          */
-        private boolean subselectHasPredicates(VisitContext context) {
-            return subselectHasPredicatesMap(context).get(nestingLevel(context));
+        private boolean anyPredicates(VisitContext context) {
+            return anyPredicatesMap(context).get(nestingLevel(context));
         }
 
         /**
          * Indicate whether the current subselect level already has predicates.
          */
-        private void subselectHasPredicates(VisitContext context, boolean value) {
-            subselectHasPredicatesMap(context).put(nestingLevel(context), value);
+        private void anyPredicates(VisitContext context, boolean value) {
+            anyPredicatesMap(context).put(nestingLevel(context), value);
         }
 
         /**
@@ -331,7 +379,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
          */
         private List<Clause> subselectClauses(VisitContext context) {
             List<Clause> result = asList(context.clauses());
-            return result.subList(result.lastIndexOf(SELECT), result.size() - 1);
+            int index = result.lastIndexOf(SELECT);
+
+            if (index > 0)
+                return result.subList(index, result.size() - 1);
+            else
+                return result;
         }
 
         @Override
@@ -341,8 +394,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             if (context.renderContext() == null)
                 return;
 
-            // Enter a new SELECT clause / nested select
-            if (context.clause() == SELECT) {
+            // Enter a new SELECT clause / nested select, or DML statement
+            if (context.clause() == SELECT ||
+                context.clause() == UPDATE ||
+                context.clause() == DELETE ||
+                context.clause() == INSERT) {
                 nestingLevel(context, 1);
             }
         }
@@ -355,13 +411,15 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 return;
 
             // Append all collected predicates to the WHERE clause if any
-            if (context.clause() == SELECT_WHERE) {
+            if (context.clause() == SELECT_WHERE ||
+                context.clause() == UPDATE_WHERE ||
+                context.clause() == DELETE_WHERE) {
                 List<Condition> conditions = subselectConditions(context);
 
                 if (conditions.size() > 0) {
                     context.renderContext()
                            .formatSeparator()
-                           .keyword(subselectHasPredicates(context) ? "and" : "where")
+                           .keyword(anyPredicates(context) ? "and" : "where")
                            .sql(" ");
 
                     Condition condition = trueCondition();
@@ -377,8 +435,11 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
                 }
             }
 
-            // Leave a SELECT clause / nested select
-            if (context.clause() == SELECT) {
+            // Leave a SELECT clause / nested select, or DML statement
+            if (context.clause() == SELECT ||
+                context.clause() == UPDATE ||
+                context.clause() == DELETE ||
+                context.clause() == INSERT) {
                 nestingLevel(context, -1);
             }
         }
@@ -397,8 +458,12 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
             // Check if we're rendering any condition within the WHERE clause
             // In this case, we can be sure that jOOQ will render a WHERE keyword
             if (context.queryPart() instanceof Condition) {
-                if (subselectClauses(context).contains(Clause.SELECT_WHERE)) {
-                    subselectHasPredicates(context, true);
+                List<Clause> clauses = subselectClauses(context);
+
+                if (clauses.contains(SELECT_WHERE) ||
+                    clauses.contains(UPDATE_WHERE) ||
+                    clauses.contains(DELETE_WHERE)) {
+                    anyPredicates(context, true);
                 }
             }
         }
@@ -407,13 +472,16 @@ extends BaseTest<A, AP, B, S, B2S, BS, L, X, DATE, BOOL, D, T, U, UU, I, IPK, T7
 
             // Check if we're visiting the given table
             if (context.queryPart() == table) {
+                List<Clause> clauses = subselectClauses(context);
 
                 // ... and if we're in the context of the current subselect's
                 // FROM clause
-                if (subselectClauses(context).contains(Clause.SELECT_FROM)) {
+                if (clauses.contains(SELECT_FROM) ||
+                    clauses.contains(UPDATE_UPDATE) ||
+                    clauses.contains(DELETE_DELETE)) {
 
                     // If we're declaring a TABLE_ALIAS... (e.g. "T_BOOK" as "b")
-                    if (subselectClauses(context).contains(Clause.TABLE_ALIAS)) {
+                    if (clauses.contains(TABLE_ALIAS)) {
                         QueryPart[] parts = context.queryParts();
 
                         // ... move up the QueryPart visit path to find the

@@ -218,6 +218,18 @@ public interface Database {
     String[] getIncludes();
 
     /**
+     * Indicate whether include / exclude regular expression shall also match
+     * database columns.
+     */
+    void setIncludeExcludeColumns(boolean includeExcludeColumns);
+
+    /**
+     * Indicate whether include / exclude regular expression shall also match
+     * database columns.
+     */
+    boolean getIncludeExcludeColumns();
+
+    /**
      * Table columns matching these regular expressions will be considered as
      * record version fields in generated code.
      */

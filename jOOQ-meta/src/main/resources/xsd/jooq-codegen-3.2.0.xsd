@@ -142,6 +142,12 @@
       <element name="excludes" type="string" default="" minOccurs="0" maxOccurs="1" />
 
       <!--
+        This flag indicates whether include / exclude patterns should also match
+        columns within tables. 
+        -->
+      <element name="includeExcludeColumns" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
+
+      <!--
         All table and view columns that are used as "version" fields for
         optimistic locking (A Java regular expression. Use the pipe to separate several expressions).
         See UpdatableRecord.store() and UpdatableRecord.delete() for details

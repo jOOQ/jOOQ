@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS v_2603/
 DROP VIEW IF EXISTS "Ää"/
 DROP VIEW IF EXISTS v_author/
 DROP VIEW IF EXISTS v_book/
@@ -364,6 +365,10 @@ SELECT * FROM t_book
 
 CREATE VIEW "Ää" AS
 SELECT 1 AS "Öö"
+/
+
+CREATE VIEW v_2603 AS
+SELECT 1 AS col1, 2 AS col2, 3 AS col3, 4 as col4
 /
 
 CREATE ALIAS f_one FOR "org.jooq.test.h2.F.fOne";/

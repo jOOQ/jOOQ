@@ -1519,8 +1519,13 @@ public abstract class jOOQAbstractTest<
     }
 
     @Test
-    public void testVisitListener() throws Exception {
-        new VisitListenerTests(this).testVisitListener();
+    public void testVisitListenerOnSELECT() throws Exception {
+        new VisitListenerTests(this).testVisitListenerOnSELECT();
+    }
+
+    @Test
+    public void testVisitListenerOnDML() throws Exception {
+        new VisitListenerTests(this).testVisitListenerOnDML();
     }
 
     @Test

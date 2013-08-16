@@ -108,9 +108,20 @@ public interface VisitContext {
 
     /**
      * The most recent {@link QueryPart} that was encountered through
-     * {@link Context#visit(QueryPart)}
+     * {@link Context#visit(QueryPart)}.
      */
     QueryPart queryPart();
+
+    /**
+     * Replace the most recent {@link QueryPart} that was encountered through
+     * {@link Context#visit(QueryPart)}.
+     * <p>
+     * This method can be called by {@link VisitListener} implementation
+     * methods, in particular by {@link VisitListener#visitStart(VisitContext)}.
+     *
+     * @param part The new <code>QueryPart</code>.
+     */
+    void queryPart(QueryPart part);
 
     /**
      * A path of {@link QueryPart}s going through the visiting tree.

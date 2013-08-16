@@ -100,6 +100,26 @@ public interface VisitListener extends EventListener {
 
     /**
      * Called before visiting a {@link QueryPart}.
+     * <p>
+     * Certain <code>VisitListener</code> implementations may chose to replace
+     * the {@link QueryPart} contained in the argument {@link VisitContext}
+     * through {@link VisitContext#queryPart(QueryPart)}. This can be used for
+     * many use-cases, for example to add a <code>CHECK OPTION</code> to an
+     * Oracle <code>INSERT</code> statement: <code><pre>
+     * -- Original query
+     * INSERT INTO book (id, author_id, title)
+     * VALUES (10, 15, '1984')
+     *
+     * -- Transformed query
+     * INSERT INTO (
+     *   SELECT * FROM book
+     *   WHERE author_id IN (1, 2, 3)
+     *   WITH CHECK OPTION
+     * ) (id, author_id, title)
+     * VALUES (10, 15, '1984')
+     * </pre></code> The above SQL transformation allows to prevent inserting
+     * new books for authors other than those with
+     * <code>author_id IN (1, 2, 3)</code>
      *
      * @see Context#visit(QueryPart)
      */

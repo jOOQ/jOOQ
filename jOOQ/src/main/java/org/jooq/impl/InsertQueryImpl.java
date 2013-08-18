@@ -38,7 +38,10 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.INSERT;
+import static org.jooq.Clause.INSERT_INSERT_INTO;
+import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
 import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT;
+import static org.jooq.Clause.INSERT_RETURNING;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
@@ -150,9 +153,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case MYSQL: {
                     toSQLInsert(context);
                     context.formatSeparator()
+                           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                            .keyword("on duplicate key update")
                            .sql(" ")
-                           .visit(updateMap);
+                           .visit(updateMap)
+                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;
                 }
@@ -188,6 +193,8 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
                 case MARIADB:
                 case MYSQL: {
                     toSQLInsert(context);
+                    context.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
                     break;
                 }
 
@@ -199,9 +206,11 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
 
                     toSQLInsert(context);
                     context.formatSeparator()
+                           .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
                            .keyword("on duplicate key update")
                            .sql(" ")
-                           .visit(update);
+                           .visit(update)
+                           .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
 
                     break;
                 }
@@ -232,7 +241,13 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
         // ------------
         else {
             toSQLInsert(context);
+            context.start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+                   .end(INSERT_ON_DUPLICATE_KEY_UPDATE);
         }
+
+        context.start(INSERT_RETURNING);
+        toSQLReturning(context);
+        context.end(INSERT_RETURNING);
     }
 
     @Override
@@ -326,17 +341,18 @@ class InsertQueryImpl<R extends Record> extends AbstractStoreQuery<R> implements
     }
 
     private final void toSQLInsert(RenderContext context) {
-        context.keyword("insert")
+        context.start(INSERT_INSERT_INTO)
+               .keyword("insert")
                .sql(" ")
                // [#1295] MySQL natively supports the IGNORE keyword
                .keyword((onDuplicateKeyIgnore && asList(MARIADB, MYSQL).contains(context.configuration().dialect())) ? "ignore " : "")
                .keyword("into")
                .sql(" ")
                .visit(getInto())
-               .sql(" ")
+               .sql(" ");
+        insertMaps.insertMaps.get(0).toSQLReferenceKeys(context);
+        context.end(INSERT_INSERT_INTO)
                .visit(insertMaps);
-
-        toSQLReturning(context);
     }
 
     private final void bindInsert(BindContext context) {

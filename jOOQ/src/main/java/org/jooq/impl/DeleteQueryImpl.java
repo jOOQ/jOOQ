@@ -38,6 +38,8 @@ package org.jooq.impl;
 
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.DELETE;
+import static org.jooq.Clause.DELETE_DELETE;
+import static org.jooq.Clause.DELETE_WHERE;
 import static org.jooq.SQLDialect.MARIADB;
 import static org.jooq.SQLDialect.MYSQL;
 
@@ -104,7 +106,8 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
     public final void toSQL(RenderContext context) {
         boolean declare = context.declareTables();
 
-        context.keyword("delete ");
+        context.start(DELETE_DELETE)
+               .keyword("delete").sql(" ");
 
         // [#2464] MySQL supports a peculiar multi-table DELETE syntax for aliased tables:
         // DELETE t1 FROM my_table AS t1
@@ -119,16 +122,20 @@ class DeleteQueryImpl<R extends Record> extends AbstractQuery implements DeleteQ
             }
         }
 
-        context.keyword("from ");
-        context.declareTables(true)
+        context.keyword("from").sql(" ")
+               .declareTables(true)
                .visit(getFrom())
-               .declareTables(declare);
+               .declareTables(declare)
+               .end(DELETE_DELETE)
+               .start(DELETE_WHERE);
 
         if (!(getWhere() instanceof TrueCondition)) {
             context.formatSeparator()
-                   .keyword("where ")
+                   .keyword("where").sql(" ")
                    .visit(getWhere());
         }
+
+        context.end(DELETE_WHERE);
     }
 
     @Override

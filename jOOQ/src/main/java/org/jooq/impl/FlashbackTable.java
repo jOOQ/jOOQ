@@ -35,13 +35,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.impl.DSL.keyword;
 import static org.jooq.impl.DSL.val;
 
 import org.jooq.BindContext;
-import org.jooq.Clause;
-import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.QueryPart;
 import org.jooq.Record;
@@ -144,11 +141,6 @@ implements VersionsBetweenAndStep<R, T> {
         else {
             context.visit(minvalue).visit(maxvalue);
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
     }
 
     @Override

@@ -36,6 +36,10 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.INSERT;
+import static org.jooq.Clause.INSERT_INSERT_INTO;
+import static org.jooq.Clause.INSERT_ON_DUPLICATE_KEY_UPDATE;
+import static org.jooq.Clause.INSERT_RETURNING;
+import static org.jooq.Clause.INSERT_SELECT;
 import static org.jooq.impl.Utils.visitAll;
 
 import org.jooq.BindContext;
@@ -74,22 +78,35 @@ class InsertSelectQueryImpl<R extends Record> extends AbstractQuery implements I
 
     @Override
     public final void toSQL(RenderContext context) {
-        context.keyword("insert into")
+        context.start(INSERT_INSERT_INTO)
+               .keyword("insert into")
                .sql(" ")
                .visit(into)
                .sql(" (");
 
+        // [#989] Avoid qualifying fields in INSERT field declaration
+        boolean qualify = context.qualify();
+        context.qualify(false);
+
         String separator = "";
         for (Field<?> field : fields) {
             context.sql(separator)
-                   .literal(field.getName());
+                   .visit(field);
 
             separator = ", ";
         }
 
+        context.qualify(qualify);
         context.sql(")")
+               .end(INSERT_INSERT_INTO)
                .formatSeparator()
-               .visit(select);
+               .start(INSERT_SELECT)
+               .visit(select)
+               .end(INSERT_SELECT)
+               .start(INSERT_ON_DUPLICATE_KEY_UPDATE)
+               .end(INSERT_ON_DUPLICATE_KEY_UPDATE)
+               .start(INSERT_RETURNING)
+               .end(INSERT_RETURNING);
     }
 
     @Override

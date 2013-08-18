@@ -35,12 +35,10 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.TABLE_VALUES;
 import static org.jooq.impl.Utils.visitAll;
 
 import org.jooq.BindContext;
-import org.jooq.Clause;
-import org.jooq.Context;
 import org.jooq.Record;
 import org.jooq.RenderContext;
 import org.jooq.Row;
@@ -137,7 +135,8 @@ class Values<R extends Record> extends AbstractTable<R> {
             case DB2:
             case INGRES:
             default: {
-                context.keyword("values")
+                context.start(TABLE_VALUES)
+                       .keyword("values")
                        .formatIndentLockStart();
 
                 boolean firstRow = true;
@@ -150,7 +149,8 @@ class Values<R extends Record> extends AbstractTable<R> {
                     firstRow = false;
                 }
 
-                context.formatIndentLockEnd();
+                context.formatIndentLockEnd()
+                       .end(TABLE_VALUES);
                 break;
             }
         }
@@ -159,11 +159,6 @@ class Values<R extends Record> extends AbstractTable<R> {
     @Override
     public final void bind(BindContext context) {
         visitAll(context, rows);
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
     }
 
     @Override

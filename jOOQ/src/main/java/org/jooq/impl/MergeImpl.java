@@ -36,12 +36,23 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.MERGE;
-import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE_SET_ASSIGNMENT;
+import static org.jooq.Clause.MERGE_DELETE_WHERE;
+import static org.jooq.Clause.MERGE_MERGE_INTO;
+import static org.jooq.Clause.MERGE_ON;
+import static org.jooq.Clause.MERGE_SET;
+import static org.jooq.Clause.MERGE_SET_ASSIGNMENT;
+import static org.jooq.Clause.MERGE_USING;
+import static org.jooq.Clause.MERGE_VALUES;
+import static org.jooq.Clause.MERGE_WHEN_MATCHED_THEN_UPDATE;
+import static org.jooq.Clause.MERGE_WHEN_NOT_MATCHED_THEN_INSERT;
+import static org.jooq.Clause.MERGE_WHERE;
 import static org.jooq.SQLDialect.H2;
+import static org.jooq.SQLDialect.ORACLE;
 import static org.jooq.impl.DSL.condition;
 import static org.jooq.impl.DSL.exists;
 import static org.jooq.impl.DSL.notExists;
 import static org.jooq.impl.DSL.nullSafe;
+import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -678,7 +689,7 @@ implements
     @Override
     public final MergeImpl whenMatchedThenUpdate() {
         matchedClause = true;
-        matchedUpdate = new FieldMapForUpdate(MERGE_WHEN_MATCHED_THEN_UPDATE_SET_ASSIGNMENT);
+        matchedUpdate = new FieldMapForUpdate(MERGE_SET_ASSIGNMENT);
 
         notMatchedClause = false;
         return this;
@@ -1047,7 +1058,8 @@ implements
     }
 
     private final void toSQLH2(RenderContext context) {
-        context.keyword("merge into ")
+        context.keyword("merge into")
+               .sql(" ")
                .declareTables(true)
                .visit(table)
                .formatSeparator();
@@ -1057,7 +1069,7 @@ implements
         context.sql(")");
 
         if (!getH2Keys().isEmpty()) {
-            context.keyword(" key (");
+            context.sql(" ").keyword("key").sql(" (");
             Utils.fieldNames(context, getH2Keys());
             context.sql(")");
         }
@@ -1067,22 +1079,29 @@ implements
                    .visit(h2Select);
         }
         else {
-            context.keyword(" values (")
+            context.sql(" ").keyword("values").sql(" (")
                    .visit(getH2Values())
                    .sql(")");
         }
     }
 
     private final void toSQLStandard(RenderContext context) {
-        context.keyword("merge into ")
+        context.start(MERGE_MERGE_INTO)
+               .keyword("merge into").sql(" ")
                .declareTables(true)
                .visit(table)
+               .declareTables(false)
+               .end(MERGE_MERGE_INTO)
                .formatSeparator()
-               .keyword("using ")
+               .start(MERGE_USING)
+               .declareTables(true)
+               .keyword("using").sql(" ")
                .formatIndentStart()
-               .formatNewLine()
-               .sql(Utils.wrapInParentheses(context.render(using)))
-               .formatIndentEnd()
+               .formatNewLine();
+        context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
+        context.visit(using);
+        context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
+        context.formatIndentEnd()
                .declareTables(false);
 
         switch (context.configuration().dialect().family()) {
@@ -1091,7 +1110,7 @@ implements
                 if (using instanceof Select) {
                     int hash = Utils.hash(using);
 
-                    context.keyword(" as ")
+                    context.sql(" ").keyword("as").sql(" ")
                            .sql("dummy_")
                            .sql(hash)
                            .sql("(");
@@ -1116,44 +1135,72 @@ implements
             }
         }
 
-        context.formatSeparator()
-               .keyword("on ")
-               .sql(Utils.wrapInParentheses(context.render(on)));
+        boolean onParentheses = context.configuration().dialect().family() == ORACLE;
+        context.end(MERGE_USING)
+               .formatSeparator()
+               .start(MERGE_ON)
+               // Oracle ON ( ... ) parentheses are a mandatory syntax element
+               .keyword("on").sql(onParentheses ? " (" : " ")
+               .visit(on)
+               .sql(onParentheses ? ")" : "")
+               .end(MERGE_ON)
+               .start(MERGE_WHEN_MATCHED_THEN_UPDATE)
+               .start(MERGE_SET);
 
         // [#999] WHEN MATCHED clause is optional
         if (matchedUpdate != null) {
             context.formatSeparator()
-                   .keyword("when matched then update set ")
+                   .keyword("when matched then update set").sql(" ")
                    .visit(matchedUpdate);
         }
+
+        context.end(MERGE_SET)
+               .start(MERGE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. WHERE
         if (matchedWhere != null) {
             context.formatSeparator()
-                   .keyword("where ")
+                   .keyword("where").sql(" ")
                    .visit(matchedWhere);
         }
+
+        context.end(MERGE_WHERE)
+               .start(MERGE_DELETE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN MATCHED THEN UPDATE .. DELETE WHERE
         if (matchedDeleteWhere != null) {
             context.formatSeparator()
-                   .keyword("delete where ")
+                   .keyword("delete where").sql(" ")
                    .visit(matchedDeleteWhere);
         }
+
+        context.end(MERGE_DELETE_WHERE)
+               .end(MERGE_WHEN_MATCHED_THEN_UPDATE)
+               .start(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
         // [#999] WHEN NOT MATCHED clause is optional
         if (notMatchedInsert != null) {
             context.formatSeparator()
-                   .sql("when not matched then insert ")
-                   .visit(notMatchedInsert);
+                   .keyword("when not matched then insert").sql(" ");
+            notMatchedInsert.toSQLReferenceKeys(context);
+            context.formatSeparator()
+                   .start(MERGE_VALUES)
+                   .keyword("values").sql(" ")
+                   .visit(notMatchedInsert)
+                   .end(MERGE_VALUES);
         }
+
+        context.start(MERGE_WHERE);
 
         // [#998] Oracle MERGE extension: WHEN NOT MATCHED THEN INSERT .. WHERE
         if (notMatchedWhere != null) {
             context.formatSeparator()
-                   .keyword("where ")
+                   .keyword("where").sql(" ")
                    .visit(notMatchedWhere);
         }
+
+        context.end(MERGE_WHERE)
+               .end(MERGE_WHEN_NOT_MATCHED_THEN_INSERT);
 
         switch (context.configuration().dialect().family()) {
             case SQLSERVER:

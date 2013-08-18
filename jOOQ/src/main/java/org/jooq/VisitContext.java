@@ -97,7 +97,7 @@ public interface VisitContext {
     Clause clause();
 
     /**
-     * All previous clauses.
+     * A path of clauses going through the visiting tree.
      * <p>
      * This returns all previous clauses that were encountered through
      * {@link Context#start(Clause)} and that haven't been removed yet through
@@ -107,9 +107,30 @@ public interface VisitContext {
     Clause[] clauses();
 
     /**
-     * The {@link QueryPart} that is being visited.
+     * The most recent {@link QueryPart} that was encountered through
+     * {@link Context#visit(QueryPart)}.
      */
-    QueryPart visiting();
+    QueryPart queryPart();
+
+    /**
+     * Replace the most recent {@link QueryPart} that was encountered through
+     * {@link Context#visit(QueryPart)}.
+     * <p>
+     * This method can be called by {@link VisitListener} implementation
+     * methods, in particular by {@link VisitListener#visitStart(VisitContext)}.
+     *
+     * @param part The new <code>QueryPart</code>.
+     */
+    void queryPart(QueryPart part);
+
+    /**
+     * A path of {@link QueryPart}s going through the visiting tree.
+     * <p>
+     * This returns all previous <code>QueryParts</code> that were encountered
+     * through {@link Context#visit(QueryPart)}. In other words,
+     * <code>VisitContext</code> contains a stack of <code>QueryParts</code>.
+     */
+    QueryPart[] queryParts();
 
     /**
      * The underlying {@link RenderContext} or {@link BindContext} object.
@@ -117,12 +138,24 @@ public interface VisitContext {
     Context<?> context();
 
     /**
-     * The underlying {@link RenderContext} or <code>null</code>, if the underlying context is a {@link BindContext}.
+     * The underlying {@link RenderContext} or <code>null</code>, if the
+     * underlying context is a {@link BindContext}.
+     * <p>
+     * [#2694] [#2695] As of jOOQ 3.2, the {@link QueryPart} traversal SPI
+     * through {@link VisitListener} is only implemented for
+     * {@link RenderContext}. Hence, you may need to inline bind values if
+     * applicable.
      */
     RenderContext renderContext();
 
     /**
-     * The underlying {@link BindContext} or <code>null</code>, if the underlying context is a {@link RenderContext}.
+     * The underlying {@link BindContext} or <code>null</code>, if the
+     * underlying context is a {@link RenderContext}.
+     *
+     * @throws UnsupportedOperationException [#2694] [#2695] As of jOOQ 3.2,
+     *             this method is not yet implemented as {@link QueryPart}
+     *             traversal SPI through {@link VisitListener} is only
+     *             implemented for {@link RenderContext}
      */
-    BindContext bindContext();
+    BindContext bindContext() throws UnsupportedOperationException;
 }

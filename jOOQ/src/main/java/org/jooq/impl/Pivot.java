@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.conf.ParamType.INLINED;
 import static org.jooq.impl.DSL.trueCondition;
 import static org.jooq.impl.DSL.using;
@@ -45,10 +44,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.jooq.BindContext;
-import org.jooq.Clause;
 import org.jooq.Condition;
 import org.jooq.Configuration;
-import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.PivotForStep;
 import org.jooq.PivotInStep;
@@ -148,11 +145,6 @@ implements
                .declareTables(false);
         }
 
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return new Clause[] { DUMMY };
-        }
-
         private Table<Record> select(Configuration configuration) {
             List<Field<?>> groupingFields = new ArrayList<Field<?>>();
             List<Field<?>> aliasedGroupingFields = new ArrayList<Field<?>>();
@@ -242,16 +234,16 @@ implements
                    .visit(table)
                    .declareTables(declareTables)
                    .formatSeparator()
-                   .keyword("pivot (")
+                   .keyword("pivot").sql(" (")
                    .paramType(INLINED)
                    .declareFields(true)
                    .formatIndentStart()
                    .visit(aggregateFunctions)
                    .formatSeparator()
-                   .keyword("for ")
+                   .keyword("for").sql(" ")
                    .literal(on.getName())
                    .formatSeparator()
-                   .keyword("in (")
+                   .keyword("in").sql(" (")
                    .visit(in)
                    .declareFields(declareFields)
                    .paramType(paramType)
@@ -268,11 +260,6 @@ implements
             context.declareTables(true)
                    .visit(table)
                    .declareTables(declareTables);
-        }
-
-        @Override
-        public final Clause[] clauses(Context<?> ctx) {
-            return new Clause[] { DUMMY };
         }
     }
 
@@ -328,11 +315,6 @@ implements
     @Override
     public final void bind(BindContext context) throws DataAccessException {
         context.visit(pivot(context.configuration()));
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
     }
 
     @Override

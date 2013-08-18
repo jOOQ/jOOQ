@@ -36,6 +36,7 @@
 
 package org.jooq.util;
 
+import static java.lang.Boolean.TRUE;
 import static org.jooq.tools.StringUtils.defaultIfNull;
 import static org.jooq.tools.StringUtils.defaultString;
 import static org.jooq.tools.StringUtils.isBlank;
@@ -233,6 +234,7 @@ public class GenerationTool {
             database.setConfiguredSchemata(schemata);
             database.setIncludes(new String[] { defaultString(d.getIncludes()) });
             database.setExcludes(new String[] { defaultString(d.getExcludes()) });
+            database.setIncludeExcludeColumns(TRUE.equals(d.isIncludeExcludeColumns()));
             database.setRecordVersionFields(new String[] { defaultString(d.getRecordVersionFields()) });
             database.setRecordTimestampFields(new String[] { defaultString(d.getRecordTimestampFields()) });
             database.setConfiguredCustomTypes(d.getCustomTypes());

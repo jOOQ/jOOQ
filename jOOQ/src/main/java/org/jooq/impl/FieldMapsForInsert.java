@@ -35,7 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.INSERT_SELECT;
+import static org.jooq.Clause.INSERT_VALUES;
 import static org.jooq.impl.Utils.visitAll;
 
 import java.util.ArrayList;
@@ -56,9 +57,9 @@ class FieldMapsForInsert extends AbstractQueryPart {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -6227074228534414225L;
+    private static final long     serialVersionUID      = -6227074228534414225L;
 
-    private final List<FieldMapForInsert> insertMaps;
+    final List<FieldMapForInsert> insertMaps;
 
     FieldMapsForInsert() {
         insertMaps = new ArrayList<FieldMapForInsert>();
@@ -77,7 +78,12 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
         // Single record inserts can use the standard syntax in any dialect
         else if (insertMaps.size() == 1 || insertMaps.get(1) == null) {
-            context.visit(insertMaps.get(0));
+            context.formatSeparator()
+                   .start(INSERT_VALUES)
+                   .keyword("values")
+                   .sql(" ")
+                   .visit(insertMaps.get(0))
+                   .end(INSERT_VALUES);
         }
 
         // True SQL92 multi-record inserts aren't always supported
@@ -90,20 +96,26 @@ class FieldMapsForInsert extends AbstractQueryPart {
                 case INGRES:
                 case ORACLE:
                 case SQLITE:
+                    context.start(INSERT_SELECT);
                     toSQLInsertSelect(context);
+                    context.end(INSERT_SELECT);
+
                     break;
 
                 default:
+                    context.formatSeparator()
+                           .start(INSERT_VALUES)
+                           .keyword("values")
+                           .sql(" ");
                     toSQL92Values(context);
+                    context.end(INSERT_VALUES);
+
                     break;
             }
         }
     }
 
     private void toSQLInsertSelect(RenderContext context) {
-        insertMaps.get(0).toSQLReferenceKeys(context);
-        context.sql(" ");
-
         Select<Record> select = null;
         for (FieldMapForInsert map : insertMaps) {
             if (map != null) {
@@ -128,7 +140,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
         for (FieldMapForInsert map : insertMaps) {
             if (map != null && i > 0) {
                 context.sql(", ");
-                map.toSQLReferenceValues(context);
+                context.visit(map);
             }
 
             i++;
@@ -142,7 +154,7 @@ class FieldMapsForInsert extends AbstractQueryPart {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return null;
     }
 
     // -------------------------------------------------------------------------

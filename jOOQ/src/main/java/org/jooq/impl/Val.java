@@ -270,9 +270,9 @@ class Val<T> extends AbstractParam<T> {
     }
 
     private final void toSQLCast(RenderContext context, DataType<?> type, int length, int precision, int scale) {
-        context.keyword("cast(");
+        context.keyword("cast").sql("(");
         toSQL(context, value, getType());
-        context.keyword(" as ")
+        context.sql(" ").keyword("as").sql(" ")
                .sql(type.length(length).precision(precision, scale).getCastTypeName(context.configuration()))
                .sql(")");
     }
@@ -447,17 +447,17 @@ class Val<T> extends AbstractParam<T> {
 
                 // [#1253] Derby doesn't support the standard literal
                 else if (family == DERBY) {
-                    context.keyword("time('").sql(escape(val)).sql("')");
+                    context.keyword("time").sql("('").sql(escape(val)).sql("')");
                 }
 
                 // [#1253] Oracle doesn't know time literals
                 else if (family == ORACLE) {
-                    context.keyword("timestamp '1970-01-01 ").sql(escape(val)).sql("'");
+                    context.keyword("timestamp").sql(" '1970-01-01 ").sql(escape(val)).sql("'");
                 }
 
                 // Most dialects implement SQL standard time literals
                 else {
-                    context.keyword("time '").sql(escape(val)).sql("'");
+                    context.keyword("time").sql(" '").sql(escape(val)).sql("'");
                 }
             }
             else if (type.isArray()) {

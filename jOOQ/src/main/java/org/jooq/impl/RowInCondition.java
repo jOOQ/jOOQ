@@ -39,7 +39,6 @@ import static java.util.Arrays.asList;
 import static org.jooq.Clause.CONDITION;
 import static org.jooq.Clause.CONDITION_IN;
 import static org.jooq.Clause.CONDITION_NOT_IN;
-import static org.jooq.Clause.DUMMY;
 import static org.jooq.Comparator.EQUALS;
 import static org.jooq.Comparator.IN;
 import static org.jooq.Comparator.NOT_IN;
@@ -89,18 +88,18 @@ class RowInCondition extends AbstractCondition {
     }
 
     @Override
-    public final void toSQL(RenderContext context) {
-        delegate(context.configuration()).toSQL(context);
+    public final void toSQL(RenderContext ctx) {
+        delegate(ctx.configuration()).toSQL(ctx);
     }
 
     @Override
-    public final void bind(BindContext context) {
-        delegate(context.configuration()).bind(context);
+    public final void bind(BindContext ctx) {
+        delegate(ctx.configuration()).bind(ctx);
     }
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return delegate(ctx.configuration()).clauses(ctx);
     }
 
     private final QueryPartInternal delegate(Configuration configuration) {

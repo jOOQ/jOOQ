@@ -36,8 +36,6 @@
 
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,7 +129,7 @@ class TableAlias<R extends Record> extends AbstractTable<R> {
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return null;
     }
 
     @Override

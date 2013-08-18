@@ -36,6 +36,10 @@
 
 package org.jooq.util;
 
+import static org.jooq.util.AbstractDatabase.fetchedSize;
+import static org.jooq.util.AbstractDatabase.filterExcludeInclude;
+import static org.jooq.util.AbstractDatabase.getDefinition;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,7 +81,17 @@ extends AbstractDefinition {
             elements = new ArrayList<E>();
 
             try {
-                elements = getElements0();
+                Database db = getDatabase();
+                List<E> e = getElements0();
+
+                // [#2603] Filter exclude / include also for table columns
+                if (this instanceof TableDefinition && db.getIncludeExcludeColumns()) {
+                    elements = filterExcludeInclude(e, db.getExcludes(), db.getIncludes());
+                    log.info("Columns fetched", fetchedSize(e, elements));
+                }
+                else {
+                    elements = e;
+                }
             }
             catch (SQLException e) {
                 log.error("Error while initialising type", e);
@@ -92,7 +106,7 @@ extends AbstractDefinition {
     }
 
     protected final E getElement(String name, boolean ignoreCase) {
-        return AbstractDatabase.getDefinition(getElements(), name, ignoreCase);
+        return getDefinition(getElements(), name, ignoreCase);
     }
 
     protected final E getElement(int index) {

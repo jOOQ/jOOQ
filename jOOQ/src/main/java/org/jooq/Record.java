@@ -434,6 +434,15 @@ public interface Record extends Attachable, Comparable<Record> {
 
     /**
      * Set a value into this record.
+     * <p>
+     * This will always set the {@link #changed(Field)} flag for the given
+     * <code>field</code>, no matter if setting the value actually changes the
+     * value.
+     * <p>
+     * Changing {@link Table#getPrimaryKey()} values will set all
+     * {@link #changed()} flags to true, in order to produce complete
+     * <code>INSERT</code> statements on subsequent
+     * {@link UpdatableRecord#store()} operations.
      *
      * @param <T> The generic field parameter
      * @param field The field
@@ -443,6 +452,15 @@ public interface Record extends Attachable, Comparable<Record> {
 
     /**
      * Set a value into this record.
+     * <p>
+     * This will always set the {@link #changed(Field)} flag for the given
+     * <code>field</code>, no matter if setting the value actually changes the
+     * value.
+     * <p>
+     * Changing {@link Table#getPrimaryKey()} values will set all
+     * {@link #changed()} flags to true, in order to produce complete
+     * <code>INSERT</code> statements on subsequent
+     * {@link UpdatableRecord#store()} operations.
      *
      * @param <T> The generic field parameter
      * @param <U> The conversion type parameter

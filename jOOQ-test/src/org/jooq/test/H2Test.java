@@ -39,6 +39,7 @@ package org.jooq.test;
 import static java.util.Arrays.asList;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.select;
+import static org.jooq.impl.DSL.table;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOK_TO_BOOK_STORE;
 import static org.jooq.test.h2.generatedclasses.Tables.T_BOOLEANS;
 import static org.jooq.test.h2.generatedclasses.Tables.T_DATES;
@@ -46,6 +47,7 @@ import static org.jooq.test.h2.generatedclasses.Tables.T_EXOTIC_TYPES;
 import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY;
 import static org.jooq.test.h2.generatedclasses.Tables.T_IDENTITY_PK;
 import static org.jooq.test.h2.generatedclasses.Tables.T_UNSIGNED;
+import static org.jooq.test.h2.generatedclasses.Tables.V_2603;
 import static org.jooq.test.h2.generatedclasses.Tables.V_AUTHOR;
 import static org.jooq.test.h2.generatedclasses.Tables.V_BOOK;
 import static org.jooq.test.h2.generatedclasses.tables.TAuthor.FIRST_NAME;
@@ -118,6 +120,7 @@ import org.jooq.test.h2.generatedclasses.tables.records.T_639NumbersTableRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_725LobTestRecord;
 import org.jooq.test.h2.generatedclasses.tables.records.T_785Record;
 import org.jooq.test.h2.generatedclasses.tables.records.VLibraryRecord;
+import org.jooq.test.h2.generatedclasses.tables.records.V_2603Record;
 import org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord;
 import org.jooq.types.UByte;
 import org.jooq.types.UInteger;
@@ -211,6 +214,11 @@ public class H2Test extends jOOQAbstractTest<
     @Override
     protected TableField<TBookRecord, Integer> TBook_AUTHOR_ID() {
         return TBook.AUTHOR_ID;
+    }
+
+    @Override
+    protected TableField<TBookRecord, Integer> TBook_CO_AUTHOR_ID() {
+        return TBook.CO_AUTHOR_ID;
     }
 
     @Override
@@ -869,5 +877,26 @@ public class H2Test extends jOOQAbstractTest<
         finally {
             create().execute("DROP VIEW my_view");
         }
+    }
+
+    @Test
+    public void testH2V2603WithExcludedColumns() throws Exception {
+
+        // The generated table only has two columns
+        V_2603Record record =
+        create().selectFrom(V_2603)
+                .fetchOne();
+
+        assertEquals(2, record.size());
+        assertEquals(1, (int) record.getCol1());
+        assertEquals(4, (int) record.getCol4());
+
+        // The actual table has four columns
+        Record r =
+        create().selectFrom(table(V_2603.getName()))
+                .fetchOne();
+
+        assertEquals(4, r.size());
+        assertEquals(asList(1, 2, 3, 4), asList(r.intoArray()));
     }
 }

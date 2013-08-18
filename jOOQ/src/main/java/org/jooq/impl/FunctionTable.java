@@ -35,11 +35,7 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
-
 import org.jooq.BindContext;
-import org.jooq.Clause;
-import org.jooq.Context;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RenderContext;
@@ -103,11 +99,6 @@ class FunctionTable<R extends Record> extends AbstractTable<R> {
             default:
                 throw new SQLDialectNotSupportedException("FUNCTION TABLE is not supported for " + context.configuration().dialect());
         }
-    }
-
-    @Override
-    public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
     }
 
     @Override

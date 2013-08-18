@@ -42,6 +42,7 @@ import org.jooq.Clause;
 import org.jooq.Context;
 import org.jooq.Name;
 import org.jooq.RenderContext;
+import org.jooq.tools.StringUtils;
 
 /**
  * The default implementation for a SQL identifier
@@ -66,8 +67,10 @@ class NameImpl extends AbstractQueryPart implements Name {
         String separator = "";
 
         for (String name : qualifiedName) {
-            context.sql(separator).literal(name);
-            separator = ".";
+            if (!StringUtils.isEmpty(name)) {
+                context.sql(separator).literal(name);
+                separator = ".";
+            }
         }
     }
 

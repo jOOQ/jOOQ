@@ -62,6 +62,15 @@ public interface DAO<R extends TableRecord<R>, P, T> {
     Configuration configuration();
 
     /**
+     * Expose the {@link RecordMapper} that is used internally by this
+     * <code>DAO</code> to map from records of type <code>R</code> to POJOs of
+     * type <code>P</code>.
+     *
+     * @return the <code>DAO</code>'s underlying <code>RecordMapper</code>
+     */
+    RecordMapper<R, P> mapper();
+
+    /**
      * Performs an <code>INSERT</code> statement for a given POJO
      *
      * @param object The POJO to be inserted

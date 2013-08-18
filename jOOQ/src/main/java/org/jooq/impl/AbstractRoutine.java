@@ -35,7 +35,8 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.DUMMY;
+import static org.jooq.Clause.FIELD;
+import static org.jooq.Clause.FIELD_FUNCTION;
 import static org.jooq.SQLDialect.POSTGRES;
 import static org.jooq.SQLDialect.SQLSERVER;
 import static org.jooq.impl.DSL.function;
@@ -90,6 +91,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
      * Generated UID
      */
     private static final long                 serialVersionUID = 6330037113167106443L;
+    private static final Clause[]             CLAUSES          = { FIELD, FIELD_FUNCTION };
 
     // ------------------------------------------------------------------------
     // Meta-data attributes (the same for every call)
@@ -295,7 +297,7 @@ public abstract class AbstractRoutine<T> extends AbstractQueryPart implements Ro
 
     @Override
     public final Clause[] clauses(Context<?> ctx) {
-        return new Clause[] { DUMMY };
+        return CLAUSES;
     }
 
     @Override

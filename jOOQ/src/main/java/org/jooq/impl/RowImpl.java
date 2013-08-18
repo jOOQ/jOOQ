@@ -35,7 +35,6 @@
  */
 package org.jooq.impl;
 
-import static org.jooq.Clause.FIELD;
 import static org.jooq.Clause.FIELD_ROW;
 import static org.jooq.impl.DSL.row;
 
@@ -163,7 +162,7 @@ implements
      * Generated UID
      */
     private static final long     serialVersionUID = -929427349071556318L;
-    private static final Clause[] CLAUSES          = { FIELD, FIELD_ROW };
+    private static final Clause[] CLAUSES          = { FIELD_ROW };
 
     final Fields                  fields;
 

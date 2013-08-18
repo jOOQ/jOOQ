@@ -113,16 +113,13 @@ class CaseConditionStepImpl<T> extends AbstractField<T> implements CaseCondition
                 context.formatNewLine();
             }
 
-            context.keyword(" when ")
-                   .visit(conditions.get(i))
-                   .keyword(" then ")
-                   .visit(results.get(i));
+            context.sql(" ").keyword("when").sql(" ").visit(conditions.get(i))
+                   .sql(" ").keyword("then").sql(" ").visit(results.get(i));
         }
 
         if (otherwise != null) {
             context.formatNewLine()
-                   .keyword(" else ")
-                   .visit(otherwise);
+                   .sql(" ").keyword("else").sql(" ").visit(otherwise);
         }
 
         context.formatIndentLockEnd();

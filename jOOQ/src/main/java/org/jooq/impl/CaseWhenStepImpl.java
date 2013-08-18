@@ -149,9 +149,9 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
                         ctx.formatNewLine();
                     }
 
-                    ctx.keyword(" when ");
+                    ctx.sql(" ").keyword("when").sql(" ");
                     ctx.visit(value.equal(compareValues.get(i)));
-                    ctx.keyword(" then ");
+                    ctx.sql(" ").keyword("then").sql(" ");
                     ctx.visit(results.get(i));
                 }
 
@@ -168,9 +168,9 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
                         ctx.formatNewLine();
                     }
 
-                    ctx.keyword(" when ");
+                    ctx.sql(" ").keyword("when").sql(" ");
                     ctx.visit(compareValues.get(i));
-                    ctx.keyword(" then ");
+                    ctx.sql(" ").keyword("then").sql(" ");
                     ctx.visit(results.get(i));
                 }
 
@@ -180,8 +180,7 @@ class CaseWhenStepImpl<V, T> extends AbstractField<T> implements CaseWhenStep<V,
 
         if (otherwise != null) {
             ctx.formatNewLine()
-               .keyword(" else ")
-               .visit(otherwise);
+               .sql(" ").keyword("else").sql(" ").visit(otherwise);
         }
 
         ctx.formatIndentLockEnd();

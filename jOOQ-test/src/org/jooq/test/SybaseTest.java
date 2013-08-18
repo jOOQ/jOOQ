@@ -184,6 +184,11 @@ public class SybaseTest extends jOOQAbstractTest<
     }
 
     @Override
+    protected TableField<TBookRecord, Integer> TBook_CO_AUTHOR_ID() {
+        return T_BOOK.CO_AUTHOR_ID;
+    }
+
+    @Override
     protected TableField<TBookRecord, String> TBook_TITLE() {
         return T_BOOK.TITLE;
     }

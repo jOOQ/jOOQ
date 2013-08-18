@@ -36,6 +36,7 @@
 package org.jooq.impl;
 
 import static org.jooq.Clause.TRUNCATE;
+import static org.jooq.Clause.TRUNCATE_TRUNCATE;
 
 import org.jooq.BindContext;
 import org.jooq.Clause;
@@ -111,25 +112,27 @@ class TruncateImpl<R extends Record> extends AbstractQuery implements
 
             // All other dialects do
             default: {
-                context.keyword("truncate table ");
-                context.visit(table);
+                context.start(TRUNCATE_TRUNCATE)
+                       .keyword("truncate table").sql(" ")
+                       .visit(table);
 
                 if (context.configuration().dialect() == SQLDialect.DB2) {
-                    context.keyword(" immediate");
+                    context.sql(" ").keyword("immediate");
                 }
 
+                if (restartIdentity != null) {
+                    context.formatSeparator()
+                           .keyword(restartIdentity ? "restart identity" : "continue identity");
+                }
+
+                if (cascade != null) {
+                    context.formatSeparator()
+                           .keyword(cascade ? "cascade" : "restrict");
+                }
+
+                context.end(TRUNCATE_TRUNCATE);
                 break;
             }
-        }
-
-        if (restartIdentity != null) {
-            context.formatSeparator()
-                   .keyword(restartIdentity ? "restart identity" : "continue identity");
-        }
-
-        if (cascade != null) {
-            context.formatSeparator()
-                   .keyword(cascade ? "cascade" : "restrict");
         }
     }
 

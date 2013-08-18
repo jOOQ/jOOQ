@@ -133,6 +133,9 @@ public class JavaGenerator extends AbstractGenerator {
         log.info("  dialect", database.getDialect());
         log.info("  target dir", getTargetDirectory());
         log.info("  target package", getTargetPackage());
+        log.info("  includes", Arrays.asList(database.getIncludes()));
+        log.info("  excludes", Arrays.asList(database.getExcludes()));
+        log.info("  includeExcludeColumns", database.getIncludeExcludeColumns());
         log.info("----------------------------------------------------------");
         log.info("");
         log.info("DefaultGenerator parameters");

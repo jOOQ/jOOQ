@@ -42,10 +42,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -76,6 +79,48 @@ public class Transform {
     private static final FopFactory fopFactory = FopFactory.newInstance();
     private static final String minorVersion = Constants.MINOR_VERSION;
     private static final String version = Constants.FULL_VERSION;
+    private static final String codegenXSDVersion;
+    private static final String exportXSDVersion;
+    private static final String runtimeXSDVersion;
+
+    static {
+        File xsdDir = new File("./xsd");
+        String[] files = xsdDir.list();
+
+        List<String> codegenXSDVersions = new ArrayList<String>();
+        List<String> exportXSDVersions = new ArrayList<String>();
+        List<String> runtimeXSDVersions = new ArrayList<String>();
+
+        Pattern p = Pattern.compile("jooq-(\\w+)-(\\d+\\.\\d+\\.\\d+).xsd");
+
+        for (String file : files) {
+            Matcher m = p.matcher(file);
+
+            if (m.matches()) {
+                if ("codegen".equals(m.group(1))) {
+                    codegenXSDVersions.add(m.group(2));
+                }
+                else if ("export".equals(m.group(1))) {
+                    exportXSDVersions.add(m.group(2));
+                }
+                else if ("runtime".equals(m.group(1))) {
+                    runtimeXSDVersions.add(m.group(2));
+                }
+            }
+        }
+
+        codegenXSDVersions.add(version);
+        exportXSDVersions.add(version);
+        runtimeXSDVersions.add(version);
+
+        Collections.sort(codegenXSDVersions);
+        Collections.sort(exportXSDVersions);
+        Collections.sort(runtimeXSDVersions);
+
+        codegenXSDVersion = codegenXSDVersions.get(codegenXSDVersions.lastIndexOf(version) - 1);
+        exportXSDVersion = exportXSDVersions.get(exportXSDVersions.lastIndexOf(version) - 1);
+        runtimeXSDVersion = runtimeXSDVersions.get(runtimeXSDVersions.lastIndexOf(version) - 1);
+    }
 
     public static void main(String[] args) throws Exception {
         System.out.println("Transforming manual: " + file("manual.xml"));
@@ -146,17 +191,17 @@ public class Transform {
                 }
 
                 if (content.contains("{codegen-xsd-version}")) {
-                    content = content.replace("{codegen-xsd-version}", "3.0.0");
+                    content = content.replace("{codegen-xsd-version}", codegenXSDVersion);
                     changed = true;
                 }
 
                 if (content.contains("{export-xsd-version}")) {
-                    content = content.replace("{export-xsd-version}", "2.6.0");
+                    content = content.replace("{export-xsd-version}", exportXSDVersion);
                     changed = true;
                 }
 
                 if (content.contains("{runtime-xsd-version}")) {
-                    content = content.replace("{runtime-xsd-version}", "3.0.0");
+                    content = content.replace("{runtime-xsd-version}", runtimeXSDVersion);
                     changed = true;
                 }
 

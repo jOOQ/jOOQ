@@ -219,6 +219,11 @@ public class MySQLTest extends jOOQAbstractTest<
     }
 
     @Override
+    protected TableField<TBookRecord, Integer> TBook_CO_AUTHOR_ID() {
+        return TBook.CO_AUTHOR_ID;
+    }
+
+    @Override
     protected TableField<TBookRecord, String> TBook_TITLE() {
         return TBook.TITLE;
     }
@@ -858,7 +863,7 @@ public class MySQLTest extends jOOQAbstractTest<
 
         Date d1 = Date.valueOf("2012-01-01");
         Date d2 = Date.valueOf("1999-01-01");
-        
+
         assertEquals(2,
         create().insertInto(T_DATES,
                     TDates.ID,

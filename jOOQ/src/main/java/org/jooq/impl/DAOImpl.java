@@ -95,6 +95,16 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return configuration;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Subclasses may override this method to provide custom implementations.
+     */
+    @Override
+    public /* non-final */ RecordMapper<R, P> mapper() {
+        return mapper;
+    }
+
     // -------------------------------------------------------------------------
     // XXX: DAO API
     // -------------------------------------------------------------------------
@@ -211,7 +221,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
         return using(configuration)
                  .selectFrom(table)
                  .fetch()
-                 .map(mapper);
+                 .map(mapper());
     }
 
     @Override
@@ -226,7 +236,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                         .fetchOne();
         }
 
-        return mapper.map(record);
+        return mapper().map(record);
     }
 
     @Override
@@ -235,7 +245,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                  .selectFrom(table)
                  .where(field.in(values))
                  .fetch()
-                 .map(mapper);
+                 .map(mapper());
     }
 
     @Override
@@ -245,7 +255,7 @@ public abstract class DAOImpl<R extends UpdatableRecord<R>, P, T> implements DAO
                      .where(field.equal(value))
                      .fetchOne();
 
-        return mapper.map(record);
+        return mapper().map(record);
     }
 
     @Override

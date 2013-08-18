@@ -35,6 +35,8 @@
  */
 package org.jooq.impl;
 
+import static org.jooq.Clause.CUSTOM;
+
 import org.jooq.BindContext;
 import org.jooq.Clause;
 import org.jooq.Condition;
@@ -63,7 +65,8 @@ public abstract class CustomCondition extends AbstractCondition {
     /**
      * Generated UID
      */
-    private static final long serialVersionUID = -3439681086987884991L;
+    private static final long     serialVersionUID = -3439681086987884991L;
+    private static final Clause[] CLAUSES          = { CUSTOM };
 
     protected CustomCondition() {
     }
@@ -80,14 +83,6 @@ public abstract class CustomCondition extends AbstractCondition {
     @Override
     public abstract void toSQL(RenderContext context);
 
-    /**
-     * Subclasses must implement this method
-     * <hr/>
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract void bind(BindContext context) throws DataAccessException;
-
     // -------------------------------------------------------------------------
     // Implementation optional
     // -------------------------------------------------------------------------
@@ -98,13 +93,17 @@ public abstract class CustomCondition extends AbstractCondition {
      * {@inheritDoc}
      */
     @Override
-    public Clause[] clauses(Context<?> ctx) {
-        return null;
+    public void bind(BindContext context) throws DataAccessException {
     }
 
     // -------------------------------------------------------------------------
     // No further overrides allowed
     // -------------------------------------------------------------------------
+
+    @Override
+    public final Clause[] clauses(Context<?> ctx) {
+        return CLAUSES;
+    }
 
     @Override
     public final boolean declaresFields() {

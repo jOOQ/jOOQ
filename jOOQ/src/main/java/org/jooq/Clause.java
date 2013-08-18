@@ -36,24 +36,9 @@
 package org.jooq;
 
 /**
- * TODO [#2667]
+ * A listing of clauses that emit events {@link VisitListener}.
  */
 public enum Clause {
-
-    /**
-     * A placeholder clause for cases where the behaviour was not yet specified.
-     * This will not go public, and is meant to be a placeholder during
-     * development.
-     */
-    @Deprecated
-    DUMMY,
-
-    // -------------------------------------------------------------------------
-    // Clauses used in a any type of statement to model package references
-    // -------------------------------------------------------------------------
-
-    PACKAGE,
-    PACKAGE_REFERENCE,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model catalog references
@@ -89,7 +74,22 @@ public enum Clause {
      */
     TABLE,
 
+    /**
+     * A table alias declaration.
+     * <p>
+     * This clause surrounds a table alias declaration, for instance within the
+     * {@link #SELECT_FROM} clause, or within a {@link #TABLE_JOIN} clause,
+     * wrapping another {@link #TABLE}.
+     * <p>
+     * Referenced table aliases emit {@link #TABLE_REFERENCE} clauses.
+     */
     TABLE_ALIAS,
+
+    /**
+     * A physical or aliased table reference.
+     * <p>
+     * This is a terminal clause used to reference physical or aliased tables.
+     */
     TABLE_REFERENCE,
     TABLE_JOIN,
     TABLE_JOIN_INNER,
@@ -104,19 +104,51 @@ public enum Clause {
     TABLE_JOIN_USING,
     TABLE_JOIN_PARTITION_BY,
 
-    TABLE_FLASHBACK,
-    TABLE_PIVOT,
+    /**
+     * A <code>VALUES</code> table constructor
+     * <p>
+     * This clause surrounds a
+     * <ul>
+     * <li>a <code>VALUES</code> keyword</li>
+     * <li>a table constructor with several {@link #FIELD_ROW} value expressions
+     * </li>
+     * </ul>
+     */
+    TABLE_VALUES,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model column references
     // -------------------------------------------------------------------------
 
+    /**
+     * A field expression.
+     * <p>
+     * This clause surrounds an actual field expression as it can be encountered
+     * in various other clauses, such as for instance {@link #SELECT_SELECT}.
+     */
     FIELD,
+
+    /**
+     * A field alias declaration.
+     * <p>
+     * This clause surrounds a field alias declaration, for instance within the
+     * {@link #SELECT_SELECT} clause, wrapping another {@link #FIELD}.
+     * <p>
+     * Referenced field aliases emit {@link #FIELD_REFERENCE} clauses.
+     */
     FIELD_ALIAS,
+
+    /**
+     * A physical or aliased field reference.
+     * <p>
+     * This is a terminal clause used to reference physical or aliased fields.
+     */
     FIELD_REFERENCE,
+
     FIELD_VALUE,
     FIELD_CASE,
     FIELD_ROW,
+    FIELD_FUNCTION,
 
     // -------------------------------------------------------------------------
     // Clauses used in a any type of statement to model condition references
@@ -140,7 +172,6 @@ public enum Clause {
      * This clause surrounds a {@link #FIELD}.
      */
     CONDITION_IS_NOT_NULL,
-
 
     // TODO: Should operators be distinguished?
     // - LIKE predicate
@@ -312,22 +343,142 @@ public enum Clause {
      * @see #TABLE
      */
     SELECT_FROM,
+
+    /**
+     * A <code>WHERE</code> clause within a {@link #SELECT} statement or
+     * subselect.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     * <p>
+     * See {@link #CONDITION} and related clauses for possible conditions
+     *
+     * @see #CONDITION
+     */
     SELECT_WHERE,
+
+    /**
+     * A <code>START WITH</code> clause within a {@link #SELECT} statement or
+     * subselect.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>START WITH</code> keywords</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     * <p>
+     * See {@link #CONDITION} and related clauses for possible conditions
+     *
+     * @see #CONDITION
+     */
     SELECT_START_WITH,
+
+    /**
+     * A <code>CONNECT BY</code> clause within a {@link #SELECT} statement or
+     * subselect.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>CONNECT BY</code> keywords</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     * <p>
+     * See {@link #CONDITION} and related clauses for possible conditions
+     *
+     * @see #CONDITION
+     */
     SELECT_CONNECT_BY,
     SELECT_GROUP_BY,
+
+    /**
+     * A <code>HAVING</code> clause within a {@link #SELECT} statement or
+     * subselect.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>HAVING</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     * <p>
+     * See {@link #CONDITION} and related clauses for possible conditions
+     *
+     * @see #CONDITION
+     */
     SELECT_HAVING,
     SELECT_ORDER_BY,
 
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an INSERT statement
+    // -------------------------------------------------------------------------
 
-
+    /**
+     * A complete <code>INSERT</code> statement.
+     */
     INSERT,
+
+    /**
+     * The <code>INSERT INTO</code> clause within an {@link #INSERT} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>INSERT INTO</code> keywords</li>
+     * <li>the table that is being inserted</li>
+     * </ul>
+     */
     INSERT_INSERT_INTO,
+
+    /**
+     * The <code>VALUES</code> clause within an {@link #INSERT} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>VALUES</code> keyword</li>
+     * <li>several {@link #FIELD_ROW} clauses</li>
+     * </ul>
+     */
+    INSERT_VALUES,
+
+    /**
+     * The <code>SELECT</code> clause within an {@link #INSERT} statement.
+     * <p>
+     * This clause surrounds a {@link #SELECT} clause.
+     */
+    INSERT_SELECT,
+
+    /**
+     * The <code>ON DUPLICATE KEY UPDATE</code> clause within an {@link #INSERT}
+     * statement.
+     * <p>
+     * This clause surrounds several
+     * {@link #INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT} clauses.
+     * <ul>
+     * <li>the <code>ON DUPLICATE KEY UPDATE</code> keywords</li>
+     * <li>several {@link #INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT} clauses</li>
+     * </ul>
+     */
     INSERT_ON_DUPLICATE_KEY_UPDATE,
+
+    /**
+     * The <code>ON DUPLICATE KEY UPDATE</code> clause within an {@link #INSERT}
+     * statement.
+     * <p>
+     * This clause surrounds two {@link #FIELD} clauses.
+     */
     INSERT_ON_DUPLICATE_KEY_UPDATE_ASSIGNMENT,
+
+    /**
+     * The <code>RETURNING</code> clause within an {@link #INSERT} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>RETURNING</code> keyword</li>
+     * <li>several {@link #FIELD} clauses</li>
+     * </ul>
+     */
     INSERT_RETURNING,
-
-
 
     // -------------------------------------------------------------------------
     // Clauses that are used in an UPDATE statement
@@ -366,9 +517,9 @@ public enum Clause {
      * <p>
      * This clause surrounds
      * <ul>
-     * <li>a column</li>
+     * <li>a {@link #FIELD} receiving the assignment</li>
      * <li>an assigment operator</li>
-     * <li>a value being assigned</li>
+     * <li>a {@link #FIELD} being assigned</li>
      * </ul>
      */
     UPDATE_SET_ASSIGNMENT,
@@ -395,19 +546,199 @@ public enum Clause {
      */
     UPDATE_RETURNING,
 
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an DELETE statement
+    // -------------------------------------------------------------------------
 
+    /**
+     * A complete <code>DELETE</code> statement.
+     */
     DELETE,
+
+    /**
+     * A <code>DELETE</code> clause within an {@link #DELETE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DELETE FROM</code> keywords</li>
+     * <li>the table that is being deleted</li>
+     * </ul>
+     */
     DELETE_DELETE,
+
+    /**
+     * A <code>WHERE</code> clause within an {@link #DELETE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
     DELETE_WHERE,
 
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an MERGE statement
+    // -------------------------------------------------------------------------
 
+    /**
+     * A complete <code>MERGE</code> statement.
+     */
     MERGE,
+
+    /**
+     * A <code>MERGE INTO</code> clause within an {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>MERGE INTO</code> keywords</li>
+     * <li>the table that is being merged</li>
+     * </ul>
+     */
     MERGE_MERGE_INTO,
-    MERGE_WHEN_MATCHED_THEN_UPDATE_SET,
-    MERGE_WHEN_MATCHED_THEN_UPDATE_SET_ASSIGNMENT,
 
+    /**
+     * A <code>USING</code> clause within a {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>USING</code> keyword</li>
+     * <li>a {@link #TABLE}</li>
+     * </ul>
+     */
+    MERGE_USING,
 
+    /**
+     * An <code>ON</code> clause within a {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>ON</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
+    MERGE_ON,
 
+    /**
+     * A <code>WHEN MATCHED THEN UPDATE</code> clause within a {@link #MERGE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHEN MATCHED THEN UPDATE</code> keywords</li>
+     * <li>a {@link #MERGE_SET} clause</li>
+     * <li>a {@link #MERGE_WHERE} clause</li>
+     * <li>a {@link #MERGE_DELETE_WHERE} clause</li>
+     * </ul>
+     */
+    MERGE_WHEN_MATCHED_THEN_UPDATE,
+
+    /**
+     * A <code>SET</code> clause within a
+     * {@link #MERGE_WHEN_MATCHED_THEN_UPDATE} clause within an {@link #MERGE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>SET</code> keyword</li>
+     * <li>several {@link #MERGE_SET_ASSIGNMENT} clauses</li>
+     * </ul>
+     */
+    MERGE_SET,
+
+    /**
+     * An assigment within a {@link #MERGE_SET} clause within an {@link #MERGE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>a {@link #FIELD} receiving the assignment</li>
+     * <li>an assigment operator</li>
+     * <li>a {@link #FIELD} being assigned</li>
+     * </ul>
+     */
+    MERGE_SET_ASSIGNMENT,
+
+    /**
+     * A <code>WHERE</code> clause within a
+     * {@link #MERGE_WHEN_MATCHED_THEN_UPDATE} clause within a
+     * {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
+    MERGE_WHERE,
+
+    /**
+     * A <code>DELETE_WHERE</code> clause within a
+     * {@link #MERGE_WHEN_MATCHED_THEN_UPDATE} clause within a {@link #MERGE}
+     * statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>DELETE WHERE</code> keyword</li>
+     * <li>a {@link #CONDITION}</li>
+     * </ul>
+     */
+    MERGE_DELETE_WHERE,
+
+    /**
+     * A <code>WHEN NOT MATCHED THEN INSERT</code> clause within a
+     * {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>WHEN NOT MATCHED THEN INSERT</code> keywords</li>
+     * <li>several {@link #FIELD} clauses</li>
+     * </ul>
+     */
+    MERGE_WHEN_NOT_MATCHED_THEN_INSERT,
+
+    /**
+     * A <code>VALUES</code> clause within a {@link #MERGE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>VALUES</code> keyword</li>
+     * <li>several {@link #FIELD_ROW} clauses</li>
+     * </ul>
+     */
+    MERGE_VALUES,
+
+    // -------------------------------------------------------------------------
+    // Clauses that are used in an TRUNCATE statement
+    // -------------------------------------------------------------------------
+
+    /**
+     * A complete <code>TRUNCATE</code> statement.
+     */
     TRUNCATE,
+
+    /**
+     * A <code>TRUNCATE</code> clause within an {@link #TRUNCATE} statement.
+     * <p>
+     * This clause surrounds
+     * <ul>
+     * <li>the <code>TRUNCATE TABLE</code> keywords</li>
+     * <li>the table that is being truncated</li>
+     * </ul>
+     */
     TRUNCATE_TRUNCATE,
+
+    // -------------------------------------------------------------------------
+    // Other clauses
+    // -------------------------------------------------------------------------
+
+    /**
+     * A plain SQL template clause.
+     */
+    TEMPLATE,
+
+    /**
+     * A custom {@link QueryPart} clause.
+     */
+    CUSTOM
 }

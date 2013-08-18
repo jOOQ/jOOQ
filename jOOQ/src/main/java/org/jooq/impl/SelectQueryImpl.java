@@ -35,6 +35,7 @@
  */
 package org.jooq.impl;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static org.jooq.Clause.SELECT;
 import static org.jooq.Clause.SELECT_CONNECT_BY;
@@ -65,6 +66,7 @@ import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.one;
 import static org.jooq.impl.DSL.rowNumber;
 import static org.jooq.impl.Utils.DATA_ROW_VALUE_EXPRESSION_PREDICATE_SUBQUERY;
+import static org.jooq.impl.Utils.DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -197,6 +199,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
 
     @Override
     public final void toSQL(RenderContext context) {
+        Boolean wrapDerivedTables = (Boolean) context.data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES);
+        if (TRUE.equals(wrapDerivedTables)) {
+            context.sql("(")
+                   .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, null);
+        }
 
         // If a limit applies
         if (getLimit().isApplicable()) {
@@ -281,11 +288,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .keyword("for update");
 
             if (!forUpdateOf.isEmpty()) {
-                context.keyword(" of ");
+                context.sql(" ").keyword("of").sql(" ");
                 Utils.fieldNames(context, forUpdateOf);
             }
             else if (!forUpdateOfTables.isEmpty()) {
-                context.keyword(" of ");
+                context.sql(" ").keyword("of").sql(" ");
 
                 switch (context.configuration().dialect().family()) {
 
@@ -340,6 +347,11 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
             context.formatSeparator()
                    .sql(option);
         }
+
+        if (TRUE.equals(wrapDerivedTables)) {
+            context.sql(")")
+                   .data(DATA_WRAP_DERIVED_TABLES_IN_PARENTHESES, true);
+        }
     }
 
     /**
@@ -378,15 +390,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                .sql(enclosed)
                .formatIndentEnd()
                .formatNewLine()
-               .keyword(") as ")
+               .sql(") ").keyword("as").sql(" ")
                .visit(name(subqueryName))
                .formatSeparator()
-               .keyword("where ")
+               .keyword("where").sql(" ")
                .visit(name(rownumName))
                .sql(" > ")
                .visit(getLimit().getLowerRownum())
                .formatSeparator()
-               .keyword("and ")
+               .keyword("and").sql(" ")
                .visit(name(rownumName))
                .sql(" <= ")
                .visit(getLimit().getUpperRownum());
@@ -404,15 +416,15 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
         String subqueryName = "limit_" + Utils.hash(enclosed);
         String rownumName = "rownum_" + Utils.hash(enclosed);
 
-        context.keyword("select * from (")
+        context.keyword("select").sql(" * ").keyword("from").sql(" (")
                .formatIndentStart()
                .formatNewLine()
-                 .keyword("select ")
-                 .visit(name(subqueryName))
-                 .keyword(".*, rownum as ")
+                 .keyword("select").sql(" ")
+                 .visit(name(subqueryName)).sql(".*, ")
+                 .keyword("rownum").sql(" ").keyword("as").sql(" ")
                  .visit(name(rownumName))
                  .formatSeparator()
-                 .keyword("from (")
+                 .keyword("from").sql(" (")
                  .formatIndentStart()
                  .formatNewLine()
                    .sql(enclosed)
@@ -421,13 +433,13 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                  .sql(") ")
                  .visit(name(subqueryName))
                  .formatSeparator()
-                 .keyword("where rownum <= ")
+                 .keyword("where").sql(" ").keyword("rownum").sql(" <= ")
                  .visit(getLimit().getUpperRownum())
                .formatIndentEnd()
                .formatNewLine()
                .sql(") ")
                .formatSeparator()
-               .keyword("where ")
+               .keyword("where").sql(" ")
                .visit(name(rownumName))
                .sql(" > ")
                .visit(getLimit().getLowerRownum());
@@ -485,7 +497,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                     // [#2423] SQL Server 2012 will render an OFFSET .. FETCH
                     // clause if there is an applicable limit
                     if (dialect == SQLSERVER2008 || !getLimit().isApplicable()) {
-                        context.keyword("top 100 percent ");
+                        context.keyword("top").sql(" 100 ").keyword("percent").sql(" ");
                     }
                 }
 
@@ -611,7 +623,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
                    .keyword("connect by");
 
             if (connectByNoCycle) {
-                context.keyword(" nocycle");
+                context.sql(" ").keyword("nocycle");
             }
 
             context.sql(" ").visit(getConnectBy());

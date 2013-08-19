@@ -182,6 +182,12 @@ import org.jooq.impl.BatchCRUD.Action;
 import org.jooq.tools.csv.CSVReader;
 
 /**
+ * A default implementation for {@link DSLContext}.
+ * <p>
+ * You may use this as a base implementation for custom {@link DSLContext}
+ * subtypes preventing potential API breakage when upgrading jOOQ, or to
+ * delegate DSL method calls to your custom implementations.
+ *
  * @author Lukas Eder
  */
 @SuppressWarnings({ "rawtypes", "unchecked" })

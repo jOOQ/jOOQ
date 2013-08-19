@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 341528136;
+	private static final long serialVersionUID = -1639629976;
 
 	/**
 	 * The singleton instance of <code>test.t_book_to_book_store</code>
@@ -29,12 +29,12 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.mysq
 	/**
 	 * The column <code>test.t_book_to_book_store.book_store_name</code>. The book store name
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("book_store_name", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_TO_BOOK_STORE);
 
 	/**
 	 * The column <code>test.t_book_to_book_store.book_id</code>. The book ID
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("book_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK_TO_BOOK_STORE);
 
 	/**
 	 * The column <code>test.t_book_to_book_store.stock</code>. The number of books on stock

@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_2025Record> {
 
-	private static final long serialVersionUID = -1366587380;
+	private static final long serialVersionUID = -278627412;
 
 	/**
 	 * The singleton instance of <code>x_test_case_2025</code>
@@ -27,12 +27,12 @@ public class XTestCase_2025 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid
 	/**
 	 * The column <code>x_test_case_2025.ref_id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("ref_id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_2025);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_2025Record, java.lang.Integer> REF_ID = createField("ref_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_2025);
 
 	/**
 	 * The column <code>x_test_case_2025.ref_name</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("ref_name", org.jooq.impl.SQLDataType.VARCHAR.length(10), X_TEST_CASE_2025);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_2025Record, java.lang.String> REF_NAME = createField("ref_name", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), X_TEST_CASE_2025);
 
 	/**
 	 * No further instances allowed

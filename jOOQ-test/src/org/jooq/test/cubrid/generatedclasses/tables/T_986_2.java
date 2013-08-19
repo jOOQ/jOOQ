@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record> {
 
-	private static final long serialVersionUID = 1526591247;
+	private static final long serialVersionUID = -1721010416;
 
 	/**
 	 * The singleton instance of <code>t_986_2</code>
@@ -27,7 +27,7 @@ public class T_986_2 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.genera
 	/**
 	 * The column <code>t_986_2.ref</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("ref", org.jooq.impl.SQLDataType.INTEGER, T_986_2);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.T_986_2Record, java.lang.Integer> REF = createField("ref", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_986_2);
 
 	/**
 	 * No further instances allowed

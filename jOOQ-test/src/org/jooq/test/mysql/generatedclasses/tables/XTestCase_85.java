@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = -1916522380;
+	private static final long serialVersionUID = 403658677;
 
 	/**
 	 * The singleton instance of <code>test.x_test_case_85</code>
@@ -29,7 +29,7 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.mysql.ge
 	/**
 	 * The column <code>test.x_test_case_85.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_85);
 
 	/**
 	 * The column <code>test.x_test_case_85.x_unused_id</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1193471052;
+	private static final long serialVersionUID = 1955354061;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_85</code>
@@ -27,7 +27,7 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.derby.ge
 	/**
 	 * The column <code>TEST.X_TEST_CASE_85.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_85);
 
 	/**
 	 * The column <code>TEST.X_TEST_CASE_85.X_UNUSED_ID</code>. 

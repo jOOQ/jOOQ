@@ -9,7 +9,7 @@ package org.jooq.test.sqlite.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1509794327;
+	private static final long serialVersionUID = -243084967;
 
 	/**
 	 * The singleton instance of <code>t_language</code>
@@ -27,7 +27,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.gene
 	/**
 	 * The column <code>t_language.cd</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("cd", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), T_LANGUAGE);
 
 	/**
 	 * The column <code>t_language.description</code>. 
@@ -42,7 +42,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.sqlite.gene
 	/**
 	 * The column <code>t_language.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.sqlite.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_LANGUAGE);
 
 	/**
 	 * No further instances allowed

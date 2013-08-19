@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -221106677;
+	private static final long serialVersionUID = 1474892522;
 
 	/**
 	 * The singleton instance of <code>TEST.X_TEST_CASE_71</code>
@@ -27,7 +27,7 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.oracle.g
 	/**
 	 * The column <code>TEST.X_TEST_CASE_71.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>TEST.X_TEST_CASE_71.TEST_CASE_64_69_ID</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = -1801719770;
+	private static final long serialVersionUID = -1796291771;
 
 	/**
 	 * The singleton instance of <code>test.x_test_case_71</code>
@@ -27,7 +27,7 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.ingres.g
 	/**
 	 * The column <code>test.x_test_case_71.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_71);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_71);
 
 	/**
 	 * The column <code>test.x_test_case_71.test_case_64_69_id</code>. 

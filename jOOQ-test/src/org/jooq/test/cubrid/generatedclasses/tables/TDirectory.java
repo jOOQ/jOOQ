@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -228115464;
+	private static final long serialVersionUID = 1188061463;
 
 	/**
 	 * The singleton instance of <code>t_directory</code>
@@ -27,7 +27,7 @@ public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.gen
 	/**
 	 * The column <code>t_directory.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_DIRECTORY);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_DIRECTORY);
 
 	/**
 	 * The column <code>t_directory.parent_id</code>. 

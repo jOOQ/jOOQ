@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -113717758;
+	private static final long serialVersionUID = -574406845;
 
 	/**
 	 * The singleton instance of <code>T_TRIGGERS</code>
@@ -27,7 +27,7 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.firebird.ge
 	/**
 	 * The column <code>T_TRIGGERS.ID_GENERATED</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_TRIGGERS.ID</code>. 

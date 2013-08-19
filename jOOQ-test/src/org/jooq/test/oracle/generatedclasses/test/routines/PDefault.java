@@ -9,12 +9,12 @@ package org.jooq.test.oracle.generatedclasses.test.routines;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 
-	private static final long serialVersionUID = -109852222;
+	private static final long serialVersionUID = 710841139;
 
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_IN_NUMBER</code>. 
 	 */
-	public static final org.jooq.Parameter<java.math.BigDecimal> P_IN_NUMBER = createParameter("P_IN_NUMBER", org.jooq.impl.SQLDataType.NUMERIC, true);
+	public static final org.jooq.Parameter<java.math.BigDecimal> P_IN_NUMBER = createParameter("P_IN_NUMBER", org.jooq.impl.SQLDataType.NUMERIC.defaulted(true), true);
 
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_OUT_NUMBER</code>. 
@@ -24,7 +24,7 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_IN_VARCHAR</code>. 
 	 */
-	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("P_IN_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR, true);
+	public static final org.jooq.Parameter<java.lang.String> P_IN_VARCHAR = createParameter("P_IN_VARCHAR", org.jooq.impl.SQLDataType.VARCHAR.defaulted(true), true);
 
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_OUT_VARCHAR</code>. 
@@ -34,7 +34,7 @@ public class PDefault extends org.jooq.impl.AbstractRoutine<java.lang.Void> {
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_IN_DATE</code>. 
 	 */
-	public static final org.jooq.Parameter<java.sql.Date> P_IN_DATE = createParameter("P_IN_DATE", org.jooq.impl.SQLDataType.DATE, true);
+	public static final org.jooq.Parameter<java.sql.Date> P_IN_DATE = createParameter("P_IN_DATE", org.jooq.impl.SQLDataType.DATE.defaulted(true), true);
 
 	/**
 	 * The parameter <code>TEST.P_DEFAULT.P_OUT_DATE</code>. 

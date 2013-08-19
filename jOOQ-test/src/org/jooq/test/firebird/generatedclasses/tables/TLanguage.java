@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 1593090169;
+	private static final long serialVersionUID = -1630654887;
 
 	/**
 	 * The singleton instance of <code>T_LANGUAGE</code>
@@ -27,7 +27,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.firebird.ge
 	/**
 	 * The column <code>T_LANGUAGE.CD</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), this);
 
 	/**
 	 * The column <code>T_LANGUAGE.DESCRIPTION</code>. 
@@ -42,7 +42,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.firebird.ge
 	/**
 	 * The column <code>T_LANGUAGE.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * Create a <code>T_LANGUAGE</code> table reference

@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 1551659637;
+	private static final long serialVersionUID = -1834659466;
 
 	/**
 	 * The singleton instance of <code>x_test_case_85</code>
@@ -27,7 +27,7 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.g
 	/**
 	 * The column <code>x_test_case_85.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, X_TEST_CASE_85);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_TEST_CASE_85);
 
 	/**
 	 * The column <code>x_test_case_85.x_unused_id</code>. 

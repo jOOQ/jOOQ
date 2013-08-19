@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record> {
 
-	private static final long serialVersionUID = 177572676;
+	private static final long serialVersionUID = -1103946205;
 
 	/**
 	 * The singleton instance of <code>X_TEST_CASE_85</code>
@@ -27,7 +27,7 @@ public class XTestCase_85 extends org.jooq.impl.TableImpl<org.jooq.test.firebird
 	/**
 	 * The column <code>X_TEST_CASE_85.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.XTestCase_85Record, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>X_TEST_CASE_85.X_UNUSED_ID</code>. 

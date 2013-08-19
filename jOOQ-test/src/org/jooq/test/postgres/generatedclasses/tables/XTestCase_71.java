@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record> {
 
-	private static final long serialVersionUID = 1363828000;
+	private static final long serialVersionUID = 1898155647;
 
 	/**
 	 * The singleton instance of <code>public.x_test_case_71</code>
@@ -27,7 +27,7 @@ public class XTestCase_71 extends org.jooq.impl.TableImpl<org.jooq.test.postgres
 	/**
 	 * The column <code>public.x_test_case_71.id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.XTestCase_71Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>public.x_test_case_71.test_case_64_69_id</code>. 

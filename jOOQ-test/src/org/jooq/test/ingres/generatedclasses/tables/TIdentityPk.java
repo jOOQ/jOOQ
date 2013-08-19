@@ -9,7 +9,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord> {
 
-	private static final long serialVersionUID = -317731921;
+	private static final long serialVersionUID = 2034746803;
 
 	/**
 	 * The singleton instance of <code>test.t_identity_pk</code>
@@ -27,7 +27,7 @@ public class TIdentityPk extends org.jooq.impl.TableImpl<org.jooq.test.ingres.ge
 	/**
 	 * The column <code>test.t_identity_pk.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY_PK);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TIdentityPkRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), T_IDENTITY_PK);
 
 	/**
 	 * The column <code>test.t_identity_pk.val</code>. 

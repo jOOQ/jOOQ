@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TPgExtensions extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord> {
 
-	private static final long serialVersionUID = -1898383913;
+	private static final long serialVersionUID = -585589541;
 
 	/**
 	 * The singleton instance of <code>public.t_pg_extensions</code>
@@ -27,7 +27,7 @@ public class TPgExtensions extends org.jooq.impl.TableImpl<org.jooq.test.postgre
 	/**
 	 * The column <code>public.t_pg_extensions.id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.TPgExtensionsRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaulted(true), this);
 
 	/**
 	 * The column <code>public.t_pg_extensions.pg_interval</code>. 

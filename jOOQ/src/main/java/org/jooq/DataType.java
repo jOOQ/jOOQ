@@ -162,6 +162,36 @@ public interface DataType<T> extends Serializable {
     List<T> convert(Collection<?> objects);
 
     /**
+     * Return a new data type like this, with a new nullability.
+     *
+     * @param nullable The new nullability
+     * @return The new data type
+     */
+    DataType<T> nullable(boolean nullable);
+
+    /**
+     * Get the nullability of this data type.
+     *
+     * @return The nullability
+     */
+    boolean nullable();
+
+    /**
+     * Return a new data type like this, with a new defaultability.
+     *
+     * @param defaulted The new defaultability
+     * @return The new data type
+     */
+    DataType<T> defaulted(boolean defaulted);
+
+    /**
+     * Get the defaultability of this data type.
+     *
+     * @return The defaultability
+     */
+    boolean defaulted();
+
+    /**
      * Return a new data type like this, with a new precision value.
      * <p>
      * This will have no effect if {@link #hasPrecision()} is <code>false</code>

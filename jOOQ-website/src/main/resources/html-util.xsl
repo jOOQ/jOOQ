@@ -81,6 +81,14 @@
     <xsl:template match="content">
         <xsl:apply-templates select="@*|node()" mode="content"/>
     </xsl:template>
+    
+    <xsl:template match="html" mode="content">
+        <div class="row col col-100 col-white">
+            <xsl:copy>
+                <xsl:apply-templates select="@*|node()" mode="content"/>
+            </xsl:copy>
+        </div>
+    </xsl:template>
 
     <xsl:template match="@*|node()" mode="content">
         <xsl:param name="colwidth" select="'100'"/>
@@ -194,82 +202,46 @@
                 </a>
             </xsl:when>
             <xsl:when test="name(.) = 'java'">
-                <xsl:if test="not($col2)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
-                </xsl:if>
-                <div class="row col col-{$colwidth} col-darkgrey">
+                <div class="row col col-{$colwidth} col-black">
                     <pre class="prettyprint lang-java">
                         <xsl:value-of select="text()"/>
                     </pre>
                 </div>
-                <xsl:if test="not($col1)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
-                </xsl:if>
             </xsl:when>
             <xsl:when test="name(.) = 'scala'">
-                <xsl:if test="not($col2)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
-                </xsl:if>
-                <div class="row col col-{$colwidth} col-darkgrey">
-                <pre class="prettyprint lang-scala">
-                    <xsl:value-of select="text()"/>
-                </pre>
+                <div class="row col col-{$colwidth} col-black">
+                    <pre class="prettyprint lang-scala">
+                        <xsl:value-of select="text()"/>
+                    </pre>
                 </div>
-                <xsl:if test="not($col1)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
-                </xsl:if>
             </xsl:when>
             <xsl:when test="name(.) = 'sql'">
-                <xsl:if test="not($col2)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
-                </xsl:if>
                 <div class="row col col-{$colwidth} col-black">
-                <pre class="prettyprint lang-sql">
-                    <xsl:value-of select="text()"/>
-                </pre>
+                    <pre class="prettyprint lang-sql">
+                        <xsl:value-of select="text()"/>
+                    </pre>
                 </div>
-                <xsl:if test="not($col1)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
-                </xsl:if>
             </xsl:when>
             <xsl:when test="name(.) = 'xml'">
-                <xsl:if test="not($col2)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
-                </xsl:if>
-                <div class="row col col-{$colwidth} col-grey">
-                <pre class="prettyprint lang-xml">
-                    <xsl:value-of select="text()"/>
-                </pre>
+                <div class="row col col-{$colwidth} col-black">
+                    <pre class="prettyprint lang-xml">
+                        <xsl:value-of select="text()"/>
+                    </pre>
                 </div>
-                <xsl:if test="not($col1)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
-                </xsl:if>
             </xsl:when>
             <xsl:when test="name(.) = 'config'">
-                <xsl:if test="not($col2)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
-                </xsl:if>
-                <div class="row col col-{$colwidth} col-green">
-                <pre class="prettyprint">
-                    <xsl:value-of select="text()"/>
-                </pre>
+                <div class="row col col-{$colwidth} col-black">
+                    <pre class="prettyprint">
+                        <xsl:value-of select="text()"/>
+                    </pre>
                 </div>
-                <xsl:if test="not($col1)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
-                </xsl:if>
             </xsl:when>
             <xsl:when test="name(.) = 'text'">
-                <xsl:if test="not($col2)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[</div>]]></xsl:text>
-                </xsl:if>
                 <div class="row col col-{$colwidth} col-red">
-                <pre>
-                    <xsl:value-of select="text()"/>
-                </pre>
+                    <pre>
+                        <xsl:value-of select="text()"/>
+                    </pre>
                 </div>
-                <xsl:if test="not($col1)">
-                    <xsl:text disable-output-escaping="yes"><![CDATA[<div class="row col col-100 col-white">]]></xsl:text>
-                </xsl:if>
             </xsl:when>
             <xsl:when test="name(.) = 'code-pair'">
                 <xsl:apply-templates select="./*[position() = 1]" mode="content">

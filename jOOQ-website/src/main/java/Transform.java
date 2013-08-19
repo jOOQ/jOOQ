@@ -76,12 +76,14 @@ import org.joox.Match;
  * @author Lukas Eder
  */
 public class Transform {
-    private static final FopFactory fopFactory = FopFactory.newInstance();
-    private static final String minorVersion = Constants.MINOR_VERSION;
-    private static final String version = Constants.FULL_VERSION;
-    private static final String codegenXSDVersion;
-    private static final String exportXSDVersion;
-    private static final String runtimeXSDVersion;
+
+    private static final FopFactory fopFactory   = FopFactory.newInstance();
+    private static final String     minorVersion = Constants.MINOR_VERSION;
+    private static final String     version      = Constants.FULL_VERSION;
+    private static final String     codegenXSDVersion;
+    private static final String     exportXSDVersion;
+    private static final String     runtimeXSDVersion;
+    private static final String     baseDir      = "";
 
     static {
         File xsdDir = new File("./xsd");
@@ -249,7 +251,7 @@ public class Transform {
             String path = path(StringUtils.join(sections.ids(), "/"));
             String relativePath = relative(path);
             String root = root();
-            File dir = new File(path);
+            File dir = new File(baseDir + path);
             dir.mkdirs();
 
             File file = new File(dir, "index.php");
@@ -313,7 +315,7 @@ public class Transform {
         Match manual = $(isXML);
         replaceVariables(manual);
 
-        File dir = new File(path("manual-single-page"));
+        File dir = new File(baseDir + path("manual-single-page"));
         dir.mkdirs();
 
         System.out.println("Transforming manual");
@@ -347,7 +349,7 @@ public class Transform {
         replaceVariables(manual);
         checkCodeBlockLengths(manual);
 
-        File dir = new File(path("manual-pdf"));
+        File dir = new File(baseDir + path("manual-pdf"));
         dir.mkdirs();
         FileOutputStream fout = new FileOutputStream(new File(dir, file("jOOQ-manual.fo.xml")));
 

@@ -43,7 +43,6 @@ import java.sql.Timestamp;
 
 import org.jooq.Configuration;
 import org.jooq.Field;
-import org.jooq.exception.SQLDialectNotSupportedException;
 import org.jooq.types.DayToSecond;
 
 /**
@@ -104,9 +103,6 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case HSQLDB:
                 return field("{datediff}('ms', {0}, {1})", getDataType(), timestamp2, timestamp1);
 
-            case INGRES:
-                throw new SQLDialectNotSupportedException("Date time arithmetic not supported in Ingres. Contributions welcome!");
-
             // MySQL's datetime operations operate on a microsecond level
             case MARIADB:
             case MYSQL:
@@ -122,6 +118,9 @@ class TimestampDiff extends AbstractFunction<DayToSecond> {
             case ORACLE:
             case POSTGRES:
                 return field("{0} - {1}", getDataType(), timestamp1, timestamp2);
+
+            // Fall through to default
+            case INGRES:
         }
 
         // Default implementation for equals() and hashCode()

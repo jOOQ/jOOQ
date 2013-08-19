@@ -242,7 +242,9 @@ public class SybaseDatabase extends AbstractDatabase {
 
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this, getSchema(),
-                SybaseDataType.NUMERIC.getTypeName(), 0, 38, 0);
+                SybaseDataType.NUMERIC.getTypeName(),
+                0, 38, 0, false, false
+            );
 
             result.add(new DefaultSequenceDefinition(getSchema(), name, type));
         }

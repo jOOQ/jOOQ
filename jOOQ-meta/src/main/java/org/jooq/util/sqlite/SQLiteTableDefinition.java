@@ -89,16 +89,19 @@ public class SQLiteTableDefinition extends AbstractTableDefinition {
                 dataType,
                 precision,
                 precision,
-                scale);
+                scale,
+                !record.getValue("notnull", boolean.class),
+                record.getValue("dflt_value") != null
+            );
 
             ColumnDefinition column = new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 name,
                 position,
                 type,
-                !record.getValue("notnull", boolean.class),
                 identity,
-                null);
+                null
+            );
 
             result.add(column);
         }

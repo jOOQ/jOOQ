@@ -72,6 +72,7 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
 		             DB_ATTRIBUTE.PREC,
 		             DB_ATTRIBUTE.SCALE,
 		             DB_ATTRIBUTE.IS_NULLABLE,
+		             DB_ATTRIBUTE.DEFAULT_VALUE,
 		             DB_SERIAL.NAME)
 		        .from(DB_ATTRIBUTE)
 		        .leftOuterJoin(DB_SERIAL).on(
@@ -90,16 +91,19 @@ public class CUBRIDTableDefinition extends AbstractTableDefinition {
                 record.getValue(DB_ATTRIBUTE.PREC),
                 record.getValue(DB_ATTRIBUTE.PREC),
                 record.getValue(DB_ATTRIBUTE.SCALE),
-                getName() + "_" + record.getValue(DB_ATTRIBUTE.ATTR_NAME));
+                record.getValue(DB_ATTRIBUTE.IS_NULLABLE, boolean.class),
+                record.getValue(DB_ATTRIBUTE.DEFAULT_VALUE) != null,
+                getName() + "_" + record.getValue(DB_ATTRIBUTE.ATTR_NAME)
+            );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(DB_ATTRIBUTE.ATTR_NAME),
 			    record.getValue(DB_ATTRIBUTE.DEF_ORDER),
 			    type,
-			    record.getValue(DB_ATTRIBUTE.IS_NULLABLE, boolean.class),
 			    record.getValue(DB_SERIAL.NAME) != null,
-			    null);
+			    null
+		    );
 
 			result.add(column);
 		}

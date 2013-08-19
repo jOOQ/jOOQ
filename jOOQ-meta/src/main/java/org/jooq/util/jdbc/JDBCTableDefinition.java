@@ -75,16 +75,20 @@ public class JDBCTableDefinition extends AbstractTableDefinition {
                 field.getDataType().length(),
                 field.getDataType().precision(),
                 field.getDataType().scale(),
-                null);
+                field.getDataType().nullable(),
+                field.getDataType().defaulted(),
+                null
+            );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
 			    field.getName(),
 			    ordinal,
 			    type,
-			    true,
 			    false,
-			    null);
+			    null
+		    );
+
 			result.add(column);
 
 			ordinal++;

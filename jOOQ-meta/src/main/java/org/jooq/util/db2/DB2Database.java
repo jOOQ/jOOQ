@@ -238,7 +238,10 @@ public class DB2Database extends AbstractDatabase {
                 record.getValue(Datatypes.TYPENAME),
                 0,
                 record.getValue(Sequences.PRECISION),
-                0);
+                0,
+                null,
+                null
+            );
 
             result.add(new DefaultSequenceDefinition(
                 schema,

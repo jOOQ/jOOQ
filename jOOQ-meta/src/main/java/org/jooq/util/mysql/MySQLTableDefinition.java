@@ -75,6 +75,7 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
     		        Columns.COLUMN_TYPE,
     		        Columns.DATA_TYPE,
     		        Columns.IS_NULLABLE,
+    		        Columns.COLUMN_DEFAULT,
     		        Columns.CHARACTER_MAXIMUM_LENGTH,
     		        Columns.NUMERIC_PRECISION,
     		        Columns.NUMERIC_SCALE,
@@ -103,16 +104,19 @@ public class MySQLTableDefinition extends AbstractTableDefinition {
                 record.getValue(Columns.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(Columns.NUMERIC_PRECISION),
                 record.getValue(Columns.NUMERIC_SCALE),
-                getName() + "_" + record.getValue(Columns.COLUMN_NAME));
+                record.getValue(Columns.IS_NULLABLE, boolean.class),
+                record.getValue(Columns.COLUMN_DEFAULT) != null,
+                getName() + "_" + record.getValue(Columns.COLUMN_NAME)
+            );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(Columns.COLUMN_NAME),
 			    record.getValue(Columns.ORDINAL_POSITION, int.class),
 			    type,
-			    record.getValue(Columns.IS_NULLABLE, boolean.class),
 			    "auto_increment".equalsIgnoreCase(record.getValue(Columns.EXTRA)),
-			    record.getValue(Columns.COLUMN_COMMENT));
+			    record.getValue(Columns.COLUMN_COMMENT)
+		    );
 
 			result.add(column);
 		}

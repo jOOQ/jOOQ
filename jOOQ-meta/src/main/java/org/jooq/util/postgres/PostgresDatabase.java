@@ -290,7 +290,10 @@ public class PostgresDatabase extends AbstractDatabase {
                 record.getValue(SEQUENCES.DATA_TYPE),
                 0,
                 record.getValue(SEQUENCES.NUMERIC_PRECISION),
-                record.getValue(SEQUENCES.NUMERIC_SCALE));
+                record.getValue(SEQUENCES.NUMERIC_SCALE),
+                false,
+                false
+            );
 
             result.add(new DefaultSequenceDefinition(schema, record.getValue(SEQUENCES.SEQUENCE_NAME), type));
         }

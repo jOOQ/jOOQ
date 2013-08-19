@@ -68,7 +68,8 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
                     SYSPROCPARM.PARM_ID,
                     SYSPROCPARM.PARM_TYPE,
                     SYSPROCPARM.PARM_MODE_IN,
-                    SYSPROCPARM.PARM_MODE_OUT)
+                    SYSPROCPARM.PARM_MODE_OUT,
+                    SYSPROCPARM.DEFAULT)
                 .from(SYSPROCPARM)
                 .join(SYSDOMAIN).on(SYSPROCPARM.DOMAIN_ID.equal(SYSDOMAIN.DOMAIN_ID))
                 .join(SYSPROCEDURE).on(SYSPROCPARM.PROC_ID.equal(SYSPROCEDURE.PROC_ID))
@@ -105,7 +106,10 @@ public class SybaseRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(SYSDOMAIN.DOMAIN_NAME),
                 record.getValue(SYSPROCPARM.WIDTH),
                 record.getValue(SYSPROCPARM.WIDTH),
-                record.getValue(SYSPROCPARM.SCALE));
+                record.getValue(SYSPROCPARM.SCALE),
+                true,
+                record.getValue(SYSPROCPARM.DEFAULT) != null
+            );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(this,
                 paramName,

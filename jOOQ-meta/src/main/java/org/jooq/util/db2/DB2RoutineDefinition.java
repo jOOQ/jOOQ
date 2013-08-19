@@ -117,7 +117,10 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                     dataType,
                     precision,
                     precision,
-                    scale);
+                    scale,
+                    null,
+                    null
+                );
 
                 addParameter(InOutDefinition.RETURN, new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type));
             }
@@ -130,7 +133,10 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                     dataType,
                     precision,
                     precision,
-                    scale);
+                    scale,
+                    null,
+                    null
+                );
 
                 ParameterDefinition column = new DefaultParameterDefinition(this, paramName, position, type);
 
@@ -164,7 +170,10 @@ public class DB2RoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(Procparms.TYPENAME),
                 record.getValue(Procparms.LENGTH),
                 record.getValue(Procparms.LENGTH),
-                record.getValue(Procparms.SCALE));
+                record.getValue(Procparms.SCALE),
+                null,
+                null
+            );
 
             addParameter(
                 InOutDefinition.getFromString(paramMode),

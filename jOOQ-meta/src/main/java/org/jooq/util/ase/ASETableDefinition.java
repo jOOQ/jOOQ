@@ -83,16 +83,19 @@ public class ASETableDefinition extends AbstractTableDefinition {
                 record.getValue("Type", String.class),
                 length,
                 precision,
-                scale);
+                scale,
+                record.getValue("Nulls", boolean.class),
+                null
+            );
 
             result.add(new DefaultColumnDefinition(
                 getDatabase().getTable(getSchema(), getName()),
                 record.getValue("Column_name", String.class),
                 position++,
                 type,
-                record.getValue("Nulls", boolean.class),
                 record.getValue("Identity", boolean.class),
-                null));
+                null)
+            );
         }
 
         return result;

@@ -96,13 +96,17 @@ class ASERoutineDefinition extends AbstractRoutineDefinition {
                     record.getValue("Type", String.class),
                     length,
                     precision,
-                    scale);
+                    scale,
+                    null,
+                    null
+            );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                     this,
                     n.replaceAll("@", ""),
                     o,
-                    type);
+                    type
+            );
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);
         }

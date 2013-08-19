@@ -2185,10 +2185,30 @@ public class JavaGenerator extends AbstractGenerator {
     protected String getJavaTypeReference(Database db, DataTypeDefinition type) {
         if (database.isArrayType(type.getType())) {
             String baseType = GenerationUtil.getArrayBaseType(db.getDialect(), type.getType(), type.getUserType());
-            return getTypeReference(db, type.getSchema(), baseType, 0, 0, 0, baseType) + ".getArrayDataType()";
+            return getTypeReference(
+                db,
+                type.getSchema(),
+                baseType,
+                0,
+                0,
+                0,
+                true,
+                false,
+                baseType
+            ) + ".getArrayDataType()";
         }
         else {
-            return getTypeReference(db, type.getSchema(), type.getType(), type.getPrecision(), type.getScale(), type.getLength(), type.getUserType());
+            return getTypeReference(
+                db,
+                type.getSchema(),
+                type.getType(),
+                type.getPrecision(),
+                type.getScale(),
+                type.getLength(),
+                type.isNullable(),
+                type.isDefaulted(),
+                type.getUserType()
+            );
         }
     }
 
@@ -2262,7 +2282,7 @@ public class JavaGenerator extends AbstractGenerator {
         return type;
     }
 
-    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, String u) {
+    protected String getTypeReference(Database db, SchemaDefinition schema, String t, int p, int s, int l, boolean n, boolean d, String u) {
         StringBuilder sb = new StringBuilder();
         if (db.getArray(schema, u) != null) {
             ArrayDefinition array = database.getArray(schema, u);
@@ -2293,7 +2313,7 @@ public class JavaGenerator extends AbstractGenerator {
             DataType<?> dataType = null;
 
             try {
-                dataType = DefaultDataType.getDataType(db.getDialect(), t, p, s);
+                dataType = DefaultDataType.getDataType(db.getDialect(), t, p, s).nullable(n).defaulted(d);
             }
 
             // Mostly because of unsupported data types. Will be handled later.
@@ -2321,6 +2341,14 @@ public class JavaGenerator extends AbstractGenerator {
 
                 if (dataType.hasLength() && l > 0) {
                     sb.append(".length(").append(l).append(")");
+                }
+
+                if (!dataType.nullable()) {
+                    sb.append(".nullable(false)");
+                }
+
+                if (dataType.defaulted()) {
+                    sb.append(".defaulted(true)");
                 }
 
                 if (db.getConfiguredCustomType(u) != null) {

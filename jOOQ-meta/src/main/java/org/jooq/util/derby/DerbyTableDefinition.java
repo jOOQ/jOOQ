@@ -73,6 +73,7 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 Syscolumns.COLUMNNAME,
                 Syscolumns.COLUMNNUMBER,
                 Syscolumns.COLUMNDATATYPE,
+                Syscolumns.COLUMNDEFAULT,
                 Syscolumns.AUTOINCREMENTINC)
             .from(SYSCOLUMNS)
             // [#1241] Suddenly, bind values didn't work any longer, here...
@@ -90,16 +91,19 @@ public class DerbyTableDefinition extends AbstractTableDefinition {
                 typeName,
                 precision,
                 precision,
-                scale);
+                scale,
+                !parseNotNull(typeName),
+                record.getValue(Syscolumns.COLUMNDEFAULT) != null
+            );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(Syscolumns.COLUMNNAME),
 			    record.getValue(Syscolumns.COLUMNNUMBER),
 			    type,
-			    !parseNotNull(typeName),
                 null != record.getValue(Syscolumns.AUTOINCREMENTINC),
-                null);
+                null
+            );
 
 			result.add(column);
 		}

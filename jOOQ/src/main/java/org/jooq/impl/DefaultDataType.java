@@ -89,13 +89,13 @@ public class DefaultDataType<T> implements DataType<T> {
     private static final long                            serialVersionUID = 4155588654449505119L;
 
     /**
-     * A pattern for data type name normalisation
+     * A pattern for data type name normalisation.
      */
     private static final Pattern                         NORMALISE_PATTERN = Pattern.compile("\"|\\.|\\s|\\(\\w+(,\\w+)*\\)|(NOT\\s*NULL)?");
 
     /**
      * A pattern to be used to replace all precision, scale, and length
-     * information
+     * information.
      */
     private static final Pattern                         TYPE_NAME_PATTERN = Pattern.compile("\\([^\\)]*\\)");
 
@@ -104,22 +104,22 @@ public class DefaultDataType<T> implements DataType<T> {
     // -------------------------------------------------------------------------
 
     /**
-     * A cache for dialect-specific data types by normalised
+     * A cache for dialect-specific data types by normalised.
      */
     private static final Map<String, DataType<?>>[]      TYPES_BY_NAME;
 
     /**
-     * A cache for dialect-specific data types by Java type
+     * A cache for dialect-specific data types by Java type.
      */
     private static final Map<Class<?>, DataType<?>>[]    TYPES_BY_TYPE;
 
     /**
-     * A cache for dialect-specific data types by SQL DataTypes
+     * A cache for dialect-specific data types by SQL DataTypes.
      */
     private static final Map<DataType<?>, DataType<?>>[] TYPES_BY_SQL_DATATYPE;
 
     /**
-     * A cache for SQL DataTypes by Java type
+     * A cache for SQL DataTypes by Java type.
      */
     private static final Map<Class<?>, DataType<?>>      SQL_DATATYPES_BY_TYPE;
 
@@ -128,22 +128,26 @@ public class DefaultDataType<T> implements DataType<T> {
     // -------------------------------------------------------------------------
 
     /**
-     * The minimum decimal precision needed to represent a Java {@link Long} type
+     * The minimum decimal precision needed to represent a Java {@link Long}
+     * type.
      */
     private static final int                             LONG_PRECISION    = String.valueOf(Long.MAX_VALUE).length();
 
     /**
-     * The minimum decimal precision needed to represent a Java {@link Integer} type
+     * The minimum decimal precision needed to represent a Java {@link Integer}
+     * type.
      */
     private static final int                             INTEGER_PRECISION = String.valueOf(Integer.MAX_VALUE).length();
 
     /**
-     * The minimum decimal precision needed to represent a Java {@link Short} type
+     * The minimum decimal precision needed to represent a Java {@link Short}
+     * type.
      */
     private static final int                             SHORT_PRECISION   = String.valueOf(Short.MAX_VALUE).length();
 
     /**
-     * The minimum decimal precision needed to represent a Java {@link Byte} type
+     * The minimum decimal precision needed to represent a Java {@link Byte}
+     * type.
      */
     private static final int                             BYTE_PRECISION    = String.valueOf(Byte.MAX_VALUE).length();
 
@@ -152,42 +156,44 @@ public class DefaultDataType<T> implements DataType<T> {
     // -------------------------------------------------------------------------
 
     /**
-     * The SQL dialect associated with this data type
+     * The SQL dialect associated with this data type.
      */
     private final SQLDialect                             dialect;
 
     /**
-     * The SQL DataType corresponding to this data type
+     * The SQL DataType corresponding to this data type.
      */
     private final DataType<T>                            sqlDataType;
 
     /**
-     * The Java class corresponding to this data type
+     * The Java class corresponding to this data type.
      */
     private final Class<T>                               type;
 
     /**
-     * The Java class corresponding to arrays of this data type
+     * The Java class corresponding to arrays of this data type.
      */
     private final Class<T[]>                             arrayType;
 
     /**
-     * The type name used for casting to this type
+     * The type name used for casting to this type.
      */
     private final String                                 castTypeName;
     /**
-     * The type name used for casting to this type
+     * The type name used for casting to this type.
      */
     private final String                                 castTypeBase;
 
     /**
-     * The type name
+     * The type name.
      */
     private final String                                 typeName;
 
-    private final int precision;
-    private final int scale;
-    private final int length;
+    private final boolean                                nullable;
+    private final boolean                                defaulted;
+    private final int                                    precision;
+    private final int                                    scale;
+    private final int                                    length;
 
     static {
         TYPES_BY_SQL_DATATYPE = new Map[SQLDialect.values().length];
@@ -210,22 +216,22 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, 0, 0, 0);
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, typeName, 0, 0, 0, true, false);
     }
 
     public DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, String typeName, String castTypeName) {
-        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, 0, 0, 0);
+        this(dialect, sqlDataType, sqlDataType.getType(), typeName, castTypeName, 0, 0, 0, true, false);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName) {
-        this(dialect, null, type, typeName, typeName, 0, 0, 0);
+        this(dialect, null, type, typeName, typeName, 0, 0, 0, true, false);
     }
 
     public DefaultDataType(SQLDialect dialect, Class<T> type, String typeName, String castTypeName) {
-        this(dialect, null, type, typeName, castTypeName, 0, 0, 0);
+        this(dialect, null, type, typeName, castTypeName, 0, 0, 0, true, false);
     }
 
-    private DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length) {
+    private DefaultDataType(SQLDialect dialect, DataType<T> sqlDataType, Class<T> type, String typeName, String castTypeName, int precision, int scale, int length, boolean nullable, boolean defaulted) {
 
         // Initialise final instance members
         // ---------------------------------
@@ -255,6 +261,8 @@ public class DefaultDataType<T> implements DataType<T> {
             }
         }
 
+        this.nullable = nullable;
+        this.defaulted = defaulted;
         this.precision = precision;
         this.scale = scale;
         this.length = length;
@@ -287,6 +295,26 @@ public class DefaultDataType<T> implements DataType<T> {
     }
 
     @Override
+    public final DataType<T> nullable(boolean n) {
+        return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, length, n, defaulted);
+    }
+
+    @Override
+    public final boolean nullable() {
+        return nullable;
+    }
+
+    @Override
+    public final DataType<T> defaulted(boolean d) {
+        return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, length, nullable, d);
+    }
+
+    @Override
+    public final boolean defaulted() {
+        return defaulted;
+    }
+
+    @Override
     public final DataType<T> precision(int p) {
         return precision(p, scale);
     }
@@ -297,7 +325,7 @@ public class DefaultDataType<T> implements DataType<T> {
             return this;
         }
         else {
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, s, length);
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, p, s, length, nullable, defaulted);
         }
     }
 
@@ -317,7 +345,7 @@ public class DefaultDataType<T> implements DataType<T> {
             return this;
         }
         else {
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length);
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, s, length, nullable, defaulted);
         }
     }
 
@@ -337,7 +365,7 @@ public class DefaultDataType<T> implements DataType<T> {
             return this;
         }
         else {
-            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l);
+            return new DefaultDataType<T>(dialect, sqlDataType, type, typeName, castTypeName, precision, scale, l, nullable, defaulted);
         }
     }
 

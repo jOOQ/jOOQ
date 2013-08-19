@@ -46,7 +46,7 @@ import org.jooq.types.DayToSecond;
 import org.jooq.types.YearToMonth;
 
 /**
- * A common interface to all dialect-specific data types
+ * A common interface to all dialect-specific data types.
  *
  * @param <T> The Java type associated with this SQL data type
  * @author Lukas Eder
@@ -65,53 +65,53 @@ public interface DataType<T> extends Serializable {
     DataType<T> getDataType(Configuration configuration);
 
     /**
-     * Get JDBC {@link Types} value
+     * Get JDBC {@link Types} value.
      */
     int getSQLType();
 
     /**
-     * Retrieve the Java type associated with this data type
+     * Retrieve the Java type associated with this data type.
      */
     Class<T> getType();
 
     /**
-     * Retrieve the Java type associated with ARRAYs of this data type
+     * Retrieve the Java type associated with ARRAYs of this data type.
      */
     Class<T[]> getArrayType();
 
     /**
-     * Retrieve the data type for an ARRAY of this data type
+     * Retrieve the data type for an ARRAY of this data type.
      */
     DataType<T[]> getArrayDataType();
 
     /**
-     * Retrieve the data type for an Oracle-style ARRAY of this data type
+     * Retrieve the data type for an Oracle-style ARRAY of this data type.
      */
     <A extends ArrayRecord<T>> DataType<A> asArrayDataType(Class<A> arrayDataType);
 
     /**
-     * Retrieve the data type for a given enum data type
+     * Retrieve the data type for a given enum data type.
      */
     <E extends EnumType> DataType<E> asEnumDataType(Class<E> enumDataType);
 
     /**
-     * Retrieve the data type for a given converter
+     * Retrieve the data type for a given converter.
      */
     <U> DataType<U> asConvertedDataType(Converter<? super T, U> converter);
 
     /**
-     * Retrieve the dialect-specific type name associated with this data type
+     * Retrieve the dialect-specific type name associated with this data type.
      */
     String getTypeName();
 
     /**
-     * Retrieve the dialect-specific type name associated with this data type
+     * Retrieve the dialect-specific type name associated with this data type.
      */
     String getTypeName(Configuration configuration);
 
     /**
      * Retrieve the dialect-specific type name associated with this data type
-     * used for casting
+     * used for casting.
      * <p>
      * This is useful for some dialects that have specialised type names for
      * cast expressions. Other dialects require type-length binding when
@@ -121,7 +121,7 @@ public interface DataType<T> extends Serializable {
 
     /**
      * Retrieve the dialect-specific type name associated with this data type
-     * used for casting
+     * used for casting.
      * <p>
      * This is useful for some dialects that have specialised type names for
      * cast expressions. Other dialects require type-length binding when
@@ -130,12 +130,12 @@ public interface DataType<T> extends Serializable {
     String getCastTypeName(Configuration configuration);
 
     /**
-     * Retrieve the underlying {@link SQLDialect}
+     * Retrieve the underlying {@link SQLDialect}.
      */
     SQLDialect getDialect();
 
     /**
-     * Convert an arbitrary object into <code>&lt;T&gt;</code>
+     * Convert an arbitrary object into <code>&lt;T&gt;</code>.
      *
      * @param object The object to be converted
      * @return The converted object
@@ -144,7 +144,7 @@ public interface DataType<T> extends Serializable {
     T convert(Object object);
 
     /**
-     * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>
+     * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>.
      *
      * @param objects The objects to be converted
      * @return The converted objects
@@ -153,7 +153,7 @@ public interface DataType<T> extends Serializable {
     T[] convert(Object... objects);
 
     /**
-     * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>
+     * Convert an arbitrary set of objects into <code>&lt;T&gt;</code>.
      *
      * @param objects The objects to be converted
      * @return The converted objects
@@ -162,7 +162,7 @@ public interface DataType<T> extends Serializable {
     List<T> convert(Collection<?> objects);
 
     /**
-     * Return a new data type like this, with a new precision value
+     * Return a new data type like this, with a new precision value.
      * <p>
      * This will have no effect if {@link #hasPrecision()} is <code>false</code>
      * <p>
@@ -175,7 +175,7 @@ public interface DataType<T> extends Serializable {
     DataType<T> precision(int precision);
 
     /**
-     * Return a new data type like this, with a new precision and scale value
+     * Return a new data type like this, with a new precision and scale value.
      * <p>
      * This will have no effect if {@link #hasPrecision()} is <code>false</code>
      * , or if <code>scale > 0</code> and {@link #hasScale()} is
@@ -188,21 +188,21 @@ public interface DataType<T> extends Serializable {
     DataType<T> precision(int precision, int scale);
 
     /**
-     * Get the precision of this data type
+     * Get the precision of this data type.
      *
      * @return The precision of this data type
      */
     int precision();
 
     /**
-     * Whether this data type has a precision
+     * Whether this data type has a precision.
      *
      * @return Whether this data type has a precision
      */
     boolean hasPrecision();
 
     /**
-     * Return a new data type like this, with a new scale value
+     * Return a new data type like this, with a new scale value.
      * <p>
      * This will have no effect if {@link #hasScale()} is <code>false</code>
      *
@@ -212,21 +212,21 @@ public interface DataType<T> extends Serializable {
     DataType<T> scale(int scale);
 
     /**
-     * Get the scale of this data type
+     * Get the scale of this data type.
      *
      * @return The scale of this data type
      */
     int scale();
 
     /**
-     * Whether this data type has a scale
+     * Whether this data type has a scale.
      *
      * @return Whether this data type has a scale
      */
     boolean hasScale();
 
     /**
-     * Return a new data type like this, with a new length value
+     * Return a new data type like this, with a new length value.
      * <p>
      * This will have no effect if {@link #hasLength()} is <code>false</code>
      *
@@ -236,14 +236,14 @@ public interface DataType<T> extends Serializable {
     DataType<T> length(int length);
 
     /**
-     * Get the length of this data type
+     * Get the length of this data type.
      *
      * @return The length of this data type
      */
     int length();
 
     /**
-     * Whether this data type has a length
+     * Whether this data type has a length.
      *
      * @return Whether this data type has a length
      */

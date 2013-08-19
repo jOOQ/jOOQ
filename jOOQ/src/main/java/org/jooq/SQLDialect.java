@@ -202,13 +202,13 @@ public enum SQLDialect {
      * The name of this dialect as it appears in related package names.
      */
     public final String getNameLC() {
-        return name.toLowerCase();
+        return name == null ? null : name.toLowerCase();
     }
 
     /**
      * The name of this dialect as it appears in related enum values.
      */
     public final String getNameUC() {
-        return name.toUpperCase();
+        return name == null ? null : name.toUpperCase();
     }
 }

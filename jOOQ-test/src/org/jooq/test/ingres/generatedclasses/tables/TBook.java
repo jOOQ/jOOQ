@@ -11,7 +11,7 @@ package org.jooq.test.ingres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -95713706;
+	private static final long serialVersionUID = -1603104263;
 
 	/**
 	 * The singleton instance of <code>test.t_book</code>
@@ -29,12 +29,12 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generate
 	/**
 	 * The column <code>test.t_book.id</code>. The book ID
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>test.t_book.author_id</code>. The author ID in entity 'author'
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("author_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>test.t_book.co_author_id</code>. 
@@ -49,17 +49,17 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.ingres.generate
 	/**
 	 * The column <code>test.t_book.title</code>. The book's title
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>test.t_book.published_in</code>. The year the book was published in
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("published_in", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>test.t_book.language_id</code>. The language of the book
 	 */
-	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.ingres.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("language_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>test.t_book.content_text</code>. Some textual content of the book

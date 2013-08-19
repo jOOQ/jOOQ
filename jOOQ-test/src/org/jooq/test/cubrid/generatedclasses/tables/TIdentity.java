@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord> {
 
-	private static final long serialVersionUID = -1750736251;
+	private static final long serialVersionUID = -781169372;
 
 	/**
 	 * The singleton instance of <code>t_identity</code>
@@ -27,7 +27,7 @@ public class TIdentity extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.gene
 	/**
 	 * The column <code>t_identity.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_IDENTITY);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TIdentityRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_IDENTITY);
 
 	/**
 	 * The column <code>t_identity.val</code>. 

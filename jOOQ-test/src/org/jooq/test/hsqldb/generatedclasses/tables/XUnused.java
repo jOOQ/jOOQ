@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = -1098823229;
+	private static final long serialVersionUID = -436314107;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.X_UNUSED</code>
@@ -27,12 +27,12 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), this);
 
 	/**
 	 * The column <code>PUBLIC.X_UNUSED.BIG_INTEGER</code>. 

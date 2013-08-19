@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_937 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record> {
 
-	private static final long serialVersionUID = -2085744044;
+	private static final long serialVersionUID = 1313421171;
 
 	/**
 	 * The singleton instance of <code>T_937</code>
@@ -27,7 +27,7 @@ public class T_937 extends org.jooq.impl.TableImpl<org.jooq.test.firebird.genera
 	/**
 	 * The column <code>T_937.T_937</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record, java.lang.Integer> T_937_ = createField("T_937", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_937Record, java.lang.Integer> T_937_ = createField("T_937", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * Create a <code>T_937</code> table reference

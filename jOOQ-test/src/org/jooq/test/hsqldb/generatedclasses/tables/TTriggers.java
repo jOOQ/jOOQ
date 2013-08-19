@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord> {
 
-	private static final long serialVersionUID = -821537573;
+	private static final long serialVersionUID = 6417244;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_TRIGGERS</code>
@@ -27,7 +27,7 @@ public class TTriggers extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.gene
 	/**
 	 * The column <code>PUBLIC.T_TRIGGERS.ID_GENERATED</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TTriggersRecord, java.lang.Integer> ID_GENERATED = createField("ID_GENERATED", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>PUBLIC.T_TRIGGERS.ID</code>. 

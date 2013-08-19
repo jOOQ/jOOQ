@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record> {
 
-	private static final long serialVersionUID = -565049842;
+	private static final long serialVersionUID = -193801939;
 
 	/**
 	 * The singleton instance of <code>dbo.x_test_case_64_69</code>
@@ -27,7 +27,7 @@ public class XTestCase_64_69 extends org.jooq.impl.TableImpl<org.jooq.test.sqlse
 	/**
 	 * The column <code>dbo.x_test_case_64_69.id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.XTestCase_64_69Record, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>dbo.x_test_case_64_69.unused_id</code>. 

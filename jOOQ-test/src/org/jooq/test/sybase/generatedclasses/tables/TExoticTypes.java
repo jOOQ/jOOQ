@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -1329497338;
+	private static final long serialVersionUID = 1133555140;
 
 	/**
 	 * The singleton instance of <code>DBA.t_exotic_types</code>
@@ -27,12 +27,12 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.sybase.g
 	/**
 	 * The column <code>DBA.t_exotic_types.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>DBA.t_exotic_types.UU</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TExoticTypesRecord, java.util.UUID> UU = createField("UU", org.jooq.impl.SQLDataType.UUID.nullable(false), this);
 
 	/**
 	 * Create a <code>DBA.t_exotic_types</code> table reference

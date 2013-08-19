@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord> {
 
-	private static final long serialVersionUID = 1418907193;
+	private static final long serialVersionUID = 584494331;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK_TO_BOOK_STORE</code>
@@ -27,12 +27,12 @@ public class TBookToBookStore extends org.jooq.impl.TableImpl<org.jooq.test.derb
 	/**
 	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_STORE_NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.String> BOOK_STORE_NAME = createField("BOOK_STORE_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK_TO_BOOK_STORE);
 
 	/**
 	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.BOOK_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK_TO_BOOK_STORE);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookToBookStoreRecord, java.lang.Integer> BOOK_ID = createField("BOOK_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK_TO_BOOK_STORE);
 
 	/**
 	 * The column <code>TEST.T_BOOK_TO_BOOK_STORE.STOCK</code>. 

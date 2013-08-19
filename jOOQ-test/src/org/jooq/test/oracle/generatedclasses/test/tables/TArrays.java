@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = -1760774617;
+	private static final long serialVersionUID = 1515065094;
 
 	/**
 	 * The singleton instance of <code>TEST.T_ARRAYS</code>
@@ -27,7 +27,7 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.oracle.genera
 	/**
 	 * The column <code>TEST.T_ARRAYS.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>TEST.T_ARRAYS.STRING_ARRAY</code>. 

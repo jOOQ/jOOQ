@@ -14,5 +14,5 @@ public class Sequences {
 	/**
 	 * The sequence <code>DBA.s_author_id</code>
 	 */
-	public static final org.jooq.Sequence<java.math.BigInteger> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("s_author_id", org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38));
+	public static final org.jooq.Sequence<java.math.BigInteger> S_AUTHOR_ID = new org.jooq.impl.SequenceImpl<java.math.BigInteger>("s_author_id", org.jooq.test.sybase.generatedclasses.Dba.DBA, org.jooq.impl.SQLDataType.DECIMAL_INTEGER.precision(38).nullable(false));
 }

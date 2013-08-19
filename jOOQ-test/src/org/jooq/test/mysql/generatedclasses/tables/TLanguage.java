@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord> {
 
-	private static final long serialVersionUID = 2112949931;
+	private static final long serialVersionUID = -1356726261;
 
 	/**
 	 * The singleton instance of <code>test.t_language</code>
@@ -29,7 +29,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql.gener
 	/**
 	 * The column <code>test.t_language.CD</code>. The language ISO code
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2), T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, java.lang.String> CD = createField("CD", org.jooq.impl.SQLDataType.CHAR.length(2).nullable(false), T_LANGUAGE);
 
 	/**
 	 * The column <code>test.t_language.DESCRIPTION</code>. The language description
@@ -44,7 +44,7 @@ public class TLanguage extends org.jooq.impl.TableImpl<org.jooq.test.mysql.gener
 	/**
 	 * The column <code>test.t_language.ID</code>. The language ID
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_LANGUAGE);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.TLanguageRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_LANGUAGE);
 
 	/**
 	 * No further instances allowed

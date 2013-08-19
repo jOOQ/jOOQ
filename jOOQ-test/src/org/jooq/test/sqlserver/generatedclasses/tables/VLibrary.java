@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord> {
 
-	private static final long serialVersionUID = 479761043;
+	private static final long serialVersionUID = -213708076;
 
 	/**
 	 * The singleton instance of <code>dbo.v_library</code>
@@ -32,7 +32,7 @@ public class VLibrary extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.ge
 	/**
 	 * The column <code>dbo.v_library.title</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VLibraryRecord, java.lang.String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
 
 	/**
 	 * Create a <code>dbo.v_library</code> table reference

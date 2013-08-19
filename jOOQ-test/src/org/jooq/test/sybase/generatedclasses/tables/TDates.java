@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 1328831873;
+	private static final long serialVersionUID = 1967347488;
 
 	/**
 	 * The singleton instance of <code>DBA.t_dates</code>
@@ -27,7 +27,7 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generat
 	/**
 	 * The column <code>DBA.t_dates.id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>DBA.t_dates.d</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord> {
 
-	private static final long serialVersionUID = -1775953739;
+	private static final long serialVersionUID = 478301204;
 
 	/**
 	 * The singleton instance of <code>T_BOOK_STORE</code>
@@ -27,7 +27,7 @@ public class TBookStore extends org.jooq.impl.TableImpl<org.jooq.test.firebird.g
 	/**
 	 * The column <code>T_BOOK_STORE.NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400), this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBookStoreRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), this);
 
 	/**
 	 * Create a <code>T_BOOK_STORE</code> table reference

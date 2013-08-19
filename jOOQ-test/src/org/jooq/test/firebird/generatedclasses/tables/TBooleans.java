@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = 1672363171;
+	private static final long serialVersionUID = -628213916;
 
 	/**
 	 * The singleton instance of <code>T_BOOLEANS</code>
@@ -27,7 +27,7 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.firebird.ge
 	/**
 	 * The column <code>T_BOOLEANS.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_BOOLEANS.ONE_ZERO</code>. 

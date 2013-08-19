@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord> {
 
-	private static final long serialVersionUID = -1581133942;
+	private static final long serialVersionUID = 38193833;
 
 	/**
 	 * The singleton instance of <code>t_booleans</code>
@@ -27,7 +27,7 @@ public class TBooleans extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.gene
 	/**
 	 * The column <code>t_booleans.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_BOOLEANS);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TBooleansRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOLEANS);
 
 	/**
 	 * The column <code>t_booleans.one_zero</code>. 

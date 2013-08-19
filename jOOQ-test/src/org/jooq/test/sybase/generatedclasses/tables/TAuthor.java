@@ -11,7 +11,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 2099791014;
+	private static final long serialVersionUID = -239142458;
 
 	/**
 	 * The singleton instance of <code>DBA.t_author</code>
@@ -29,7 +29,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sybase.genera
 	/**
 	 * The column <code>DBA.t_author.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>DBA.t_author.FIRST_NAME</code>. 
@@ -39,7 +39,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sybase.genera
 	/**
 	 * The column <code>DBA.t_author.LAST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
 
 	/**
 	 * The column <code>DBA.t_author.DATE_OF_BIRTH</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.firebird.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.firebird.generatedclasses.tables.records.T_725LobTestRecord> {
 
-	private static final long serialVersionUID = -1775124986;
+	private static final long serialVersionUID = -1594497273;
 
 	/**
 	 * The singleton instance of <code>T_725_LOB_TEST</code>
@@ -27,7 +27,7 @@ public class T_725LobTest extends org.jooq.impl.TableImpl<org.jooq.test.firebird
 	/**
 	 * The column <code>T_725_LOB_TEST.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.firebird.generatedclasses.tables.records.T_725LobTestRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>T_725_LOB_TEST.LOB</code>. 

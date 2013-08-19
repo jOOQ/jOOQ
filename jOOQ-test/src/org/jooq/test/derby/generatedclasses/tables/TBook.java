@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord> {
 
-	private static final long serialVersionUID = -1018643020;
+	private static final long serialVersionUID = 1943156661;
 
 	/**
 	 * The singleton instance of <code>TEST.T_BOOK</code>
@@ -27,12 +27,12 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generated
 	/**
 	 * The column <code>TEST.T_BOOK.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>TEST.T_BOOK.AUTHOR_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>TEST.T_BOOK.CO_AUTHOR_ID</code>. 
@@ -47,17 +47,17 @@ public class TBook extends org.jooq.impl.TableImpl<org.jooq.test.derby.generated
 	/**
 	 * The column <code>TEST.T_BOOK.TITLE</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400), T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.VARCHAR.length(400).nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>TEST.T_BOOK.PUBLISHED_IN</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>TEST.T_BOOK.LANGUAGE_ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, T_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_BOOK);
 
 	/**
 	 * The column <code>TEST.T_BOOK.CONTENT_TEXT</code>. 

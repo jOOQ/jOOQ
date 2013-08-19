@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord> {
 
-	private static final long serialVersionUID = 1615317090;
+	private static final long serialVersionUID = -355964637;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_ARRAYS</code>
@@ -27,7 +27,7 @@ public class TArrays extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.genera
 	/**
 	 * The column <code>PUBLIC.T_ARRAYS.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TArraysRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>PUBLIC.T_ARRAYS.STRING_ARRAY</code>. 

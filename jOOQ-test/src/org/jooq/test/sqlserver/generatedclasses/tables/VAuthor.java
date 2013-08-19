@@ -9,7 +9,7 @@ package org.jooq.test.sqlserver.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord> {
 
-	private static final long serialVersionUID = -237378102;
+	private static final long serialVersionUID = -1491058134;
 
 	/**
 	 * The singleton instance of <code>dbo.v_author</code>
@@ -27,7 +27,7 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 	/**
 	 * The column <code>dbo.v_author.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>dbo.v_author.FIRST_NAME</code>. 
@@ -37,7 +37,7 @@ public class VAuthor extends org.jooq.impl.TableImpl<org.jooq.test.sqlserver.gen
 	/**
 	 * The column <code>dbo.v_author.LAST_NAME</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50), this);
+	public final org.jooq.TableField<org.jooq.test.sqlserver.generatedclasses.tables.records.VAuthorRecord, java.lang.String> LAST_NAME = createField("LAST_NAME", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), this);
 
 	/**
 	 * The column <code>dbo.v_author.DATE_OF_BIRTH</code>. 

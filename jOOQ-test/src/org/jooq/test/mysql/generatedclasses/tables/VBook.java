@@ -11,7 +11,7 @@ package org.jooq.test.mysql.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord> {
 
-	private static final long serialVersionUID = -644765676;
+	private static final long serialVersionUID = -1046959565;
 
 	/**
 	 * The singleton instance of <code>test.v_book</code>
@@ -29,12 +29,12 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generated
 	/**
 	 * The column <code>test.v_book.ID</code>. The book ID
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK);
 
 	/**
 	 * The column <code>test.v_book.AUTHOR_ID</code>. The author ID in entity 'author'
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> AUTHOR_ID = createField("AUTHOR_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK);
 
 	/**
 	 * The column <code>test.v_book.co_author_id</code>. 
@@ -49,17 +49,17 @@ public class VBook extends org.jooq.impl.TableImpl<org.jooq.test.mysql.generated
 	/**
 	 * The column <code>test.v_book.TITLE</code>. The book's title
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535), V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.String> TITLE = createField("TITLE", org.jooq.impl.SQLDataType.CLOB.length(65535).nullable(false), V_BOOK);
 
 	/**
 	 * The column <code>test.v_book.PUBLISHED_IN</code>. The year the book was published in
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> PUBLISHED_IN = createField("PUBLISHED_IN", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK);
 
 	/**
 	 * The column <code>test.v_book.LANGUAGE_ID</code>. The language of the book
 	 */
-	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER, V_BOOK);
+	public static final org.jooq.TableField<org.jooq.test.mysql.generatedclasses.tables.records.VBookRecord, java.lang.Integer> LANGUAGE_ID = createField("LANGUAGE_ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), V_BOOK);
 
 	/**
 	 * The column <code>test.v_book.CONTENT_TEXT</code>. Some textual content of the book

@@ -9,7 +9,7 @@ package org.jooq.test.cubrid.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord> {
 
-	private static final long serialVersionUID = 821712952;
+	private static final long serialVersionUID = 346056600;
 
 	/**
 	 * The singleton instance of <code>t_author</code>
@@ -27,7 +27,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.genera
 	/**
 	 * The column <code>t_author.id</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_AUTHOR);
 
 	/**
 	 * The column <code>t_author.first_name</code>. 
@@ -37,7 +37,7 @@ public class TAuthor extends org.jooq.impl.TableImpl<org.jooq.test.cubrid.genera
 	/**
 	 * The column <code>t_author.last_name</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50), T_AUTHOR);
+	public static final org.jooq.TableField<org.jooq.test.cubrid.generatedclasses.tables.records.TAuthorRecord, java.lang.String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.VARCHAR.length(50).nullable(false), T_AUTHOR);
 
 	/**
 	 * The column <code>t_author.date_of_birth</code>. 

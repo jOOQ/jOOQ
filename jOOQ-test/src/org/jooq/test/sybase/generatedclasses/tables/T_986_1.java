@@ -9,7 +9,7 @@ package org.jooq.test.sybase.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record> {
 
-	private static final long serialVersionUID = 1137554492;
+	private static final long serialVersionUID = 488910043;
 
 	/**
 	 * The singleton instance of <code>DBA.t_986_1</code>
@@ -27,7 +27,7 @@ public class T_986_1 extends org.jooq.impl.TableImpl<org.jooq.test.sybase.genera
 	/**
 	 * The column <code>DBA.t_986_1.REF</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.sybase.generatedclasses.tables.records.T_986_1Record, java.lang.Integer> REF = createField("REF", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * Create a <code>DBA.t_986_1</code> table reference

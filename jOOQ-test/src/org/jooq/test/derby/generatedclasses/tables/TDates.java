@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord> {
 
-	private static final long serialVersionUID = 923827642;
+	private static final long serialVersionUID = 2900697;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DATES</code>
@@ -27,7 +27,7 @@ public class TDates extends org.jooq.impl.TableImpl<org.jooq.test.derby.generate
 	/**
 	 * The column <code>TEST.T_DATES.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, T_DATES);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.TDatesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), T_DATES);
 
 	/**
 	 * The column <code>TEST.T_DATES.D</code>. 

@@ -9,7 +9,7 @@ package org.jooq.test.oracle.generatedclasses.test.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord> {
 
-	private static final long serialVersionUID = -133463732;
+	private static final long serialVersionUID = 349843789;
 
 	/**
 	 * The singleton instance of <code>TEST.T_DIRECTORY</code>
@@ -27,7 +27,7 @@ public class TDirectory extends org.jooq.impl.TableImpl<org.jooq.test.oracle.gen
 	/**
 	 * The column <code>TEST.T_DIRECTORY.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.oracle.generatedclasses.test.tables.records.TDirectoryRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>TEST.T_DIRECTORY.PARENT_ID</code>. 

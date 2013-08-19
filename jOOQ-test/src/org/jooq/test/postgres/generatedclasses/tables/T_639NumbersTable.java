@@ -9,7 +9,7 @@ package org.jooq.test.postgres.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord> {
 
-	private static final long serialVersionUID = -1298555844;
+	private static final long serialVersionUID = 443819837;
 
 	/**
 	 * The singleton instance of <code>public.t_639_numbers_table</code>
@@ -27,7 +27,7 @@ public class T_639NumbersTable extends org.jooq.impl.TableImpl<org.jooq.test.pos
 	/**
 	 * The column <code>public.t_639_numbers_table.id</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.postgres.generatedclasses.tables.records.T_639NumbersTableRecord, java.lang.Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>public.t_639_numbers_table.short</code>. 

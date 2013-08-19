@@ -9,7 +9,7 @@ package org.jooq.test.derby.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord> {
 
-	private static final long serialVersionUID = 1063041596;
+	private static final long serialVersionUID = 1891001470;
 
 	/**
 	 * The singleton instance of <code>TEST.X_UNUSED</code>
@@ -27,12 +27,12 @@ public class XUnused extends org.jooq.impl.TableImpl<org.jooq.test.derby.generat
 	/**
 	 * The column <code>TEST.X_UNUSED.ID</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, X_UNUSED);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), X_UNUSED);
 
 	/**
 	 * The column <code>TEST.X_UNUSED.NAME</code>. 
 	 */
-	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10), X_UNUSED);
+	public static final org.jooq.TableField<org.jooq.test.derby.generatedclasses.tables.records.XUnusedRecord, java.lang.String> NAME = createField("NAME", org.jooq.impl.SQLDataType.VARCHAR.length(10).nullable(false), X_UNUSED);
 
 	/**
 	 * The column <code>TEST.X_UNUSED.BIG_INTEGER</code>. 

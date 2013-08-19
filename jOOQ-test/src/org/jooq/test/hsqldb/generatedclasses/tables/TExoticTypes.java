@@ -9,7 +9,7 @@ package org.jooq.test.hsqldb.generatedclasses.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.generatedclasses.tables.records.TExoticTypesRecord> {
 
-	private static final long serialVersionUID = -926123960;
+	private static final long serialVersionUID = 2112540617;
 
 	/**
 	 * The singleton instance of <code>PUBLIC.T_EXOTIC_TYPES</code>
@@ -27,7 +27,7 @@ public class TExoticTypes extends org.jooq.impl.TableImpl<org.jooq.test.hsqldb.g
 	/**
 	 * The column <code>PUBLIC.T_EXOTIC_TYPES.ID</code>. 
 	 */
-	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER, this);
+	public final org.jooq.TableField<org.jooq.test.hsqldb.generatedclasses.tables.records.TExoticTypesRecord, java.lang.Integer> ID = createField("ID", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this);
 
 	/**
 	 * The column <code>PUBLIC.T_EXOTIC_TYPES.UU</code>. 

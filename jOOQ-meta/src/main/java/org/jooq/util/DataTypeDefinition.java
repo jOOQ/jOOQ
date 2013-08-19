@@ -37,54 +37,54 @@ package org.jooq.util;
 
 
 /**
- * A definition for a data type object
+ * A definition for a data type object.
  *
  * @author Lukas Eder
  */
 public interface DataTypeDefinition {
 
     /**
-     * The dialect-specific column type
+     * The dialect-specific column type.
      */
     String getType();
 
     /**
-     * The type's length
+     * The type's length.
      */
     int getLength();
 
     /**
-     * The type's precision
+     * The type's precision.
      */
     int getPrecision();
 
     /**
-     * The type's scale
+     * The type's scale.
      */
     int getScale();
 
     /**
-     * The user type, if applicable
+     * The user type, if applicable.
      */
     String getUserType();
 
     /**
-     * Whether this data type represents a udt
+     * Whether this data type represents a udt.
      */
     boolean isUDT();
 
     /**
-     * Whether this data type is a NUMBER type without precision and scale
+     * Whether this data type is a NUMBER type without precision and scale.
      */
     boolean isGenericNumberType();
 
     /**
-     * The underlying database
+     * The underlying database.
      */
     Database getDatabase();
 
     /**
-     * The underlying schema
+     * The underlying schema.
      */
     SchemaDefinition getSchema();
 

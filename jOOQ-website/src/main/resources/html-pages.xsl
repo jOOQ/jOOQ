@@ -65,6 +65,9 @@ function getH1() {
 function getActiveMenu() {
     return "learn";
 }
+function printTheme() {
+    noTheme();
+}
 function printContent() {
     global $root;
 ?&gt;
@@ -95,8 +98,11 @@ function printContent() {
         <section>
             <div class="row col col-100 col-white">
                 <xsl:apply-templates select="." mode="navigation"/>
-                <xsl:apply-templates select="content"/>
+            </div>
+            
+            <xsl:apply-templates select="content"/>
         
+            <div class="row col col-100 col-white">
                 <xsl:if test="count(sections/section) &gt; 0">
                     <h2 id="toc"><a href="#toc" name="toc">Table of contents</a></h2>
                 </xsl:if>

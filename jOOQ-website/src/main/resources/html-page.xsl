@@ -60,6 +60,9 @@ function getH1() {
 function getActiveMenu() {
     return "learn";
 }
+function printTheme() {
+    noTheme();
+}
 function printContent() {
     global $root;
 ?&gt;
@@ -93,9 +96,9 @@ function printContent() {
             				<xsl:value-of select="title"/>
                         </a>
         			</h2>
-        
-        			<xsl:apply-templates select="content" />
                 </div>
+                    
+    			<xsl:apply-templates select="content" />
             </section>
 		</xsl:for-each>
 

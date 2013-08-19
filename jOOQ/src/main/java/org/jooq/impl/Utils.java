@@ -1172,6 +1172,19 @@ final class Utils {
     }
 
     /**
+     * [#2591] Type-safely copy a value from one record to another, preserving flags.
+     */
+    static final <T> void copyValue(AbstractRecord target, Field<T> targetField, Record source, Field<?> sourceField) {
+        Value<T> value = new Value<T>(
+            targetField.getDataType().convert(source.getValue(sourceField)),
+            targetField.getDataType().convert(source.original(sourceField)),
+            source.changed(sourceField)
+        );
+
+        target.setValue(targetField, value);
+    }
+
+    /**
      * Map a {@link Schema} according to the configured {@link org.jooq.SchemaMapping}
      */
     @SuppressWarnings("deprecation")

@@ -67,9 +67,9 @@ import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.RecordHandler;
 import org.jooq.RecordMapper;
+import org.jooq.RecordType;
 import org.jooq.Result;
 import org.jooq.Row;
-import org.jooq.RecordType;
 import org.jooq.Table;
 import org.jooq.exception.InvalidResultException;
 import org.jooq.tools.Convert;
@@ -800,10 +800,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (R record : this) {
 
             @SuppressWarnings({ "rawtypes", "unchecked" })
-            Record key = new RecordImpl(keys);
+            RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
-                Utils.setValue(key, field, record, field);
+                Utils.copyValue(key, field, record, field);
             }
 
             if (map.put(key, record) != null) {
@@ -909,10 +909,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (R record : this) {
 
             @SuppressWarnings({ "rawtypes", "unchecked" })
-            Record key = new RecordImpl(keys);
+            RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
-                Utils.setValue(key, field, record, field);
+                Utils.copyValue(key, field, record, field);
             }
 
             Result<R> result = map.get(key);
@@ -961,10 +961,10 @@ class ResultImpl<R extends Record> implements Result<R>, AttachableInternal {
         for (R record : this) {
 
             @SuppressWarnings({ "rawtypes", "unchecked" })
-            Record key = new RecordImpl(keys);
+            RecordImpl key = new RecordImpl(keys);
 
             for (Field<?> field : keys) {
-                Utils.setValue(key, field, record, field);
+                Utils.copyValue(key, field, record, field);
             }
 
             List<E> list = map.get(key);

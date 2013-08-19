@@ -51,8 +51,13 @@ class Value<T> implements Serializable {
     private boolean           isChanged;
 
     Value(T value) {
-        this.original = value;
+        this(value, value, false);
+    }
+
+    Value(T value, T original, boolean isChanged) {
         this.value = value;
+        this.original = original;
+        this.isChanged = isChanged;
     }
 
     final T getValue() {

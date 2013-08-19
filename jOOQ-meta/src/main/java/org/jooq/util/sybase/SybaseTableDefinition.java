@@ -83,16 +83,19 @@ public class SybaseTableDefinition extends AbstractTableDefinition {
                 record.getValue(SYSDOMAIN.DOMAIN_NAME),
                 record.getValue(SYSTABCOL.WIDTH),
                 record.getValue(SYSTABCOL.WIDTH),
-                record.getValue(SYSTABCOL.SCALE));
+                record.getValue(SYSTABCOL.SCALE),
+                record.getValue(SYSTABCOL.NULLS, boolean.class),
+                record.getValue(SYSTABCOL.DEFAULT) != null
+            );
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
                 record.getValue(SYSTABCOL.COLUMN_NAME),
                 record.getValue(SYSTABCOL.COLUMN_ID),
                 type,
-                record.getValue(SYSTABCOL.NULLS, boolean.class),
                 "autoincrement".equalsIgnoreCase(record.getValue(SYSTABCOL.DEFAULT)),
-                null);
+                null
+            );
 
             result.add(column);
         }

@@ -68,6 +68,8 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                     ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH,
                     ATTRIBUTES.NUMERIC_PRECISION,
                     ATTRIBUTES.NUMERIC_SCALE,
+                    ATTRIBUTES.IS_NULLABLE,
+                    ATTRIBUTES.ATTRIBUTE_DEFAULT,
                     ATTRIBUTES.ATTRIBUTE_UDT_NAME)
                 .from(ATTRIBUTES)
                 .where(ATTRIBUTES.UDT_SCHEMA.equal(getSchema().getName()))
@@ -82,7 +84,10 @@ public class PostgresUDTDefinition extends AbstractUDTDefinition {
                 record.getValue(ATTRIBUTES.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(ATTRIBUTES.NUMERIC_PRECISION),
                 record.getValue(ATTRIBUTES.NUMERIC_SCALE),
-                record.getValue(ATTRIBUTES.ATTRIBUTE_UDT_NAME));
+                record.getValue(ATTRIBUTES.IS_NULLABLE, boolean.class),
+                record.getValue(ATTRIBUTES.ATTRIBUTE_DEFAULT) != null,
+                record.getValue(ATTRIBUTES.ATTRIBUTE_UDT_NAME)
+            );
 
             AttributeDefinition column = new DefaultAttributeDefinition(
                 this,

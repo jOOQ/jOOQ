@@ -79,7 +79,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
     }
 
     private void init55() {
-    	
+
     	// [#742] In MySQL 5.5 and later, the INFORMATION_SCHEMA.PARAMETERS
     	// table is available, which is much more reliable than mysql.proc
         for (Record record : create()
@@ -106,7 +106,10 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(Parameters.DATA_TYPE),
                 record.getValue(Parameters.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(Parameters.NUMERIC_PRECISION),
-                record.getValue(Parameters.NUMERIC_SCALE));
+                record.getValue(Parameters.NUMERIC_SCALE),
+                null,
+                null
+            );
 
             if (inOut == null) {
                 addParameter(InOutDefinition.RETURN, new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type));
@@ -124,7 +127,7 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
     }
 
     private void init54() {
-        
+
         // [#742] Before MySQL 5.5, the INFORMATION_SCHEMA.PARAMETERS table was
     	// not yet available. Resort to mysql.proc and regex-pattern matching.
 
@@ -174,13 +177,16 @@ public class MySQLRoutineDefinition extends AbstractRoutineDefinition {
             paramType,
             precision,
             precision,
-            scale);
+            scale,
+            null,
+            null
+        );
 
         return new DefaultParameterDefinition(this, paramName, columnIndex, type);
     }
 
     private boolean is55() {
-    	
+
     	// Check if this is a MySQL 5.5 or later database
         if (is55 == null) {
             try {

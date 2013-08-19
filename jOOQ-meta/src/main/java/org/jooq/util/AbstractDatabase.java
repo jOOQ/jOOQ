@@ -858,19 +858,19 @@ public abstract class AbstractDatabase implements Database {
         DataTypeDefinition type;
 
         if (BigInteger.valueOf(Byte.MAX_VALUE).compareTo(value) >= 0) {
-            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 2, 0);
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 2, 0, false, false);
         }
         else if (BigInteger.valueOf(Short.MAX_VALUE).compareTo(value) >= 0) {
-            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 4, 0);
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 4, 0, false, false);
         }
         else if (BigInteger.valueOf(Integer.MAX_VALUE).compareTo(value) >= 0) {
-            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 9, 0);
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 9, 0, false, false);
         }
         else if (BigInteger.valueOf(Long.MAX_VALUE).compareTo(value) >= 0) {
-            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 18, 0);
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 18, 0, false, false);
         }
         else {
-            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 38, 0);
+            type = new DefaultDataTypeDefinition(this, schema, SQLDataType.NUMERIC.getTypeName(), 0, 38, 0, false, false);
         }
 
         return type;

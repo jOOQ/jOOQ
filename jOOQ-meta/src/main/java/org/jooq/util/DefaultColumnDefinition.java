@@ -49,7 +49,6 @@ public class DefaultColumnDefinition
 
     private final int                  position;
     private final boolean              isIdentity;
-    private final boolean              nullable;
 
     private boolean                    primaryKeyLoaded;
     private UniqueKeyDefinition        primaryKey;
@@ -58,13 +57,12 @@ public class DefaultColumnDefinition
     private List<ForeignKeyDefinition> foreignKey;
 
     public DefaultColumnDefinition(TableDefinition table, String name, int position, DataTypeDefinition type,
-        boolean nullable, boolean isIdentity, String comment) {
+        boolean isIdentity, String comment) {
 
         super(table, name, position, type, comment);
 
         this.position = position;
         this.isIdentity = isIdentity;
-        this.nullable = nullable;
     }
 
     @Override
@@ -108,6 +106,6 @@ public class DefaultColumnDefinition
 
     @Override
     public final boolean isNullable() {
-        return nullable;
+        return getType().isNullable();
     }
 }

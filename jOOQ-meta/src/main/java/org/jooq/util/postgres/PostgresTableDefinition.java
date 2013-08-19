@@ -87,16 +87,20 @@ public class PostgresTableDefinition extends AbstractTableDefinition {
                 record.getValue(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
-                record.getValue(COLUMNS.UDT_NAME));
+                record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
+                record.getValue(COLUMNS.COLUMN_DEFAULT) != null,
+                record.getValue(COLUMNS.UDT_NAME)
+            );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValue(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
-			    record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
 			    record.getValue(COLUMNS.COLUMN_DEFAULT, "").startsWith("nextval"),
-			    null);
+			    null
+		    );
+
 			result.add(column);
 		}
 

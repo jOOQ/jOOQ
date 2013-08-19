@@ -137,7 +137,8 @@ public class JDBCDatabase extends AbstractDatabase {
                 DataTypeDefinition type = new DefaultDataTypeDefinition(
                     this,
                     sd,
-                    sequence.getDataType().getTypeName(), 0, 0, 0);
+                    sequence.getDataType().getTypeName()
+                );
 
                 result.add(new DefaultSequenceDefinition(
                     sd, sequence.getName(), type));

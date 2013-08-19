@@ -75,6 +75,7 @@ public class OracleTableDefinition extends AbstractTableDefinition {
 		        ALL_TAB_COLS.DATA_PRECISION,
 		        ALL_TAB_COLS.DATA_SCALE,
 		        ALL_TAB_COLS.NULLABLE,
+		        ALL_TAB_COLS.DATA_DEFAULT,
 		        ALL_TAB_COLS.COLUMN_NAME,
 		        ALL_TAB_COLS.COLUMN_ID,
 		        ALL_COL_COMMENTS.COMMENTS)
@@ -94,16 +95,19 @@ public class OracleTableDefinition extends AbstractTableDefinition {
                 record.getValue(ALL_TAB_COLS.DATA_TYPE),
                 record.getValue("data_length", int.class),
                 record.getValue(ALL_TAB_COLS.DATA_PRECISION, int.class),
-                record.getValue(ALL_TAB_COLS.DATA_SCALE, int.class));
+                record.getValue(ALL_TAB_COLS.DATA_SCALE, int.class),
+                record.getValue(ALL_TAB_COLS.NULLABLE, boolean.class),
+                record.getValue(ALL_TAB_COLS.DATA_DEFAULT) != null
+            );
 
 			DefaultColumnDefinition column = new DefaultColumnDefinition(
 				getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(ALL_TAB_COLS.COLUMN_NAME),
 			    record.getValue(ALL_TAB_COLS.COLUMN_ID, int.class),
 			    type,
-			    record.getValue(ALL_TAB_COLS.NULLABLE, boolean.class),
                 false,
-			    record.getValue(ALL_COL_COMMENTS.COMMENTS));
+			    record.getValue(ALL_COL_COMMENTS.COMMENTS)
+		    );
 
 			result.add(column);
 		}

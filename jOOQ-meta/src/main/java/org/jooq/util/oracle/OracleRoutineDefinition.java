@@ -117,7 +117,10 @@ public class OracleRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(ALL_ARGUMENTS.DATA_LENGTH),
                 record.getValue(ALL_ARGUMENTS.DATA_PRECISION),
                 record.getValue(ALL_ARGUMENTS.DATA_SCALE),
-                record.getValue(ALL_ARGUMENTS.TYPE_NAME));
+                true,
+                record.getValue(defaulted, boolean.class),
+                record.getValue(ALL_ARGUMENTS.TYPE_NAME)
+            );
 
             String name = record.getValue(ALL_ARGUMENTS.ARGUMENT_NAME);
             int position = record.getValue(ALL_ARGUMENTS.POSITION, int.class);

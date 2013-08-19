@@ -72,6 +72,7 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
                 COLUMNS.ORDINAL_POSITION,
                 COLUMNS.DATA_TYPE,
                 COLUMNS.IS_NULLABLE,
+                COLUMNS.COLUMN_DEFAULT,
                 COLUMNS.CHARACTER_MAXIMUM_LENGTH,
                 COLUMNS.NUMERIC_PRECISION,
                 COLUMNS.NUMERIC_SCALE,
@@ -99,14 +100,16 @@ public class SQLServerTableDefinition extends AbstractTableDefinition {
                 record.getValue(COLUMNS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(COLUMNS.NUMERIC_PRECISION),
                 record.getValue(COLUMNS.NUMERIC_SCALE),
-                "");
+                record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
+                record.getValue(COLUMNS.COLUMN_DEFAULT) != null,
+                ""
+            );
 
 			ColumnDefinition column = new DefaultColumnDefinition(
 			    getDatabase().getTable(getSchema(), getName()),
 			    record.getValue(COLUMNS.COLUMN_NAME),
 			    record.getValue(COLUMNS.ORDINAL_POSITION, int.class),
 			    type,
-			    record.getValue(COLUMNS.IS_NULLABLE, boolean.class),
 			    1 == record.getValue(identity),
 			    null);
 			result.add(column);

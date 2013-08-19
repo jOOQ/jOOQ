@@ -69,6 +69,16 @@ public interface DataTypeDefinition {
     String getUserType();
 
     /**
+     * Whether this data type is nullable.
+     */
+    boolean isNullable();
+
+    /**
+     * Whether this data type is defaultable.
+     */
+    boolean isDefaulted();
+
+    /**
      * Whether this data type represents a udt.
      */
     boolean isUDT();

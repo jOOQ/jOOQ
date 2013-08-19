@@ -84,7 +84,10 @@ public class DB2UDTDefinition extends AbstractUDTDefinition {
                 record.getValue(Attributes.ATTR_TYPENAME),
                 record.getValue(Attributes.LENGTH),
                 record.getValue(Attributes.LENGTH),
-                record.getValue(Attributes.SCALE));
+                record.getValue(Attributes.SCALE),
+                null,
+                null
+            );
 
             AttributeDefinition column = new DefaultAttributeDefinition(
                 this,

@@ -39,14 +39,14 @@ package org.jooq.util;
 import java.util.List;
 
 /**
- * An interface defining a column of a table
+ * An interface defining a column of a table.
  *
  * @author Lukas Eder
  */
 public interface ColumnDefinition extends TypedElementDefinition<TableDefinition> {
 
     /**
-     * The column position in the table
+     * The column position in the table.
      */
     int getPosition();
 
@@ -72,7 +72,11 @@ public interface ColumnDefinition extends TypedElementDefinition<TableDefinition
     boolean isIdentity();
 
     /**
-     * Whether the column is nullable
+     * Whether the column is nullable.
+     *
+     * @deprecated - [#2699] - 3.2.0 - Use
+     *             {@link DataTypeDefinition#isNullable()} instead.
      */
+    @Deprecated
     boolean isNullable();
 }

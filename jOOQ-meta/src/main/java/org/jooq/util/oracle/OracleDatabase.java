@@ -363,7 +363,7 @@ public class OracleDatabase extends AbstractDatabase {
             int precision = record.getValue(ALL_COLL_TYPES.PRECISION, BigDecimal.ZERO).intValue();
             int scale = record.getValue(ALL_COLL_TYPES.SCALE, BigDecimal.ZERO).intValue();
 
-            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, schema, dataType, length, precision, scale);
+            DefaultDataTypeDefinition type = new DefaultDataTypeDefinition(this, schema, dataType, length, precision, scale, null, null);
             DefaultArrayDefinition array = new DefaultArrayDefinition(schema, name, type);
 
             arrays.add(array);

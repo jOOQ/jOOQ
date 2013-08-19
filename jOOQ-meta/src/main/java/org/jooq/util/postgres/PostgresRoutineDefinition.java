@@ -75,7 +75,10 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(ROUTINES.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(ROUTINES.NUMERIC_PRECISION),
                 record.getValue(ROUTINES.NUMERIC_SCALE),
-                record.getValue(ROUTINES.TYPE_UDT_NAME));
+                null,
+                null,
+                record.getValue(ROUTINES.TYPE_UDT_NAME)
+            );
 
             returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
@@ -109,13 +112,17 @@ public class PostgresRoutineDefinition extends AbstractRoutineDefinition {
                 record.getValue(PARAMETERS.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(PARAMETERS.NUMERIC_PRECISION),
                 record.getValue(PARAMETERS.NUMERIC_SCALE),
-                record.getValue(PARAMETERS.UDT_NAME));
+                null,
+                null,
+                record.getValue(PARAMETERS.UDT_NAME)
+            );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(
                 this,
                 record.getValue(PARAMETERS.PARAMETER_NAME),
                 record.getValue(PARAMETERS.ORDINAL_POSITION),
-                type);
+                type
+            );
 
             addParameter(InOutDefinition.getFromString(inOut), parameter);
         }

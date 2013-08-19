@@ -201,7 +201,8 @@ public class FirebirdDatabase extends AbstractDatabase {
 
             SchemaDefinition schema = getSchemata().get(0);
             DataTypeDefinition type = new DefaultDataTypeDefinition(
-                this, schema, FirebirdDataType.BIGINT.getTypeName(), 0, 0, 0);
+                this, schema, FirebirdDataType.BIGINT.getTypeName()
+            );
 
             result.add(new DefaultSequenceDefinition(schema, sequenceName, type ));
         }

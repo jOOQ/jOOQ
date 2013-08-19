@@ -69,7 +69,10 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                 typeName,
                 precision,
                 precision,
-                scale);
+                scale,
+                null,
+                null
+            );
 
             this.returnValue = new DefaultParameterDefinition(this, "RETURN_VALUE", -1, type);
         }
@@ -83,7 +86,9 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                     FunctionColumns.TYPE_NAME,
                     FunctionColumns.PRECISION,
                     FunctionColumns.SCALE,
-                    FunctionColumns.POS)
+                    FunctionColumns.POS,
+                    FunctionColumns.NULLABLE,
+                    FunctionColumns.COLUMN_DEFAULT.nvl2(true, false).as("default"))
                 .from(FUNCTION_COLUMNS)
                 .where(FunctionColumns.ALIAS_SCHEMA.equal(getSchema().getName()))
                 .and(FunctionColumns.ALIAS_NAME.equal(getName()))
@@ -94,6 +99,8 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
             Integer precision = record.getValue(FunctionColumns.PRECISION);
             Short scale = record.getValue(FunctionColumns.SCALE);
             int position = record.getValue(FunctionColumns.POS);
+            boolean nullable = record.getValue(FunctionColumns.NULLABLE, boolean.class);
+            boolean defaulted = record.getValue("default", boolean.class);
 
             // VERY special case for H2 alias/function parameters. The first parameter
             // may be a java.sql.Connection object and in such cases it should NEVER be used.
@@ -107,10 +114,12 @@ public class H2RoutineDefinition extends AbstractRoutineDefinition {
                 getSchema(), typeName,
                 precision,
                 precision,
-                scale);
+                scale,
+                nullable,
+                defaulted
+            );
 
             ParameterDefinition parameter = new DefaultParameterDefinition(this, paramName, position, type);
-
             addParameter(InOutDefinition.IN, parameter);
         }
     }

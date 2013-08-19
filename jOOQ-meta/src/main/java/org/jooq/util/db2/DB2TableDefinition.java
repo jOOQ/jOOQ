@@ -72,7 +72,8 @@ public class DB2TableDefinition extends AbstractTableDefinition {
                     Columns.LENGTH,
                     Columns.SCALE,
                     Columns.IDENTITY,
-                    Columns.NULLS)
+                    Columns.NULLS,
+                    Columns.DEFAULT)
                 .from(COLUMNS)
                 .where(Columns.TABSCHEMA.equal(getSchema().getName()))
                 .and(Columns.TABNAME.equal(getName()))
@@ -85,16 +86,19 @@ public class DB2TableDefinition extends AbstractTableDefinition {
                 record.getValue(Columns.TYPENAME),
                 record.getValue(Columns.LENGTH),
                 record.getValue(Columns.LENGTH),
-                record.getValue(Columns.SCALE));
+                record.getValue(Columns.SCALE),
+                record.getValue(Columns.NULLS, boolean.class),
+                record.getValue(Columns.DEFAULT) != null
+            );
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
                 record.getValue(Columns.COLNAME),
                 record.getValue(Columns.COLNO),
                 type,
-                record.getValue(Columns.NULLS, boolean.class),
                 record.getValue(Columns.IDENTITY, boolean.class),
-                null);
+                null
+            );
 
             result.add(column);
         }

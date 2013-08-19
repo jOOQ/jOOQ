@@ -256,8 +256,8 @@ public class DerbyDatabase extends AbstractDatabase {
             DataTypeDefinition type = new DefaultDataTypeDefinition(
                 this,
                 schema,
-                record.getValue(Syssequences.SEQUENCEDATATYPE),
-                0, 0, 0);
+                record.getValue(Syssequences.SEQUENCEDATATYPE)
+            );
 
             result.add(new DefaultSequenceDefinition(
                 schema,

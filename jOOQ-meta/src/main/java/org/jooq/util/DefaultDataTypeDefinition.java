@@ -51,15 +51,21 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
     private final SchemaDefinition schema;
     private final String           typeName;
     private final String           udtName;
+    private final boolean          nullable;
+    private final boolean          defaulted;
     private final int              length;
     private final int              precision;
     private final int              scale;
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale) {
-        this(database, schema, typeName, length, precision, scale, typeName);
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName) {
+        this(database, schema, typeName, null, null, null, null, null);
     }
 
-    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, String udtName) {
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable) {
+        this(database, schema, typeName, length, precision, scale, nullable, defaultable, typeName);
+    }
+
+    public DefaultDataTypeDefinition(Database database, SchemaDefinition schema, String typeName, Number length, Number precision, Number scale, Boolean nullable, Boolean defaultable, String udtName) {
         this.database = database;
         this.schema = schema;
         this.typeName = typeName;
@@ -82,6 +88,8 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
         this.length = length == null ? 0 : length.intValue();
         this.precision = precision == null ? 0 : precision.intValue();
         this.scale = scale == null ? 0 : scale.intValue();
+        this.nullable = nullable == null ? true : nullable.booleanValue();
+        this.defaulted = defaultable == null ? false : defaultable.booleanValue();
     }
 
     @Override
@@ -96,6 +104,16 @@ public class DefaultDataTypeDefinition implements DataTypeDefinition {
 
     private final SQLDialect getDialect() {
         return getDatabase().getDialect();
+    }
+
+    @Override
+    public final boolean isNullable() {
+        return nullable;
+    }
+
+    @Override
+    public final boolean isDefaulted() {
+        return defaulted;
     }
 
     @Override

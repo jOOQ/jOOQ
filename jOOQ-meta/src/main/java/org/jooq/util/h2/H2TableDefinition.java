@@ -74,6 +74,7 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 Columns.NUMERIC_PRECISION,
                 Columns.NUMERIC_SCALE,
                 Columns.IS_NULLABLE,
+                Columns.COLUMN_DEFAULT.nvl2(true, false).as("default"),
                 Columns.REMARKS,
                 Columns.SEQUENCE_NAME)
             .from(COLUMNS)
@@ -88,14 +89,15 @@ public class H2TableDefinition extends AbstractTableDefinition {
                 record.getValue(Columns.TYPE_NAME),
                 record.getValue(Columns.CHARACTER_MAXIMUM_LENGTH),
                 record.getValue(Columns.NUMERIC_PRECISION),
-                record.getValue(Columns.NUMERIC_SCALE));
+                record.getValue(Columns.NUMERIC_SCALE),
+                record.getValue(Columns.IS_NULLABLE, boolean.class),
+                record.getValue("default", boolean.class));
 
             ColumnDefinition column = new DefaultColumnDefinition(
             	getDatabase().getTable(getSchema(), getName()),
                 record.getValue(Columns.COLUMN_NAME),
                 record.getValue(Columns.ORDINAL_POSITION),
                 type,
-                record.getValue(Columns.IS_NULLABLE, boolean.class),
                 null != record.getValue(Columns.SEQUENCE_NAME),
                 record.getValue(Columns.REMARKS));
 

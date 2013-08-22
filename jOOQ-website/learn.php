@@ -207,8 +207,8 @@ running. It shows how to use jOOQ and its code generator with a simple MySQL dat
 <a href="http://sql-performance-explained.com/l" title="SQL Performance Explained by Markus Winand, author of Use-The-Index-Luke.com">SQL Performance Explained</a></td>
 </tr>
 <tr>
-<td>ISBN</td>
-<td>9783950307818</td>
+<td>Available in</td>
+<td><a href="http://sql-performance-explained.com">English</a>, <a href="http://sql-performance-explained.de">German</a>, <a href="http://sql-au-coeur-des-performances.fr">French</a></td>
 </tr>
 </table>
 <br/><br/>

@@ -64,17 +64,17 @@ function manualHeader($isSingle, $forVersion) {
         <script>
         $(document).ready(function() {
             var $registration = $('#registration'),
-                 track = function(event) {
+                 track = function(url) {
                      var pageTracker;
 
                      try {                     
                          pageTracker = _gat._getTracker("UA-30716479-1");
                          
-                         if (data.substring(0, 4) === 'http') {
+                         if (('' + url).substring(0, 4) === 'http') {
                              pageTracker._trackPageview('/external/' + url.replace(/^https?\:\/\//i, ""));
                          }
                          else {
-                             pageTracker._trackPageview('/event/' + event);
+                             pageTracker._trackPageview('/event/' + url);
                          }
                      }
                      catch (ignore) {}

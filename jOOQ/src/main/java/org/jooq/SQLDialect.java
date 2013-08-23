@@ -60,10 +60,10 @@ public enum SQLDialect {
     @Deprecated
     SQL99(null),
 
-    /**
-     * The MS Access SQL dialect family.
-     */
-    ACCESS("Access"),
+//  /**
+//   * The MS Access SQL dialect family. ACCESS support will be added in jOOQ 3.3
+//   */
+//  ACCESS("Access"),
 
     /**
      * The Sybase Adaptive Server SQL dialect family.

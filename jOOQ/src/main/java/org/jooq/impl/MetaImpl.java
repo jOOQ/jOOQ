@@ -118,21 +118,10 @@ class MetaImpl implements Meta, Serializable {
     public final List<Catalog> getCatalogs() {
         try {
             List<Catalog> result = new ArrayList<Catalog>();
-            switch (configuration.dialect()) {
+            Result<Record> catalogs = create.fetch(meta().getCatalogs());
 
-                // Some dialects do not support catalogs in their meta data APIs
-                case ACCESS:
-                    break;
-
-                default: {
-                    Result<Record> catalogs = create.fetch(meta().getCatalogs());
-
-                    for (String name : catalogs.getValues(0, String.class)) {
-                        result.add(new MetaCatalog(name));
-                    }
-
-                    break;
-                }
+            for (String name : catalogs.getValues(0, String.class)) {
+                result.add(new MetaCatalog(name));
             }
 
             // There should always be at least one (empty) catalog in a database
@@ -199,21 +188,10 @@ class MetaImpl implements Meta, Serializable {
         public final List<Schema> getSchemas() {
             try {
                 List<Schema> result = new ArrayList<Schema>();
-                switch (configuration.dialect()) {
+                Result<Record> schemas = create.fetch(meta().getSchemas());
 
-                    // Some dialects do not support schemas in their meta data APIs
-                    case ACCESS:
-                        break;
-
-                    default: {
-                        Result<Record> schemas = create.fetch(meta().getSchemas());
-
-                        for (String name : schemas.getValues(0, String.class)) {
-                            result.add(new MetaSchema(name));
-                        }
-
-                        break;
-                    }
+                for (String name : schemas.getValues(0, String.class)) {
+                    result.add(new MetaSchema(name));
                 }
 
                 // There should always be at least one (empty) schema in a database

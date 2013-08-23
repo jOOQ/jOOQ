@@ -39,6 +39,8 @@ package org.jooq.util.postgres;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.decode;
 import static org.jooq.impl.DSL.exists;
+import static org.jooq.impl.DSL.field;
+import static org.jooq.impl.DSL.name;
 import static org.jooq.impl.DSL.select;
 import static org.jooq.impl.DSL.selectOne;
 import static org.jooq.impl.DSL.upper;
@@ -62,7 +64,7 @@ import java.util.List;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;
-import org.jooq.Record3;
+import org.jooq.Record2;
 import org.jooq.Record4;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
@@ -305,32 +307,49 @@ public class PostgresDatabase extends AbstractDatabase {
     protected List<EnumDefinition> getEnums0() throws SQLException {
         List<EnumDefinition> result = new ArrayList<EnumDefinition>();
 
-        Result<Record3<String, String, String>> records = create()
+        // [#2707] Fetch all enum type names first, in order to be able to
+        // perform enumlabel::[typname] casts in the subsequent query for
+        // cross-version compatible enum literal ordering
+        Result<Record2<String, String>> types = create()
             .select(
                 PG_NAMESPACE.NSPNAME,
-                PG_TYPE.TYPNAME,
-                PG_ENUM.ENUMLABEL)
-            .from(PG_ENUM)
-            .join(PG_TYPE).on("pg_enum.enumtypid = pg_type.oid")
+                PG_TYPE.TYPNAME)
+            .from(PG_TYPE)
             .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
             .where(PG_NAMESPACE.NSPNAME.in(getInputSchemata()))
+            .and(field("pg_type.oid", Long.class).in(select(PG_ENUM.ENUMTYPID).from(PG_ENUM)))
             .orderBy(
                 PG_NAMESPACE.NSPNAME,
-                PG_TYPE.TYPNAME,
-                PG_ENUM.ENUMLABEL)
+                PG_TYPE.TYPNAME)
             .fetch();
 
-        DefaultEnumDefinition definition = null;
-        for (Record record : records) {
-            SchemaDefinition schema = getSchema(record.getValue(PG_NAMESPACE.NSPNAME));
-            String typeName = String.valueOf(record.getValue(PG_TYPE.TYPNAME));
+        for (Record2<String, String> type : types) {
+            String nspname = type.getValue(PG_NAMESPACE.NSPNAME);
+            String typname = type.getValue(PG_TYPE.TYPNAME);
 
-            if (definition == null || !definition.getName().equals(typeName)) {
-                definition = new DefaultEnumDefinition(schema, typeName, null);
-                result.add(definition);
+            List<String> labels = create()
+                .select(PG_ENUM.ENUMLABEL)
+                .from(PG_ENUM)
+                .join(PG_TYPE).on("pg_enum.enumtypid = pg_type.oid")
+                .join(PG_NAMESPACE).on("pg_type.typnamespace = pg_namespace.oid")
+                .where(PG_NAMESPACE.NSPNAME.eq(nspname))
+                .and(PG_TYPE.TYPNAME.eq(typname))
+                .orderBy(field("{0}::{1}", PG_ENUM.ENUMLABEL, name(nspname, typname)))
+                .fetch(PG_ENUM.ENUMLABEL);
+
+            DefaultEnumDefinition definition = null;
+            for (String label : labels) {
+                SchemaDefinition schema = getSchema(nspname);
+                String typeName = String.valueOf(typname);
+
+                if (definition == null || !definition.getName().equals(typeName)) {
+                    definition = new DefaultEnumDefinition(schema, typeName, null);
+                    result.add(definition);
+                }
+
+                definition.addLiteral(label);
             }
 
-            definition.addLiteral(String.valueOf(record.getValue(PG_ENUM.ENUMLABEL)));
         }
 
         return result;

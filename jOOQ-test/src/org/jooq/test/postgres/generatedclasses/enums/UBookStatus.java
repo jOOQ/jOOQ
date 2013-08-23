@@ -9,11 +9,11 @@ package org.jooq.test.postgres.generatedclasses.enums;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public enum UBookStatus implements org.jooq.EnumType {
 
+	SOLD_OUT("SOLD OUT"),
+
 	ON_STOCK("ON STOCK"),
 
 	ORDERED("ORDERED"),
-
-	SOLD_OUT("SOLD OUT"),
 
 	;
 

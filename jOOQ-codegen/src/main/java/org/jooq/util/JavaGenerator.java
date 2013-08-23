@@ -1706,7 +1706,7 @@ public class JavaGenerator extends AbstractGenerator {
             }
 
             String nullable = "";
-            if (!column.isNullable()) {
+            if (!column.getType().isNullable()) {
                 nullable = ", nullable = false";
             }
 
@@ -1741,7 +1741,7 @@ public class JavaGenerator extends AbstractGenerator {
         if (generateValidationAnnotations()) {
             DataTypeDefinition type = column.getType();
 
-            if (!column.isNullable()) {
+            if (!column.getType().isNullable()) {
                 out.tab(1).println("@javax.validation.constraints.NotNull");
             }
 

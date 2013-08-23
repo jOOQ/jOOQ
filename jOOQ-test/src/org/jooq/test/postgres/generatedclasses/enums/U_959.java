@@ -33,9 +33,9 @@ public enum U_959 implements org.jooq.EnumType {
 
 	default_("default"),
 
-	do_("do"),
-
 	double_("double"),
+
+	do_("do"),
 
 	else_("else"),
 
@@ -63,9 +63,9 @@ public enum U_959 implements org.jooq.EnumType {
 
 	instanceof_("instanceof"),
 
-	int_("int"),
-
 	interface_("interface"),
+
+	int_("int"),
 
 	long_("long"),
 

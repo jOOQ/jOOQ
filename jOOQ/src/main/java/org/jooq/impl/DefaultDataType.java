@@ -390,13 +390,17 @@ public class DefaultDataType<T> implements DataType<T> {
         // If this is a SQLDataType find the most suited dialect-specific
         // data type
         if (getDialect() == null) {
+            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.dialect().family().ordinal()]
 
-            // Be sure to reset length, precision, and scale, as those values
-            // were not registered in the below cache
-            DataType<?> dataType = TYPES_BY_SQL_DATATYPE[configuration.dialect().family().ordinal()].get(length(0).precision(0, 0));
+                // Be sure to reset length, precision, and scale, as those values
+                // were not registered in the below cache
+                .get(length(0).precision(0, 0));
 
             if (dataType != null) {
-                return (DataType<T>) dataType;
+
+                // ... and then, set them back to the original value
+                // [#2710] TODO: Remove this logic along with cached data types
+                return (DataType<T>) dataType.length(length).precision(precision, scale);
             }
         }
 

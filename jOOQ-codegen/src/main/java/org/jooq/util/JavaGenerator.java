@@ -593,6 +593,30 @@ public class JavaGenerator extends AbstractGenerator {
         out.tab(2).println("super(%s);", tableIdentifier);
         out.tab(1).println("}");
 
+        List<String> arguments = new ArrayList<String>();
+        for (int i = 0; i < degree; i++) {
+            final ColumnDefinition column = table.getColumn(i);
+            final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
+            final String type = getJavaType(column.getType());
+
+            arguments.add(type + " " + columnMember);
+        }
+
+        out.tab(1).javadoc("Create a detached, initialised %s", className);
+        out.tab(1).println("public %s([[%s]]) {", className, arguments);
+        out.tab(2).println("super(%s);", tableIdentifier);
+        out.println();
+
+        for (int i = 0; i < degree; i++) {
+            final ColumnDefinition column = table.getColumn(i);
+            final String columnMember = getStrategy().getJavaMemberName(column, Mode.DEFAULT);
+
+            out.tab(2).println("setValue(%s, %s);", i, columnMember);
+        }
+
+        out.tab(1).println("}");
+
+
         out.println("}");
         out.close();
     }

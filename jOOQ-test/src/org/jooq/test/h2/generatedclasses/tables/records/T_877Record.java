@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.T_877Record> implements org.jooq.Record1<java.lang.Integer>, org.jooq.test.h2.generatedclasses.tables.interfaces.IT_877 {
 
-	private static final long serialVersionUID = 435014745;
+	private static final long serialVersionUID = -449374963;
 
 	/**
 	 * Setter for <code>PUBLIC.T_877.ID</code>. 
@@ -93,5 +93,14 @@ public class T_877Record extends org.jooq.impl.TableRecordImpl<org.jooq.test.h2.
 	 */
 	public T_877Record() {
 		super(org.jooq.test.h2.generatedclasses.tables.T_877.T_877);
+	}
+
+	/**
+	 * Create a detached, initialised T_877Record
+	 */
+	public T_877Record(java.lang.Integer id) {
+		super(org.jooq.test.h2.generatedclasses.tables.T_877.T_877);
+
+		setValue(0, id);
 	}
 }

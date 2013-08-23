@@ -9,7 +9,7 @@ package org.jooq.test.h2.generatedclasses.tables.records;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.test.h2.generatedclasses.tables.records.XUnusedRecord> implements org.jooq.Record16<java.lang.Integer, java.lang.String, java.math.BigInteger, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.lang.Integer, java.math.BigDecimal>, org.jooq.test.h2.generatedclasses.tables.interfaces.IXUnused {
 
-	private static final long serialVersionUID = 2057901947;
+	private static final long serialVersionUID = -481499938;
 
 	/**
 	 * Setter for <code>PUBLIC.X_UNUSED.ID</code>. 
@@ -600,5 +600,29 @@ public class XUnusedRecord extends org.jooq.impl.UpdatableRecordImpl<org.jooq.te
 	 */
 	public XUnusedRecord() {
 		super(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED);
+	}
+
+	/**
+	 * Create a detached, initialised XUnusedRecord
+	 */
+	public XUnusedRecord(java.lang.Integer id, java.lang.String name, java.math.BigInteger bigInteger, java.lang.Integer idRef, java.lang.String nameRef, java.lang.Integer class_, java.lang.Integer fields, java.lang.Integer table, java.lang.Integer configuration, java.lang.Integer uDT, java.lang.Integer metaData, java.lang.Integer values, java.lang.Integer type0, java.lang.Integer primaryKey, java.lang.Integer primarykey, java.math.BigDecimal field_737) {
+		super(org.jooq.test.h2.generatedclasses.tables.XUnused.X_UNUSED);
+
+		setValue(0, id);
+		setValue(1, name);
+		setValue(2, bigInteger);
+		setValue(3, idRef);
+		setValue(4, nameRef);
+		setValue(5, class_);
+		setValue(6, fields);
+		setValue(7, table);
+		setValue(8, configuration);
+		setValue(9, uDT);
+		setValue(10, metaData);
+		setValue(11, values);
+		setValue(12, type0);
+		setValue(13, primaryKey);
+		setValue(14, primarykey);
+		setValue(15, field_737);
 	}
 }

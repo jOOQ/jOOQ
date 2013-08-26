@@ -15,19 +15,16 @@
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}.jar"/>
-		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}.jar"/>
 		<copy todir="${dir.release}/${version}/lib" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}.jar"/>
 
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ/target/jooq-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-sources.jar"/>
-		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}-sources.jar"/>
 		<copy todir="${dir.release}/${version}/src" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-sources.jar"/>
 
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ/target/jooq-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-meta/target/jooq-meta-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-codegen/target/jooq-codegen-${version}-javadoc.jar"/>
-		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-console/target/jooq-console-${version}-javadoc.jar"/>
 		<copy todir="${dir.release}/${version}/javadoc" file="${dir.workspace}/jOOQ-scala/target/jooq-scala-${version}-javadoc.jar"/>
 
 		<copy todir="${dir.release}/${version}">
@@ -51,24 +48,6 @@
 		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\javax\validation\validation-api\1.1.0.Alpha1\validation-api-1.1.0.Alpha1.jar"/>
 		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\javax\validation\validation-api\1.1.0.Alpha1\validation-api-1.1.0.Alpha1-sources.jar"/>
 
-		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\com\fifesoft\rsyntaxtextarea\2.0.7\rsyntaxtextarea-2.0.7.jar"/>
-		<copy todir="${dir.release}/${version}/third-party/src" file="C:\Users\lukas\.m2\repository\com\fifesoft\rsyntaxtextarea\2.0.7\rsyntaxtextarea-2.0.7-sources.jar"/>
-
- 		<copy todir="${dir.release}/${version}/third-party/lib" file="C:\Users\lukas\.m2\repository\org\apache\ant\ant\1.8.2\ant-1.8.2.jar"/>
-
-		<!-- Include jooq.jar and rsyntaxtextarea.jar binaries in jooq-console.jar -->
-		<unzip dest="${dir.release}/${version}/third-party/src/unzipped" src="${dir.workspace}/jOOQ/target/jooq-${version}.jar"/>
-		<unzip dest="${dir.release}/${version}/third-party/src/unzipped" src="${dir.release}/${version}/third-party/lib/rsyntaxtextarea-2.0.7.jar"/>
-
-
-		<jar update="true" destfile="${dir.release}/${version}/lib/jooq-console-${version}.jar">
-			<fileset dir="${dir.release}/${version}/third-party/src/unzipped">
-				<include name="org/**"/>
-			</fileset>
-		</jar>
-
-		<delete dir="${dir.release}/${version}/third-party/src/unzipped"/>
-		<!-- Include rsyntaxtextarea.jar binaries in jooq-console.jar -->
 
 		<zip destfile="${dir.release}/versions/jOOQ-${version}-full.zip">
 			<fileset dir="${dir.release}/${version}"/>

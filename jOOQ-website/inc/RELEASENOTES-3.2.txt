@@ -10,95 +10,6 @@ http://www.jooq.org/notes.php
 For a text version, see
 http://www.jooq.org/inc/RELEASENOTES.txt
 
-Version 3.2.0-alpha-01 - August 26, 2013
-================================================================================
-
-** This is a preview for the upcoming jOOQ 3.2.0 release, which is due for late
-September 2013. Beware that the new SPI might still be undergoing minor changes
-
-This release mainly features two new SPI elements, which allow jOOQ users to
-take even more control of their jOOQ experience. A new rendering SPI called 
-VisitListener has been introduced, allowing for listening to arbitrary types of
-SQL rendering events and for interacting with jOOQ's SQL renderer in order to
-perform SQL transformation. An example of such transformation is given here:
-https://github.com/jOOQ/jOOQ/blob/master/jOOQ-test/src/org/jooq/test/_/testcases/VisitListenerTests.java
-
-The above example adds custom "security" predicates to SELECT, UPDATE, DELETE
-statements, restricting access to parts of data. It even transforms INSERT
-statements adding a CHECK option to prevent "invalid" data insertion. Such SQL
-transformation can also be used to implement shared-schema multi-tenancy. More
-examples will follow in the manual when 3.2.0 is released.
-
-The other SPI is called RecordListener and it allows for hooking into a Record's
-CRUD lifecycle, possibly modifying records prior to INSERTs, UPDATEs, DELETEs,
-etc. An example use-case is the central generation of IDs (e.g. UUIDs) for all
-records thus created.
-
-Features and improvements
--------------------------
-#1079 - Add support for Oracle's FLASHBACK QUERY clause
-#1903 - Duplicate Query construction API between DSLContext and DSL
-#2010 - Add listener API to Record / UpdatableRecord
-#2542 - Add an org.jooq.Keyword type and DSL.keyword(String) to construct it
-#2593 - Add Meta.getPrimaryKeys()
-#2594 - Add primary key and foreign key navigation support in JDBCDatabase
-#2595 - Add implicit conversions from Scala functions to RecordMapper
-#2603 - Add <includeExcludeColumns/> flag to code generation configuration to
-        indicate that <includes/> and <excludes/> shall also match column names
-#2606 - Distinguish Oracle10g, Oracle11g, Oracle12c SQLDialects within the
-        ORACLE family
-#2618 - Document the fact that different packages are generated for different
-        schemas
-#2619 - Add an example ExecuteListener to the manual, showing how UPDATE and
-        DELETE statements without WHERE clause can be aborted
-#2630 - Add DSL.queryPart(String, Object...) and similar methods to create
-        simple plain SQL query parts
-#2660 - Add some documentation about jOOQ not supporting operator precedence
-#2665 - Implement SPI for RenderContext listening to allow for custom SQL 
-        transformation
-#2666 - Pull up RenderContext.sql(QueryPart) and BindContext.bind(QueryPart)
-        to Context.visit(QueryPart)
-#2667 - Add org.jooq.Clause and let org.jooq.Context listen on start(Clause) and
-        end(Clause) events
-#2676 - Add QueryPartInternal.clause() to allow for QueryParts to return Clause
-        information to org.jooq.Context
-#2689 - Expose a DAO's internal RecordMapper through DAO.mapper()
-#2696 - Provide default implementation for CustomQueryPart.bind() (for all
-        Custom QueryParts)
-#2699 - Generate DEFAULT and NULL metadata information on generated DataTypes
-#2701 - Document the fact that jOOQ sets changed flags to true, even if
-        Record.setValue() sets the value already present in the record
-#2702 - Add DataType.defaulted() and DataType.nullable()
-#2706 - Generate "full" constructors in records, allowing to construct a record
-        with all values set
-
-API changes (backwards-compatible)
-----------------------------------
-#2581 - Deprecate fetchLater() and FutureResult<R>
-#2662 - Deprecate the internal method DSLContext.bind(QueryPart, 
-        PreparedStatement)
-
-Bug fixes
----------
-#2586 - Bad SQL dialect referenced from ASE's and CUBRID's package-info.java
-#2591 - Result.intoGroups() and similar methods create key Records with
-        changed=true
-#2592 - Qualified names created using DSL.name(String...) should not render null
-        or empty string parts
-#2596 - Scala tests don't run with Maven
-#2608 - Error in code generator when the sqlite_sequence table is missing
-#2613 - The batch INSERT query example in the manual is no longer correct with
-        jOOQ 3.x
-#2624 - Wrong SQL Server 2012 detection in jOOQ-Meta
-#2628 - Add missing Javadoc to DefaultDSLContext
-#2634 - Minor documentation bug: The MockDataProvider uses toLowerCase() but
-        upper-cases SQL keywords
-#2690 - Inaccurate runtime xsd versions in 3.1 manual
-#2703 - SQLDialect.getNameLC() and getNameUC() are not NPE-safe
-#2707 - PostgreSQL ENUM ordering is inconsistent with the database
-#2708 - Wrong SQL rendered for CAST(x AS DECIMAL(y, z)). Precision and scale are
-        lost
-
 Version 3.1.0 - June 30, 2013
 ================================================================================
 
@@ -111,8 +22,7 @@ SQL Server 2012 is another SQL dialect that is now officially supported in jOOQ,
 allowing to make use of the newly supported ROWS UNBOUNDED PRECEDING and similar
 windowing clauses, as well as the long awaited OFFSET .. FETCH clause. From now
 on, jOOQ SQLDialect.family() allows to define a super-set of SQL dialects by the
-same vendors with only subtle differences. SQL Server users be careful to choose
-the right dialect!
+same vendors with only subtle differences.
 
 POJO mapping is taken to the next level. jOOQ opened up its internal
 DefaultRecordMapper providing useful Record to POJO mapping algorithms. But your

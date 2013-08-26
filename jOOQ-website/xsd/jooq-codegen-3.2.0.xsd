@@ -53,16 +53,16 @@
   </complexType>
 
   <complexType name="Properties">
-  	<sequence>
-  	  <element name="property" type="tns:Property" minOccurs="0" maxOccurs="unbounded"/>
-  	</sequence>
+    <sequence>
+      <element name="property" type="tns:Property" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
   </complexType>
 
   <complexType name="Property">
-  	<all>
-  	  <element name="key" type="string" minOccurs="1" maxOccurs="1"/>
-  	  <element name="value" type="string" minOccurs="1" maxOccurs="1"/>
-  	</all>
+    <all>
+      <element name="key" type="string" minOccurs="1" maxOccurs="1"/>
+      <element name="value" type="string" minOccurs="1" maxOccurs="1"/>
+    </all>
   </complexType>
 
   <complexType name="Generator">
@@ -140,6 +140,12 @@
         includes
         -->
       <element name="excludes" type="string" default="" minOccurs="0" maxOccurs="1" />
+
+      <!--
+        This flag indicates whether include / exclude patterns should also match
+        columns within tables. 
+        -->
+      <element name="includeExcludeColumns" type="boolean" default="false" minOccurs="0" maxOccurs="1" />
 
       <!--
         All table and view columns that are used as "version" fields for

@@ -205,41 +205,41 @@ object Conversions {
     // QueryPart API
     // -------------
 
-    def toSQL(context : RenderContext) = underlying.asInstanceOf[QueryPartInternal].toSQL(context)
-    def bind (context : BindContext)   = underlying.asInstanceOf[QueryPartInternal].bind(context)
+             def toSQL(context : RenderContext) = underlying.asInstanceOf[QueryPartInternal].toSQL(context)
+    override def bind (context : BindContext)   = underlying.asInstanceOf[QueryPartInternal].bind(context)
 
     // String operations
     // -----------------
 
-    def ||(value : String)            = underlying.concat(value)
-    def ||(value : Field[_])          = underlying.concat(value)
+             def ||(value : String)            = underlying.concat(value)
+             def ||(value : Field[_])          = underlying.concat(value)
 
     // Comparison predicates
     // ---------------------
 
-    def ===(value : T)                = underlying.equal(value)
-    def ===(value : Field[T])         = underlying.equal(value)
+             def ===(value : T)                = underlying.equal(value)
+             def ===(value : Field[T])         = underlying.equal(value)
 
-    def !==(value : T)                = underlying.notEqual(value)
-    def !==(value : Field[T])         = underlying.notEqual(value)
+             def !==(value : T)                = underlying.notEqual(value)
+             def !==(value : Field[T])         = underlying.notEqual(value)
 
-    def <>(value : T)                 = underlying.notEqual(value)
-    def <>(value : Field[T])          = underlying.notEqual(value)
+             def <>(value : T)                 = underlying.notEqual(value)
+             def <>(value : Field[T])          = underlying.notEqual(value)
 
-    def >(value : T)                  = underlying.greaterThan(value)
-    def >(value : Field[T])           = underlying.greaterThan(value)
+             def >(value : T)                  = underlying.greaterThan(value)
+             def >(value : Field[T])           = underlying.greaterThan(value)
 
-    def >=(value : T)                 = underlying.greaterOrEqual(value)
-    def >=(value : Field[T])          = underlying.greaterOrEqual(value)
+             def >=(value : T)                 = underlying.greaterOrEqual(value)
+             def >=(value : Field[T])          = underlying.greaterOrEqual(value)
 
-    def <(value : T)                  = underlying.lessThan(value)
-    def <(value : Field[T])           = underlying.lessThan(value)
+             def <(value : T)                  = underlying.lessThan(value)
+             def <(value : Field[T])           = underlying.lessThan(value)
 
-    def <=(value : T)                 = underlying.lessOrEqual(value)
-    def <=(value : Field[T])          = underlying.lessOrEqual(value)
+             def <=(value : T)                 = underlying.lessOrEqual(value)
+             def <=(value : Field[T])          = underlying.lessOrEqual(value)
 
-    def <=>(value : T)                = underlying.isNotDistinctFrom(value)
-    def <=>(value : Field[T])         = underlying.isNotDistinctFrom(value)
+             def <=>(value : T)                = underlying.isNotDistinctFrom(value)
+             def <=>(value : Field[T])         = underlying.isNotDistinctFrom(value)
   }
 
   /**

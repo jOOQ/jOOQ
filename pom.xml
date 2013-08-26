@@ -132,7 +132,7 @@
         <module>jOOQ-codegen</module>
         <module>jOOQ-codegen-maven</module>
         <!--<module>jOOQ-codegen-maven-example</module>-->
-        <module>jOOQ-console</module>
+        <!--<module>jOOQ-console</module>-->
         <module>jOOQ-meta</module>
         <module>jOOQ-scala</module>
     </modules>

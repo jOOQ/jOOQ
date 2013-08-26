@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.jooq</groupId>
         <artifactId>jooq-parent</artifactId>
-        <version>3.2.0-alpha-01</version>
+        <version>3.2.0-SNAPSHOT</version>
     </parent>
 
     <groupId>org.jooq</groupId>

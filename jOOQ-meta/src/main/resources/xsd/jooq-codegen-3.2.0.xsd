@@ -7,6 +7,12 @@
   <element name="configuration">
     <complexType>
       <all>
+        
+        <!--
+          The license information used for the code generator 
+          -->
+        <element name="license" type="tns:License" minOccurs="1" maxOccurs="1"/>
+        
         <!--
           The JDBC configuration element contains information about how
           to set up the database connection used for source code generation
@@ -23,6 +29,16 @@
       </all>
     </complexType>
   </element>
+
+  <complexType name="License">
+    <all>
+      <!-- The license holder as indicated when the license was purchased -->
+      <element name="licenseHolder" type="string" minOccurs="1" maxOccurs="1" />
+      
+      <!-- The license key as issued to you when the license was purchased -->
+      <element name="licenseKey" type="string" minOccurs="1" maxOccurs="1" />
+    </all>
+  </complexType>
 
   <complexType name="Jdbc">
     <all>

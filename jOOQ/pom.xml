@@ -14,6 +14,19 @@
     <artifactId>jooq</artifactId>
     <name>jOOQ</name>
 
+    <licenses>
+        <license>
+            <name>LGPL 2.1 license</name>
+            <url>http://www.opensource.org/licenses/lgpl-2.1.php</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>jOOQ EULA</name>
+            <url>http://www.jooq.org/eula</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <build>
         <plugins>
             <!-- XJC-generate JAXB artefacts. Contribution is the courtesy

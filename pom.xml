@@ -24,14 +24,6 @@
 
     <url>http://www.jooq.org</url>
 
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.jooq.org/inc/LICENSE.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
     <scm>
         <developerConnection>https://github.com/jOOQ/jOOQ.git</developerConnection>
         <url>https://github.com/jOOQ/jOOQ.git</url>
@@ -74,13 +66,6 @@
             <email>digulla@hepe.com</email>
             <roles>
                 <role>codegen-support</role>
-            </roles>
-        </contributor>
-        <contributor>
-            <name>Ben Manes</name>
-            <email>ben.manes@gmail.com</email>
-            <roles>
-                <role>gradle-support</role>
             </roles>
         </contributor>
         <contributor>
@@ -137,17 +122,13 @@
     <modules>
         <module>jOOQ</module>
         <module>jOOQ-codegen</module>
-        <module>jOOQ-codegen-gradle</module>
         <module>jOOQ-codegen-maven</module>
+        <module>jOOQ-codegen-gradle</module>
         <!--<module>jOOQ-codegen-maven-example</module>-->
         <!--<module>jOOQ-console</module>-->
         <module>jOOQ-meta</module>
         <module>jOOQ-scala</module>
     </modules>
-
-    <properties>
-        <version.gradle>1.6</version.gradle>
-    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -159,6 +140,11 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -184,34 +170,6 @@
         </dependencies>
     </dependencyManagement>
 
-	<!--
-	  These additions were introduced with #2711, #2287 by Ben Manes
-	  Sonatype strongly recommends not to reference any third-party
-	  Maven repositories from artefact published to Maven Central.
-	  
-	  There must be another way to solve these issues:
-    <repositories>
-        <repository>
-            <id>maven-central</id>
-            <url>http://repo1.maven.org/maven2</url>
-        </repository>
-        <repository>
-            <id>gradle</id>
-            <url>http://repo.gradle.org/gradle/libs-releases-local</url>
-            <snapshots>
-              <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>gradle-workaround</id>
-            <url>http://flywaydb.org/repo</url>
-            <snapshots>
-              <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-	-->
-	
     <build>
         <defaultGoal>deploy</defaultGoal>
         <finalName>${project.artifactId}-${project.version}</finalName>

@@ -13,6 +13,19 @@
     <artifactId>jooq-codegen-maven-example</artifactId>
     <name>jOOQ Codegen Maven (Example)</name>
 
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License v3</name>
+            <url>http://www.fsf.org/licensing/licenses/agpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>jOOQ EULA</name>
+            <url>http://www.jooq.org/eula</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.springframework.version>3.2.3.RELEASE</org.springframework.version>

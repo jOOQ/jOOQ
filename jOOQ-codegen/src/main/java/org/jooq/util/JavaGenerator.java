@@ -1,39 +1,40 @@
 /**
- * Copyright (c) 2009-2013, Lukas Eder, lukas.eder@gmail.com
+ * Copyright (c) 2009-2013, Data Geekery GmbH (http://www.datageekery.com)
  * All rights reserved.
  *
- * This software is licensed to you under the Apache License, Version 2.0
- * (the "License"); You may obtain a copy of the License at
+ * This work is dual-licensed Open Source, under AGPL and jOOQ EULA
+ * =============================================================================
+ * You may freely choose which license applies to you. For more information
+ * about licensing, please visit http://www.jooq.org/licenses
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * AGPL:
+ * -----------------------------------------------------------------------------
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  *
- * . Redistributions of source code must retain the above copyright notice, this
- *   list of conditions and the following disclaimer.
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this library.
+ * If not, see http://www.gnu.org/licenses.
  *
- * . Redistributions in binary form must reproduce the above copyright notice,
- *   this list of conditions and the following disclaimer in the documentation
- *   and/or other materials provided with the distribution.
+ * jOOQ End User License Agreement:
+ * -----------------------------------------------------------------------------
+ * This library is commercial software; you may not redistribute it and/or
+ * modify it.
  *
- * . Neither the name "jOOQ" nor the names of its contributors may be
- *   used to endorse or promote products derived from this software without
- *   specific prior written permission.
+ * This library is distributed with a LIMITED WARRANTY. See the jOOQ End User
+ * License Agreement for more details.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
+ * You should have received a copy of the jOOQ End User License Agreement
+ * along with this library.
+ * If not, see http://www.jooq.org/eula
  */
-
 package org.jooq.util;
 
 
@@ -41,6 +42,7 @@ import java.io.File;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -125,9 +127,25 @@ public class JavaGenerator extends AbstractGenerator {
 
     @Override
     public final void generate(Database db) {
-
         this.database = db;
 
+        log.info("License parameters");
+        log.info("----------------------------------------------------------");
+        log.info("  Thank you for using jOOQ and jOOQ's code generator");
+        log.info("");
+
+        if (LicenseChecker.isValid(getLicense())) {
+            log.info("  You are using jOOQ's code generator with a valid license.");
+            log.info("  The generated code belongs to " + getLicense().getLicenseHolder());
+        }
+        else {
+            log.info("  YOU ARE USING jOOQ's CODE GENERATOR WITH THE jOOQ COMMUNITY LICENSE");
+            log.info("  Data Geekery GmbH will license generated code to you");
+            log.info("  through the GNU Affero General Public License (AFFERO GPL)");
+            log.info("  See http://www.gnu.org/licenses for details");
+        }
+
+        log.info("");
         log.info("Database parameters");
         log.info("----------------------------------------------------------");
         log.info("  dialect", database.getDialect());
@@ -167,6 +185,7 @@ public class JavaGenerator extends AbstractGenerator {
         // ----------------------------------------------------------------------
         log.info("Emptying", targetPackageDir.getAbsolutePath());
         empty(targetPackageDir, ".java");
+        license(targetPackageDir);
 
         // ----------------------------------------------------------------------
         // XXX Generating schemas
@@ -2145,13 +2164,16 @@ public class JavaGenerator extends AbstractGenerator {
      * This method is used to add line breaks in lengthy javadocs
      */
     protected void printJavadocParagraph(JavaWriter out, String comment, String indent) {
+        printParagraph(out, comment, indent + " * ");
+    }
+
+    protected void printParagraph(GeneratorWriter<?> out, String comment, String indent) {
         boolean newLine = true;
         int lineLength = 0;
 
         for (int i = 0; i < comment.length(); i++) {
             if (newLine) {
                 out.print(indent);
-                out.print(" * ");
 
                 newLine = false;
             }
@@ -2180,9 +2202,83 @@ public class JavaGenerator extends AbstractGenerator {
     }
 
     protected void printPackage(JavaWriter out, Definition definition, Mode mode) {
-        out.javadoc("This class is generated by jOOQ");
+
+        // We at Data Geekery GmbH believe in honesty and Open Source. It is
+        // hard to provide you with Open Source AND prevent piracy. At the same
+        // time, it is hard to prevent piracy without annoying honest customers.
+        // THAT IS WHY WE BELIEVE THAT YOU WILL AGREE NOT TO REMOVE THESE LINES.
+        if (LicenseChecker.isValid(getLicense())) {
+            out.println("/*");
+            printJavadocParagraph(out,
+                "This code is licensed to " + getLicense().getLicenseHolder() +
+                " through a jOOQ Per Seat License or a jOOQ Site License", "");
+            out.println(" */");
+        }
+        else {
+            out.println("/*");
+            printJavadocParagraph(out,
+                "Copyright (c) " + Calendar.getInstance().get(Calendar.YEAR) + " by Data Geekery GmbH", "");
+            out.println(" *");
+            printJavadocParagraph(out,
+                "This program is free software: you can redistribute it and/or modify " +
+                "it under the terms of the GNU Affero General Public License as " +
+                "published by the Free Software Foundation, either version 3 of the " +
+                "License, or (at your option) any later version.", "");
+            printJavadocParagraph(out, "", "");
+            out.println(" *");
+            printJavadocParagraph(out,
+                "This program is distributed in the hope that it will be useful, " +
+                "but WITHOUT ANY WARRANTY; without even the implied warranty of " +
+                "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the " +
+                "GNU Affero General Public License for more details.", "");
+            printJavadocParagraph(out, "", "");
+            out.println(" *");
+            printJavadocParagraph(out, "You should have received a copy of the GNU Affero General Public License " +
+                "along with this program.  If not, see <http://www.gnu.org/licenses/>.", "");
+
+            out.println(" */");
+        }
+
         out.println("package %s;", getStrategy().getJavaPackageName(definition, mode));
         out.println();
+    }
+
+    private void license(File targetPackageDir) {
+
+        // We at Data Geekery GmbH believe in honesty and Open Source. It is
+        // hard to provide you with Open Source AND prevent piracy. At the same
+        // time, it is hard to prevent piracy without annoying honest customers.
+        // THAT IS WHY WE BELIEVE THAT YOU WILL AGREE NOT TO REMOVE THESE LINES.
+        TextWriter out = new TextWriter(new File(targetPackageDir, "LICENSE.txt"));
+
+        if (LicenseChecker.isValid(getLicense())) {
+            printParagraph(out,
+                "This code is licensed to " + getLicense().getLicenseHolder() +
+                " through a jOOQ Per Seat License or a jOOQ Site License", "");
+        }
+        else {
+            printParagraph(out,
+                "Copyright (c) " + Calendar.getInstance().get(Calendar.YEAR) + " by Data Geekery GmbH", "");
+            out.println();
+            printParagraph(out,
+                "This program is free software: you can redistribute it and/or modify " +
+                "it under the terms of the GNU Affero General Public License as " +
+                "published by the Free Software Foundation, either version 3 of the " +
+                "License, or (at your option) any later version.", "");
+            printParagraph(out, "", "");
+            out.println();
+            printParagraph(out,
+                "This program is distributed in the hope that it will be useful, " +
+                "but WITHOUT ANY WARRANTY; without even the implied warranty of " +
+                "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the " +
+                "GNU Affero General Public License for more details.", "");
+            printParagraph(out, "", "");
+            out.println();
+            printParagraph(out, "You should have received a copy of the GNU Affero General Public License " +
+                "along with this program.  If not, see <http://www.gnu.org/licenses/>.", "");
+        }
+
+        out.close();
     }
 
     protected String getExtendsNumberType(DataTypeDefinition type) {

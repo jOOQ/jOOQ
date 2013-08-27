@@ -4687,7 +4687,7 @@ BigInteger nextID = create.select(s).fetchOne(S_AUTHOR_ID.nextval());
 
 // Reference the sequence in an INSERT statement:
 create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
-      .values(S_AUTHOR_ID.nextval(), "William", "Shakespeare");
+      .values(S_AUTHOR_ID.nextval(), val("William"), val("Shakespeare"));
 ]]></java>
 
 									<ul>
@@ -7408,7 +7408,7 @@ BigInteger nextID = create.select(s).fetchOne(S_AUTHOR_ID.nextval());
 
 // Reference the sequence in an INSERT statement:
 create.insertInto(AUTHOR, AUTHOR.ID, AUTHOR.FIRST_NAME, AUTHOR.LAST_NAME)
-      .values(S_AUTHOR_ID.nextval(), "William", "Shakespeare");
+      .values(S_AUTHOR_ID.nextval(), val("William"), val("Shakespeare"));
 ]]></java>
 
 							<p>

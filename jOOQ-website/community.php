@@ -27,6 +27,7 @@ worth mentioning (in alphabetical order)
 </p>
 <ul>
     <li>Aaron Digulla: jOOQ-codegen cleanup</li>
+    <li>Ben Manes: Gradle integration</li>
     <li>Christopher Deckers: jOOQ-Console contribution</li>
     <li>Christopher Klewes: Maven integration</li>
     <li>Ed Schaller: Improvements to unsigned data types (jOOU)</li>

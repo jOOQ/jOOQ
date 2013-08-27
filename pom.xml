@@ -77,6 +77,13 @@
             </roles>
         </contributor>
         <contributor>
+            <name>Ben Manes</name>
+            <email>ben.manes@gmail.com</email>
+            <roles>
+                <role>gradle-support</role>
+            </roles>
+        </contributor>
+        <contributor>
             <name>Ed Schaller</name>
             <email>schallee@darkmist.net</email>
             <roles>
@@ -157,16 +164,6 @@
             <dependency>
                 <groupId>org.jooq</groupId>
                 <artifactId>jooq-codegen-maven</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-codegen-maven-example</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jooq</groupId>
-                <artifactId>jooq-console</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

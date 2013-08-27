@@ -111,7 +111,7 @@ function manualHeader($isSingle, $forVersion) {
                          track('email/clicked');
                          $.ajax({
                              type: "POST",
-                             url: '<?=$root?>/registration-email-save.php',
+                             url: '<?=$root?>/registration-email-save',
                              data: $("#registration-email-form").serialize(),
                              success: function(data, textStatus, jqXHR) {
                                  fade($email);
@@ -166,7 +166,7 @@ function manualHeader($isSingle, $forVersion) {
                 registration(true, true);
             });
               
-            if ($registration && document.URL.indexOf("download.php") >= 0) {
+            if ($registration && document.URL.indexOf("download") >= 0) {
                 if (!$.cookie("jooq-registration-email") ||
                     !$.cookie("jooq-registration-survey")) {
                     
@@ -267,19 +267,19 @@ function manualHeader($isSingle, $forVersion) {
                 <a href="<?=$root?>/" title="jOOQ Home Page">Start</a>
             </div>
             <div class="navigation-item-left <?php if ($menu == 'learn') print 'navigation-item-active'?>">
-                <a href="<?=$root?>/learn.php" title="Learn about jOOQ">Learn</a>
+                <a href="<?=$root?>/learn" title="Learn about jOOQ">Learn</a>
             </div>
             <div class="navigation-item-left <?php if ($menu == 'download') print 'navigation-item-active'?>">
-                <a href="<?=$root?>/download.php" title="Download jOOQ">Download</a>
+                <a href="<?=$root?>/download" title="Download jOOQ">Download</a>
             </div>
             <div class="navigation-item-left <?php if ($menu == 'community') print 'navigation-item-active'?>">
-                <a href="<?=$root?>/community.php" title="See who's behind jOOQ and contribute">Community</a>
+                <a href="<?=$root?>/community" title="See who's behind jOOQ and contribute">Community</a>
             </div>
             <div class="navigation-item-left <?php if ($menu == 'news') print 'navigation-item-active'?>">
-                <a href="<?=$root?>/news.php" title="What's new around jOOQ">News</a>
+                <a href="<?=$root?>/news" title="What's new around jOOQ">News</a>
             </div>
             <div class="navigation-item-left <?php if ($menu == 'donate') print 'navigation-item-active'?>">
-                <a href="<?=$root?>/donate.php" title="Show some love to the jOOQ developer">Donate</a>
+                <a href="<?=$root?>/donate" title="Show some love to the jOOQ developer">Donate</a>
             </div>
         </div>
         </div>

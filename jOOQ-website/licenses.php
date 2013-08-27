@@ -4,7 +4,7 @@ function getH1() {
 	return 'Licensing';
 }
 function getActiveMenu() {
-	return "";
+	return "support";
 }
 function printContent() {
 	global $root;

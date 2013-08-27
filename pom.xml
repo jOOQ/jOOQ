@@ -184,6 +184,12 @@
         </dependencies>
     </dependencyManagement>
 
+	<!--
+	  These additions were introduced with #2711, #2287 by Ben Manes
+	  Sonatype strongly recommends not to reference any third-party
+	  Maven repositories from artefact published to Maven Central.
+	  
+	  There must be another way to solve these issues:
     <repositories>
         <repository>
             <id>maven-central</id>
@@ -204,7 +210,8 @@
             </snapshots>
         </repository>
     </repositories>
-
+	-->
+	
     <build>
         <defaultGoal>deploy</defaultGoal>
         <finalName>${project.artifactId}-${project.version}</finalName>

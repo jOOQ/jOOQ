@@ -14,6 +14,19 @@
     <artifactId>jooq-codegen</artifactId>
     <name>jOOQ Codegen</name>
 
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License v3</name>
+            <url>http://www.fsf.org/licensing/licenses/agpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>jOOQ EULA</name>
+            <url>http://www.jooq.org/eula</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <profiles>
         <profile>
             <id>release</id>

@@ -38,6 +38,11 @@ RewriteCond %{SCRIPT_FILENAME} !-f
 # Create vanity URLS, mapping non-existing directories to equivalent .php files
 RewriteRule ^.*?$ $0.php
 
+# Rewrite datageekery.com to subdirectory
+RewriteCond %{REQUEST_URI} !^/datageekery.com/
+RewriteCond %{HTTP_HOST} ^(www\.)?datageekery.com [NC]
+RewriteRule ^(.*)$ /datageekery.com/$1
+
 <Files users.csv>
 Order Allow,Deny
 Deny from all

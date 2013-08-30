@@ -36,7 +36,6 @@
 	<classpathentry kind="lib" path="lib/ucanaccess/commons-logging-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/ucanaccess/jackcess-1.2.13.jar"/>
 	<classpathentry kind="lib" path="lib/ucanaccess/ucanaccess-1.0.2.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-console"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/jOOQ-meta"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

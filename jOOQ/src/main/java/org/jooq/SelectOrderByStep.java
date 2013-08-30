@@ -134,7 +134,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
         name = "ORDER BY",
         args = "SortField+"
     )
-    SelectLimitStep<R> orderBy(Collection<SortField<?>> fields);
+    SelectLimitStep<R> orderBy(Collection<? extends SortField<?>> fields);
 
     /**
      * Add an <code>ORDER BY</code> clause to the query
@@ -192,7 +192,7 @@ public interface SelectOrderByStep<R extends Record> extends SelectLimitStep<R> 
         name = "ORDER SIBLINGS BY",
         args = "SortField+"
     )
-    SelectLimitStep<R> orderSiblingsBy(Collection<SortField<?>> fields);
+    SelectLimitStep<R> orderSiblingsBy(Collection<? extends SortField<?>> fields);
 
     /**
      * Add an <code>ORDER SIBLINGS BY</code> clause to the query

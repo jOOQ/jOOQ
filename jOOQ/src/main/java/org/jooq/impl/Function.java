@@ -513,7 +513,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final AggregateFunction<T> withinGroupOrderBy(Collection<SortField<?>> fields) {
+    public final AggregateFunction<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields) {
         withinGroupOrderBy.addAll(fields);
         return this;
     }
@@ -531,7 +531,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<SortField<?>> fields) {
+    public final WindowBeforeOverStep<T> keepDenseRankFirstOrderBy(Collection<? extends SortField<?>> fields) {
         first = true;
         keepDenseRankOrderBy.addAll(fields);
         return this;
@@ -549,7 +549,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<SortField<?>> fields) {
+    public final WindowBeforeOverStep<T> keepDenseRankLastOrderBy(Collection<? extends SortField<?>> fields) {
         keepDenseRankOrderBy.addAll(fields);
         return this;
     }
@@ -600,7 +600,7 @@ class Function<T> extends AbstractField<T> implements
     }
 
     @Override
-    public final WindowRowsStep<T> orderBy(Collection<SortField<?>> fields) {
+    public final WindowRowsStep<T> orderBy(Collection<? extends SortField<?>> fields) {
         orderBy.addAll(fields);
         return this;
     }

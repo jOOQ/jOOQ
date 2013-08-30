@@ -403,7 +403,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @Support
-    void addConditions(Collection<Condition> conditions);
+    void addConditions(Collection<? extends Condition> conditions);
 
     /**
      * {@inheritDoc}
@@ -417,7 +417,7 @@ public interface UpdateQuery<R extends Record> extends StoreQuery<R>, ConditionP
      */
     @Override
     @Support
-    void addConditions(Operator operator, Collection<Condition> conditions);
+    void addConditions(Operator operator, Collection<? extends Condition> conditions);
 
     // ------------------------------------------------------------------------
     // XXX: Methods for the UPDATE .. RETURNING syntax

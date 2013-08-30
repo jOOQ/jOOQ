@@ -257,7 +257,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param conditions The condition
      */
     @Support
-    void addHaving(Collection<Condition> conditions);
+    void addHaving(Collection<? extends Condition> conditions);
 
     /**
      * Adds new conditions to the having clause of query, connecting them to
@@ -279,7 +279,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param conditions The condition
      */
     @Support
-    void addHaving(Operator operator, Collection<Condition> conditions);
+    void addHaving(Operator operator, Collection<? extends Condition> conditions);
 
     /**
      * Add an Oracle-style hint to the select clause.
@@ -380,7 +380,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Override
     @Support
-    void addConditions(Collection<Condition> conditions);
+    void addConditions(Collection<? extends Condition> conditions);
 
     /**
      * {@inheritDoc}
@@ -394,7 +394,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      */
     @Override
     @Support
-    void addConditions(Operator operator, Collection<Condition> conditions);
+    void addConditions(Operator operator, Collection<? extends Condition> conditions);
 
     /**
      * Adds ordering fields, ordering by the default sort order
@@ -418,7 +418,7 @@ public interface SelectQuery<R extends Record> extends Select<R>, ConditionProvi
      * @param fields The ordering fields
      */
     @Support
-    void addOrderBy(Collection<SortField<?>> fields);
+    void addOrderBy(Collection<? extends SortField<?>> fields);
 
     /**
      * Adds ordering fields

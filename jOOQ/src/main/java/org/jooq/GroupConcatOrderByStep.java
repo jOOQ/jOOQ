@@ -108,5 +108,5 @@ public interface GroupConcatOrderByStep extends GroupConcatSeparatorStep {
         name = "ORDER BY",
         args = "SortField+"
     )
-    GroupConcatSeparatorStep orderBy(Collection<SortField<?>> fields);
+    GroupConcatSeparatorStep orderBy(Collection<? extends SortField<?>> fields);
 }

@@ -122,7 +122,7 @@ public interface SelectWhereStep<R extends Record> extends SelectConnectByStep<R
         name = "WHERE",
         args = "Condition+"
     )
-    SelectConditionStep<R> where(Collection<Condition> conditions);
+    SelectConditionStep<R> where(Collection<? extends Condition> conditions);
 
     /**
      * Add a <code>WHERE</code> clause to the query.

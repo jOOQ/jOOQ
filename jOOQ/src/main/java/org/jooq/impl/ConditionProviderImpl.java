@@ -101,7 +101,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public final void addConditions(Collection<Condition> conditions) {
+    public final void addConditions(Collection<? extends Condition> conditions) {
         addConditions(Operator.AND, conditions);
     }
 
@@ -111,7 +111,7 @@ class ConditionProviderImpl extends AbstractQueryPart implements ConditionProvid
     }
 
     @Override
-    public final void addConditions(Operator operator, Collection<Condition> conditions) {
+    public final void addConditions(Operator operator, Collection<? extends Condition> conditions) {
         if (!conditions.isEmpty()) {
             Condition c;
 

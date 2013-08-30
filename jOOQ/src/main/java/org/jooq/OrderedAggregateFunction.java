@@ -121,5 +121,5 @@ public interface OrderedAggregateFunction<T> {
         args = "SortField+",
         to = "OrderedAggregateFunction"
     )
-    AggregateFunction<T> withinGroupOrderBy(Collection<SortField<?>> fields);
+    AggregateFunction<T> withinGroupOrderBy(Collection<? extends SortField<?>> fields);
 }

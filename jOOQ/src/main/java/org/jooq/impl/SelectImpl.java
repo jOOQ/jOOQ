@@ -244,7 +244,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> where(Collection<Condition> conditions) {
+    public final SelectImpl<R> where(Collection<? extends Condition> conditions) {
         conditionStep = ConditionStep.WHERE;
         getQuery().addConditions(conditions);
         return this;
@@ -506,7 +506,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> orderBy(Collection<SortField<?>> fields) {
+    public final SelectImpl<R> orderBy(Collection<? extends SortField<?>> fields) {
         getQuery().addOrderBy(fields);
         return this;
     }
@@ -532,7 +532,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> orderSiblingsBy(Collection<SortField<?>> fields) {
+    public final SelectImpl<R> orderSiblingsBy(Collection<? extends SortField<?>> fields) {
         getQuery().addOrderBy(fields);
         getQuery().setOrderBySiblings(true);
         return this;
@@ -622,7 +622,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> of(Collection<Field<?>> fields) {
+    public final SelectImpl<R> of(Collection<? extends Field<?>> fields) {
         getQuery().setForUpdateOf(fields);
         return this;
     }
@@ -685,7 +685,7 @@ class SelectImpl<R extends Record> extends AbstractDelegatingQuery<Select<R>> im
     }
 
     @Override
-    public final SelectImpl<R> having(Collection<Condition> conditions) {
+    public final SelectImpl<R> having(Collection<? extends Condition> conditions) {
         conditionStep = ConditionStep.HAVING;
         getQuery().addHaving(conditions);
         return this;

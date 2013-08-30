@@ -941,7 +941,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void addOrderBy(Collection<SortField<?>> fields) {
+    public final void addOrderBy(Collection<? extends SortField<?>> fields) {
         getOrderBy().addAll(fields);
     }
 
@@ -977,7 +977,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void addConditions(Collection<Condition> conditions) {
+    public final void addConditions(Collection<? extends Condition> conditions) {
         condition.addConditions(conditions);
     }
 
@@ -987,7 +987,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void addConditions(Operator operator, Collection<Condition> conditions) {
+    public final void addConditions(Operator operator, Collection<? extends Condition> conditions) {
         condition.addConditions(operator, conditions);
     }
 
@@ -1057,7 +1057,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void addHaving(Collection<Condition> conditions) {
+    public final void addHaving(Collection<? extends Condition> conditions) {
         getHaving().addConditions(conditions);
     }
 
@@ -1067,7 +1067,7 @@ class SelectQueryImpl<R extends Record> extends AbstractSelect<R> implements Sel
     }
 
     @Override
-    public final void addHaving(Operator operator, Collection<Condition> conditions) {
+    public final void addHaving(Operator operator, Collection<? extends Condition> conditions) {
         getHaving().addConditions(operator, conditions);
     }
 
